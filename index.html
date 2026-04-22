@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metamorpho · Ágora Design Outputs</title>
+<meta name="description" content="El Element Man. Galería de outputs de diseño generados por el Design Studio de Ágora.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0a0a0a;
+  --ink-2: #1a1a1a;
+  --paper: #fafaf7;
+  --paper-2: #f0efe9;
+  --line: rgba(10,10,10,0.08);
+  --line-strong: rgba(10,10,10,0.14);
+  --muted: rgba(10,10,10,0.55);
+  --brand: #ff5a1f;
+  --brand-ink: #c9360a;
+  --accent: #2563eb;
+  --radius: 14px;
+  --radius-sm: 8px;
+  --mono: 'Space Mono', ui-monospace, monospace;
+  --sans: 'Montserrat', system-ui, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--paper); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+
+.chrome {
+  position: sticky; top: 0; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 28px;
+  background: rgba(250,250,247,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.chrome .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: -0.01em; }
+.chrome .brand .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--brand); box-shadow: 0 0 0 4px rgba(255,90,31,0.15); }
+.chrome .meta { font-family: var(--mono); font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+.hero {
+  padding: 96px 28px 56px;
+  max-width: 1200px; margin: 0 auto;
+}
+.hero .kicker {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--brand-ink);
+  padding: 6px 12px; border-radius: 100px;
+  background: rgba(255,90,31,0.08);
+  margin-bottom: 24px;
+}
+.hero h1 {
+  font-size: clamp(48px, 8vw, 112px);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  font-weight: 800;
+  margin-bottom: 24px;
+}
+.hero h1 .morpho { font-style: italic; font-weight: 500; color: var(--muted); }
+.hero .lede {
+  font-size: clamp(18px, 2vw, 22px);
+  line-height: 1.45;
+  color: var(--ink-2);
+  max-width: 640px;
+  margin-bottom: 32px;
+}
+.hero .stats { display: flex; gap: 32px; flex-wrap: wrap; }
+.hero .stat { font-family: var(--mono); font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.hero .stat strong { display: block; font-family: var(--sans); font-size: 32px; color: var(--ink); letter-spacing: -0.02em; margin-bottom: 2px; }
+
+.filters {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  padding: 0 28px 24px;
+  max-width: 1200px; margin: 0 auto;
+}
+.filter {
+  font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em;
+  padding: 8px 14px; border-radius: 100px;
+  border: 1px solid var(--line-strong);
+  background: transparent; color: var(--ink-2);
+  cursor: pointer; transition: all 0.15s;
+}
+.filter:hover { background: var(--paper-2); }
+.filter.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+.gallery {
+  max-width: 1200px; margin: 0 auto;
+  padding: 8px 28px 96px;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+.card {
+  display: flex; flex-direction: column; gap: 16px;
+  padding: 24px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+}
+.card:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(10,10,10,0.06); border-color: var(--line-strong); }
+.card .type-row { display: flex; justify-content: space-between; align-items: center; }
+.card .type { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--brand-ink); }
+.card .date { font-family: var(--mono); font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.card h3 { font-size: 20px; line-height: 1.2; letter-spacing: -0.01em; font-weight: 700; }
+.card p { font-size: 14px; line-height: 1.5; color: var(--ink-2); flex: 1; }
+.card .detail { font-family: var(--mono); font-size: 11px; color: var(--muted); padding-top: 12px; border-top: 1px dashed var(--line); }
+
+.empty {
+  grid-column: 1 / -1;
+  padding: 96px 32px;
+  text-align: center;
+  border: 2px dashed var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--paper-2);
+}
+.empty h2 { font-size: 28px; letter-spacing: -0.02em; margin-bottom: 12px; }
+.empty p { font-family: var(--mono); font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.empty code { font-family: var(--mono); background: var(--ink); color: var(--paper); padding: 2px 8px; border-radius: 4px; font-size: 12px; }
+
+footer {
+  padding: 32px 28px;
+  border-top: 1px solid var(--line);
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+  font-family: var(--mono); font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em;
+}
+footer a { color: var(--brand-ink); }
+
+@media (max-width: 640px) {
+  .chrome { padding: 14px 20px; }
+  .hero { padding: 56px 20px 32px; }
+  .filters, .gallery, footer { padding-left: 20px; padding-right: 20px; }
+  .hero .stats { gap: 20px; }
+  .hero .stat strong { font-size: 24px; }
+}
+</style>
+</head>
+<body>
+
+<header class="chrome">
+  <div class="brand">
+    <span class="dot"></span>
+    <span>Metamorpho</span>
+  </div>
+  <div class="meta">agora · design outputs</div>
+</header>
+
+<section class="hero">
+  <span class="kicker">● Element Man · DC Comics</span>
+  <h1>Un briefing<br><span class="morpho">se convierte</span> en<br>cualquier forma.</h1>
+  <p class="lede">Galería de outputs generados por el Design Studio de Ágora. Decks, landings, wikis, sets de Instagram, propuestas, brand kits — todos en un solo lugar, en HTML self-contained, listos para compartir.</p>
+  <div class="stats">
+    <div class="stat"><strong id="stat-total">0</strong>outputs</div>
+    <div class="stat"><strong id="stat-types">0</strong>tipos</div>
+    <div class="stat"><strong id="stat-latest">—</strong>último</div>
+  </div>
+</section>
+
+<nav class="filters" id="filters"></nav>
+
+<main class="gallery" id="gallery">
+  <div class="empty">
+    <h2>Sin outputs todavía</h2>
+    <p>Corré <code>/design-studio</code> en Claude Code para generar el primero</p>
+  </div>
+</main>
+
+<footer>
+  <div>Ágora · 2026 · hosted on GitHub Pages</div>
+  <a href="https://github.com/agora-red/metamorpho">github.com/agora-red/metamorpho ↗</a>
+</footer>
+
+<script>
+(async () => {
+  const res = await fetch('./_manifest.json', { cache: 'no-store' });
+  const { outputs = [] } = await res.json();
+
+  const gallery = document.getElementById('gallery');
+  const filters = document.getElementById('filters');
+  const statTotal = document.getElementById('stat-total');
+  const statTypes = document.getElementById('stat-types');
+  const statLatest = document.getElementById('stat-latest');
+
+  if (outputs.length === 0) return;
+
+  const types = [...new Set(outputs.map(o => o.type))];
+  statTotal.textContent = outputs.length;
+  statTypes.textContent = types.length;
+  statLatest.textContent = outputs[0]?.date || '—';
+
+  const renderCards = (filter) => {
+    const list = filter === 'all' ? outputs : outputs.filter(o => o.type === filter);
+    gallery.innerHTML = list.map(o => `
+      <a class="card" href="${o.href}">
+        <div class="type-row">
+          <span class="type">${o.typeLabel}</span>
+          <span class="date">${o.date}</span>
+        </div>
+        <h3>${o.title}</h3>
+        <p>${o.description}</p>
+        ${o.detail ? `<div class="detail">${o.detail}</div>` : ''}
+      </a>
+    `).join('');
+  };
+
+  const renderFilters = () => {
+    const all = `<button class="filter active" data-type="all">Todos · ${outputs.length}</button>`;
+    const byType = types.map(t => {
+      const count = outputs.filter(o => o.type === t).length;
+      const label = outputs.find(o => o.type === t).typeLabel;
+      return `<button class="filter" data-type="${t}">${label} · ${count}</button>`;
+    }).join('');
+    filters.innerHTML = all + byType;
+    filters.addEventListener('click', (e) => {
+      if (!e.target.matches('.filter')) return;
+      filters.querySelectorAll('.filter').forEach(b => b.classList.remove('active'));
+      e.target.classList.add('active');
+      renderCards(e.target.dataset.type);
+    });
+  };
+
+  renderFilters();
+  renderCards('all');
+})();
+</script>
+
+</body>
+</html>
