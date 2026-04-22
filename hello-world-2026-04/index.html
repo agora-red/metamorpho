@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hola mundo · Ágora Design Studio</title>
+<meta name="description" content="Deck de ejemplo generado por el Design Studio de Ágora — sistema Frost aplicado.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   FROST TOKENS — pulled from flash/stories/Design/*.stories.tsx
+   ============================================================ */
+:root {
+  /* Brand */
+  --frost-primary:        #0072FB;
+  --frost-primary-hover:  #005CD4;
+  --frost-primary-soft:   #EEF6FF;
+  --frost-primary-wash:   rgba(0,114,251,0.08);
+
+  /* Severity */
+  --frost-accent:         #FF4658;
+  --frost-accent-soft:    #FFE3E6;
+  --frost-accent-wash:    rgba(255,70,88,0.08);
+  --frost-success:        #10B981;
+  --frost-success-soft:   #A9FFE7;
+  --frost-warning:        #F59E0B;
+  --frost-warning-soft:   #FFE77B;
+
+  /* Ink */
+  --frost-ink:            #0F172A;
+  --frost-ink-soft:       #3A3A3A;
+  --frost-muted:          #868686;
+  --frost-faint:          #B5B5B5;
+
+  /* Surfaces */
+  --frost-surface:        #FFFFFF;
+  --frost-surface-muted:  #EFF3F9;
+  --frost-border:         #E2E8F0;
+  --frost-border-soft:    #F2F2F2;
+
+  /* Radius */
+  --r-sm:     6px;
+  --r-item:  10px;
+  --r-btn:   12px;
+  --r-card:  20px;
+  --r-shell: 28px;
+  --r-chip:  999px;
+
+  /* Elevation */
+  --sh-xs:      0 1px 2px rgba(15,23,42,0.04);
+  --sh-sm:      0 4px 12px -4px rgba(15,23,42,0.10);
+  --sh-md:      0 10px 30px -12px rgba(15,23,42,0.15);
+  --sh-lg:      0 20px 50px -20px rgba(15,23,42,0.25);
+  --sh-glow:    0 4px 18px -2px rgba(0,114,251,0.30);
+  --sh-glow-lg: 0 8px 30px -4px rgba(0,114,251,0.40);
+
+  /* Type */
+  --sans: 'Montserrat', system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  font-family: var(--sans);
+  color: var(--frost-ink);
+  background: var(--frost-surface-muted);
+  -webkit-font-smoothing: antialiased;
+  font-variant-numeric: tabular-nums;
+}
+
+body {
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  height: 100vh;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ============================================================
+   CHROME — fixed wordmark + counter
+   ============================================================ */
+.chrome {
+  position: fixed; inset: 0 0 auto 0;
+  z-index: 20;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px 40px;
+  pointer-events: none;
+}
+.chrome .wordmark {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  color: var(--frost-ink);
+  pointer-events: auto;
+}
+.chrome .wordmark .dot {
+  width: 10px; height: 10px;
+  border-radius: var(--r-chip);
+  background: var(--frost-primary);
+  box-shadow: var(--sh-glow);
+}
+.chrome .meta {
+  font-family: var(--sans);
+  font-size: 10.5px; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--frost-muted);
+  pointer-events: auto;
+}
+
+/* ============================================================
+   SLIDE — 100vh scroll-snap canvas
+   ============================================================ */
+.slide {
+  min-height: 100vh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  padding: 96px 80px 80px;
+  display: flex; flex-direction: column;
+  position: relative;
+  background: var(--frost-surface-muted);
+}
+.slide[data-surface="white"]  { background: var(--frost-surface); }
+.slide[data-surface="ink"]    { background: var(--frost-ink); color: var(--frost-surface); }
+
+.kicker {
+  font-family: var(--sans);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--frost-primary);
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.kicker::before {
+  content: ''; display: inline-block;
+  width: 18px; height: 1px;
+  background: var(--frost-primary);
+}
+.slide[data-surface="ink"] .kicker { color: var(--frost-primary-soft); }
+.slide[data-surface="ink"] .kicker::before { background: var(--frost-primary-soft); }
+
+.slide-no {
+  position: absolute;
+  bottom: 32px; right: 40px;
+  font-family: var(--sans);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--frost-muted);
+}
+
+/* ============================================================
+   SLIDE 1 — COVER
+   ============================================================ */
+.cover {
+  justify-content: center;
+  background:
+    radial-gradient(1200px 800px at 88% 10%, rgba(0,114,251,0.10), transparent 60%),
+    radial-gradient(900px 700px at 10% 90%, rgba(16,185,129,0.08), transparent 55%),
+    var(--frost-surface);
+}
+.cover .eyebrow { margin-bottom: 32px; }
+.cover h1 {
+  font-family: var(--sans);
+  font-weight: 200;
+  font-size: clamp(72px, 12vw, 184px);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  color: var(--frost-ink);
+  margin-bottom: 28px;
+}
+.cover h1 strong { font-weight: 600; }
+.cover h1 .period { color: var(--frost-primary); }
+.cover .lede {
+  max-width: 560px;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--frost-ink-soft);
+  margin-bottom: 48px;
+}
+.cover .cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* ============================================================
+   BUTTONS (Primitives/Button V2 — Frost spec)
+   ============================================================ */
+.btn {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 13.5px;
+  letter-spacing: 0.01em;
+  padding: 12px 22px;
+  border-radius: var(--r-btn);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: box-shadow 0.15s ease, transform 0.15s ease, background 0.15s ease;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-primary {
+  background: linear-gradient(180deg, var(--frost-primary) 0%, var(--frost-primary-hover) 100%);
+  color: #fff;
+  box-shadow: var(--sh-glow);
+}
+.btn-primary:hover {
+  box-shadow: var(--sh-glow-lg);
+  transform: translateY(-1px);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--frost-ink);
+  border-color: var(--frost-border);
+}
+.btn-ghost:hover { background: var(--frost-surface); box-shadow: var(--sh-sm); }
+.btn .arrow { transition: transform 0.2s; }
+.btn:hover .arrow { transform: translateX(3px); }
+
+/* ============================================================
+   SLIDE 2 — PALETTE SHOWCASE
+   ============================================================ */
+.palette {
+  justify-content: flex-start;
+}
+.palette .head { margin-bottom: 48px; }
+.palette h2 {
+  font-family: var(--sans);
+  font-weight: 200;
+  font-size: clamp(40px, 5vw, 64px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-top: 18px;
+  margin-bottom: 18px;
+}
+.palette h2 strong { font-weight: 600; }
+.palette h2 .period { color: var(--frost-primary); }
+.palette .lede {
+  max-width: 560px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--frost-muted);
+}
+.swatch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+.swatch {
+  border-radius: var(--r-card);
+  overflow: hidden;
+  background: var(--frost-surface);
+  border: 1px solid var(--frost-border);
+  box-shadow: var(--sh-xs);
+}
+.swatch .chip {
+  height: 88px;
+  display: flex; align-items: flex-end;
+  padding: 14px;
+  color: rgba(255,255,255,0.88);
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.swatch .chip[data-on-light="true"] { color: rgba(15,23,42,0.55); }
+.swatch .meta { padding: 14px 16px 16px; }
+.swatch .name {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 12.5px;
+  color: var(--frost-primary);
+  letter-spacing: 0.01em;
+}
+.swatch .use {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: var(--frost-muted);
+  margin-top: 4px;
+  line-height: 1.45;
+}
+
+/* ============================================================
+   SLIDE 3 — COMPONENTS
+   ============================================================ */
+.components {
+  justify-content: flex-start;
+  background: var(--frost-surface);
+}
+.components .head { margin-bottom: 48px; }
+.components h2 {
+  font-family: var(--sans);
+  font-weight: 200;
+  font-size: clamp(40px, 5vw, 64px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-top: 18px;
+  margin-bottom: 18px;
+}
+.components h2 strong { font-weight: 600; }
+.components h2 .period { color: var(--frost-primary); }
+.components .lede {
+  max-width: 560px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--frost-muted);
+}
+.specimen-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+.specimen {
+  background: var(--frost-surface);
+  border: 1px solid var(--frost-border);
+  border-radius: var(--r-card);
+  padding: 28px;
+  box-shadow: var(--sh-sm);
+  display: flex; flex-direction: column; gap: 20px;
+}
+.specimen .label {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 10.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--frost-faint);
+}
+.specimen .stage {
+  display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+  min-height: 64px;
+}
+
+/* Badges (Primitives/Badge spec) */
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 10px;
+  border-radius: var(--r-chip);
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+}
+.badge .pulse {
+  width: 6px; height: 6px; border-radius: var(--r-chip);
+  background: currentColor;
+}
+.badge-success { background: var(--frost-success-soft); color: #065F46; }
+.badge-pending { background: var(--frost-primary-soft); color: var(--frost-primary-hover); }
+.badge-warn    { background: var(--frost-warning-soft); color: #92400E; }
+.badge-due     { background: var(--frost-accent-soft); color: #9F1239; }
+
+/* Input (Primitives/Input spec) */
+.input-sample {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: var(--r-btn);
+  border: 1px solid var(--frost-border);
+  background: var(--frost-surface);
+  font-family: var(--sans);
+  font-size: 13.5px;
+  color: var(--frost-ink);
+}
+.input-sample::placeholder { color: var(--frost-faint); }
+.input-sample:focus {
+  outline: none;
+  border-color: var(--frost-primary);
+  box-shadow: 0 0 0 3px var(--frost-primary-wash);
+}
+
+/* Card preview (Primitives/Card spec — r-card 20px, sh-sm default) */
+.card-preview {
+  background: var(--frost-surface);
+  border: 1px solid var(--frost-border);
+  border-radius: var(--r-card);
+  padding: 20px;
+  box-shadow: var(--sh-sm);
+  display: flex; flex-direction: column; gap: 12px;
+  width: 100%;
+}
+.card-preview .row {
+  display: flex; justify-content: space-between; align-items: center;
+}
+.card-preview .title {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--frost-ink);
+}
+.card-preview .price {
+  font-family: var(--sans);
+  font-weight: 200;
+  font-size: 28px;
+  letter-spacing: -0.02em;
+  color: var(--frost-ink);
+  font-variant-numeric: tabular-nums;
+}
+.card-preview .price span { font-size: 13.5px; color: var(--frost-muted); font-weight: 500; }
+.card-preview .meta {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: var(--frost-muted);
+  line-height: 1.5;
+}
+
+/* ============================================================
+   SLIDE 4 — CLOSING
+   ============================================================ */
+.closing {
+  justify-content: center;
+  background: var(--frost-ink);
+  color: var(--frost-surface);
+}
+.closing .eyebrow { margin-bottom: 32px; }
+.closing .eyebrow::before { background: var(--frost-primary-soft); }
+.closing h2 {
+  font-family: var(--sans);
+  font-weight: 200;
+  font-size: clamp(56px, 8vw, 120px);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  margin-bottom: 32px;
+  color: var(--frost-surface);
+}
+.closing h2 strong { font-weight: 600; }
+.closing h2 .period { color: var(--frost-primary); }
+.closing .lede {
+  max-width: 560px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.70);
+  margin-bottom: 48px;
+}
+.closing .pipeline {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  max-width: 880px;
+}
+.closing .step {
+  padding: 18px 20px;
+  border-radius: var(--r-card);
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(8px);
+}
+.closing .step .n {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 10.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--frost-primary-soft);
+  margin-bottom: 8px;
+}
+.closing .step .t {
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--frost-surface);
+  line-height: 1.3;
+}
+.closing .step.done .n { color: var(--frost-success); }
+.closing .step.done .n::after { content: '  ✓'; }
+
+.closing .slide-no { color: rgba(255,255,255,0.45); }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 720px) {
+  .slide { padding: 88px 24px 72px; }
+  .chrome { padding: 18px 24px; }
+  .chrome .meta { font-size: 9.5px; }
+  .cover h1 { font-size: 64px; }
+  .palette h2, .components h2, .closing h2 { font-size: 40px; }
+  .slide-no { right: 24px; }
+}
+</style>
+</head>
+<body>
+
+<header class="chrome" aria-hidden="true">
+  <div class="wordmark">
+    <span class="dot"></span>
+    <span>Ágora <span style="color:var(--frost-muted);font-weight:400">· Design Studio</span></span>
+  </div>
+  <div class="meta">Hola mundo · 2026.04</div>
+</header>
+
+<!-- ============ SLIDE 1 · COVER ============ -->
+<section class="slide cover">
+  <div class="kicker eyebrow">Design Studio · showcase</div>
+  <h1>Hola <strong>mundo</strong><span class="period">.</span></h1>
+  <p class="lede">
+    Este deck se generó con el Design Studio de Ágora para testear el flujo completo —
+    briefing, research, tokens del sistema Frost, preview y publicación a Metamorpho.
+    Todo lo que ves acá sale del source real, no inventado.
+  </p>
+  <div class="cta-row">
+    <button class="btn btn-primary">
+      Ver el sistema Frost
+      <span class="arrow">→</span>
+    </button>
+    <button class="btn btn-ghost">Pipeline del studio</button>
+  </div>
+  <div class="slide-no">01 · cover</div>
+</section>
+
+<!-- ============ SLIDE 2 · PALETTE ============ -->
+<section class="slide palette">
+  <div class="head">
+    <span class="kicker">01 · Paleta Frost</span>
+    <h2>Un <strong>único azul</strong><span class="period">.</span></h2>
+    <p class="lede">
+      Primary es el único acento cromático con propósito decorativo. Severity (coral, success, warning)
+      es solo para estado. Todo lo demás vive en la escala de tinta + superficies.
+    </p>
+  </div>
+
+  <div class="swatch-grid">
+    <div class="swatch">
+      <div class="chip" style="background:var(--frost-primary)">#0072FB</div>
+      <div class="meta"><div class="name">frost-primary</div><div class="use">CTAs, focus rings, kicker activo</div></div>
+    </div>
+    <div class="swatch">
+      <div class="chip" style="background:var(--frost-accent)">#FF4658</div>
+      <div class="meta"><div class="name">frost-accent</div><div class="use">Destructivo, cancelación, vencido</div></div>
+    </div>
+    <div class="swatch">
+      <div class="chip" style="background:var(--frost-success)">#10B981</div>
+      <div class="meta"><div class="name">frost-success</div><div class="use">Confirmación de pago, estado activo</div></div>
+    </div>
+    <div class="swatch">
+      <div class="chip" style="background:var(--frost-warning)">#F59E0B</div>
+      <div class="meta"><div class="name">frost-warning</div><div class="use">Nudges, alertas de seña</div></div>
+    </div>
+    <div class="swatch">
+      <div class="chip" style="background:var(--frost-ink)">#0F172A</div>
+      <div class="meta"><div class="name">frost-ink</div><div class="use">Body text, titulares</div></div>
+    </div>
+    <div class="swatch">
+      <div class="chip" data-on-light="true" style="background:var(--frost-surface-muted);border-bottom:1px solid var(--frost-border)">#EFF3F9</div>
+      <div class="meta"><div class="name">frost-surface-muted</div><div class="use">Fondo de la app, default en Storybook</div></div>
+    </div>
+  </div>
+
+  <div class="slide-no">02 · paleta</div>
+</section>
+
+<!-- ============ SLIDE 3 · COMPONENTS ============ -->
+<section class="slide components" data-surface="white">
+  <div class="head">
+    <span class="kicker">02 · Primitives</span>
+    <h2>Componentes <strong>ya resueltos</strong><span class="period">.</span></h2>
+    <p class="lede">
+      El studio reusa los specs de Flash Storybook (radios, padding, sombras, estados) en vez de reinventar variantes.
+      Un botón acá se ve igual que un botón en pro.agora.red.
+    </p>
+  </div>
+
+  <div class="specimen-grid">
+    <div class="specimen">
+      <span class="label">Button · V2</span>
+      <div class="stage" style="flex-direction:column;align-items:flex-start">
+        <button class="btn btn-primary">Reservar ahora <span class="arrow">→</span></button>
+        <button class="btn btn-ghost">Ver detalles</button>
+      </div>
+    </div>
+
+    <div class="specimen">
+      <span class="label">Badge</span>
+      <div class="stage">
+        <span class="badge badge-success"><span class="pulse"></span>Pagado</span>
+        <span class="badge badge-pending">Pendiente</span>
+        <span class="badge badge-warn">Seña</span>
+        <span class="badge badge-due">Vencido</span>
+      </div>
+    </div>
+
+    <div class="specimen">
+      <span class="label">Input</span>
+      <div class="stage" style="flex-direction:column;align-items:stretch;gap:8px">
+        <input class="input-sample" type="text" placeholder="Nombre del cliente" />
+        <input class="input-sample" type="email" placeholder="email@ejemplo.com" />
+      </div>
+    </div>
+
+    <div class="specimen">
+      <span class="label">Card</span>
+      <div class="stage">
+        <div class="card-preview">
+          <div class="row">
+            <span class="title">Corte + color</span>
+            <span class="badge badge-success"><span class="pulse"></span>Activo</span>
+          </div>
+          <div class="price">$ 18.500 <span>/ 90 min</span></div>
+          <div class="meta">Lun a Vie · 10:00 a 19:00 · 3 profesionales</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-no">03 · componentes</div>
+</section>
+
+<!-- ============ SLIDE 4 · CLOSING ============ -->
+<section class="slide closing">
+  <div class="kicker eyebrow">Pipeline completo</div>
+  <h2>Flujo <strong>funciona</strong><span class="period">.</span></h2>
+  <p class="lede">
+    De una frase a un deck publicado en Metamorpho. Todo self-contained, zero build, listo para compartir.
+    El log de iteraciones queda en <code style="font-family:inherit;background:rgba(255,255,255,0.06);padding:2px 6px;border-radius:4px">_edits.jsonl</code>.
+  </p>
+
+  <div class="pipeline">
+    <div class="step done"><div class="n">01 · briefing</div><div class="t">Conversación, una pregunta a la vez</div></div>
+    <div class="step done"><div class="n">02 · research</div><div class="t">Tokens desde el source de Flash</div></div>
+    <div class="step done"><div class="n">03 · design</div><div class="t">HTML self-contained con Frost aplicado</div></div>
+    <div class="step done"><div class="n">04 · preview</div><div class="t">Servidor local en :8010</div></div>
+    <div class="step"><div class="n">05 · publish</div><div class="t">Metamorpho → GitHub Pages</div></div>
+  </div>
+
+  <div class="slide-no">04 · cierre</div>
+</section>
+
+</body>
+</html>

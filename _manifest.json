@@ -2,5 +2,16 @@
   "$schema": "https://json-schema.org/draft-07/schema#",
   "version": 1,
   "updated_at": "2026-04-22",
-  "outputs": []
+  "outputs": [
+    {
+      "type": "deck",
+      "typeLabel": "Deck",
+      "title": "Hola mundo",
+      "description": "Deck de ejemplo · showcase del sistema Frost aplicado vía Design Studio.",
+      "detail": "4 slides · cover · paleta · componentes · cierre",
+      "date": "ABR 2026",
+      "href": "./hello-world-2026-04/index.html",
+      "slug": "hello-world-2026-04"
+    }
+  ]
 }
