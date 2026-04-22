@@ -89,19 +89,19 @@ a { color: inherit; text-decoration: none; }
   pointer-events: none;
 }
 .chrome .wordmark {
-  display: flex; align-items: center; gap: 10px;
+  display: flex; align-items: center; gap: 14px;
+  pointer-events: auto;
+  color: var(--frost-ink);
+}
+.chrome .wordmark svg { display: block; height: 26px; width: auto; }
+.chrome .wordmark .sub {
   font-family: var(--sans);
   font-weight: 500;
-  font-size: 15px;
+  font-size: 13px;
   letter-spacing: -0.01em;
-  color: var(--frost-ink);
-  pointer-events: auto;
-}
-.chrome .wordmark .dot {
-  width: 10px; height: 10px;
-  border-radius: var(--r-chip);
-  background: var(--frost-primary);
-  box-shadow: var(--sh-glow);
+  color: var(--frost-muted);
+  border-left: 1px solid var(--frost-border);
+  padding-left: 14px;
 }
 .chrome .meta {
   font-family: var(--sans);
@@ -485,8 +485,22 @@ a { color: inherit; text-decoration: none; }
 
 <header class="chrome" aria-hidden="true">
   <div class="wordmark">
-    <span class="dot"></span>
-    <span>Ágora <span style="color:var(--frost-muted);font-weight:400">· Design Studio</span></span>
+    <svg viewBox="0 0 153 36" xmlns="http://www.w3.org/2000/svg" aria-label="Ágora">
+      <path d="M41.3822 30.3938L38.187 35.7712L3.11719 35.8491L17.5348 10.9106L20.6466 16.2974L15.7314 24.9347L12.625 30.3938H41.3822Z" fill="#E2E8F0"/>
+      <path d="M17.5351 10.9106L20.6469 16.2974L16.7342 23.0921L12.1689 20.1848L17.5351 10.9106Z" fill="url(#p0)" fill-opacity="0.7"/>
+      <path d="M20.6467 16.2973L17.5349 10.9106L3.11731 35.8491L0 30.3938L17.5349 0L31.8745 24.9385H25.6399L20.6467 16.2973Z" fill="#0072FF"/>
+      <path d="M31.8543 24.9244L25.6302 24.9316L21.7061 18.1387L26.5114 15.6305L31.8543 24.9244Z" fill="url(#p1)" fill-opacity="0.7"/>
+      <path d="M23.8473 0L41.3822 30.3938H12.625L15.7314 24.9346L15.7384 24.9385H25.6398H31.8744L17.5348 0H23.8473Z" fill="#FF4658"/>
+      <path d="M12.625 30.3937L15.7289 24.9387L23.7202 24.9194L23.4706 30.3746L12.625 30.3937Z" fill="url(#p2)" fill-opacity="0.7"/>
+      <path d="M76.7893 7.41158V4.76367H69.5647V7.41158H76.7893ZM72.2126 26.6334C74.4029 26.6334 76.3316 25.7835 77.6065 24.2797V26.3065H81.2351V10.1249H77.6065V12.1844C76.3316 10.6806 74.4029 9.79797 72.2126 9.79797C67.7668 9.79797 64.7266 13.5573 64.7266 18.232C64.7266 22.8741 67.7668 26.6334 72.2126 26.6334ZM73.1279 23.1356C70.382 23.1356 68.4206 21.0761 68.4206 18.232C68.4206 15.388 70.382 13.2958 73.1279 13.2958C75.7105 13.2958 77.6065 15.388 77.6065 18.232C77.6065 21.1088 75.6778 23.1356 73.1279 23.1356ZM92.2844 31.112C96.9264 31.112 100.718 28.2679 100.718 22.6125V10.1249H97.2533V12.5439C96.4034 10.9421 94.2131 9.79797 91.7614 9.79797C87.2828 9.79797 84.3407 13.2958 84.3407 17.6436C84.3407 21.9914 87.2828 25.4566 91.7614 25.4566C94.7035 25.4566 96.4361 23.9855 97.0899 22.6779V22.8087C97.0899 26.1104 95.39 28.3333 91.9248 28.3333C90.2576 28.3333 88.3616 27.7776 87.0867 26.6661L85.681 28.9544C87.1847 30.2947 89.5058 31.112 92.2844 31.112ZM92.5459 22.2856C89.9961 22.2856 88.0347 20.3242 88.0347 17.6436C88.0347 14.963 89.9961 12.9689 92.5459 12.9689C95.0958 12.9689 97.0899 14.9303 97.0899 17.5129C97.0899 20.3242 95.1612 22.2856 92.5459 22.2856ZM112.422 26.6334C117.194 26.6334 121.019 22.9067 121.019 18.232C121.019 13.5247 117.194 9.79797 112.422 9.79797C107.649 9.79797 103.824 13.5247 103.824 18.232C103.824 22.9067 107.649 26.6334 112.422 26.6334ZM112.422 23.1356C109.643 23.1356 107.518 21.0434 107.518 18.232C107.518 15.388 109.643 13.2958 112.422 13.2958C115.2 13.2958 117.325 15.388 117.325 18.232C117.325 21.0434 115.2 23.1356 112.422 23.1356ZM127.753 26.3065V19.7031C127.753 15.4534 130.042 13.7535 133.605 13.7535V9.79797C130.14 9.79797 128.374 11.694 127.753 13.3285V10.1249H124.125V26.3065H127.753ZM143.118 26.6334C145.308 26.6334 147.237 25.7835 148.512 24.2797V26.3065H152.14V10.1249H148.512V12.1844C147.237 10.6806 145.308 9.79797 143.118 9.79797C138.672 9.79797 135.632 13.5573 135.632 18.232C135.632 22.8741 138.672 26.6334 143.118 26.6334ZM144.033 23.1356C141.287 23.1356 139.326 21.0761 139.326 18.232C139.326 15.388 141.287 13.2958 144.033 13.2958C146.616 13.2958 148.512 15.388 148.512 18.232C148.512 21.1088 146.583 23.1356 144.033 23.1356Z" fill="#0F172A"/>
+      <rect x="52.7876" y="3.5874" width="0.683334" height="28.5292" fill="#E2E8F0"/>
+      <defs>
+        <linearGradient id="p0" x1="18.8455" y1="15.9076" x2="12.5252" y2="18.5424" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
+        <linearGradient id="p1" x1="26.8652" y1="23.5719" x2="27.7524" y2="16.7522" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
+        <linearGradient id="p2" x1="16.3401" y1="26.6997" x2="21.8393" y2="30.8946" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
+      </defs>
+    </svg>
+    <span class="sub">Design Studio</span>
   </div>
   <div class="meta">Hola mundo · 2026.04</div>
 </header>
