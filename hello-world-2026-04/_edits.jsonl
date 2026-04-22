@@ -1,0 +1,1 @@
+{"ts":"2026-04-22T00:00:00Z","instruction":"use real Ágora logo from flash/src/components/Logo/Logo.tsx instead of CSS dot","diff_summary":"chrome .wordmark: replaced .dot + 'Ágora' text with inline horizontal SVG (viewBox 0 0 153 36) + 'Design Studio' subtitle separated by border-left hairline"}
