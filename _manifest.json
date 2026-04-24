@@ -1,8 +1,18 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
   "version": 1,
-  "updated_at": "2026-04-22",
+  "updated_at": "2026-04-24",
   "outputs": [
+    {
+      "type": "one-pager",
+      "typeLabel": "One-pager",
+      "title": "Ágora Voice",
+      "description": "Prototipo interactivo de un componente de voz universal que se pluga en cualquier input largo de la plataforma.",
+      "detail": "1-page · 5 estados interactivos · 11 contextos",
+      "date": "ABR 2026",
+      "href": "./agora-voice-2026-04/index.html",
+      "slug": "agora-voice-2026-04"
+    },
     {
       "type": "deck",
       "typeLabel": "Deck",
