@@ -1,8 +1,18 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
   "version": 1,
-  "updated_at": "2026-04-24",
+  "updated_at": "2026-04-28",
   "outputs": [
+    {
+      "type": "wiki",
+      "typeLabel": "Wiki",
+      "title": "Checklist · 3 etapas",
+      "description": "Propuesta de reorganización del onboarding del dashboard en 3 etapas con steppers instructivos y deep-links a IG, WA Business e Intercom.",
+      "detail": "Panel interactivo · 24 tareas · 5 steppers · spec md adjunta",
+      "date": "ABR 2026",
+      "href": "./checklist-3-stages-2026-04/index.html",
+      "slug": "checklist-3-stages-2026-04"
+    },
     {
       "type": "one-pager",
       "typeLabel": "One-pager",

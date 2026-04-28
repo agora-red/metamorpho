@@ -1,0 +1,1916 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Checklist · 3 etapas — Propuesta Flash</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: #0f172a;
+    --ink-2: #334155;
+    --ink-3: #64748b;
+    --ink-4: #94a3b8;
+    --line: #e2e8f0;
+    --line-2: #eef2f7;
+    --bg: #f7f8fb;
+    --surface: #ffffff;
+    --surface-2: #f4f6fb;
+    --primary: #0072FF;
+    --primary-soft: #e6f0ff;
+    --success: #0AD6A1;
+    --success-soft: #e7faf3;
+    --warn: #f59e0b;
+    --danger: #FF4658;
+
+    --radius-lg: 24px;
+    --radius-md: 16px;
+    --radius-sm: 12px;
+
+    --shadow-card: 0 1px 0 rgba(15, 23, 42, .04), 0 8px 24px -12px rgba(15, 23, 42, .08);
+    --shadow-pop: 0 24px 48px -24px rgba(15, 23, 42, .18);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Montserrat', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  .page {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 56px 40px 96px;
+  }
+
+  /* Header */
+  .doc-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 32px;
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+  .doc-head h1 {
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin: 0 0 8px;
+    line-height: 1.05;
+  }
+  .doc-head .sub {
+    color: var(--ink-3);
+    font-size: 14px;
+    max-width: 520px;
+    line-height: 1.55;
+    margin: 0;
+  }
+  .doc-meta {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-4);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    text-align: right;
+    line-height: 1.6;
+  }
+  .doc-meta b { color: var(--ink-2); font-weight: 700; }
+
+  /* Section labels */
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--ink-4);
+    margin: 0 0 16px;
+  }
+
+  /* Layout: 2 columns */
+  .grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  /* ================================
+     LEFT: dashboard context (trigger)
+     ================================ */
+  .dashboard {
+    background: linear-gradient(180deg, #f8fafc, #eef2f7);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-card);
+    position: relative;
+  }
+  .dashboard::after {
+    content: 'Vista actual';
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink-4);
+    background: #fff;
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+  }
+
+  .dash-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 32px 16px 28px;
+  }
+  .dash-greet {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+  }
+  .dash-greet span { font-weight: 400; color: var(--ink-2); }
+
+  .trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, .06);
+    cursor: pointer;
+  }
+  .trigger .icon-circle {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--primary-soft);
+    color: var(--primary);
+    display: grid;
+    place-items: center;
+  }
+  .trigger .icon-circle svg { width: 18px; height: 18px; }
+  .trigger .label-stack { line-height: 1.15; }
+  .trigger .title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .trigger .meta {
+    font-size: 11px;
+    color: var(--ink-4);
+    margin-top: 2px;
+  }
+  .trigger .pct {
+    font-size: 18px;
+    font-weight: 700;
+    margin-left: 4px;
+    font-variant-numeric: tabular-nums;
+  }
+  .trigger .chev {
+    color: var(--ink-4);
+    margin-left: 4px;
+  }
+
+  .dash-body {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 22px 24px;
+    margin-top: 8px;
+  }
+  .dash-body .row-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--primary);
+    margin: 0 0 12px;
+  }
+  .dash-body h3 {
+    margin: 0 0 4px;
+    font-size: 14px;
+    color: var(--ink-3);
+    font-weight: 500;
+  }
+  .dash-body .skeleton-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 12px;
+  }
+  .dash-body .sk {
+    height: 96px;
+    border-radius: 14px;
+    background: linear-gradient(180deg, #f8fafc, #eef2f7);
+    border: 1px solid var(--line-2);
+  }
+
+  .arrow-note {
+    margin-top: 20px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    color: var(--ink-3);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .arrow-note .pill {
+    flex-shrink: 0;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--primary);
+    background: var(--primary-soft);
+    border-radius: 6px;
+    padding: 4px 8px;
+    line-height: 1;
+  }
+
+  /* ================================
+     RIGHT: panel proposal (3 stages)
+     ================================ */
+  .panel {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-pop);
+    overflow: hidden;
+    width: 100%;
+    max-width: 520px;
+    margin-left: auto;
+    position: relative;
+  }
+  .panel::before {
+    content: 'Propuesta';
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #fff;
+    background: var(--ink);
+    padding: 4px 10px;
+    border-radius: 999px;
+    z-index: 2;
+  }
+  .panel-head {
+    padding: 56px 28px 20px;
+    border-bottom: 1px solid var(--line-2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .panel-head h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .panel-close {
+    width: 32px; height: 32px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: #fff;
+    color: var(--ink-3);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+  }
+
+  /* Compact summary (replaces the previous big hero) */
+  .summary {
+    padding: 22px 28px 18px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    border-bottom: 1px solid var(--line-2);
+  }
+  .summary .ring {
+    --pct: 60;
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background:
+      conic-gradient(var(--primary) calc(var(--pct) * 1%), var(--line-2) 0);
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+  }
+  .summary .ring::before {
+    content: '';
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: #fff;
+    grid-area: 1/1;
+  }
+  .summary .ring span {
+    grid-area: 1/1;
+    font-size: 13px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .summary .stack { flex: 1; min-width: 0; }
+  .summary .stack .title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .summary .stack .meta {
+    font-size: 12px;
+    color: var(--ink-3);
+  }
+  .summary .badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    background: var(--primary-soft);
+    color: var(--primary);
+    padding: 6px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  /* Stages */
+  .stages {
+    padding: 12px 16px 24px;
+  }
+
+  .stage {
+    border: 1px solid var(--line-2);
+    border-radius: var(--radius-md);
+    background: #fff;
+    margin: 12px 0;
+    overflow: hidden;
+    transition: border-color .2s ease;
+  }
+  .stage[data-state='active'] {
+    border-color: rgba(0, 114, 255, 0.25);
+    box-shadow: 0 0 0 4px rgba(0, 114, 255, 0.04);
+  }
+
+  .stage-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color .15s ease;
+  }
+  .stage-head:hover { background: var(--surface-2); }
+  .stage-head:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: -2px;
+  }
+  .stage-num {
+    width: 32px; height: 32px;
+    border-radius: 10px;
+    background: var(--surface-2);
+    display: grid;
+    place-items: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink-2);
+    flex-shrink: 0;
+  }
+  .stage[data-state='active'] .stage-num {
+    background: var(--primary-soft);
+    color: var(--primary);
+  }
+  .stage[data-state='done'] .stage-num {
+    background: var(--success-soft);
+    color: var(--success);
+  }
+  .stage[data-state='done'] .stage-num::after {
+    content: '✓';
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+  }
+  .stage[data-state='done'] .stage-num span { display: none; }
+
+  .stage-info { flex: 1; min-width: 0; }
+  .stage-info .label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-4);
+    margin-bottom: 2px;
+  }
+  .stage-info .title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.005em;
+    margin-bottom: 2px;
+  }
+  .stage-info .desc {
+    font-size: 12px;
+    color: var(--ink-3);
+    line-height: 1.45;
+  }
+
+  .stage-progress {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .stage-progress .count {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+  }
+  .stage-progress .bar {
+    width: 56px;
+    height: 4px;
+    background: var(--line-2);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .stage-progress .bar i {
+    display: block;
+    height: 100%;
+    background: var(--primary);
+    border-radius: 999px;
+  }
+  .stage[data-state='done'] .stage-progress .bar i { background: var(--success); }
+
+  .stage-chev {
+    color: var(--ink-4);
+    transition: transform .2s ease;
+    flex-shrink: 0;
+  }
+  .stage[data-open='true'] .stage-chev { transform: rotate(90deg); }
+
+  .stage-body {
+    border-top: 1px solid var(--line-2);
+    padding: 6px 8px 12px;
+    display: none;
+  }
+  .stage[data-open='true'] .stage-body { display: block; }
+
+  /* Task row */
+  .task {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background-color .15s ease;
+  }
+  .task:hover { background: var(--surface-2); }
+  .task .check {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 1.5px solid var(--line);
+    display: grid;
+    place-items: center;
+    color: var(--ink-3);
+    flex-shrink: 0;
+    background: #fff;
+  }
+  .task .check svg { width: 12px; height: 12px; }
+  .task[data-done='true'] .check {
+    background: var(--success);
+    border-color: var(--success);
+    color: #fff;
+  }
+  .task[data-done='true'] .label {
+    color: var(--ink-4);
+    text-decoration: line-through;
+  }
+  .task .label {
+    font-size: 13px;
+    flex: 1;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .task .arrow {
+    color: var(--ink-4);
+  }
+  .task .step-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 9.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--primary);
+    background: var(--primary-soft);
+    padding: 3px 8px;
+    border-radius: 999px;
+    border: 1px solid #cfe1ff;
+    white-space: nowrap;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+  .task[data-stepper] { cursor: pointer; }
+  .task[data-stepper]:hover .step-tag {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+  }
+  .task .skip {
+    width: 28px;
+    height: 28px;
+    border: 1px solid transparent;
+    background: transparent;
+    cursor: pointer;
+    border-radius: 8px;
+    color: var(--ink-4);
+    display: grid;
+    place-items: center;
+    transition: all .15s ease;
+    flex-shrink: 0;
+    padding: 0;
+  }
+  .task .skip svg { width: 14px; height: 14px; }
+  .task .skip:hover {
+    color: var(--danger);
+    background: #fff5f6;
+    border-color: #fecaca;
+  }
+
+  /* Right column annotations */
+  .notes {
+    margin-top: 28px;
+    border-top: 1px dashed var(--line);
+    padding-top: 24px;
+  }
+  .notes h4 {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink-4);
+    margin: 0 0 12px;
+  }
+  .notes ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 10px;
+  }
+  .notes li {
+    display: grid;
+    grid-template-columns: 22px 1fr;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.5;
+  }
+  .notes li::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--primary);
+    border-radius: 50%;
+    margin-top: 8px;
+    grid-column: 1;
+    align-self: start;
+    justify-self: center;
+  }
+
+  /* Mobile fallback */
+  @media (max-width: 980px) {
+    .grid { grid-template-columns: 1fr; }
+    .doc-head { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .doc-meta { text-align: left; }
+    .panel { max-width: 100%; }
+  }
+
+  /* Bottom: full taxonomy */
+  .taxonomy {
+    margin-top: 64px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 28px 32px;
+  }
+  .taxonomy h3 {
+    margin: 0 0 4px;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .taxonomy p.lead {
+    color: var(--ink-3);
+    font-size: 13px;
+    margin: 0 0 24px;
+    line-height: 1.55;
+    max-width: 720px;
+  }
+  .tax-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .tax-card {
+    border: 1px solid var(--line-2);
+    border-radius: var(--radius-md);
+    padding: 18px 18px 14px;
+    background: var(--surface-2);
+  }
+  .tax-card .num {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-4);
+    letter-spacing: 0.14em;
+  }
+  .tax-card h5 {
+    margin: 4px 0 6px;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.005em;
+  }
+  .tax-card p {
+    margin: 0 0 14px;
+    font-size: 12px;
+    color: var(--ink-3);
+    line-height: 1.5;
+  }
+  .tax-card ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px dashed var(--line);
+    padding-top: 12px;
+    display: grid;
+    gap: 8px;
+  }
+  .tax-card li {
+    font-size: 12.5px;
+    color: var(--ink-2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .tax-card li::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--ink-4);
+    flex-shrink: 0;
+  }
+  .tax-card[data-stage='1'] li[data-existing='true']::before { background: var(--primary); }
+  .tax-card[data-stage='2'] li[data-existing='true']::before { background: #8b5cf6; }
+  .tax-card[data-stage='3'] li[data-existing='true']::before { background: var(--success); }
+  .tax-card li[data-existing='true'] {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .tax-card li[data-existing='true']::after {
+    content: 'Hoy';
+    margin-left: auto;
+    font-family: 'Space Mono', monospace;
+    font-size: 9.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-4);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 2px 6px;
+    line-height: 1;
+    background: #fff;
+  }
+  .tax-card li {
+    width: 100%;
+  }
+  .dot-existing {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--primary);
+    vertical-align: middle;
+    margin: 0 2px;
+  }
+
+  @media (max-width: 980px) {
+    .tax-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ===========
+     Detail table
+     =========== */
+  .detail {
+    margin-top: 64px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 28px 32px 32px;
+  }
+  .detail h3 {
+    margin: 0 0 4px;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .detail p.lead {
+    color: var(--ink-3);
+    font-size: 13px;
+    margin: 0 0 24px;
+    line-height: 1.55;
+    max-width: 760px;
+  }
+  .detail-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .detail-table thead th {
+    text-align: left;
+    font-family: 'Space Mono', monospace;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-4);
+    font-weight: 400;
+    padding: 12px 12px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: bottom;
+  }
+  .detail-table tbody td {
+    padding: 14px 12px;
+    border-bottom: 1px solid var(--line-2);
+    vertical-align: top;
+    line-height: 1.45;
+  }
+  .detail-table tr.stage-row td {
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 12px;
+  }
+  .detail-table tr.stage-row td .stage-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink-3);
+  }
+  .detail-table tr.stage-row td .stage-tag::before {
+    content: '';
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--ink-4);
+  }
+  .detail-table tr.stage-row[data-stage='1'] td .stage-tag::before { background: var(--primary); }
+  .detail-table tr.stage-row[data-stage='2'] td .stage-tag::before { background: #8b5cf6; }
+  .detail-table tr.stage-row[data-stage='3'] td .stage-tag::before { background: var(--success); }
+  .detail-table tr.stage-row td .stage-name {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--ink);
+    font-weight: 700;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 13px;
+    margin-left: 4px;
+  }
+
+  .detail-table .task-cell .id {
+    font-family: 'Space Mono', monospace;
+    font-size: 10.5px;
+    color: var(--ink-4);
+    margin-bottom: 2px;
+  }
+  .detail-table .task-cell .name {
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .detail-table .obj {
+    color: var(--ink-2);
+    max-width: 360px;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    padding: 4px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: #fff;
+    color: var(--ink-3);
+    white-space: nowrap;
+    line-height: 1;
+  }
+  .pill[data-kind='auto']    { background: #eef2ff; border-color: #dbe4ff; color: #4338ca; }
+  .pill[data-kind='stepper'] { background: #fff7ed; border-color: #fed7aa; color: #b45309; }
+  .pill[data-kind='manual']  { background: #f1f5f9; border-color: var(--line); color: var(--ink-2); }
+  .pill[data-kind='skip-yes'] { background: #fef2f2; border-color: #fecaca; color: #b91c1c; }
+  .pill[data-kind='skip-no']  { background: #ecfdf5; border-color: #a7f3d0; color: #065f46; }
+  .pill[data-kind='today']   { background: var(--primary-soft); border-color: #b6d8ff; color: var(--primary); }
+  .pill[data-kind='cand']    { background: #f8fafc; border-color: var(--line); color: var(--ink-3); }
+
+  .legend {
+    margin-top: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 22px;
+    font-size: 12px;
+    color: var(--ink-3);
+  }
+  .legend .lg-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  @media (max-width: 980px) {
+    .detail { padding: 20px 16px; }
+    .detail-table { font-size: 12px; }
+    .detail-table thead { display: none; }
+    .detail-table tbody td { padding: 10px 6px; }
+    .detail-table .obj { max-width: none; }
+  }
+
+  /* =========
+     Steppers
+     ========= */
+  .steppers {
+    margin-top: 64px;
+  }
+  .steppers-head {
+    margin-bottom: 28px;
+  }
+  .steppers-head h3 {
+    margin: 0 0 4px;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .steppers-head p {
+    color: var(--ink-3);
+    font-size: 13px;
+    margin: 0;
+    line-height: 1.55;
+    max-width: 760px;
+  }
+  .stepper-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+  @media (max-width: 980px) {
+    .stepper-grid { grid-template-columns: 1fr; }
+  }
+  .stepper-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 24px 26px 26px;
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    scroll-margin-top: 48px;
+    transition: box-shadow .35s ease, border-color .35s ease, transform .35s ease;
+  }
+  .stepper-card.flash {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(0, 114, 255, 0.18), var(--shadow-pop);
+    transform: translateY(-2px);
+  }
+  .stepper-card .stp-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 6px;
+  }
+  .stepper-card .stp-title {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.005em;
+    line-height: 1.35;
+  }
+  .stepper-card .stp-id {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-4);
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    padding: 4px 8px;
+    border-radius: 6px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .stepper-card .stp-sub {
+    color: var(--ink-3);
+    font-size: 12.5px;
+    line-height: 1.5;
+    margin: 0 0 18px;
+  }
+
+  .stepper-steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: step;
+    border-top: 1px dashed var(--line);
+    padding-top: 18px;
+  }
+  .stepper-steps > li {
+    position: relative;
+    padding: 0 0 18px 44px;
+    counter-increment: step;
+  }
+  .stepper-steps > li:last-child { padding-bottom: 0; }
+  .stepper-steps > li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--primary-soft);
+    color: var(--primary);
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+  }
+  .stepper-steps > li::after {
+    content: '';
+    position: absolute;
+    left: 13px;
+    top: 32px;
+    bottom: 4px;
+    width: 2px;
+    background: linear-gradient(180deg, var(--line) 0%, var(--line) 60%, transparent 100%);
+  }
+  .stepper-steps > li:last-child::after { display: none; }
+
+  .stepper-steps .step-title {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 4px 0 6px;
+    line-height: 1.4;
+  }
+  .stepper-steps .step-text {
+    font-size: 12.5px;
+    color: var(--ink-2);
+    line-height: 1.55;
+    margin: 0 0 10px;
+  }
+  .stepper-steps .step-text:last-child { margin-bottom: 0; }
+  .stepper-steps .step-text code {
+    font-family: 'Space Mono', monospace;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 11.5px;
+  }
+
+  .copy-block {
+    background: #0f172a;
+    color: #e2e8f0;
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    font-size: 12px;
+    line-height: 1.55;
+    margin: 10px 0 0;
+    position: relative;
+  }
+  .copy-block .copy-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 9.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #cbd5e1;
+    padding: 5px 9px;
+    border-radius: 6px;
+    cursor: pointer;
+    line-height: 1;
+  }
+  .copy-block .copy-btn:hover { background: rgba(255, 255, 255, 0.12); color: #fff; }
+  .copy-block pre {
+    margin: 0;
+    white-space: pre-wrap;
+    font-family: 'Montserrat', system-ui, sans-serif;
+    color: #e2e8f0;
+    padding-right: 70px;
+  }
+
+  .pill-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--primary-soft);
+    color: var(--primary);
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11.5px;
+    border: 1px solid #b6d8ff;
+    margin-top: 4px;
+  }
+  .step-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--ink);
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: inherit;
+  }
+  .step-cta:hover { background: #1e293b; color: #fff; }
+  .step-cta svg { width: 12px; height: 12px; }
+  .step-cta--ghost {
+    background: #fff;
+    color: var(--ink);
+    border: 1px solid var(--line);
+  }
+  .step-cta--ghost:hover { background: var(--surface-2); color: var(--ink); }
+  .step-cta--brand {
+    background: var(--primary);
+  }
+  .step-cta--brand:hover { background: #0066e0; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="doc-head">
+    <div>
+      <h1>Checklist en 3 etapas · 24 tareas</h1>
+      <p class="sub">Reorganización del onboarding del dashboard. 9 / 6 / 9 tareas, agrupadas por intención: configurar el negocio, obtener primeras reservas y activar herramientas avanzadas. Sin tiempos estimados.</p>
+    </div>
+    <div class="doc-meta">
+      <div><b>Producto</b> · Flash · Dashboard</div>
+      <div><b>Estado</b> · Propuesta visual</div>
+      <div><b>Hoy</b> · 27 abr 2026</div>
+    </div>
+  </header>
+
+  <div class="grid">
+
+    <!-- LEFT: Trigger in dashboard context -->
+    <section>
+      <p class="section-label">Punto de entrada</p>
+
+      <div class="dashboard">
+        <div class="dash-top">
+          <div class="dash-greet">Buenas tardes, <span>Manuel.</span></div>
+          <button class="trigger" aria-label="Configurá tu negocio">
+            <span class="icon-circle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+            </span>
+            <span class="label-stack">
+              <div class="title">Configurá tu negocio</div>
+              <div class="meta">24 pendientes · etapa 1 de 3</div>
+            </span>
+            <span class="pct">0%</span>
+            <span class="chev">›</span>
+          </button>
+        </div>
+
+        <div class="dash-body">
+          <p class="row-label">· Resumen del día</p>
+          <h3>Lunes · 27 abr</h3>
+          <div class="skeleton-grid">
+            <div class="sk"></div>
+            <div class="sk"></div>
+          </div>
+        </div>
+
+        <div class="arrow-note">
+          <span class="pill">Cambio</span>
+          <span>El badge ahora muestra <b>la etapa actual</b> en lugar del tiempo estimado. Mantiene el % y el conteo de pendientes para preservar el patrón mental existente.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT: Open panel with 3 stages -->
+    <section>
+      <p class="section-label">Panel desplegado</p>
+
+      <div class="panel" role="dialog" aria-label="Configurá tu negocio">
+        <div class="panel-head">
+          <h2>Configurá tu negocio</h2>
+          <button class="panel-close" aria-label="Cerrar">✕</button>
+        </div>
+
+        <div class="summary">
+          <div class="ring" style="--pct: 0;"><span>0%</span></div>
+          <div class="stack">
+            <div class="title">0 de 24 tareas listas</div>
+            <div class="meta">Vas por la etapa 1 · Configurá tu Ágora</div>
+          </div>
+          <div class="badge">Etapa 1/3</div>
+        </div>
+
+        <div class="stages">
+
+          <!-- Stage 1: in progress (active) -->
+          <div class="stage" data-state="active" data-open="true">
+            <div class="stage-head" role="button" tabindex="0" aria-expanded="true">
+              <div class="stage-num"><span>1</span></div>
+              <div class="stage-info">
+                <div class="label">Etapa 1 · En curso</div>
+                <div class="title">Configurá tu Ágora</div>
+                <div class="desc">Página, catálogo, comunicación, señas y disponibilidad.</div>
+              </div>
+              <div class="stage-progress">
+                <span class="count">0/9</span>
+                <span class="bar"><i style="width: 0%"></i></span>
+              </div>
+              <span class="stage-chev">›</span>
+            </div>
+            <div class="stage-body">
+              <div class="task" data-done="false">
+                <div class="check"></div>
+                <div class="label">Agregar foto de perfil</div>
+                <span class="arrow">›</span>
+              </div>
+              <div class="task" data-done="false">
+                <div class="check"></div>
+                <div class="label">Agregá tus redes sociales</div>
+                <span class="arrow">›</span>
+              </div>
+              <div class="task" data-done="false">
+                <div class="check"></div>
+                <div class="label">Agregar galería de imágenes a tu página</div>
+                <span class="arrow">›</span>
+              </div>
+              <div class="task" data-done="false">
+                <div class="check"></div>
+                <div class="label">Configurá tu política de cancelación</div>
+                <span class="arrow">›</span>
+              </div>
+              <div class="task" data-done="false">
+                <div class="check"></div>
+                <div class="label">Configurá tu política de señas</div>
+                <span class="arrow">›</span>
+              </div>
+              <div class="task" data-done="false">
+                <div class="check"></div>
+                <div class="label">Organizar tu catálogo en categorías</div>
+                <button class="skip" aria-label="Eliminar de mi checklist" title="Eliminar de mi checklist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1.5 13a2 2 0 0 1-2 1.8H8.5a2 2 0 0 1-2-1.8L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg></button>
+                <span class="arrow">›</span>
+              </div>
+              <div class="task" data-done="false">
+                <div class="check"></div>
+                <div class="label">Conectar Google Calendar</div>
+                <span class="arrow">›</span>
+              </div>
+              <div class="task" data-done="false" data-stepper="upload_clients">
+                <div class="check"></div>
+                <div class="label">Subir base de clientes</div>
+                <span class="step-tag">Instructivo</span>
+                <button class="skip" aria-label="Eliminar de mi checklist" title="Eliminar de mi checklist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1.5 13a2 2 0 0 1-2 1.8H8.5a2 2 0 0 1-2-1.8L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg></button>
+                <span class="arrow">›</span>
+              </div>
+              <div class="task" data-done="false">
+                <div class="check"></div>
+                <div class="label">Configurá los mensajes automáticos a clientes</div>
+                <button class="skip" aria-label="Eliminar de mi checklist" title="Eliminar de mi checklist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1.5 13a2 2 0 0 1-2 1.8H8.5a2 2 0 0 1-2-1.8L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg></button>
+                <span class="arrow">›</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stage 2: pending -->
+          <div class="stage" data-state="pending" data-open="false">
+            <div class="stage-head" role="button" tabindex="0" aria-expanded="false">
+              <div class="stage-num"><span>2</span></div>
+              <div class="stage-info">
+                <div class="label">Etapa 2</div>
+                <div class="title">Obtené tus primeras reservas</div>
+                <div class="desc">Compartí tu Ágora y activá los canales por donde llegan los clientes.</div>
+              </div>
+              <div class="stage-progress">
+                <span class="count">0/6</span>
+                <span class="bar"><i style="width: 0%"></i></span>
+              </div>
+              <span class="stage-chev">›</span>
+            </div>
+            <div class="stage-body">
+              <div class="task" data-done="false" data-stepper="link_in_bio">
+                <div class="check"></div>
+                <div class="label">Agregar enlace a tu bio de Instagram</div>
+                <span class="step-tag">Instructivo</span>
+                <button class="skip" aria-label="Eliminar de mi checklist" title="Eliminar de mi checklist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1.5 13a2 2 0 0 1-2 1.8H8.5a2 2 0 0 1-2-1.8L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg></button>
+                <span class="arrow">›</span>
+              </div>
+              <div class="task" data-done="false" data-stepper="wa_business_autoreply">
+                <div class="check"></div>
+                <div class="label">Activar respuesta automática en WhatsApp Business</div>
+                <span class="step-tag">Instructivo</span>
+                <button class="skip" aria-label="Eliminar de mi checklist" title="Eliminar de mi checklist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1.5 13a2 2 0 0 1-2 1.8H8.5a2 2 0 0 1-2-1.8L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg></button>
+                <span class="arrow">›</span>
+              </div>
+              <div class="task" data-done="false" data-stepper="share_whatsapp">
+                <div class="check"></div>
+                <div class="label">Compartir tu página por WhatsApp</div>
+                <span class="step-tag">Instructivo</span>
+                <button class="skip" aria-label="Eliminar de mi checklist" title="Eliminar de mi checklist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1.5 13a2 2 0 0 1-2 1.8H8.5a2 2 0 0 1-2-1.8L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg></button>
+                <span class="arrow">›</span>
+              </div>
+              <div class="task" data-done="false">
+                <div class="check"></div>
+                <div class="label">Crear tu primer descuento</div>
+                <button class="skip" aria-label="Eliminar de mi checklist" title="Eliminar de mi checklist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1.5 13a2 2 0 0 1-2 1.8H8.5a2 2 0 0 1-2-1.8L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg></button>
+                <span class="arrow">›</span>
+              </div>
+              <div class="task" data-done="false" data-stepper="request_tutorial">
+                <div class="check"></div>
+                <div class="label">Solicitar instructivo para clientes</div>
+                <span class="step-tag">Instructivo</span>
+                <button class="skip" aria-label="Eliminar de mi checklist" title="Eliminar de mi checklist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1.5 13a2 2 0 0 1-2 1.8H8.5a2 2 0 0 1-2-1.8L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg></button>
+                <span class="arrow">›</span>
+              </div>
+              <div class="task" data-done="false">
+                <div class="check"></div>
+                <div class="label">Ingresar tu 1ra reserva manual</div>
+                <span class="arrow">›</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stage 3: pending -->
+          <div class="stage" data-state="pending" data-open="false">
+            <div class="stage-head" role="button" tabindex="0" aria-expanded="false">
+              <div class="stage-num"><span>3</span></div>
+              <div class="stage-info">
+                <div class="label">Etapa 3</div>
+                <div class="title">Activá y escalá tu negocio</div>
+                <div class="desc">Rituales operativos, segmentación de clientes y nuevos canales de venta.</div>
+              </div>
+              <div class="stage-progress">
+                <span class="count">0/9</span>
+                <span class="bar"><i style="width: 0%"></i></span>
+              </div>
+              <span class="stage-chev">›</span>
+            </div>
+            <div class="stage-body">
+              <div class="task" data-done="false">
+                <div class="check"></div>
+                <div class="label">Recibir tu 1er cobro online</div>
+                <span class="arrow">›</span>
+              </div>
+              <div class="task" data-done="false">
+                <div class="check"></div>
+                <div class="label">Confirmar asistencia de un cliente</div>
+                <span class="arrow">›</span>
+              </div>
+              <div class="task" data-done="false">
+                <div class="check"></div>
+                <div class="label">Confirmar recepción de un cobro</div>
+                <span class="arrow">›</span>
+              </div>
+              <div class="task" data-done="false">
+                <div class="check"></div>
+                <div class="label">Agregar notas a tus reservas</div>
+                <span class="arrow">›</span>
+              </div>
+              <div class="task" data-done="false">
+                <div class="check"></div>
+                <div class="label">Usar etiquetas para segmentar clientes</div>
+                <span class="arrow">›</span>
+              </div>
+              <div class="task" data-done="false">
+                <div class="check"></div>
+                <div class="label">Activar mensajes automáticos por WhatsApp</div>
+                <span class="arrow">›</span>
+              </div>
+              <div class="task" data-done="false">
+                <div class="check"></div>
+                <div class="label">Agregar un add-on a un servicio</div>
+                <span class="arrow">›</span>
+              </div>
+              <div class="task" data-done="false">
+                <div class="check"></div>
+                <div class="label">Bloquear horarios o feriados en que no vas a estar disponible</div>
+                <span class="arrow">›</span>
+              </div>
+              <div class="task" data-done="false">
+                <div class="check"></div>
+                <div class="label">Creá tu 1ra tarjeta de regalo</div>
+                <span class="arrow">›</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="notes">
+        <h4>Notas de diseño</h4>
+        <ul>
+          <li>Removimos el <b>tiempo estimado</b> y el hero ✨ grande del panel actual. La cabecera nueva es compacta: anillo de %, conteo concreto y la etapa en curso.</li>
+          <li>Cada etapa es <b>colapsable</b>. Por default abrimos solo la etapa activa; las completadas y futuras quedan plegadas para reducir ruido.</li>
+          <li>El estado de la etapa se lee con un <b>color por número</b>: gris pendiente · azul activa · verde completada. Sin gradientes, alineado a la guía de marca.</li>
+          <li>Las tareas mantienen el comportamiento actual: clic abre el flujo, hover muestra acción de "saltar" cuando aplica.</li>
+          <li>Con 30 tareas el panel se vuelve denso: por eso solo abrimos la etapa activa y mantenemos las otras dos plegadas. La etapa activa scrollea internamente sin empujar al resto.</li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Full taxonomy -->
+  <section class="taxonomy">
+    <h3>Distribución de las 24 tareas en 3 etapas</h3>
+    <p class="lead">9 / 6 / 9 tareas por etapa. Las que ya existen hoy en cyclone (<code>SETUP_TASK_IDS</code>) están marcadas con <span class="dot-existing"></span>; el resto son tareas candidatas que ya viven en otras partes del producto y se podrían incorporar al checklist.</p>
+
+    <div class="tax-grid">
+      <div class="tax-card" data-stage="1">
+        <div class="num">ETAPA 1</div>
+        <h5>Configurá tu Ágora</h5>
+        <p>Página, catálogo, comunicación y políticas operativas.</p>
+        <ul>
+          <li data-existing="true">Agregar foto de perfil</li>
+          <li data-existing="true">Agregá tus redes sociales</li>
+          <li data-existing="true">Agregar galería de imágenes a tu página</li>
+          <li>Configurá tu política de cancelación</li>
+          <li data-existing="true">Configurá tu política de señas</li>
+          <li>Organizar catálogo en categorías</li>
+          <li data-existing="true">Conectar Google Calendar</li>
+          <li data-existing="true">Subir base de clientes</li>
+          <li data-existing="true">Configurá los mensajes automáticos a clientes</li>
+        </ul>
+      </div>
+
+      <div class="tax-card" data-stage="2">
+        <div class="num">ETAPA 2</div>
+        <h5>Obtené tus primeras reservas</h5>
+        <p>Compartí tu Ágora y activá los canales por donde llegan los clientes.</p>
+        <ul>
+          <li data-existing="true">Agregar enlace a tu bio de Instagram</li>
+          <li>Activar respuesta automática en WhatsApp Business</li>
+          <li>Compartir tu página por WhatsApp</li>
+          <li>Crear tu primer descuento</li>
+          <li data-existing="true">Solicitar instructivo para clientes</li>
+          <li data-existing="true">Ingresar tu 1ra reserva manual</li>
+        </ul>
+      </div>
+
+      <div class="tax-card" data-stage="3">
+        <div class="num">ETAPA 3</div>
+        <h5>Activá y escalá tu negocio</h5>
+        <p>Rituales operativos, segmentación de clientes y nuevos canales de venta.</p>
+        <ul>
+          <li>Recibir tu 1er cobro online</li>
+          <li>Confirmar asistencia de un cliente</li>
+          <li>Confirmar recepción de un cobro</li>
+          <li>Agregar notas a tus reservas</li>
+          <li>Usar etiquetas para segmentar clientes</li>
+          <li>Activar mensajes automáticos por WhatsApp</li>
+          <li>Agregar un add-on a un servicio</li>
+          <li>Bloquear horarios o feriados en que no vas a estar disponible</li>
+          <li>Creá tu 1ra tarjeta de regalo</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Detail table -->
+  <section class="detail">
+    <h3>Detalle de las 24 tareas</h3>
+    <p class="lead">Cada tarea con su objetivo, cómo se confirma (auto desde back · stepper guiado · manual confirmado por el vendor) y si es salteable. Las marcadas como <span class="pill" data-kind="today" style="font-size: 9px; padding: 2px 6px;">HOY</span> ya existen en cyclone (<code>SETUP_TASK_IDS</code> en develop). Las de <span class="pill" data-kind="cand" style="font-size: 9px; padding: 2px 6px;">CANDIDATA</span> son propuestas — la lógica de auto-confirmación es la sugerida, no implementada.</p>
+
+    <table class="detail-table">
+      <thead>
+        <tr>
+          <th style="width: 22%">Tarea</th>
+          <th style="width: 38%">Objetivo</th>
+          <th style="width: 14%">Confirmación</th>
+          <th style="width: 12%">Skippable</th>
+          <th style="width: 14%">Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <!-- ====== STAGE 1 ====== -->
+        <tr class="stage-row" data-stage="1">
+          <td colspan="5">
+            <span class="stage-tag">Etapa 1<span class="stage-name">· Configurá tu Ágora</span></span>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="task-cell">
+            <div class="id">profile_photo</div>
+            <div class="name">Agregar foto de perfil</div>
+          </td>
+          <td class="obj">Que tu cara o logo aparezca en página, búsquedas y notificaciones — humaniza al negocio antes de la primera reserva.</td>
+          <td><span class="pill" data-kind="auto">Auto · back</span></td>
+          <td><span class="pill" data-kind="skip-no">No</span></td>
+          <td><span class="pill" data-kind="today">Hoy</span></td>
+        </tr>
+        <tr>
+          <td class="task-cell">
+            <div class="id">social_media</div>
+            <div class="name">Agregá tus redes sociales</div>
+          </td>
+          <td class="obj">Dejar visibles IG / TikTok / FB para que el cliente cruce reputación antes de reservar.</td>
+          <td><span class="pill" data-kind="auto">Auto · back</span></td>
+          <td><span class="pill" data-kind="skip-no">No</span></td>
+          <td><span class="pill" data-kind="today">Hoy</span></td>
+        </tr>
+        <tr>
+          <td class="task-cell">
+            <div class="id">image_gallery</div>
+            <div class="name">Agregar galería de imágenes a tu página</div>
+          </td>
+          <td class="obj">Subir trabajos previos. Es el activo de prueba social más fuerte para servicios visuales (estética, peluquería, eventos).</td>
+          <td><span class="pill" data-kind="auto">Auto · back</span></td>
+          <td><span class="pill" data-kind="skip-no">No</span></td>
+          <td><span class="pill" data-kind="today">Hoy</span></td>
+        </tr>
+        <tr>
+          <td class="task-cell">
+            <div class="id">cancellation_policy</div>
+            <div class="name">Configurá tu política de cancelación</div>
+          </td>
+          <td class="obj">Reglas claras de cuándo cobrar / reembolsar — reduce disputas y reclamos.</td>
+          <td><span class="pill" data-kind="auto">Auto · back</span></td>
+          <td><span class="pill" data-kind="skip-no">No</span></td>
+          <td><span class="pill" data-kind="cand">Candidata</span></td>
+        </tr>
+        <tr>
+          <td class="task-cell">
+            <div class="id">deposit_policy</div>
+            <div class="name">Configurá tu política de señas</div>
+          </td>
+          <td class="obj">Cobrar parte por adelantado para reducir no-shows. Confirmada cuando <code>is_down_payment_enabled = true</code>.</td>
+          <td><span class="pill" data-kind="auto">Auto · back</span></td>
+          <td><span class="pill" data-kind="skip-no">No</span></td>
+          <td><span class="pill" data-kind="today">Hoy</span></td>
+        </tr>
+        <tr>
+          <td class="task-cell">
+            <div class="id">service_categories</div>
+            <div class="name">Organizar tu catálogo en categorías</div>
+          </td>
+          <td class="obj">Agrupar servicios afines para que el cliente con muchas opciones encuentre rápido.</td>
+          <td><span class="pill" data-kind="auto">Auto · back</span></td>
+          <td><span class="pill" data-kind="skip-yes">Sí</span></td>
+          <td><span class="pill" data-kind="cand">Candidata</span></td>
+        </tr>
+        <tr>
+          <td class="task-cell">
+            <div class="id">google_calendar</div>
+            <div class="name">Conectar Google Calendar</div>
+          </td>
+          <td class="obj">Sincronizar bloqueos y eventos externos para evitar overbooking. Confirmada al primer sync OAuth.</td>
+          <td><span class="pill" data-kind="auto">Auto · back</span></td>
+          <td><span class="pill" data-kind="skip-no">No</span></td>
+          <td><span class="pill" data-kind="today">Hoy</span></td>
+        </tr>
+        <tr>
+          <td class="task-cell">
+            <div class="id">upload_clients</div>
+            <div class="name">Subir base de clientes</div>
+          </td>
+          <td class="obj">Migrar histórico de clientes — flujo asistido: el vendor nos manda el archivo por WA o mail y nosotros cargamos. Habilita campañas, segmentaciones y mensajes masivos desde el día uno.</td>
+          <td><span class="pill" data-kind="stepper">Stepper</span></td>
+          <td><span class="pill" data-kind="skip-yes">Sí</span></td>
+          <td><span class="pill" data-kind="today">Hoy</span></td>
+        </tr>
+        <tr>
+          <td class="task-cell">
+            <div class="id">configure_messages</div>
+            <div class="name">Configurá los mensajes automáticos a clientes</div>
+          </td>
+          <td class="obj">Personalizar el tono de los recordatorios y confirmaciones que recibe el cliente — base para todas las comms transaccionales.</td>
+          <td><span class="pill" data-kind="auto">Auto · back</span></td>
+          <td><span class="pill" data-kind="skip-yes">Sí</span></td>
+          <td><span class="pill" data-kind="today">Hoy</span></td>
+        </tr>
+
+        <!-- ====== STAGE 2 ====== -->
+        <tr class="stage-row" data-stage="2">
+          <td colspan="5">
+            <span class="stage-tag">Etapa 2<span class="stage-name">· Obtené tus primeras reservas</span></span>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="task-cell">
+            <div class="id">link_in_bio</div>
+            <div class="name">Agregar enlace a tu bio de Instagram</div>
+          </td>
+          <td class="obj">Convertir el tráfico orgánico de IG en reservas. Stepper que copia el link al portapapeles para pegar en el perfil.</td>
+          <td><span class="pill" data-kind="stepper">Stepper</span></td>
+          <td><span class="pill" data-kind="skip-yes">Sí</span></td>
+          <td><span class="pill" data-kind="today">Hoy</span></td>
+        </tr>
+        <tr>
+          <td class="task-cell">
+            <div class="id">wa_business_autoreply</div>
+            <div class="name">Activar respuesta automática en WhatsApp Business</div>
+          </td>
+          <td class="obj">Stepper que guía a configurar el "saludo automático" de WA Business con el link de reservas e instrucciones para que el cliente reserve solo cuando consulta — convierte cada DM entrante en un turno.</td>
+          <td><span class="pill" data-kind="stepper">Stepper</span></td>
+          <td><span class="pill" data-kind="skip-yes">Sí</span></td>
+          <td><span class="pill" data-kind="cand">Candidata</span></td>
+        </tr>
+        <tr>
+          <td class="task-cell">
+            <div class="id">share_whatsapp</div>
+            <div class="name">Compartir tu página por WhatsApp</div>
+          </td>
+          <td class="obj">Activación viral con la audiencia que el vendor ya tiene en WA. Stepper que copia mensaje + link.</td>
+          <td><span class="pill" data-kind="stepper">Stepper</span></td>
+          <td><span class="pill" data-kind="skip-yes">Sí</span></td>
+          <td><span class="pill" data-kind="cand">Candidata</span></td>
+        </tr>
+        <tr>
+          <td class="task-cell">
+            <div class="id">create_discount</div>
+            <div class="name">Crear tu primer descuento</div>
+          </td>
+          <td class="obj">Cupón de bienvenida para acelerar la primera reserva. Auto al primer registro en <code>discounts</code>.</td>
+          <td><span class="pill" data-kind="auto">Auto · back</span></td>
+          <td><span class="pill" data-kind="skip-yes">Sí</span></td>
+          <td><span class="pill" data-kind="cand">Candidata</span></td>
+        </tr>
+        <tr>
+          <td class="task-cell">
+            <div class="id">request_tutorial</div>
+            <div class="name">Solicitar instructivo para clientes</div>
+          </td>
+          <td class="obj">Recibir un instructivo armado para que tus clientes aprendan a reservar. Wizard guiado.</td>
+          <td><span class="pill" data-kind="stepper">Stepper</span></td>
+          <td><span class="pill" data-kind="skip-yes">Sí</span></td>
+          <td><span class="pill" data-kind="today">Hoy</span></td>
+        </tr>
+        <tr>
+          <td class="task-cell">
+            <div class="id">first_manual_booking</div>
+            <div class="name">Ingresar tu 1ra reserva manual</div>
+          </td>
+          <td class="obj">Probar el flow real con un caso conocido. Confirmada al primer registro en <code>vat.first_business_booking_at</code>.</td>
+          <td><span class="pill" data-kind="auto">Auto · back</span></td>
+          <td><span class="pill" data-kind="skip-no">No</span></td>
+          <td><span class="pill" data-kind="today">Hoy</span></td>
+        </tr>
+
+        <!-- ====== STAGE 3 ====== -->
+        <tr class="stage-row" data-stage="3">
+          <td colspan="5">
+            <span class="stage-tag">Etapa 3<span class="stage-name">· Activá y escalá tu negocio</span></span>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="task-cell">
+            <div class="id">first_payment</div>
+            <div class="name">Recibir tu 1er cobro online</div>
+          </td>
+          <td class="obj">Validar el cobro end-to-end con dinero real. Detectada al primer payment con status succeeded.</td>
+          <td><span class="pill" data-kind="auto">Auto · back</span></td>
+          <td><span class="pill" data-kind="skip-no">No</span></td>
+          <td><span class="pill" data-kind="cand">Candidata</span></td>
+        </tr>
+        <tr>
+          <td class="task-cell">
+            <div class="id">confirm_attendance</div>
+            <div class="name">Confirmar asistencia de un cliente</div>
+          </td>
+          <td class="obj">Marcar al cliente como asistió después de su turno — base para el reporte de no-shows, reseñas automáticas y métricas de retención.</td>
+          <td><span class="pill" data-kind="auto">Auto · back</span></td>
+          <td><span class="pill" data-kind="skip-no">No</span></td>
+          <td><span class="pill" data-kind="cand">Candidata</span></td>
+        </tr>
+        <tr>
+          <td class="task-cell">
+            <div class="id">confirm_payment_received</div>
+            <div class="name">Confirmar recepción de un cobro</div>
+          </td>
+          <td class="obj">Marcar manualmente un cobro offline (efectivo, transferencia) como recibido — habilita el módulo de tracking de cobros mixtos.</td>
+          <td><span class="pill" data-kind="auto">Auto · back</span></td>
+          <td><span class="pill" data-kind="skip-no">No</span></td>
+          <td><span class="pill" data-kind="cand">Candidata</span></td>
+        </tr>
+        <tr>
+          <td class="task-cell">
+            <div class="id">booking_notes</div>
+            <div class="name">Agregar notas a tus reservas</div>
+          </td>
+          <td class="obj">Anotar contexto del cliente en cada reserva (alergias, preferencias, observaciones) — clave para fidelización en servicios recurrentes.</td>
+          <td><span class="pill" data-kind="auto">Auto · back</span></td>
+          <td><span class="pill" data-kind="skip-no">No</span></td>
+          <td><span class="pill" data-kind="cand">Candidata</span></td>
+        </tr>
+        <tr>
+          <td class="task-cell">
+            <div class="id">client_tags</div>
+            <div class="name">Usar etiquetas para segmentar clientes</div>
+          </td>
+          <td class="obj">Etiquetar clientes (VIP, primera vez, suscriptor) — base para campañas y mensajes masivos segmentados.</td>
+          <td><span class="pill" data-kind="auto">Auto · back</span></td>
+          <td><span class="pill" data-kind="skip-no">No</span></td>
+          <td><span class="pill" data-kind="cand">Candidata</span></td>
+        </tr>
+        <tr>
+          <td class="task-cell">
+            <div class="id">enable_wa_messages</div>
+            <div class="name">Activar mensajes automáticos por WhatsApp</div>
+          </td>
+          <td class="obj">Pasar los recordatorios y confirmaciones de email a WA — sube tasa de apertura y reduce no-shows. Requiere <code>wa_packs</code> activo.</td>
+          <td><span class="pill" data-kind="auto">Auto · back</span></td>
+          <td><span class="pill" data-kind="skip-no">No</span></td>
+          <td><span class="pill" data-kind="cand">Candidata</span></td>
+        </tr>
+        <tr>
+          <td class="task-cell">
+            <div class="id">add_service_addon</div>
+            <div class="name">Agregar un add-on a un servicio</div>
+          </td>
+          <td class="obj">Sumar extras opcionales (tinte, bebida, deluxe) a un servicio. Sube ticket promedio sin crear servicios nuevos.</td>
+          <td><span class="pill" data-kind="auto">Auto · back</span></td>
+          <td><span class="pill" data-kind="skip-no">No</span></td>
+          <td><span class="pill" data-kind="cand">Candidata</span></td>
+        </tr>
+        <tr>
+          <td class="task-cell">
+            <div class="id">block_dates</div>
+            <div class="name">Bloquear horarios o feriados en que no vas a estar disponible</div>
+          </td>
+          <td class="obj">Cargar feriados, vacaciones o franjas puntuales sin atención — evita reservas en momentos en que el vendor no va a estar.</td>
+          <td><span class="pill" data-kind="auto">Auto · back</span></td>
+          <td><span class="pill" data-kind="skip-no">No</span></td>
+          <td><span class="pill" data-kind="cand">Candidata</span></td>
+        </tr>
+        <tr>
+          <td class="task-cell">
+            <div class="id">create_first_gift_card</div>
+            <div class="name">Creá tu 1ra tarjeta de regalo</div>
+          </td>
+          <td class="obj">Sacar la primera gift card al mercado — milestone que valida el canal de venta. Auto al primer registro en <code>gift_cards</code>.</td>
+          <td><span class="pill" data-kind="auto">Auto · back</span></td>
+          <td><span class="pill" data-kind="skip-no">No</span></td>
+          <td><span class="pill" data-kind="cand">Candidata</span></td>
+        </tr>
+
+      </tbody>
+    </table>
+
+    <div class="legend">
+      <span class="lg-row"><span class="pill" data-kind="auto">Auto · back</span> Confirmada por una query al estado del vendor (avatar, social_apps, payments, etc.)</span>
+      <span class="lg-row"><span class="pill" data-kind="stepper">Stepper</span> Wizard guiado dentro del checklist (no implica un cambio en DB del propio recurso)</span>
+      <span class="lg-row"><span class="pill" data-kind="manual">Manual</span> Confirmada por declaración del vendor — sin verificación automática posible</span>
+      <span class="lg-row"><span class="pill" data-kind="today">Hoy</span> Existe en <code>SETUP_TASK_IDS</code> sobre develop</span>
+      <span class="lg-row"><span class="pill" data-kind="cand">Candidata</span> Propuesta nueva en esta iteración</span>
+    </div>
+  </section>
+
+  <!-- Steppers section -->
+  <section class="steppers">
+    <div class="steppers-head">
+      <h3>Steppers · instructivos paso a paso</h3>
+      <p>Contenido de los wizards guiados que se abren desde el checklist. Cada uno usa el mismo componente <code>StepperModal</code> que ya existe en Flash; lo único que cambia es la lista de pasos y los snippets de copia. Los placeholders <code>{username}</code> se sustituyen en runtime con el slug del vendor.</p>
+    </div>
+
+    <div class="stepper-grid">
+
+      <!-- WA Business autoreply -->
+      <article class="stepper-card" id="stp-wa_business_autoreply">
+        <div class="stp-head">
+          <h4 class="stp-title">Activar respuesta automática en WhatsApp Business</h4>
+          <span class="stp-id">wa_business_autoreply</span>
+        </div>
+        <p class="stp-sub">Convierte cada DM entrante en una reserva: el cliente que escribe pidiendo turno recibe al instante el link de tu agenda online y cómo reservar.</p>
+        <ol class="stepper-steps">
+          <li>
+            <div class="step-title">Confirmá que estás usando WhatsApp Business</div>
+            <p class="step-text">Esto solo funciona con la app <b>WhatsApp Business</b> (no la versión normal de WhatsApp). Es gratuita y la conseguís en Play Store o App Store. Si todavía usás WhatsApp normal, descargá Business y migrá tu cuenta antes de seguir.</p>
+          </li>
+          <li>
+            <div class="step-title">Abrí "Mensaje de bienvenida" dentro de la app</div>
+            <p class="step-text"><b>En Android:</b> tocá los 3 puntos arriba a la derecha → <b>Herramientas para empresas</b> → <b>Mensaje de bienvenida</b>.</p>
+            <p class="step-text"><b>En iPhone:</b> abajo tocá la pestaña <b>Ajustes</b> (ícono de engranaje) → <b>Herramientas para empresas</b> → <b>Mensaje de bienvenida</b>.</p>
+            <a class="step-cta" href="whatsapp://" target="_blank" rel="noopener">Abrir WhatsApp Business <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+          </li>
+          <li>
+            <div class="step-title">Activá el switch y pegá este texto</div>
+            <p class="step-text">Tocá el switch <b>"Enviar mensaje de bienvenida"</b> para activarlo. Después tocá el cuadro de texto y reemplazá el contenido por este mensaje:</p>
+            <div class="copy-block">
+              <button class="copy-btn">Copiar</button>
+<pre>¡Hola! Gracias por escribirme 🙌
+Para reservar tu turno entrá a 👉 www.agora.red/{username}
+
+Ahí podés:
+1️⃣ Ver mis servicios y precios
+2️⃣ Elegir el horario que más te conviene
+3️⃣ Reservar al instante
+
+Ante cualquier duda te respondo apenas pueda. ¡Te espero!</pre>
+            </div>
+            <p class="step-text">Tocá <b>OK</b> (o <b>Guardar</b> en algunas versiones) para confirmar el texto.</p>
+          </li>
+          <li>
+            <div class="step-title">Elegí a quién le llega el mensaje</div>
+            <p class="step-text">Tocá <b>Destinatarios</b> y elegí <b>Todos los que no estén en mi libreta de contactos</b>. Esto hace que cada persona nueva que te escriba reciba el mensaje en cuanto manda el primer DM, sin que vos hagas nada.</p>
+            <p class="step-text">Tocá <b>Guardar</b> arriba a la derecha para terminar.</p>
+            <button class="step-cta">Listo, ya lo configuré</button>
+          </li>
+        </ol>
+      </article>
+
+      <!-- Link in bio IG -->
+      <article class="stepper-card" id="stp-link_in_bio">
+        <div class="stp-head">
+          <h4 class="stp-title">Agregar enlace a tu bio de Instagram</h4>
+          <span class="stp-id">link_in_bio</span>
+        </div>
+        <p class="stp-sub">Hace que el tráfico orgánico de IG (perfil, posts, stories) caiga en tu agenda online con un solo toque.</p>
+        <ol class="stepper-steps">
+          <li>
+            <div class="step-title">Copiá tu link</div>
+            <p class="step-text">Este es el link público de tu agenda. Tocá el botón para copiarlo al portapapeles.</p>
+            <span class="pill-link">www.agora.red/{username}</span>
+            <button class="step-cta step-cta--ghost">Copiar link</button>
+          </li>
+          <li>
+            <div class="step-title">Andá a tu perfil de Instagram y tocá "Editar perfil"</div>
+            <p class="step-text">En la app de Instagram: abajo a la derecha tocá tu foto para entrar a tu perfil. Después arriba tocá el botón <b>Editar perfil</b>.</p>
+            <a class="step-cta" href="https://www.instagram.com/accounts/edit/" target="_blank" rel="noopener">Abrir Editar perfil en Instagram <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+          </li>
+          <li>
+            <div class="step-title">Tocá la sección "Enlaces"</div>
+            <p class="step-text">Dentro de "Editar perfil" vas a ver una fila que dice <b>Enlaces</b> (o "Links" si tenés Instagram en inglés). Tocala para entrar a la pantalla de enlaces.</p>
+            <p class="step-text">Si todavía aparece el campo viejo <b>Sitio web</b>, también podés pegar ahí el link directamente y saltear los pasos siguientes — Instagram va a migrarlo solo a la sección Enlaces más adelante.</p>
+          </li>
+          <li>
+            <div class="step-title">Tocá "+ Agregar enlace externo"</div>
+            <p class="step-text">En la pantalla de Enlaces vas a ver el botón <b>+ Agregar enlace externo</b>. Tocalo.</p>
+          </li>
+          <li>
+            <div class="step-title">Pegá tu link y poné un título</div>
+            <p class="step-text">En el campo <b>URL</b>, pegá <code>www.agora.red/{username}</code>.</p>
+            <p class="step-text">En el campo <b>Título del enlace</b>, escribí algo como <b>Reservá tu turno</b> o <b>Mi agenda online</b> — es el texto que ven tus seguidores en tu bio.</p>
+            <p class="step-text">Tocá <b>Listo</b> arriba a la derecha.</p>
+          </li>
+          <li>
+            <div class="step-title">Volvé a "Editar perfil" y guardá</div>
+            <p class="step-text">Volvés a la pantalla de "Editar perfil" automáticamente. Tocá <b>Listo</b> (arriba a la derecha) para guardar los cambios. Verificá entrando a tu perfil que el link aparezca debajo de tu bio.</p>
+            <button class="step-cta">Listo, ya lo agregué</button>
+          </li>
+        </ol>
+      </article>
+
+      <!-- Share by WhatsApp -->
+      <article class="stepper-card" id="stp-share_whatsapp">
+        <div class="stp-head">
+          <h4 class="stp-title">Compartir tu página por WhatsApp</h4>
+          <span class="stp-id">share_whatsapp</span>
+        </div>
+        <p class="stp-sub">Avisarle a los clientes que ya tenés en WA que ahora pueden reservar online — el primer empuje viral.</p>
+        <ol class="stepper-steps">
+          <li>
+            <div class="step-title">Mensaje pre-armado para mandar</div>
+            <p class="step-text">Te dejamos un texto listo. Solo copialo:</p>
+            <div class="copy-block">
+              <button class="copy-btn">Copiar</button>
+<pre>¡Hola! Te cuento que ahora tenés mi agenda online 🙌
+
+Reservá tu turno cuando quieras desde 👉 www.agora.red/{username}
+Elegís el servicio, ves mis horarios disponibles y reservás al instante. Sin esperar respuesta por mensaje.
+
+¡Te espero!</pre>
+            </div>
+          </li>
+          <li>
+            <div class="step-title">Compartilo con tus contactos</div>
+            <p class="step-text">Tocá el botón para abrir WhatsApp con el mensaje ya pegado. Después elegí los contactos a los que querés mandárselo (empezá por tus clientes habituales) y mandalo.</p>
+            <a class="step-cta step-cta--brand" href="https://wa.me/?text=%C2%A1Hola%21%20Te%20cuento%20que%20ahora%20ten%C3%A9s%20mi%20agenda%20online%20%F0%9F%99%8C%0A%0AReserv%C3%A1%20tu%20turno%20cuando%20quieras%20desde%20%F0%9F%91%89%20www.agora.red%2F%7Busername%7D%0AEleg%C3%ADs%20el%20servicio%2C%20ves%20mis%20horarios%20y%20reserv%C3%A1s%20al%20instante.%0A%0A%C2%A1Te%20espero%21" target="_blank" rel="noopener">Compartir por WhatsApp <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+          </li>
+        </ol>
+      </article>
+
+      <!-- Upload clients (assisted) -->
+      <article class="stepper-card" id="stp-upload_clients">
+        <div class="stp-head">
+          <h4 class="stp-title">Subir base de clientes</h4>
+          <span class="stp-id">upload_clients</span>
+        </div>
+        <p class="stp-sub">Te ayudamos a migrar tu histórico de clientes para que puedas usar campañas, segmentaciones y mensajes masivos desde el día uno. Esta tarea no es self-service: la hacemos nosotros por vos.</p>
+        <ol class="stepper-steps">
+          <li>
+            <div class="step-title">Lo subimos nosotros</div>
+            <p class="step-text">No tenés que normalizar nada ni adaptar columnas. Mandanos el listado en el formato que tengas — Excel, CSV, contactos exportados del celular, una hoja de Google, una agenda escaneada — y nosotros lo cargamos a tu cuenta.</p>
+          </li>
+          <li>
+            <div class="step-title">Contactanos desde el messenger</div>
+            <p class="step-text">Tocá el botón abajo para abrir una conversación con nuestro equipo de soporte (Intercom). Va con un mensaje pre-armado — solo tenés que adjuntar tu archivo y enviarlo.</p>
+            <button class="step-cta" onclick="if(window.Intercom){window.Intercom('showNewMessage','Hola, quiero migrar mi base de clientes a Ágora. Adjunto el archivo.');}">Contactanos <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></button>
+          </li>
+          <li>
+            <div class="step-title">Listo en el día</div>
+            <p class="step-text">En cuanto recibimos tu archivo lo procesamos y dejamos la base cargada en tu cuenta. Te avisamos por la misma conversación cuando esté lista — normalmente el mismo día hábil.</p>
+          </li>
+        </ol>
+      </article>
+
+      <!-- Request tutorial -->
+      <article class="stepper-card" id="stp-request_tutorial">
+        <div class="stp-head">
+          <h4 class="stp-title">Solicitar instructivo para clientes</h4>
+          <span class="stp-id">request_tutorial</span>
+        </div>
+        <p class="stp-sub">Recibís un mini-tutorial en imágenes/video que mostrás a tus clientes para que aprendan a reservar online sin fricciones.</p>
+        <ol class="stepper-steps">
+          <li>
+            <div class="step-title">Te armamos un instructivo a medida</div>
+            <p class="step-text">Es un set de imágenes (o un video corto) explicando paso a paso cómo reservar en <code>www.agora.red/{username}</code>. Lo podés mandar por WA, mostrarlo en el local o pegarlo como historia de IG.</p>
+          </li>
+          <li>
+            <div class="step-title">Contactanos para pedirlo</div>
+            <p class="step-text">Tocá el botón abajo para abrir una conversación con nuestro equipo desde el messenger del dashboard (Intercom). Va con un mensaje pre-armado — solo tenés que enviarlo. Te respondemos con el instructivo en un par de horas hábiles.</p>
+            <button class="step-cta" onclick="if(window.Intercom){window.Intercom('showNewMessage','Hola, quisiera el instructivo para clientes con mi link de reservas.');}">Contactanos <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></button>
+          </li>
+        </ol>
+      </article>
+
+    </div>
+  </section>
+
+</div>
+
+<script>
+  // Toggle stages on click / Enter / Space
+  document.querySelectorAll('.stage-head').forEach((head) => {
+    const stage = head.closest('.stage');
+    const toggle = (e) => {
+      // Don't toggle if the click came from a button inside the body (e.g. skip)
+      if (e && e.target && e.target.closest('.skip')) return;
+      const isOpen = stage.getAttribute('data-open') === 'true';
+      stage.setAttribute('data-open', String(!isOpen));
+      head.setAttribute('aria-expanded', String(!isOpen));
+    };
+    head.addEventListener('click', toggle);
+    head.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggle(e);
+      }
+    });
+  });
+
+  // Prevent skip button from bubbling and toggling the stage body if it ever gets nested inside the head
+  document.querySelectorAll('.task .skip').forEach((btn) => {
+    btn.addEventListener('click', (e) => e.stopPropagation());
+  });
+
+  // Click on a task with stepper → smooth-scroll to its instructional card and flash-highlight
+  document.querySelectorAll('.task[data-stepper]').forEach((task) => {
+    task.addEventListener('click', (e) => {
+      if (e.target.closest('.skip')) return;
+      const id = task.getAttribute('data-stepper');
+      const card = document.getElementById('stp-' + id);
+      if (!card) return;
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      card.classList.remove('flash');
+      // re-trigger the animation
+      void card.offsetWidth;
+      card.classList.add('flash');
+      setTimeout(() => card.classList.remove('flash'), 1600);
+    });
+  });
+</script>
+</body>
+</html>
