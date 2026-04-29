@@ -1,0 +1,1508 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ágora Operator · Briefing de producto</title>
+    <link rel="icon" href="assets/agora-iso.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ============================================================
+         Plan Premium · Briefing
+         Sobrio, sin gradientes. Paleta restringida.
+         Acento único: --accent (rojo Ágora) usado con parsimonia.
+      ============================================================ */
+      :root {
+        /* Marca — paleta restringida */
+        --ink:            #0f0f0f;   /* texto principal, casi negro */
+        --ink-2:          #4a4a4a;   /* texto secundario */
+        --ink-3:          #8a8a8a;   /* captions, footnotes */
+        --ink-4:          #c4c4c4;   /* placeholders, dividers suaves */
+        --line:           #e6e6e6;   /* bordes 1px */
+        --line-soft:      #f1f1f1;
+        --paper:          #ffffff;   /* superficie principal */
+        --paper-soft:     #fafaf8;   /* off-white de fondo */
+        --paper-cream:    #f6f3ee;   /* tono muy sutil para zebra/sidebar */
+
+        --accent:         #ff4658;   /* rojo Ágora — único acento */
+        --accent-soft:    #ffe3e6;
+        --accent-ink:     #b8202f;
+
+        /* Tipografía */
+        --font-sans: 'Montserrat', system-ui, -apple-system, sans-serif;
+        --font-mono: 'Space Mono', ui-monospace, Menlo, monospace;
+
+        /* Layout */
+        --maxw: 1080px;
+        --gutter: 56px;
+      }
+
+      * , *::before , *::after { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+      body {
+        font-family: var(--font-sans);
+        color: var(--ink);
+        background: var(--paper-soft);
+        font-size: 15px;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      .mono { font-family: var(--font-mono); }
+      a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--ink-4); }
+      a:hover { text-decoration-color: var(--ink); }
+
+      /* ============================================================
+         Top nav · sticky, sobrio
+      ============================================================ */
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: var(--paper);
+        border-bottom: 1px solid var(--line);
+      }
+      .topbar-inner {
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 10px var(--gutter);
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .topbar-brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 700;
+        font-size: 13px;
+        letter-spacing: 0.01em;
+      }
+      .topbar-brand img.brand-logo {
+        height: 18px;
+        width: auto;
+        display: block;
+      }
+      .topbar-brand .brand-x {
+        color: var(--text-faint);
+        font-family: var(--font-sans);
+        font-weight: 400;
+        font-size: 12px;
+      }
+      .topbar-brand .operator-tag {
+        margin-left: 6px;
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+        padding: 3px 8px;
+        border: 1px solid var(--line);
+        border-radius: 2px;
+      }
+      .topbar-meta {
+        margin-left: auto;
+        font-family: var(--font-mono);
+        font-size: 9.5px;
+        color: var(--ink-3);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .topnav {
+        display: flex;
+        gap: 14px;
+        font-size: 11px;
+        font-weight: 500;
+        color: var(--ink-2);
+      }
+      .topnav a { text-decoration: none; }
+      .topnav a:hover { color: var(--ink); }
+
+      @media (max-width: 980px) {
+        .topnav { display: none; }
+      }
+
+      /* ============================================================
+         Layout
+      ============================================================ */
+      main {
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 0 var(--gutter);
+      }
+      section {
+        padding: 96px 0;
+        border-top: 1px solid var(--line);
+      }
+      section:first-of-type { border-top: 0; }
+
+      .kicker {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+        margin-bottom: 18px;
+      }
+      .kicker-num {
+        color: var(--accent);
+        margin-right: 10px;
+      }
+
+      h1, h2, h3, h4 {
+        font-family: var(--font-sans);
+        color: var(--ink);
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        margin: 0 0 16px;
+      }
+      h1 { font-size: 56px; line-height: 1.05; letter-spacing: -0.02em; font-weight: 800; }
+      h2 { font-size: 36px; line-height: 1.15; }
+      h3 { font-size: 20px; line-height: 1.3; }
+      h4 { font-size: 15px; line-height: 1.4; font-weight: 600; }
+
+      p { margin: 0 0 14px; max-width: 68ch; color: var(--ink-2); }
+      p strong { color: var(--ink); font-weight: 600; }
+
+      .lede { font-size: 17px; line-height: 1.55; color: var(--ink); max-width: 60ch; }
+
+      /* ============================================================
+         Cover
+      ============================================================ */
+      .cover {
+        padding: 120px 0 96px;
+        border-top: 0;
+      }
+      .cover-eyebrow {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+        margin-bottom: 32px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .cover-eyebrow::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: var(--line);
+        max-width: 320px;
+      }
+      .cover h1 {
+        max-width: 18ch;
+        margin-bottom: 28px;
+      }
+      .cover-sub {
+        font-size: 19px;
+        line-height: 1.45;
+        color: var(--ink-2);
+        max-width: 56ch;
+        margin-bottom: 64px;
+        font-weight: 400;
+      }
+      .cover-meta {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 32px;
+        padding-top: 36px;
+        border-top: 1px solid var(--line);
+        max-width: 720px;
+      }
+      .cover-meta dt {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+        margin-bottom: 8px;
+      }
+      .cover-meta dd {
+        margin: 0;
+        font-size: 14px;
+        color: var(--ink);
+        font-weight: 500;
+      }
+      .cover-iso {
+        position: absolute;
+        top: 80px;
+        right: var(--gutter);
+        height: 56px;
+        width: auto;
+        opacity: 0.85;
+      }
+      .cover-wrap { position: relative; }
+
+      /* ============================================================
+         Resumen ejecutivo
+      ============================================================ */
+      .exec p { font-size: 16px; line-height: 1.65; max-width: 68ch; color: var(--ink); }
+      .exec p + p { margin-top: 18px; }
+      .exec .lede {
+        font-size: 22px;
+        line-height: 1.4;
+        font-weight: 500;
+        color: var(--ink);
+        margin-bottom: 32px;
+        max-width: 60ch;
+      }
+
+      /* ============================================================
+         Capacidades · grid 2 col
+      ============================================================ */
+      .caps-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1px;
+        background: var(--line);
+        border: 1px solid var(--line);
+        margin-top: 40px;
+      }
+      .cap {
+        background: var(--paper);
+        padding: 32px 28px;
+      }
+      .cap-num {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        color: var(--ink-3);
+        margin-bottom: 14px;
+      }
+      .cap h3 {
+        margin-bottom: 10px;
+        font-size: 18px;
+      }
+      .cap p {
+        font-size: 14px;
+        margin: 0;
+        color: var(--ink-2);
+        max-width: none;
+      }
+
+      @media (max-width: 700px) {
+        .caps-grid { grid-template-columns: 1fr; }
+      }
+
+      /* ============================================================
+         Automatizaciones — la sección estrella
+      ============================================================ */
+      .autom-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        margin-top: 48px;
+      }
+      .autom {
+        padding: 48px 0;
+        border-top: 1px solid var(--line);
+        display: grid;
+        grid-template-columns: 220px 1fr;
+        gap: 48px;
+      }
+      .autom:first-child { border-top: 0; padding-top: 0; }
+      .autom:last-child { padding-bottom: 0; }
+
+      .autom-side {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .autom-num {
+        font-family: var(--font-mono);
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        color: var(--accent);
+      }
+      .autom-tag {
+        display: inline-flex;
+        align-items: center;
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+        padding: 5px 9px;
+        border: 1px solid var(--line);
+        border-radius: 2px;
+        align-self: flex-start;
+      }
+      .autom-body h3 { font-size: 24px; margin-bottom: 12px; }
+      .autom-body p { font-size: 15px; max-width: 64ch; }
+
+      .autom-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        margin-top: 24px;
+        padding-top: 24px;
+        border-top: 1px solid var(--line-soft);
+      }
+      .autom-grid dt {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+        margin-bottom: 8px;
+      }
+      .autom-grid dd {
+        margin: 0;
+        font-size: 14px;
+        color: var(--ink);
+        line-height: 1.55;
+      }
+      .autom-grid dd + dt { margin-top: 22px; }
+
+      /* mensaje ejemplo (mock WhatsApp sobrio) */
+      .msg-card {
+        margin-top: 24px;
+        padding: 22px 24px;
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-left: 2px solid var(--accent);
+      }
+      .msg-card-meta {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .msg-card-meta::before {
+        content: '';
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--accent);
+      }
+      .msg-card p {
+        margin: 0;
+        font-size: 14.5px;
+        color: var(--ink);
+        line-height: 1.6;
+        max-width: none;
+      }
+
+      .decision-note {
+        margin-top: 20px;
+        padding: 16px 20px;
+        background: var(--paper-cream);
+        border: 1px solid var(--line);
+        font-size: 13.5px;
+        color: var(--ink);
+        line-height: 1.55;
+      }
+      .decision-note .label {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent);
+        display: block;
+        margin-bottom: 6px;
+      }
+
+      @media (max-width: 760px) {
+        .autom { grid-template-columns: 1fr; gap: 20px; }
+        .autom-grid { grid-template-columns: 1fr; }
+      }
+
+      /* ============================================================
+         Mockups
+      ============================================================ */
+      .mockup {
+        margin-top: 28px;
+        margin-bottom: 56px;
+        background: var(--paper);
+        border: 1px solid var(--line);
+        overflow: hidden;
+      }
+      .mockup-chrome {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 16px;
+        background: var(--paper-cream);
+        border-bottom: 1px solid var(--line);
+      }
+      .mockup-chrome .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--ink-4);
+      }
+      .mockup-chrome .url {
+        flex: 1;
+        text-align: center;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--ink-3);
+        letter-spacing: 0.04em;
+      }
+      .mockup-chrome .label {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+      }
+      .mockup-body { padding: 0; }
+
+      .mockup-caption {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+        margin-bottom: 8px;
+      }
+
+      /* Mockup 1 · CRM cliente */
+      .mock-crm {
+        display: grid;
+        grid-template-columns: 220px 1fr;
+        min-height: 480px;
+      }
+      .mock-crm-side {
+        background: var(--paper-cream);
+        border-right: 1px solid var(--line);
+        padding: 18px;
+      }
+      .mock-crm-side .item {
+        font-size: 12.5px;
+        padding: 8px 10px;
+        margin-bottom: 2px;
+        border-radius: 3px;
+        color: var(--ink-2);
+      }
+      .mock-crm-side .item.active { background: var(--paper); color: var(--ink); font-weight: 600; border: 1px solid var(--line); }
+      .mock-crm-side .group {
+        font-family: var(--font-mono);
+        font-size: 9.5px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        color: var(--ink-3);
+        text-transform: uppercase;
+        margin: 18px 0 8px 10px;
+      }
+      .mock-crm-side .group:first-child { margin-top: 0; }
+
+      .mock-crm-main { padding: 28px; }
+      .mock-crm-header {
+        display: flex;
+        align-items: flex-start;
+        gap: 18px;
+        padding-bottom: 22px;
+        border-bottom: 1px solid var(--line);
+      }
+      .avatar {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: var(--paper-cream);
+        border: 1px solid var(--line);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 18px;
+        color: var(--ink);
+        flex-shrink: 0;
+      }
+      .mock-crm-header h4 { font-size: 18px; margin-bottom: 4px; }
+      .mock-crm-header .sub { font-size: 12.5px; color: var(--ink-3); font-family: var(--font-mono); }
+      .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+      .tag {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 4px 8px;
+        border: 1px solid var(--line);
+        border-radius: 2px;
+        color: var(--ink-2);
+        background: var(--paper);
+      }
+      .tag.accent { color: var(--accent-ink); border-color: var(--accent-soft); background: var(--accent-soft); }
+
+      .mock-crm-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
+        padding-top: 22px;
+      }
+      .mock-crm-grid h5 {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+        margin: 0 0 10px;
+      }
+      .field-row { display: grid; grid-template-columns: 110px 1fr; gap: 8px; padding: 5px 0; font-size: 12.5px; border-bottom: 1px solid var(--line-soft); }
+      .field-row:last-child { border-bottom: 0; }
+      .field-row dt { color: var(--ink-3); }
+      .field-row dd { margin: 0; color: var(--ink); }
+
+      .timeline-item { display: grid; grid-template-columns: 70px 1fr; gap: 12px; padding: 8px 0; font-size: 12.5px; border-bottom: 1px solid var(--line-soft); }
+      .timeline-item:last-child { border-bottom: 0; }
+      .timeline-item .date { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-3); }
+      .timeline-item .what { color: var(--ink); }
+      .timeline-item .what small { display: block; color: var(--ink-3); font-size: 11px; }
+
+      /* Mockup 2 · Builder de automation */
+      .mock-builder {
+        display: grid;
+        grid-template-columns: 1fr 320px;
+        min-height: 480px;
+      }
+      .mock-builder-canvas {
+        padding: 36px 28px;
+        background: var(--paper-soft);
+        background-image:
+          radial-gradient(circle, var(--line) 1px, transparent 1px);
+        background-size: 22px 22px;
+        background-position: -8px -8px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+      }
+      .node {
+        width: 100%;
+        max-width: 320px;
+        background: var(--paper);
+        border: 1px solid var(--line);
+        padding: 14px 16px;
+      }
+      .node-label {
+        font-family: var(--font-mono);
+        font-size: 9.5px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+        margin-bottom: 4px;
+      }
+      .node-title { font-size: 14px; font-weight: 600; color: var(--ink); }
+      .node-meta { font-size: 12px; color: var(--ink-2); margin-top: 4px; }
+      .node.trigger .node-label { color: var(--accent); }
+      .node-arrow {
+        width: 1px;
+        height: 22px;
+        background: var(--ink-4);
+        position: relative;
+      }
+      .node-arrow::after {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 7px;
+        height: 7px;
+        border-right: 1px solid var(--ink-4);
+        border-bottom: 1px solid var(--ink-4);
+        rotate: 45deg;
+      }
+
+      .mock-builder-aside {
+        border-left: 1px solid var(--line);
+        background: var(--paper);
+        padding: 24px 22px;
+      }
+      .mock-builder-aside h5 {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+        margin: 0 0 14px;
+      }
+      .preview-bubble {
+        background: var(--paper-cream);
+        border: 1px solid var(--line);
+        padding: 14px 16px;
+        font-size: 13px;
+        line-height: 1.5;
+        color: var(--ink);
+      }
+      .preview-meta { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 10px; color: var(--ink-3); margin-bottom: 8px; letter-spacing: 0.08em; }
+
+      /* Mockup 3 · Conversación AI Bot */
+      .mock-chat { padding: 24px; background: var(--paper-cream); }
+      .mock-chat-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 18px;
+      }
+      .mock-chat-header .avatar { width: 36px; height: 36px; font-size: 13px; }
+      .mock-chat-header h5 { margin: 0; font-size: 14px; font-weight: 600; }
+      .mock-chat-header .sub { font-size: 11px; color: var(--ink-3); font-family: var(--font-mono); }
+      .ai-badge {
+        margin-left: auto;
+        font-family: var(--font-mono);
+        font-size: 9.5px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--accent);
+        padding: 4px 8px;
+        border: 1px solid var(--accent-soft);
+        background: var(--accent-soft);
+      }
+      .bubble {
+        max-width: 70%;
+        padding: 10px 13px;
+        font-size: 13.5px;
+        line-height: 1.5;
+        margin-bottom: 8px;
+        border: 1px solid var(--line);
+      }
+      .bubble.client { background: var(--paper); }
+      .bubble.bot { background: var(--paper); margin-left: auto; }
+      .bubble small { display: block; font-family: var(--font-mono); font-size: 9.5px; color: var(--ink-3); margin-top: 4px; letter-spacing: 0.08em; }
+
+      /* ============================================================
+         Arquitectura técnica · diagrama de cajas
+      ============================================================ */
+      .arch {
+        margin-top: 36px;
+        padding: 36px 32px;
+        background: var(--paper);
+        border: 1px solid var(--line);
+      }
+      .arch-row {
+        display: grid;
+        gap: 14px;
+        margin-bottom: 14px;
+      }
+      .arch-row:last-child { margin-bottom: 0; }
+      .arch-row.r3 { grid-template-columns: repeat(3, 1fr); }
+      .arch-row.r4 { grid-template-columns: repeat(4, 1fr); }
+      .arch-row.r2 { grid-template-columns: repeat(2, 1fr); }
+
+      .arch-label {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+        margin-bottom: 10px;
+      }
+      .arch-card {
+        background: var(--paper);
+        border: 1px solid var(--line);
+        padding: 14px 14px;
+        font-size: 13px;
+        color: var(--ink);
+        line-height: 1.45;
+        text-align: center;
+      }
+      .arch-card.muted { background: var(--paper-cream); color: var(--ink-2); }
+      .arch-card .small { display: block; font-family: var(--font-mono); font-size: 10px; color: var(--ink-3); margin-top: 4px; letter-spacing: 0.08em; }
+      .arch-divider {
+        height: 1px;
+        background: var(--line);
+        margin: 14px 0;
+        position: relative;
+      }
+      .arch-divider span {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: var(--paper);
+        padding: 0 12px;
+        font-family: var(--font-mono);
+        font-size: 9.5px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+      }
+
+      @media (max-width: 700px) {
+        .arch-row.r4, .arch-row.r3 { grid-template-columns: 1fr 1fr; }
+      }
+
+      /* ============================================================
+         Roadmap · timeline horizontal
+      ============================================================ */
+      .roadmap {
+        margin-top: 40px;
+        position: relative;
+      }
+      .roadmap-line {
+        position: absolute;
+        top: 22px;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: var(--line);
+      }
+      .roadmap-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        position: relative;
+      }
+      .phase {
+        position: relative;
+        padding-top: 50px;
+      }
+      .phase::before {
+        content: '';
+        position: absolute;
+        top: 18px;
+        left: 0;
+        width: 9px;
+        height: 9px;
+        background: var(--paper);
+        border: 2px solid var(--ink);
+        border-radius: 50%;
+      }
+      .phase-name {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 6px;
+      }
+      .phase-when {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--ink-3);
+        margin-bottom: 10px;
+      }
+      .phase h4 { margin-bottom: 8px; font-size: 14px; }
+      .phase p { font-size: 13px; margin: 0; }
+
+      .roadmap-launch {
+        margin-top: 36px;
+        padding: 18px 22px;
+        background: var(--paper-cream);
+        border: 1px solid var(--line);
+        font-size: 13.5px;
+        display: flex;
+        gap: 32px;
+        flex-wrap: wrap;
+      }
+      .roadmap-launch span { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); margin-right: 8px; }
+
+      @media (max-width: 760px) {
+        .roadmap-grid { grid-template-columns: 1fr 1fr; }
+        .roadmap-line { display: none; }
+        .phase { padding-top: 24px; }
+        .phase::before { top: 0; }
+      }
+
+      /* ============================================================
+         Métricas · tabla
+      ============================================================ */
+      .metrics-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 32px;
+        font-size: 14px;
+      }
+      .metrics-table thead th {
+        text-align: left;
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+        padding: 12px 16px 12px 0;
+        border-bottom: 1px solid var(--ink);
+      }
+      .metrics-table tbody td {
+        padding: 18px 16px 18px 0;
+        vertical-align: top;
+        border-bottom: 1px solid var(--line);
+        color: var(--ink);
+      }
+      .metrics-table tbody tr:last-child td { border-bottom: 0; }
+      .metrics-table .metric-name { font-weight: 600; width: 25%; }
+      .metrics-table .metric-detail { color: var(--ink-2); width: 45%; }
+      .metrics-table .metric-target {
+        font-family: var(--font-mono);
+        color: var(--accent-ink);
+        font-weight: 700;
+        font-size: 13px;
+        white-space: nowrap;
+      }
+
+      /* ============================================================
+         Riesgos · listado simple
+      ============================================================ */
+      .risks {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        margin-top: 40px;
+        border-top: 1px solid var(--line);
+      }
+      .risk {
+        padding: 22px 0;
+        border-bottom: 1px solid var(--line);
+        display: grid;
+        grid-template-columns: 180px 1fr;
+        gap: 32px;
+        align-items: start;
+      }
+      .risk-tag {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+      }
+      .risk h4 { margin: 0 0 6px; font-size: 15px; }
+      .risk p { font-size: 13.5px; margin: 0; }
+
+      @media (max-width: 700px) {
+        .risk { grid-template-columns: 1fr; gap: 8px; }
+      }
+
+      /* ============================================================
+         Cierre / next steps
+      ============================================================ */
+      .next {
+        margin-top: 32px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1px;
+        background: var(--line);
+        border: 1px solid var(--line);
+      }
+      .next-step {
+        background: var(--paper);
+        padding: 28px 24px;
+      }
+      .next-step .num {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        color: var(--accent);
+        margin-bottom: 12px;
+      }
+      .next-step h4 { margin-bottom: 6px; font-size: 16px; }
+      .next-step p { font-size: 13.5px; margin: 0; }
+
+      @media (max-width: 760px) {
+        .next { grid-template-columns: 1fr; }
+      }
+
+      /* ============================================================
+         Footer
+      ============================================================ */
+      footer {
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 48px var(--gutter) 80px;
+        border-top: 1px solid var(--line);
+        margin-top: 64px;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+      footer img.brand-foot {
+        height: 20px;
+        width: auto;
+        opacity: 0.95;
+      }
+      footer .meta {
+        margin-left: auto;
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+      }
+
+      /* ============================================================
+         Print
+      ============================================================ */
+      @media print {
+        body { background: white; font-size: 11pt; }
+        .topbar { display: none; }
+        section { padding: 36px 0; page-break-inside: avoid; }
+        .autom { page-break-inside: avoid; }
+        .mockup { page-break-inside: avoid; }
+        h1 { font-size: 36pt; }
+        h2 { font-size: 22pt; }
+      }
+
+      /* Helpers */
+      .stack-sm > * + * { margin-top: 12px; }
+      .stack-md > * + * { margin-top: 20px; }
+      .stack-lg > * + * { margin-top: 32px; }
+      .text-mono-mini { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; color: var(--ink-3); }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--ink-2);
+        padding: 5px 9px;
+        border: 1px solid var(--line);
+        border-radius: 2px;
+      }
+      .pill.accent { color: var(--accent-ink); border-color: var(--accent-soft); background: var(--accent-soft); }
+    </style>
+  </head>
+  <body>
+    <!-- ============================================================
+         Topbar
+    ============================================================ -->
+    <div class="topbar">
+      <div class="topbar-inner">
+        <div class="topbar-brand">
+          <img class="brand-logo" src="assets/agora-horizontal.png" alt="Ágora" />
+          <span class="brand-x">×</span>
+          <img class="brand-logo" src="assets/salon-up.png" alt="Salon Up" />
+          <span class="operator-tag">Operator</span>
+        </div>
+        <nav class="topnav">
+          <a href="#resumen">Resumen</a>
+          <a href="#identidad">Identidad</a>
+          <a href="#capacidades">Capacidades</a>
+          <a href="#automatizaciones">Automatizaciones</a>
+          <a href="#arquitectura">Arquitectura</a>
+          <a href="#roadmap">Roadmap</a>
+          <a href="#metricas">Métricas</a>
+        </nav>
+        <div class="topbar-meta">v0.1 · Borrador</div>
+      </div>
+    </div>
+
+    <main>
+      <!-- ============================================================
+           1 · Cover
+      ============================================================ -->
+      <section class="cover" id="cover">
+        <div class="cover-wrap">
+          <img class="cover-iso" src="assets/agora-iso.png" alt="" />
+          <div class="cover-eyebrow">
+            <span>Briefing de producto · Plan Operator</span>
+          </div>
+          <h1>Ágora Operator</h1>
+          <p class="cover-sub">
+            La primera capa de operación autónoma para tu negocio. Atiende, agenda, reactiva y mide — todo el día, todos los días.
+          </p>
+          <dl class="cover-meta">
+            <div>
+              <dt>Documento</dt>
+              <dd>Briefing v0.1 · Borrador interno</dd>
+            </div>
+            <div>
+              <dt>Audiencia</dt>
+              <dd>Partner BD · vertical beauty · GTM + producto</dd>
+            </div>
+            <div>
+              <dt>Fecha</dt>
+              <dd class="mono">ABR 2026</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           2 · Resumen ejecutivo
+      ============================================================ -->
+      <section id="resumen" class="exec">
+        <div class="kicker"><span class="kicker-num mono">01</span>Resumen ejecutivo</div>
+        <h2>Tu negocio. En modo Operator.</h2>
+        <p class="lede">
+          <strong>Ágora Operator</strong> es la primera capa <em>agentic AI</em> diseñada para operar un negocio de servicios en LATAM — atendiendo, agendando, reactivando y midiendo, mientras el dueño hace su oficio.
+        </p>
+        <p>
+          Hoy Ágora ofrece un único Plan Mensual con pricing por consumo. Resuelve la base — agenda, cobros, comunicaciones — pero deja afuera todo lo que pasa <em>entre</em> turno y turno: segmentar clientas, hacer que vuelvan, llenar los días flojos, recuperar reseñas. Operator toma esa capa entera y la convierte en sistema autónomo: <strong>CRM con tags y campos custom, automatizaciones por comportamiento, integración con el WhatsApp del propio negocio y un agente conversacional que recibe consultas y agenda turnos en nombre del vendor</strong>. No es feature pack — es una capa de inteligencia que opera el negocio.
+        </p>
+        <p>
+          Apunta al vendor maduro y premium del rubro beauty — barberías concept, salones de coloración, peluquerías boutique, estudios de estética — donde el ROI de automatizar un solo flujo (ej. re-booking) ya cubre la suscripción y el espíritu del oficio premia el oficio sobre la operación. Fresha, Booksy, GoHighLevel y ManyChat tienen pedazos de esto, pero ninguno combina booking + WhatsApp business + agente AI + marketplace propio en un producto <em>agentic-native</em> y LATAM-native. Operator ocupa ese espacio, y abre nuestro ARPU sin canibalizar la base.
+        </p>
+        <p>
+          Este briefing presenta Operator a un partner BD con foco beauty: capacidad de generar leads calificadas dispuestas a pagar el valor más alto, ejecutar el GTM con vendors target, y aportar input sobre herramientas y UX durante la beta. La tesis es que la combinación <em>capa agentic + canal BD especializado</em> acelera el time-to-revenue del plan en un mercado donde la categoría todavía no tiene nombre.
+        </p>
+      </section>
+
+      <!-- ============================================================
+           2.5 · Identidad de marca · Operator
+      ============================================================ -->
+      <section id="identidad">
+        <div class="kicker"><span class="kicker-num mono">02</span>Identidad de marca · Operator</div>
+        <h2>Cómo se llama, cómo se vende, cómo se vive.</h2>
+        <p style="max-width: 64ch;">
+          Operator no es un tier ni una versión ampliada de algo existente. Es una <strong>solución integral</strong> con producto, identidad y onboarding propios — premium-tech, sobrio, contemporáneo. Esta sección define el sistema de marca antes del go-to-market.
+        </p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); margin-top: 40px;">
+          <div style="background: var(--paper); padding: 28px;">
+            <div class="autom-tag" style="margin-bottom: 14px;">Naming · taglines</div>
+            <div style="display: flex; flex-direction: column; gap: 14px; font-size: 14px; color: var(--ink); line-height: 1.55;">
+              <div><span class="text-mono-mini" style="display:block;margin-bottom:4px;">PLAN</span><strong style="font-size: 18px; letter-spacing: -0.01em;">Ágora Operator</strong></div>
+              <div><span class="text-mono-mini" style="display:block;margin-bottom:4px;">TAGLINE CORTO</span>Vos cortás. Operator opera.</div>
+              <div><span class="text-mono-mini" style="display:block;margin-bottom:4px;">SUBHERO</span>Mientras vos atendés a tu cliente, Operator atiende los WhatsApp, agenda los turnos, recupera a las que dejaron de venir, llena los días flojos y consigue tus reseñas. Todo el día. Sin sueldo. Sin franco.</div>
+              <div><span class="text-mono-mini" style="display:block;margin-bottom:4px;">LÍNEA COMPETITIVA</span>Fresha y Booksy te dan un dashboard. <em>Ágora Operator opera tu salón.</em></div>
+              <div><span class="text-mono-mini" style="display:block;margin-bottom:4px;">INVITACIÓN A LA WAITLIST</span>Llevá tu salón al próximo nivel. <em>Sumate a la waitlist de Operator.</em></div>
+            </div>
+          </div>
+
+          <div style="background: var(--paper); padding: 28px;">
+            <div class="autom-tag" style="margin-bottom: 14px;">Pillars de marca</div>
+            <ol style="margin: 0; padding-left: 22px; font-size: 14px; line-height: 1.55; color: var(--ink-2);">
+              <li style="margin-bottom: 14px;"><strong style="color: var(--ink);">Autonomía.</strong> Operator no espera que vos hagas algo. Detecta, decide, ejecuta.</li>
+              <li style="margin-bottom: 14px;"><strong style="color: var(--ink);">Precisión.</strong> Cada acción tiene un destinatario, un momento y un objetivo medible. Nada de spray-and-pray.</li>
+              <li style="margin-bottom: 14px;"><strong style="color: var(--ink);">Sobriedad técnica.</strong> Habla con datos, no con adjetivos. Tono cabina de control, no agencia de marketing.</li>
+              <li style="margin-bottom: 0;"><strong style="color: var(--ink);">Premium implícito.</strong> La capa que usan los que ya no operan: dirigen.</li>
+            </ol>
+          </div>
+
+          <div style="background: var(--paper); padding: 28px; grid-column: 1 / -1;">
+            <div class="autom-tag" style="margin-bottom: 14px;">Léxico · qué decir y qué no</div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; font-size: 13.5px; line-height: 1.5;">
+              <div>
+                <div class="text-mono-mini" style="margin-bottom: 10px; color: var(--accent-ink);">DECIMOS</div>
+                <ul style="margin: 0; padding-left: 18px; color: var(--ink); list-style: '·  ';">
+                  <li style="margin-bottom: 6px;">Operator <strong>opera</strong> · <strong>detecta</strong> · <strong>agenda</strong> · <strong>reactiva</strong> · <strong>mide</strong></li>
+                  <li style="margin-bottom: 6px;"><strong>Activá</strong> Operator</li>
+                  <li style="margin-bottom: 6px;">En operación · <span class="mono">Operator · ON</span></li>
+                  <li style="margin-bottom: 6px;">Una <strong>capa</strong> de inteligencia operativa</li>
+                  <li style="margin-bottom: 0;">Las <strong>capacidades</strong> de Operator</li>
+                </ul>
+              </div>
+              <div>
+                <div class="text-mono-mini" style="margin-bottom: 10px; color: var(--ink-3);">NO DECIMOS</div>
+                <ul style="margin: 0; padding-left: 18px; color: var(--ink-2); list-style: '·  ';">
+                  <li style="margin-bottom: 6px;">"El sistema hace…" · "El plan tiene…"</li>
+                  <li style="margin-bottom: 6px;">"Comprá Operator" · "Suscribite a Operator"</li>
+                  <li style="margin-bottom: 6px;">"El bot está prendido"</li>
+                  <li style="margin-bottom: 6px;">"Una funcionalidad" · "un módulo"</li>
+                  <li style="margin-bottom: 0;">"Features del plan" · "Pro/Plus/Premium"</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div style="background: var(--paper); padding: 28px;">
+            <div class="autom-tag" style="margin-bottom: 14px;">Voice &amp; tone</div>
+            <div style="font-size: 13.5px; line-height: 1.6; color: var(--ink-2);">
+              <p style="margin: 0 0 8px;"><strong style="color: var(--ink);">Es:</strong> técnico · sobrio · contemporáneo · confiado · mínimo.</p>
+              <p style="margin: 0 0 8px;"><strong style="color: var(--ink);">No es:</strong> alegre · juguetón · infantil · recargado · cursi · motivacional.</p>
+              <p style="margin: 0;"><strong style="color: var(--ink);">Referencias:</strong> Linear · Notion AI · Stripe · Apple Vision Pro <em>—no Mailchimp, Calendly, GoDaddy.</em></p>
+            </div>
+          </div>
+
+          <div style="background: var(--paper); padding: 28px;">
+            <div class="autom-tag" style="margin-bottom: 14px;">Visual identity</div>
+            <div style="font-size: 13.5px; line-height: 1.6; color: var(--ink-2);">
+              <p style="margin: 0 0 8px;"><strong style="color: var(--ink);">Paleta:</strong> grafito/negro como base premium, blanco para texto, un solo acento (rojo Ágora) usado con parsimonia. Sin gradientes.</p>
+              <p style="margin: 0 0 8px;"><strong style="color: var(--ink);">Tipografía:</strong> Montserrat 800 para naming · Space Mono para datos y estados.</p>
+              <p style="margin: 0;"><strong style="color: var(--ink);">Theme en Flash:</strong> la sección "Operator" usa fondo oscuro/grafito y se siente como un sistema propio dentro del dashboard. Refuerza que es otra capa, con identidad y onboarding diferenciados.</p>
+            </div>
+          </div>
+
+          <div style="background: var(--paper); padding: 28px; grid-column: 1 / -1;">
+            <div class="autom-tag" style="margin-bottom: 14px;">Storyline · narrative arc</div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; font-size: 13.5px; line-height: 1.55; color: var(--ink-2);">
+              <div>
+                <div class="text-mono-mini" style="margin-bottom: 8px;">ANTES</div>
+                <p style="margin: 0; color: var(--ink);">Vos respondés WhatsApps a las 23h. Rechazás clientas porque la agenda quedó mal armada. Las que se fueron no volvieron porque no las llamaste. Los martes están vacíos. Las reseñas no llegan.</p>
+              </div>
+              <div>
+                <div class="text-mono-mini" style="margin-bottom: 8px;">CLICK</div>
+                <p style="margin: 0; color: var(--ink); font-style: italic;">Hacés el onboarding de Operator.</p>
+              </div>
+              <div>
+                <div class="text-mono-mini" style="margin-bottom: 8px;">DESPUÉS</div>
+                <p style="margin: 0; color: var(--ink);">Operator atiende los WhatsApp. Detecta que Camila no viene hace 14 días y la reactiva. Llena tu martes flojo con una promo quirúrgica para 8 clientas. Pide la reseña a las 3h del turno. Vos cortás.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           3 · Las 5 capacidades
+      ============================================================ -->
+      <section id="capacidades">
+        <div class="kicker"><span class="kicker-num mono">03</span>Capacidades de Operator</div>
+        <h2>Las 5 capas que componen Operator.</h2>
+        <p style="max-width: 64ch;">
+          Cinco capacidades concatenadas. Cada una agrega valor sola; juntas forman la primera capa <em>agentic AI</em> end-to-end para servicios beauty en LATAM.
+        </p>
+
+        <div class="caps-grid">
+          <article class="cap">
+            <div class="cap-num">01 · Operator conoce</div>
+            <h3>CRM con memoria de cada clienta.</h3>
+            <p>Tags ilimitadas, segmentos dinámicos por comportamiento (frecuencia, ticket promedio, último turno, servicio favorito) y campos custom (texto, número, fecha, opciones). Operator entiende a quién hablarle, cuándo y por qué — y lo recuerda para siempre.</p>
+          </article>
+
+          <article class="cap">
+            <div class="cap-num">02 · Operator decide</div>
+            <h3>Builder agentic con plantillas listas.</h3>
+            <p>Constructor de flujos: <span class="mono">trigger → condición → acción</span>. Plantillas pre-armadas para los 4 casos de mayor impacto + flujos custom. Sin código, sin Zapier — toda la lógica corre dentro del contexto del negocio.</p>
+          </article>
+
+          <article class="cap">
+            <div class="cap-num">03 · Operator habla</div>
+            <h3>WhatsApp Business desde el número del vendor.</h3>
+            <p>El vendor conecta su propio número con WhatsApp Cloud API (Meta vía BSP). Operator opera <strong>desde el número del negocio, no desde Ágora</strong>. La conversación queda dentro de la marca del salón.</p>
+          </article>
+
+          <article class="cap">
+            <div class="cap-num">04 · Operator atiende</div>
+            <h3>Agente AI conversacional con contexto del negocio.</h3>
+            <p>Agente entrenado con servicios, precios, horarios y políticas del salón. Recibe consultas, agenda turnos, responde FAQs y escala a humano cuando el caso lo amerita. Doble confirmación obligatoria antes de reservar.</p>
+          </article>
+
+          <article class="cap" style="grid-column: 1 / -1;">
+            <div class="cap-num">05 · Operator se ve</div>
+            <h3>Theme premium dentro de Flash.</h3>
+            <p>La sección "Operator" en Flash tiene una piel distinta: fondo oscuro/grafito, tipografía técnica, indicador permanente <span class="mono">Operator · ON</span> en la topbar y un dashboard tipo cabina con métricas en tiempo real. Refuerza que el vendor está operando un sistema con identidad y onboarding propios — no es un agregado a algo existente.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           4 · Las 4 automatizaciones (estrella)
+      ============================================================ -->
+      <section id="automatizaciones">
+        <div class="kicker"><span class="kicker-num mono">04</span>Lo que Operator hace por defecto</div>
+        <h2>Las 4 acciones autónomas pre-armadas.</h2>
+        <p style="max-width: 64ch;">
+          Cuatro flujos que Operator ejecuta automáticamente desde el día uno. Resuelven los problemas más caros del negocio — primer turno, re-booking, capacidad ociosa y reseñas — sin que el vendor tenga que pensar en armarlos.
+        </p>
+
+        <div class="autom-list">
+          <!-- Automation 1 -->
+          <article class="autom">
+            <div class="autom-side">
+              <div class="autom-num">01</div>
+              <span class="autom-tag">Bienvenida cliente nuevo</span>
+            </div>
+            <div class="autom-body">
+              <h3>Mensaje de bienvenida al primer turno.</h3>
+              <p>El primer contacto profesionalizado, con instrucciones claras para que el cliente nuevo llegue a tiempo y sepa qué esperar. Reduce no-shows del primer turno y deja una marca de marca-personal del negocio.</p>
+
+              <dl class="autom-grid">
+                <div>
+                  <dt>Trigger</dt>
+                  <dd>Primera reserva confirmada de un cliente nuevo (sin historial previo).</dd>
+                </div>
+                <div>
+                  <dt>Valor de negocio</dt>
+                  <dd>Reduce no-shows del primer turno · Profesionaliza el onboarding del cliente · Aumenta probabilidad de segunda reserva.</dd>
+                </div>
+              </dl>
+
+              <div class="msg-card">
+                <div class="msg-card-meta">Mensaje al cliente · vía WhatsApp del negocio</div>
+                <p>"¡Hola Camila! Soy Sofía de Estudio Sur. Te confirmo tu turno del jueves 14:00 para corte y color. Si querés cambiar el horario o tenés cualquier consulta, escribime acá nomás. Ya quedaste cargada en mi sistema; la próxima vez podés reservar directo desde mi página: www.agora.red/estudiosur"</p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Automation 2 -->
+          <article class="autom">
+            <div class="autom-side">
+              <div class="autom-num">02</div>
+              <span class="autom-tag">Re-booking post-turno</span>
+            </div>
+            <div class="autom-body">
+              <h3>"Volvé a tu fecha" — recordatorio inteligente.</h3>
+              <p>El recordatorio que más vendors hacen a mano por WhatsApp todos los días. La automatización lo dispara en el momento óptimo de la curva de retención del cliente.</p>
+
+              <dl class="autom-grid">
+                <div>
+                  <dt>Trigger</dt>
+                  <dd>T + (frecuencia recomendada × <span class="mono">0.7</span>) días desde el último turno completado. Ej: servicio cada 14d → recordatorio en T+10.</dd>
+                </div>
+                <div>
+                  <dt>Cómo se calibra</dt>
+                  <dd>Campo "frecuencia recomendada" por servicio (días). Override por cliente si el vendor lo conoce mejor que el promedio.</dd>
+                </div>
+                <div>
+                  <dt>Valor de negocio</dt>
+                  <dd>Aumenta LTV del cliente · Reduce churn de la base activa · Automatiza el flujo manual más frecuente del vendor.</dd>
+                </div>
+                <div>
+                  <dt>Audiencia</dt>
+                  <dd>Clientes con al menos 1 turno en el servicio + opt-in de comunicación.</dd>
+                </div>
+              </dl>
+
+              <div class="msg-card">
+                <div class="msg-card-meta">Mensaje al cliente · vía WhatsApp del negocio</div>
+                <p>"Hola Camila, ya pasaron 10 días desde tu última coloración. Si querés mantener el resultado parejo, este es buen momento para reservar el próximo. ¿Te paso fecha disponible o lo elegís vos? Mi agenda: www.agora.red/estudiosur"</p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Automation 3 -->
+          <article class="autom">
+            <div class="autom-side">
+              <div class="autom-num">03</div>
+              <span class="autom-tag">Promo días bajos</span>
+            </div>
+            <div class="autom-body">
+              <h3>Llenar martes y miércoles sin canibalizar el fin de semana.</h3>
+              <p>Una palanca clásica de revenue management que hoy ningún competidor en LATAM tiene automatizada. El vendor define ventana, descuento y cupo, y la automation hace el resto.</p>
+
+              <dl class="autom-grid">
+                <div>
+                  <dt>Trigger</dt>
+                  <dd>Vendor define días/horarios bajos (ej. martes y miércoles), descuento (ej. 25%) y cupo máximo (ej. 10 lugares).</dd>
+                </div>
+                <div>
+                  <dt>Audiencia</dt>
+                  <dd>Sólo clientes con <strong>opt-in</strong> de promociones (campo opt-in al crearse la cuenta o configurable después).</dd>
+                </div>
+                <div>
+                  <dt>Mecánica</dt>
+                  <dd>Cupón con código único por cliente, cupo limitado (first-come), expira al fin de la ventana definida. Ágora cuenta los redims y corta el envío al llegar al cupo.</dd>
+                </div>
+                <div>
+                  <dt>Valor de negocio</dt>
+                  <dd>Convierte capacidad ociosa en ingresos · No canibaliza días de alta demanda · Le da al vendor una palanca de ingresos sin esfuerzo manual.</dd>
+                </div>
+              </dl>
+
+              <div class="msg-card">
+                <div class="msg-card-meta">Mensaje al cliente · vía WhatsApp del negocio</div>
+                <p>"Hola Camila — esta semana tengo 25% off los martes y miércoles. Sólo me quedan 4 lugares y se cierra el domingo. Si querés aprovechar, reservá acá: www.agora.red/estudiosur · Si preferís no recibir promos, decímelo y te saco de la lista."</p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Automation 4 -->
+          <article class="autom">
+            <div class="autom-side">
+              <div class="autom-num">04</div>
+              <span class="autom-tag">Feedback + reseña</span>
+            </div>
+            <div class="autom-body">
+              <h3>Mensaje post-turno · pedido de reseña.</h3>
+              <p>El loop que ningún vendor de servicios sostiene a mano: pedir reseña en el momento exacto en que el cliente todavía tiene el resultado fresco. Alimenta NPS interno y reseñas en Google + marketplace.</p>
+
+              <dl class="autom-grid">
+                <div>
+                  <dt>Trigger</dt>
+                  <dd>2 a 4 horas después de que el turno fue marcado como completado.</dd>
+                </div>
+                <div>
+                  <dt>Routing</dt>
+                  <dd>Si el cliente responde positivo: link a Google + marketplace. Si responde negativo: notificación al vendor para handoff humano antes de que escriba una reseña pública.</dd>
+                </div>
+                <div>
+                  <dt>Valor de negocio</dt>
+                  <dd>Alimenta loop de reseñas (Google + marketplace de Ágora) · Inputs para NPS interno · Identifica clientes insatisfechos antes de que churnen o publiquen.</dd>
+                </div>
+                <div>
+                  <dt>Audiencia</dt>
+                  <dd>Cualquier cliente con turno completado + opt-in.</dd>
+                </div>
+              </dl>
+
+              <div class="msg-card">
+                <div class="msg-card-meta">Mensaje al cliente · vía WhatsApp del negocio</div>
+                <p>"Hola Camila, ¿cómo estuvo tu coloración hoy? Tu opinión me importa mucho. ⭐ Si te gustó, ¿me dejarías una reseña en este link? Me ayuda muchísimo: g.page/estudiosur/review · Y si algo se puede mejorar, contame y lo charlamos."</p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           5 · Arquitectura técnica
+      ============================================================ -->
+      <section id="arquitectura">
+        <div class="kicker"><span class="kicker-num mono">05</span>Arquitectura técnica</div>
+        <h2>Cómo se construye Operator, en alto nivel.</h2>
+        <p style="max-width: 64ch;">
+          Tres capas que se apoyan en infraestructura ya existente de Ágora. Las piezas nuevas son los módulos centrales de Operator; el resto es integración con sistemas que ya funcionan.
+        </p>
+
+        <div class="arch">
+          <div class="arch-label">Onboarding propio · pre-condición de operación</div>
+          <div class="arch-row r4">
+            <div class="arch-card">Catálogo de servicios<span class="small">Servicios · precios · duración</span></div>
+            <div class="arch-card">Agenda &amp; disponibilidad<span class="small">Horarios · feriados · break times</span></div>
+            <div class="arch-card">Equipo<span class="small">Estilistas · roles · agendas individuales</span></div>
+            <div class="arch-card">Plantillas conversacionales<span class="small">Tono · políticas · respuestas tipo</span></div>
+          </div>
+
+          <div class="arch-divider"><span>Capa de aplicación · Flash (vendor app)</span></div>
+          <div class="arch-row r4">
+            <div class="arch-card">CRM avanzado<span class="small">Tags · segmentos · campos custom</span></div>
+            <div class="arch-card">Automation builder<span class="small">Trigger → condición → mensaje</span></div>
+            <div class="arch-card">Consola AI Bot<span class="small">Conversaciones · handoff</span></div>
+            <div class="arch-card">Theme Operator<span class="small">Capa visual oscura · cabina</span></div>
+          </div>
+
+          <div class="arch-divider"><span>Backend · Cyclone</span></div>
+
+          <div class="arch-row r4">
+            <div class="arch-card">automations-engine<span class="small">Nuevo · cron + queue</span></div>
+            <div class="arch-card">segments-service<span class="small">Nuevo · query builder</span></div>
+            <div class="arch-card">whatsapp-business-integration<span class="small">Nuevo · BSP adapter</span></div>
+            <div class="arch-card">ai-bot-orchestrator<span class="small">Nuevo · OpenAI + RAG</span></div>
+          </div>
+
+          <div class="arch-divider"><span>Servicios externos</span></div>
+
+          <div class="arch-row r3">
+            <div class="arch-card muted">WhatsApp Cloud API<span class="small">Meta · vía BSP</span></div>
+            <div class="arch-card muted">OpenAI<span class="small">GPT-4o · contexto del negocio</span></div>
+            <div class="arch-card muted">Redis · Postgres · S3<span class="small">Existentes en Ágora</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           7 · Roadmap
+      ============================================================ -->
+      <section id="roadmap">
+        <div class="kicker"><span class="kicker-num mono">06</span>Roadmap por fases</div>
+        <h2>Cómo lo construimos.</h2>
+        <p style="max-width: 64ch;">
+          Cuatro fases secuenciales. Cada fase es entregable y monetizable de forma incremental — si se frena en fase 2, ya hay producto vendible bajo el nombre Operator.
+        </p>
+
+        <div class="roadmap">
+          <div class="roadmap-line"></div>
+          <div class="roadmap-grid">
+            <div class="phase">
+              <div class="phase-name">Fase 01</div>
+              <h4>CRM + Builder + 4 plantillas</h4>
+              <p>Tags, segmentos y campos custom. Builder visual de automatizaciones. Las 4 plantillas base usando WhatsApp actual de Ágora.</p>
+            </div>
+            <div class="phase">
+              <div class="phase-name">Fase 02</div>
+              <h4>WhatsApp del negocio</h4>
+              <p>Integración con Cloud API de Meta vía BSP. Onboarding de número del vendor. Migración de las 4 plantillas al canal del negocio.</p>
+            </div>
+            <div class="phase">
+              <div class="phase-name">Fase 03</div>
+              <h4>AI Bot + handoff</h4>
+              <p>Bot conversacional con contexto del negocio. Reserva turnos. Política de confirmación humana en bordes. Handoff a operador.</p>
+            </div>
+            <div class="phase">
+              <div class="phase-name">Fase 04</div>
+              <h4>Onboarding propio + identidad visual</h4>
+              <p>Wizard de onboarding de Operator: catálogo de servicios y precios · agenda y disponibilidad · integrantes del equipo · plantillas conversacionales del agente. Theme oscuro Operator + indicador <span class="mono">Operator · ON</span>. Pricing visible, comparativa con costo de equivalente humano, billing.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           8 · Métricas
+      ============================================================ -->
+      <section id="metricas">
+        <div class="kicker"><span class="kicker-num mono">07</span>Objetivos de adquisición inicial</div>
+        <h2>Primeros 60 días, por cohort mensual.</h2>
+        <p style="max-width: 64ch;">
+          Lanzamiento gradual por cohorts mensuales. La prioridad de los primeros 60 días no es escalar — es <strong>aprender, iterar y demostrar retención</strong> antes de abrir el grifo de adquisición.
+        </p>
+
+        <table class="metrics-table">
+          <thead>
+            <tr>
+              <th style="width: 18%;">Cohort</th>
+              <th style="width: 14%;">Período</th>
+              <th style="width: 48%;">Objetivo</th>
+              <th style="width: 20%;">Target</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="metric-name">Cohort 01</td>
+              <td class="metric-detail mono" style="font-size: 12px; letter-spacing: 0.04em;">MES 1</td>
+              <td class="metric-detail">Adquisición inicial — primeros salones activos en Operator.</td>
+              <td class="metric-target">15 salones</td>
+            </tr>
+            <tr>
+              <td class="metric-name">Cohort 01</td>
+              <td class="metric-detail mono" style="font-size: 12px; letter-spacing: 0.04em;">MES 1</td>
+              <td class="metric-detail">Aprendizaje — iterar producto y onboarding con feedback de campo.</td>
+              <td class="metric-target">Loop iterativo</td>
+            </tr>
+            <tr>
+              <td class="metric-name">Cohort 01</td>
+              <td class="metric-detail mono" style="font-size: 12px; letter-spacing: 0.04em;">FIN MES 1</td>
+              <td class="metric-detail">Retención del primer cohort después del onboarding inicial.</td>
+              <td class="metric-target">&gt; 60%</td>
+            </tr>
+            <tr>
+              <td class="metric-name">Cohort 02</td>
+              <td class="metric-detail mono" style="font-size: 12px; letter-spacing: 0.04em;">MES 2</td>
+              <td class="metric-detail">Adquisición del segundo cohort, con producto ya iterado.</td>
+              <td class="metric-target">+ 20 salones <small style="color: var(--text-2); font-weight: 400;">(35 acumulados)</small></td>
+            </tr>
+            <tr>
+              <td class="metric-name">Cohort 01 + 02</td>
+              <td class="metric-detail mono" style="font-size: 12px; letter-spacing: 0.04em;">FIN MES 2</td>
+              <td class="metric-detail">Retención mejorada en ambos cohorts vs el baseline del 60%.</td>
+              <td class="metric-target">↑ vs Cohort 01</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+    </main>
+
+    <footer>
+      <img class="brand-foot" src="assets/agora-horizontal.png" alt="Ágora" />
+      <span class="brand-x" style="color: var(--text-faint); font-size: 14px;">×</span>
+      <img class="brand-foot" src="assets/salon-up.png" alt="Salon Up" />
+      <span class="text-mono-mini" style="margin-left: 18px;">Ágora Operator · Briefing v0.1</span>
+      <span class="meta">ABR 2026 · Borrador interno · Confidencial</span>
+    </footer>
+  </body>
+</html>

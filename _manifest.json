@@ -1,8 +1,18 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
   "version": 1,
-  "updated_at": "2026-04-28",
+  "updated_at": "2026-04-29",
   "outputs": [
+    {
+      "type": "proposal",
+      "typeLabel": "Proposal",
+      "title": "Ágora Operator · Briefing de producto",
+      "description": "Briefing de producto para el lanzamiento conjunto Ágora × Salon Up de Operator — capa agentic AI para operar un salón de forma autónoma. Incluye sistema de marca, capacidades, automatizaciones, arquitectura, roadmap y objetivos de adquisición por cohort.",
+      "detail": "1-page · 7 secciones · co-brand Ágora × Salon Up",
+      "date": "ABR 2026",
+      "href": "./operator-briefing-2026-04/index.html",
+      "slug": "operator-briefing-2026-04"
+    },
     {
       "type": "wiki",
       "typeLabel": "Wiki",
