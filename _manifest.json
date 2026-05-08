@@ -1,8 +1,28 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
   "version": 1,
-  "updated_at": "2026-04-29",
+  "updated_at": "2026-05-08",
   "outputs": [
+    {
+      "type": "dashboard",
+      "typeLabel": "Dashboard",
+      "title": "Flash · Monthly Wrapped mockup",
+      "description": "Mockup interactivo del flujo completo del feature Resúmenes Mensuales dentro de Flash — notificación, side menu, y story viewer embebido.",
+      "detail": "3 estados interactivos · desktop",
+      "date": "MAY 2026",
+      "href": "./flash-wrapped-mockup-2026-05/index.html",
+      "slug": "flash-wrapped-mockup-2026-05"
+    },
+    {
+      "type": "deck",
+      "typeLabel": "Story viewer",
+      "title": "akirastudio · Wrapped Abril 2026",
+      "description": "Demo del Monthly Wrapped — story viewer estilo Instagram Stories con datos reales de akirastudio para abril 2026. 10 slides: reservas, servicios, horarios, clientes, facturación, equipo y racha.",
+      "detail": "10 slides · venue pro · datos reales",
+      "date": "MAY 2026",
+      "href": "./akirastudio-wrapped-abril-2026/index.html",
+      "slug": "akirastudio-wrapped-abril-2026"
+    },
     {
       "type": "proposal",
       "typeLabel": "Proposal",

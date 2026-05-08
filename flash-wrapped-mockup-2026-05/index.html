@@ -1,0 +1,1742 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flash · Wrapped – Mockup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── Frost tokens ── */
+    :root {
+      --f-brand:         #0072FB;
+      --f-brand-wash:    rgba(0,114,251,0.08);
+      --f-brand-soft:    #EEF6FF;
+      --f-coral:         #FF4658;
+      --f-coral-wash:    rgba(255,70,88,0.08);
+      --f-success:       #10B981;
+      --f-success-wash:  rgba(16,185,129,0.12);
+      --f-warning:       #F59E0B;
+      --f-warning-wash:  rgba(245,158,11,0.12);
+      --f-ink:           #0F172A;
+      --f-ink-soft:      #3A3A3A;
+      --f-ink-mid:       rgba(15,23,42,0.55);
+      --f-ink-whisper:   rgba(15,23,42,0.35);
+      --f-paper:         #EFF3F9;
+      --f-surface:       #FFFFFF;
+      --f-border:        #E2E8F0;
+      --f-border-soft:   #F2F2F2;
+      --f-hair:          rgba(226,232,240,0.6);
+      --f-hair-strong:   #E2E8F0;
+      --f-muted:         #868686;
+      --r-sm:   6px;
+      --r-item: 8px;
+      --r-btn:  10px;
+      --r-card: 16px;
+      --r-xl:   20px;
+      --r-chip: 999px;
+      --sh-xs:  0 1px 2px rgba(15,23,42,0.04);
+      --sh-sm:  0 1px 2px rgba(15,23,42,0.04), 0 4px 12px -4px rgba(15,23,42,0.07);
+      --sh-md:  0 4px 6px -1px rgba(15,23,42,0.06), 0 2px 4px -2px rgba(15,23,42,0.04);
+      --sans:   'Montserrat', system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      font-family: var(--sans);
+      font-variant-numeric: tabular-nums;
+      background: var(--f-paper);
+      color: var(--f-ink);
+      overflow: hidden;
+      font-size: 13.5px;
+    }
+
+    /* ══════════════════════════════════
+       APP SHELL
+    ══════════════════════════════════ */
+    .app {
+      display: flex;
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ══════════════════════════════════
+       RAIL
+    ══════════════════════════════════ */
+    .rail {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      display: flex;
+      flex-direction: column;
+      width: 232px;
+      flex-shrink: 0;
+      height: 100vh;
+      padding: 20px 16px;
+      background: rgba(239,243,249,0.72);
+      backdrop-filter: blur(20px) saturate(140%);
+      -webkit-backdrop-filter: blur(20px) saturate(140%);
+      border-right: 1px solid rgba(255,255,255,0.6);
+      box-shadow: inset -1px 0 0 rgba(255,255,255,0.4), 1px 0 0 rgba(15,23,42,0.02);
+    }
+
+    /* Rail brand */
+    .rail-brand {
+      display: flex;
+      align-items: center;
+      padding: 2px 2px 0;
+      margin-bottom: 4px;
+    }
+
+    /* Rail scrollable body */
+    .rail-body {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      min-height: 0;
+      padding-right: 4px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(15,23,42,0.1) transparent;
+    }
+
+    /* Rail section */
+    .rail-section {
+      padding-top: 18px;
+    }
+
+    .rail-section-label {
+      display: block;
+      padding: 0 8px 8px;
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--f-ink-whisper);
+    }
+
+    .rail-section-sep {
+      display: block;
+      margin: 0 8px 8px;
+      height: 1px;
+      background: var(--f-hair-strong);
+    }
+
+    /* Nav item */
+    .nav-item {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: var(--r-item);
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--f-ink);
+      cursor: pointer;
+      text-decoration: none;
+      border: none;
+      background: transparent;
+      font-family: var(--sans);
+      text-align: left;
+      transition: background 180ms ease, color 180ms ease;
+      margin-bottom: 1px;
+    }
+    .nav-item:hover { background: var(--f-paper); }
+
+    .nav-item.active {
+      background: var(--f-brand-wash);
+      color: var(--f-brand);
+    }
+    .nav-item.active .nav-icon { color: var(--f-brand); opacity: 1; }
+    .nav-item.active::before {
+      content: '';
+      position: absolute;
+      top: 8px; bottom: 8px;
+      left: -16px;
+      width: 3px;
+      border-radius: 0 3px 3px 0;
+      background: var(--f-brand);
+    }
+
+    .nav-icon {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      opacity: 0.85;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .nav-icon svg { width: 14px; height: 14px; }
+
+    .nav-label { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    /* Badge */
+    .nav-badge {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 20px;
+      height: 18px;
+      padding: 0 6px;
+      border-radius: var(--r-chip);
+      font-size: 10px;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .badge-coral {
+      background: var(--f-coral);
+      color: white;
+      box-shadow: 0 2px 6px rgba(255,70,88,0.35);
+    }
+    .badge-gold {
+      background: rgba(245,158,11,0.15);
+      color: #B45309;
+      border: 1px solid rgba(245,158,11,0.3);
+      font-size: 9px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* Sub-items */
+    .sub-items {
+      margin-top: 2px;
+      margin-left: 24px;
+      padding-left: 8px;
+      border-left: 1px solid var(--f-hair-strong);
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .sub-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 8px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--f-ink-mid);
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 150ms, color 150ms;
+    }
+    .sub-item:hover { background: var(--f-paper); color: var(--f-ink); }
+    .sub-item.active { background: var(--f-brand-wash); color: var(--f-brand); }
+    .sub-count {
+      font-size: 10.5px;
+      color: var(--f-ink-whisper);
+    }
+
+    /* Chevron for dropdown items */
+    .nav-chevron {
+      margin-left: auto;
+      flex-shrink: 0;
+      color: var(--f-ink-whisper);
+      transition: transform 200ms;
+    }
+    .nav-item.open .nav-chevron { transform: rotate(180deg); }
+
+    /* Notification bell item (special) */
+    .nav-item.notif-trigger { position: relative; }
+    .notif-dot-pulse {
+      position: absolute;
+      top: 6px; right: 6px;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--f-coral);
+      border: 2px solid white;
+      animation: dot-pulse 1.8s ease-in-out infinite;
+    }
+
+    /* Rail profile */
+    .rail-profile {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 8px 8px;
+      border-top: 1px solid rgba(255,255,255,0.5);
+    }
+    .profile-avatar {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid rgba(255,255,255,0.7);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 4px 12px -4px rgba(0,0,0,0.06);
+      flex-shrink: 0;
+    }
+    .profile-info { display: flex; flex-direction: column; min-width: 0; }
+    .profile-name {
+      font-size: 13px; font-weight: 600;
+      color: var(--f-ink);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .profile-plan {
+      font-size: 11px; color: var(--f-ink-mid);
+      white-space: nowrap;
+    }
+
+    /* ══════════════════════════════════
+       MAIN CONTENT
+    ══════════════════════════════════ */
+    .main {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* View management */
+    .view { display: none; flex-direction: column; flex: 1; min-height: 0; }
+    .view.active { display: flex; }
+
+    /* Frost hero */
+    .frost-hero {
+      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(20px) saturate(140%);
+      -webkit-backdrop-filter: blur(20px) saturate(140%);
+      border-bottom: 1px solid rgba(226,232,240,0.6);
+      padding: 16px 32px;
+    }
+    .hero-kicker {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--f-ink-mid);
+      margin-bottom: 4px;
+    }
+    .hero-kicker .kicker-sep { opacity: 0.4; }
+    .hero-kicker .kicker-active { color: var(--f-brand); }
+    .hero-h1 {
+      font-size: 26px;
+      font-weight: 300;
+      color: var(--f-ink);
+      line-height: 1.1;
+    }
+    .hero-h1 strong { font-weight: 700; }
+    .hero-h1 .dot { color: var(--f-brand); }
+    .hero-right { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+
+    /* Content area */
+    .content-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: 28px 32px 48px;
+    }
+
+    /* ── Stat cards ── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: white;
+      border: 1px solid rgba(226,232,240,0.7);
+      border-radius: var(--r-xl);
+      padding: 18px 20px;
+      box-shadow: var(--sh-xs);
+    }
+    .stat-kicker {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--f-ink-whisper);
+      margin-bottom: 8px;
+    }
+    .stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--f-ink);
+      line-height: 1;
+      letter-spacing: -0.5px;
+    }
+    .stat-change {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-top: 6px;
+    }
+    .stat-change.up { color: var(--f-success); }
+    .stat-change.neutral { color: var(--f-ink-whisper); }
+
+    /* Main content card */
+    .main-card {
+      background: white;
+      border: 1px solid rgba(226,232,240,0.7);
+      border-radius: var(--r-xl);
+      padding: 0;
+      box-shadow: var(--sh-xs);
+      overflow: hidden;
+    }
+    .main-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--f-border-soft);
+    }
+    .main-card-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--f-ink);
+    }
+    .main-card-body { padding: 16px 20px; }
+
+    /* Booking row (simplified) */
+    .booking-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--f-border-soft);
+    }
+    .booking-row:last-child { border-bottom: none; }
+    .booking-avatar {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--f-brand-wash);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; color: var(--f-brand);
+      flex-shrink: 0;
+    }
+    .booking-info { flex: 1; }
+    .booking-name { font-size: 13px; font-weight: 600; color: var(--f-ink); }
+    .booking-service { font-size: 11.5px; color: var(--f-ink-mid); margin-top: 1px; }
+    .booking-meta { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+    .booking-time {
+      font-size: 11px; font-weight: 600;
+      color: var(--f-ink-mid);
+      background: var(--f-paper);
+      padding: 3px 8px;
+      border-radius: var(--r-sm);
+    }
+    .booking-amount {
+      font-size: 13px; font-weight: 700; color: var(--f-ink);
+    }
+
+    /* ── Resúmenes section ── */
+    .resumenes-intro {
+      font-size: 13.5px;
+      color: var(--f-ink-mid);
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+    .month-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .month-card {
+      background: white;
+      border: 1px solid rgba(226,232,240,0.7);
+      border-radius: var(--r-xl);
+      overflow: hidden;
+      cursor: pointer;
+      transition: box-shadow 200ms, transform 200ms, border-color 200ms;
+      box-shadow: var(--sh-xs);
+    }
+    .month-card:hover {
+      box-shadow: 0 8px 24px -8px rgba(15,23,42,0.12), 0 2px 4px rgba(15,23,42,0.04);
+      transform: translateY(-2px);
+      border-color: rgba(0,114,251,0.2);
+    }
+    .month-card.unread { border-color: rgba(245,158,11,0.3); }
+
+    .month-card-cover {
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      position: relative;
+    }
+    .month-card-cover.abril {
+      background: linear-gradient(155deg, #1E0808 0%, #5C1212 100%);
+    }
+    .month-card-cover.marzo {
+      background: linear-gradient(155deg, #0f1e2e 0%, #1a3a5c 100%);
+    }
+    .month-card-cover.empty {
+      background: var(--f-paper);
+    }
+    .month-new-badge {
+      position: absolute;
+      top: 10px; right: 10px;
+      background: var(--f-warning);
+      color: white;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: var(--r-chip);
+      box-shadow: 0 2px 8px rgba(245,158,11,0.4);
+    }
+    .month-card-body { padding: 14px 16px; }
+    .month-period {
+      font-size: 13px; font-weight: 700;
+      color: var(--f-ink);
+      margin-bottom: 4px;
+    }
+    .month-stats {
+      font-size: 11.5px; color: var(--f-ink-mid);
+      line-height: 1.5;
+    }
+    .month-stats strong { color: var(--f-ink); font-weight: 600; }
+    .month-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 10px;
+      font-size: 12px; font-weight: 600;
+      color: var(--f-brand);
+    }
+    .month-empty-label {
+      font-size: 12px; color: var(--f-ink-whisper);
+      font-style: italic;
+      margin-top: 4px;
+    }
+
+    /* ══════════════════════════════════
+       NOTIFICATION DROPDOWN
+    ══════════════════════════════════ */
+    .notif-panel {
+      position: fixed;
+      left: 248px; /* 232 rail + 16 offset */
+      top: 50%;
+      transform: translateY(-50%);
+      width: 400px;
+      background: rgba(255,255,255,0.86);
+      backdrop-filter: blur(24px) saturate(140%);
+      -webkit-backdrop-filter: blur(24px) saturate(140%);
+      border: 1px solid rgba(255,255,255,0.6);
+      border-radius: 16px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.6),
+                  0 1px 2px rgba(15,23,42,0.04),
+                  0 12px 32px -8px rgba(15,23,42,0.14),
+                  0 24px 48px -12px rgba(15,23,42,0.08);
+      overflow: hidden;
+      z-index: 60;
+      animation: panel-in 220ms cubic-bezier(0.22,1,0.36,1);
+    }
+    .notif-panel.hidden {
+      display: none;
+    }
+
+    @keyframes panel-in {
+      from { opacity: 0; transform: translateY(calc(-50% + 8px)); }
+      to   { opacity: 1; transform: translateY(-50%); }
+    }
+
+    .notif-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px 12px;
+      border-bottom: 1px solid var(--f-hair-strong);
+    }
+    .notif-panel-title {
+      font-size: 13px; font-weight: 700;
+      color: var(--f-ink);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .notif-count-pill {
+      font-size: 10.5px; font-weight: 600;
+      background: var(--f-paper);
+      color: var(--f-ink-mid);
+      padding: 1px 8px;
+      border-radius: var(--r-chip);
+      letter-spacing: 0.06em;
+    }
+    .notif-mark-all {
+      font-size: 11.5px; font-weight: 600; color: var(--f-brand);
+      cursor: pointer; background: none; border: none;
+      font-family: var(--sans); padding: 3px 6px;
+      border-radius: var(--r-sm);
+      transition: background 150ms;
+    }
+    .notif-mark-all:hover { background: var(--f-brand-soft); }
+
+    .notif-list {
+      list-style: none;
+      max-height: 360px;
+      overflow-y: auto;
+    }
+
+    /* Notification row */
+    .notif-row {
+      position: relative;
+      cursor: pointer;
+      border-bottom: 1px solid var(--f-hair-strong);
+      transition: background 160ms;
+    }
+    .notif-row:last-child { border-bottom: none; }
+    .notif-row:hover { background: rgba(239,243,249,0.8); }
+    .notif-row.unread { background: rgba(0,114,251,0.03); }
+    .notif-row.unread:hover { background: rgba(0,114,251,0.06); }
+
+    .notif-stripe {
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 2.5px;
+    }
+    .stripe-success { background: var(--f-success); }
+    .stripe-brand   { background: var(--f-brand); }
+    .stripe-coral   { background: var(--f-coral); }
+    .stripe-gold    { background: var(--f-warning); }
+
+    .notif-row-inner {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 16px 12px 14px; /* 14px left for stripe space */
+    }
+    .notif-row.unread .notif-row-inner { padding-left: 14px; }
+
+    .notif-icon-chip {
+      flex-shrink: 0;
+      margin-top: 2px;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px;
+    }
+    .chip-success { background: #E4FFF5; box-shadow: 0 0 0 1px rgba(16,185,129,0.2) inset; }
+    .chip-brand   { background: var(--f-brand-soft); box-shadow: 0 0 0 1px rgba(0,114,251,0.15) inset; }
+    .chip-coral   { background: var(--f-coral-wash); box-shadow: 0 0 0 1px rgba(255,70,88,0.2) inset; }
+    .chip-gold    { background: rgba(245,158,11,0.1); box-shadow: 0 0 0 1px rgba(245,158,11,0.2) inset; }
+
+    .notif-body { flex: 1; min-width: 0; }
+    .notif-title-row {
+      font-size: 13px;
+      line-height: 1.4;
+      color: var(--f-ink);
+      margin-bottom: 2px;
+    }
+    .notif-title-row strong { font-weight: 600; }
+    .notif-title-row .verb { color: var(--f-ink-mid); }
+
+    .notif-service {
+      font-size: 12.5px;
+      color: var(--f-ink-soft);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      margin-bottom: 5px;
+    }
+
+    .notif-chips { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; margin-bottom: 5px; }
+    .notif-chip-date {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: rgba(239,243,249,0.7);
+      padding: 2px 7px;
+      border-radius: var(--r-sm);
+      font-size: 11px; color: var(--f-ink-mid);
+    }
+    .notif-chip-amount {
+      font-size: 11.5px; font-weight: 700;
+      color: var(--f-ink);
+    }
+
+    .notif-meta {
+      display: flex; align-items: center; gap: 6px;
+    }
+    .notif-pulse-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      animation: dot-pulse 1.8s ease-in-out infinite;
+    }
+    .dot-success { background: var(--f-success); }
+    .dot-gold    { background: var(--f-warning); }
+    .notif-ts {
+      font-size: 10.5px; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--f-ink-whisper);
+    }
+    .notif-cta-link {
+      margin-left: auto;
+      font-size: 11.5px; font-weight: 600;
+      color: var(--f-brand);
+      white-space: nowrap;
+    }
+
+    .notif-panel-footer {
+      border-top: 1px solid var(--f-hair-strong);
+      padding: 10px 12px;
+    }
+    .notif-footer-btn {
+      width: 100%; padding: 9px;
+      border-radius: var(--r-btn);
+      border: 1px solid var(--f-hair-strong);
+      background: transparent;
+      font-family: var(--sans); font-size: 12.5px; font-weight: 600;
+      color: var(--f-ink-mid);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      transition: background 150ms, border-color 150ms, color 150ms;
+    }
+    .notif-footer-btn:hover { background: var(--f-paper); border-color: var(--f-brand); color: var(--f-brand); }
+
+    /* ══════════════════════════════════
+       STORY OVERLAY
+    ══════════════════════════════════ */
+    .story-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(5,2,2,0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: overlay-in 280ms ease;
+    }
+    .story-overlay.hidden { display: none; }
+
+    @keyframes overlay-in {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .story-close {
+      position: absolute;
+      top: 20px; right: 24px;
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.7);
+      font-size: 16px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 150ms, color 150ms;
+      z-index: 10;
+    }
+    .story-close:hover { background: rgba(255,255,255,0.15); color: white; }
+
+    /* Story shell — scaled to fit */
+    .story-shell {
+      position: relative;
+      width: 390px;
+      height: 844px;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+      transform: scale(0.88);
+      transform-origin: center center;
+    }
+
+    /* ── Story internals (same as standalone) ── */
+    .s-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(155deg, #1E0808 0%, #3D0F0F 50%, #5C1212 100%);
+      z-index: 0;
+    }
+    .s-bg::before {
+      content: '';
+      position: absolute;
+      width: 280px; height: 280px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(194,64,64,0.18), transparent 70%);
+      top: -80px; right: -60px; z-index: 1;
+    }
+    .s-bg::after {
+      content: '';
+      position: absolute;
+      width: 360px; height: 360px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(245,200,66,0.05), transparent 70%);
+      bottom: -120px; left: -80px; z-index: 1;
+    }
+
+    .s-progress {
+      position: absolute; top: 16px; left: 16px; right: 16px;
+      display: flex; gap: 4px; z-index: 20;
+    }
+    .s-seg {
+      flex: 1; height: 2.5px; border-radius: 2px;
+      background: rgba(255,255,255,0.22); overflow: hidden; position: relative;
+    }
+    .s-seg::after {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(255,255,255,0.9);
+      transform: scaleX(0); transform-origin: left;
+    }
+    .s-seg.done::after  { transform: scaleX(1); transition: none; }
+    .s-seg.active::after { transform: scaleX(1); transition: transform 0.3s ease; }
+
+    .s-chrome {
+      position: absolute; top: 28px; left: 20px; right: 20px;
+      display: flex; align-items: center; justify-content: space-between;
+      z-index: 20;
+    }
+    .s-avatar-sm {
+      width: 34px; height: 34px; border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.35); object-fit: cover;
+    }
+
+    .s-slides { position: absolute; inset: 0; z-index: 10; }
+    .s-slide {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 90px 28px 80px;
+      opacity: 0; transform: translateX(32px);
+      transition: opacity 0.3s cubic-bezier(0.4,0,0.2,1), transform 0.3s cubic-bezier(0.4,0,0.2,1);
+      pointer-events: none;
+    }
+    .s-slide.active { opacity: 1; transform: translateX(0); pointer-events: auto; }
+    .s-slide.exit { opacity: 0; transform: translateX(-32px); }
+
+    /* story type atoms */
+    .s-kicker {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.22em;
+      text-transform: uppercase; color: #E8A0A0;
+      margin-bottom: 10px; text-align: center;
+    }
+    .s-h1 { font-size: 24px; font-weight: 300; color: #F1F5F9; text-align: center; line-height: 1.2; }
+    .s-h1 strong { font-weight: 700; }
+    .s-num {
+      font-size: 88px; font-weight: 700; color: #F5C842;
+      line-height: 0.95; letter-spacing: -3px;
+      text-shadow: 0 6px 28px rgba(245,200,66,0.28);
+      margin: 14px 0 10px;
+    }
+    .s-sub { font-size: 13px; font-weight: 500; color: rgba(241,245,249,0.55); text-align: center; line-height: 1.55; margin-top: 6px; }
+    .s-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 5px 14px; border-radius: 999px;
+      font-size: 11.5px; font-weight: 600; margin-top: 14px;
+    }
+    .s-badge-ok   { background: rgba(16,185,129,0.18); color: #6EE7C7; border: 1px solid rgba(16,185,129,0.28); }
+    .s-badge-gold { background: rgba(245,200,66,0.14); color: #F5C842; border: 1px solid rgba(245,200,66,0.24); }
+    .s-badge-fire { background: rgba(255,100,40,0.18); color: #FFAB80; border: 1px solid rgba(255,100,40,0.28); }
+
+    .s-card {
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.13);
+      border-radius: 20px; padding: 18px 20px; width: 100%;
+      backdrop-filter: blur(12px);
+    }
+
+    /* service rows inside story */
+    .ss-row { display: flex; align-items: center; gap: 11px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .ss-row:first-child { padding-top: 0; }
+    .ss-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .ss-medal { font-size: 18px; width: 24px; flex-shrink: 0; }
+    .ss-name { flex: 1; font-size: 12.5px; font-weight: 500; color: #F1F5F9; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ss-bar-t { margin-top: 4px; height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; }
+    .ss-bar { height: 100%; background: linear-gradient(90deg, #C24040, #F5C842); border-radius: 2px; }
+    .ss-n { font-size: 18px; font-weight: 700; color: #F5C842; flex-shrink: 0; }
+
+    .s-chips-row { display: flex; gap: 10px; width: 100%; margin-bottom: 14px; }
+    .s-chip {
+      flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;
+      padding: 12px 10px; border-radius: 14px;
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.13);
+    }
+    .s-chip.hi { background: rgba(245,200,66,0.13); border-color: rgba(245,200,66,0.28); }
+    .s-chip-lbl { font-size: 9.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(241,245,249,0.55); }
+    .s-chip.hi .s-chip-lbl { color: rgba(245,200,66,0.7); }
+    .s-chip-val { font-size: 16px; font-weight: 700; color: #F1F5F9; }
+    .s-chip.hi .s-chip-val { color: #F5C842; }
+
+    .s-bars { display: flex; gap: 5px; align-items: flex-end; height: 52px; width: 100%; }
+    .s-bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+    .s-bar-f { width: 100%; border-radius: 3px 3px 0 0; min-height: 3px; }
+    .s-bar-lbl { font-size: 9px; font-weight: 600; color: rgba(241,245,249,0.55); }
+    .s-bar-lbl.hi { color: #F5C842; }
+
+    .s-cmp { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+    .s-cmp-prev { font-size: 13px; color: rgba(241,245,249,0.55); }
+    .s-cmp-pct { font-size: 15px; font-weight: 700; color: #6EE7C7; }
+
+    .s-client-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .s-client-row:first-child { padding-top: 0; }
+    .s-client-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .s-client-icon { font-size: 19px; width: 24px; flex-shrink: 0; }
+    .s-client-name { font-size: 15px; font-weight: 600; color: #F1F5F9; text-transform: capitalize; flex: 1; }
+    .s-client-v { font-size: 11px; font-weight: 600; color: rgba(241,245,249,0.55); }
+
+    .s-staff-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .s-staff-row:first-child { padding-top: 0; }
+    .s-staff-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .s-staff-av { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: white; flex-shrink: 0; }
+    .s-staff-name { font-size: 13px; font-weight: 600; color: #F1F5F9; }
+    .s-staff-stats { font-size: 11px; color: rgba(241,245,249,0.55); margin-top: 2px; }
+
+    .s-streak-num {
+      font-size: 88px; font-weight: 700; line-height: 0.95;
+      background: linear-gradient(175deg, #F5C842 0%, #FF6B35 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; letter-spacing: -3px;
+      margin: 14px 0 10px;
+    }
+
+    .s-cover-av {
+      width: 88px; height: 88px; border-radius: 50%;
+      border: 3px solid rgba(255,255,255,0.3); object-fit: cover;
+      margin-bottom: 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+    .s-cover-month { font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #E8A0A0; margin-bottom: 6px; }
+    .s-cover-name { font-size: 20px; font-weight: 600; color: #F1F5F9; text-align: center; }
+    .s-cover-handle { font-size: 12px; font-weight: 500; color: rgba(241,245,249,0.55); margin-top: 3px; margin-bottom: 20px; }
+    .s-cover-tagline { font-size: 28px; font-weight: 300; color: #F1F5F9; text-align: center; line-height: 1.2; }
+    .s-cover-tagline b { font-weight: 700; color: #F5C842; }
+
+    .s-billing-ccy { font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #E8A0A0; margin-bottom: 6px; }
+    .s-billing-amt { font-size: 46px; font-weight: 700; color: #F5C842; line-height: 1; letter-spacing: -1px; text-shadow: 0 4px 24px rgba(245,200,66,0.28); }
+    .s-billing-lbl { font-size: 12px; color: rgba(241,245,249,0.55); margin-top: 8px; }
+
+    .s-nav-zones { position: absolute; inset: 0; display: flex; z-index: 15; }
+    .s-prev { width: 40%; height: 100%; cursor: w-resize; }
+    .s-next { width: 60%; height: 100%; cursor: e-resize; }
+
+    .s-controls {
+      position: absolute; bottom: 20px; left: 20px; right: 20px;
+      display: flex; gap: 10px; z-index: 25; transition: opacity 0.3s;
+    }
+    .s-controls.hidden { opacity: 0; pointer-events: none; }
+    .s-ctrl {
+      flex: 1; height: 44px; border: none; border-radius: 12px;
+      font-family: var(--sans); font-size: 12px; font-weight: 600; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      transition: opacity 0.15s;
+    }
+    .s-ctrl:active { opacity: 0.7; }
+    .s-ctrl-dl { background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.18); color: white; }
+    .s-ctrl-share { background: #C24040; color: white; box-shadow: 0 4px 14px rgba(194,64,64,0.4); }
+
+    .s-tap-hint { position: absolute; bottom: 74px; left: 50%; transform: translateX(-50%); font-size: 9.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.22); z-index: 20; white-space: nowrap; transition: opacity 0.3s; }
+    .s-tap-hint.hidden { opacity: 0; }
+
+    /* ── Animations ── */
+    @keyframes dot-pulse {
+      0%, 100% { opacity: 0.95; transform: scale(1); }
+      50%       { opacity: 0.55; transform: scale(0.8); }
+    }
+
+    /* Overlay for backdrop click to close notif */
+    .notif-backdrop {
+      position: fixed; inset: 0; z-index: 55;
+    }
+    .notif-backdrop.hidden { display: none; }
+
+    /* ── Demo label ── */
+    .demo-bar {
+      position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
+      background: rgba(15,23,42,0.82);
+      backdrop-filter: blur(12px);
+      color: rgba(255,255,255,0.7);
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 8px 16px; border-radius: 999px;
+      z-index: 200;
+      pointer-events: none;
+    }
+    .demo-bar span { color: rgba(255,255,255,0.4); }
+    .demo-bar strong { color: white; }
+  </style>
+</head>
+<body>
+
+<!-- Demo state label -->
+<div class="demo-bar" id="demoBar">
+  <span>Estado actual: </span><strong id="demoState">Panel — click la campana o "Resúmenes mensuales"</strong>
+</div>
+
+<div class="app">
+
+  <!-- ════════════════════════
+       RAIL
+  ════════════════════════ -->
+  <aside class="rail">
+
+    <!-- Brand -->
+    <div class="rail-brand">
+      <svg width="96" height="23" viewBox="0 0 153 36" xmlns="http://www.w3.org/2000/svg" aria-label="Ágora">
+        <path d="M41.3822 30.3938L38.187 35.7712L3.11719 35.8491L17.5348 10.9106L20.6466 16.2974L15.7314 24.9347L12.625 30.3938H41.3822Z" fill="#E2E8F0"/>
+        <path d="M17.5351 10.9106L20.6469 16.2974L16.7342 23.0921L12.1689 20.1848L17.5351 10.9106Z" fill="url(#rl0)" fill-opacity="0.7"/>
+        <path d="M20.6467 16.2973L17.5349 10.9106L3.11731 35.8491L0 30.3938L17.5349 0L31.8745 24.9385H25.6399L20.6467 16.2973Z" fill="#0072FF"/>
+        <path d="M31.8543 24.9244L25.6302 24.9316L21.7061 18.1387L26.5114 15.6305L31.8543 24.9244Z" fill="url(#rl1)" fill-opacity="0.7"/>
+        <path d="M23.8473 0L41.3822 30.3938H12.625L15.7314 24.9346L15.7384 24.9385H25.6398H31.8744L17.5348 0H23.8473Z" fill="#FF4658"/>
+        <path d="M12.625 30.3937L15.7289 24.9387L23.7202 24.9194L23.4706 30.3746L12.625 30.3937Z" fill="url(#rl2)" fill-opacity="0.7"/>
+        <path d="M76.7893 7.41158V4.76367H69.5647V7.41158H76.7893ZM72.2126 26.6334C74.4029 26.6334 76.3316 25.7835 77.6065 24.2797V26.3065H81.2351V10.1249H77.6065V12.1844C76.3316 10.6806 74.4029 9.79797 72.2126 9.79797C67.7668 9.79797 64.7266 13.5573 64.7266 18.232C64.7266 22.8741 67.7668 26.6334 72.2126 26.6334ZM73.1279 23.1356C70.382 23.1356 68.4206 21.0761 68.4206 18.232C68.4206 15.388 70.382 13.2958 73.1279 13.2958C75.7105 13.2958 77.6065 15.388 77.6065 18.232C77.6065 21.1088 75.6778 23.1356 73.1279 23.1356ZM92.2844 31.112C96.9264 31.112 100.718 28.2679 100.718 22.6125V10.1249H97.2533V12.5439C96.4034 10.9421 94.2131 9.79797 91.7614 9.79797C87.2828 9.79797 84.3407 13.2958 84.3407 17.6436C84.3407 21.9914 87.2828 25.4566 91.7614 25.4566C94.7035 25.4566 96.4361 23.9855 97.0899 22.6779V22.8087C97.0899 26.1104 95.39 28.3333 91.9248 28.3333C90.2576 28.3333 88.3616 27.7776 87.0867 26.6661L85.681 28.9544C87.1847 30.2947 89.5058 31.112 92.2844 31.112ZM92.5459 22.2856C89.9961 22.2856 88.0347 20.3242 88.0347 17.6436C88.0347 14.963 89.9961 12.9689 92.5459 12.9689C95.0958 12.9689 97.0899 14.9303 97.0899 17.5129C97.0899 20.3242 95.1612 22.2856 92.5459 22.2856ZM112.422 26.6334C117.194 26.6334 121.019 22.9067 121.019 18.232C121.019 13.5247 117.194 9.79797 112.422 9.79797C107.649 9.79797 103.824 13.5247 103.824 18.232C103.824 22.9067 107.649 26.6334 112.422 26.6334ZM112.422 23.1356C109.643 23.1356 107.518 21.0434 107.518 18.232C107.518 15.388 109.643 13.2958 112.422 13.2958C115.2 13.2958 117.325 15.388 117.325 18.232C117.325 21.0434 115.2 23.1356 112.422 23.1356ZM127.753 26.3065V19.7031C127.753 15.4534 130.042 13.7535 133.605 13.7535V9.79797C130.14 9.79797 128.374 11.694 127.753 13.3285V10.1249H124.125V26.3065H127.753ZM143.118 26.6334C145.308 26.6334 147.237 25.7835 148.512 24.2797V26.3065H152.14V10.1249H148.512V12.1844C147.237 10.6806 145.308 9.79797 143.118 9.79797C138.672 9.79797 135.632 13.5573 135.632 18.232C135.632 22.8741 138.672 26.6334 143.118 26.6334ZM144.033 23.1356C141.287 23.1356 139.326 21.0761 139.326 18.232C139.326 15.388 141.287 13.2958 144.033 13.2958C146.616 13.2958 148.512 15.388 148.512 18.232C148.512 21.1088 146.583 23.1356 144.033 23.1356Z" fill="#0F172A"/>
+        <rect x="52.7876" y="3.5874" width="0.683334" height="28.5292" fill="#E2E8F0"/>
+        <defs>
+          <linearGradient id="rl0" x1="18.8" y1="15.9" x2="12.5" y2="18.5" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="1" stop-opacity="0"/></linearGradient>
+          <linearGradient id="rl1" x1="26.9" y1="23.6" x2="27.8" y2="16.8" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="1" stop-opacity="0"/></linearGradient>
+          <linearGradient id="rl2" x1="16.3" y1="26.7" x2="21.8" y2="30.9" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="1" stop-opacity="0"/></linearGradient>
+        </defs>
+      </svg>
+    </div>
+
+    <div class="rail-body">
+
+      <!-- Sección: PRINCIPAL -->
+      <nav class="rail-section">
+        <span class="rail-section-label">Principal</span>
+
+        <button class="nav-item active" id="navPanel" onclick="goToPanel()">
+          <span class="nav-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6" rx="1.2"/><rect x="9" y="1" width="6" height="6" rx="1.2"/><rect x="1" y="9" width="6" height="6" rx="1.2"/><rect x="9" y="9" width="6" height="6" rx="1.2"/></svg></span>
+          <span class="nav-label">Panel</span>
+        </button>
+
+        <!-- Catálogo (dropdown) -->
+        <button class="nav-item" onclick="this.classList.toggle('open'); this.nextElementSibling.style.display = this.nextElementSibling.style.display==='flex'?'none':'flex'">
+          <span class="nav-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4z"/><path d="M5 7h6M5 10h4"/></svg></span>
+          <span class="nav-label">Catálogo</span>
+          <svg class="nav-chevron" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3.5l3 3 3-3"/></svg>
+        </button>
+        <div class="sub-items" style="display:none;flex-direction:column">
+          <a class="sub-item" href="#">Servicios <span class="sub-count">12</span></a>
+          <a class="sub-item" href="#">Capacitaciones <span class="sub-count">4</span></a>
+          <a class="sub-item" href="#">Planes mensuales <span class="sub-count">2</span></a>
+          <a class="sub-item" href="#">Descargables <span class="sub-count">1</span></a>
+        </div>
+
+        <button class="nav-item" href="#">
+          <span class="nav-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1.5" y="2.5" width="13" height="12" rx="1.5"/><path d="M5 1v3M11 1v3M1.5 7h13"/></svg></span>
+          <span class="nav-label">Agenda</span>
+        </button>
+
+        <button class="nav-item">
+          <span class="nav-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 7.5a3.5 3.5 0 1 0-7 0 3.5 3.5 0 0 0 7 0z"/><path d="M13.5 13.5a5.5 5.5 0 0 0-11 0"/></svg></span>
+          <span class="nav-label">Equipo</span>
+        </button>
+      </nav>
+
+      <!-- Sección: NEGOCIO -->
+      <nav class="rail-section">
+        <span class="rail-section-label">Negocio</span>
+
+        <!-- Mi negocio dropdown -->
+        <button class="nav-item" onclick="this.classList.toggle('open'); this.nextElementSibling.style.display = this.nextElementSibling.style.display==='flex'?'none':'flex'">
+          <span class="nav-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12V5l6-3 6 3v7"/><path d="M6 12V8h4v4"/></svg></span>
+          <span class="nav-label">Mi negocio</span>
+          <svg class="nav-chevron" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3.5l3 3 3-3"/></svg>
+        </button>
+        <div class="sub-items" style="display:none;flex-direction:column">
+          <a class="sub-item" href="#">Actividad</a>
+          <a class="sub-item" href="#">Clientes</a>
+          <a class="sub-item" href="#">Analítica</a>
+        </div>
+
+        <button class="nav-item">
+          <span class="nav-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 7.5h3l2-5 3 10 2-5h2"/></svg></span>
+          <span class="nav-label">Descuentos</span>
+        </button>
+
+        <button class="nav-item">
+          <span class="nav-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2l1.5 3 3.5.5-2.5 2.5.6 3.5L8 10l-3.1 1.5.6-3.5L3 5.5l3.5-.5z"/></svg></span>
+          <span class="nav-label">Tarjetas de regalo</span>
+        </button>
+
+        <!-- ✨ Resúmenes mensuales — NUEVO -->
+        <button class="nav-item" id="navResumenes" onclick="goToResumenes()">
+          <span class="nav-icon" style="font-size:14px">✨</span>
+          <span class="nav-label">Resúmenes mensuales</span>
+          <span class="nav-badge badge-gold" id="badgeNuevo">NUEVO</span>
+        </button>
+
+      </nav>
+
+      <!-- Sección: SISTEMA -->
+      <nav class="rail-section">
+        <span class="rail-section-sep" aria-hidden></span>
+
+        <!-- Notifications (rail variant) -->
+        <button class="nav-item notif-trigger" id="bellBtn" onclick="toggleNotif()">
+          <span class="nav-icon">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2a4.5 4.5 0 0 1 4.5 4.5c0 2.5.8 4 1.5 4.5H2c.7-.5 1.5-2 1.5-4.5A4.5 4.5 0 0 1 8 2z"/><path d="M6.5 11a1.5 1.5 0 0 0 3 0"/></svg>
+          </span>
+          <span class="nav-label">Notificaciones</span>
+          <span class="nav-badge badge-coral" id="bellBadge">1</span>
+          <span class="notif-dot-pulse" id="bellDot"></span>
+        </button>
+
+        <button class="nav-item">
+          <span class="nav-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1.5" y="1.5" width="13" height="13" rx="2"/><path d="M5.5 8h5M8 5.5v5"/></svg></span>
+          <span class="nav-label">Mi plan</span>
+        </button>
+
+        <button class="nav-item">
+          <span class="nav-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="2"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41"/></svg></span>
+          <span class="nav-label">Ajustes</span>
+        </button>
+
+        <button class="nav-item" style="color: var(--f-coral)">
+          <span class="nav-icon" style="color: var(--f-coral)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3H3a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h3M10 11l3-3-3-3M13 8H6"/></svg></span>
+          <span class="nav-label">Salir</span>
+        </button>
+      </nav>
+
+    </div><!-- /rail-body -->
+
+    <!-- Profile footer -->
+    <div class="rail-profile">
+      <img class="profile-avatar"
+        src="https://d3p2i4pt6coq3o.cloudfront.net/vendors/storefront-2356/cover_1775234998"
+        alt="Florencia"
+        onerror="this.style.display='none'">
+      <div class="profile-info">
+        <span class="profile-name">Florencia Murillo</span>
+        <span class="profile-plan">akirastudio · Venue Pro</span>
+      </div>
+    </div>
+
+  </aside><!-- /rail -->
+
+  <!-- ════════════════════════
+       MAIN CONTENT
+  ════════════════════════ -->
+  <div class="main">
+
+    <!-- VIEW: Panel -->
+    <div id="view-panel" class="view active">
+      <header class="frost-hero">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px">
+          <div>
+            <div class="hero-kicker">
+              <span>Lun 6 may</span>
+              <span class="kicker-sep">·</span>
+              <span>Buenos Aires</span>
+              <span class="kicker-sep">·</span>
+              <span class="kicker-active">akirastudio</span>
+            </div>
+            <h1 class="hero-h1">Hola de nuevo, <strong>Florencia</strong><span class="dot">.</span></h1>
+          </div>
+          <div class="hero-right" style="padding-top:8px">
+            <button style="display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:10px;border:1px solid var(--f-hair-strong);background:white;font-family:var(--sans);font-size:12px;font-weight:600;color:var(--f-ink-mid);cursor:pointer;box-shadow:var(--sh-xs)">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 4h12M4 8h8M6 12h4"/></svg>
+              Filtrar
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <div class="content-area">
+
+        <!-- Stat cards -->
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-kicker">Reservas · Abril</div>
+            <div class="stat-value">55</div>
+            <div class="stat-change up">↑ +45% vs marzo</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-kicker">Facturación ARS · Abril</div>
+            <div class="stat-value" style="font-size:21px;letter-spacing:-0.5px">$2.408.000</div>
+            <div class="stat-change neutral">— —</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-kicker">Clientes nuevas · Abril</div>
+            <div class="stat-value">11</div>
+            <div class="stat-change up">↑ nuevas este mes</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-kicker">Equipo activo</div>
+            <div class="stat-value">2</div>
+            <div class="stat-change neutral">profesionales</div>
+          </div>
+        </div>
+
+        <!-- Próximas reservas -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div class="main-card">
+            <div class="main-card-header">
+              <span class="main-card-title">Próximas reservas — Hoy</span>
+              <span style="font-size:11px;color:var(--f-brand);font-weight:600;cursor:pointer">Ver todas →</span>
+            </div>
+            <div class="main-card-body">
+              <div class="booking-row">
+                <div class="booking-avatar">GR</div>
+                <div class="booking-info">
+                  <div class="booking-name">Guadalupe Romero</div>
+                  <div class="booking-service">Volumen tecnológicos 4W</div>
+                </div>
+                <div class="booking-meta">
+                  <span class="booking-time">16:00</span>
+                  <span class="booking-amount">$67.000</span>
+                </div>
+              </div>
+              <div class="booking-row">
+                <div class="booking-avatar">BT</div>
+                <div class="booking-info">
+                  <div class="booking-name">Brisa Torres</div>
+                  <div class="booking-service">Retoque de extensiones 4W</div>
+                </div>
+                <div class="booking-meta">
+                  <span class="booking-time">17:30</span>
+                  <span class="booking-amount">$52.000</span>
+                </div>
+              </div>
+              <div class="booking-row">
+                <div class="booking-avatar" style="background:rgba(16,185,129,0.1);color:var(--f-success)">MF</div>
+                <div class="booking-info">
+                  <div class="booking-name">María Fernández</div>
+                  <div class="booking-service">Efecto húmedo</div>
+                </div>
+                <div class="booking-meta">
+                  <span class="booking-time">19:00</span>
+                  <span class="booking-amount">$45.000</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="main-card">
+            <div class="main-card-header">
+              <span class="main-card-title">Actividad reciente</span>
+            </div>
+            <div class="main-card-body">
+              <div class="booking-row">
+                <div class="booking-avatar" style="background:#E4FFF5;color:var(--f-success)">✓</div>
+                <div class="booking-info">
+                  <div class="booking-name">Natacha Gómez reservó</div>
+                  <div class="booking-service">Volumen tecnológicos 4W · Jue 8 may</div>
+                </div>
+                <div class="booking-meta">
+                  <span class="booking-time" style="color:var(--f-success)">hace 3h</span>
+                </div>
+              </div>
+              <div class="booking-row">
+                <div class="booking-avatar" style="background:#E4FFF5;color:var(--f-success)">✓</div>
+                <div class="booking-info">
+                  <div class="booking-name">Mariela Díaz reservó</div>
+                  <div class="booking-service">Retoque de extensiones 4W · Vie 9 may</div>
+                </div>
+                <div class="booking-meta">
+                  <span class="booking-time" style="color:var(--f-success)">hace 5h</span>
+                </div>
+              </div>
+              <div class="booking-row">
+                <div class="booking-avatar" style="background:var(--f-coral-wash);color:var(--f-coral)">✕</div>
+                <div class="booking-info">
+                  <div class="booking-name">Valentina Ruiz canceló</div>
+                  <div class="booking-service">Efecto húmedo · Sáb 10 may</div>
+                </div>
+                <div class="booking-meta">
+                  <span class="booking-time" style="color:var(--f-coral)">hace 6h</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /view-panel -->
+
+    <!-- VIEW: Resúmenes mensuales -->
+    <div id="view-resumenes" class="view">
+      <header class="frost-hero">
+        <div class="hero-kicker">
+          <span>Negocio</span>
+          <span class="kicker-sep">›</span>
+          <span class="kicker-active">Resúmenes mensuales</span>
+        </div>
+        <h1 class="hero-h1">Resúmenes <strong>mensuales</strong><span class="dot">.</span></h1>
+      </header>
+
+      <div class="content-area">
+        <p class="resumenes-intro">Mirá cómo fue evolucionando tu negocio mes a mes. Cada resumen está disponible el segundo día hábil del mes siguiente.</p>
+
+        <div class="month-grid">
+
+          <!-- Abril 2026 — disponible, no leído -->
+          <div class="month-card unread" onclick="openStory()">
+            <div class="month-card-cover abril">
+              <img src="https://d3p2i4pt6coq3o.cloudfront.net/vendors/storefront-2356/cover_1775234998"
+                style="width:56px;height:56px;border-radius:50%;border:3px solid rgba(255,255,255,0.3);object-fit:cover"
+                onerror="this.style.display='none'">
+              <span class="month-new-badge">NUEVO</span>
+            </div>
+            <div class="month-card-body">
+              <div class="month-period">Abril 2026</div>
+              <div class="month-stats">
+                <strong>55 reservas</strong> · +45% vs marzo<br>
+                <strong>$2.408.000 ARS</strong> · 🔥 Racha activa
+              </div>
+              <div class="month-cta">
+                Ver resumen
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6h8M7 3l3 3-3 3"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Marzo 2026 — disponible, ya leído -->
+          <div class="month-card" onclick="openStory()" style="opacity:0.8">
+            <div class="month-card-cover marzo">
+              <span style="font-size:32px">📊</span>
+            </div>
+            <div class="month-card-body">
+              <div class="month-period">Marzo 2026</div>
+              <div class="month-stats">
+                <strong>38 reservas</strong><br>
+                <span style="color:var(--f-muted);font-size:11px">Ya visto</span>
+              </div>
+              <div class="month-cta" style="color:var(--f-ink-mid)">
+                Ver resumen
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6h8M7 3l3 3-3 3"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Febrero 2026 — sin datos suficientes -->
+          <div class="month-card" style="cursor:default;opacity:0.5" onclick="">
+            <div class="month-card-cover empty" style="flex-direction:column;gap:6px">
+              <span style="font-size:28px;opacity:0.4">📅</span>
+            </div>
+            <div class="month-card-body">
+              <div class="month-period">Febrero 2026</div>
+              <div class="month-empty-label">Sin suficiente actividad ese mes</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div><!-- /view-resumenes -->
+
+  </div><!-- /main -->
+
+  <!-- ════════════════════════
+       NOTIFICATION PANEL
+  ════════════════════════ -->
+  <div class="notif-backdrop hidden" id="notifBackdrop" onclick="closeNotif()"></div>
+
+  <div class="notif-panel hidden" id="notifPanel">
+    <div class="notif-panel-header">
+      <span class="notif-panel-title">
+        Notificaciones
+        <span class="notif-count-pill">1 sin leer</span>
+      </span>
+      <button class="notif-mark-all" onclick="markAllRead()">Marcar todas como leídas</button>
+    </div>
+
+    <ul class="notif-list">
+
+      <!-- WRAPPED NOTIFICATION — tipo nuevo, gold/celebration -->
+      <li class="notif-row unread" id="wrappedNotifRow" onclick="openFromNotif()">
+        <span class="notif-stripe stripe-gold"></span>
+        <div class="notif-row-inner">
+          <span class="notif-icon-chip chip-gold">✨</span>
+          <div class="notif-body">
+            <p class="notif-title-row">Tu resumen de <strong>abril 2026</strong> está listo</p>
+            <p class="notif-service">55 reservas · $2.408.000 · 🔥 Racha activa de 2 meses</p>
+            <div class="notif-meta">
+              <span class="notif-pulse-dot dot-gold"></span>
+              <span class="notif-ts">hace 2 horas</span>
+              <span class="notif-cta-link">Ver resumen →</span>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- Regular notifications (read) -->
+      <li class="notif-row" onclick="">
+        <div class="notif-row-inner">
+          <span class="notif-icon-chip chip-success">✓</span>
+          <div class="notif-body">
+            <p class="notif-title-row"><strong>Natacha Gómez</strong> <span class="verb">reservó</span></p>
+            <p class="notif-service">Volumen tecnológicos 4W</p>
+            <div class="notif-chips">
+              <span class="notif-chip-date">📅 Jue 8 may · 15:00</span>
+              <span class="notif-chip-amount">$67.000</span>
+            </div>
+            <div class="notif-meta">
+              <span class="notif-ts">hace 3 horas</span>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <li class="notif-row" onclick="">
+        <div class="notif-row-inner">
+          <span class="notif-icon-chip chip-success">✓</span>
+          <div class="notif-body">
+            <p class="notif-title-row"><strong>Mariela Díaz</strong> <span class="verb">reservó</span></p>
+            <p class="notif-service">Retoque de extensiones 4W</p>
+            <div class="notif-chips">
+              <span class="notif-chip-date">📅 Vie 9 may · 16:30</span>
+              <span class="notif-chip-amount">$52.000</span>
+            </div>
+            <div class="notif-meta">
+              <span class="notif-ts">hace 5 horas</span>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <li class="notif-row" onclick="">
+        <div class="notif-row-inner">
+          <span class="notif-icon-chip chip-coral">✕</span>
+          <div class="notif-body">
+            <p class="notif-title-row"><strong>Valentina Ruiz</strong> <span class="verb">canceló</span></p>
+            <p class="notif-service">Efecto húmedo</p>
+            <div class="notif-meta">
+              <span class="notif-ts">hace 6 horas</span>
+            </div>
+          </div>
+        </div>
+      </li>
+
+    </ul>
+
+    <div class="notif-panel-footer">
+      <button class="notif-footer-btn" onclick="closeNotif()">
+        Ver todas las notificaciones
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6h8M7 3l3 3-3 3"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ════════════════════════
+       STORY OVERLAY
+  ════════════════════════ -->
+  <div class="story-overlay hidden" id="storyOverlay">
+    <button class="story-close" onclick="closeStory()">✕</button>
+
+    <div class="story-shell">
+      <div class="s-bg"></div>
+
+      <!-- Progress -->
+      <div class="s-progress" id="sProg"></div>
+
+      <!-- Chrome -->
+      <div class="s-chrome">
+        <svg width="68" height="16" viewBox="0 0 153 36" xmlns="http://www.w3.org/2000/svg">
+          <path d="M41.3822 30.3938L38.187 35.7712L3.11719 35.8491L17.5348 10.9106L20.6466 16.2974L15.7314 24.9347L12.625 30.3938H41.3822Z" fill="rgba(255,255,255,0.28)"/>
+          <path d="M20.6467 16.2973L17.5349 10.9106L3.11731 35.8491L0 30.3938L17.5349 0L31.8745 24.9385H25.6399L20.6467 16.2973Z" fill="rgba(255,255,255,0.92)"/>
+          <path d="M23.8473 0L41.3822 30.3938H12.625L15.7314 24.9346L15.7384 24.9385H25.6398H31.8744L17.5348 0H23.8473Z" fill="rgba(232,160,160,0.85)"/>
+          <path d="M76.7893 7.41158V4.76367H69.5647V7.41158H76.7893ZM72.2126 26.6334C74.4029 26.6334 76.3316 25.7835 77.6065 24.2797V26.3065H81.2351V10.1249H77.6065V12.1844C76.3316 10.6806 74.4029 9.79797 72.2126 9.79797C67.7668 9.79797 64.7266 13.5573 64.7266 18.232C64.7266 22.8741 67.7668 26.6334 72.2126 26.6334ZM73.1279 23.1356C70.382 23.1356 68.4206 21.0761 68.4206 18.232C68.4206 15.388 70.382 13.2958 73.1279 13.2958C75.7105 13.2958 77.6065 15.388 77.6065 18.232C77.6065 21.1088 75.6778 23.1356 73.1279 23.1356ZM92.2844 31.112C96.9264 31.112 100.718 28.2679 100.718 22.6125V10.1249H97.2533V12.5439C96.4034 10.9421 94.2131 9.79797 91.7614 9.79797C87.2828 9.79797 84.3407 13.2958 84.3407 17.6436C84.3407 21.9914 87.2828 25.4566 91.7614 25.4566C94.7035 25.4566 96.4361 23.9855 97.0899 22.6779V22.8087C97.0899 26.1104 95.39 28.3333 91.9248 28.3333C90.2576 28.3333 88.3616 27.7776 87.0867 26.6661L85.681 28.9544C87.1847 30.2947 89.5058 31.112 92.2844 31.112ZM92.5459 22.2856C89.9961 22.2856 88.0347 20.3242 88.0347 17.6436C88.0347 14.963 89.9961 12.9689 92.5459 12.9689C95.0958 12.9689 97.0899 14.9303 97.0899 17.5129C97.0899 20.3242 95.1612 22.2856 92.5459 22.2856ZM112.422 26.6334C117.194 26.6334 121.019 22.9067 121.019 18.232C121.019 13.5247 117.194 9.79797 112.422 9.79797C107.649 9.79797 103.824 13.5247 103.824 18.232C103.824 22.9067 107.649 26.6334 112.422 26.6334ZM112.422 23.1356C109.643 23.1356 107.518 21.0434 107.518 18.232C107.518 15.388 109.643 13.2958 112.422 13.2958C115.2 13.2958 117.325 15.388 117.325 18.232C117.325 21.0434 115.2 23.1356 112.422 23.1356ZM127.753 26.3065V19.7031C127.753 15.4534 130.042 13.7535 133.605 13.7535V9.79797C130.14 9.79797 128.374 11.694 127.753 13.3285V10.1249H124.125V26.3065H127.753ZM143.118 26.6334C145.308 26.6334 147.237 25.7835 148.512 24.2797V26.3065H152.14V10.1249H148.512V12.1844C147.237 10.6806 145.308 9.79797 143.118 9.79797C138.672 9.79797 135.632 13.5573 135.632 18.232C135.632 22.8741 138.672 26.6334 143.118 26.6334ZM144.033 23.1356C141.287 23.1356 139.326 21.0761 139.326 18.232C139.326 15.388 141.287 13.2958 144.033 13.2958C146.616 13.2958 148.512 15.388 148.512 18.232C148.512 21.1088 146.583 23.1356 144.033 23.1356Z" fill="rgba(255,255,255,0.88)"/>
+          <rect x="52.7876" y="3.5874" width="0.683334" height="28.5292" fill="rgba(255,255,255,0.28)"/>
+        </svg>
+        <img class="s-avatar-sm"
+          src="https://d3p2i4pt6coq3o.cloudfront.net/vendors/storefront-2356/cover_1775234998"
+          alt="" onerror="this.style.display='none'">
+      </div>
+
+      <!-- Slides -->
+      <div class="s-slides">
+
+        <!-- 0: Cover -->
+        <div class="s-slide active" id="ss0">
+          <img class="s-cover-av"
+            src="https://d3p2i4pt6coq3o.cloudfront.net/vendors/storefront-2356/cover_1775234998"
+            alt="" onerror="this.style.background='#C24040';this.style.display='flex'">
+          <div class="s-cover-month">Abril 2026</div>
+          <div class="s-cover-name">Florencia Murillo</div>
+          <div class="s-cover-handle">@akirastudio</div>
+          <div class="s-cover-tagline">Tu <b>resumen</b><br>del mes 🎉</div>
+        </div>
+
+        <!-- 1: Reservas -->
+        <div class="s-slide" id="ss1">
+          <div class="s-kicker">Reservas</div>
+          <div class="s-h1">Tuviste</div>
+          <div class="s-num">55</div>
+          <div class="s-h1">reservas <strong>confirmadas</strong></div>
+          <div class="s-cmp">
+            <span class="s-cmp-prev">38 en marzo</span>
+            <span style="color:rgba(241,245,249,0.4)">→</span>
+            <span class="s-cmp-pct">+45%</span>
+          </div>
+          <div class="s-badge s-badge-ok">↑ Tu mejor mes del año</div>
+        </div>
+
+        <!-- 2: Top servicios -->
+        <div class="s-slide" id="ss2">
+          <div class="s-kicker">Servicios estrella</div>
+          <div class="s-h1" style="margin-bottom:18px">Lo más <strong>reservado</strong></div>
+          <div class="s-card">
+            <div class="ss-row"><span class="ss-medal">🥇</span><div style="flex:1;min-width:0"><div class="ss-name">Volumen tecnológicos 4W</div><div class="ss-bar-t"><div class="ss-bar" style="width:100%"></div></div></div><span class="ss-n">5</span></div>
+            <div class="ss-row"><span class="ss-medal">🥈</span><div style="flex:1;min-width:0"><div class="ss-name">Retoque de extensiones 4W</div><div class="ss-bar-t"><div class="ss-bar" style="width:80%"></div></div></div><span class="ss-n">4</span></div>
+            <div class="ss-row"><span class="ss-medal">🥉</span><div style="flex:1;min-width:0"><div class="ss-name">Efecto húmedo</div><div class="ss-bar-t"><div class="ss-bar" style="width:60%"></div></div></div><span class="ss-n">3</span></div>
+          </div>
+        </div>
+
+        <!-- 3: Días y horas -->
+        <div class="s-slide" id="ss3">
+          <div class="s-kicker">Ocupación</div>
+          <div class="s-h1" style="margin-bottom:16px">Tus momentos<br>más <strong>intensos</strong></div>
+          <div class="s-chips-row">
+            <div class="s-chip hi"><div class="s-chip-lbl">Día top</div><div class="s-chip-val">Jueves</div></div>
+            <div class="s-chip hi"><div class="s-chip-lbl">Franja top</div><div class="s-chip-val">16–17 hs</div></div>
+          </div>
+          <div class="s-card">
+            <div style="font-size:9.5px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:rgba(241,245,249,0.45);margin-bottom:10px">Distribución semanal</div>
+            <div class="s-bars">
+              <div class="s-bar-col"><div class="s-bar-f" style="height:10px;background:rgba(255,255,255,0.12)"></div><span class="s-bar-lbl">L</span></div>
+              <div class="s-bar-col"><div class="s-bar-f" style="height:26px;background:rgba(194,64,64,0.5)"></div><span class="s-bar-lbl">M</span></div>
+              <div class="s-bar-col"><div class="s-bar-f" style="height:8px;background:rgba(255,255,255,0.12)"></div><span class="s-bar-lbl">X</span></div>
+              <div class="s-bar-col"><div class="s-bar-f" style="height:48px;background:rgba(245,200,66,0.75)"></div><span class="s-bar-lbl hi">J</span></div>
+              <div class="s-bar-col"><div class="s-bar-f" style="height:5px;background:rgba(255,255,255,0.10)"></div><span class="s-bar-lbl">V</span></div>
+              <div class="s-bar-col"><div class="s-bar-f" style="height:3px;background:rgba(255,255,255,0.07)"></div><span class="s-bar-lbl">S</span></div>
+              <div class="s-bar-col"><div class="s-bar-f" style="height:3px;background:rgba(255,255,255,0.07)"></div><span class="s-bar-lbl">D</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4: Clientes nuevas -->
+        <div class="s-slide" id="ss4">
+          <div class="s-kicker">Nuevas caras</div>
+          <div class="s-num" style="font-size:100px">11</div>
+          <div class="s-h1"><strong>clientas nuevas</strong><br>te eligieron este mes</div>
+          <div class="s-sub" style="margin-top:16px">Primera reserva con vos en abril ✨</div>
+          <div class="s-badge s-badge-gold">+11 en tu base de clientas</div>
+        </div>
+
+        <!-- 5: Clientas más fieles -->
+        <div class="s-slide" id="ss5">
+          <div class="s-kicker">Fidelidad</div>
+          <div class="s-h1" style="margin-bottom:16px">Tus clientas<br>más <strong>fieles</strong> ❤️</div>
+          <div class="s-card">
+            <div class="s-client-row"><span class="s-client-icon">👑</span><span class="s-client-name">Guadalupe</span><span class="s-client-v">9 visitas</span></div>
+            <div style="height:1px;background:rgba(255,255,255,0.08);margin:2px 0"></div>
+            <div class="s-client-row"><span class="s-client-icon">⭐</span><span class="s-client-name">Brisa</span><span class="s-client-v">6 visitas</span></div>
+            <div class="s-client-row"><span class="s-client-icon">⭐</span><span class="s-client-name">María</span><span class="s-client-v">6 visitas</span></div>
+          </div>
+          <div class="s-sub" style="font-size:11px;margin-top:10px">Solo nombre — listo para compartir</div>
+        </div>
+
+        <!-- 6: Facturación -->
+        <div class="s-slide" id="ss6">
+          <div class="s-kicker">Facturación</div>
+          <div class="s-h1" style="margin-bottom:16px">Lo que <strong>facturaste</strong></div>
+          <div class="s-card" style="text-align:center;padding:26px 20px">
+            <div class="s-billing-ccy">ARS</div>
+            <div class="s-billing-amt">$2.408.000</div>
+            <div class="s-billing-lbl">ingreso neto del mes</div>
+          </div>
+          <div class="s-sub" style="font-size:11px;margin-top:12px">Reservas confirmadas · neto de comisiones</div>
+        </div>
+
+        <!-- 7: Equipo -->
+        <div class="s-slide" id="ss7">
+          <div class="s-kicker">Tu equipo en abril</div>
+          <div class="s-h1" style="margin-bottom:16px">Cómo trabajó<br>el <strong>equipo</strong></div>
+          <div class="s-card">
+            <div class="s-staff-row"><div class="s-staff-av" style="background:#C24040">FM</div><div><div class="s-staff-name">Florencia Murillo</div><div class="s-staff-stats">57 reservas · $3.796.000 ARS</div></div><span style="font-size:16px;margin-left:auto">🏆</span></div>
+            <div class="s-staff-row"><div class="s-staff-av" style="background:rgba(194,64,64,0.45)">DR</div><div><div class="s-staff-name">De ro</div><div class="s-staff-stats">16 reservas · $463.000 ARS</div></div></div>
+          </div>
+        </div>
+
+        <!-- 8: Racha -->
+        <div class="s-slide" id="ss8">
+          <div class="s-kicker">Racha activa 🔥</div>
+          <div class="s-h1">Llevas</div>
+          <div class="s-streak-num">2</div>
+          <div class="s-h1"><strong>meses consecutivos</strong><br>creciendo tus reservas</div>
+          <div class="s-card" style="margin-top:20px;text-align:center;padding:14px 20px">
+            <div style="font-size:12px;color:rgba(241,245,249,0.55)">Marzo → Abril</div>
+            <div style="font-size:15px;font-weight:600;color:#F1F5F9;margin-top:4px">38 → 55 reservas</div>
+            <div style="font-size:12px;color:#6EE7C7;margin-top:3px;font-weight:600">+45% de crecimiento</div>
+          </div>
+          <div class="s-badge s-badge-fire">¡Seguí así! 💪</div>
+        </div>
+
+        <!-- 9: Cierre -->
+        <div class="s-slide" id="ss9">
+          <span style="font-size:50px;margin-bottom:16px">🎊</span>
+          <div class="s-h1" style="font-size:26px">¡Hasta el<br><strong>mes que viene!</strong></div>
+          <div class="s-sub" style="margin-top:8px">Mayo 2026 ya viene 💪</div>
+        </div>
+
+      </div><!-- /s-slides -->
+
+      <!-- Nav zones -->
+      <div class="s-nav-zones">
+        <div class="s-prev" id="sPrev"></div>
+        <div class="s-next" id="sNext"></div>
+      </div>
+
+      <!-- Controls (last slide) -->
+      <div class="s-controls hidden" id="sControls">
+        <button class="s-ctrl s-ctrl-dl">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Descargar
+        </button>
+        <button class="s-ctrl s-ctrl-share" id="sShareBtn">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          Compartir
+        </button>
+      </div>
+
+      <div class="s-tap-hint" id="sTapHint">tocá para avanzar</div>
+
+    </div><!-- /story-shell -->
+  </div><!-- /story-overlay -->
+
+</div><!-- /app -->
+
+<script>
+  /* ── State ── */
+  const TOTAL_SLIDES = 10;
+  let sCur = 0;
+  let notifOpen = false;
+  let currentView = 'panel'; // 'panel' | 'resumenes'
+  let notifRead = false;
+
+  /* ── Elements ── */
+  const bellBadge  = document.getElementById('bellBadge');
+  const bellDot    = document.getElementById('bellDot');
+  const bellBtn    = document.getElementById('bellBtn');
+  const badgeNuevo = document.getElementById('badgeNuevo');
+  const notifPanel = document.getElementById('notifPanel');
+  const notifBackdrop = document.getElementById('notifBackdrop');
+  const storyOverlay  = document.getElementById('storyOverlay');
+  const viewPanel    = document.getElementById('view-panel');
+  const viewResumenes = document.getElementById('view-resumenes');
+  const navPanel     = document.getElementById('navPanel');
+  const navResumenes = document.getElementById('navResumenes');
+  const demoState    = document.getElementById('demoState');
+  const sProg        = document.getElementById('sProg');
+  const sControls    = document.getElementById('sControls');
+  const sTapHint     = document.getElementById('sTapHint');
+
+  /* Build story progress segments */
+  for (let i = 0; i < TOTAL_SLIDES; i++) {
+    const s = document.createElement('div');
+    s.className = 's-seg';
+    s.id = 'ss-p' + i;
+    sProg.appendChild(s);
+  }
+
+  /* ── View navigation ── */
+  function goToPanel() {
+    closeNotif();
+    currentView = 'panel';
+    viewPanel.classList.add('active');
+    viewResumenes.classList.remove('active');
+    navPanel.classList.add('active');
+    navResumenes.classList.remove('active');
+    demoState.textContent = 'Panel — click la campana o "Resúmenes mensuales"';
+  }
+
+  function goToResumenes() {
+    closeNotif();
+    currentView = 'resumenes';
+    viewPanel.classList.remove('active');
+    viewResumenes.classList.add('active');
+    navPanel.classList.remove('active');
+    navResumenes.classList.add('active');
+    demoState.textContent = 'Resúmenes mensuales — click "Abril 2026" para abrir el wrapped';
+  }
+
+  /* ── Notifications ── */
+  function toggleNotif() {
+    if (notifOpen) closeNotif();
+    else openNotif();
+  }
+
+  function openNotif() {
+    notifPanel.classList.remove('hidden');
+    notifBackdrop.classList.remove('hidden');
+    notifOpen = true;
+    demoState.textContent = 'Notificaciones abiertas — click la notificación ✨ del wrapped';
+  }
+
+  function closeNotif() {
+    notifPanel.classList.add('hidden');
+    notifBackdrop.classList.add('hidden');
+    notifOpen = false;
+  }
+
+  function markAllRead() {
+    bellBadge.style.display = 'none';
+    bellDot.style.display = 'none';
+    notifRead = true;
+    document.getElementById('wrappedNotifRow').classList.remove('unread');
+    document.getElementById('notifPanel').querySelector('.notif-count-pill').textContent = 'Todas leídas';
+    demoState.textContent = 'Notificaciones marcadas como leídas';
+  }
+
+  function openFromNotif() {
+    /* Mark wrapped notif as read */
+    bellBadge.style.display = 'none';
+    bellDot.style.display = 'none';
+    document.getElementById('wrappedNotifRow').classList.remove('unread');
+    closeNotif();
+    goToResumenes();
+    /* small delay so the view transition is visible before the overlay */
+    setTimeout(() => openStory(), 180);
+  }
+
+  /* ── Story ── */
+  function openStory() {
+    storyOverlay.classList.remove('hidden');
+    sCur = 0;
+    syncStory();
+    demoState.textContent = 'Resumen abierto — ← → o click para navegar · ESC para cerrar';
+  }
+
+  function closeStory() {
+    storyOverlay.classList.add('hidden');
+    demoState.textContent = 'Resúmenes mensuales — click "Abril 2026" para reabrir';
+    /* Remove NUEVO badge once story was opened */
+    if (badgeNuevo) badgeNuevo.style.display = 'none';
+  }
+
+  function sGoTo(next) {
+    if (next < 0 || next >= TOTAL_SLIDES || next === sCur) return;
+    const from = document.getElementById('ss' + sCur);
+    const to   = document.getElementById('ss' + next);
+    from.classList.remove('active');
+    from.classList.add('exit');
+    from.addEventListener('transitionend', () => from.classList.remove('exit'), { once: true });
+    to.classList.remove('exit');
+    to.classList.add('active');
+    sCur = next;
+    syncStory();
+  }
+
+  function syncStory() {
+    for (let i = 0; i < TOTAL_SLIDES; i++) {
+      const s = document.getElementById('ss-p' + i);
+      s.className = 's-seg' + (i < sCur ? ' done' : i === sCur ? ' active' : '');
+    }
+    const isLast = sCur === TOTAL_SLIDES - 1;
+    sControls.classList.toggle('hidden', !isLast);
+    sTapHint.classList.toggle('hidden', isLast);
+  }
+
+  document.getElementById('sPrev').addEventListener('click', () => sGoTo(sCur - 1));
+  document.getElementById('sNext').addEventListener('click', () => sGoTo(sCur + 1));
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && !storyOverlay.classList.contains('hidden')) { closeStory(); return; }
+    if (storyOverlay.classList.contains('hidden')) return;
+    if (e.key === 'ArrowRight' || e.key === ' ') sGoTo(sCur + 1);
+    if (e.key === 'ArrowLeft') sGoTo(sCur - 1);
+  });
+
+  /* Web Share */
+  document.getElementById('sShareBtn').addEventListener('click', async () => {
+    const data = { title: 'Mi resumen de abril 2026 · @akirastudio', text: '55 reservas, +45% 🔥', url: window.location.href };
+    try {
+      if (navigator.share && navigator.canShare(data)) { await navigator.share(data); return; }
+    } catch {}
+    try { await navigator.clipboard.writeText(data.url); alert('Link copiado'); } catch {}
+  });
+</script>
+</body>
+</html>
