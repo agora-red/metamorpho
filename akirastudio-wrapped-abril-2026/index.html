@@ -578,6 +578,41 @@
       background: rgba(255,255,255,0.08);
       margin: 4px 0;
     }
+
+    /* ── Summary rows ── */
+    .summary-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .summary-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .summary-row:first-child { padding-top: 0; }
+    .s-icon { font-size: 13px; width: 20px; flex-shrink: 0; text-align: center; }
+    .s-label {
+      font-size: 9.5px;
+      font-weight: 600;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: var(--v-muted);
+      flex: 1;
+    }
+    .s-val {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--v-text);
+      text-align: right;
+      white-space: nowrap;
+    }
+    .s-val .s-badge {
+      display: inline-block;
+      font-size: 9.5px;
+      font-weight: 700;
+      color: #6EE7C7;
+      margin-left: 5px;
+    }
+    .s-val .s-fire { color: #FFAB80; }
   </style>
 </head>
 <body>
@@ -810,8 +845,56 @@
       <div class="badge badge-fire">¡Seguí así! 💪</div>
     </div>
 
-    <!-- 9 · Cierre -->
+    <!-- 9 · Resumen completo -->
     <div class="slide" id="s9">
+      <div class="kicker">Todo en un vistazo</div>
+      <div class="h1" style="margin-bottom:16px">Tu <strong>abril 2026</strong></div>
+      <div class="card" style="padding:14px 18px;width:100%">
+        <div class="summary-row">
+          <span class="s-icon">📅</span>
+          <span class="s-label">Reservas</span>
+          <span class="s-val">55 <span class="s-badge">+45%</span></span>
+        </div>
+        <div class="summary-row">
+          <span class="s-icon">✂️</span>
+          <span class="s-label">Servicio top</span>
+          <span class="s-val" style="max-width:160px;overflow:hidden;text-overflow:ellipsis">Vol. tecnológicos 4W</span>
+        </div>
+        <div class="summary-row">
+          <span class="s-icon">📆</span>
+          <span class="s-label">Momento pico</span>
+          <span class="s-val">Jueves · 16–17 hs</span>
+        </div>
+        <div class="summary-row">
+          <span class="s-icon">🌟</span>
+          <span class="s-label">Clientas nuevas</span>
+          <span class="s-val">11</span>
+        </div>
+        <div class="summary-row">
+          <span class="s-icon">👑</span>
+          <span class="s-label">Clienta más fiel</span>
+          <span class="s-val">Guadalupe · 9 visitas</span>
+        </div>
+        <div class="summary-row">
+          <span class="s-icon">💰</span>
+          <span class="s-label">Facturación ARS</span>
+          <span class="s-val">$2.408.000</span>
+        </div>
+        <div class="summary-row">
+          <span class="s-icon">👥</span>
+          <span class="s-label">Equipo</span>
+          <span class="s-val">2 profesionales</span>
+        </div>
+        <div class="summary-row">
+          <span class="s-icon">🔥</span>
+          <span class="s-label">Racha activa</span>
+          <span class="s-val"><span class="s-fire">2 meses</span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10 · Cierre -->
+    <div class="slide" id="s10">
       <div class="close-emoji">🎊</div>
       <svg width="108" height="26" viewBox="0 0 153 36" xmlns="http://www.w3.org/2000/svg" aria-label="Ágora" style="margin-bottom:22px">
         <path d="M41.3822 30.3938L38.187 35.7712L3.11719 35.8491L17.5348 10.9106L20.6466 16.2974L15.7314 24.9347L12.625 30.3938H41.3822Z" fill="rgba(255,255,255,0.28)"/>
@@ -850,7 +933,7 @@
 </div><!-- /shell -->
 
 <script>
-  const TOTAL = 10;
+  const TOTAL = 11;
   let cur = 0;
 
   const prog = document.getElementById('progress');
