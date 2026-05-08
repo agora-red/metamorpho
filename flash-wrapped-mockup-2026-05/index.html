@@ -830,6 +830,11 @@
     .s-badge-ok   { background: rgba(16,185,129,0.18); color: #6EE7C7; border: 1px solid rgba(16,185,129,0.28); }
     .s-badge-gold { background: rgba(245,200,66,0.14); color: #F5C842; border: 1px solid rgba(245,200,66,0.24); }
     .s-badge-fire { background: rgba(255,100,40,0.18); color: #FFAB80; border: 1px solid rgba(255,100,40,0.28); }
+    .s-sum-row { display:flex; align-items:center; gap:9px; padding:7px 0; border-bottom:1px solid rgba(255,255,255,0.06); }
+    .s-si { font-size:12px; width:18px; flex-shrink:0; text-align:center; }
+    .s-sl { font-size:9px; font-weight:600; letter-spacing:0.10em; text-transform:uppercase; color:rgba(241,245,249,0.55); flex:1; }
+    .s-sv { font-size:12px; font-weight:600; color:#F1F5F9; text-align:right; white-space:nowrap; }
+    .s-sv-ok { font-size:9.5px; font-weight:700; color:#6EE7C7; margin-left:4px; }
 
     .s-card {
       background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.13);
@@ -1554,8 +1559,24 @@
           <div class="s-badge s-badge-fire">¡Seguí así! 💪</div>
         </div>
 
-        <!-- 9: Cierre -->
+        <!-- 9: Resumen completo -->
         <div class="s-slide" id="ss9">
+          <div class="s-kicker">Todo en un vistazo</div>
+          <div class="s-h1" style="margin-bottom:14px">Tu <strong>abril 2026</strong></div>
+          <div class="s-card" style="padding:12px 16px;width:100%">
+            <div class="s-sum-row"><span class="s-si">📅</span><span class="s-sl">Reservas</span><span class="s-sv">55 <span class="s-sv-ok">+45%</span></span></div>
+            <div class="s-sum-row"><span class="s-si">✂️</span><span class="s-sl">Servicio top</span><span class="s-sv" style="max-width:148px;overflow:hidden;text-overflow:ellipsis">Vol. tecnológicos 4W</span></div>
+            <div class="s-sum-row"><span class="s-si">📆</span><span class="s-sl">Momento pico</span><span class="s-sv">Jueves · 16–17 hs</span></div>
+            <div class="s-sum-row"><span class="s-si">🌟</span><span class="s-sl">Clientas nuevas</span><span class="s-sv">11</span></div>
+            <div class="s-sum-row"><span class="s-si">👑</span><span class="s-sl">Clienta fiel</span><span class="s-sv">Guadalupe · 9 visitas</span></div>
+            <div class="s-sum-row"><span class="s-si">💰</span><span class="s-sl">Facturación ARS</span><span class="s-sv">$2.408.000</span></div>
+            <div class="s-sum-row"><span class="s-si">👥</span><span class="s-sl">Equipo</span><span class="s-sv">2 profesionales</span></div>
+            <div class="s-sum-row" style="border-bottom:none;padding-bottom:0"><span class="s-si">🔥</span><span class="s-sl">Racha activa</span><span class="s-sv" style="color:#FFAB80">2 meses</span></div>
+          </div>
+        </div>
+
+        <!-- 10: Cierre -->
+        <div class="s-slide" id="ss10">
           <span style="font-size:50px;margin-bottom:16px">🎊</span>
           <div class="s-h1" style="font-size:26px">¡Hasta el<br><strong>mes que viene!</strong></div>
           <div class="s-sub" style="margin-top:8px">Mayo 2026 ya viene 💪</div>
@@ -1590,7 +1611,7 @@
 
 <script>
   /* ── State ── */
-  const TOTAL_SLIDES = 10;
+  const TOTAL_SLIDES = 11;
   let sCur = 0;
   let notifOpen = false;
   let currentView = 'panel'; // 'panel' | 'resumenes'
