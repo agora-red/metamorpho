@@ -1,8 +1,18 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
   "version": 1,
-  "updated_at": "2026-05-08",
+  "updated_at": "2026-05-11",
   "outputs": [
+    {
+      "type": "proposal",
+      "typeLabel": "Proposal",
+      "title": "Feedback Loop · propuesta interna",
+      "description": "Propuesta de dos canales de feedback de vendors: Idea Box in-app (Flash, visibilidad solo interna) y Digest quincenal automatizado que cruza señales existentes.",
+      "detail": "1-page · 2 propuestas · Idea Box + Digest",
+      "date": "ABR 2026",
+      "href": "./feedback-loop-proposal-2026-04/index.html",
+      "slug": "feedback-loop-proposal-2026-04"
+    },
     {
       "type": "dashboard",
       "typeLabel": "Dashboard",
