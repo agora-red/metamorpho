@@ -1,8 +1,18 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
   "version": 1,
-  "updated_at": "2026-05-11",
+  "updated_at": "2026-05-15",
   "outputs": [
+    {
+      "type": "deck",
+      "typeLabel": "Deck",
+      "title": "Brainstorming · Onboarding conversacional con AI",
+      "description": "Deck de 16 slides para sesión de brainstorming interno sobre reemplazar el wizard de onboarding de Flash (11 vistas en 2 wizards) por un flow conversacional con Claude + preview visual en vivo. Mapea el flow actual con branching por plan/rol, zoom en el gap crítico (Working Hours captura bloques pero no frequency/buffer/service-specific schedules), mock visual del split-screen chat+calendar, transcript conversacional con detección de inconsistencias entre slot interval y duración de servicio, arquitectura transversal de 6 pilares, riesgos con mitigaciones, breakdown de pricing por completion (~$0.30 USD/setup con Sonnet 4.6 + caching, breakdown de tokens, sensitivities, sanity check vs unit economics) y 6 preguntas abiertas para el equipo.",
+      "detail": "16 slides · interno · brainstorming · navegable con teclado",
+      "date": "MAY 2026",
+      "href": "./brainstorming-onboarding-conversacional-2026-05/index.html",
+      "slug": "brainstorming-onboarding-conversacional-2026-05"
+    },
     {
       "type": "proposal",
       "typeLabel": "Proposal",

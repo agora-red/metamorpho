@@ -1,0 +1,2343 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Brainstorming · Onboarding conversacional con AI · Ágora</title>
+    <link rel="icon" href="./assets/agora-iso.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #0072fb;
+        --primary-hover: #005cd4;
+        --primary-soft: #eef6ff;
+        --primary-8: rgba(0, 114, 251, 0.08);
+        --accent: #ff4658;
+        --accent-soft: #ffe3e6;
+        --success: #0ad6a1;
+        --success-soft: #a9ffe7;
+        --success-ink: #07806a;
+        --violet: #7c5cff;
+        --violet-soft: #ece7ff;
+        --sky: #00cdff;
+        --sky-soft: #d6f8ff;
+        --warning: #ffe066;
+        --warning-soft: #fff5c2;
+        --warning-ink: #8a6d00;
+
+        --text: #1a1a1a;
+        --text-secondary: #5a5a5a;
+        --text-faint: #9a9a9a;
+        --border: #e9e9e9;
+        --border-soft: #f2f2f2;
+        --surface: #ffffff;
+        --surface-muted: #fafafa;
+        --surface-cream: #faf7f2;
+        --surface-dim: #f4f4f6;
+        --ink: #0c1220;
+        --ink-2: #161c2c;
+
+        --bk-active: #a9ffe7;
+        --bk-finished: #afc6f2;
+        --bk-blocked: #d9d9d9;
+        --bk-working: #eef6ff;
+
+        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 12px -4px rgba(0, 0, 0, 0.06);
+        --shadow-md: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 18px -4px rgba(0, 0, 0, 0.08), 0 18px 38px -8px rgba(0, 0, 0, 0.10);
+        --shadow-lg: 0 2px 4px rgba(0, 0, 0, 0.06), 0 12px 28px -6px rgba(0, 0, 0, 0.14);
+
+        --font-sans: 'Montserrat', system-ui, -apple-system, sans-serif;
+        --font-mono: 'Space Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+      html, body { height: 100%; }
+      body {
+        background: var(--surface-muted);
+        color: var(--text);
+        font-family: var(--font-sans);
+        font-size: 16px;
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        scroll-snap-type: y mandatory;
+        overflow-y: scroll;
+      }
+      .mono { font-family: var(--font-mono); }
+
+      /* ===================== Topbar ===================== */
+      .topbar {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        z-index: 50;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 36px;
+        background: var(--glass-light, rgba(255,255,255,0.85));
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border-soft);
+      }
+      .topbar img { height: 18px; display: block; }
+      .topbar-meta {
+        display: flex; align-items: center; gap: 12px;
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--text-secondary);
+      }
+      .topbar-meta .pill {
+        padding: 4px 10px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: var(--surface);
+      }
+      .topbar-meta .pill.live {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      /* ===================== Slide framework ===================== */
+      .slide {
+        min-height: 100vh;
+        scroll-snap-align: start;
+        padding: 72px 56px 36px;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+      }
+      .slide-inner {
+        flex: 1;
+        max-width: 1280px;
+        width: 100%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+      }
+      .slide-foot {
+        position: absolute;
+        bottom: 22px;
+        left: 56px;
+        right: 56px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--text-faint);
+      }
+      .slide-foot .num { display: flex; align-items: center; gap: 8px; }
+      .slide-foot .num .total { color: var(--text-faint); opacity: 0.6; }
+      .slide-foot .iso { height: 14px; opacity: 0.6; }
+      .slide-foot .iso img { height: 100%; display: block; }
+
+      /* Backgrounds */
+      .bg-white   { background: var(--surface); }
+      .bg-cream   { background: var(--surface-cream); }
+      .bg-dim     { background: var(--surface-dim); }
+      .bg-ink     { background: var(--ink); color: #f1eee6; }
+      .bg-ink .slide-foot { color: rgba(255,255,255,0.5); }
+
+      /* Kicker */
+      .kicker {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--text-secondary);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .kicker .dot {
+        width: 6px; height: 6px;
+        border-radius: 50%;
+        background: var(--accent);
+        display: inline-block;
+      }
+      .bg-ink .kicker { color: rgba(255,255,255,0.65); }
+
+      /* Type */
+      h1, h2, h3 { font-weight: 700; letter-spacing: -0.01em; }
+      .h-display { font-size: clamp(48px, 6.4vw, 92px); line-height: 1.02; font-weight: 800; letter-spacing: -0.03em; }
+      .h-1 { font-size: clamp(36px, 4.2vw, 62px); line-height: 1.05; letter-spacing: -0.025em; }
+      .h-2 { font-size: clamp(22px, 2vw, 30px); line-height: 1.2; }
+      .lead { font-size: clamp(17px, 1.3vw, 21px); color: var(--text-secondary); max-width: 70ch; }
+      .small { font-size: 13px; color: var(--text-secondary); }
+
+      strong { font-weight: 700; }
+
+      /* Common helpers */
+      .row { display: flex; gap: 24px; }
+      .col { display: flex; flex-direction: column; gap: 24px; }
+      .stack-12 > * + * { margin-top: 12px; }
+      .stack-20 > * + * { margin-top: 20px; }
+      .stack-32 > * + * { margin-top: 32px; }
+      .grow { flex: 1; }
+
+      /* ===================== Slide 1 — Cover ===================== */
+      .cover-inner {
+        flex: 1;
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        gap: 56px;
+        align-items: center;
+      }
+      .cover-left .kicker { margin-bottom: 28px; }
+      .cover-left h1 { margin-bottom: 24px; }
+      .cover-left .lead { margin-bottom: 36px; }
+      .cover-byline {
+        display: flex; align-items: center; gap: 14px;
+        padding-top: 18px;
+        border-top: 1px solid var(--border);
+      }
+      .avatar {
+        width: 36px; height: 36px;
+        border-radius: 50%;
+        background: var(--surface-dim);
+        display: grid; place-items: center;
+        font-family: var(--font-mono);
+        font-size: 12px; font-weight: 700;
+        color: var(--primary);
+        border: 1px solid var(--border);
+      }
+      .cover-byline .who { font-weight: 600; }
+      .cover-byline .role { color: var(--text-secondary); font-size: 13px; }
+
+      .cover-visual {
+        position: relative;
+        aspect-ratio: 1;
+        border: 1px solid var(--border);
+        background: var(--surface-dim);
+        border-radius: 24px;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        overflow: hidden;
+      }
+      .cover-visual::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 80% 110%, var(--primary-soft) 0%, transparent 50%);
+        pointer-events: none;
+      }
+      .cv-bubble {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 12px 14px;
+        font-size: 14px;
+        max-width: 88%;
+        box-shadow: var(--shadow-sm);
+        position: relative;
+      }
+      .cv-bubble.user {
+        align-self: flex-end;
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
+      }
+      .cv-bubble .who-tag {
+        font-family: var(--font-mono);
+        font-size: 9px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--text-faint);
+        display: block;
+        margin-bottom: 4px;
+      }
+      .cv-bubble.user .who-tag { color: rgba(255,255,255,0.7); }
+
+      /* ===================== Slide 2 — Hook ===================== */
+      .hook-inner { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 48px; }
+      .gap-viz {
+        display: grid;
+        grid-template-columns: 1fr 80px 1fr;
+        gap: 16px;
+        align-items: stretch;
+        margin-top: 32px;
+      }
+      .gap-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 24px 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .gap-card.left { border-left: 4px solid var(--success); }
+      .gap-card.right { border-left: 4px solid var(--primary); }
+      .gap-card .label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-faint); }
+      .gap-card .title { font-size: 20px; font-weight: 700; }
+      .gap-card .body { color: var(--text-secondary); font-size: 14px; line-height: 1.45; }
+
+      .gap-bridge {
+        align-self: stretch;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+      .gap-bridge .line {
+        flex: 1;
+        width: 1px;
+        background: var(--accent);
+        position: relative;
+      }
+      .gap-bridge .line::before {
+        content: '';
+        position: absolute;
+        left: 50%; top: 0;
+        transform: translateX(-50%);
+        width: 12px; height: 12px;
+        border-radius: 50%;
+        background: var(--accent);
+      }
+      .gap-bridge .line::after {
+        content: '';
+        position: absolute;
+        left: 50%; bottom: 0;
+        transform: translateX(-50%);
+        width: 12px; height: 12px;
+        border-radius: 50%;
+        background: var(--accent);
+      }
+      .gap-bridge .word {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        color: var(--accent);
+        text-transform: uppercase;
+      }
+
+      .missing-list {
+        background: var(--accent-soft);
+        border: 1px solid #ffd0d4;
+        border-radius: 14px;
+        padding: 20px 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        max-width: 760px;
+        margin-top: 28px;
+      }
+      .missing-list .head {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--accent);
+        font-weight: 700;
+      }
+      .missing-list ul { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 24px; }
+      .missing-list li { font-size: 14px; color: var(--text); display: flex; gap: 8px; align-items: flex-start; }
+      .missing-list li::before { content: '·'; color: var(--accent); font-weight: 700; }
+
+      /* ===================== Slide 3 — Estado actual ===================== */
+      .wizards {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
+        margin-top: 36px;
+      }
+      .wizard {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 26px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .wizard .head {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+      }
+      .wizard .head .title { font-size: 18px; font-weight: 700; }
+      .wizard .head .count {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--text-secondary);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .wizard .head .route {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--primary);
+        background: var(--primary-soft);
+        padding: 3px 8px;
+        border-radius: 6px;
+      }
+      .steps {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .step {
+        padding: 8px 12px;
+        background: var(--surface-dim);
+        border: 1px solid var(--border-soft);
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .step .n {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        color: var(--text-faint);
+        font-weight: 700;
+      }
+      .step.crit {
+        background: var(--accent-soft);
+        border-color: #ffd0d4;
+      }
+      .step.crit .n { color: var(--accent); }
+      .branching {
+        margin-top: 24px;
+        padding: 18px 22px;
+        background: var(--warning-soft);
+        border: 1px solid var(--warning);
+        border-radius: 12px;
+        font-size: 14px;
+        color: var(--warning-ink);
+      }
+      .branching strong { color: #5b4800; }
+
+      /* ===================== Slide 4 — Working hours pain ===================== */
+      .capture-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        margin-top: 32px;
+      }
+      .capture-col {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 26px;
+      }
+      .capture-col .head {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-weight: 700;
+        margin-bottom: 16px;
+      }
+      .capture-col.ok .head { color: var(--success-ink); }
+      .capture-col.no .head { color: var(--accent); }
+      .capture-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+      .capture-col li {
+        display: flex;
+        gap: 12px;
+        font-size: 15px;
+        align-items: flex-start;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--border-soft);
+      }
+      .capture-col li:last-child { border-bottom: none; padding-bottom: 0; }
+      .capture-col .mark {
+        font-family: var(--font-mono);
+        font-weight: 700;
+        flex-shrink: 0;
+        width: 18px;
+      }
+      .capture-col.ok .mark { color: var(--success-ink); }
+      .capture-col.no .mark { color: var(--accent); }
+      .capture-col li .where {
+        margin-left: auto;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--text-faint);
+      }
+      .pain-conclusion {
+        margin-top: 28px;
+        padding: 22px 26px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-left: 4px solid var(--accent);
+        border-radius: 12px;
+        font-size: 15.5px;
+        line-height: 1.55;
+        color: var(--text);
+      }
+      .pain-conclusion p + p { margin-top: 6px; }
+
+      /* ===================== Slide 5 — Split mock ===================== */
+      .split {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
+        margin-top: 32px;
+        height: 100%;
+        flex: 1;
+        min-height: 0;
+      }
+      .panel {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        box-shadow: var(--shadow-md);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      .panel-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 18px;
+        border-bottom: 1px solid var(--border);
+        background: var(--surface);
+      }
+      .panel-title {
+        display: flex; align-items: center; gap: 10px;
+        font-size: 13px;
+        font-weight: 600;
+      }
+      .panel-title .iso { width: 18px; height: 18px; }
+      .panel-title .iso img { width: 100%; height: 100%; object-fit: contain; }
+      .panel-tag {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--success-ink);
+        background: var(--success-soft);
+        padding: 3px 8px;
+        border-radius: 6px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .panel-tag .live-dot {
+        width: 6px; height: 6px;
+        border-radius: 50%;
+        background: var(--success);
+        animation: blink 1.6s infinite;
+      }
+      @keyframes blink {
+        0%, 60% { opacity: 1; }
+        70%, 100% { opacity: 0.3; }
+      }
+
+      .chat-body {
+        flex: 1;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        overflow: hidden;
+        background: var(--surface-muted);
+      }
+      .msg {
+        max-width: 86%;
+        padding: 11px 14px;
+        border-radius: 14px;
+        font-size: 13.5px;
+        line-height: 1.45;
+      }
+      .msg.bot {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        align-self: flex-start;
+        border-bottom-left-radius: 4px;
+      }
+      .msg.user {
+        background: var(--primary);
+        color: white;
+        align-self: flex-end;
+        border-bottom-right-radius: 4px;
+      }
+      .msg .who {
+        font-family: var(--font-mono);
+        font-size: 9px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        opacity: 0.55;
+        margin-bottom: 3px;
+      }
+      .chat-input {
+        margin: 16px 20px 20px;
+        padding: 11px 14px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--text-faint);
+        font-size: 13.5px;
+      }
+      .chat-input .send {
+        margin-left: auto;
+        width: 28px; height: 28px;
+        background: var(--primary);
+        color: white;
+        border-radius: 8px;
+        display: grid; place-items: center;
+        font-size: 13px;
+      }
+
+      .preview-body {
+        flex: 1;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        background: var(--surface);
+        overflow: hidden;
+      }
+      .cal {
+        display: grid;
+        grid-template-columns: 44px repeat(6, 1fr);
+        gap: 0;
+        font-size: 11px;
+        flex: 1;
+        align-content: stretch;
+      }
+      .cal-cell {
+        border-right: 1px solid var(--border-soft);
+        border-bottom: 1px solid var(--border-soft);
+        padding: 4px 6px;
+        background: var(--surface);
+        position: relative;
+        min-height: 22px;
+      }
+      .cal-cell.head {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        color: var(--text-secondary);
+        text-align: center;
+        text-transform: uppercase;
+        background: var(--surface-dim);
+        padding: 7px 4px;
+        min-height: 0;
+      }
+      .cal-cell.time {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        color: var(--text-faint);
+        text-align: right;
+        padding-right: 8px;
+        background: var(--surface-dim);
+      }
+      .cal-cell.bk-active { background: var(--bk-active); }
+      .cal-cell.bk-working { background: var(--bk-working); }
+      .cal-cell.bk-conflict {
+        background: repeating-linear-gradient(45deg, var(--accent-soft), var(--accent-soft) 6px, #ffd0d4 6px, #ffd0d4 12px);
+      }
+      .cal-cell.bk-conflict::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border: 1.5px dashed var(--accent);
+      }
+      .cal-callout {
+        position: absolute;
+        right: -8px;
+        top: 50%;
+        transform: translate(100%, -50%);
+        background: var(--accent);
+        color: white;
+        font-family: var(--font-mono);
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 4px 8px;
+        border-radius: 6px;
+        white-space: nowrap;
+      }
+      .cal-callout::before {
+        content: '';
+        position: absolute;
+        left: -4px; top: 50%;
+        transform: translateY(-50%);
+        border: 4px solid transparent;
+        border-right-color: var(--accent);
+      }
+      .cal-legend {
+        display: flex;
+        gap: 14px;
+        font-size: 11px;
+        color: var(--text-secondary);
+        align-items: center;
+      }
+      .cal-legend .swatch {
+        display: inline-block;
+        width: 12px; height: 12px;
+        border-radius: 3px;
+        margin-right: 6px;
+        vertical-align: -2px;
+      }
+
+      .split-caption {
+        margin-top: 20px;
+        text-align: center;
+        font-size: 14px;
+        color: var(--text-secondary);
+      }
+      .split-caption strong { color: var(--text); font-weight: 600; }
+
+      /* ===================== Slides 6-9 — Before/After ===================== */
+      .ba-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
+        margin-top: 32px;
+        flex: 1;
+        min-height: 0;
+      }
+      .ba-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      .ba-card .ba-head {
+        display: flex; align-items: baseline; justify-content: space-between;
+        margin-bottom: 14px;
+      }
+      .ba-card .ba-label {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+      .ba-card.before .ba-label { color: var(--text-faint); }
+      .ba-card.after  .ba-label { color: var(--primary); }
+      .ba-card .ba-foot {
+        margin-top: 16px;
+        font-size: 13px;
+        color: var(--text-secondary);
+        line-height: 1.5;
+        padding-top: 14px;
+        border-top: 1px solid var(--border-soft);
+      }
+      .ba-card .ba-foot strong { color: var(--text); }
+
+      /* Mock form (before) */
+      .mock-form {
+        background: var(--surface-muted);
+        border: 1px solid var(--border-soft);
+        border-radius: 12px;
+        padding: 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        flex: 1;
+        min-height: 0;
+      }
+      .mock-field {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .mock-field .lab {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-secondary);
+      }
+      .mock-field .inp {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 9px 12px;
+        font-size: 13px;
+        color: var(--text-secondary);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .mock-field .inp.empty { color: var(--text-faint); font-style: italic; }
+      .mock-field .inp.placeholder { color: var(--text-faint); }
+      .mock-field .inp .caret { color: var(--text-faint); }
+      .mock-tabs {
+        display: flex;
+        gap: 2px;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 8px;
+      }
+      .mock-tabs .tab {
+        padding: 8px 12px;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--text-secondary);
+        border-bottom: 2px solid transparent;
+      }
+      .mock-tabs .tab.active {
+        color: var(--primary);
+        border-bottom-color: var(--primary);
+        font-weight: 600;
+      }
+
+      /* Mini chat (after) */
+      .mini-chat {
+        background: var(--surface-muted);
+        border: 1px solid var(--border-soft);
+        border-radius: 12px;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        flex: 1;
+        min-height: 0;
+        overflow: hidden;
+      }
+
+      /* Variant suggestions slide */
+      .variants {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .variant {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 10px 14px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14px;
+      }
+      .variant .url {
+        font-family: var(--font-mono);
+        color: var(--text);
+      }
+      .variant .url span.host { color: var(--text-faint); }
+      .variant .status {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+      .variant.ok { border-color: var(--success); background: linear-gradient(to right, transparent, var(--success-soft) 200%); }
+      .variant.ok .status { color: var(--success-ink); }
+      .variant.no .status { color: var(--accent); text-decoration: line-through; }
+
+      /* Working Hours slide variant */
+      .wh-mockup {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .wh-day {
+        display: grid;
+        grid-template-columns: 60px 1fr;
+        gap: 10px;
+        font-size: 12px;
+        align-items: center;
+      }
+      .wh-day .label {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-secondary);
+        font-weight: 700;
+      }
+      .wh-slots {
+        display: flex;
+        gap: 6px;
+      }
+      .wh-chip {
+        padding: 4px 10px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        font-weight: 500;
+      }
+
+      .wh-after-preview {
+        margin-top: 12px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 12px;
+        font-size: 12px;
+        color: var(--text-secondary);
+      }
+      .wh-after-preview .label {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--success-ink);
+        margin-bottom: 8px;
+        display: flex; align-items: center; gap: 6px;
+      }
+      .wh-after-preview .live-dot {
+        width: 6px; height: 6px; border-radius: 50%;
+        background: var(--success);
+        animation: blink 1.6s infinite;
+      }
+      .mini-cal {
+        display: grid;
+        grid-template-columns: 38px repeat(5, 1fr);
+        gap: 0;
+      }
+      .mini-cal .cell {
+        border-right: 1px solid var(--border-soft);
+        border-bottom: 1px solid var(--border-soft);
+        min-height: 14px;
+      }
+      .mini-cal .cell.head {
+        background: var(--surface-dim);
+        font-family: var(--font-mono);
+        font-size: 9px;
+        text-align: center;
+        padding: 4px 2px;
+        color: var(--text-secondary);
+        font-weight: 700;
+        min-height: 0;
+      }
+      .mini-cal .cell.time {
+        background: var(--surface-dim);
+        font-family: var(--font-mono);
+        font-size: 9px;
+        color: var(--text-faint);
+        text-align: right;
+        padding-right: 5px;
+        line-height: 14px;
+      }
+      .mini-cal .cell.bk { background: var(--bk-active); }
+      .mini-cal .cell.bk2 { background: var(--bk-working); }
+
+      /* ===================== Slide 10 — Conversación tipo ===================== */
+      .transcript {
+        display: grid;
+        grid-template-columns: 1fr 280px;
+        gap: 28px;
+        margin-top: 28px;
+        flex: 1;
+        min-height: 0;
+      }
+      .transcript-main {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 22px 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        overflow: hidden;
+        font-size: 14px;
+      }
+      .turn {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .turn .msg.bot, .turn .msg.user {
+        max-width: 80%;
+        font-size: 13.5px;
+        padding: 9px 13px;
+      }
+      .tool-call {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--primary);
+        background: var(--primary-soft);
+        padding: 4px 8px;
+        border-radius: 5px;
+        align-self: flex-start;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .tool-call.warn {
+        color: var(--warning-ink);
+        background: var(--warning-soft);
+      }
+      .tool-call .arrow { opacity: 0.5; }
+
+      .transcript-side {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .side-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 18px;
+        font-size: 13px;
+      }
+      .side-card .label {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--text-secondary);
+        margin-bottom: 10px;
+      }
+      .side-card h4 { font-size: 16px; margin-bottom: 6px; }
+      .side-card ul { list-style: none; display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; color: var(--text-secondary); }
+      .side-card li { display: flex; gap: 8px; }
+      .side-card li::before { content: '·'; color: var(--accent); font-weight: 700; }
+
+      /* ===================== Slide 11 — Arquitectura ===================== */
+      .arch-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin-top: 32px;
+        flex: 1;
+      }
+      .arch-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 22px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .arch-card .icon {
+        width: 36px; height: 36px;
+        border-radius: 10px;
+        background: var(--primary-soft);
+        color: var(--primary);
+        display: grid;
+        place-items: center;
+        font-family: var(--font-mono);
+        font-weight: 700;
+        font-size: 13px;
+        margin-bottom: 6px;
+      }
+      .arch-card h3 { font-size: 16px; font-weight: 700; }
+      .arch-card p { font-size: 13.5px; color: var(--text-secondary); line-height: 1.5; }
+
+      /* ===================== Slide 12 — Riesgos ===================== */
+      .risk-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-top: 28px;
+      }
+      .risk {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-left: 4px solid var(--accent);
+        border-radius: 14px;
+        padding: 18px 20px;
+      }
+      .risk h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+      .risk p { font-size: 13.5px; color: var(--text-secondary); line-height: 1.5; }
+      .risk .mitig {
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px dashed var(--border);
+        font-size: 12.5px;
+        color: var(--text);
+      }
+      .risk .mitig::before {
+        content: 'MITIGACIÓN · ';
+        font-family: var(--font-mono);
+        font-size: 9.5px;
+        letter-spacing: 0.14em;
+        font-weight: 700;
+        color: var(--success-ink);
+      }
+
+      /* ===================== Slide 13 — Para discutir (standout) ===================== */
+      .discuss-intro {
+        max-width: 800px;
+        margin-bottom: 32px;
+      }
+      .discuss-intro .h-1 { color: white; }
+      .discuss-intro .lead { color: rgba(255,255,255,0.7); }
+      .discuss-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+      .discuss-q {
+        background: var(--ink-2);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 14px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .discuss-q .qn {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        color: var(--accent);
+        font-weight: 700;
+      }
+      .discuss-q .qt {
+        font-size: 15.5px;
+        font-weight: 600;
+        color: white;
+        line-height: 1.4;
+      }
+      .discuss-q .qh {
+        font-size: 13px;
+        color: rgba(255,255,255,0.6);
+        line-height: 1.45;
+      }
+
+      /* ===================== Slide 14 — Impacto ===================== */
+      .impact-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        margin: 36px 0;
+        max-width: 800px;
+      }
+      .impact-item {
+        display: flex;
+        gap: 16px;
+        font-size: 17px;
+        line-height: 1.5;
+      }
+      .impact-item .check {
+        flex-shrink: 0;
+        width: 28px; height: 28px;
+        border-radius: 50%;
+        background: var(--success-soft);
+        color: var(--success-ink);
+        display: grid;
+        place-items: center;
+        font-weight: 700;
+        font-size: 14px;
+        margin-top: 2px;
+      }
+      .impact-item p { flex: 1; }
+      .impact-item strong { color: var(--text); }
+
+      .vision {
+        margin-top: 32px;
+        padding: 28px 32px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        font-size: clamp(20px, 1.8vw, 28px);
+        font-weight: 700;
+        line-height: 1.3;
+        letter-spacing: -0.015em;
+        max-width: 900px;
+      }
+      .vision .seg { color: var(--primary); }
+      .vision .seg.alt { color: var(--accent); }
+
+      /* ===================== Slide 15 — Cierre ===================== */
+      .close-inner {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 56px;
+        align-items: center;
+        flex: 1;
+      }
+      .close-right {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+      .close-right h3 {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--text-secondary);
+      }
+      .close-field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .close-field .lab {
+        font-size: 13px;
+        font-weight: 600;
+      }
+      .close-field .input {
+        background: var(--surface-dim);
+        border: 1px dashed var(--border);
+        border-radius: 10px;
+        padding: 14px;
+        min-height: 44px;
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--text-faint);
+      }
+
+      /* ===================== Slide · Pricing ===================== */
+      .price-hero {
+        display: flex;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 18px 24px;
+        margin-top: 18px;
+      }
+      .price-hero .big-num {
+        font-size: clamp(56px, 7vw, 96px);
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        line-height: 1;
+        color: var(--primary);
+      }
+      .price-hero .big-num .sym { color: var(--text-faint); font-size: 0.42em; vertical-align: middle; font-weight: 600; margin-right: 2px; }
+      .price-hero .big-num .approx { color: var(--text-faint); font-weight: 600; }
+      .price-hero .range {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--text-secondary);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        background: var(--surface-dim);
+        padding: 6px 12px;
+        border-radius: 999px;
+      }
+      .price-hero .qual {
+        font-size: 14.5px;
+        color: var(--text-secondary);
+        max-width: 320px;
+        line-height: 1.45;
+      }
+
+      .price-grid {
+        display: grid;
+        grid-template-columns: 1.3fr 1fr;
+        gap: 24px;
+        margin-top: 28px;
+      }
+      .price-stack {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 22px 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .price-stack .head {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--text-secondary);
+        font-weight: 700;
+        margin-bottom: 10px;
+      }
+      .price-bar {
+        display: grid;
+        grid-template-columns: 88px 1fr;
+        gap: 16px;
+        align-items: center;
+        padding: 11px 0;
+        border-bottom: 1px solid var(--border-soft);
+      }
+      .price-bar:last-child { border-bottom: none; }
+      .price-bar .amount {
+        font-family: var(--font-mono);
+        font-size: 13.5px;
+        font-weight: 700;
+        color: var(--text);
+        text-align: right;
+      }
+      .price-bar .bar-wrap { display: flex; flex-direction: column; gap: 5px; }
+      .price-bar .bar { height: 7px; background: var(--primary); border-radius: 4px; }
+      .price-bar.alt .bar  { background: var(--violet); }
+      .price-bar.warn .bar { background: var(--accent); }
+      .price-bar.faint .bar { background: var(--text-faint); }
+      .price-bar .label { font-size: 12.5px; color: var(--text-secondary); line-height: 1.4; }
+
+      .price-side {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 22px;
+      }
+      .price-side .head {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--text-secondary);
+        font-weight: 700;
+        margin-bottom: 14px;
+      }
+      .price-side ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+      .price-side li {
+        display: grid;
+        grid-template-columns: 64px 1fr;
+        gap: 10px;
+        font-size: 13px;
+        color: var(--text);
+        line-height: 1.5;
+        align-items: center;
+      }
+      .delta {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        font-weight: 700;
+        padding: 3px 7px;
+        border-radius: 5px;
+        text-align: center;
+        letter-spacing: 0.04em;
+      }
+      .delta.good { color: var(--success-ink); background: var(--success-soft); }
+      .delta.bad  { color: var(--accent); background: var(--accent-soft); }
+      .delta.neutral { color: var(--text); background: var(--surface-dim); }
+
+      .sanity-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin-top: 22px;
+      }
+      .sanity-card {
+        background: var(--surface-cream);
+        border: 1px solid var(--border-soft);
+        border-radius: 14px;
+        padding: 16px 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .sanity-card .big {
+        font-size: clamp(26px, 2.8vw, 36px);
+        font-weight: 800;
+        color: var(--primary);
+        letter-spacing: -0.02em;
+        line-height: 1;
+      }
+      .sanity-card.alt .big { color: var(--accent); }
+      .sanity-card.cool .big { color: var(--success-ink); }
+      .sanity-card .lab { font-size: 12.5px; color: var(--text-secondary); line-height: 1.45; }
+
+      /* Print fallback / smaller screens */
+      @media (max-width: 900px) {
+        .cover-inner, .ba-grid, .split, .arch-grid, .risk-grid, .transcript, .discuss-grid, .wizards, .capture-grid, .close-inner, .price-grid, .sanity-row { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <img src="./assets/agora-horizontal.png" alt="Ágora" />
+      <div class="topbar-meta">
+        <span class="pill">BRAINSTORMING</span>
+        <span class="pill live">INTERNO</span>
+        <span class="mono">2026-05</span>
+      </div>
+    </header>
+
+    <!-- =================================================================== -->
+    <!-- SLIDE 1 — COVER -->
+    <!-- =================================================================== -->
+    <section class="slide bg-white" id="s1">
+      <div class="slide-inner cover-inner">
+        <div class="cover-left">
+          <div class="kicker"><span class="dot"></span>BRAINSTORMING · 2026-05 · INTERNO</div>
+          <h1 class="h-display">Onboarding<br/>conversacional<br/><span style="color: var(--primary);">con AI</span></h1>
+          <p class="lead">De 11 vistas y 2 wizards a 1 conversación con preview en vivo. Material de apoyo para la sesión — discusión abierta, sin conclusiones cerradas.</p>
+          <div class="cover-byline">
+            <div class="avatar">JP</div>
+            <div>
+              <div class="who">JP Abossio</div>
+              <div class="role">Producto · Ágora</div>
+            </div>
+          </div>
+        </div>
+        <div class="cover-visual">
+          <div class="cv-bubble">
+            <span class="who-tag">Claude</span>
+            Contame cómo trabajás un día normal.
+          </div>
+          <div class="cv-bubble user">
+            <span class="who-tag">Vendor</span>
+            Abro 9 a 19, los cortes me llevan 45 min, miércoles solo a la tarde.
+          </div>
+          <div class="cv-bubble">
+            <span class="who-tag">Claude</span>
+            Listo, así se ve un lunes ↓
+          </div>
+          <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 8px; margin-top: 4px;">
+            <div class="mini-cal" style="grid-template-columns: 34px repeat(5, 1fr);">
+              <div class="cell head"></div>
+              <div class="cell head">L</div>
+              <div class="cell head">M</div>
+              <div class="cell head">X</div>
+              <div class="cell head">J</div>
+              <div class="cell head">V</div>
+              <div class="cell time">9:00</div>
+              <div class="cell bk"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell bk"></div>
+              <div class="cell"></div>
+              <div class="cell time">9:30</div>
+              <div class="cell"></div>
+              <div class="cell bk"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell bk"></div>
+              <div class="cell time">10:00</div>
+              <div class="cell bk"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell bk"></div>
+              <div class="cell"></div>
+              <div class="cell time">10:30</div>
+              <div class="cell"></div>
+              <div class="cell bk2"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell bk"></div>
+              <div class="cell time">11:00</div>
+              <div class="cell bk"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell bk"></div>
+              <div class="cell"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="slide-foot">
+        <span class="num">01<span class="total"> / 16</span></span>
+        <span class="iso"><img src="./assets/agora-iso.png" alt=""/></span>
+      </footer>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SLIDE 2 — HOOK -->
+    <!-- =================================================================== -->
+    <section class="slide bg-cream" id="s2">
+      <div class="slide-inner hook-inner">
+        <div>
+          <div class="kicker"><span class="dot"></span>EL PROBLEMA</div>
+          <h2 class="h-1" style="margin-top: 20px;">El vendor termina el setup<br/>creyendo que está listo.<br/><span style="color: var(--accent);">No lo está.</span></h2>
+        </div>
+
+        <div class="gap-viz">
+          <div class="gap-card left">
+            <span class="label">El vendor cree</span>
+            <span class="title">Wizard completado</span>
+            <span class="body">"Tu cuenta está lista. Ya podés recibir reservas." Marca todas las casillas, ve check verde en el dashboard.</span>
+          </div>
+          <div class="gap-bridge">
+            <span class="word">Gap</span>
+            <span class="line"></span>
+          </div>
+          <div class="gap-card right">
+            <span class="label">La realidad</span>
+            <span class="title">Puede recibir reservas</span>
+            <span class="body">Calendario público funciona, slots se generan correctamente, primer cliente puede reservar sin sorpresas.</span>
+          </div>
+        </div>
+
+        <div class="missing-list">
+          <div class="head">Entre los dos, viven invisibles:</div>
+          <ul>
+            <li><strong>Frecuencia de inicio de turnos</strong> — vive en <span class="mono">/agenda</span></li>
+            <li><strong>Duración por servicio</strong> — vive en <span class="mono">/servicios</span></li>
+            <li><strong>Buffer entre turnos</strong> — vive en <span class="mono">/servicios</span></li>
+            <li><strong>Schedules específicos por servicio</strong> — vive en <span class="mono">/servicios</span></li>
+          </ul>
+        </div>
+      </div>
+      <footer class="slide-foot">
+        <span class="num">02<span class="total"> / 16</span></span>
+        <span class="iso"><img src="./assets/agora-iso.png" alt=""/></span>
+      </footer>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SLIDE 3 — ESTADO ACTUAL -->
+    <!-- =================================================================== -->
+    <section class="slide bg-dim" id="s3">
+      <div class="slide-inner">
+        <div class="kicker"><span class="dot"></span>ESTADO ACTUAL</div>
+        <h2 class="h-1" style="margin-top: 18px;">11 vistas. 2 wizards.<br/>1 vendor confundido.</h2>
+        <p class="lead" style="margin-top: 18px;">El flow standard pasa por dos pasarelas separadas, con branching por plan y por rol. Cada vista pide pensar en abstracto sobre conceptos que el vendor todavía no formuló.</p>
+
+        <div class="wizards">
+          <div class="wizard">
+            <div class="head">
+              <span class="title">Onboarding · pre-cuenta</span>
+              <span class="route">/onboarding</span>
+            </div>
+            <div class="steps">
+              <span class="step"><span class="n">01</span>Categoría</span>
+              <span class="step"><span class="n">02</span>Sub-categoría</span>
+              <span class="step"><span class="n">03</span>Ubicación</span>
+              <span class="step"><span class="n">04</span>Teléfono</span>
+              <span class="step"><span class="n">05</span>Datos públicos</span>
+              <span class="step"><span class="n">06</span>Plan</span>
+            </div>
+            <div class="small" style="color: var(--text-secondary);">6 pasos · país + provincia + timezone · username único · plan PRO / BUSINESS / EVENT / ACADEMY</div>
+          </div>
+          <div class="wizard">
+            <div class="head">
+              <span class="title">Setup wizard · post-cuenta</span>
+              <span class="route">/setup</span>
+            </div>
+            <div class="steps">
+              <span class="step"><span class="n">00</span>Pagos</span>
+              <span class="step"><span class="n">01</span>Rol</span>
+              <span class="step"><span class="n">02</span>Equipo</span>
+              <span class="step crit"><span class="n">03</span>Horarios</span>
+              <span class="step"><span class="n">04</span>Primer servicio</span>
+            </div>
+            <div class="small" style="color: var(--text-secondary);">5 pasos · bloquea el resto del dashboard hasta completarse · paso 03 es donde más se rompe el flow</div>
+          </div>
+        </div>
+
+        <div class="branching">
+          <strong>Branching:</strong> Academy tiene flow paralelo de 7 pasos · EVENT salta rol + equipo + servicio · PRO + ADMIN_VENDOR no crea equipo · BUSINESS muestra multi-staff en todos lados. La lógica condicional vive distribuida en el routing.
+        </div>
+      </div>
+      <footer class="slide-foot">
+        <span class="num">03<span class="total"> / 16</span></span>
+        <span class="iso"><img src="./assets/agora-iso.png" alt=""/></span>
+      </footer>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SLIDE 4 — DÓNDE DUELE MÁS -->
+    <!-- =================================================================== -->
+    <section class="slide bg-white" id="s4">
+      <div class="slide-inner">
+        <div class="kicker"><span class="dot"></span>EL DOLOR MÁS GRANDE · SETUP 03</div>
+        <h2 class="h-1" style="margin-top: 18px;">Horarios captura bloques.<br/>Deja afuera lo que más importa.</h2>
+        <p class="lead" style="margin-top: 18px;">El paso de Working Hours pide "decime cuándo abrís y cerrás". El vendor lo completa, ve verde, sigue. Pero su calendario público todavía no es usable hasta que descubre, días o semanas después, que faltan tres configs viviendo en otra parte de la app.</p>
+
+        <div class="capture-grid">
+          <div class="capture-col ok">
+            <div class="head">✓ Captura acá</div>
+            <ul>
+              <li><span class="mark">✓</span><div><strong>Horarios por día</strong><div class="small">Lunes 9-13 / 14-19, miércoles solo tarde, etc.</div></div></li>
+              <li><span class="mark">✓</span><div><strong>Multi-staff con tabs</strong><div class="small">Cada persona del equipo con su grilla propia.</div></div></li>
+              <li><span class="mark">✓</span><div><strong>Quick-add bulk</strong><div class="small">Mismo horario aplicado a varios días.</div></div></li>
+              <li><span class="mark">✓</span><div><strong>Clone entre staff</strong><div class="small">Copiar horarios de otro empleado.</div></div></li>
+            </ul>
+          </div>
+          <div class="capture-col no">
+            <div class="head">✗ NO captura — vive en otra parte</div>
+            <ul>
+              <li><span class="mark">✗</span><div><strong>Frecuencia de inicio de turnos</strong><div class="small">15 / 30 / 45 / 60 min.</div></div><span class="where">/agenda</span></li>
+              <li><span class="mark">✗</span><div><strong>Duración por servicio</strong><div class="small">Sin esto, no hay slots reales.</div></div><span class="where">/servicios</span></li>
+              <li><span class="mark">✗</span><div><strong>Buffer entre turnos</strong><div class="small">Tiempo de limpieza/preparación.</div></div><span class="where">/servicios</span></li>
+              <li><span class="mark">✗</span><div><strong>Schedules por servicio</strong><div class="small">Ciertos servicios solo ciertos días.</div></div><span class="where">/servicios</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="pain-conclusion">
+          <p>→ Slot interval y duración de servicio son <strong>conceptos relacionados que el vendor no entiende como tales</strong> — el form los pide separados sin explicar cómo interactúan.</p>
+          <p>→ Los primeros clientes ven horarios rotos o no pueden reservar. <strong>El vendor culpa al producto</strong>, no a la configuración invisible.</p>
+        </div>
+      </div>
+      <footer class="slide-foot">
+        <span class="num">04<span class="total"> / 16</span></span>
+        <span class="iso"><img src="./assets/agora-iso.png" alt=""/></span>
+      </footer>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SLIDE 5 — LA IDEA EN UNA IMAGEN -->
+    <!-- =================================================================== -->
+    <section class="slide bg-cream" id="s5">
+      <div class="slide-inner">
+        <div class="kicker"><span class="dot"></span>LA PROPUESTA · UNA SURFACE</div>
+        <h2 class="h-1" style="margin-top: 18px;">Chat a la izquierda.<br/>Preview en vivo a la derecha.</h2>
+
+        <div class="split">
+          <div class="panel">
+            <div class="panel-head">
+              <div class="panel-title">
+                <span class="iso"><img src="./assets/agora-iso.png" alt=""/></span>
+                Setup conversacional
+              </div>
+              <span class="mono" style="font-size: 10px; color: var(--text-faint); letter-spacing: 0.1em;">PASO · HORARIOS</span>
+            </div>
+            <div class="chat-body">
+              <div class="msg bot"><span class="who">Claude</span>Listo. Anoté: abrís lun-sáb de 9 a 19. ¿Cuánto te lleva un corte?</div>
+              <div class="msg user"><span class="who">Vendor</span>45 minutos</div>
+              <div class="msg bot"><span class="who">Claude</span>¿Querés que los turnos arranquen en horarios redondos (9, 9:30, 10...) o cualquier hora libre?</div>
+              <div class="msg user"><span class="who">Vendor</span>Redondos, cada 30 min</div>
+              <div class="msg bot"><span class="who">Claude</span>Ojo: con corte de 45 y turnos cada 30, si alguien reserva 9:00 el de 9:30 se pisa. ¿Bloqueo el del medio o cambio la grilla?</div>
+            </div>
+            <div class="chat-input">
+              <span>Escribí tu respuesta...</span>
+              <span class="send">↑</span>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <div class="panel-title">
+                <span style="font-size: 14px;">📅</span>
+                Tu calendario
+              </div>
+              <span class="panel-tag"><span class="live-dot"></span>LIVE PREVIEW</span>
+            </div>
+            <div class="preview-body">
+              <div class="cal">
+                <div class="cal-cell head"></div>
+                <div class="cal-cell head">LUN</div>
+                <div class="cal-cell head">MAR</div>
+                <div class="cal-cell head">MIÉ</div>
+                <div class="cal-cell head">JUE</div>
+                <div class="cal-cell head">VIE</div>
+                <div class="cal-cell head">SÁB</div>
+
+                <div class="cal-cell time">9:00</div>
+                <div class="cal-cell bk-active"></div>
+                <div class="cal-cell bk-active"></div>
+                <div class="cal-cell"></div>
+                <div class="cal-cell bk-active"></div>
+                <div class="cal-cell bk-active"></div>
+                <div class="cal-cell"></div>
+
+                <div class="cal-cell time">9:30</div>
+                <div class="cal-cell bk-conflict" style="position: relative;"><span class="cal-callout">choque</span></div>
+                <div class="cal-cell"></div>
+                <div class="cal-cell"></div>
+                <div class="cal-cell"></div>
+                <div class="cal-cell bk-working"></div>
+                <div class="cal-cell"></div>
+
+                <div class="cal-cell time">10:00</div>
+                <div class="cal-cell bk-active"></div>
+                <div class="cal-cell bk-active"></div>
+                <div class="cal-cell"></div>
+                <div class="cal-cell bk-active"></div>
+                <div class="cal-cell"></div>
+                <div class="cal-cell"></div>
+
+                <div class="cal-cell time">10:30</div>
+                <div class="cal-cell"></div>
+                <div class="cal-cell"></div>
+                <div class="cal-cell bk-working"></div>
+                <div class="cal-cell"></div>
+                <div class="cal-cell bk-active"></div>
+                <div class="cal-cell bk-active"></div>
+
+                <div class="cal-cell time">11:00</div>
+                <div class="cal-cell bk-active"></div>
+                <div class="cal-cell"></div>
+                <div class="cal-cell"></div>
+                <div class="cal-cell bk-active"></div>
+                <div class="cal-cell bk-active"></div>
+                <div class="cal-cell"></div>
+
+                <div class="cal-cell time">11:30</div>
+                <div class="cal-cell"></div>
+                <div class="cal-cell bk-working"></div>
+                <div class="cal-cell"></div>
+                <div class="cal-cell"></div>
+                <div class="cal-cell"></div>
+                <div class="cal-cell bk-active"></div>
+
+                <div class="cal-cell time">12:00</div>
+                <div class="cal-cell bk-active"></div>
+                <div class="cal-cell bk-active"></div>
+                <div class="cal-cell bk-active"></div>
+                <div class="cal-cell"></div>
+                <div class="cal-cell bk-active"></div>
+                <div class="cal-cell"></div>
+              </div>
+              <div class="cal-legend">
+                <span><span class="swatch" style="background: var(--bk-active);"></span>Confirmado</span>
+                <span><span class="swatch" style="background: var(--bk-working);"></span>Tentativo</span>
+                <span><span class="swatch" style="background: var(--accent-soft); border: 1px dashed var(--accent);"></span>Conflicto</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="split-caption">
+          <strong>El chat conduce. El preview confirma.</strong> &nbsp;·&nbsp; Si el preview no es bueno, el chat solo es peor que la wizard.
+        </div>
+      </div>
+      <footer class="slide-foot">
+        <span class="num">05<span class="total"> / 16</span></span>
+        <span class="iso"><img src="./assets/agora-iso.png" alt=""/></span>
+      </footer>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SLIDE 6 — CATEGORÍA + UBICACIÓN -->
+    <!-- =================================================================== -->
+    <section class="slide bg-white" id="s6">
+      <div class="slide-inner">
+        <div class="kicker"><span class="dot"></span>VISTA POR VISTA · CATEGORÍA + UBICACIÓN</div>
+        <h2 class="h-1" style="margin-top: 18px;">5 dropdowns → 2 preguntas abiertas.</h2>
+
+        <div class="ba-grid">
+          <div class="ba-card before">
+            <div class="ba-head">
+              <span class="ba-label">HOY · 2 VISTAS, 5 CAMPOS</span>
+            </div>
+            <div class="mock-form">
+              <div class="mock-field">
+                <span class="lab">Categoría</span>
+                <span class="inp placeholder">Elegí una opción <span class="caret">▾</span></span>
+              </div>
+              <div class="mock-field">
+                <span class="lab">Sub-categoría</span>
+                <span class="inp empty">— habilitar después de Categoría —</span>
+              </div>
+              <div class="mock-field">
+                <span class="lab">País</span>
+                <span class="inp placeholder">Argentina <span class="caret">▾</span></span>
+              </div>
+              <div class="mock-field">
+                <span class="lab">Provincia</span>
+                <span class="inp placeholder">Elegí una provincia <span class="caret">▾</span></span>
+              </div>
+              <div class="mock-field">
+                <span class="lab">Zona horaria</span>
+                <span class="inp placeholder">GMT-3 (Buenos Aires) <span class="caret">▾</span></span>
+              </div>
+            </div>
+            <div class="ba-foot">
+              <strong>Fricción.</strong> Listas cerradas fuerzan al vendor que hace varias cosas (cortes + uñas + maquillaje) a elegir una. El timezone es ruido en LATAM. No captura si es presencial u online.
+            </div>
+          </div>
+
+          <div class="ba-card after">
+            <div class="ba-head">
+              <span class="ba-label">CONVERSACIONAL · 2 PREGUNTAS</span>
+            </div>
+            <div class="mini-chat">
+              <div class="msg bot"><span class="who">Claude</span>Contame qué hacés.</div>
+              <div class="msg user"><span class="who">Vendor</span>Peluquería, hago cortes, color y uñas. Atiendo en mi casa en Belgrano.</div>
+              <div class="msg bot"><span class="who">Claude</span>Anoté: <strong>peluquería + estética</strong> con servicios principales <strong>corte / color / uñas</strong>. ¿Modalidad presencial únicamente o también online?</div>
+              <div class="msg user"><span class="who">Vendor</span>Solo presencial</div>
+              <div class="msg bot"><span class="who">Claude</span>Listo. Categoría, sub-categorías, ubicación (CABA · Belgrano), timezone y modalidad: configurados. ✓</div>
+            </div>
+            <div class="ba-foot">
+              <strong>Ganancia.</strong> Una pregunta abierta + una de modalidad. Captura nuance que el form pierde: múltiples categorías, presencial vs online, barrio explícito. Texto libre queda guardado para copilot/matching.
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="slide-foot">
+        <span class="num">06<span class="total"> / 16</span></span>
+        <span class="iso"><img src="./assets/agora-iso.png" alt=""/></span>
+      </footer>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SLIDE 7 — USERNAME -->
+    <!-- =================================================================== -->
+    <section class="slide bg-dim" id="s7">
+      <div class="slide-inner">
+        <div class="kicker"><span class="dot"></span>VISTA POR VISTA · USERNAME</div>
+        <h2 class="h-1" style="margin-top: 18px;">La decisión que dura para siempre,<br/>hecha al apuro.</h2>
+
+        <div class="ba-grid">
+          <div class="ba-card before">
+            <div class="ba-head"><span class="ba-label">HOY · FORM AL APURO</span></div>
+            <div class="mock-form">
+              <div class="mock-field">
+                <span class="lab">Username (URL pública)</span>
+                <span class="inp placeholder">tu-usuario</span>
+              </div>
+              <div class="mock-field">
+                <span class="lab">Descripción</span>
+                <span class="inp empty" style="min-height: 60px; align-items: flex-start; padding-top: 10px;">— escribí algo sobre tu negocio —</span>
+              </div>
+              <div class="mock-field">
+                <span class="lab">Privacy</span>
+                <span class="inp">☐ Acepto términos y privacidad</span>
+              </div>
+              <div class="mock-field">
+                <span class="lab">¿Cuenta privada?</span>
+                <span class="inp">☐ Mantener oculta del marketplace</span>
+              </div>
+            </div>
+            <div class="ba-foot">
+              <strong>Fricción.</strong> El username es la decisión más importante del onboarding — es la URL pública del vendor <em>para siempre</em>. Pero está enterrada en un form con 3 cosas más. Vendors eligen rápido un username malo y se arrepienten.
+            </div>
+          </div>
+
+          <div class="ba-card after">
+            <div class="ba-head"><span class="ba-label">CONVERSACIONAL · 3 OPCIONES VALIDADAS</span></div>
+            <div class="mini-chat">
+              <div class="msg bot"><span class="who">Claude</span>Tu página pública va a ser <span class="mono">www.agora.red/algo</span> — para siempre. En base a tu nombre, te propongo 3 opciones:</div>
+              <div class="variants">
+                <div class="variant ok">
+                  <span class="url"><span class="host">www.agora.red/</span>lunabeauty</span>
+                  <span class="status">✓ Libre</span>
+                </div>
+                <div class="variant ok">
+                  <span class="url"><span class="host">www.agora.red/</span>luna.beauty</span>
+                  <span class="status">✓ Libre</span>
+                </div>
+                <div class="variant no">
+                  <span class="url"><span class="host">www.agora.red/</span>luna</span>
+                  <span class="status">Tomado</span>
+                </div>
+              </div>
+              <div class="msg bot"><span class="who">Claude</span>¿Te gusta alguna o pensaste en otra? Mientras me decís, te tiro una descripción posible para tu página y la editás.</div>
+            </div>
+            <div class="ba-foot">
+              <strong>Ganancia.</strong> La decisión de marca pública deja de ser apurada. Vendor ve la URL completa, entiende el peso, elige consciente. Descripción inicial pre-redactada — vendor edita, no escribe desde cero. Privacy y compliance siguen siendo aceptación estructurada.
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="slide-foot">
+        <span class="num">07<span class="total"> / 16</span></span>
+        <span class="iso"><img src="./assets/agora-iso.png" alt=""/></span>
+      </footer>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SLIDE 8 — WORKING HOURS (núcleo) -->
+    <!-- =================================================================== -->
+    <section class="slide bg-white" id="s8">
+      <div class="slide-inner">
+        <div class="kicker"><span class="dot"></span>EL NÚCLEO · WORKING HOURS</div>
+        <h2 class="h-1" style="margin-top: 18px;">El paso donde más se gana.<br/><span style="color: var(--text-secondary); font-size: 0.55em; font-weight: 600;">Toda la config (frequency + buffer + duración + multi-staff) en una sola pasada.</span></h2>
+
+        <div class="ba-grid">
+          <div class="ba-card before">
+            <div class="ba-head"><span class="ba-label">HOY · TABBED + INCOMPLETO</span></div>
+            <div class="mock-form">
+              <div class="mock-tabs">
+                <span class="tab active">Lucía</span>
+                <span class="tab">Mariana</span>
+                <span class="tab">Eduardo</span>
+                <span class="tab" style="color: var(--text-faint);">+ Agregar</span>
+              </div>
+              <div class="wh-mockup">
+                <div class="wh-day"><span class="label">Lun</span><div class="wh-slots"><span class="wh-chip">9-13</span><span class="wh-chip">14-19</span></div></div>
+                <div class="wh-day"><span class="label">Mar</span><div class="wh-slots"><span class="wh-chip">9-13</span><span class="wh-chip">14-19</span></div></div>
+                <div class="wh-day"><span class="label">Mié</span><div class="wh-slots"><span class="wh-chip">14-19</span></div></div>
+                <div class="wh-day"><span class="label">Jue</span><div class="wh-slots"><span class="wh-chip">9-13</span><span class="wh-chip">14-19</span></div></div>
+                <div class="wh-day"><span class="label">Vie</span><div class="wh-slots"><span class="wh-chip">9-13</span><span class="wh-chip">14-19</span></div></div>
+                <div class="wh-day"><span class="label">Sáb</span><div class="wh-slots"><span class="wh-chip">9-14</span></div></div>
+              </div>
+            </div>
+            <div class="ba-foot" style="color: var(--accent); border-top-color: var(--accent-soft);">
+              <strong>NO captura:</strong> frecuencia de inicio · duración por servicio · buffer · service-specific schedules. Vendor sale del wizard sin saber que falta lo más importante.
+            </div>
+          </div>
+
+          <div class="ba-card after">
+            <div class="ba-head"><span class="ba-label">CONVERSACIONAL · TODO EN UNA PASADA</span></div>
+            <div class="mini-chat">
+              <div class="msg bot"><span class="who">Claude</span>Contame cómo trabajás un día normal.</div>
+              <div class="msg user"><span class="who">Vendor</span>Abro 9 a 19, corto en 45 min, miércoles solo tarde, con Mariana y Eduardo</div>
+              <div class="msg bot"><span class="who">Claude</span>¿Turnos en horarios redondos o libres?</div>
+              <div class="msg user"><span class="who">Vendor</span>redondos cada 30</div>
+              <div class="msg bot" style="background: var(--accent-soft); border-color: #ffd0d4;"><span class="who">Claude</span>⚠️ Con corte de 45 y turnos cada 30, se van a pisar. ¿Bloqueo el del medio o cambio la grilla?</div>
+            </div>
+            <div class="wh-after-preview">
+              <div class="label"><span class="live-dot"></span>PREVIEW · LUNES SIMULADO</div>
+              <div class="mini-cal">
+                <div class="cell head"></div><div class="cell head">9</div><div class="cell head">10</div><div class="cell head">11</div><div class="cell head">12</div><div class="cell head">13</div>
+                <div class="cell time">Lu</div><div class="cell bk"></div><div class="cell bk"></div><div class="cell bk"></div><div class="cell"></div><div class="cell bk"></div>
+                <div class="cell time">Ma</div><div class="cell bk"></div><div class="cell"></div><div class="cell bk"></div><div class="cell bk"></div><div class="cell"></div>
+                <div class="cell time">Mi</div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="slide-foot">
+        <span class="num">08<span class="total"> / 16</span></span>
+        <span class="iso"><img src="./assets/agora-iso.png" alt=""/></span>
+      </footer>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SLIDE 9 — FIRST SERVICE -->
+    <!-- =================================================================== -->
+    <section class="slide bg-cream" id="s9">
+      <div class="slide-inner">
+        <div class="kicker"><span class="dot"></span>VISTA POR VISTA · PRIMER SERVICIO</div>
+        <h2 class="h-1" style="margin-top: 18px;">12 campos → 1 pregunta.</h2>
+
+        <div class="ba-grid">
+          <div class="ba-card before">
+            <div class="ba-head"><span class="ba-label">HOY · FORM GIGANTE</span></div>
+            <div class="mock-form">
+              <div class="mock-field"><span class="lab">Nombre</span><span class="inp placeholder">Corte de pelo</span></div>
+              <div class="mock-field"><span class="lab">Descripción</span><span class="inp empty">— opcional —</span></div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                <div class="mock-field"><span class="lab">Duración (min)</span><span class="inp placeholder">45</span></div>
+                <div class="mock-field"><span class="lab">Precio</span><span class="inp placeholder">$8.000</span></div>
+              </div>
+              <div class="mock-field"><span class="lab">Staff que lo provee</span><span class="inp placeholder">Lucía, Mariana, Eduardo <span class="caret">▾</span></span></div>
+              <div class="mock-field"><span class="lab">Categorías / tags</span><span class="inp empty">— opcional —</span></div>
+              <div class="mock-field"><span class="lab">Packs y add-ons</span><span class="inp empty">— configurar luego —</span></div>
+              <div class="mock-field"><span class="lab">Política de cancelación</span><span class="inp placeholder">Estándar <span class="caret">▾</span></span></div>
+              <div class="mock-field"><span class="lab">Anticipación mínima</span><span class="inp placeholder">2 horas <span class="caret">▾</span></span></div>
+            </div>
+            <div class="ba-foot">
+              <strong>Fricción.</strong> 12+ campos para "primer servicio". Vendor abandona o llena con basura para salir del flow. Es el último paso y donde más fricción se acumula.
+            </div>
+          </div>
+
+          <div class="ba-card after">
+            <div class="ba-head"><span class="ba-label">CONVERSACIONAL · 30 SEGUNDOS</span></div>
+            <div class="mini-chat">
+              <div class="msg bot"><span class="who">Claude</span>¿Cuál es el servicio que más vendés?</div>
+              <div class="msg user"><span class="who">Vendor</span>Corte de pelo</div>
+              <div class="msg bot"><span class="who">Claude</span>Lo configuro como:<br/><strong>Corte de pelo</strong> · 45min · ARS 8.000<br/>Atendido por Lucía, Mariana, Eduardo.<br/>¿Te sirve para empezar?</div>
+              <div class="msg user"><span class="who">Vendor</span>El precio mejor 9.500</div>
+              <div class="msg bot"><span class="who">Claude</span>Listo, ARS 9.500. Lo dejo creado. Los detalles fines (packs, cancelación, anticipación) los ajustás cuando quieras en <span class="mono">/servicios</span>. ¿Algún otro servicio ahora o lo dejamos para después?</div>
+            </div>
+            <div class="ba-foot">
+              <strong>Ganancia.</strong> Primer servicio listo en 30 segundos con defaults razonables. Vendor sale del setup con algo concreto que vender. Los 8 campos opcionales no bloquean nada — se afinan después con contexto.
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="slide-foot">
+        <span class="num">09<span class="total"> / 16</span></span>
+        <span class="iso"><img src="./assets/agora-iso.png" alt=""/></span>
+      </footer>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SLIDE 10 — CONVERSACIÓN TIPO (transcript) -->
+    <!-- =================================================================== -->
+    <section class="slide bg-dim" id="s10">
+      <div class="slide-inner">
+        <div class="kicker"><span class="dot"></span>UN FLOW ENTERO, EN UNA CONVERSACIÓN</div>
+        <h2 class="h-1" style="margin-top: 18px;">Lo que ve el vendor.<br/><span style="color: var(--text-secondary); font-size: 0.5em; font-weight: 600;">Cada respuesta dispara una o más tool calls — y la detección de inconsistencias surge en lenguaje natural.</span></h2>
+
+        <div class="transcript">
+          <div class="transcript-main">
+            <div class="turn">
+              <div class="msg bot"><span class="who">Claude</span>Listo, contame de tu negocio.</div>
+              <div class="msg user"><span class="who">Vendor</span>Peluquería en Palermo, abro lun-sáb de 9 a 19</div>
+              <span class="tool-call"><span class="arrow">→</span>set_business_hours(mon-sat, 9-19)</span>
+            </div>
+            <div class="turn">
+              <div class="msg bot"><span class="who">Claude</span>¿Cuánto te lleva el corte que más hacés?</div>
+              <div class="msg user"><span class="who">Vendor</span>45 minutos</div>
+              <span class="tool-call"><span class="arrow">→</span>add_service(name='Corte', duration=45)</span>
+            </div>
+            <div class="turn">
+              <div class="msg bot"><span class="who">Claude</span>¿Los turnos arrancan en horarios redondos o cualquier hora libre?</div>
+              <div class="msg user"><span class="who">Vendor</span>redondos cada 30</div>
+              <span class="tool-call"><span class="arrow">→</span>set_slot_grid(interval=30)</span>
+              <span class="tool-call warn"><span class="arrow">⚠</span>validate_config() → conflict</span>
+            </div>
+            <div class="turn">
+              <div class="msg bot" style="background: var(--warning-soft); border-color: var(--warning);"><span class="who">Claude</span>Con corte de 45 y turnos cada 30, hay choque. Si reservan 9:00, el de 9:30 se pisa. Te muestro cómo se ve →</div>
+              <div class="msg user"><span class="who">Vendor</span>ah, mejor bloqueá el del medio</div>
+              <span class="tool-call"><span class="arrow">→</span>set_overlap_policy('block')</span>
+            </div>
+            <div class="turn">
+              <div class="msg bot"><span class="who">Claude</span>¿Trabajás sola o con equipo?</div>
+              <div class="msg user"><span class="who">Vendor</span>con Mariana y Eduardo</div>
+              <span class="tool-call"><span class="arrow">→</span>add_staff(['Mariana', 'Eduardo'])</span>
+            </div>
+            <div class="turn">
+              <div class="msg bot"><span class="who">Claude</span>¿Mismos horarios para los 3?</div>
+              <div class="msg user"><span class="who">Vendor</span>Mariana solo tarde, Eduardo full</div>
+              <span class="tool-call"><span class="arrow">→</span>set_staff_schedule(Mariana: 14-19, Eduardo: 9-19)</span>
+            </div>
+            <div class="turn">
+              <div class="msg bot" style="background: var(--success-soft); border-color: var(--success);"><span class="who">Claude</span>✓ Listo. Horarios, frecuencia, duración y equipo configurados. Pasamos a configurar tu primer servicio.</div>
+            </div>
+          </div>
+          <div class="transcript-side">
+            <div class="side-card">
+              <div class="label">QUÉ SE CONFIGURÓ</div>
+              <ul>
+                <li>Horarios + apertura/cierre</li>
+                <li>Frecuencia de turnos</li>
+                <li>Duración del servicio principal</li>
+                <li>Política de overlap</li>
+                <li>Multi-staff con schedule propio</li>
+              </ul>
+            </div>
+            <div class="side-card" style="border-left: 3px solid var(--primary);">
+              <div class="label">EL TRUCO</div>
+              <h4>Detección en lenguaje natural</h4>
+              <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">Claude nunca usa el término "slot interval". Pero detecta el choque entre duración y grilla, y lo explica en el lenguaje del vendor con una opción concreta.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="slide-foot">
+        <span class="num">10<span class="total"> / 16</span></span>
+        <span class="iso"><img src="./assets/agora-iso.png" alt=""/></span>
+      </footer>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SLIDE 11 — ARQUITECTURA -->
+    <!-- =================================================================== -->
+    <section class="slide bg-white" id="s11">
+      <div class="slide-inner">
+        <div class="kicker"><span class="dot"></span>ARQUITECTURA TRANSVERSAL</div>
+        <h2 class="h-1" style="margin-top: 18px;">Lo que tiene que ser cierto<br/>en cualquiera de los pasos.</h2>
+
+        <div class="arch-grid">
+          <div class="arch-card">
+            <div class="icon">01</div>
+            <h3>Surface mixta</h3>
+            <p>Chat principal + sidebar visual que cambia según el paso: calendario, página pública, equipo, card de servicio.</p>
+          </div>
+          <div class="arch-card">
+            <div class="icon">02</div>
+            <h3>Priors por categoría</h3>
+            <p>Antes del primer mensaje, Claude ya sabe los defaults razonables (peluquerías: turnos cada 30, corte 45, lun-sáb). Vendor solo conversa diferencias.</p>
+          </div>
+          <div class="arch-card">
+            <div class="icon">03</div>
+            <h3>Mismo data model</h3>
+            <p>Las tool calls escriben los mismos endpoints/repos que la wizard actual. Sin migración de schema. Sin riesgo de divergencia.</p>
+          </div>
+          <div class="arch-card">
+            <div class="icon">04</div>
+            <h3>Save state continuo</h3>
+            <p>Cada respuesta persiste server-side. Vendor puede abandonar y volver — el chat retoma exactamente donde quedó.</p>
+          </div>
+          <div class="arch-card">
+            <div class="icon">05</div>
+            <h3>Skippable inteligente</h3>
+            <p>"Saltame esto, lo configuro después" en cada paso. El sistema sabe qué es crítico (horarios + primer servicio) y qué no.</p>
+          </div>
+          <div class="arch-card">
+            <div class="icon">06</div>
+            <h3>Formato mixto</h3>
+            <p>No todo es texto libre. Teléfono, plan, MP OAuth, privacy: componentes estructurados embebidos en el chat. El agente elige el formato que más conviene al dato.</p>
+          </div>
+        </div>
+      </div>
+      <footer class="slide-foot">
+        <span class="num">11<span class="total"> / 16</span></span>
+        <span class="iso"><img src="./assets/agora-iso.png" alt=""/></span>
+      </footer>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SLIDE 12 — RIESGOS -->
+    <!-- =================================================================== -->
+    <section class="slide bg-cream" id="s12">
+      <div class="slide-inner">
+        <div class="kicker"><span class="dot"></span>RIESGOS Y TRADEOFFS</div>
+        <h2 class="h-1" style="margin-top: 18px;">Lo que puede salir mal.</h2>
+        <p class="lead" style="margin-top: 14px;">Si elegimos este camino, estos son los puntos donde hay que tener atención explícita o aceptar el costo.</p>
+
+        <div class="risk-grid">
+          <div class="risk">
+            <h3>Costo ingenieril del live preview</h3>
+            <p>El calendar debe renderizar con state parcial e inconsistente durante toda la conversación. No trivial. Si el preview falla, el chat solo es <em>peor</em> que la wizard.</p>
+            <div class="mitig">Spike de 1 semana antes de comprometernos al approach completo.</div>
+          </div>
+          <div class="risk">
+            <h3>Defaults silenciosos del agente</h3>
+            <p>Riesgo de que el vendor termine con config que no entiende porque Claude asumió cosas sin verbalizarlas.</p>
+            <div class="mitig">Cada tool call con default debe decirlo: "asumí turnos cada 30, ¿está bien?".</div>
+          </div>
+          <div class="risk">
+            <h3>No todo gana con chat</h3>
+            <p>Pasos triviales (phone, plan con un click) no son más rápidos en conversación que un input. Forzar chat es ideología.</p>
+            <div class="mitig">Regla: el agente elige el formato según el dato. Chat conduce, no monopoliza.</div>
+          </div>
+          <div class="risk">
+            <h3>Compliance steps siguen siendo UI</h3>
+            <p>Privacy policy, T&amp;Cs, OAuth con MP: no se conversan. Hay que diseñar bien la transición chat → UI estructurada → chat.</p>
+            <div class="mitig">Componentes embebidos en el chat (no modals). El chat espera.</div>
+          </div>
+          <div class="risk">
+            <h3>Branching plan/rol vive en el agente</h3>
+            <p>La lógica condicional pasa de routing explícito a prompt del agente. Más fácil iterar; más difícil auditar y testear.</p>
+            <div class="mitig">Tests de regresión por flow + observabilidad de qué path tomó cada vendor.</div>
+          </div>
+          <div class="risk">
+            <h3>Tamaño del proyecto</h3>
+            <p>Replantear todo el funnel de signup es serio. ¿Hacemos todo o solo Setup 03?</p>
+            <div class="mitig">MVP: reemplazar SOLO Working Hours por chat. Si el preview funciona y el lift es real, expandir.</div>
+          </div>
+        </div>
+      </div>
+      <footer class="slide-foot">
+        <span class="num">12<span class="total"> / 16</span></span>
+        <span class="iso"><img src="./assets/agora-iso.png" alt=""/></span>
+      </footer>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SLIDE 13 — PRICING / COSTO POR USUARIO -->
+    <!-- =================================================================== -->
+    <section class="slide bg-white" id="s13">
+      <div class="slide-inner">
+        <div class="kicker"><span class="dot"></span>COSTO POR USUARIO · MODELO MADURO</div>
+        <div class="price-hero">
+          <div class="big-num"><span class="approx">~</span>$0.30</div>
+          <div>
+            <div style="font-size: 17px; font-weight: 600; color: var(--text); margin-bottom: 6px;">USD por setup completado</div>
+            <span class="range">RANGO · $0.20 – $0.50</span>
+          </div>
+          <div class="qual">Solo costo de LLM (Sonnet 4.6) con prompt caching maduro. No incluye infra del live preview ni amortización de eng — la build sigue siendo la parte cara, no el runtime.</div>
+        </div>
+
+        <div class="price-grid">
+          <div class="price-stack">
+            <div class="head">Breakdown · conversación ~25 turnos</div>
+            <div class="price-bar">
+              <span class="amount">$0.10</span>
+              <div class="bar-wrap">
+                <span class="bar" style="width: 60%;"></span>
+                <span class="label">Output · ~7k tokens (Sonnet 4.6 @ $15/M)</span>
+              </div>
+            </div>
+            <div class="price-bar alt">
+              <span class="amount">$0.08-0.12</span>
+              <div class="bar-wrap">
+                <span class="bar" style="width: 70%;"></span>
+                <span class="label">Input efectivo · ~12k tokens history con caching (90% descuento en reads)</span>
+              </div>
+            </div>
+            <div class="price-bar faint">
+              <span class="amount">$0.03</span>
+              <div class="bar-wrap">
+                <span class="bar" style="width: 18%;"></span>
+                <span class="label">Cache writes (amortizados)</span>
+              </div>
+            </div>
+            <div class="price-bar warn">
+              <span class="amount">×1.3-2</span>
+              <div class="bar-wrap">
+                <span class="bar" style="width: 45%;"></span>
+                <span class="label">Retries + multi-sesión · vendor abandona y vuelve, cache expira (5min TTL)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="price-side">
+            <div class="head">Qué mueve el número</div>
+            <ul>
+              <li><span class="delta good">↓ 0.5×</span><span><strong>Routing Haiku/Sonnet</strong> según paso → <strong>~$0.15</strong>. La optimización real.</span></li>
+              <li><span class="delta bad">↑ 5×</span><span><strong>Opus en todo</strong> → ~$1.50. No vale — Sonnet maneja el schedule inference.</span></li>
+              <li><span class="delta neutral">+$0.05</span><span>Vendor sube <strong>PDF o imagen</strong> (menú, lista de precios).</span></li>
+              <li><span class="delta bad">↑ 3-5×</span><span><strong>Caching mal hecho</strong>. Crítico desde día 1, no afterthought.</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="sanity-row">
+          <div class="sanity-card">
+            <span class="big">&lt;1%</span>
+            <span class="lab">del MRR del primer mes en un plan PRO ($20-50). Se amortiza en horas, no días.</span>
+          </div>
+          <div class="sanity-card alt">
+            <span class="big">$3-8</span>
+            <span class="lab">cuesta un ticket de soporte humano por vendor confundido. Si reducimos 10% de tickets de onboarding, se paga solo.</span>
+          </div>
+          <div class="sanity-card cool">
+            <span class="big">2-3×</span>
+            <span class="lab">los primeros 2-3 meses post-launch mientras tuneamos prompts y caching. Planificar para eso.</span>
+          </div>
+        </div>
+      </div>
+      <footer class="slide-foot">
+        <span class="num">13<span class="total"> / 16</span></span>
+        <span class="iso"><img src="./assets/agora-iso.png" alt=""/></span>
+      </footer>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SLIDE 14 — PARA DISCUTIR (standout, dark) -->
+    <!-- =================================================================== -->
+    <section class="slide bg-ink" id="s14">
+      <div class="slide-inner">
+        <div class="kicker" style="color: var(--accent);"><span class="dot"></span>PARA DISCUTIR · ACÁ EMPIEZA LA SESIÓN</div>
+        <div class="discuss-intro" style="margin-top: 20px;">
+          <h2 class="h-1">6 preguntas abiertas.</h2>
+          <p class="lead">No tenemos respuesta a ninguna. Si la tuviéramos, no estaríamos haciendo brainstorming. La salida del meeting es un sí/no por pregunta + un owner por la pregunta donde decidamos avanzar.</p>
+        </div>
+
+        <div class="discuss-grid">
+          <div class="discuss-q">
+            <span class="qn">Q · 01</span>
+            <span class="qt">¿Toda la wizard o solo Setup 03?</span>
+            <span class="qh">Working Hours es el punto de más dolor y más ganancia. Empezar ahí reduce riesgo y demuestra el approach. ¿O hacemos todo de una para no fragmentar?</span>
+          </div>
+          <div class="discuss-q">
+            <span class="qn">Q · 02</span>
+            <span class="qt">Build cost del live preview.</span>
+            <span class="qh">El calendar con state parcial es el riesgo técnico real. ¿Hacemos un spike de 1 semana para validar feasibility antes de comprometernos al approach?</span>
+          </div>
+          <div class="discuss-q">
+            <span class="qn">Q · 03</span>
+            <span class="qt">¿Cómo medimos éxito?</span>
+            <span class="qh">Propuesta: completion del setup <em>completo</em> (con frequency), time-to-first-booking, % de vendors que tocan agenda los primeros 7 días (proxy de "salí roto"). ¿Suma alguna?</span>
+          </div>
+          <div class="discuss-q">
+            <span class="qn">Q · 04</span>
+            <span class="qt">¿Vendors existentes también?</span>
+            <span class="qh">¿Ofrecemos "reconfigurar tu setup con AI" como flow paralelo para vendors que ya pasaron por la wizard y tienen config a medias?</span>
+          </div>
+          <div class="discuss-q">
+            <span class="qn">Q · 05</span>
+            <span class="qt">¿Lógica en prompt o en routing?</span>
+            <span class="qh">El branching plan/rol vive en la lógica del agente (más iterable) o sigue en routing explícito (más auditable). Tradeoff real.</span>
+          </div>
+          <div class="discuss-q">
+            <span class="qn">Q · 06</span>
+            <span class="qt">¿Primera categoría piloto?</span>
+            <span class="qh">Peluquerías parecen ideales — schedule complejo, alta densidad de vendors, priors bien entendidos. ¿O preferimos arrancar por algo más simple para reducir variables?</span>
+          </div>
+        </div>
+      </div>
+      <footer class="slide-foot">
+        <span class="num">14<span class="total"> / 16</span></span>
+        <span class="iso"><img src="./assets/agora-iso.png" alt="" style="filter: invert(1) brightness(2);"/></span>
+      </footer>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SLIDE 15 — IMPACTO -->
+    <!-- =================================================================== -->
+    <section class="slide bg-white" id="s15">
+      <div class="slide-inner">
+        <div class="kicker"><span class="dot"></span>IMPACTO ESPERADO</div>
+        <h2 class="h-1" style="margin-top: 18px;">Por qué vale la pena<br/>aunque sea grande.</h2>
+
+        <div class="impact-list">
+          <div class="impact-item">
+            <span class="check">✓</span>
+            <p>Vendor termina el setup <strong>realmente configurado</strong> — no medio configurado con piezas invisibles esperando en agenda.</p>
+          </div>
+          <div class="impact-item">
+            <span class="check">✓</span>
+            <p>Time-to-first-booking baja drásticamente — menos pasos, menos abandono, menos confusión.</p>
+          </div>
+          <div class="impact-item">
+            <span class="check">✓</span>
+            <p>Capturamos texto libre del vendor (cómo trabaja, qué hace) que después <strong>alimenta copilot, soporte y matching</strong>.</p>
+          </div>
+          <div class="impact-item">
+            <span class="check">✓</span>
+            <p>Onboarding deja de ser un funnel a optimizar y pasa a ser <strong>una conversación a iterar</strong> — mucho más rápido para experimentar.</p>
+          </div>
+          <div class="impact-item">
+            <span class="check">✓</span>
+            <p>Encaja con la narrativa de Claude for SMBs y posiciona a Ágora como AI-native para servicios profesionales en LATAM.</p>
+          </div>
+        </div>
+
+        <div class="vision">
+          <span class="seg">5 minutos</span> de conversación.<br/>
+          <span class="seg">0 forms</span>. <span class="seg">0 tickets</span> de soporte.<br/>
+          <span class="seg alt">1 vendor listo para vender.</span>
+        </div>
+      </div>
+      <footer class="slide-foot">
+        <span class="num">15<span class="total"> / 16</span></span>
+        <span class="iso"><img src="./assets/agora-iso.png" alt=""/></span>
+      </footer>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SLIDE 16 — CIERRE -->
+    <!-- =================================================================== -->
+    <section class="slide bg-dim" id="s16">
+      <div class="slide-inner close-inner">
+        <div>
+          <div class="kicker"><span class="dot"></span>CIERRE · ACUERDOS DEL MEETING</div>
+          <h2 class="h-1" style="margin-top: 18px;">Lo que salga de hoy,<br/>lo escribimos acá →</h2>
+          <p class="lead" style="margin-top: 18px;">El brainstorming es para decidir si avanzamos, hasta dónde, y quién toma cada pieza. Estos campos son la captura literal del meeting — no la entrada ni la conclusión predefinida.</p>
+          <p class="small" style="margin-top: 28px;">Material de apoyo: <span class="mono">brainstorming-onboarding-conversacional-spec.md</span><br/>Brief Slack: <span class="mono">brainstorming-onboarding-conversacional-briefing.md</span></p>
+        </div>
+        <div class="close-right">
+          <h3>Captura del meeting</h3>
+          <div class="close-field">
+            <span class="lab">Decisión sobre alcance (MVP o full)</span>
+            <div class="input">[ escribir acá ]</div>
+          </div>
+          <div class="close-field">
+            <span class="lab">Owner del próximo paso</span>
+            <div class="input">[ escribir acá ]</div>
+          </div>
+          <div class="close-field">
+            <span class="lab">Spike técnico — sí/no, owner</span>
+            <div class="input">[ escribir acá ]</div>
+          </div>
+          <div class="close-field">
+            <span class="lab">Fecha de checkpoint</span>
+            <div class="input">[ escribir acá ]</div>
+          </div>
+        </div>
+      </div>
+      <footer class="slide-foot">
+        <span class="num">16<span class="total"> / 16</span></span>
+        <span class="iso"><img src="./assets/agora-iso.png" alt=""/></span>
+      </footer>
+    </section>
+
+    <script>
+      // Keyboard navigation: arrows + space to advance, shift+space to go back
+      document.addEventListener('keydown', (e) => {
+        const target = e.target;
+        if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA')) return;
+        const slides = Array.from(document.querySelectorAll('.slide'));
+        const scrollTop = window.scrollY;
+        const vh = window.innerHeight;
+        const current = Math.round(scrollTop / vh);
+
+        if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === 'PageDown' || (e.key === ' ' && !e.shiftKey)) {
+          e.preventDefault();
+          const next = Math.min(slides.length - 1, current + 1);
+          slides[next] && slides[next].scrollIntoView({ behavior: 'smooth' });
+        } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === 'PageUp' || (e.key === ' ' && e.shiftKey)) {
+          e.preventDefault();
+          const prev = Math.max(0, current - 1);
+          slides[prev] && slides[prev].scrollIntoView({ behavior: 'smooth' });
+        } else if (e.key === 'Home') {
+          e.preventDefault();
+          slides[0].scrollIntoView({ behavior: 'smooth' });
+        } else if (e.key === 'End') {
+          e.preventDefault();
+          slides[slides.length - 1].scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    </script>
+  </body>
+</html>
