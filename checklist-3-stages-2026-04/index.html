@@ -3,34 +3,37 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Checklist · 3 etapas — Propuesta Flash</title>
+<title>Checklist · 3 etapas · v3 editorial — Propuesta Flash</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Montserrat:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --ink: #0f172a;
-    --ink-2: #334155;
-    --ink-3: #64748b;
-    --ink-4: #94a3b8;
-    --line: #e2e8f0;
-    --line-2: #eef2f7;
-    --bg: #f7f8fb;
+    --ink: #0a0a0a;
+    --ink-2: #404040;
+    --ink-3: #737373;
+    --ink-4: #a3a3a3;
+    --line: #e5e5e5;
+    --line-2: #f0f0f0;
+    --bg: #fafafa;
     --surface: #ffffff;
-    --surface-2: #f4f6fb;
-    --primary: #0072FF;
-    --primary-soft: #e6f0ff;
-    --success: #0AD6A1;
-    --success-soft: #e7faf3;
-    --warn: #f59e0b;
+    --surface-2: #f5f5f5;
+    --highlight-bg: #f4f4f4;
+
+    --radius-lg: 20px;
+    --radius-md: 12px;
+    --radius-sm: 8px;
+
+    --shadow-card: 0 1px 0 rgba(10, 10, 10, .04), 0 8px 24px -12px rgba(10, 10, 10, .08);
+    --shadow-pop: 0 24px 48px -24px rgba(10, 10, 10, .18);
+
+    --font-sans: 'Montserrat', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    --font-mono: 'Space Mono', monospace;
+    --font-hand: 'Caveat', 'Brush Script MT', cursive;
+
+    /* Ágora red — para detalles a mano alzada y skip destructivo */
     --danger: #FF4658;
-
-    --radius-lg: 24px;
-    --radius-md: 16px;
-    --radius-sm: 12px;
-
-    --shadow-card: 0 1px 0 rgba(15, 23, 42, .04), 0 8px 24px -12px rgba(15, 23, 42, .08);
-    --shadow-pop: 0 24px 48px -24px rgba(15, 23, 42, .18);
+    --danger-soft: rgba(255, 70, 88, 0.10);
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
@@ -42,205 +45,275 @@
     text-rendering: optimizeLegibility;
   }
 
+  /* ================================
+     Hand-drawn accents
+     Detalles a mano alzada en Ágora red.
+     Tipografía y resto del UI quedan
+     en sans-serif (Montserrat).
+     ================================ */
+  .hand {
+    font-family: var(--font-hand);
+    font-weight: 600;
+    font-style: normal;
+    letter-spacing: 0;
+  }
+
+  /* Wavy hand-drawn underline beneath a span of text */
+  .hu {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 4px;
+  }
+  .hu > svg {
+    position: absolute;
+    left: -2%;
+    bottom: -2px;
+    width: 104%;
+    height: 8px;
+    overflow: visible;
+    pointer-events: none;
+  }
+  .hu > svg path {
+    fill: none;
+    stroke: var(--danger);
+    stroke-width: 2.2;
+    stroke-linecap: round;
+  }
+
+  /* Marginalia: handwritten note with optional arrow */
+  .marginalia {
+    font-family: var(--font-hand);
+    font-weight: 600;
+    color: var(--danger);
+    font-size: 19px;
+    line-height: 1.15;
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .marginalia svg {
+    flex-shrink: 0;
+    width: 36px;
+    height: 22px;
+    margin-top: 2px;
+  }
+  .marginalia svg path { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
   .page {
-    max-width: 1320px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 56px 40px 96px;
+    padding: 48px 32px 80px;
   }
 
   /* Header */
   .doc-head {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 32px;
-    margin-bottom: 40px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 48px;
+    align-items: end;
+    margin-bottom: 36px;
     padding-bottom: 24px;
     border-bottom: 1px solid var(--line);
   }
   .doc-head h1 {
-    font-size: 36px;
+    font-size: 32px;
     font-weight: 800;
     letter-spacing: -0.02em;
     margin: 0 0 8px;
-    line-height: 1.05;
+    line-height: 1.1;
   }
   .doc-head .sub {
     color: var(--ink-3);
     font-size: 14px;
-    max-width: 520px;
     line-height: 1.55;
     margin: 0;
+    max-width: 520px;
   }
   .doc-meta {
     font-family: 'Space Mono', monospace;
-    font-size: 11px;
+    font-size: 10px;
     color: var(--ink-4);
     text-transform: uppercase;
-    letter-spacing: 0.12em;
-    text-align: right;
-    line-height: 1.6;
+    letter-spacing: 0.14em;
+    line-height: 1.7;
   }
-  .doc-meta b { color: var(--ink-2); font-weight: 700; }
+  .doc-meta b { color: var(--ink); font-weight: 700; }
+  .doc-meta a { color: var(--ink-3); text-decoration: none; border-bottom: 1px dashed var(--line); }
+  .doc-meta a:hover { color: var(--ink); }
 
-  /* Section labels */
+  /* Changelog */
+  .changelog {
+    margin: 24px 0 0;
+    padding: 16px 20px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    list-style: none;
+    display: grid;
+    gap: 8px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .changelog li {
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.5;
+    padding-left: 18px;
+    position: relative;
+  }
+  .changelog li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 8px;
+    width: 6px; height: 6px;
+    background: var(--ink);
+    border-radius: 50%;
+  }
+  .changelog li b { color: var(--ink); font-weight: 700; }
+
+  /* Section label */
   .section-label {
     font-family: 'Space Mono', monospace;
-    font-size: 11px;
+    font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 0.18em;
     color: var(--ink-4);
-    margin: 0 0 16px;
+    margin: 0 0 14px;
   }
 
-  /* Layout: 2 columns */
-  .grid {
+  /* Mock layout */
+  .mock {
     display: grid;
-    grid-template-columns: 1.1fr 1fr;
+    grid-template-columns: 1fr 1.1fr;
     gap: 40px;
     align-items: start;
   }
+  @media (max-width: 980px) {
+    .doc-head { grid-template-columns: 1fr; gap: 16px; }
+    .mock { grid-template-columns: 1fr; }
+    .changelog { grid-template-columns: 1fr; }
+  }
 
   /* ================================
-     LEFT: dashboard context (trigger)
+     LEFT: trigger state (collapsed)
      ================================ */
-  .dashboard {
-    background: linear-gradient(180deg, #f8fafc, #eef2f7);
+  .trigger-frame {
+    background: var(--surface-2);
     border: 1px solid var(--line);
     border-radius: var(--radius-lg);
-    padding: 24px;
-    box-shadow: var(--shadow-card);
+    padding: 28px;
     position: relative;
   }
-  .dashboard::after {
-    content: 'Vista actual';
+  .trigger-frame::after {
+    content: 'Trigger en el dashboard';
     position: absolute;
-    top: 16px;
-    left: 16px;
+    top: 14px;
+    left: 14px;
     font-family: 'Space Mono', monospace;
     font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 0.16em;
     color: var(--ink-4);
-    background: #fff;
+    background: var(--surface);
     padding: 4px 10px;
     border-radius: 999px;
     border: 1px solid var(--line);
   }
 
-  .dash-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 32px 16px 28px;
-  }
-  .dash-greet {
-    font-size: 28px;
-    font-weight: 700;
-    letter-spacing: -0.015em;
-  }
-  .dash-greet span { font-weight: 400; color: var(--ink-2); }
-
   .trigger {
-    display: inline-flex;
+    margin-top: 32px;
+    display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 12px 16px;
-    background: #fff;
+    gap: 14px;
+    width: 100%;
+    padding: 14px 18px;
+    background: var(--surface);
     border: 1px solid var(--line);
-    border-radius: 18px;
-    box-shadow: 0 4px 16px rgba(15, 23, 42, .06);
+    border-radius: 14px;
     cursor: pointer;
+    box-shadow: 0 1px 0 rgba(10, 10, 10, .04);
+    font-family: inherit;
+    text-align: left;
   }
-  .trigger .icon-circle {
+  .trigger:hover { border-color: var(--ink); }
+  .trigger .t-ring {
     width: 36px; height: 36px;
-    border-radius: 50%;
-    background: var(--primary-soft);
-    color: var(--primary);
-    display: grid;
-    place-items: center;
+    position: relative;
+    flex-shrink: 0;
   }
-  .trigger .icon-circle svg { width: 18px; height: 18px; }
-  .trigger .label-stack { line-height: 1.15; }
-  .trigger .title {
-    font-size: 13px;
-    font-weight: 600;
+  .trigger .t-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .trigger .t-ring .ring-bg { fill: none; stroke: var(--line); stroke-width: 3; }
+  .trigger .t-ring .ring-fill {
+    fill: none; stroke: var(--ink); stroke-width: 3;
+    stroke-linecap: round;
+    stroke-dasharray: 100;
+    stroke-dashoffset: calc(100 - 43);
+  }
+  .trigger .t-pct {
+    position: absolute; inset: 0;
+    display: grid; place-items: center;
+    font-size: 10px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    font-family: 'Space Mono', monospace;
+  }
+  .trigger .t-stack { flex: 1; min-width: 0; line-height: 1.2; }
+  .trigger .t-title {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
     color: var(--ink);
   }
-  .trigger .meta {
-    font-size: 11px;
-    color: var(--ink-4);
-    margin-top: 2px;
-  }
-  .trigger .pct {
-    font-size: 18px;
-    font-weight: 700;
-    margin-left: 4px;
-    font-variant-numeric: tabular-nums;
-  }
-  .trigger .chev {
-    color: var(--ink-4);
-    margin-left: 4px;
-  }
-
-  .dash-body {
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 20px;
-    padding: 22px 24px;
-    margin-top: 8px;
-  }
-  .dash-body .row-label {
+  .trigger .t-row {
+    margin-top: 4px;
     font-family: 'Space Mono', monospace;
     font-size: 10px;
     text-transform: uppercase;
-    letter-spacing: 0.16em;
-    color: var(--primary);
-    margin: 0 0 12px;
-  }
-  .dash-body h3 {
-    margin: 0 0 4px;
-    font-size: 14px;
+    letter-spacing: 0.12em;
     color: var(--ink-3);
-    font-weight: 500;
   }
-  .dash-body .skeleton-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-top: 12px;
+  .trigger .t-row b { color: var(--ink); font-weight: 700; }
+  .trigger .t-hint {
+    display: block;
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--ink-2);
   }
-  .dash-body .sk {
-    height: 96px;
-    border-radius: 14px;
-    background: linear-gradient(180deg, #f8fafc, #eef2f7);
-    border: 1px solid var(--line-2);
+  .trigger .t-hint .arr { color: var(--ink); font-weight: 700; margin-right: 4px; }
+  .trigger .t-chev {
+    color: var(--ink-4);
+    font-size: 20px;
+    flex-shrink: 0;
   }
 
-  .arrow-note {
-    margin-top: 20px;
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
+  .trigger-notes {
+    margin-top: 28px;
+    display: grid;
+    gap: 12px;
+    font-size: 12px;
     color: var(--ink-3);
-    font-size: 13px;
     line-height: 1.5;
   }
-  .arrow-note .pill {
+  .trigger-notes .row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .trigger-notes .tag {
     flex-shrink: 0;
     font-family: 'Space Mono', monospace;
     font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 0.14em;
-    color: var(--primary);
-    background: var(--primary-soft);
+    color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--line);
     border-radius: 6px;
-    padding: 4px 8px;
+    padding: 3px 8px;
     line-height: 1;
   }
 
   /* ================================
-     RIGHT: panel proposal (3 stages)
+     RIGHT: open panel
      ================================ */
   .panel {
     background: var(--surface);
@@ -249,224 +322,212 @@
     box-shadow: var(--shadow-pop);
     overflow: hidden;
     width: 100%;
-    max-width: 520px;
+    max-width: 480px;
     margin-left: auto;
     position: relative;
   }
-  .panel::before {
-    content: 'Propuesta';
-    position: absolute;
-    top: 16px;
-    left: 16px;
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.16em;
-    color: #fff;
-    background: var(--ink);
-    padding: 4px 10px;
-    border-radius: 999px;
-    z-index: 2;
-  }
   .panel-head {
-    padding: 56px 28px 20px;
+    padding: 18px 22px 16px;
     border-bottom: 1px solid var(--line-2);
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-items: center;
+    gap: 12px;
+    flex-wrap: nowrap;
   }
+  .panel-head .stack { line-height: 1.2; min-width: 0; flex: 1; }
   .panel-head h2 {
-    margin: 0;
-    font-size: 18px;
-    font-weight: 700;
+    margin: 0 0 4px;
+    font-size: 17px;
+    font-weight: 800;
     letter-spacing: -0.01em;
+    white-space: nowrap;
   }
-  .panel-close {
-    width: 32px; height: 32px;
-    border-radius: 10px;
-    border: 1px solid var(--line);
-    background: #fff;
-    color: var(--ink-3);
-    display: grid;
-    place-items: center;
-    cursor: pointer;
-  }
-
-  /* Compact summary (replaces the previous big hero) */
-  .summary {
-    padding: 22px 28px 18px;
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    border-bottom: 1px solid var(--line-2);
-  }
-  .summary .ring {
-    --pct: 60;
-    width: 56px; height: 56px;
-    border-radius: 50%;
-    background:
-      conic-gradient(var(--primary) calc(var(--pct) * 1%), var(--line-2) 0);
-    display: grid;
-    place-items: center;
-    flex-shrink: 0;
-  }
-  .summary .ring::before {
-    content: '';
-    width: 44px; height: 44px;
-    border-radius: 50%;
-    background: #fff;
-    grid-area: 1/1;
-  }
-  .summary .ring span {
-    grid-area: 1/1;
-    font-size: 13px;
-    font-weight: 700;
-    font-variant-numeric: tabular-nums;
-  }
-  .summary .stack { flex: 1; min-width: 0; }
-  .summary .stack .title {
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 2px;
-  }
-  .summary .stack .meta {
-    font-size: 12px;
-    color: var(--ink-3);
-  }
-  .summary .badge {
+  .panel-head .sub {
     font-family: 'Space Mono', monospace;
     font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 0.14em;
-    background: var(--primary-soft);
-    color: var(--primary);
-    padding: 6px 10px;
-    border-radius: 999px;
+    color: var(--ink-3);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .panel-head .sub b { color: var(--ink); font-weight: 700; }
+  .panel-head .actions { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+  .panel-head .count-pill {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink);
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-variant-numeric: tabular-nums;
     white-space: nowrap;
   }
+  .panel-close {
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink-3);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .panel-close:hover { color: var(--ink); border-color: var(--ink); }
 
-  /* Stages */
+  /* Stages container */
   .stages {
-    padding: 12px 16px 24px;
+    padding: 12px;
   }
 
   .stage {
     border: 1px solid var(--line-2);
     border-radius: var(--radius-md);
-    background: #fff;
-    margin: 12px 0;
+    background: var(--surface);
+    margin: 0 0 8px;
     overflow: hidden;
-    transition: border-color .2s ease;
+    position: relative;
   }
+  .stage:last-child { margin-bottom: 0; }
+
+  /* Active accent: thin black bar on the left */
   .stage[data-state='active'] {
-    border-color: rgba(0, 114, 255, 0.25);
-    box-shadow: 0 0 0 4px rgba(0, 114, 255, 0.04);
+    border-color: var(--ink);
+  }
+  .stage[data-state='active']::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--ink);
+  }
+
+  .stage[data-state='locked'] {
+    background: var(--surface-2);
+    border-style: dashed;
+    border-color: var(--line);
   }
 
   .stage-head {
     display: flex;
     align-items: center;
-    gap: 14px;
-    padding: 16px 18px;
+    gap: 12px;
+    padding: 12px 14px;
     cursor: pointer;
     user-select: none;
-    transition: background-color .15s ease;
   }
-  .stage-head:hover { background: var(--surface-2); }
-  .stage-head:focus-visible {
-    outline: 2px solid var(--primary);
-    outline-offset: -2px;
-  }
-  .stage-num {
-    width: 32px; height: 32px;
-    border-radius: 10px;
-    background: var(--surface-2);
+  .stage[data-state='locked'] .stage-head { cursor: not-allowed; }
+  .stage[data-state='active'] .stage-head { padding-left: 17px; }
+  .stage[data-state='done'] .stage-head:hover { background: var(--surface-2); }
+
+  .stage-marker {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    flex-shrink: 0;
     display: grid;
     place-items: center;
     font-family: 'Space Mono', monospace;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 700;
-    color: var(--ink-2);
-    flex-shrink: 0;
+    color: var(--ink-3);
+    background: var(--surface-2);
+    border: 1px solid var(--line);
   }
-  .stage[data-state='active'] .stage-num {
-    background: var(--primary-soft);
-    color: var(--primary);
+  .stage[data-state='active'] .stage-marker {
+    color: var(--surface);
+    background: var(--ink);
+    border-color: var(--ink);
   }
-  .stage[data-state='done'] .stage-num {
-    background: var(--success-soft);
-    color: var(--success);
+  .stage[data-state='done'] .stage-marker {
+    color: var(--surface);
+    background: var(--ink);
+    border-color: var(--ink);
   }
-  .stage[data-state='done'] .stage-num::after {
-    content: '✓';
-    font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
-  }
-  .stage[data-state='done'] .stage-num span { display: none; }
-
-  .stage-info { flex: 1; min-width: 0; }
-  .stage-info .label {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
+  .stage[data-state='done'] .stage-marker .num { display: none; }
+  .stage[data-state='done'] .stage-marker .ok { display: block; }
+  .stage[data-state='done'] .stage-marker .lock { display: none; }
+  .stage[data-state='active'] .stage-marker .ok { display: none; }
+  .stage[data-state='active'] .stage-marker .lock { display: none; }
+  .stage[data-state='locked'] .stage-marker {
     color: var(--ink-4);
-    margin-bottom: 2px;
+    background: var(--surface);
+    border-style: dashed;
   }
+  .stage[data-state='locked'] .stage-marker .num { display: none; }
+  .stage[data-state='locked'] .stage-marker .lock { display: block; }
+  .stage-marker .ok { display: none; width: 14px; height: 14px; }
+  .stage-marker .lock { display: none; width: 12px; height: 12px; color: var(--ink-4); }
+  .stage-marker .ok path { stroke: currentColor; stroke-width: 3.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+
+  .stage-info { flex: 1; min-width: 0; line-height: 1.15; }
   .stage-info .title {
     font-size: 14px;
     font-weight: 700;
+    color: var(--ink);
     letter-spacing: -0.005em;
-    margin-bottom: 2px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    overflow-wrap: anywhere;
   }
+  .stage[data-state='locked'] .stage-info .title { color: var(--ink-4); font-weight: 600; }
+  .stage[data-state='done'] .stage-info .title { color: var(--ink-2); font-weight: 600; }
   .stage-info .desc {
+    margin-top: 2px;
     font-size: 12px;
     color: var(--ink-3);
-    line-height: 1.45;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+  }
+  .stage[data-state='done'] .stage-info .desc { display: none; }
+  .stage[data-state='locked'] .stage-info .desc {
+    color: var(--ink-4);
+    font-style: italic;
   }
 
-  .stage-progress {
+  .stage-meta {
+    flex-shrink: 0;
     display: flex;
     align-items: center;
     gap: 8px;
-    flex-shrink: 0;
-  }
-  .stage-progress .count {
     font-family: 'Space Mono', monospace;
     font-size: 11px;
+    font-weight: 700;
     color: var(--ink-3);
     font-variant-numeric: tabular-nums;
   }
-  .stage-progress .bar {
-    width: 56px;
-    height: 4px;
-    background: var(--line-2);
-    border-radius: 999px;
-    overflow: hidden;
-  }
-  .stage-progress .bar i {
-    display: block;
-    height: 100%;
-    background: var(--primary);
-    border-radius: 999px;
-  }
-  .stage[data-state='done'] .stage-progress .bar i { background: var(--success); }
+  .stage[data-state='active'] .stage-meta .count { color: var(--ink); }
+  .stage[data-state='locked'] .stage-meta { color: var(--ink-4); }
 
   .stage-chev {
     color: var(--ink-4);
+    font-size: 18px;
+    line-height: 1;
+    margin-left: 2px;
     transition: transform .2s ease;
-    flex-shrink: 0;
   }
+  .stage[data-state='locked'] .stage-chev { display: none; }
   .stage[data-open='true'] .stage-chev { transform: rotate(90deg); }
 
+  /* Stage body */
   .stage-body {
-    border-top: 1px solid var(--line-2);
-    padding: 6px 8px 12px;
     display: none;
+    padding: 4px 8px 10px;
+    border-top: 1px solid var(--line-2);
   }
   .stage[data-open='true'] .stage-body { display: block; }
 
-  /* Task row */
+  /* Tasks */
   .task {
     display: flex;
     align-items: center;
@@ -474,170 +535,384 @@
     padding: 10px 12px;
     border-radius: var(--radius-sm);
     cursor: pointer;
-    transition: background-color .15s ease;
+    position: relative;
   }
   .task:hover { background: var(--surface-2); }
+  .task + .task { margin-top: 2px; }
+
   .task .check {
-    width: 28px; height: 28px;
+    width: 18px; height: 18px;
     border-radius: 50%;
     border: 1.5px solid var(--line);
+    background: var(--surface);
+    flex-shrink: 0;
     display: grid;
     place-items: center;
-    color: var(--ink-3);
-    flex-shrink: 0;
-    background: #fff;
+    color: var(--surface);
+    transition: background .15s, border-color .15s;
   }
-  .task .check svg { width: 12px; height: 12px; }
+  .task .check svg { width: 11px; height: 11px; opacity: 0; }
   .task[data-done='true'] .check {
-    background: var(--success);
-    border-color: var(--success);
-    color: #fff;
+    background: var(--ink);
+    border-color: var(--ink);
+  }
+  .task[data-done='true'] .check svg { opacity: 1; }
+
+  .task .label {
+    flex: 1;
+    min-width: 0;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.35;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    overflow-wrap: anywhere;
   }
   .task[data-done='true'] .label {
     color: var(--ink-4);
     text-decoration: line-through;
+    text-decoration-thickness: 1px;
   }
-  .task .label {
-    font-size: 13px;
-    flex: 1;
-    color: var(--ink);
-    font-weight: 500;
+
+  .task .meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
   }
-  .task .arrow {
-    color: var(--ink-4);
+
+  /* Next-step highlight */
+  .task[data-next='true'] {
+    background: var(--ink);
   }
-  .task .step-tag {
+  .task[data-next='true'] .label { color: var(--surface); font-weight: 600; }
+  .task[data-next='true'] .check {
+    border-color: var(--surface);
+    background: transparent;
+  }
+  .task[data-next='true'] .arrow { color: var(--surface); }
+  .task[data-next='true']:hover { background: #1a1a1a; }
+
+  .step-tag {
     font-family: 'Space Mono', monospace;
-    font-size: 9.5px;
+    font-size: 9px;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.14em;
-    color: var(--primary);
-    background: var(--primary-soft);
-    padding: 3px 8px;
+    color: var(--ink-3);
+    border: 1px solid var(--line);
+    padding: 3px 7px;
     border-radius: 999px;
-    border: 1px solid #cfe1ff;
-    white-space: nowrap;
-    flex-shrink: 0;
+    background: var(--surface);
+  }
+  .task[data-next='true'] .step-tag {
+    color: var(--surface);
+    border-color: rgba(255,255,255,0.4);
+    background: transparent;
+  }
+
+  .arrow {
+    color: var(--ink-4);
+    font-size: 16px;
     line-height: 1;
   }
-  .task[data-stepper] { cursor: pointer; }
-  .task[data-stepper]:hover .step-tag {
-    background: var(--primary);
-    color: #fff;
-    border-color: var(--primary);
-  }
-  .task .skip {
-    width: 28px;
-    height: 28px;
-    border: 1px solid transparent;
+
+  .skip {
+    width: 24px; height: 24px;
+    border: 0;
     background: transparent;
+    color: var(--danger);
+    border-radius: 6px;
     cursor: pointer;
-    border-radius: 8px;
-    color: var(--ink-4);
-    display: grid;
+    display: none;
     place-items: center;
-    transition: all .15s ease;
-    flex-shrink: 0;
     padding: 0;
   }
-  .task .skip svg { width: 14px; height: 14px; }
-  .task .skip:hover {
+  .skip svg { width: 13px; height: 13px; }
+  .task:hover .skip { display: grid; }
+  .task:hover .skip:hover {
     color: var(--danger);
-    background: #fff5f6;
-    border-color: #fecaca;
+    background: var(--danger-soft);
+  }
+  .task[data-next='true'] .skip { color: #ffb5bd; }
+  .task[data-next='true']:hover .skip:hover {
+    color: var(--danger);
+    background: var(--surface);
   }
 
-  /* Right column annotations */
-  .notes {
-    margin-top: 28px;
-    border-top: 1px dashed var(--line);
-    padding-top: 24px;
-  }
-  .notes h4 {
-    font-family: 'Space Mono', monospace;
+  /* Locked stage subtle hint inside body (not used — body hidden, but for future "peek") */
+  .lock-hint {
+    padding: 8px 14px 0;
     font-size: 11px;
+    color: var(--ink-4);
+    font-style: italic;
+  }
+
+  /* Annotations under the panel */
+  .panel-notes {
+    margin-top: 20px;
+    padding: 18px 20px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    font-size: 12px;
+    color: var(--ink-3);
+    line-height: 1.55;
+  }
+  .panel-notes h4 {
+    margin: 0 0 8px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 0.16em;
-    color: var(--ink-4);
-    margin: 0 0 12px;
-  }
-  .notes ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    display: grid;
-    gap: 10px;
-  }
-  .notes li {
-    display: grid;
-    grid-template-columns: 22px 1fr;
-    gap: 10px;
-    font-size: 13px;
-    color: var(--ink-2);
-    line-height: 1.5;
-  }
-  .notes li::before {
-    content: '';
-    width: 6px; height: 6px;
-    background: var(--primary);
-    border-radius: 50%;
-    margin-top: 8px;
-    grid-column: 1;
-    align-self: start;
-    justify-self: center;
-  }
-
-  /* Mobile fallback */
-  @media (max-width: 980px) {
-    .grid { grid-template-columns: 1fr; }
-    .doc-head { flex-direction: column; align-items: flex-start; gap: 16px; }
-    .doc-meta { text-align: left; }
-    .panel { max-width: 100%; }
-  }
-
-  /* Bottom: full taxonomy */
-  .taxonomy {
-    margin-top: 64px;
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
-    padding: 28px 32px;
-  }
-  .taxonomy h3 {
-    margin: 0 0 4px;
-    font-size: 18px;
+    color: var(--ink);
     font-weight: 700;
-    letter-spacing: -0.01em;
   }
-  .taxonomy p.lead {
+  .panel-notes ul { margin: 0; padding-left: 18px; }
+  .panel-notes li { margin: 4px 0; }
+  .panel-notes b { color: var(--ink); font-weight: 700; }
+
+  /* Variant viewer */
+  .variants {
+    margin-top: 56px;
+    padding-top: 36px;
+    border-top: 1px solid var(--line);
+  }
+  .variants h2 {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    margin: 0 0 4px;
+  }
+  .variants > p {
+    margin: 0 0 28px;
     color: var(--ink-3);
     font-size: 13px;
-    margin: 0 0 24px;
+  }
+  .variant-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    align-items: start;
+  }
+  @media (max-width: 980px) { .variant-grid { grid-template-columns: 1fr; } }
+  .variant {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+  }
+  .variant h3 {
+    font-size: 13px;
+    font-weight: 700;
+    margin: 0 0 4px;
+    color: var(--ink);
+  }
+  .variant p {
+    margin: 0 0 16px;
+    font-size: 12px;
+    color: var(--ink-3);
+    line-height: 1.5;
+  }
+
+  /* In variant, panels are scaled down visually using width */
+  .variant .panel {
+    box-shadow: 0 1px 0 rgba(10,10,10,.04), 0 6px 18px -10px rgba(10,10,10,.12);
+    margin: 0;
+    max-width: 100%;
+  }
+
+  /* ================================
+     MOBILE · pantalla completa
+     Aplica a viewport real <600px Y al frame de preview .is-mobile
+     ================================ */
+  .mobile-section {
+    margin-top: 56px;
+    padding-top: 36px;
+    border-top: 1px solid var(--line);
+  }
+  .mobile-section h2 {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    margin: 0 0 4px;
+  }
+  .mobile-section > p {
+    margin: 0 0 28px;
+    color: var(--ink-3);
+    font-size: 13px;
+    max-width: 620px;
     line-height: 1.55;
+  }
+  .mobile-stage {
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .phone-frame {
+    width: 390px;
+    flex-shrink: 0;
+    border-radius: 36px;
+    border: 10px solid var(--ink);
+    background: var(--surface);
+    overflow: hidden;
+    box-shadow: 0 24px 48px -24px rgba(10, 10, 10, .25);
+  }
+  .phone-frame .status-bar {
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 22px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink);
+    border-bottom: 1px solid var(--line-2);
+  }
+  .phone-frame .status-bar .dots {
+    display: flex; gap: 4px;
+  }
+  .phone-frame .status-bar .dots i {
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--ink);
+    display: inline-block;
+  }
+  .mobile-notes {
+    flex: 1;
+    min-width: 240px;
+    padding: 18px 20px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    font-size: 12px;
+    color: var(--ink-3);
+    line-height: 1.55;
+  }
+  .mobile-notes h4 {
+    margin: 0 0 8px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink);
+    font-weight: 700;
+  }
+  .mobile-notes ul { margin: 0; padding-left: 18px; }
+  .mobile-notes li { margin: 4px 0; }
+  .mobile-notes b { color: var(--ink); font-weight: 700; }
+
+  /* Mobile panel styles — scoped via .is-mobile o @media */
+  .is-mobile.panel,
+  .is-mobile .panel {
+    border-radius: 0;
+    border: 0;
+    box-shadow: none;
+    max-width: 100%;
+    margin: 0;
+  }
+  .is-mobile .panel-head {
+    padding: 16px 18px 14px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas: "title close" "sub count";
+    gap: 4px 12px;
+    align-items: center;
+  }
+  .is-mobile .panel-head .stack { display: contents; }
+  .is-mobile .panel-head .actions { display: contents; }
+  .is-mobile .panel-head h2 { grid-area: title; }
+  .is-mobile .panel-head .sub { grid-area: sub; align-self: center; }
+  .is-mobile .panel-head .count-pill { grid-area: count; justify-self: end; }
+  .is-mobile .panel-head .panel-close { grid-area: close; justify-self: end; }
+  .is-mobile .stages { padding: 0; }
+  .is-mobile .stage {
+    border: 0;
+    border-radius: 0;
+    margin: 0;
+    background: var(--surface);
+    border-bottom: 1px solid var(--line-2);
+  }
+  .is-mobile .stage:last-child { border-bottom: 0; }
+  .is-mobile .stage[data-state='locked'] {
+    background: var(--surface);
+    border-style: solid;
+    border-color: transparent;
+    border-bottom-color: var(--line-2);
+  }
+  .is-mobile .stage[data-state='active'] {
+    border: 0;
+    border-bottom: 1px solid var(--line-2);
+  }
+  .is-mobile .stage[data-state='active']::before { display: none; }
+  .is-mobile .stage-head { padding: 16px 18px; }
+  .is-mobile .stage[data-state='active'] .stage-head { padding-left: 18px; }
+  .is-mobile .stage-body {
+    padding: 0 10px 14px;
+    border-top: 1px solid var(--line-2);
+  }
+  .is-mobile .task { padding: 12px 10px; }
+  .is-mobile .skip { display: grid; } /* hover doesn't apply on touch — always visible */
+
+  /* ================================
+     Taxonomy · 23 tareas en 3 etapas
+     ================================ */
+  .taxonomy {
+    margin-top: 56px;
+    padding-top: 36px;
+    border-top: 1px solid var(--line);
+  }
+  .taxonomy h2 {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    margin: 0 0 4px;
+  }
+  .taxonomy .lead {
+    margin: 0 0 24px;
+    color: var(--ink-3);
+    font-size: 13px;
     max-width: 720px;
+    line-height: 1.55;
+  }
+  .dot-existing {
+    display: inline-block;
+    width: 7px; height: 7px;
+    background: var(--ink);
+    border-radius: 50%;
+    vertical-align: middle;
+    margin: 0 1px;
   }
   .tax-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
+    gap: 20px;
   }
   .tax-card {
-    border: 1px solid var(--line-2);
+    background: var(--surface);
+    border: 1px solid var(--line);
     border-radius: var(--radius-md);
-    padding: 18px 18px 14px;
-    background: var(--surface-2);
+    padding: 20px;
   }
   .tax-card .num {
     font-family: 'Space Mono', monospace;
-    font-size: 11px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
     color: var(--ink-4);
-    letter-spacing: 0.14em;
+    margin-bottom: 6px;
   }
   .tax-card h5 {
-    margin: 4px 0 6px;
+    margin: 0 0 6px;
     font-size: 15px;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: -0.005em;
+    color: var(--ink);
   }
   .tax-card p {
     margin: 0 0 14px;
@@ -646,191 +921,158 @@
     line-height: 1.5;
   }
   .tax-card ul {
-    list-style: none;
     margin: 0;
     padding: 0;
-    border-top: 1px dashed var(--line);
-    padding-top: 12px;
-    display: grid;
-    gap: 8px;
+    list-style: none;
   }
   .tax-card li {
-    font-size: 12.5px;
+    position: relative;
+    padding: 8px 0 8px 20px;
+    font-size: 13px;
     color: var(--ink-2);
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    line-height: 1.4;
+    border-top: 1px solid var(--line-2);
   }
+  .tax-card li:first-child { border-top: 0; }
   .tax-card li::before {
     content: '';
-    width: 6px; height: 6px;
+    position: absolute;
+    left: 0; top: 13px;
+    width: 7px; height: 7px;
     border-radius: 50%;
-    background: var(--ink-4);
-    flex-shrink: 0;
+    border: 1.5px solid var(--ink-4);
+    box-sizing: border-box;
   }
-  .tax-card[data-stage='1'] li[data-existing='true']::before { background: var(--primary); }
-  .tax-card[data-stage='2'] li[data-existing='true']::before { background: #8b5cf6; }
-  .tax-card[data-stage='3'] li[data-existing='true']::before { background: var(--success); }
-  .tax-card li[data-existing='true'] {
-    color: var(--ink);
-    font-weight: 600;
-  }
-  .tax-card li[data-existing='true']::after {
-    content: 'Hoy';
-    margin-left: auto;
-    font-family: 'Space Mono', monospace;
-    font-size: 9.5px;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--ink-4);
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    padding: 2px 6px;
-    line-height: 1;
-    background: #fff;
-  }
-  .tax-card li {
-    width: 100%;
-  }
-  .dot-existing {
-    display: inline-block;
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--primary);
-    vertical-align: middle;
-    margin: 0 2px;
+  .tax-card li[data-existing='true']::before {
+    background: var(--ink);
+    border-color: var(--ink);
   }
 
-  @media (max-width: 980px) {
-    .tax-grid { grid-template-columns: 1fr; }
-  }
-
-  /* ===========
-     Detail table
-     =========== */
+  /* ================================
+     Detail table · 23 tareas
+     ================================ */
   .detail {
-    margin-top: 64px;
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
-    padding: 28px 32px 32px;
+    margin-top: 48px;
   }
-  .detail h3 {
-    margin: 0 0 4px;
-    font-size: 18px;
-    font-weight: 700;
+  .detail h2 {
+    font-size: 22px;
+    font-weight: 800;
     letter-spacing: -0.01em;
+    margin: 0 0 4px;
   }
-  .detail p.lead {
+  .detail .lead {
+    margin: 0 0 20px;
     color: var(--ink-3);
     font-size: 13px;
-    margin: 0 0 24px;
+    max-width: 720px;
     line-height: 1.55;
-    max-width: 760px;
+  }
+  .detail-wrap {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    overflow: hidden;
   }
   .detail-table {
     width: 100%;
     border-collapse: collapse;
     font-size: 13px;
+    font-family: inherit;
   }
   .detail-table thead th {
     text-align: left;
     font-family: 'Space Mono', monospace;
-    font-size: 10.5px;
+    font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 0.14em;
-    color: var(--ink-4);
-    font-weight: 400;
-    padding: 12px 12px;
-    border-bottom: 1px solid var(--line);
-    vertical-align: bottom;
-  }
-  .detail-table tbody td {
-    padding: 14px 12px;
-    border-bottom: 1px solid var(--line-2);
-    vertical-align: top;
-    line-height: 1.45;
-  }
-  .detail-table tr.stage-row td {
+    color: var(--ink-3);
+    font-weight: 700;
     background: var(--surface-2);
     border-bottom: 1px solid var(--line);
-    padding: 14px 12px;
+    padding: 10px 14px;
+  }
+  .detail-table tbody td {
+    padding: 12px 14px;
+    border-top: 1px solid var(--line-2);
+    vertical-align: top;
+  }
+  .detail-table tr.stage-row td {
+    background: var(--ink);
+    padding: 10px 14px;
+    border-top: 1px solid var(--ink);
   }
   .detail-table tr.stage-row td .stage-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
     font-family: 'Space Mono', monospace;
     font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.16em;
-    color: var(--ink-3);
-  }
-  .detail-table tr.stage-row td .stage-tag::before {
-    content: '';
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--ink-4);
-  }
-  .detail-table tr.stage-row[data-stage='1'] td .stage-tag::before { background: var(--primary); }
-  .detail-table tr.stage-row[data-stage='2'] td .stage-tag::before { background: #8b5cf6; }
-  .detail-table tr.stage-row[data-stage='3'] td .stage-tag::before { background: var(--success); }
-  .detail-table tr.stage-row td .stage-name {
-    font-family: 'Montserrat', sans-serif;
-    color: var(--ink);
     font-weight: 700;
-    text-transform: none;
-    letter-spacing: 0;
-    font-size: 13px;
-    margin-left: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--surface);
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
   }
-
+  .detail-table tr.stage-row td .stage-name {
+    font-weight: 400;
+    color: rgba(255,255,255,0.65);
+  }
   .detail-table .task-cell .id {
     font-family: 'Space Mono', monospace;
-    font-size: 10.5px;
+    font-size: 11px;
     color: var(--ink-4);
     margin-bottom: 2px;
   }
   .detail-table .task-cell .name {
     font-weight: 600;
+    font-size: 13px;
     color: var(--ink);
+    line-height: 1.35;
   }
   .detail-table .obj {
+    font-size: 12px;
     color: var(--ink-2);
-    max-width: 360px;
+    line-height: 1.5;
+  }
+  .detail-table .obj code {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--ink);
+    background: var(--surface-2);
+    padding: 1px 4px;
+    border-radius: 4px;
   }
 
+  /* Pills — monochrome */
   .pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 999px;
     font-family: 'Space Mono', monospace;
     font-size: 10px;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.14em;
-    padding: 4px 8px;
-    border-radius: 999px;
+    letter-spacing: 0.12em;
     border: 1px solid var(--line);
-    background: #fff;
+    background: var(--surface);
     color: var(--ink-3);
     white-space: nowrap;
-    line-height: 1;
   }
-  .pill[data-kind='auto']    { background: #eef2ff; border-color: #dbe4ff; color: #4338ca; }
-  .pill[data-kind='stepper'] { background: #fff7ed; border-color: #fed7aa; color: #b45309; }
-  .pill[data-kind='manual']  { background: #f1f5f9; border-color: var(--line); color: var(--ink-2); }
-  .pill[data-kind='skip-yes'] { background: #fef2f2; border-color: #fecaca; color: #b91c1c; }
-  .pill[data-kind='skip-no']  { background: #ecfdf5; border-color: #a7f3d0; color: #065f46; }
-  .pill[data-kind='today']   { background: var(--primary-soft); border-color: #b6d8ff; color: var(--primary); }
-  .pill[data-kind='cand']    { background: #f8fafc; border-color: var(--line); color: var(--ink-3); }
+  .pill[data-kind='auto']     { background: var(--surface-2); border-color: var(--line); color: var(--ink-2); }
+  .pill[data-kind='stepper']  { background: var(--ink); border-color: var(--ink); color: var(--surface); }
+  .pill[data-kind='manual']   { background: var(--surface-2); border-color: var(--line); color: var(--ink-3); }
+  .pill[data-kind='skip-yes'] { background: var(--surface); border-color: var(--line); color: var(--ink-4); }
+  .pill[data-kind='skip-no']  { background: var(--ink); border-color: var(--ink); color: var(--surface); }
+  .pill[data-kind='today']    { background: var(--surface); border-color: var(--ink); color: var(--ink); }
+  .pill[data-kind='cand']     { background: var(--surface); border: 1px dashed var(--ink-4); color: var(--ink-3); }
 
   .legend {
     margin-top: 18px;
     display: flex;
     flex-wrap: wrap;
-    gap: 14px 22px;
+    gap: 12px 22px;
     font-size: 12px;
     color: var(--ink-3);
+    line-height: 1.45;
   }
   .legend .lg-row {
     display: inline-flex;
@@ -838,898 +1080,1173 @@
     gap: 8px;
   }
 
-  @media (max-width: 980px) {
-    .detail { padding: 20px 16px; }
-    .detail-table { font-size: 12px; }
-    .detail-table thead { display: none; }
-    .detail-table tbody td { padding: 10px 6px; }
-    .detail-table .obj { max-width: none; }
-  }
-
-  /* =========
-     Steppers
-     ========= */
+  /* ================================
+     Steppers · instructivos paso a paso
+     ================================ */
   .steppers {
-    margin-top: 64px;
+    margin-top: 56px;
+    padding-top: 36px;
+    border-top: 1px solid var(--line);
   }
-  .steppers-head {
-    margin-bottom: 28px;
-  }
-  .steppers-head h3 {
-    margin: 0 0 4px;
-    font-size: 18px;
-    font-weight: 700;
+  .steppers-head h2 {
+    font-size: 22px;
+    font-weight: 800;
     letter-spacing: -0.01em;
+    margin: 0 0 4px;
   }
   .steppers-head p {
+    margin: 0 0 16px;
     color: var(--ink-3);
     font-size: 13px;
-    margin: 0;
+    max-width: 720px;
     line-height: 1.55;
-    max-width: 760px;
   }
-  .stepper-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 20px;
-  }
-  @media (max-width: 980px) {
-    .stepper-grid { grid-template-columns: 1fr; }
-  }
-  .stepper-card {
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
-    padding: 24px 26px 26px;
-    box-shadow: var(--shadow-card);
+  .stepper-toc {
     display: flex;
-    flex-direction: column;
-    scroll-margin-top: 48px;
-    transition: box-shadow .35s ease, border-color .35s ease, transform .35s ease;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 28px;
   }
-  .stepper-card.flash {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 4px rgba(0, 114, 255, 0.18), var(--shadow-pop);
-    transform: translateY(-2px);
-  }
-  .stepper-card .stp-head {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 14px;
-    margin-bottom: 6px;
-  }
-  .stepper-card .stp-title {
-    margin: 0;
-    font-size: 15px;
-    font-weight: 700;
-    letter-spacing: -0.005em;
-    line-height: 1.35;
-  }
-  .stepper-card .stp-id {
+  .stepper-toc a {
     font-family: 'Space Mono', monospace;
     font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 0.14em;
-    color: var(--ink-4);
-    background: var(--surface-2);
+    color: var(--ink-2);
+    background: var(--surface);
     border: 1px solid var(--line);
-    padding: 4px 8px;
-    border-radius: 6px;
-    white-space: nowrap;
+    padding: 5px 10px;
+    border-radius: 999px;
+    text-decoration: none;
+  }
+  .stepper-toc a:hover {
+    color: var(--surface);
+    background: var(--ink);
+    border-color: var(--ink);
+  }
+  .stepper-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .stepper-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 22px;
+    scroll-margin-top: 16px;
+  }
+  .stepper-card .stp-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+  .stepper-card .stp-title {
+    font-size: 15px;
+    font-weight: 800;
+    margin: 0;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+    line-height: 1.3;
+  }
+  .stepper-card .stp-id {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-4);
+    font-weight: 700;
+    letter-spacing: 0.06em;
     flex-shrink: 0;
+    white-space: nowrap;
   }
   .stepper-card .stp-sub {
-    color: var(--ink-3);
-    font-size: 12.5px;
-    line-height: 1.5;
     margin: 0 0 18px;
+    font-size: 13px;
+    color: var(--ink-3);
+    line-height: 1.5;
   }
-
   .stepper-steps {
     list-style: none;
-    margin: 0;
-    padding: 0;
     counter-reset: step;
-    border-top: 1px dashed var(--line);
-    padding-top: 18px;
+    padding: 0;
+    margin: 0;
   }
   .stepper-steps > li {
     position: relative;
-    padding: 0 0 18px 44px;
+    padding: 14px 0 14px 38px;
+    border-top: 1px solid var(--line-2);
     counter-increment: step;
   }
-  .stepper-steps > li:last-child { padding-bottom: 0; }
+  .stepper-steps > li:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
   .stepper-steps > li::before {
     content: counter(step);
     position: absolute;
-    left: 0;
-    top: 0;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: var(--primary-soft);
-    color: var(--primary);
-    font-family: 'Space Mono', monospace;
-    font-size: 12px;
-    font-weight: 700;
+    left: -4px;
+    top: 8px;
+    width: 32px; height: 32px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><path d='M16 2.4 C 22.8 2.7, 29 7.5, 29.5 14.6 C 30 22.3, 24.3 28.8, 17.4 29.5 C 9.6 30.3, 2.7 25.1, 2.4 17.2 C 2.1 9.3, 7.8 2.7, 14.5 2.4' fill='none' stroke='%23FF4658' stroke-width='2.2' stroke-linecap='round'/></svg>");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+    color: var(--ink);
     display: grid;
     place-items: center;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
   }
-  .stepper-steps > li::after {
-    content: '';
-    position: absolute;
-    left: 13px;
-    top: 32px;
-    bottom: 4px;
-    width: 2px;
-    background: linear-gradient(180deg, var(--line) 0%, var(--line) 60%, transparent 100%);
+  .stepper-steps > li:first-child::before { top: -4px; }
+  .stepper-steps > li {
+    padding-left: 44px;
   }
-  .stepper-steps > li:last-child::after { display: none; }
-
   .stepper-steps .step-title {
-    font-size: 13.5px;
-    font-weight: 600;
+    font-family: var(--font-sans);
+    font-weight: 700;
+  }
+  .stepper-steps .step-title {
+    font-size: 13px;
+    font-weight: 700;
     color: var(--ink);
-    margin: 4px 0 6px;
-    line-height: 1.4;
+    margin-bottom: 6px;
+    line-height: 1.35;
   }
   .stepper-steps .step-text {
-    font-size: 12.5px;
+    margin: 0 0 8px;
+    font-size: 12px;
     color: var(--ink-2);
     line-height: 1.55;
-    margin: 0 0 10px;
   }
   .stepper-steps .step-text:last-child { margin-bottom: 0; }
   .stepper-steps .step-text code {
     font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--ink);
     background: var(--surface-2);
-    border: 1px solid var(--line);
     padding: 1px 5px;
     border-radius: 4px;
-    font-size: 11.5px;
   }
-
   .copy-block {
-    background: #0f172a;
-    color: #e2e8f0;
+    background: var(--ink);
+    color: var(--surface);
     border-radius: var(--radius-sm);
-    padding: 14px 16px;
-    font-size: 12px;
-    line-height: 1.55;
-    margin: 10px 0 0;
+    padding: 14px 14px 12px;
+    margin: 8px 0;
     position: relative;
   }
-  .copy-block .copy-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-family: 'Space Mono', monospace;
-    font-size: 9.5px;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    color: #cbd5e1;
-    padding: 5px 9px;
-    border-radius: 6px;
-    cursor: pointer;
-    line-height: 1;
-  }
-  .copy-block .copy-btn:hover { background: rgba(255, 255, 255, 0.12); color: #fff; }
   .copy-block pre {
     margin: 0;
     white-space: pre-wrap;
-    font-family: 'Montserrat', system-ui, sans-serif;
-    color: #e2e8f0;
-    padding-right: 70px;
-  }
-
-  .pill-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--primary-soft);
-    color: var(--primary);
-    border-radius: 999px;
-    padding: 6px 12px;
+    word-break: break-word;
     font-family: 'Space Mono', monospace;
     font-size: 11.5px;
-    border: 1px solid #b6d8ff;
-    margin-top: 4px;
+    line-height: 1.55;
+    color: var(--surface);
+  }
+  .copy-block .copy-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--surface);
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    padding: 4px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .copy-block .copy-btn:hover { background: rgba(255,255,255,0.18); }
+  .pill-link {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--ink);
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    padding: 4px 10px;
+    border-radius: 999px;
+    margin: 4px 0 8px;
   }
   .step-cta {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: var(--ink);
-    color: #fff;
-    border: none;
+    margin-top: 8px;
     padding: 8px 14px;
-    border-radius: 10px;
+    background: var(--ink);
+    color: var(--surface);
+    border: 1px solid var(--ink);
+    border-radius: 8px;
+    font-family: inherit;
     font-size: 12px;
-    font-weight: 600;
-    margin-top: 10px;
+    font-weight: 700;
     cursor: pointer;
     text-decoration: none;
-    font-family: inherit;
   }
-  .step-cta:hover { background: #1e293b; color: #fff; }
+  .step-cta:hover { background: #1a1a1a; }
   .step-cta svg { width: 12px; height: 12px; }
   .step-cta--ghost {
-    background: #fff;
+    background: var(--surface);
     color: var(--ink);
-    border: 1px solid var(--line);
+    border-color: var(--ink);
   }
   .step-cta--ghost:hover { background: var(--surface-2); color: var(--ink); }
-  .step-cta--brand {
-    background: var(--primary);
+
+  @media (max-width: 980px) {
+    .tax-grid { grid-template-columns: 1fr; }
+    .stepper-grid { grid-template-columns: 1fr; }
   }
-  .step-cta--brand:hover { background: #0066e0; }
+
+  @media (max-width: 600px) {
+    .page { padding: 24px 0 40px; }
+    .doc-head { padding: 0 16px; gap: 12px; }
+    .changelog { margin: 16px 16px 0; grid-template-columns: 1fr; }
+    .section-label { padding: 0 16px; }
+    .mock, .variants, .mobile-section { padding: 0 16px; }
+    .panel {
+      border-radius: 0;
+      border-left: 0;
+      border-right: 0;
+      box-shadow: none;
+      max-width: 100%;
+      margin: 0 -16px;
+    }
+    .panel-head {
+      padding: 16px 18px 14px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      grid-template-areas: "title close" "sub count";
+      gap: 4px 12px;
+      align-items: center;
+      flex-wrap: nowrap;
+    }
+    .panel-head .stack { display: contents; }
+    .panel-head .actions { display: contents; }
+    .panel-head h2 { grid-area: title; }
+    .panel-head .sub { grid-area: sub; align-self: center; }
+    .panel-head .count-pill { grid-area: count; justify-self: end; }
+    .panel-head .panel-close { grid-area: close; justify-self: end; }
+    .stages { padding: 0; }
+    .stage {
+      border: 0;
+      border-radius: 0;
+      margin: 0;
+      background: var(--surface);
+      border-bottom: 1px solid var(--line-2);
+    }
+    .stage:last-child { border-bottom: 0; }
+    .stage[data-state='locked'] {
+      background: var(--surface);
+      border-style: solid;
+      border-color: transparent;
+      border-bottom-color: var(--line-2);
+    }
+    .stage[data-state='active'] {
+      border: 0;
+      border-bottom: 1px solid var(--line-2);
+    }
+    .stage[data-state='active']::before { display: none; }
+    .stage-head { padding: 16px 18px; }
+    .stage[data-state='active'] .stage-head { padding-left: 18px; }
+    .stage-body { padding: 0 10px 14px; border-top: 1px solid var(--line-2); }
+    .task { padding: 12px 10px; }
+    .skip { display: grid; }
+    .panel-notes, .mobile-notes { margin: 16px; }
+    .variant-grid { grid-template-columns: 1fr; }
+    .detail-table { font-size: 12px; min-width: 540px; }
+    .detail-wrap { overflow-x: auto; }
+    .detail-table tbody td { padding: 10px 8px; }
+    .stepper-card { padding: 16px; }
+    .stepper-card .stp-head { flex-direction: column; align-items: flex-start; gap: 2px; }
+  }
+
 </style>
 </head>
 <body>
-<div class="page">
+  <main class="page">
 
-  <header class="doc-head">
-    <div>
-      <h1>Checklist en 3 etapas · 24 tareas</h1>
-      <p class="sub">Reorganización del onboarding del dashboard. 9 / 6 / 9 tareas, agrupadas por intención: configurar el negocio, obtener primeras reservas y activar herramientas avanzadas. Sin tiempos estimados.</p>
-    </div>
-    <div class="doc-meta">
-      <div><b>Producto</b> · Flash · Dashboard</div>
-      <div><b>Estado</b> · Propuesta visual</div>
-      <div><b>Hoy</b> · 27 abr 2026</div>
-    </div>
-  </header>
+    <header class="doc-head">
+      <div>
+        <h1>Checklist · 3 etapas · v3</h1>
+        <p class="sub">Propuesta compacta, monocromática y con desbloqueo secuencial de etapas. Esta versión suma <b>detalles a mano alzada en rojo Ágora</b> al UI de la checklist (subrayados ondulados, círculos imperfectos en steppers, skip destructivo) — tipografía sans-serif en todos lados.</p>
+      </div>
+      <div class="doc-meta">
+        Iteración <b>v3</b><br />
+        Fecha · <b>18 / 05 / 2026</b>
+      </div>
+    </header>
 
-  <div class="grid">
+    <ul class="changelog">
+      <li><b>Paleta reducida</b> a negro + grises. El negro queda reservado para active state y next step.</li>
+      <li><b>Etapas secuenciales</b>: la próxima queda con candado hasta completar la anterior.</li>
+      <li><b>Sin mensaje de éxito</b> al cerrar etapa: cuando se completa solo queda el header colapsado.</li>
+      <li><b>Sin stage-tracker horizontal</b> arriba: la información ya vive en la lista de etapas.</li>
+      <li><b>Sin hero "Tu próximo paso"</b>: el highlight es inline sobre la task que sigue.</li>
+      <li><b>Padding reducido</b> en stage-head y task-row para densidad sin ahogar el contenido.</li>
+    </ul>
 
-    <!-- LEFT: Trigger in dashboard context -->
-    <section>
-      <p class="section-label">Punto de entrada</p>
+    <section class="mock" style="margin-top: 36px;">
 
-      <div class="dashboard">
-        <div class="dash-top">
-          <div class="dash-greet">Buenas tardes, <span>Manuel.</span></div>
-          <button class="trigger" aria-label="Configurá tu negocio">
-            <span class="icon-circle">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+      <!-- LEFT: trigger context -->
+      <div>
+        <p class="section-label">Trigger en el dashboard</p>
+        <div class="trigger-frame">
+          <button class="trigger">
+            <span class="t-ring" aria-hidden="true">
+              <svg viewBox="0 0 36 36">
+                <circle cx="18" cy="18" r="15.9" class="ring-bg"></circle>
+                <circle cx="18" cy="18" r="15.9" class="ring-fill" pathLength="100"></circle>
+              </svg>
+              <span class="t-pct">43%</span>
             </span>
-            <span class="label-stack">
-              <div class="title">Configurá tu negocio</div>
-              <div class="meta">24 pendientes · etapa 1 de 3</div>
+            <span class="t-stack">
+              <span class="t-title">Configurá tu <span class="hu">negocio<svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path d="M1 6 Q 25 1, 50 5 T 99 5"/></svg></span></span>
+              <span class="t-row">Etapa <b>2</b> de 3 · <b>10</b>/23</span>
+              <span class="t-hint"><span class="arr">→</span> Próximo: Compartir tu página por WhatsApp</span>
             </span>
-            <span class="pct">0%</span>
-            <span class="chev">›</span>
+            <span class="t-chev">›</span>
           </button>
-        </div>
 
-        <div class="dash-body">
-          <p class="row-label">· Resumen del día</p>
-          <h3>Lunes · 27 abr</h3>
-          <div class="skeleton-grid">
-            <div class="sk"></div>
-            <div class="sk"></div>
+          <div class="trigger-notes">
+            <div class="row">
+              <span class="tag">Ring</span>
+              <span>Negro al 43% sobre línea gris. Sin gradients, sin azul.</span>
+            </div>
+            <div class="row">
+              <span class="tag">Hint</span>
+              <span>La próxima tarea siempre asoma debajo del título — invita al click sin requerir abrir el panel.</span>
+            </div>
+            <div class="row">
+              <span class="tag">Meta</span>
+              <span>"Etapa <b>N</b> de 3 · <b>X</b>/<b>Y</b>" reemplaza el formato anterior con tiempos estimados.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: open panel -->
+      <div>
+        <p class="section-label">Panel desplegado · estado activo (etapa 2)</p>
+
+        <div class="panel" role="dialog" aria-label="Configurá tu negocio">
+          <div class="panel-head">
+            <div class="stack">
+              <h2>Configurá tu <span class="hu">negocio<svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path d="M1 6 Q 25 1, 50 5 T 99 5"/></svg></span></h2>
+              <div class="sub">Etapa <b>2</b> de 3</div>
+            </div>
+            <div class="actions">
+              <span class="count-pill">10 / 23</span>
+              <button class="panel-close" aria-label="Cerrar">✕</button>
+            </div>
+          </div>
+
+          <div class="stages">
+
+            <!-- Stage 1: DONE -->
+            <div class="stage" data-state="done" data-open="false">
+              <div class="stage-head" role="button" tabindex="0" aria-expanded="false">
+                <div class="stage-marker">
+                  <span class="num">1</span>
+                  <svg class="ok" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>
+                </div>
+                <div class="stage-info">
+                  <div class="title">Configurá tu negocio en Ágora</div>
+                  <div class="desc">Página, catálogo, comunicación, señas y disponibilidad.</div>
+                </div>
+                <div class="stage-meta">
+                  <span class="count">8/8</span>
+                </div>
+                <span class="stage-chev">›</span>
+              </div>
+            </div>
+
+            <!-- Stage 2: ACTIVE -->
+            <div class="stage" data-state="active" data-open="true">
+              <div class="stage-head" role="button" tabindex="0" aria-expanded="true">
+                <div class="stage-marker">
+                  <span class="num">2</span>
+                </div>
+                <div class="stage-info">
+                  <div class="title">Conseguí tus primeras reservas</div>
+                  <div class="desc">Compartí tu página y activá los canales por donde llegan clientes.</div>
+                </div>
+                <div class="stage-meta">
+                  <span class="count">2/6</span>
+                </div>
+                <span class="stage-chev">›</span>
+              </div>
+              <div class="stage-body">
+                <div class="task" data-done="true">
+                  <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></div>
+                  <div class="label">Agregar enlace a tu bio de Instagram</div>
+                  <div class="meta">
+                    <span class="step-tag">+ Info</span>
+                    <span class="arrow">›</span>
+                  </div>
+                </div>
+
+                <div class="task" data-done="true">
+                  <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></div>
+                  <div class="label">Activar respuesta automática en WhatsApp Business</div>
+                  <div class="meta">
+                    <span class="step-tag">+ Info</span>
+                    <span class="arrow">›</span>
+                  </div>
+                </div>
+
+                <div class="task" data-done="false" data-next="true">
+                  <div class="check"></div>
+                  <div class="label">Compartir tu página por WhatsApp</div>
+                  <div class="meta">
+                                        <span class="step-tag">+ Info</span>
+                    <span class="arrow">›</span>
+                  </div>
+                </div>
+
+                <div class="task" data-done="false">
+                  <div class="check"></div>
+                  <div class="label">Crear tu primer descuento</div>
+                  <div class="meta">
+                    <button class="skip" aria-label="Eliminar de mi checklist" title="Eliminar de mi checklist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1.5 13a2 2 0 0 1-2 1.8H8.5a2 2 0 0 1-2-1.8L5 6"/></svg></button>
+                    <span class="arrow">›</span>
+                  </div>
+                </div>
+
+                <div class="task" data-done="false">
+                  <div class="check"></div>
+                  <div class="label">Solicitar instructivo para clientes</div>
+                  <div class="meta">
+                    <button class="skip" aria-label="Eliminar de mi checklist" title="Eliminar de mi checklist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1.5 13a2 2 0 0 1-2 1.8H8.5a2 2 0 0 1-2-1.8L5 6"/></svg></button>
+                    <span class="step-tag">+ Info</span>
+                    <span class="arrow">›</span>
+                  </div>
+                </div>
+
+                <div class="task" data-done="false">
+                  <div class="check"></div>
+                  <div class="label">Ingresar tu 1ra reserva manual</div>
+                  <div class="meta">
+                    <span class="arrow">›</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Stage 3: LOCKED -->
+            <div class="stage" data-state="locked" data-open="false">
+              <div class="stage-head" role="button" tabindex="0" aria-expanded="false" aria-disabled="true">
+                <div class="stage-marker">
+                  <span class="num">3</span>
+                  <svg class="lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+                </div>
+                <div class="stage-info">
+                  <div class="title">Gestioná y escalá tu negocio</div>
+                  <div class="desc">Se desbloquea al completar la etapa 2.</div>
+                </div>
+                <div class="stage-meta">
+                  <span class="count">0/9</span>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
 
-        <div class="arrow-note">
-          <span class="pill">Cambio</span>
-          <span>El badge ahora muestra <b>la etapa actual</b> en lugar del tiempo estimado. Mantiene el % y el conteo de pendientes para preservar el patrón mental existente.</span>
+        <div class="panel-notes">
+          <h4>Comportamiento clave</h4>
+          <ul>
+            <li><b>Solo una etapa abierta</b>. Las etapas done quedan colapsadas y no se vuelven a expandir — la información ya cumplió su rol.</li>
+            <li><b>La etapa locked no responde al click</b>. El candado y el sub-label "Se desbloquea al completar la etapa 2" comunican el gating sin pop-ups.</li>
+            <li><b>El "Próximo"</b> es el único elemento con fondo negro pleno dentro del panel: lo destaca sin requerir badges de color extra.</li>
+            <li><b>Skip</b> sigue apareciendo en hover sobre las tasks skippables (sin badge visible — el botón basurero es suficiente).</li>
+          </ul>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- MOBILE PREVIEW: full-screen, sin boxes, separadores horizontales -->
+    <section class="mobile-section">
+      <h2>Mobile · pantalla completa</h2>
+      <p>Sin cards por etapa: separadores horizontales para ganar ancho útil. El panel ocupa todo el viewport, el acento negro del active state queda flush a la izquierda.</p>
+
+      <div class="mobile-stage">
+        <div class="phone-frame">
+          <div class="status-bar">
+            <span>9:41</span>
+            <span class="dots"><i></i><i></i><i></i></span>
+          </div>
+          <div class="panel is-mobile" role="dialog" aria-label="Configurá tu negocio">
+            <div class="panel-head">
+              <div class="stack">
+                <h2>Configurá tu <span class="hu">negocio<svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path d="M1 6 Q 25 1, 50 5 T 99 5"/></svg></span></h2>
+                <div class="sub">Etapa <b>2</b> de 3</div>
+              </div>
+              <div class="actions">
+                <span class="count-pill">10 / 23</span>
+                <button class="panel-close" aria-label="Cerrar">✕</button>
+              </div>
+            </div>
+
+            <div class="stages">
+              <div class="stage" data-state="done">
+                <div class="stage-head">
+                  <div class="stage-marker">
+                    <span class="num">1</span>
+                    <svg class="ok" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+                  </div>
+                  <div class="stage-info">
+                    <div class="title">Configurá tu negocio en Ágora</div>
+                  </div>
+                  <div class="stage-meta"><span class="count">8/8</span></div>
+                  <span class="stage-chev">›</span>
+                </div>
+              </div>
+
+              <div class="stage" data-state="active" data-open="true">
+                <div class="stage-head">
+                  <div class="stage-marker"><span class="num">2</span></div>
+                  <div class="stage-info">
+                    <div class="title">Conseguí tus primeras reservas</div>
+                    <div class="desc">Compartí tu página y activá los canales por donde llegan clientes.</div>
+                  </div>
+                  <div class="stage-meta"><span class="count">2/6</span></div>
+                  <span class="stage-chev">›</span>
+                </div>
+                <div class="stage-body">
+                  <div class="task" data-done="true">
+                    <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></div>
+                    <div class="label">Agregar enlace a tu bio de Instagram</div>
+                    <div class="meta"><span class="step-tag">+ Info</span><span class="arrow">›</span></div>
+                  </div>
+                  <div class="task" data-done="true">
+                    <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></div>
+                    <div class="label">Activar respuesta automática en WhatsApp Business</div>
+                    <div class="meta"><span class="step-tag">+ Info</span><span class="arrow">›</span></div>
+                  </div>
+                  <div class="task" data-done="false" data-next="true">
+                    <div class="check"></div>
+                    <div class="label">Compartir tu página por WhatsApp</div>
+                    <div class="meta"><span class="next-pill">Próximo</span><span class="arrow">›</span></div>
+                  </div>
+                  <div class="task" data-done="false">
+                    <div class="check"></div>
+                    <div class="label">Crear tu primer descuento</div>
+                    <div class="meta">
+                      <button class="skip" aria-label="Eliminar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1.5 13a2 2 0 0 1-2 1.8H8.5a2 2 0 0 1-2-1.8L5 6"/></svg></button>
+                      <span class="arrow">›</span>
+                    </div>
+                  </div>
+                  <div class="task" data-done="false">
+                    <div class="check"></div>
+                    <div class="label">Solicitar instructivo para clientes</div>
+                    <div class="meta">
+                      <button class="skip" aria-label="Eliminar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1.5 13a2 2 0 0 1-2 1.8H8.5a2 2 0 0 1-2-1.8L5 6"/></svg></button>
+                      <span class="step-tag">+ Info</span>
+                      <span class="arrow">›</span>
+                    </div>
+                  </div>
+                  <div class="task" data-done="false">
+                    <div class="check"></div>
+                    <div class="label">Ingresar tu 1ra reserva manual</div>
+                    <div class="meta"><span class="arrow">›</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="stage" data-state="locked">
+                <div class="stage-head" aria-disabled="true">
+                  <div class="stage-marker">
+                    <span class="num">3</span>
+                    <svg class="lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+                  </div>
+                  <div class="stage-info">
+                    <div class="title">Gestioná y escalá tu negocio</div>
+                    <div class="desc">Se desbloquea al completar la etapa 2.</div>
+                  </div>
+                  <div class="stage-meta"><span class="count">0/9</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mobile-notes">
+          <h4>Por qué cambia en mobile</h4>
+          <ul>
+            <li><b>Ancho útil ganado</b>: al sacar el border + radius + margin de cada stage, las task labels usan todo el ancho del viewport.</li>
+            <li><b>Separadores hairline</b> (<code>1px solid line-2</code>) entre etapas — definen agrupación sin gastar espacio.</li>
+            <li><b>Skip icon siempre visible</b> en mobile: hover no aplica en touch.</li>
+            <li><b>Panel-head sticky candidato</b>: en implementación, podemos pinear el header al scroll para que el counter sea visible siempre.</li>
+          </ul>
         </div>
       </div>
     </section>
 
-    <!-- RIGHT: Open panel with 3 stages -->
-    <section>
-      <p class="section-label">Panel desplegado</p>
+    <!-- VARIANTS: states viewer -->
+    <section class="variants">
+      <h2>Variantes de estado</h2>
+      <p>Tres momentos del journey en formato compacto para revisar transiciones.</p>
 
-      <div class="panel" role="dialog" aria-label="Configurá tu negocio">
-        <div class="panel-head">
-          <h2>Configurá tu negocio</h2>
-          <button class="panel-close" aria-label="Cerrar">✕</button>
+      <div class="variant-grid">
+
+        <!-- Variant A: Just started (Stage 1 active) -->
+        <div class="variant">
+          <h3>A · Recién empezando</h3>
+          <p>Vendor nuevo. Etapa 1 abierta, etapas 2 y 3 con candado.</p>
+          <div class="panel">
+            <div class="panel-head">
+              <div class="stack">
+                <h2>Configurá tu <span class="hu">negocio<svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path d="M1 6 Q 25 1, 50 5 T 99 5"/></svg></span></h2>
+                <div class="sub">Etapa <b>1</b> de 3</div>
+              </div>
+              <div class="actions">
+                <span class="count-pill">0 / 23</span>
+              </div>
+            </div>
+            <div class="stages">
+              <div class="stage" data-state="active" data-open="true">
+                <div class="stage-head">
+                  <div class="stage-marker"><span class="num">1</span></div>
+                  <div class="stage-info">
+                    <div class="title">Configurá tu negocio en Ágora</div>
+                    <div class="desc">Página, catálogo, comunicación, señas y disponibilidad.</div>
+                  </div>
+                  <div class="stage-meta"><span class="count">0/8</span></div>
+                  <span class="stage-chev">›</span>
+                </div>
+                <div class="stage-body">
+                  <div class="task" data-done="false" data-next="true">
+                    <div class="check"></div>
+                    <div class="label">Agregar foto de perfil</div>
+                    <div class="meta">
+                                            <span class="arrow">›</span>
+                    </div>
+                  </div>
+                  <div class="task" data-done="false">
+                    <div class="check"></div>
+                    <div class="label">Agregá tus redes sociales</div>
+                    <div class="meta"><span class="arrow">›</span></div>
+                  </div>
+                  <div class="task" data-done="false">
+                    <div class="check"></div>
+                    <div class="label">Agregar galería de imágenes</div>
+                    <div class="meta"><span class="arrow">›</span></div>
+                  </div>
+                  <div class="task" data-done="false">
+                    <div class="check"></div>
+                    <div class="label">Configurá tu política de cancelación</div>
+                    <div class="meta"><span class="arrow">›</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="stage" data-state="locked">
+                <div class="stage-head" aria-disabled="true">
+                  <div class="stage-marker">
+                    <span class="num">2</span>
+                    <svg class="lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+                  </div>
+                  <div class="stage-info">
+                    <div class="title">Conseguí tus primeras reservas</div>
+                    <div class="desc">Se desbloquea al completar la etapa 1.</div>
+                  </div>
+                  <div class="stage-meta"><span class="count">0/6</span></div>
+                </div>
+              </div>
+              <div class="stage" data-state="locked">
+                <div class="stage-head" aria-disabled="true">
+                  <div class="stage-marker">
+                    <span class="num">3</span>
+                    <svg class="lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+                  </div>
+                  <div class="stage-info">
+                    <div class="title">Gestioná y escalá tu negocio</div>
+                    <div class="desc">Se desbloquea al completar la etapa 2.</div>
+                  </div>
+                  <div class="stage-meta"><span class="count">0/9</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div class="summary">
-          <div class="ring" style="--pct: 0;"><span>0%</span></div>
-          <div class="stack">
-            <div class="title">0 de 24 tareas listas</div>
-            <div class="meta">Vas por la etapa 1 · Configurá tu Ágora</div>
+        <!-- Variant B: Mid-journey (Stage 2 active) -->
+        <div class="variant">
+          <h3>B · A mitad del camino</h3>
+          <p>Etapa 1 cerrada, etapa 2 abierta con 2/6 done y una "Próximo" highlighted.</p>
+          <div class="panel">
+            <div class="panel-head">
+              <div class="stack">
+                <h2>Configurá tu <span class="hu">negocio<svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path d="M1 6 Q 25 1, 50 5 T 99 5"/></svg></span></h2>
+                <div class="sub">Etapa <b>2</b> de 3</div>
+              </div>
+              <div class="actions">
+                <span class="count-pill">10 / 23</span>
+              </div>
+            </div>
+            <div class="stages">
+              <div class="stage" data-state="done">
+                <div class="stage-head">
+                  <div class="stage-marker">
+                    <span class="num">1</span>
+                    <svg class="ok" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+                  </div>
+                  <div class="stage-info">
+                    <div class="title">Configurá tu negocio en Ágora</div>
+                    <div class="desc">Página, catálogo, comunicación, señas y disponibilidad.</div>
+                  </div>
+                  <div class="stage-meta"><span class="count">8/8</span></div>
+                  <span class="stage-chev">›</span>
+                </div>
+              </div>
+              <div class="stage" data-state="active" data-open="true">
+                <div class="stage-head">
+                  <div class="stage-marker"><span class="num">2</span></div>
+                  <div class="stage-info">
+                    <div class="title">Conseguí tus primeras reservas</div>
+                    <div class="desc">Compartí tu página y activá los canales por donde llegan clientes.</div>
+                  </div>
+                  <div class="stage-meta"><span class="count">2/6</span></div>
+                  <span class="stage-chev">›</span>
+                </div>
+                <div class="stage-body">
+                  <div class="task" data-done="true">
+                    <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></div>
+                    <div class="label">Agregar enlace a tu bio de Instagram</div>
+                    <div class="meta"><span class="arrow">›</span></div>
+                  </div>
+                  <div class="task" data-done="true">
+                    <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></div>
+                    <div class="label">Activar respuesta automática WA</div>
+                    <div class="meta"><span class="arrow">›</span></div>
+                  </div>
+                  <div class="task" data-done="false" data-next="true">
+                    <div class="check"></div>
+                    <div class="label">Compartir tu página por WhatsApp</div>
+                    <div class="meta"><span class="next-pill">Próximo</span><span class="arrow">›</span></div>
+                  </div>
+                  <div class="task" data-done="false">
+                    <div class="check"></div>
+                    <div class="label">Crear tu primer descuento</div>
+                    <div class="meta"><span class="arrow">›</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="stage" data-state="locked">
+                <div class="stage-head" aria-disabled="true">
+                  <div class="stage-marker">
+                    <span class="num">3</span>
+                    <svg class="lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+                  </div>
+                  <div class="stage-info">
+                    <div class="title">Gestioná y escalá tu negocio</div>
+                    <div class="desc">Se desbloquea al completar la etapa 2.</div>
+                  </div>
+                  <div class="stage-meta"><span class="count">0/9</span></div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="badge">Etapa 1/3</div>
         </div>
 
-        <div class="stages">
-
-          <!-- Stage 1: in progress (active) -->
-          <div class="stage" data-state="active" data-open="true">
-            <div class="stage-head" role="button" tabindex="0" aria-expanded="true">
-              <div class="stage-num"><span>1</span></div>
-              <div class="stage-info">
-                <div class="label">Etapa 1 · En curso</div>
-                <div class="title">Configurá tu Ágora</div>
-                <div class="desc">Página, catálogo, comunicación, señas y disponibilidad.</div>
+        <!-- Variant C: Almost done (Stage 3 active) -->
+        <div class="variant">
+          <h3>C · Cerca de cerrar</h3>
+          <p>Etapas 1 y 2 cerradas. Etapa 3 abierta con 6/9 done.</p>
+          <div class="panel">
+            <div class="panel-head">
+              <div class="stack">
+                <h2>Configurá tu <span class="hu">negocio<svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path d="M1 6 Q 25 1, 50 5 T 99 5"/></svg></span></h2>
+                <div class="sub">Etapa <b>3</b> de 3</div>
               </div>
-              <div class="stage-progress">
-                <span class="count">0/9</span>
-                <span class="bar"><i style="width: 0%"></i></span>
-              </div>
-              <span class="stage-chev">›</span>
-            </div>
-            <div class="stage-body">
-              <div class="task" data-done="false">
-                <div class="check"></div>
-                <div class="label">Agregar foto de perfil</div>
-                <span class="arrow">›</span>
-              </div>
-              <div class="task" data-done="false">
-                <div class="check"></div>
-                <div class="label">Agregá tus redes sociales</div>
-                <span class="arrow">›</span>
-              </div>
-              <div class="task" data-done="false">
-                <div class="check"></div>
-                <div class="label">Agregar galería de imágenes a tu página</div>
-                <span class="arrow">›</span>
-              </div>
-              <div class="task" data-done="false">
-                <div class="check"></div>
-                <div class="label">Configurá tu política de cancelación</div>
-                <span class="arrow">›</span>
-              </div>
-              <div class="task" data-done="false">
-                <div class="check"></div>
-                <div class="label">Configurá tu política de señas</div>
-                <span class="arrow">›</span>
-              </div>
-              <div class="task" data-done="false">
-                <div class="check"></div>
-                <div class="label">Organizar tu catálogo en categorías</div>
-                <button class="skip" aria-label="Eliminar de mi checklist" title="Eliminar de mi checklist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1.5 13a2 2 0 0 1-2 1.8H8.5a2 2 0 0 1-2-1.8L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg></button>
-                <span class="arrow">›</span>
-              </div>
-              <div class="task" data-done="false">
-                <div class="check"></div>
-                <div class="label">Conectar Google Calendar</div>
-                <span class="arrow">›</span>
-              </div>
-              <div class="task" data-done="false" data-stepper="upload_clients">
-                <div class="check"></div>
-                <div class="label">Subir base de clientes</div>
-                <span class="step-tag">Instructivo</span>
-                <button class="skip" aria-label="Eliminar de mi checklist" title="Eliminar de mi checklist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1.5 13a2 2 0 0 1-2 1.8H8.5a2 2 0 0 1-2-1.8L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg></button>
-                <span class="arrow">›</span>
-              </div>
-              <div class="task" data-done="false">
-                <div class="check"></div>
-                <div class="label">Configurá los mensajes automáticos a clientes</div>
-                <button class="skip" aria-label="Eliminar de mi checklist" title="Eliminar de mi checklist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1.5 13a2 2 0 0 1-2 1.8H8.5a2 2 0 0 1-2-1.8L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg></button>
-                <span class="arrow">›</span>
+              <div class="actions">
+                <span class="count-pill">20 / 23</span>
               </div>
             </div>
-          </div>
-
-          <!-- Stage 2: pending -->
-          <div class="stage" data-state="pending" data-open="false">
-            <div class="stage-head" role="button" tabindex="0" aria-expanded="false">
-              <div class="stage-num"><span>2</span></div>
-              <div class="stage-info">
-                <div class="label">Etapa 2</div>
-                <div class="title">Obtené tus primeras reservas</div>
-                <div class="desc">Compartí tu Ágora y activá los canales por donde llegan los clientes.</div>
+            <div class="stages">
+              <div class="stage" data-state="done">
+                <div class="stage-head">
+                  <div class="stage-marker">
+                    <span class="num">1</span>
+                    <svg class="ok" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+                  </div>
+                  <div class="stage-info">
+                    <div class="title">Configurá tu negocio en Ágora</div>
+                  </div>
+                  <div class="stage-meta"><span class="count">8/8</span></div>
+                  <span class="stage-chev">›</span>
+                </div>
               </div>
-              <div class="stage-progress">
-                <span class="count">0/6</span>
-                <span class="bar"><i style="width: 0%"></i></span>
+              <div class="stage" data-state="done">
+                <div class="stage-head">
+                  <div class="stage-marker">
+                    <span class="num">2</span>
+                    <svg class="ok" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+                  </div>
+                  <div class="stage-info">
+                    <div class="title">Conseguí tus primeras reservas</div>
+                  </div>
+                  <div class="stage-meta"><span class="count">6/6</span></div>
+                  <span class="stage-chev">›</span>
+                </div>
               </div>
-              <span class="stage-chev">›</span>
-            </div>
-            <div class="stage-body">
-              <div class="task" data-done="false" data-stepper="link_in_bio">
-                <div class="check"></div>
-                <div class="label">Agregar enlace a tu bio de Instagram</div>
-                <span class="step-tag">Instructivo</span>
-                <button class="skip" aria-label="Eliminar de mi checklist" title="Eliminar de mi checklist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1.5 13a2 2 0 0 1-2 1.8H8.5a2 2 0 0 1-2-1.8L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg></button>
-                <span class="arrow">›</span>
-              </div>
-              <div class="task" data-done="false" data-stepper="wa_business_autoreply">
-                <div class="check"></div>
-                <div class="label">Activar respuesta automática en WhatsApp Business</div>
-                <span class="step-tag">Instructivo</span>
-                <button class="skip" aria-label="Eliminar de mi checklist" title="Eliminar de mi checklist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1.5 13a2 2 0 0 1-2 1.8H8.5a2 2 0 0 1-2-1.8L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg></button>
-                <span class="arrow">›</span>
-              </div>
-              <div class="task" data-done="false" data-stepper="share_whatsapp">
-                <div class="check"></div>
-                <div class="label">Compartir tu página por WhatsApp</div>
-                <span class="step-tag">Instructivo</span>
-                <button class="skip" aria-label="Eliminar de mi checklist" title="Eliminar de mi checklist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1.5 13a2 2 0 0 1-2 1.8H8.5a2 2 0 0 1-2-1.8L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg></button>
-                <span class="arrow">›</span>
-              </div>
-              <div class="task" data-done="false">
-                <div class="check"></div>
-                <div class="label">Crear tu primer descuento</div>
-                <button class="skip" aria-label="Eliminar de mi checklist" title="Eliminar de mi checklist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1.5 13a2 2 0 0 1-2 1.8H8.5a2 2 0 0 1-2-1.8L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg></button>
-                <span class="arrow">›</span>
-              </div>
-              <div class="task" data-done="false" data-stepper="request_tutorial">
-                <div class="check"></div>
-                <div class="label">Solicitar instructivo para clientes</div>
-                <span class="step-tag">Instructivo</span>
-                <button class="skip" aria-label="Eliminar de mi checklist" title="Eliminar de mi checklist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1.5 13a2 2 0 0 1-2 1.8H8.5a2 2 0 0 1-2-1.8L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg></button>
-                <span class="arrow">›</span>
-              </div>
-              <div class="task" data-done="false">
-                <div class="check"></div>
-                <div class="label">Ingresar tu 1ra reserva manual</div>
-                <span class="arrow">›</span>
+              <div class="stage" data-state="active" data-open="true">
+                <div class="stage-head">
+                  <div class="stage-marker"><span class="num">3</span></div>
+                  <div class="stage-info">
+                    <div class="title">Gestioná y escalá tu negocio</div>
+                    <div class="desc">Rituales operativos, segmentación y nuevos canales.</div>
+                  </div>
+                  <div class="stage-meta"><span class="count">6/9</span></div>
+                  <span class="stage-chev">›</span>
+                </div>
+                <div class="stage-body">
+                  <div class="task" data-done="true">
+                    <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></div>
+                    <div class="label">Recibir tu 1er cobro online</div>
+                    <div class="meta"><span class="arrow">›</span></div>
+                  </div>
+                  <div class="task" data-done="true">
+                    <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></div>
+                    <div class="label">Confirmar asistencia de un cliente</div>
+                    <div class="meta"><span class="arrow">›</span></div>
+                  </div>
+                  <div class="task" data-done="false" data-next="true">
+                    <div class="check"></div>
+                    <div class="label">Activar mensajes automáticos WA</div>
+                    <div class="meta"><span class="next-pill">Próximo</span><span class="arrow">›</span></div>
+                  </div>
+                  <div class="task" data-done="false">
+                    <div class="check"></div>
+                    <div class="label">Agregar un adicional a un servicio</div>
+                    <div class="meta"><span class="arrow">›</span></div>
+                  </div>
+                  <div class="task" data-done="false">
+                    <div class="check"></div>
+                    <div class="label">Creá tu 1ra tarjeta de regalo</div>
+                    <div class="meta"><span class="arrow">›</span></div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-
-          <!-- Stage 3: pending -->
-          <div class="stage" data-state="pending" data-open="false">
-            <div class="stage-head" role="button" tabindex="0" aria-expanded="false">
-              <div class="stage-num"><span>3</span></div>
-              <div class="stage-info">
-                <div class="label">Etapa 3</div>
-                <div class="title">Activá y escalá tu negocio</div>
-                <div class="desc">Rituales operativos, segmentación de clientes y nuevos canales de venta.</div>
-              </div>
-              <div class="stage-progress">
-                <span class="count">0/9</span>
-                <span class="bar"><i style="width: 0%"></i></span>
-              </div>
-              <span class="stage-chev">›</span>
-            </div>
-            <div class="stage-body">
-              <div class="task" data-done="false">
-                <div class="check"></div>
-                <div class="label">Recibir tu 1er cobro online</div>
-                <span class="arrow">›</span>
-              </div>
-              <div class="task" data-done="false">
-                <div class="check"></div>
-                <div class="label">Confirmar asistencia de un cliente</div>
-                <span class="arrow">›</span>
-              </div>
-              <div class="task" data-done="false">
-                <div class="check"></div>
-                <div class="label">Confirmar recepción de un cobro</div>
-                <span class="arrow">›</span>
-              </div>
-              <div class="task" data-done="false">
-                <div class="check"></div>
-                <div class="label">Agregar notas a tus reservas</div>
-                <span class="arrow">›</span>
-              </div>
-              <div class="task" data-done="false">
-                <div class="check"></div>
-                <div class="label">Usar etiquetas para segmentar clientes</div>
-                <span class="arrow">›</span>
-              </div>
-              <div class="task" data-done="false">
-                <div class="check"></div>
-                <div class="label">Activar mensajes automáticos por WhatsApp</div>
-                <span class="arrow">›</span>
-              </div>
-              <div class="task" data-done="false">
-                <div class="check"></div>
-                <div class="label">Agregar un add-on a un servicio</div>
-                <span class="arrow">›</span>
-              </div>
-              <div class="task" data-done="false">
-                <div class="check"></div>
-                <div class="label">Bloquear horarios o feriados en que no vas a estar disponible</div>
-                <span class="arrow">›</span>
-              </div>
-              <div class="task" data-done="false">
-                <div class="check"></div>
-                <div class="label">Creá tu 1ra tarjeta de regalo</div>
-                <span class="arrow">›</span>
-              </div>
-            </div>
-          </div>
-
         </div>
-      </div>
 
-      <div class="notes">
-        <h4>Notas de diseño</h4>
-        <ul>
-          <li>Removimos el <b>tiempo estimado</b> y el hero ✨ grande del panel actual. La cabecera nueva es compacta: anillo de %, conteo concreto y la etapa en curso.</li>
-          <li>Cada etapa es <b>colapsable</b>. Por default abrimos solo la etapa activa; las completadas y futuras quedan plegadas para reducir ruido.</li>
-          <li>El estado de la etapa se lee con un <b>color por número</b>: gris pendiente · azul activa · verde completada. Sin gradientes, alineado a la guía de marca.</li>
-          <li>Las tareas mantienen el comportamiento actual: clic abre el flujo, hover muestra acción de "saltar" cuando aplica.</li>
-          <li>Con 30 tareas el panel se vuelve denso: por eso solo abrimos la etapa activa y mantenemos las otras dos plegadas. La etapa activa scrollea internamente sin empujar al resto.</li>
-        </ul>
       </div>
     </section>
 
-  </div>
+    <!-- Taxonomy · 23 tareas en 3 etapas -->
+    <section class="taxonomy">
+      <h2>Distribución de las 23 tareas en 3 etapas</h2>
+      <p class="lead">8 / 6 / 9 tareas por etapa. Las que ya existen hoy en cyclone (<code>SETUP_TASK_IDS</code>) están marcadas con <span class="dot-existing"></span>; el resto son tareas candidatas que viven en otras partes del producto y se incorporarían al checklist.</p>
 
-  <!-- Full taxonomy -->
-  <section class="taxonomy">
-    <h3>Distribución de las 24 tareas en 3 etapas</h3>
-    <p class="lead">9 / 6 / 9 tareas por etapa. Las que ya existen hoy en cyclone (<code>SETUP_TASK_IDS</code>) están marcadas con <span class="dot-existing"></span>; el resto son tareas candidatas que ya viven en otras partes del producto y se podrían incorporar al checklist.</p>
-
-    <div class="tax-grid">
-      <div class="tax-card" data-stage="1">
-        <div class="num">ETAPA 1</div>
-        <h5>Configurá tu Ágora</h5>
-        <p>Página, catálogo, comunicación y políticas operativas.</p>
-        <ul>
-          <li data-existing="true">Agregar foto de perfil</li>
-          <li data-existing="true">Agregá tus redes sociales</li>
-          <li data-existing="true">Agregar galería de imágenes a tu página</li>
-          <li>Configurá tu política de cancelación</li>
-          <li data-existing="true">Configurá tu política de señas</li>
-          <li>Organizar catálogo en categorías</li>
-          <li data-existing="true">Conectar Google Calendar</li>
-          <li data-existing="true">Subir base de clientes</li>
-          <li data-existing="true">Configurá los mensajes automáticos a clientes</li>
-        </ul>
-      </div>
-
-      <div class="tax-card" data-stage="2">
-        <div class="num">ETAPA 2</div>
-        <h5>Obtené tus primeras reservas</h5>
-        <p>Compartí tu Ágora y activá los canales por donde llegan los clientes.</p>
-        <ul>
-          <li data-existing="true">Agregar enlace a tu bio de Instagram</li>
-          <li>Activar respuesta automática en WhatsApp Business</li>
-          <li>Compartir tu página por WhatsApp</li>
-          <li>Crear tu primer descuento</li>
-          <li data-existing="true">Solicitar instructivo para clientes</li>
-          <li data-existing="true">Ingresar tu 1ra reserva manual</li>
-        </ul>
-      </div>
-
-      <div class="tax-card" data-stage="3">
-        <div class="num">ETAPA 3</div>
-        <h5>Activá y escalá tu negocio</h5>
-        <p>Rituales operativos, segmentación de clientes y nuevos canales de venta.</p>
-        <ul>
-          <li>Recibir tu 1er cobro online</li>
-          <li>Confirmar asistencia de un cliente</li>
-          <li>Confirmar recepción de un cobro</li>
-          <li>Agregar notas a tus reservas</li>
-          <li>Usar etiquetas para segmentar clientes</li>
-          <li>Activar mensajes automáticos por WhatsApp</li>
-          <li>Agregar un add-on a un servicio</li>
-          <li>Bloquear horarios o feriados en que no vas a estar disponible</li>
-          <li>Creá tu 1ra tarjeta de regalo</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- Detail table -->
-  <section class="detail">
-    <h3>Detalle de las 24 tareas</h3>
-    <p class="lead">Cada tarea con su objetivo, cómo se confirma (auto desde back · stepper guiado · manual confirmado por el vendor) y si es salteable. Las marcadas como <span class="pill" data-kind="today" style="font-size: 9px; padding: 2px 6px;">HOY</span> ya existen en cyclone (<code>SETUP_TASK_IDS</code> en develop). Las de <span class="pill" data-kind="cand" style="font-size: 9px; padding: 2px 6px;">CANDIDATA</span> son propuestas — la lógica de auto-confirmación es la sugerida, no implementada.</p>
-
-    <table class="detail-table">
-      <thead>
-        <tr>
-          <th style="width: 22%">Tarea</th>
-          <th style="width: 38%">Objetivo</th>
-          <th style="width: 14%">Confirmación</th>
-          <th style="width: 12%">Skippable</th>
-          <th style="width: 14%">Estado</th>
-        </tr>
-      </thead>
-      <tbody>
-
-        <!-- ====== STAGE 1 ====== -->
-        <tr class="stage-row" data-stage="1">
-          <td colspan="5">
-            <span class="stage-tag">Etapa 1<span class="stage-name">· Configurá tu Ágora</span></span>
-          </td>
-        </tr>
-
-        <tr>
-          <td class="task-cell">
-            <div class="id">profile_photo</div>
-            <div class="name">Agregar foto de perfil</div>
-          </td>
-          <td class="obj">Que tu cara o logo aparezca en página, búsquedas y notificaciones — humaniza al negocio antes de la primera reserva.</td>
-          <td><span class="pill" data-kind="auto">Auto · back</span></td>
-          <td><span class="pill" data-kind="skip-no">No</span></td>
-          <td><span class="pill" data-kind="today">Hoy</span></td>
-        </tr>
-        <tr>
-          <td class="task-cell">
-            <div class="id">social_media</div>
-            <div class="name">Agregá tus redes sociales</div>
-          </td>
-          <td class="obj">Dejar visibles IG / TikTok / FB para que el cliente cruce reputación antes de reservar.</td>
-          <td><span class="pill" data-kind="auto">Auto · back</span></td>
-          <td><span class="pill" data-kind="skip-no">No</span></td>
-          <td><span class="pill" data-kind="today">Hoy</span></td>
-        </tr>
-        <tr>
-          <td class="task-cell">
-            <div class="id">image_gallery</div>
-            <div class="name">Agregar galería de imágenes a tu página</div>
-          </td>
-          <td class="obj">Subir trabajos previos. Es el activo de prueba social más fuerte para servicios visuales (estética, peluquería, eventos).</td>
-          <td><span class="pill" data-kind="auto">Auto · back</span></td>
-          <td><span class="pill" data-kind="skip-no">No</span></td>
-          <td><span class="pill" data-kind="today">Hoy</span></td>
-        </tr>
-        <tr>
-          <td class="task-cell">
-            <div class="id">cancellation_policy</div>
-            <div class="name">Configurá tu política de cancelación</div>
-          </td>
-          <td class="obj">Reglas claras de cuándo cobrar / reembolsar — reduce disputas y reclamos.</td>
-          <td><span class="pill" data-kind="auto">Auto · back</span></td>
-          <td><span class="pill" data-kind="skip-no">No</span></td>
-          <td><span class="pill" data-kind="cand">Candidata</span></td>
-        </tr>
-        <tr>
-          <td class="task-cell">
-            <div class="id">deposit_policy</div>
-            <div class="name">Configurá tu política de señas</div>
-          </td>
-          <td class="obj">Cobrar parte por adelantado para reducir no-shows. Confirmada cuando <code>is_down_payment_enabled = true</code>.</td>
-          <td><span class="pill" data-kind="auto">Auto · back</span></td>
-          <td><span class="pill" data-kind="skip-no">No</span></td>
-          <td><span class="pill" data-kind="today">Hoy</span></td>
-        </tr>
-        <tr>
-          <td class="task-cell">
-            <div class="id">service_categories</div>
-            <div class="name">Organizar tu catálogo en categorías</div>
-          </td>
-          <td class="obj">Agrupar servicios afines para que el cliente con muchas opciones encuentre rápido.</td>
-          <td><span class="pill" data-kind="auto">Auto · back</span></td>
-          <td><span class="pill" data-kind="skip-yes">Sí</span></td>
-          <td><span class="pill" data-kind="cand">Candidata</span></td>
-        </tr>
-        <tr>
-          <td class="task-cell">
-            <div class="id">google_calendar</div>
-            <div class="name">Conectar Google Calendar</div>
-          </td>
-          <td class="obj">Sincronizar bloqueos y eventos externos para evitar overbooking. Confirmada al primer sync OAuth.</td>
-          <td><span class="pill" data-kind="auto">Auto · back</span></td>
-          <td><span class="pill" data-kind="skip-no">No</span></td>
-          <td><span class="pill" data-kind="today">Hoy</span></td>
-        </tr>
-        <tr>
-          <td class="task-cell">
-            <div class="id">upload_clients</div>
-            <div class="name">Subir base de clientes</div>
-          </td>
-          <td class="obj">Migrar histórico de clientes — flujo asistido: el vendor nos manda el archivo por WA o mail y nosotros cargamos. Habilita campañas, segmentaciones y mensajes masivos desde el día uno.</td>
-          <td><span class="pill" data-kind="stepper">Stepper</span></td>
-          <td><span class="pill" data-kind="skip-yes">Sí</span></td>
-          <td><span class="pill" data-kind="today">Hoy</span></td>
-        </tr>
-        <tr>
-          <td class="task-cell">
-            <div class="id">configure_messages</div>
-            <div class="name">Configurá los mensajes automáticos a clientes</div>
-          </td>
-          <td class="obj">Personalizar el tono de los recordatorios y confirmaciones que recibe el cliente — base para todas las comms transaccionales.</td>
-          <td><span class="pill" data-kind="auto">Auto · back</span></td>
-          <td><span class="pill" data-kind="skip-yes">Sí</span></td>
-          <td><span class="pill" data-kind="today">Hoy</span></td>
-        </tr>
-
-        <!-- ====== STAGE 2 ====== -->
-        <tr class="stage-row" data-stage="2">
-          <td colspan="5">
-            <span class="stage-tag">Etapa 2<span class="stage-name">· Obtené tus primeras reservas</span></span>
-          </td>
-        </tr>
-
-        <tr>
-          <td class="task-cell">
-            <div class="id">link_in_bio</div>
-            <div class="name">Agregar enlace a tu bio de Instagram</div>
-          </td>
-          <td class="obj">Convertir el tráfico orgánico de IG en reservas. Stepper que copia el link al portapapeles para pegar en el perfil.</td>
-          <td><span class="pill" data-kind="stepper">Stepper</span></td>
-          <td><span class="pill" data-kind="skip-yes">Sí</span></td>
-          <td><span class="pill" data-kind="today">Hoy</span></td>
-        </tr>
-        <tr>
-          <td class="task-cell">
-            <div class="id">wa_business_autoreply</div>
-            <div class="name">Activar respuesta automática en WhatsApp Business</div>
-          </td>
-          <td class="obj">Stepper que guía a configurar el "saludo automático" de WA Business con el link de reservas e instrucciones para que el cliente reserve solo cuando consulta — convierte cada DM entrante en un turno.</td>
-          <td><span class="pill" data-kind="stepper">Stepper</span></td>
-          <td><span class="pill" data-kind="skip-yes">Sí</span></td>
-          <td><span class="pill" data-kind="cand">Candidata</span></td>
-        </tr>
-        <tr>
-          <td class="task-cell">
-            <div class="id">share_whatsapp</div>
-            <div class="name">Compartir tu página por WhatsApp</div>
-          </td>
-          <td class="obj">Activación viral con la audiencia que el vendor ya tiene en WA. Stepper que copia mensaje + link.</td>
-          <td><span class="pill" data-kind="stepper">Stepper</span></td>
-          <td><span class="pill" data-kind="skip-yes">Sí</span></td>
-          <td><span class="pill" data-kind="cand">Candidata</span></td>
-        </tr>
-        <tr>
-          <td class="task-cell">
-            <div class="id">create_discount</div>
-            <div class="name">Crear tu primer descuento</div>
-          </td>
-          <td class="obj">Cupón de bienvenida para acelerar la primera reserva. Auto al primer registro en <code>discounts</code>.</td>
-          <td><span class="pill" data-kind="auto">Auto · back</span></td>
-          <td><span class="pill" data-kind="skip-yes">Sí</span></td>
-          <td><span class="pill" data-kind="cand">Candidata</span></td>
-        </tr>
-        <tr>
-          <td class="task-cell">
-            <div class="id">request_tutorial</div>
-            <div class="name">Solicitar instructivo para clientes</div>
-          </td>
-          <td class="obj">Recibir un instructivo armado para que tus clientes aprendan a reservar. Wizard guiado.</td>
-          <td><span class="pill" data-kind="stepper">Stepper</span></td>
-          <td><span class="pill" data-kind="skip-yes">Sí</span></td>
-          <td><span class="pill" data-kind="today">Hoy</span></td>
-        </tr>
-        <tr>
-          <td class="task-cell">
-            <div class="id">first_manual_booking</div>
-            <div class="name">Ingresar tu 1ra reserva manual</div>
-          </td>
-          <td class="obj">Probar el flow real con un caso conocido. Confirmada al primer registro en <code>vat.first_business_booking_at</code>.</td>
-          <td><span class="pill" data-kind="auto">Auto · back</span></td>
-          <td><span class="pill" data-kind="skip-no">No</span></td>
-          <td><span class="pill" data-kind="today">Hoy</span></td>
-        </tr>
-
-        <!-- ====== STAGE 3 ====== -->
-        <tr class="stage-row" data-stage="3">
-          <td colspan="5">
-            <span class="stage-tag">Etapa 3<span class="stage-name">· Activá y escalá tu negocio</span></span>
-          </td>
-        </tr>
-
-        <tr>
-          <td class="task-cell">
-            <div class="id">first_payment</div>
-            <div class="name">Recibir tu 1er cobro online</div>
-          </td>
-          <td class="obj">Validar el cobro end-to-end con dinero real. Detectada al primer payment con status succeeded.</td>
-          <td><span class="pill" data-kind="auto">Auto · back</span></td>
-          <td><span class="pill" data-kind="skip-no">No</span></td>
-          <td><span class="pill" data-kind="cand">Candidata</span></td>
-        </tr>
-        <tr>
-          <td class="task-cell">
-            <div class="id">confirm_attendance</div>
-            <div class="name">Confirmar asistencia de un cliente</div>
-          </td>
-          <td class="obj">Marcar al cliente como asistió después de su turno — base para el reporte de no-shows, reseñas automáticas y métricas de retención.</td>
-          <td><span class="pill" data-kind="auto">Auto · back</span></td>
-          <td><span class="pill" data-kind="skip-no">No</span></td>
-          <td><span class="pill" data-kind="cand">Candidata</span></td>
-        </tr>
-        <tr>
-          <td class="task-cell">
-            <div class="id">confirm_payment_received</div>
-            <div class="name">Confirmar recepción de un cobro</div>
-          </td>
-          <td class="obj">Marcar manualmente un cobro offline (efectivo, transferencia) como recibido — habilita el módulo de tracking de cobros mixtos.</td>
-          <td><span class="pill" data-kind="auto">Auto · back</span></td>
-          <td><span class="pill" data-kind="skip-no">No</span></td>
-          <td><span class="pill" data-kind="cand">Candidata</span></td>
-        </tr>
-        <tr>
-          <td class="task-cell">
-            <div class="id">booking_notes</div>
-            <div class="name">Agregar notas a tus reservas</div>
-          </td>
-          <td class="obj">Anotar contexto del cliente en cada reserva (alergias, preferencias, observaciones) — clave para fidelización en servicios recurrentes.</td>
-          <td><span class="pill" data-kind="auto">Auto · back</span></td>
-          <td><span class="pill" data-kind="skip-no">No</span></td>
-          <td><span class="pill" data-kind="cand">Candidata</span></td>
-        </tr>
-        <tr>
-          <td class="task-cell">
-            <div class="id">client_tags</div>
-            <div class="name">Usar etiquetas para segmentar clientes</div>
-          </td>
-          <td class="obj">Etiquetar clientes (VIP, primera vez, suscriptor) — base para campañas y mensajes masivos segmentados.</td>
-          <td><span class="pill" data-kind="auto">Auto · back</span></td>
-          <td><span class="pill" data-kind="skip-no">No</span></td>
-          <td><span class="pill" data-kind="cand">Candidata</span></td>
-        </tr>
-        <tr>
-          <td class="task-cell">
-            <div class="id">enable_wa_messages</div>
-            <div class="name">Activar mensajes automáticos por WhatsApp</div>
-          </td>
-          <td class="obj">Pasar los recordatorios y confirmaciones de email a WA — sube tasa de apertura y reduce no-shows. Requiere <code>wa_packs</code> activo.</td>
-          <td><span class="pill" data-kind="auto">Auto · back</span></td>
-          <td><span class="pill" data-kind="skip-no">No</span></td>
-          <td><span class="pill" data-kind="cand">Candidata</span></td>
-        </tr>
-        <tr>
-          <td class="task-cell">
-            <div class="id">add_service_addon</div>
-            <div class="name">Agregar un add-on a un servicio</div>
-          </td>
-          <td class="obj">Sumar extras opcionales (tinte, bebida, deluxe) a un servicio. Sube ticket promedio sin crear servicios nuevos.</td>
-          <td><span class="pill" data-kind="auto">Auto · back</span></td>
-          <td><span class="pill" data-kind="skip-no">No</span></td>
-          <td><span class="pill" data-kind="cand">Candidata</span></td>
-        </tr>
-        <tr>
-          <td class="task-cell">
-            <div class="id">block_dates</div>
-            <div class="name">Bloquear horarios o feriados en que no vas a estar disponible</div>
-          </td>
-          <td class="obj">Cargar feriados, vacaciones o franjas puntuales sin atención — evita reservas en momentos en que el vendor no va a estar.</td>
-          <td><span class="pill" data-kind="auto">Auto · back</span></td>
-          <td><span class="pill" data-kind="skip-no">No</span></td>
-          <td><span class="pill" data-kind="cand">Candidata</span></td>
-        </tr>
-        <tr>
-          <td class="task-cell">
-            <div class="id">create_first_gift_card</div>
-            <div class="name">Creá tu 1ra tarjeta de regalo</div>
-          </td>
-          <td class="obj">Sacar la primera gift card al mercado — milestone que valida el canal de venta. Auto al primer registro en <code>gift_cards</code>.</td>
-          <td><span class="pill" data-kind="auto">Auto · back</span></td>
-          <td><span class="pill" data-kind="skip-no">No</span></td>
-          <td><span class="pill" data-kind="cand">Candidata</span></td>
-        </tr>
-
-      </tbody>
-    </table>
-
-    <div class="legend">
-      <span class="lg-row"><span class="pill" data-kind="auto">Auto · back</span> Confirmada por una query al estado del vendor (avatar, social_apps, payments, etc.)</span>
-      <span class="lg-row"><span class="pill" data-kind="stepper">Stepper</span> Wizard guiado dentro del checklist (no implica un cambio en DB del propio recurso)</span>
-      <span class="lg-row"><span class="pill" data-kind="manual">Manual</span> Confirmada por declaración del vendor — sin verificación automática posible</span>
-      <span class="lg-row"><span class="pill" data-kind="today">Hoy</span> Existe en <code>SETUP_TASK_IDS</code> sobre develop</span>
-      <span class="lg-row"><span class="pill" data-kind="cand">Candidata</span> Propuesta nueva en esta iteración</span>
-    </div>
-  </section>
-
-  <!-- Steppers section -->
-  <section class="steppers">
-    <div class="steppers-head">
-      <h3>Steppers · instructivos paso a paso</h3>
-      <p>Contenido de los wizards guiados que se abren desde el checklist. Cada uno usa el mismo componente <code>StepperModal</code> que ya existe en Flash; lo único que cambia es la lista de pasos y los snippets de copia. Los placeholders <code>{username}</code> se sustituyen en runtime con el slug del vendor.</p>
-    </div>
-
-    <div class="stepper-grid">
-
-      <!-- WA Business autoreply -->
-      <article class="stepper-card" id="stp-wa_business_autoreply">
-        <div class="stp-head">
-          <h4 class="stp-title">Activar respuesta automática en WhatsApp Business</h4>
-          <span class="stp-id">wa_business_autoreply</span>
+      <div class="tax-grid">
+        <div class="tax-card">
+          <div class="num">ETAPA 1</div>
+          <h5>Configurá tu negocio en Ágora</h5>
+          <p>Página, catálogo, comunicación y políticas operativas.</p>
+          <ul>
+            <li data-existing="true">Agregar foto de perfil</li>
+            <li data-existing="true">Agregá tus redes sociales</li>
+            <li data-existing="true">Agregar galería de imágenes a tu página</li>
+            <li>Configurá tu política de cancelación</li>
+            <li data-existing="true">Configurá tu política de señas</li>
+            <li>Organizar catálogo en categorías</li>
+            <li data-existing="true">Conectar Google Calendar</li>
+            <li data-existing="true">Subir base de clientes</li>
+          </ul>
         </div>
-        <p class="stp-sub">Convierte cada DM entrante en una reserva: el cliente que escribe pidiendo turno recibe al instante el link de tu agenda online y cómo reservar.</p>
-        <ol class="stepper-steps">
-          <li>
-            <div class="step-title">Confirmá que estás usando WhatsApp Business</div>
-            <p class="step-text">Esto solo funciona con la app <b>WhatsApp Business</b> (no la versión normal de WhatsApp). Es gratuita y la conseguís en Play Store o App Store. Si todavía usás WhatsApp normal, descargá Business y migrá tu cuenta antes de seguir.</p>
-          </li>
-          <li>
-            <div class="step-title">Abrí "Mensaje de bienvenida" dentro de la app</div>
-            <p class="step-text"><b>En Android:</b> tocá los 3 puntos arriba a la derecha → <b>Herramientas para empresas</b> → <b>Mensaje de bienvenida</b>.</p>
-            <p class="step-text"><b>En iPhone:</b> abajo tocá la pestaña <b>Ajustes</b> (ícono de engranaje) → <b>Herramientas para empresas</b> → <b>Mensaje de bienvenida</b>.</p>
-            <a class="step-cta" href="whatsapp://" target="_blank" rel="noopener">Abrir WhatsApp Business <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a>
-          </li>
-          <li>
-            <div class="step-title">Activá el switch y pegá este texto</div>
-            <p class="step-text">Tocá el switch <b>"Enviar mensaje de bienvenida"</b> para activarlo. Después tocá el cuadro de texto y reemplazá el contenido por este mensaje:</p>
-            <div class="copy-block">
-              <button class="copy-btn">Copiar</button>
+
+        <div class="tax-card">
+          <div class="num">ETAPA 2</div>
+          <h5>Conseguí tus primeras reservas</h5>
+          <p>Compartí tu página y activá los canales por donde llegan los clientes.</p>
+          <ul>
+            <li data-existing="true">Agregar enlace a tu bio de Instagram</li>
+            <li>Activar respuesta automática en WhatsApp Business</li>
+            <li>Compartir tu página por WhatsApp</li>
+            <li>Crear tu primer descuento</li>
+            <li data-existing="true">Solicitar instructivo para clientes</li>
+            <li data-existing="true">Ingresar tu 1ra reserva manual</li>
+          </ul>
+        </div>
+
+        <div class="tax-card">
+          <div class="num">ETAPA 3</div>
+          <h5>Gestioná y escalá tu negocio</h5>
+          <p>Rituales operativos, segmentación de clientes y nuevos canales de venta.</p>
+          <ul>
+            <li>Recibir tu 1er cobro online</li>
+            <li>Confirmar asistencia de un cliente</li>
+            <li>Confirmar recepción de un cobro</li>
+            <li>Agregar notas a tus reservas</li>
+            <li>Usar etiquetas para segmentar clientes</li>
+            <li>Activar mensajes automáticos por WhatsApp</li>
+            <li>Agregar un adicional a un servicio</li>
+            <li>Bloquear horarios o feriados en que no vas a estar disponible</li>
+            <li>Creá tu 1ra tarjeta de regalo</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Detail table · 23 tareas -->
+    <section class="detail">
+      <h2>Detalle de las 23 tareas</h2>
+      <p class="lead">Cada tarea con su objetivo, cómo se confirma (auto desde back · stepper guiado · manual) y si es salteable. Las marcadas como <span class="pill" data-kind="today">Hoy</span> ya existen en cyclone (<code>SETUP_TASK_IDS</code> en develop); las de <span class="pill" data-kind="cand">Candidata</span> son propuestas nuevas — la lógica de auto-confirmación es la sugerida, no implementada.</p>
+
+      <div class="detail-wrap">
+        <table class="detail-table">
+          <thead>
+            <tr>
+              <th style="width: 24%">Tarea</th>
+              <th style="width: 40%">Objetivo</th>
+              <th style="width: 12%">Confirmación</th>
+              <th style="width: 10%">Skippable</th>
+              <th style="width: 14%">Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr class="stage-row">
+              <td colspan="5"><span class="stage-tag">Etapa 1 <span class="stage-name">· Configurá tu negocio en Ágora</span></span></td>
+            </tr>
+
+            <tr>
+              <td class="task-cell"><div class="id">profile_photo</div><div class="name">Agregar foto de perfil</div></td>
+              <td class="obj">Que tu cara o logo aparezca en página, búsquedas y notificaciones — humaniza al negocio antes de la primera reserva.</td>
+              <td><span class="pill" data-kind="auto">Auto · back</span></td>
+              <td><span class="pill" data-kind="skip-no">No</span></td>
+              <td><span class="pill" data-kind="today">Hoy</span></td>
+            </tr>
+            <tr>
+              <td class="task-cell"><div class="id">social_media</div><div class="name">Agregá tus redes sociales</div></td>
+              <td class="obj">Dejar visibles IG / TikTok / FB para que el cliente cruce reputación antes de reservar.</td>
+              <td><span class="pill" data-kind="auto">Auto · back</span></td>
+              <td><span class="pill" data-kind="skip-no">No</span></td>
+              <td><span class="pill" data-kind="today">Hoy</span></td>
+            </tr>
+            <tr>
+              <td class="task-cell"><div class="id">image_gallery</div><div class="name">Agregar galería de imágenes a tu página</div></td>
+              <td class="obj">Subir trabajos previos. Es el activo de prueba social más fuerte para servicios visuales (estética, peluquería, eventos).</td>
+              <td><span class="pill" data-kind="auto">Auto · back</span></td>
+              <td><span class="pill" data-kind="skip-no">No</span></td>
+              <td><span class="pill" data-kind="today">Hoy</span></td>
+            </tr>
+            <tr>
+              <td class="task-cell"><div class="id">cancellation_policy</div><div class="name">Configurá tu política de cancelación</div></td>
+              <td class="obj">Reglas claras de cuándo cobrar / reembolsar — reduce disputas y reclamos.</td>
+              <td><span class="pill" data-kind="auto">Auto · back</span></td>
+              <td><span class="pill" data-kind="skip-no">No</span></td>
+              <td><span class="pill" data-kind="cand">Candidata</span></td>
+            </tr>
+            <tr>
+              <td class="task-cell"><div class="id">deposit_policy</div><div class="name">Configurá tu política de señas</div></td>
+              <td class="obj">Cobrar parte por adelantado para reducir no-shows. Confirmada cuando <code>is_down_payment_enabled = true</code>.</td>
+              <td><span class="pill" data-kind="auto">Auto · back</span></td>
+              <td><span class="pill" data-kind="skip-no">No</span></td>
+              <td><span class="pill" data-kind="today">Hoy</span></td>
+            </tr>
+            <tr>
+              <td class="task-cell"><div class="id">service_categories</div><div class="name">Organizar tu catálogo en categorías</div></td>
+              <td class="obj">Agrupar servicios afines para que el cliente con muchas opciones encuentre rápido.</td>
+              <td><span class="pill" data-kind="auto">Auto · back</span></td>
+              <td><span class="pill" data-kind="skip-yes">Sí</span></td>
+              <td><span class="pill" data-kind="cand">Candidata</span></td>
+            </tr>
+            <tr>
+              <td class="task-cell"><div class="id">google_calendar</div><div class="name">Conectar Google Calendar</div></td>
+              <td class="obj">Sincronizar bloqueos y eventos externos para evitar overbooking. Confirmada al primer sync OAuth.</td>
+              <td><span class="pill" data-kind="auto">Auto · back</span></td>
+              <td><span class="pill" data-kind="skip-no">No</span></td>
+              <td><span class="pill" data-kind="today">Hoy</span></td>
+            </tr>
+            <tr>
+              <td class="task-cell"><div class="id">upload_clients</div><div class="name">Subir base de clientes</div></td>
+              <td class="obj">Migrar histórico de clientes — flujo asistido: el vendor nos manda el archivo por WA o mail y nosotros cargamos. Habilita campañas, segmentaciones y mensajes masivos desde el día uno.</td>
+              <td><span class="pill" data-kind="stepper">Stepper</span></td>
+              <td><span class="pill" data-kind="skip-yes">Sí</span></td>
+              <td><span class="pill" data-kind="today">Hoy</span></td>
+            </tr>
+            <tr class="stage-row">
+              <td colspan="5"><span class="stage-tag">Etapa 2 <span class="stage-name">· Conseguí tus primeras reservas</span></span></td>
+            </tr>
+
+            <tr>
+              <td class="task-cell"><div class="id">link_in_bio</div><div class="name">Agregar enlace a tu bio de Instagram</div></td>
+              <td class="obj">Convertir el tráfico orgánico de IG en reservas. Stepper que copia el link al portapapeles para pegar en el perfil.</td>
+              <td><span class="pill" data-kind="stepper">Stepper</span></td>
+              <td><span class="pill" data-kind="skip-yes">Sí</span></td>
+              <td><span class="pill" data-kind="today">Hoy</span></td>
+            </tr>
+            <tr>
+              <td class="task-cell"><div class="id">wa_business_autoreply</div><div class="name">Activar respuesta automática en WhatsApp Business</div></td>
+              <td class="obj">Stepper que guía a configurar el "saludo automático" de WA Business con el link de reservas e instrucciones para que el cliente reserve solo cuando consulta — convierte cada DM entrante en un turno.</td>
+              <td><span class="pill" data-kind="stepper">Stepper</span></td>
+              <td><span class="pill" data-kind="skip-yes">Sí</span></td>
+              <td><span class="pill" data-kind="cand">Candidata</span></td>
+            </tr>
+            <tr>
+              <td class="task-cell"><div class="id">share_whatsapp</div><div class="name">Compartir tu página por WhatsApp</div></td>
+              <td class="obj">Activación viral con la audiencia que el vendor ya tiene en WA. Stepper que copia mensaje + link.</td>
+              <td><span class="pill" data-kind="stepper">Stepper</span></td>
+              <td><span class="pill" data-kind="skip-yes">Sí</span></td>
+              <td><span class="pill" data-kind="cand">Candidata</span></td>
+            </tr>
+            <tr>
+              <td class="task-cell"><div class="id">create_discount</div><div class="name">Crear tu primer descuento</div></td>
+              <td class="obj">Cupón de bienvenida para acelerar la primera reserva. Auto al primer registro en <code>discounts</code>.</td>
+              <td><span class="pill" data-kind="auto">Auto · back</span></td>
+              <td><span class="pill" data-kind="skip-yes">Sí</span></td>
+              <td><span class="pill" data-kind="cand">Candidata</span></td>
+            </tr>
+            <tr>
+              <td class="task-cell"><div class="id">request_tutorial</div><div class="name">Solicitar instructivo para clientes</div></td>
+              <td class="obj">Recibir un instructivo armado para que tus clientes aprendan a reservar. Wizard guiado.</td>
+              <td><span class="pill" data-kind="stepper">Stepper</span></td>
+              <td><span class="pill" data-kind="skip-yes">Sí</span></td>
+              <td><span class="pill" data-kind="today">Hoy</span></td>
+            </tr>
+            <tr>
+              <td class="task-cell"><div class="id">first_manual_booking</div><div class="name">Ingresar tu 1ra reserva manual</div></td>
+              <td class="obj">Probar el flow real con un caso conocido. Confirmada al primer registro en <code>vat.first_business_booking_at</code>.</td>
+              <td><span class="pill" data-kind="auto">Auto · back</span></td>
+              <td><span class="pill" data-kind="skip-no">No</span></td>
+              <td><span class="pill" data-kind="today">Hoy</span></td>
+            </tr>
+
+            <tr class="stage-row">
+              <td colspan="5"><span class="stage-tag">Etapa 3 <span class="stage-name">· Gestioná y escalá tu negocio</span></span></td>
+            </tr>
+
+            <tr>
+              <td class="task-cell"><div class="id">first_payment</div><div class="name">Recibir tu 1er cobro online</div></td>
+              <td class="obj">Validar el cobro end-to-end con dinero real. Detectada al primer payment con status succeeded.</td>
+              <td><span class="pill" data-kind="auto">Auto · back</span></td>
+              <td><span class="pill" data-kind="skip-no">No</span></td>
+              <td><span class="pill" data-kind="cand">Candidata</span></td>
+            </tr>
+            <tr>
+              <td class="task-cell"><div class="id">confirm_attendance</div><div class="name">Confirmar asistencia de un cliente</div></td>
+              <td class="obj">Marcar al cliente como asistió después de su turno — base para el reporte de no-shows, reseñas automáticas y métricas de retención.</td>
+              <td><span class="pill" data-kind="auto">Auto · back</span></td>
+              <td><span class="pill" data-kind="skip-no">No</span></td>
+              <td><span class="pill" data-kind="cand">Candidata</span></td>
+            </tr>
+            <tr>
+              <td class="task-cell"><div class="id">confirm_payment_received</div><div class="name">Confirmar recepción de un cobro</div></td>
+              <td class="obj">Marcar manualmente un cobro offline (efectivo, transferencia) como recibido — habilita el módulo de tracking de cobros mixtos.</td>
+              <td><span class="pill" data-kind="auto">Auto · back</span></td>
+              <td><span class="pill" data-kind="skip-no">No</span></td>
+              <td><span class="pill" data-kind="cand">Candidata</span></td>
+            </tr>
+            <tr>
+              <td class="task-cell"><div class="id">booking_notes</div><div class="name">Agregar notas a tus reservas</div></td>
+              <td class="obj">Anotar contexto del cliente en cada reserva (alergias, preferencias, observaciones) — clave para fidelización en servicios recurrentes.</td>
+              <td><span class="pill" data-kind="auto">Auto · back</span></td>
+              <td><span class="pill" data-kind="skip-no">No</span></td>
+              <td><span class="pill" data-kind="cand">Candidata</span></td>
+            </tr>
+            <tr>
+              <td class="task-cell"><div class="id">client_tags</div><div class="name">Usar etiquetas para segmentar clientes</div></td>
+              <td class="obj">Etiquetar clientes (VIP, primera vez, suscriptor) — base para campañas y mensajes masivos segmentados.</td>
+              <td><span class="pill" data-kind="auto">Auto · back</span></td>
+              <td><span class="pill" data-kind="skip-no">No</span></td>
+              <td><span class="pill" data-kind="cand">Candidata</span></td>
+            </tr>
+            <tr>
+              <td class="task-cell"><div class="id">enable_wa_messages</div><div class="name">Activar mensajes automáticos por WhatsApp</div></td>
+              <td class="obj">Pasar los recordatorios y confirmaciones de email a WA — sube tasa de apertura y reduce no-shows. Requiere <code>wa_packs</code> activo.</td>
+              <td><span class="pill" data-kind="auto">Auto · back</span></td>
+              <td><span class="pill" data-kind="skip-no">No</span></td>
+              <td><span class="pill" data-kind="cand">Candidata</span></td>
+            </tr>
+            <tr>
+              <td class="task-cell"><div class="id">add_service_addon</div><div class="name">Agregar un adicional a un servicio</div></td>
+              <td class="obj">Sumar adicionales opcionales (tinte, bebida, deluxe) a un servicio. Sube ticket promedio sin crear servicios nuevos.</td>
+              <td><span class="pill" data-kind="auto">Auto · back</span></td>
+              <td><span class="pill" data-kind="skip-no">No</span></td>
+              <td><span class="pill" data-kind="cand">Candidata</span></td>
+            </tr>
+            <tr>
+              <td class="task-cell"><div class="id">block_dates</div><div class="name">Bloquear horarios o feriados en que no vas a estar disponible</div></td>
+              <td class="obj">Cargar feriados, vacaciones o franjas puntuales sin atención — evita reservas en momentos en que el vendor no va a estar.</td>
+              <td><span class="pill" data-kind="auto">Auto · back</span></td>
+              <td><span class="pill" data-kind="skip-no">No</span></td>
+              <td><span class="pill" data-kind="cand">Candidata</span></td>
+            </tr>
+            <tr>
+              <td class="task-cell"><div class="id">create_first_gift_card</div><div class="name">Creá tu 1ra tarjeta de regalo</div></td>
+              <td class="obj">Sacar la primera gift card al mercado — milestone que valida el canal de venta. Auto al primer registro en <code>gift_cards</code>.</td>
+              <td><span class="pill" data-kind="auto">Auto · back</span></td>
+              <td><span class="pill" data-kind="skip-no">No</span></td>
+              <td><span class="pill" data-kind="cand">Candidata</span></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      <div class="legend">
+        <span class="lg-row"><span class="pill" data-kind="auto">Auto · back</span> Confirmada por query al estado del vendor</span>
+        <span class="lg-row"><span class="pill" data-kind="stepper">Stepper</span> Wizard guiado dentro del checklist</span>
+        <span class="lg-row"><span class="pill" data-kind="skip-no">No</span> Obligatoria (sin botón eliminar)</span>
+        <span class="lg-row"><span class="pill" data-kind="skip-yes">Sí</span> Salteable (botón basurero en hover)</span>
+        <span class="lg-row"><span class="pill" data-kind="today">Hoy</span> Ya existe en <code>SETUP_TASK_IDS</code></span>
+        <span class="lg-row"><span class="pill" data-kind="cand">Candidata</span> Propuesta nueva</span>
+      </div>
+    </section>
+
+    <!-- Steppers · instructivos paso a paso -->
+    <section class="steppers">
+      <div class="steppers-head">
+        <h2>Steppers · instructivos paso a paso</h2>
+        <p>Contenido de los wizards guiados que se abren desde el checklist. Cada uno usa el mismo componente <code>StepperModal</code> que ya existe en Flash; lo único que cambia es la lista de pasos y los snippets de copia. Los placeholders <code>{username}</code> se sustituyen en runtime con el slug del vendor.</p>
+        <nav class="stepper-toc" aria-label="Lista de steppers">
+          <a href="#stp-wa_business_autoreply">WA Business · autoreply</a>
+          <a href="#stp-link_in_bio">Link in bio · Instagram</a>
+          <a href="#stp-share_whatsapp">Compartir por WhatsApp</a>
+          <a href="#stp-upload_clients">Subir base de clientes</a>
+          <a href="#stp-request_tutorial">Solicitar instructivo</a>
+        </nav>
+      </div>
+
+      <div class="stepper-grid">
+
+        <!-- WA Business autoreply -->
+        <article class="stepper-card" id="stp-wa_business_autoreply">
+          <div class="stp-head">
+            <h4 class="stp-title">Activar respuesta automática en WhatsApp Business</h4>
+            <span class="stp-id">wa_business_autoreply</span>
+          </div>
+          <p class="stp-sub">Convierte cada DM entrante en una reserva: el cliente que escribe pidiendo turno recibe al instante el link de tu agenda online y cómo reservar.</p>
+          <ol class="stepper-steps">
+            <li>
+              <div class="step-title">Confirmá que estás usando WhatsApp Business</div>
+              <p class="step-text">Esto solo funciona con la app <b>WhatsApp Business</b> (no la versión normal de WhatsApp). Es gratuita y la conseguís en Play Store o App Store. Si todavía usás WhatsApp normal, descargá Business y migrá tu cuenta antes de seguir.</p>
+            </li>
+            <li>
+              <div class="step-title">Abrí "Mensaje de bienvenida" dentro de la app</div>
+              <p class="step-text"><b>En Android:</b> tocá los 3 puntos arriba a la derecha → <b>Herramientas para empresas</b> → <b>Mensaje de bienvenida</b>.</p>
+              <p class="step-text"><b>En iPhone:</b> abajo tocá la pestaña <b>Ajustes</b> (ícono de engranaje) → <b>Herramientas para empresas</b> → <b>Mensaje de bienvenida</b>.</p>
+              <a class="step-cta" href="whatsapp://" target="_blank" rel="noopener">Abrir WhatsApp Business <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+            </li>
+            <li>
+              <div class="step-title">Activá el switch y pegá este texto</div>
+              <p class="step-text">Tocá el switch <b>"Enviar mensaje de bienvenida"</b> para activarlo. Después tocá el cuadro de texto y reemplazá el contenido por este mensaje:</p>
+              <div class="marginalia" style="margin: 4px 0 -4px;">
+                <svg viewBox="0 0 36 22" aria-hidden="true"><path d="M2 4 Q 12 18, 28 14 M 22 10 L 28 14 L 24 19"/></svg>
+                copialo tal cual, los emojis suman
+              </div>
+              <div class="copy-block">
+                <button class="copy-btn">Copiar</button>
 <pre>¡Hola! Gracias por escribirme 🙌
 Para reservar tu turno entrá a 👉 www.agora.red/{username}
 
@@ -1739,178 +2256,139 @@ Ahí podés:
 3️⃣ Reservar al instante
 
 Ante cualquier duda te respondo apenas pueda. ¡Te espero!</pre>
-            </div>
-            <p class="step-text">Tocá <b>OK</b> (o <b>Guardar</b> en algunas versiones) para confirmar el texto.</p>
-          </li>
-          <li>
-            <div class="step-title">Elegí a quién le llega el mensaje</div>
-            <p class="step-text">Tocá <b>Destinatarios</b> y elegí <b>Todos los que no estén en mi libreta de contactos</b>. Esto hace que cada persona nueva que te escriba reciba el mensaje en cuanto manda el primer DM, sin que vos hagas nada.</p>
-            <p class="step-text">Tocá <b>Guardar</b> arriba a la derecha para terminar.</p>
-            <button class="step-cta">Listo, ya lo configuré</button>
-          </li>
-        </ol>
-      </article>
+              </div>
+              <p class="step-text">Tocá <b>Guardar</b> arriba a la derecha para confirmar el texto.</p>
+            </li>
+            <li>
+              <div class="step-title">Elegí a quién le llega el mensaje</div>
+              <p class="step-text">Tocá <b>Destinatarios</b> y elegí <b>Todos los que no estén en mi libreta de contactos</b>. Esto hace que cada persona nueva que te escriba reciba el mensaje en cuanto manda el primer DM, sin que vos hagas nada.</p>
+              <p class="step-text">Tocá <b>Guardar</b> arriba a la derecha para terminar.</p>
+              <button class="step-cta">Listo, ya lo configuré</button>
+            </li>
+          </ol>
+        </article>
 
-      <!-- Link in bio IG -->
-      <article class="stepper-card" id="stp-link_in_bio">
-        <div class="stp-head">
-          <h4 class="stp-title">Agregar enlace a tu bio de Instagram</h4>
-          <span class="stp-id">link_in_bio</span>
-        </div>
-        <p class="stp-sub">Hace que el tráfico orgánico de IG (perfil, posts, stories) caiga en tu agenda online con un solo toque.</p>
-        <ol class="stepper-steps">
-          <li>
-            <div class="step-title">Copiá tu link</div>
-            <p class="step-text">Este es el link público de tu agenda. Tocá el botón para copiarlo al portapapeles.</p>
-            <span class="pill-link">www.agora.red/{username}</span>
-            <button class="step-cta step-cta--ghost">Copiar link</button>
-          </li>
-          <li>
-            <div class="step-title">Andá a tu perfil de Instagram y tocá "Editar perfil"</div>
-            <p class="step-text">En la app de Instagram: abajo a la derecha tocá tu foto para entrar a tu perfil. Después arriba tocá el botón <b>Editar perfil</b>.</p>
-            <a class="step-cta" href="https://www.instagram.com/accounts/edit/" target="_blank" rel="noopener">Abrir Editar perfil en Instagram <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a>
-          </li>
-          <li>
-            <div class="step-title">Tocá la sección "Enlaces"</div>
-            <p class="step-text">Dentro de "Editar perfil" vas a ver una fila que dice <b>Enlaces</b> (o "Links" si tenés Instagram en inglés). Tocala para entrar a la pantalla de enlaces.</p>
-            <p class="step-text">Si todavía aparece el campo viejo <b>Sitio web</b>, también podés pegar ahí el link directamente y saltear los pasos siguientes — Instagram va a migrarlo solo a la sección Enlaces más adelante.</p>
-          </li>
-          <li>
-            <div class="step-title">Tocá "+ Agregar enlace externo"</div>
-            <p class="step-text">En la pantalla de Enlaces vas a ver el botón <b>+ Agregar enlace externo</b>. Tocalo.</p>
-          </li>
-          <li>
-            <div class="step-title">Pegá tu link y poné un título</div>
-            <p class="step-text">En el campo <b>URL</b>, pegá <code>www.agora.red/{username}</code>.</p>
-            <p class="step-text">En el campo <b>Título del enlace</b>, escribí algo como <b>Reservá tu turno</b> o <b>Mi agenda online</b> — es el texto que ven tus seguidores en tu bio.</p>
-            <p class="step-text">Tocá <b>Listo</b> arriba a la derecha.</p>
-          </li>
-          <li>
-            <div class="step-title">Volvé a "Editar perfil" y guardá</div>
-            <p class="step-text">Volvés a la pantalla de "Editar perfil" automáticamente. Tocá <b>Listo</b> (arriba a la derecha) para guardar los cambios. Verificá entrando a tu perfil que el link aparezca debajo de tu bio.</p>
-            <button class="step-cta">Listo, ya lo agregué</button>
-          </li>
-        </ol>
-      </article>
+        <!-- Link in bio IG -->
+        <article class="stepper-card" id="stp-link_in_bio">
+          <div class="stp-head">
+            <h4 class="stp-title">Agregar enlace a tu bio de Instagram</h4>
+            <span class="stp-id">link_in_bio</span>
+          </div>
+          <p class="stp-sub">Hace que el tráfico orgánico de IG (perfil, posts, stories) caiga en tu agenda online con un solo toque.</p>
+          <ol class="stepper-steps">
+            <li>
+              <div class="step-title">Copiá tu link</div>
+              <p class="step-text">Este es el link público de tu agenda. Tocá el botón para copiarlo al portapapeles.</p>
+              <span class="pill-link">www.agora.red/{username}</span>
+              <button class="step-cta step-cta--ghost">Copiar link</button>
+              <div class="marginalia" style="margin-top: 10px; color: var(--ink-3);">
+                <svg viewBox="0 0 36 22" aria-hidden="true"><path d="M30 18 Q 18 4, 4 8 M 10 4 L 4 8 L 8 14"/></svg>
+                este link queda público
+              </div>
+            </li>
+            <li>
+              <div class="step-title">Andá a tu perfil de Instagram y tocá "Editar perfil"</div>
+              <p class="step-text">En la app de Instagram: abajo a la derecha tocá tu foto para entrar a tu perfil. Después arriba tocá el botón <b>Editar perfil</b>.</p>
+              <a class="step-cta" href="https://www.instagram.com/accounts/edit/" target="_blank" rel="noopener">Abrir Editar perfil en Instagram <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+            </li>
+            <li>
+              <div class="step-title">Tocá la sección "Enlaces"</div>
+              <p class="step-text">Dentro de "Editar perfil" vas a ver una fila que dice <b>Enlaces</b> (o "Links" si tenés Instagram en inglés). Tocala para entrar a la pantalla de enlaces.</p>
+            </li>
+            <li>
+              <div class="step-title">Tocá "+ Agregar enlace externo"</div>
+              <p class="step-text">En la pantalla de Enlaces vas a ver el botón <b>+ Agregar enlace externo</b>. Tocalo.</p>
+            </li>
+            <li>
+              <div class="step-title">Pegá tu link y poné un título</div>
+              <p class="step-text">En el campo <b>URL</b>, pegá <code>www.agora.red/{username}</code>.</p>
+              <p class="step-text">En el campo <b>Título del enlace</b>, escribí algo como <b>Reservá tu turno</b> o <b>Mi agenda online</b> — es el texto que ven tus seguidores en tu bio.</p>
+              <p class="step-text">Tocá <b>Listo</b> arriba a la derecha.</p>
+            </li>
+            <li>
+              <div class="step-title">Volvé a "Editar perfil" y guardá</div>
+              <p class="step-text">Volvés a la pantalla de "Editar perfil" automáticamente. Tocá <b>Listo</b> (arriba a la derecha) para guardar los cambios. Verificá entrando a tu perfil que el link aparezca debajo de tu bio.</p>
+              <button class="step-cta">Listo, ya lo agregué</button>
+            </li>
+          </ol>
+        </article>
 
-      <!-- Share by WhatsApp -->
-      <article class="stepper-card" id="stp-share_whatsapp">
-        <div class="stp-head">
-          <h4 class="stp-title">Compartir tu página por WhatsApp</h4>
-          <span class="stp-id">share_whatsapp</span>
-        </div>
-        <p class="stp-sub">Avisarle a los clientes que ya tenés en WA que ahora pueden reservar online — el primer empuje viral.</p>
-        <ol class="stepper-steps">
-          <li>
-            <div class="step-title">Mensaje pre-armado para mandar</div>
-            <p class="step-text">Te dejamos un texto listo. Solo copialo:</p>
-            <div class="copy-block">
-              <button class="copy-btn">Copiar</button>
+        <!-- Share by WhatsApp -->
+        <article class="stepper-card" id="stp-share_whatsapp">
+          <div class="stp-head">
+            <h4 class="stp-title">Compartir tu página por WhatsApp</h4>
+            <span class="stp-id">share_whatsapp</span>
+          </div>
+          <p class="stp-sub">Avisarle a los clientes que ya tenés en WA que ahora pueden reservar online — el primer empuje viral.</p>
+          <ol class="stepper-steps">
+            <li>
+              <div class="step-title">Mensaje pre-armado para mandar</div>
+              <p class="step-text">Te dejamos un texto listo. Solo copialo:</p>
+              <div class="copy-block">
+                <button class="copy-btn">Copiar</button>
 <pre>¡Hola! Te cuento que ahora tenés mi agenda online 🙌
 
 Reservá tu turno cuando quieras desde 👉 www.agora.red/{username}
 Elegís el servicio, ves mis horarios disponibles y reservás al instante. Sin esperar respuesta por mensaje.
 
 ¡Te espero!</pre>
-            </div>
-          </li>
-          <li>
-            <div class="step-title">Compartilo con tus contactos</div>
-            <p class="step-text">Tocá el botón para abrir WhatsApp con el mensaje ya pegado. Después elegí los contactos a los que querés mandárselo (empezá por tus clientes habituales) y mandalo.</p>
-            <a class="step-cta step-cta--brand" href="https://wa.me/?text=%C2%A1Hola%21%20Te%20cuento%20que%20ahora%20ten%C3%A9s%20mi%20agenda%20online%20%F0%9F%99%8C%0A%0AReserv%C3%A1%20tu%20turno%20cuando%20quieras%20desde%20%F0%9F%91%89%20www.agora.red%2F%7Busername%7D%0AEleg%C3%ADs%20el%20servicio%2C%20ves%20mis%20horarios%20y%20reserv%C3%A1s%20al%20instante.%0A%0A%C2%A1Te%20espero%21" target="_blank" rel="noopener">Compartir por WhatsApp <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a>
-          </li>
-        </ol>
-      </article>
+              </div>
+            </li>
+            <li>
+              <div class="step-title">Compartilo con tus contactos</div>
+              <p class="step-text">Tocá el botón para abrir WhatsApp con el mensaje ya pegado. Después elegí los contactos a los que querés mandárselo (empezá por tus clientes habituales) y mandalo.</p>
+              <a class="step-cta" href="https://wa.me/?text=%C2%A1Hola%21%20Te%20cuento%20que%20ahora%20ten%C3%A9s%20mi%20agenda%20online%20%F0%9F%99%8C%0A%0AReserv%C3%A1%20tu%20turno%20cuando%20quieras%20desde%20%F0%9F%91%89%20www.agora.red%2F%7Busername%7D%0AEleg%C3%ADs%20el%20servicio%2C%20ves%20mis%20horarios%20y%20reserv%C3%A1s%20al%20instante.%0A%0A%C2%A1Te%20espero%21" target="_blank" rel="noopener">Compartir por WhatsApp <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+            </li>
+          </ol>
+        </article>
 
-      <!-- Upload clients (assisted) -->
-      <article class="stepper-card" id="stp-upload_clients">
-        <div class="stp-head">
-          <h4 class="stp-title">Subir base de clientes</h4>
-          <span class="stp-id">upload_clients</span>
-        </div>
-        <p class="stp-sub">Te ayudamos a migrar tu histórico de clientes para que puedas usar campañas, segmentaciones y mensajes masivos desde el día uno. Esta tarea no es self-service: la hacemos nosotros por vos.</p>
-        <ol class="stepper-steps">
-          <li>
-            <div class="step-title">Lo subimos nosotros</div>
-            <p class="step-text">No tenés que normalizar nada ni adaptar columnas. Mandanos el listado en el formato que tengas — Excel, CSV, contactos exportados del celular, una hoja de Google, una agenda escaneada — y nosotros lo cargamos a tu cuenta.</p>
-          </li>
-          <li>
-            <div class="step-title">Contactanos desde el messenger</div>
-            <p class="step-text">Tocá el botón abajo para abrir una conversación con nuestro equipo de soporte (Intercom). Va con un mensaje pre-armado — solo tenés que adjuntar tu archivo y enviarlo.</p>
-            <button class="step-cta" onclick="if(window.Intercom){window.Intercom('showNewMessage','Hola, quiero migrar mi base de clientes a Ágora. Adjunto el archivo.');}">Contactanos <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></button>
-          </li>
-          <li>
-            <div class="step-title">Listo en el día</div>
-            <p class="step-text">En cuanto recibimos tu archivo lo procesamos y dejamos la base cargada en tu cuenta. Te avisamos por la misma conversación cuando esté lista — normalmente el mismo día hábil.</p>
-          </li>
-        </ol>
-      </article>
+        <!-- Upload clients (assisted) -->
+        <article class="stepper-card" id="stp-upload_clients">
+          <div class="stp-head">
+            <h4 class="stp-title">Subir base de clientes</h4>
+            <span class="stp-id">upload_clients</span>
+          </div>
+          <p class="stp-sub">Te ayudamos a migrar tu histórico de clientes para que puedas usar campañas, segmentaciones y mensajes masivos desde el día uno. Esta tarea no es self-service: la hacemos nosotros por vos.</p>
+          <ol class="stepper-steps">
+            <li>
+              <div class="step-title">Lo subimos nosotros</div>
+              <p class="step-text">No tenés que normalizar nada ni adaptar columnas. Mandanos el listado en el formato que tengas — Excel, CSV, contactos exportados del celular, una hoja de Google, una agenda escaneada — y nosotros lo cargamos a tu cuenta.</p>
+            </li>
+            <li>
+              <div class="step-title">Escribinos por el chat de soporte</div>
+              <p class="step-text">Tocá el botón abajo para abrir el chat de soporte y enviarnos tu archivo. Va con un mensaje pre-armado — solo tenés que adjuntar el listado y enviarlo.</p>
+              <button class="step-cta">Contactanos <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></button>
+            </li>
+            <li>
+              <div class="step-title">Listo en el día</div>
+              <p class="step-text">En cuanto recibimos tu archivo lo procesamos y dejamos la base cargada en tu cuenta. Te avisamos por la misma conversación cuando esté lista — normalmente el mismo día hábil.</p>
+            </li>
+          </ol>
+        </article>
 
-      <!-- Request tutorial -->
-      <article class="stepper-card" id="stp-request_tutorial">
-        <div class="stp-head">
-          <h4 class="stp-title">Solicitar instructivo para clientes</h4>
-          <span class="stp-id">request_tutorial</span>
-        </div>
-        <p class="stp-sub">Recibís un mini-tutorial en imágenes/video que mostrás a tus clientes para que aprendan a reservar online sin fricciones.</p>
-        <ol class="stepper-steps">
-          <li>
-            <div class="step-title">Te armamos un instructivo a medida</div>
-            <p class="step-text">Es un set de imágenes (o un video corto) explicando paso a paso cómo reservar en <code>www.agora.red/{username}</code>. Lo podés mandar por WA, mostrarlo en el local o pegarlo como historia de IG.</p>
-          </li>
-          <li>
-            <div class="step-title">Contactanos para pedirlo</div>
-            <p class="step-text">Tocá el botón abajo para abrir una conversación con nuestro equipo desde el messenger del dashboard (Intercom). Va con un mensaje pre-armado — solo tenés que enviarlo. Te respondemos con el instructivo en un par de horas hábiles.</p>
-            <button class="step-cta" onclick="if(window.Intercom){window.Intercom('showNewMessage','Hola, quisiera el instructivo para clientes con mi link de reservas.');}">Contactanos <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></button>
-          </li>
-        </ol>
-      </article>
+        <!-- Request tutorial -->
+        <article class="stepper-card" id="stp-request_tutorial">
+          <div class="stp-head">
+            <h4 class="stp-title">Solicitar instructivo para clientes</h4>
+            <span class="stp-id">request_tutorial</span>
+          </div>
+          <p class="stp-sub">Recibís un mini-tutorial en imágenes/video que mostrás a tus clientes para que aprendan a reservar online sin fricciones.</p>
+          <ol class="stepper-steps">
+            <li>
+              <div class="step-title">Te armamos un instructivo a medida</div>
+              <p class="step-text">Es un set de imágenes (o un video corto) explicando paso a paso cómo reservar en <code>www.agora.red/{username}</code>. Lo podés mandar por WA, mostrarlo en el local o pegarlo como historia de IG.</p>
+            </li>
+            <li>
+              <div class="step-title">Pedinos el instructivo por el chat de soporte</div>
+              <p class="step-text">Tocá el botón abajo para abrir el chat de soporte del dashboard. Va con un mensaje pre-armado — solo tenés que enviarlo. Te respondemos con el instructivo en un par de horas hábiles.</p>
+              <button class="step-cta">Contactanos <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></button>
+            </li>
+          </ol>
+        </article>
 
-    </div>
-  </section>
+      </div>
+    </section>
 
-</div>
-
-<script>
-  // Toggle stages on click / Enter / Space
-  document.querySelectorAll('.stage-head').forEach((head) => {
-    const stage = head.closest('.stage');
-    const toggle = (e) => {
-      // Don't toggle if the click came from a button inside the body (e.g. skip)
-      if (e && e.target && e.target.closest('.skip')) return;
-      const isOpen = stage.getAttribute('data-open') === 'true';
-      stage.setAttribute('data-open', String(!isOpen));
-      head.setAttribute('aria-expanded', String(!isOpen));
-    };
-    head.addEventListener('click', toggle);
-    head.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        toggle(e);
-      }
-    });
-  });
-
-  // Prevent skip button from bubbling and toggling the stage body if it ever gets nested inside the head
-  document.querySelectorAll('.task .skip').forEach((btn) => {
-    btn.addEventListener('click', (e) => e.stopPropagation());
-  });
-
-  // Click on a task with stepper → smooth-scroll to its instructional card and flash-highlight
-  document.querySelectorAll('.task[data-stepper]').forEach((task) => {
-    task.addEventListener('click', (e) => {
-      if (e.target.closest('.skip')) return;
-      const id = task.getAttribute('data-stepper');
-      const card = document.getElementById('stp-' + id);
-      if (!card) return;
-      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      card.classList.remove('flash');
-      // re-trigger the animation
-      void card.offsetWidth;
-      card.classList.add('flash');
-      setTimeout(() => card.classList.remove('flash'), 1600);
-    });
-  });
-</script>
+  </main>
 </body>
 </html>
