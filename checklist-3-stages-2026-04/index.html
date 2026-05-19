@@ -46,6 +46,447 @@
   }
 
   /* ================================
+     Stepper modal mockup
+     ================================ */
+  .modal-section {
+    margin-top: 56px;
+    padding-top: 36px;
+    border-top: 1px solid var(--line);
+  }
+  .modal-section h2 {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    margin: 0 0 4px;
+  }
+  .modal-section > .lead {
+    margin: 0 0 28px;
+    color: var(--ink-3);
+    font-size: 13px;
+    max-width: 720px;
+    line-height: 1.55;
+  }
+  .modal-stage {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+  .modal-stage + .modal-stage { margin-top: 32px; }
+  @media (max-width: 980px) {
+    .modal-stage { grid-template-columns: 1fr; }
+  }
+
+  /* Dimmed canvas behind the desktop modal (simulates the page behind) */
+  .modal-frame {
+    background: rgba(10, 10, 10, 0.82);
+    border-radius: var(--radius-md);
+    padding: 36px 28px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 520px;
+    position: relative;
+  }
+  .modal-frame::before {
+    content: 'Backdrop · click cierra';
+    position: absolute;
+    top: 12px; left: 14px;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: rgba(255, 255, 255, 0.45);
+  }
+
+  /* The modal itself */
+  .modal {
+    width: 100%;
+    max-width: 440px;
+    background: var(--surface);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 32px 64px -16px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+  }
+  .modal-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 18px 20px 14px;
+    gap: 14px;
+  }
+  .modal-head-stack { flex: 1; min-width: 0; line-height: 1.2; }
+  .modal-kicker {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink-4);
+    margin-bottom: 4px;
+  }
+  .modal-kicker b { color: var(--ink); }
+  .modal-title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: -0.005em;
+    line-height: 1.25;
+    color: var(--ink);
+  }
+  .modal-close {
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink-3);
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .modal-close:hover { color: var(--ink); border-color: var(--ink); }
+
+  /* Two-segment progress bar (matches the wizard's step count) */
+  .modal-progress {
+    display: flex;
+    gap: 4px;
+    padding: 0 20px 16px;
+  }
+  .modal-progress i {
+    flex: 1;
+    height: 3px;
+    background: var(--line);
+    border-radius: 999px;
+  }
+  .modal-progress i[data-state='done'] { background: var(--ink); }
+  .modal-progress i[data-state='active'] { background: var(--ink); }
+
+  .modal-body { padding: 4px 20px 16px; }
+  .modal-step-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 10px;
+  }
+  .modal-step-num {
+    width: 32px; height: 32px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><path d='M16 2.4 C 22.8 2.7, 29 7.5, 29.5 14.6 C 30 22.3, 24.3 28.8, 17.4 29.5 C 9.6 30.3, 2.7 25.1, 2.4 17.2 C 2.1 9.3, 7.8 2.7, 14.5 2.4' fill='none' stroke='%23FF4658' stroke-width='2.2' stroke-linecap='round'/></svg>");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    color: var(--ink);
+    display: grid;
+    place-items: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .modal-step-title {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+    line-height: 1.35;
+    padding-top: 5px;
+  }
+  .modal-step-text {
+    margin: 0 0 14px;
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.55;
+  }
+  .modal-step-text + .modal-step-text { margin-top: -8px; }
+
+  /* Message preview (WhatsApp-style chat bubble, monochrome) */
+  .msg-preview {
+    margin: 14px 0 12px;
+    padding: 12px;
+    background: var(--surface-2);
+    border-radius: 12px;
+  }
+  .msg-preview-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .msg-preview-head .label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink-4);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+  }
+  .msg-preview-head .label .dot {
+    display: inline-block;
+    width: 5px; height: 5px;
+    background: var(--ink);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .msg-preview-head .msg-copy {
+    margin: 0;
+    padding: 5px 9px;
+    font-size: 10px;
+  }
+  .msg-preview-head .msg-copy svg { width: 11px; height: 11px; }
+  .msg-bubble {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    padding: 11px 13px 10px;
+    border-radius: 12px;
+    border-top-left-radius: 4px;
+    font-size: 12.5px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    font-family: var(--font-sans);
+    position: relative;
+    margin-right: 18px;
+  }
+  .msg-bubble .time {
+    display: block;
+    text-align: right;
+    margin-top: 4px;
+    font-size: 9px;
+    color: var(--ink-4);
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.06em;
+  }
+  .msg-actions {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .msg-copy {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--ink);
+    padding: 6px 11px;
+    border-radius: 7px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .msg-copy:hover { background: var(--ink); color: var(--surface); }
+  .msg-copy svg { width: 12px; height: 12px; }
+
+  /* Footer */
+  .modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 20px 18px;
+    border-top: 1px solid var(--line-2);
+  }
+  .modal-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink-3);
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    padding: 6px 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .modal-back:hover { color: var(--ink); }
+  .modal-back svg { width: 12px; height: 12px; }
+  .modal-back--placeholder { visibility: hidden; }
+
+  .modal-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: var(--ink);
+    color: var(--surface);
+    border: 1px solid var(--ink);
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .modal-cta:hover { background: #1a1a1a; }
+  .modal-cta svg { width: 14px; height: 14px; }
+
+  /* Mobile modal (full screen in phone frame) */
+  .modal-mobile-frame {
+    width: 320px;
+    flex-shrink: 0;
+    border-radius: 36px;
+    border: 10px solid var(--ink);
+    background: var(--surface);
+    overflow: hidden;
+    box-shadow: 0 24px 48px -24px rgba(10, 10, 10, 0.3);
+    margin: 0 auto;
+  }
+  .modal-mobile-frame .status-bar {
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--ink);
+    border-bottom: 1px solid var(--line-2);
+  }
+  .modal-mobile-frame .status-bar .dots {
+    display: flex; gap: 4px;
+  }
+  .modal-mobile-frame .status-bar .dots i {
+    width: 3px; height: 3px;
+    border-radius: 50%;
+    background: var(--ink);
+    display: inline-block;
+  }
+  .modal-mobile {
+    display: flex;
+    flex-direction: column;
+    height: 540px;
+    position: relative;
+  }
+  .modal-mobile .modal-head { padding: 16px 18px 12px; }
+  .modal-mobile .modal-progress { padding: 0 18px 14px; }
+  .modal-mobile .modal-body {
+    flex: 1;
+    padding: 4px 18px 24px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    /* Subtle scrollbar hint */
+    scrollbar-width: thin;
+    scrollbar-color: var(--line) transparent;
+  }
+  .modal-mobile .modal-body::-webkit-scrollbar { width: 4px; }
+  .modal-mobile .modal-body::-webkit-scrollbar-thumb {
+    background: var(--line);
+    border-radius: 4px;
+  }
+  /* Sticky footer with a fade gradient above it — indicates more content scrollable below */
+  .modal-mobile .modal-footer {
+    padding: 12px 16px 16px;
+    position: sticky;
+    bottom: 0;
+    background: var(--surface);
+  }
+  .modal-mobile .modal-footer::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    bottom: 100%;
+    height: 36px;
+    background: linear-gradient(to bottom, transparent, var(--surface) 95%);
+    pointer-events: none;
+  }
+  /* Visible scroll hint at the bottom of the body — small arrow indicator */
+  .modal-mobile-scroll-hint {
+    position: absolute;
+    left: 50%;
+    bottom: 70px; /* sits just above the footer */
+    transform: translateX(-50%);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--surface);
+    display: grid;
+    place-items: center;
+    z-index: 3;
+    box-shadow: 0 4px 12px -2px rgba(10, 10, 10, 0.3);
+    pointer-events: none;
+    animation: scroll-hint-bounce 1.8s ease-in-out infinite;
+  }
+  .modal-mobile-scroll-hint svg { width: 12px; height: 12px; }
+  @keyframes scroll-hint-bounce {
+    0%, 100% { transform: translate(-50%, 0); }
+    50% { transform: translate(-50%, -4px); }
+  }
+  .modal-mobile .modal-cta {
+    flex: 1;
+    justify-content: center;
+    padding: 12px 18px;
+  }
+
+  /* Notes block */
+  .modal-notes {
+    margin-top: 28px;
+    padding: 20px 22px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.55;
+  }
+  .modal-notes h4 {
+    margin: 0 0 12px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink);
+    font-weight: 700;
+  }
+  .modal-notes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 24px;
+  }
+  @media (max-width: 720px) {
+    .modal-notes-grid { grid-template-columns: 1fr; }
+  }
+  .modal-notes-grid h5 {
+    margin: 0 0 4px;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--ink);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .modal-notes-grid h5 .x {
+    color: var(--danger);
+    margin-right: 4px;
+    font-weight: 700;
+  }
+  .modal-notes-grid h5 .ok {
+    color: var(--ink);
+    margin-right: 4px;
+    font-weight: 700;
+  }
+  .modal-notes-grid ul {
+    margin: 6px 0 0;
+    padding-left: 18px;
+  }
+  .modal-notes-grid li { margin: 4px 0; }
+  .modal-notes-grid li b { color: var(--ink); font-weight: 700; }
+
+  /* ================================
      Hand-drawn accents
      Detalles a mano alzada en Ágora red.
      Tipografía y resto del UI quedan
@@ -1379,7 +1820,7 @@
       </div>
       <div class="doc-meta">
         Iteración <b>v3</b><br />
-        Fecha · <b>18 / 05 / 2026</b>
+        Fecha · <b>19 / 05 / 2026</b>
       </div>
     </header>
 
@@ -2387,6 +2828,241 @@ Elegís el servicio, ves mis horarios disponibles y reservás al instante. Sin e
         </article>
 
       </div>
+    </section>
+
+    <!-- Stepper modal · propuesta de rediseño -->
+    <section class="modal-section">
+      <h2>Stepper modal · propuesta</h2>
+      <p class="lead">Rediseño del modal que se abre al tocar una task con <code>+ Info</code>. La versión actual usa azul Material genérico, muestra el mensaje pre-armado como texto plano y tiene el step counter desconectado del título. Esta propuesta lo alinea con el panel v3: monocromático, preview real del mensaje, círculo hand-drawn en rojo Ágora para el step number, progress bar segmentada arriba, footer fijo con primary action a la derecha.</p>
+
+      <!-- ROW 1: Step 1 — Mensaje pre-armado -->
+      <div class="modal-stage">
+
+        <!-- Desktop · Step 1 -->
+        <div>
+          <p class="section-label">Desktop · paso 1 de 2</p>
+          <div class="modal-frame">
+            <div class="modal" role="dialog" aria-label="Compartir tu página por WhatsApp">
+              <div class="modal-head">
+                <div class="modal-head-stack">
+                  <div class="modal-kicker">Paso <b>1</b> de <b>2</b></div>
+                  <h3 class="modal-title">Compartir tu página por WhatsApp</h3>
+                </div>
+                <button class="modal-close" aria-label="Cerrar">✕</button>
+              </div>
+              <div class="modal-progress" aria-hidden="true">
+                <i data-state="active"></i>
+                <i></i>
+              </div>
+              <div class="modal-body">
+                <div class="modal-step-head">
+                  <div class="modal-step-num">1</div>
+                  <h4 class="modal-step-title">Mensaje pre-armado para mandar</h4>
+                </div>
+                <p class="modal-step-text">Este es el mensaje que va a recibir tu cliente. Lo podés editar después si querés.</p>
+
+                <div class="msg-preview">
+                  <div class="msg-preview-head">
+                    <span class="label"><span class="dot"></span> Vista previa · WhatsApp</span>
+                    <button class="msg-copy">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                      Copiar
+                    </button>
+                  </div>
+                  <div class="msg-bubble">¡Hola! Te cuento que ahora tenés mi agenda online 🙌
+
+Reservá tu turno cuando quieras desde 👉 www.agora.red/centrodepelo
+Elegís el servicio, ves mis horarios y reservás al instante.
+
+¡Te espero!<span class="time">9:41 ✓✓</span></div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <span class="modal-back modal-back--placeholder" aria-hidden="true">·</span>
+                <button class="modal-cta">
+                  Siguiente
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile · Step 1 -->
+        <div>
+          <p class="section-label">Mobile · pantalla completa · paso 1 de 2</p>
+          <div class="modal-mobile-frame">
+            <div class="status-bar">
+              <span>9:41</span>
+              <span class="dots"><i></i><i></i><i></i></span>
+            </div>
+            <div class="modal-mobile" role="dialog" aria-label="Compartir tu página por WhatsApp">
+              <div class="modal-head">
+                <div class="modal-head-stack">
+                  <div class="modal-kicker">Paso <b>1</b> de <b>2</b></div>
+                  <h3 class="modal-title">Compartir tu página por WhatsApp</h3>
+                </div>
+                <button class="modal-close" aria-label="Cerrar">✕</button>
+              </div>
+              <div class="modal-progress" aria-hidden="true">
+                <i data-state="active"></i>
+                <i></i>
+              </div>
+              <div class="modal-body">
+                <div class="modal-step-head">
+                  <div class="modal-step-num">1</div>
+                  <h4 class="modal-step-title">Mensaje pre-armado para mandar</h4>
+                </div>
+                <p class="modal-step-text">Este es el mensaje que va a recibir tu cliente. Lo podés editar después si querés.</p>
+
+                <div class="msg-preview">
+                  <div class="msg-preview-head">
+                    <span class="label"><span class="dot"></span> Vista previa</span>
+                    <button class="msg-copy">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                      Copiar
+                    </button>
+                  </div>
+                  <div class="msg-bubble">¡Hola! Te cuento que ahora tenés mi agenda online 🙌
+
+Reservá desde 👉 www.agora.red/centrodepelo
+Elegís el servicio, ves horarios y reservás al instante.
+
+¡Te espero!<span class="time">9:41 ✓✓</span></div>
+                </div>
+
+                <p class="modal-step-text" style="margin-top: 14px;"><b>Tip:</b> el mensaje se puede editar antes de mandarlo desde WhatsApp.</p>
+              </div>
+              <div class="modal-mobile-scroll-hint" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </div>
+              <div class="modal-footer">
+                <button class="modal-cta">
+                  Siguiente
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ROW 2: Step 2 — Compartilo -->
+      <div class="modal-stage">
+
+        <!-- Desktop · Step 2 -->
+        <div>
+          <p class="section-label">Desktop · paso 2 de 2</p>
+          <div class="modal-frame">
+            <div class="modal" role="dialog" aria-label="Compartir tu página por WhatsApp">
+              <div class="modal-head">
+                <div class="modal-head-stack">
+                  <div class="modal-kicker">Paso <b>2</b> de <b>2</b></div>
+                  <h3 class="modal-title">Compartir tu página por WhatsApp</h3>
+                </div>
+                <button class="modal-close" aria-label="Cerrar">✕</button>
+              </div>
+              <div class="modal-progress" aria-hidden="true">
+                <i data-state="done"></i>
+                <i data-state="active"></i>
+              </div>
+              <div class="modal-body">
+                <div class="modal-step-head">
+                  <div class="modal-step-num">2</div>
+                  <h4 class="modal-step-title">Compartilo con tus contactos</h4>
+                </div>
+                <p class="modal-step-text">Al tocar el botón, se abre WhatsApp con el mensaje ya pegado. Vos elegís a quién mandárselo — empezá por tus clientes habituales y andá sumando.</p>
+                <p class="modal-step-text"><b>Tip:</b> mandalo en tandas chicas (10–15 contactos por vez) para que se sienta personal y no spam.</p>
+              </div>
+              <div class="modal-footer">
+                <button class="modal-back">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                  Volver
+                </button>
+                <a class="modal-cta" href="https://wa.me/?text=" target="_blank" rel="noopener">
+                  Abrir WhatsApp
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile · Step 2 -->
+        <div>
+          <p class="section-label">Mobile · pantalla completa · paso 2 de 2</p>
+          <div class="modal-mobile-frame">
+            <div class="status-bar">
+              <span>9:41</span>
+              <span class="dots"><i></i><i></i><i></i></span>
+            </div>
+            <div class="modal-mobile" role="dialog" aria-label="Compartir tu página por WhatsApp">
+              <div class="modal-head">
+                <div class="modal-head-stack">
+                  <div class="modal-kicker">Paso <b>2</b> de <b>2</b></div>
+                  <h3 class="modal-title">Compartir tu página por WhatsApp</h3>
+                </div>
+                <button class="modal-close" aria-label="Cerrar">✕</button>
+              </div>
+              <div class="modal-progress" aria-hidden="true">
+                <i data-state="done"></i>
+                <i data-state="active"></i>
+              </div>
+              <div class="modal-body">
+                <div class="modal-step-head">
+                  <div class="modal-step-num">2</div>
+                  <h4 class="modal-step-title">Compartilo con tus contactos</h4>
+                </div>
+                <p class="modal-step-text">Al tocar el botón, se abre WhatsApp con el mensaje ya pegado. Vos elegís a quién mandárselo.</p>
+                <p class="modal-step-text"><b>Tip:</b> mandalo en tandas chicas para que se sienta personal y no spam.</p>
+              </div>
+              <div class="modal-footer">
+                <button class="modal-back">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                  Volver
+                </button>
+                <a class="modal-cta" href="https://wa.me/?text=" target="_blank" rel="noopener">
+                  Abrir WhatsApp
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Antes / Después notes -->
+      <div class="modal-notes">
+        <h4>Qué cambia respecto al modal actual</h4>
+        <div class="modal-notes-grid">
+          <div>
+            <h5><span class="x">×</span> Versión actual</h5>
+            <ul>
+              <li>Paleta azul Material genérica · "Siguiente" gigante en azul saturado.</li>
+              <li>Mensaje pre-armado renderizado como <b>texto plano</b> dentro del body.</li>
+              <li>Step counter (dot + line) <b>desconectado</b> del título y de la progress bar.</li>
+              <li>Título centrado + X a la derecha = jerarquía ambigua.</li>
+              <li>Sin "Volver", sin diferenciar paso 1 vs paso 2 visualmente.</li>
+            </ul>
+          </div>
+          <div>
+            <h5><span class="ok">✓</span> Esta propuesta</h5>
+            <ul>
+              <li>Monocromática + accents en rojo Ágora <b>solo</b> en el step number.</li>
+              <li>Mensaje renderizado como <b>chat bubble preview</b> (con timestamp y ✓✓) — el vendor ve exactamente lo que va a recibir su cliente.</li>
+              <li>Progress bar segmentada arriba (1 de 2 / 2 de 2) alineada con el header.</li>
+              <li>Título a la izquierda + close X a la derecha = lectura natural.</li>
+              <li>Footer fijo con <b>"Volver"</b> ghost a la izquierda y <b>primary CTA</b> a la derecha. CTA cambia de "Siguiente" a "Abrir WhatsApp →" según el paso.</li>
+              <li>Botón <b>"Copiar"</b> outline integrado en el header del preview (top-right del card), no debajo del bubble — siempre visible aunque el mensaje sea largo.</li>
+              <li>Mobile usa el viewport entero con CTA sticky abajo + <b>fade gradient</b> sobre el footer y un <b>indicador animado ↓</b> arriba del CTA cuando hay contenido oculto — el vendor sabe que puede scrollear.</li>
+              <li><b>Scroll affordance</b>: el fade es CSS puro; el indicador ↓ debería ocultarse vía JS cuando el scroll llega al final (no implementado en este mockup estático).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
     </section>
 
   </main>
