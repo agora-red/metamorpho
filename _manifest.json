@@ -1,8 +1,18 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
   "version": 1,
-  "updated_at": "2026-05-19",
+  "updated_at": "2026-05-20",
   "outputs": [
+    {
+      "type": "wiki",
+      "typeLabel": "Skill",
+      "title": "Biz Digest · skill de análisis de negocio",
+      "description": "Documento de presentación de Biz Digest, una skill de Claude Code que toma un username y sintetiza en un informe branded todo lo que sabemos de un negocio — datos de prod (ops-data), comportamiento (Amplitude), tráfico y conversión + audiencia (Google Analytics), voz del cliente (Intercom), presencia digital, captura del storefront y negocios cercanos del marketplace (Ágora y no-Ágora, con followers de IG). Explica el flujo (7 plataformas → 1 Digest vía IA), las herramientas, la anatomía del Digest con el caso real florluna, y un generador interactivo por username.",
+      "detail": "1-page · 7 fuentes · caso florluna · generador en vivo",
+      "date": "MAY 2026",
+      "href": "./business-digest-2026-05/index.html",
+      "slug": "business-digest-2026-05"
+    },
     {
       "type": "deck",
       "typeLabel": "Deck",
