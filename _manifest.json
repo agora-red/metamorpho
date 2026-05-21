@@ -1,8 +1,18 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
   "version": 1,
-  "updated_at": "2026-05-20",
+  "updated_at": "2026-05-21",
   "outputs": [
+    {
+      "type": "proposal",
+      "typeLabel": "Proposal",
+      "title": "Placas de Reserva · Antes vs Ahora",
+      "description": "Rediseño de las placas auto-generadas que arma Alfred para que cada negocio enseñe a sus clientes a reservar online (6 Feed 1080×1350 + 6 Story 1080×1920, screenshot del storefront vivo). Sobre el output real de @agora.pelu: muestra los bugs de render (texto cortado, línea fuera del canvas, numeración off-by-one) y los 2 pasos que son PNG estáticos viejos en vez del iframe vivo. Propone un marco editorial co-branded Ágora × Negocio (marca del vendor como sistema, grilla con safe-area, device unificado, stepper contenido, CTA) preservando intacto el iframe real del producto. Incluye comparación lado a lado de los 6 slides + stories, sistema de diseño y próximos pasos.",
+      "detail": "1-page · antes vs ahora · feed + story · caso @agora.pelu",
+      "date": "MAY 2026",
+      "href": "./placas-reserva-antes-vs-ahora-2026-05/index.html",
+      "slug": "placas-reserva-antes-vs-ahora-2026-05"
+    },
     {
       "type": "wiki",
       "typeLabel": "Skill",

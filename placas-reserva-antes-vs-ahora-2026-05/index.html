@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Placas de Reserva — Antes vs Ahora · Ágora Design Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;500;600;700&family=Playfair+Display:wght@500;600;700;800;900&family=Raleway:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* ── Ágora Frost (chrome del artefacto) ── */
+  --frost-primary:#0072FB; --frost-primary-soft:#EEF6FF;
+  --frost-accent:#FF4658; --frost-accent-soft:#FFE3E6; --frost-accent-wash:rgba(255,70,88,.08);
+  --frost-success:#10B981;
+  --frost-ink:#0F172A; --frost-ink-soft:#3A3A3A; --frost-muted:#868686; --frost-faint:#B5B5B5;
+  --frost-surface:#FFFFFF; --frost-surface-muted:#EFF3F9; --frost-border:#E2E8F0; --frost-border-soft:#F2F2F2;
+  --r-btn:12px; --r-card:20px; --r-shell:28px; --r-chip:999px;
+  --sh-xs:0 1px 2px rgba(15,23,42,.04); --sh-sm:0 4px 12px -4px rgba(15,23,42,.10);
+  --sh-md:0 10px 30px -12px rgba(15,23,42,.15); --sh-lg:0 20px 50px -20px rgba(15,23,42,.25);
+  --sans:'Montserrat',system-ui,-apple-system,sans-serif;
+  /* ── Marca del vendor @agora.pelu (las placas) ── */
+  --pelu:#C9A9A6; --pelu-deep:#B8918E; --pelu-cream:#FDF8F6; --pelu-ink:#2D2926; --pelu-ok:#16A34A;
+  --pelu-tint:rgba(201,169,166,.16); --pelu-tint2:rgba(201,169,166,.30);
+  --serif:'Playfair Display',Georgia,serif; --body:'Raleway',var(--sans);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);font-weight:300;color:var(--frost-ink);background:var(--frost-surface-muted);
+  font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased;line-height:1.5}
+.wrap{max-width:1200px;margin:0 auto;padding:0 28px}
+
+/* ── Chrome ── */
+.chrome{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.82);backdrop-filter:blur(18px) saturate(1.4);
+  -webkit-backdrop-filter:blur(18px) saturate(1.4);border-bottom:1px solid var(--frost-border)}
+.chrome .row{max-width:1200px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.chrome .brand{display:flex;align-items:center;gap:14px}
+.chrome .brand .sep{width:1px;height:26px;background:var(--frost-border)}
+.chrome .brand .label{font-weight:600;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--frost-muted)}
+.chrome .meta{font-weight:500;font-size:12.5px;color:var(--frost-muted)}
+.chrome .meta b{color:var(--frost-ink);font-weight:600}
+
+/* ── Section scaffold ── */
+section{padding:84px 0}
+.eyebrow{font-weight:600;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--frost-primary);
+  display:inline-flex;align-items:center;gap:9px}
+.eyebrow::before{content:"";width:22px;height:2px;background:var(--frost-primary);border-radius:2px}
+.s-head{margin-bottom:40px;max-width:760px}
+.s-head h2{font-weight:200;font-size:clamp(30px,4vw,44px);letter-spacing:-.02em;line-height:1.08;margin:16px 0 10px}
+.s-head h2 b{font-weight:600}
+.s-head p{font-weight:300;font-size:16.5px;color:var(--frost-ink-soft);max-width:660px}
+.divider{height:1px;background:var(--frost-border);max-width:1200px;margin:0 auto}
+
+/* ── Hero ── */
+.hero{padding:74px 0 56px;background:
+  radial-gradient(1100px 460px at 78% -8%,rgba(0,114,251,.10),transparent 60%),
+  radial-gradient(820px 420px at 8% 8%,rgba(201,169,166,.16),transparent 62%)}
+.hero h1{font-weight:200;font-size:clamp(40px,6.4vw,76px);line-height:1.0;letter-spacing:-.035em;margin:20px 0 18px}
+.hero h1 b{font-weight:600}
+.hero h1 .ah{font-family:var(--serif);font-weight:800;font-style:italic;color:var(--pelu-deep);letter-spacing:-.01em}
+.hero .lead{font-weight:300;font-size:18.5px;color:var(--frost-ink-soft);max-width:680px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.chip{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;color:var(--frost-ink-soft);
+  background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-chip);padding:8px 15px;box-shadow:var(--sh-xs)}
+.chip i{width:7px;height:7px;border-radius:50%;background:var(--frost-primary)}
+.chip.pelu i{background:var(--pelu-deep)}
+.chip.ok i{background:var(--frost-success)}
+.teaser{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:42px}
+.teaser .stage{width:100%;height:auto;aspect-ratio:4/5}
+.teaser figcaption{font-size:11px;color:var(--frost-faint);font-weight:600;text-align:center;margin-top:7px;letter-spacing:.04em}
+
+/* ── Pipeline ── */
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.flow .step{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-card);
+  padding:22px 20px;box-shadow:var(--sh-sm);position:relative}
+.flow .step .n{font-family:var(--sans);font-weight:700;font-size:13px;color:var(--frost-primary);letter-spacing:.04em}
+.flow .step h4{font-weight:600;font-size:15.5px;margin:9px 0 7px;letter-spacing:-.01em}
+.flow .step p{font-weight:300;font-size:13px;color:var(--frost-muted);line-height:1.55}
+.flow .step code{font-family:ui-monospace,Menlo,monospace;font-size:11px;background:var(--frost-surface-muted);
+  padding:1px 6px;border-radius:6px;color:var(--frost-ink-soft)}
+.flow .step::after{content:"→";position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--frost-faint);
+  font-size:18px;z-index:2}
+.flow .step:last-child::after{display:none}
+.note{margin-top:18px;display:flex;gap:12px;align-items:flex-start;background:var(--frost-accent-wash);
+  border:1px solid var(--frost-accent-soft);border-radius:var(--r-btn);padding:14px 18px;font-size:13.5px;color:var(--frost-ink-soft)}
+.note b{color:var(--frost-accent)}
+.note svg{flex-shrink:0;margin-top:1px}
+
+/* ── Problem gallery ── */
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.pcard{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-card);
+  overflow:hidden;box-shadow:var(--sh-sm)}
+.pcard .shot{position:relative;background:#f4f4f6;aspect-ratio:4/5;overflow:hidden}
+.pcard .shot img{width:100%;height:100%;object-fit:cover;display:block}
+.pcard .slidetag{position:absolute;top:10px;left:10px;background:rgba(15,23,42,.78);color:#fff;font-size:10.5px;
+  font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:4px 9px;border-radius:var(--r-chip)}
+.pcard .body{padding:16px 18px 18px}
+.pcard .body h4{font-weight:600;font-size:14px;margin-bottom:10px}
+.pcard ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+.pcard li{font-size:12.5px;color:var(--frost-ink-soft);font-weight:400;display:flex;gap:8px;line-height:1.42}
+.pcard li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--frost-muted);margin-top:6px;flex-shrink:0}
+.pcard li.bug::before{background:var(--frost-accent)}
+.pcard li.bug b{color:var(--frost-accent);font-weight:700}
+/* transversal */
+.tvers{margin-top:30px;display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.tv{display:flex;gap:14px;background:var(--frost-surface);border:1px solid var(--frost-border);
+  border-radius:var(--r-card);padding:18px 20px;box-shadow:var(--sh-xs)}
+.tv .num{font-family:var(--serif);font-weight:800;font-size:30px;line-height:1;color:var(--pelu-deep);min-width:34px}
+.tv h4{font-weight:600;font-size:14.5px;margin-bottom:4px}
+.tv p{font-weight:300;font-size:13px;color:var(--frost-muted);line-height:1.5}
+
+/* ── Compare ── */
+.cmp{display:grid;grid-template-columns:1fr auto 1fr;align-items:start;gap:26px;margin-bottom:18px}
+.cmp .col{display:flex;flex-direction:column;align-items:center;gap:12px}
+.cmp .vs{align-self:center;display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--frost-faint)}
+.cmp .vs .ar{font-size:26px;line-height:1}
+.cmp .vs span{font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
+.tag{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:5px 13px;border-radius:var(--r-chip)}
+.tag--antes{color:var(--frost-muted);background:var(--frost-surface);border:1px solid var(--frost-border)}
+.tag--ahora{color:#fff;background:var(--pelu-deep)}
+.cmp-note{max-width:880px;margin:0 auto 60px;text-align:center;font-size:13.5px;color:var(--frost-muted);font-weight:400}
+.cmp-note b{color:var(--frost-ink);font-weight:600}
+.story-row{display:flex;align-items:flex-start;justify-content:center;gap:26px;margin-bottom:18px;flex-wrap:wrap}
+.story-row .vs{align-self:center}
+.cmp-row-head{text-align:center;margin:8px 0 26px}
+.cmp-row-head .k{font-weight:600;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--pelu-deep)}
+.cmp-row-head h3{font-weight:300;font-size:23px;letter-spacing:-.01em;margin-top:5px}
+.cmp-row-head h3 b{font-weight:600}
+
+/* ── Stage / placa scaler ── */
+.stage{position:relative;border-radius:18px;overflow:hidden;background:#fff;box-shadow:var(--sh-md);flex-shrink:0}
+.stage--feed{width:340px;height:425px}
+.stage--story{width:270px;height:480px}
+.stage img{width:100%;height:100%;object-fit:cover;display:block}
+.scaler{position:absolute;top:0;left:0;transform-origin:top left}
+.stage--feed .scaler{transform:scale(.314814)}      /* 340/1080 */
+.stage--story .scaler{transform:scale(.25)}          /* 270/1080 */
+.canvas{position:relative;overflow:hidden;font-family:var(--body);color:var(--pelu-ink)}
+.canvas--feed{width:1080px;height:1350px}
+.canvas--story{width:1080px;height:1920px}
+
+/* ── Placa system (vendor brand) ── */
+.placa{display:flex;flex-direction:column;background:var(--pelu-cream)}
+.placa.dark{background:linear-gradient(157deg,var(--pelu) 0%,var(--pelu-deep) 100%);color:#fff}
+.placa.dark .grain,.placa .grain{position:absolute;inset:0;opacity:.5;pointer-events:none;
+  background:radial-gradient(circle at 18% 12%,rgba(255,255,255,.18),transparent 38%),
+  radial-gradient(circle at 88% 86%,rgba(45,41,38,.06),transparent 42%)}
+.pl-pad{position:relative;flex:1;display:flex;flex-direction:column;padding:90px}
+.pl-story .pl-pad{padding:120px 96px}
+.kicker{font-family:var(--body);font-weight:800;font-size:26px;letter-spacing:.24em;text-transform:uppercase;color:var(--pelu-deep)}
+.placa.dark .kicker{color:rgba(255,255,255,.92)}
+.madeby{display:inline-flex;align-items:center;gap:9px;font-family:var(--body);font-weight:600;font-size:21px;color:rgba(45,41,38,.45)}
+.placa.dark .madeby{color:rgba(255,255,255,.72)}
+.madeby .tri{width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:14px solid currentColor;opacity:.8}
+.pl-top{display:flex;align-items:center;justify-content:space-between}
+.ptitle{font-family:var(--serif);font-weight:800;line-height:1.02;letter-spacing:-.015em;color:var(--pelu-ink)}
+.placa.dark .ptitle{color:#fff}
+.psub{font-family:var(--body);font-weight:400;color:rgba(45,41,38,.62);line-height:1.4}
+.placa.dark .psub{color:rgba(255,255,255,.85)}
+.purl{display:inline-flex;align-items:center;gap:14px;background:#fff;border:2px solid var(--pelu-tint2);
+  color:var(--pelu-deep);font-family:var(--body);font-weight:700;font-size:30px;border-radius:999px;padding:18px 30px;width:max-content}
+.purl .lk{width:22px;height:22px;border-radius:6px;border:3px solid var(--pelu-deep);position:relative}
+.purl .lk::after{content:"";position:absolute;inset:5px 5px auto 5px;height:3px;background:var(--pelu-deep)}
+.stepnum{font-family:var(--serif);font-weight:900;color:var(--pelu);line-height:.8;font-size:260px;opacity:.9}
+.stepper{display:flex;gap:12px;align-items:center}
+.stepper .seg{height:10px;border-radius:999px;background:var(--pelu-tint2);flex:1}
+.stepper .seg.on{background:var(--pelu-deep)}
+.placa.dark .stepper .seg{background:rgba(255,255,255,.32)}
+.placa.dark .stepper .seg.on{background:#fff}
+.lockup{display:flex;align-items:center;gap:18px}
+.lockup .ava{width:74px;height:74px;border-radius:50%;background:radial-gradient(circle at 38% 32%,var(--pelu),var(--pelu-deep));
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 6px 18px -6px rgba(45,41,38,.5)}
+.lockup .nm{font-family:var(--serif);font-weight:700;font-size:34px;color:var(--pelu-ink);line-height:1}
+.placa.dark .lockup .nm{color:#fff}
+.lockup .ur{font-family:var(--body);font-weight:600;font-size:23px;color:rgba(45,41,38,.5);margin-top:5px}
+.placa.dark .lockup .ur{color:rgba(255,255,255,.8)}
+.row{display:flex}.col{display:flex;flex-direction:column}.between{justify-content:space-between}
+.aic{align-items:center}.jcc{justify-content:center}.f1{flex:1}
+.cta-pelu{display:inline-flex;align-items:center;gap:16px;background:#fff;color:var(--pelu-deep);
+  font-family:var(--body);font-weight:800;font-size:38px;border-radius:22px;padding:30px 46px;width:max-content;
+  box-shadow:0 18px 40px -16px rgba(45,41,38,.5)}
+
+/* paw glyph */
+.paw{position:relative;display:inline-block}
+.paw i{position:absolute;background:currentColor;border-radius:50%}
+
+/* ── Mini phone device ── */
+.device{background:#fff;border-radius:62px;padding:16px;position:relative;
+  box-shadow:0 50px 90px -34px rgba(45,41,38,.55),0 10px 26px -10px rgba(45,41,38,.3);border:1px solid rgba(45,41,38,.07)}
+.device::before{content:"";position:absolute;top:24px;left:50%;transform:translateX(-50%);width:120px;height:11px;
+  border-radius:999px;background:rgba(45,41,38,.16);z-index:3}
+.screen{width:100%;height:100%;border-radius:48px;overflow:hidden;background:var(--pelu-cream);
+  display:flex;flex-direction:column;position:relative}
+.screen .topbar{height:54px;flex-shrink:0}
+.screen>img.real{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+/* storefront screen */
+.sf-bar{display:flex;align-items:center;justify-content:space-between;padding:30px 26px 14px;background:transparent}
+.sf-h{display:flex;align-items:center;gap:9px;font-family:var(--body);font-weight:600;font-size:20px;color:rgba(45,41,38,.7)}
+.sf-h .dot{width:11px;height:11px;border-radius:50%;background:var(--pelu-ok)}
+.sf-burger{display:flex;flex-direction:column;gap:5px}.sf-burger i{width:26px;height:3px;background:rgba(45,41,38,.55);border-radius:2px}
+.sf-hero{height:200px;margin:0 0 0;background:linear-gradient(135deg,#EAD9CF,#D9C2BC 60%,var(--pelu));position:relative;display:flex;align-items:center;justify-content:center}
+.sf-ava{width:130px;height:130px;border-radius:50%;background:radial-gradient(circle at 38% 32%,#F2E3DD,var(--pelu));
+  border:8px solid var(--pelu-cream);position:absolute;left:50%;bottom:-65px;transform:translateX(-50%);
+  display:flex;align-items:center;justify-content:center;color:var(--pelu-deep);box-shadow:0 10px 24px -10px rgba(45,41,38,.5)}
+.sf-body{padding:90px 34px 0;display:flex;flex-direction:column;align-items:center;text-align:center;flex:1}
+.sf-name{font-family:var(--serif);font-weight:800;font-size:42px;color:var(--pelu-ink)}
+.sf-sub{font-family:var(--body);font-size:22px;color:rgba(45,41,38,.55);margin-top:8px;line-height:1.35}
+.sf-soc{display:flex;gap:16px;margin:22px 0 26px}
+.sf-soc i{width:50px;height:50px;border-radius:50%;background:var(--pelu-tint);display:flex;align-items:center;justify-content:center;color:var(--pelu-deep)}
+.sf-btns{width:100%;display:flex;flex-direction:column;gap:16px}
+.sf-btn{height:78px;border-radius:999px;display:flex;align-items:center;justify-content:center;
+  font-family:var(--body);font-weight:700;font-size:24px;background:var(--pelu);color:#fff}
+.sf-btn.t{background:var(--pelu-tint);color:var(--pelu-deep)}
+.sf-fab{position:absolute;right:30px;bottom:30px;width:96px;height:64px;border-radius:999px;background:#fff;
+  box-shadow:0 8px 20px -8px rgba(45,41,38,.5);display:flex;align-items:center;justify-content:space-between;padding:0 8px}
+.sf-fab .h{width:48px;height:48px;border-radius:50%;background:rgba(45,41,38,.08);display:flex;align-items:center;justify-content:center}
+.sf-fab .w{width:48px;height:48px;border-radius:50%;background:var(--pelu-ok);display:flex;align-items:center;justify-content:center}
+/* generic sheet screens (services / calendar / checkout) */
+.sheet{flex:1;display:flex;flex-direction:column;padding:34px 30px;gap:18px}
+.sheet .sh-top{display:flex;align-items:center;justify-content:space-between}
+.sheet .sh-top .t{font-family:var(--body);font-weight:700;font-size:26px;color:var(--pelu-ink)}
+.sheet .sh-top .x{width:40px;height:40px;border-radius:50%;background:var(--pelu-tint);display:flex;align-items:center;justify-content:center;color:var(--pelu-deep);font-size:24px}
+.search{height:64px;border-radius:16px;background:#fff;border:2px solid var(--pelu-tint2);display:flex;align-items:center;gap:12px;padding:0 20px;color:rgba(45,41,38,.4);font-family:var(--body);font-size:21px}
+.srv-card{border:2px solid var(--pelu-tint2);border-radius:18px;padding:18px;display:flex;align-items:center;gap:16px;background:#fff}
+.srv-card .thumb{width:84px;height:84px;border-radius:14px;background:linear-gradient(135deg,#EAD9CF,var(--pelu));flex-shrink:0;display:flex;align-items:center;justify-content:center;color:var(--pelu-deep)}
+.srv-card .info{flex:1}
+.srv-card .info .n{font-family:var(--serif);font-weight:700;font-size:26px;color:var(--pelu-ink)}
+.srv-card .info .m{font-family:var(--body);font-weight:600;font-size:20px;color:var(--pelu-deep);margin-top:4px}
+.srv-card .info .s{font-family:var(--body);font-size:18px;color:rgba(45,41,38,.45)}
+.srv-card .plus{width:54px;height:54px;border-radius:50%;background:var(--pelu);color:#fff;display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:300}
+.days{display:flex;gap:14px}
+.day{flex:1;border-radius:18px;border:2px solid var(--pelu-tint2);padding:16px 0;text-align:center;font-family:var(--body);color:var(--pelu-ink)}
+.day .dn{font-weight:800;font-size:34px}.day .dl{font-size:16px;color:rgba(45,41,38,.5);margin-top:2px}
+.day.on{background:var(--pelu);border-color:var(--pelu);color:#fff}.day.on .dl{color:rgba(255,255,255,.85)}
+.day.off{opacity:.4}
+.slot{height:74px;border-radius:16px;border:2px solid var(--pelu-tint2);display:flex;align-items:center;padding:0 24px;font-family:var(--body);font-weight:600;font-size:24px;color:var(--pelu-ink);background:#fff}
+.slot.on{border-color:var(--pelu);box-shadow:inset 0 0 0 2px var(--pelu);color:var(--pelu-deep)}
+.field{height:70px;border-radius:14px;border:2px solid var(--pelu-tint2);display:flex;align-items:center;padding:0 22px;font-family:var(--body);font-size:21px;color:rgba(45,41,38,.42);background:#fff}
+.payrow{display:flex;align-items:center;justify-content:space-between;font-family:var(--body);font-size:22px;color:rgba(45,41,38,.7)}
+.payrow.b{font-weight:800;color:var(--pelu-ink);font-size:24px}
+.sh-cta{margin-top:auto;height:84px;border-radius:18px;background:var(--pelu);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--body);font-weight:800;font-size:26px}
+.okwrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;background:linear-gradient(160deg,#F3E7E2,var(--pelu-cream))}
+.okwrap .ring{width:150px;height:150px;border-radius:50%;background:rgba(22,163,74,.12);display:flex;align-items:center;justify-content:center}
+.okwrap .ttl{font-family:var(--serif);font-weight:800;font-size:38px;color:var(--pelu-ink)}
+.okwrap .pill{font-family:var(--body);font-weight:700;font-size:22px;color:var(--pelu-deep);background:#fff;border-radius:999px;padding:14px 28px;box-shadow:var(--sh-sm)}
+
+/* ── Design system cheatsheet ── */
+.ds{display:grid;grid-template-columns:1.1fr 1fr;gap:22px}
+.panel{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-card);padding:24px;box-shadow:var(--sh-sm)}
+.panel h4{font-weight:600;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--frost-muted);margin-bottom:16px}
+.sw{display:flex;gap:10px;flex-wrap:wrap}
+.swatch{flex:1;min-width:84px}
+.swatch .b{height:64px;border-radius:12px;border:1px solid rgba(0,0,0,.06)}
+.swatch .l{font-size:11px;font-weight:600;margin-top:7px;color:var(--frost-ink)}
+.swatch .h{font-size:10.5px;color:var(--frost-faint);font-family:ui-monospace,monospace}
+.typ .pf{font-family:var(--serif);font-weight:800;font-size:34px;color:var(--pelu-ink);letter-spacing:-.01em}
+.typ .rl{font-family:var(--body);font-weight:400;font-size:15px;color:var(--frost-ink-soft);margin-top:8px}
+.typ .kk{font-family:var(--body);font-weight:800;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--pelu-deep);margin-top:14px}
+.comp{display:flex;flex-direction:column;gap:14px}
+.comp .it{display:flex;align-items:center;gap:14px}
+.comp .it .lab{font-size:12.5px;color:var(--frost-muted);font-weight:500;min-width:118px}
+.mini-step{width:54px;height:54px;border-radius:50%;background:var(--pelu);color:#fff;font-family:var(--serif);font-weight:800;
+  display:flex;align-items:center;justify-content:center;font-size:24px}
+.mini-stepper{display:flex;gap:6px;flex:1}.mini-stepper i{height:7px;border-radius:9px;flex:1;background:var(--pelu-tint2)}.mini-stepper i.on{background:var(--pelu-deep)}
+.mini-url{display:inline-flex;align-items:center;gap:8px;border:2px solid var(--pelu-tint2);color:var(--pelu-deep);font-weight:700;font-size:12.5px;border-radius:999px;padding:7px 14px}
+.mini-cta{background:var(--pelu);color:#fff;font-weight:700;font-size:12.5px;border-radius:10px;padding:10px 18px}
+.rule{display:flex;gap:12px;align-items:flex-start;background:var(--pelu-tint);border-radius:var(--r-btn);padding:14px 16px;font-size:13px;color:var(--pelu-ink)}
+.rule b{color:var(--pelu-deep)}
+
+/* ── Impact ── */
+.impact{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:30px}
+.ic{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-card);padding:24px;box-shadow:var(--sh-sm)}
+.ic .big{font-family:var(--serif);font-weight:800;font-size:30px;color:var(--pelu-deep);letter-spacing:-.01em}
+.ic h4{font-weight:600;font-size:14.5px;margin:10px 0 6px}
+.ic p{font-weight:300;font-size:13px;color:var(--frost-muted);line-height:1.5}
+.next{background:linear-gradient(135deg,var(--frost-ink),#1e293b);color:#fff;border-radius:var(--r-shell);padding:38px 40px}
+.next h3{font-weight:200;font-size:26px;margin-bottom:18px}.next h3 b{font-weight:600}
+.next ol{list-style:none;counter-reset:n;display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.next li{counter-increment:n;display:flex;gap:14px;font-size:14px;font-weight:300;color:rgba(255,255,255,.86);line-height:1.5}
+.next li::before{content:counter(n);font-weight:700;font-size:13px;color:var(--frost-ink);background:#fff;width:26px;height:26px;
+  border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+footer{padding:40px 0 60px;border-top:1px solid var(--frost-border);background:var(--frost-surface)}
+footer .row{display:flex;align-items:center;justify-content:space-between;gap:16px}
+footer .mk{display:flex;align-items:center;gap:12px;color:var(--frost-muted);font-size:12.5px;font-weight:500}
+
+@media(max-width:1080px){.pgrid{grid-template-columns:repeat(2,1fr)}.flow{grid-template-columns:repeat(2,1fr)}.flow .step::after{display:none}}
+@media(max-width:860px){.ds{grid-template-columns:1fr}.impact{grid-template-columns:1fr}.tvers{grid-template-columns:1fr}
+  .next ol{grid-template-columns:1fr}.cmp{grid-template-columns:1fr;gap:18px}.cmp .vs{transform:rotate(90deg)}
+  .teaser{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:560px){.pgrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- CHROME -->
+<header class="chrome">
+  <div class="row">
+    <div class="brand">
+      <svg width="116" height="27" viewBox="0 0 153 36" xmlns="http://www.w3.org/2000/svg" aria-label="Ágora">
+        <path d="M41.3822 30.3938L38.187 35.7712L3.11719 35.8491L17.5348 10.9106L20.6466 16.2974L15.7314 24.9347L12.625 30.3938H41.3822Z" fill="#E2E8F0"/>
+        <path d="M17.5351 10.9106L20.6469 16.2974L16.7342 23.0921L12.1689 20.1848L17.5351 10.9106Z" fill="#0072FF" fill-opacity="0.5"/>
+        <path d="M20.6467 16.2973L17.5349 10.9106L3.11731 35.8491L0 30.3938L17.5349 0L31.8745 24.9385H25.6399L20.6467 16.2973Z" fill="#0072FF"/>
+        <path d="M23.8473 0L41.3822 30.3938H12.625L15.7314 24.9346L15.7384 24.9385H25.6398H31.8744L17.5348 0H23.8473Z" fill="#FF4658"/>
+        <path d="M76.7893 7.41158V4.76367H69.5647V7.41158H76.7893ZM72.2126 26.6334C74.4029 26.6334 76.3316 25.7835 77.6065 24.2797V26.3065H81.2351V10.1249H77.6065V12.1844C76.3316 10.6806 74.4029 9.79797 72.2126 9.79797C67.7668 9.79797 64.7266 13.5573 64.7266 18.232C64.7266 22.8741 67.7668 26.6334 72.2126 26.6334ZM73.1279 23.1356C70.382 23.1356 68.4206 21.0761 68.4206 18.232C68.4206 15.388 70.382 13.2958 73.1279 13.2958C75.7105 13.2958 77.6065 15.388 77.6065 18.232C77.6065 21.1088 75.6778 23.1356 73.1279 23.1356ZM92.2844 31.112C96.9264 31.112 100.718 28.2679 100.718 22.6125V10.1249H97.2533V12.5439C96.4034 10.9421 94.2131 9.79797 91.7614 9.79797C87.2828 9.79797 84.3407 13.2958 84.3407 17.6436C84.3407 21.9914 87.2828 25.4566 91.7614 25.4566C94.7035 25.4566 96.4361 23.9855 97.0899 22.6779V22.8087C97.0899 26.1104 95.39 28.3333 91.9248 28.3333C90.2576 28.3333 88.3616 27.7776 87.0867 26.6661L85.681 28.9544C87.1847 30.2947 89.5058 31.112 92.2844 31.112ZM92.5459 22.2856C89.9961 22.2856 88.0347 20.3242 88.0347 17.6436C88.0347 14.963 89.9961 12.9689 92.5459 12.9689C95.0958 12.9689 97.0899 14.9303 97.0899 17.5129C97.0899 20.3242 95.1612 22.2856 92.5459 22.2856ZM112.422 26.6334C117.194 26.6334 121.019 22.9067 121.019 18.232C121.019 13.5247 117.194 9.79797 112.422 9.79797C107.649 9.79797 103.824 13.5247 103.824 18.232C103.824 22.9067 107.649 26.6334 112.422 26.6334ZM112.422 23.1356C109.643 23.1356 107.518 21.0434 107.518 18.232C107.518 15.388 109.643 13.2958 112.422 13.2958C115.2 13.2958 117.325 15.388 117.325 18.232C117.325 21.0434 115.2 23.1356 112.422 23.1356ZM127.753 26.3065V19.7031C127.753 15.4534 130.042 13.7535 133.605 13.7535V9.79797C130.14 9.79797 128.374 11.694 127.753 13.3285V10.1249H124.125V26.3065H127.753ZM143.118 26.6334C145.308 26.6334 147.237 25.7835 148.512 24.2797V26.3065H152.14V10.1249H148.512V12.1844C147.237 10.6806 145.308 9.79797 143.118 9.79797C138.672 9.79797 135.632 13.5573 135.632 18.232C135.632 22.8741 138.672 26.6334 143.118 26.6334ZM144.033 23.1356C141.287 23.1356 139.326 21.0761 139.326 18.232C139.326 15.388 141.287 13.2958 144.033 13.2958C146.616 13.2958 148.512 15.388 148.512 18.232C148.512 21.1088 146.583 23.1356 144.033 23.1356Z" fill="#0F172A"/>
+        <rect x="52.7876" y="3.5874" width="0.683334" height="28.5292" fill="#E2E8F0"/>
+      </svg>
+      <div class="sep"></div>
+      <span class="label">Design Studio</span>
+    </div>
+    <div class="meta">Propuesta interna · <b>Mayo 2026</b></div>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Propuesta de diseño · Placas auto-generadas</span>
+    <h1>Placas de Reserva.<br><b>Antes</b> <span class="ah">vs</span> <b>Ahora</b>.</h1>
+    <p class="lead">Las imágenes que arma Alfred para que cada negocio enseñe a sus clientes a reservar online.
+    Hoy se ven como un wireframe y arrastran bugs de render. Esta es la propuesta para que el negocio las postee con orgullo.</p>
+    <div class="chips">
+      <span class="chip"><i></i>6 Feed · 1080×1350</span>
+      <span class="chip"><i></i>6 Story · 1080×1920</span>
+      <span class="chip ok"><i></i>Pedidas vía Alfred</span>
+      <span class="chip pelu"><i></i>Caso real: @agora.pelu</span>
+    </div>
+    <div class="teaser">
+      <figure><div class="stage"><img src="assets/feed-1.jpg" alt="feed 1 actual"></div><figcaption>Slide 1</figcaption></figure>
+      <figure><div class="stage"><img src="assets/feed-2.jpg" alt="feed 2 actual"></div><figcaption>Slide 2</figcaption></figure>
+      <figure><div class="stage"><img src="assets/feed-3.jpg" alt="feed 3 actual"></div><figcaption>Slide 3</figcaption></figure>
+      <figure><div class="stage"><img src="assets/feed-4.jpg" alt="feed 4 actual"></div><figcaption>Slide 4</figcaption></figure>
+      <figure><div class="stage"><img src="assets/feed-5.jpg" alt="feed 5 actual"></div><figcaption>Slide 5</figcaption></figure>
+      <figure><div class="stage"><img src="assets/feed-6.jpg" alt="feed 6 actual"></div><figcaption>Slide 6</figcaption></figure>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- COMO FUNCIONAN HOY -->
+<section>
+  <div class="wrap">
+    <div class="s-head">
+      <span class="eyebrow">Cómo funcionan hoy</span>
+      <h2>Un screenshot del <b>storefront vivo</b> del negocio</h2>
+      <p>No es un editor de imágenes: es una página de Flash que <b>embebe la web real del negocio en un iframe</b> y se le saca una captura. Por eso se personaliza solo… pero también por eso hereda lo que esté roto.</p>
+    </div>
+    <div class="flow">
+      <div class="step"><div class="n">01</div><h4>Pedido por Alfred</h4><p>En Slack: <code>@Alfred genera las imágenes para el user agora.pelu</code> → encola un job de 12 placas.</p></div>
+      <div class="step"><div class="n">02</div><h4>Flash arma la página</h4><p>Cyclone abre <code>/posts/feed?id=1..6&vendor=…</code>. Cada paso mete el storefront real en un <b>&lt;iframe&gt;</b>.</p></div>
+      <div class="step"><div class="n">03</div><h4>Puppeteer captura</h4><p>Chrome headless renderiza a 1080×1350 (feed) y 1080×1920 (story) y saca el screenshot.</p></div>
+      <div class="step"><div class="n">04</div><h4>S3 + descarga</h4><p>Sube a CloudFront y el negocio las baja desde el panel para postearlas en Instagram.</p></div>
+    </div>
+    <div class="note">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF4658" stroke-width="2"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+      <div>De los 6 pasos, <b>2 no son el iframe vivo</b>: "elegí fecha" y "completá tus datos" usan <b>PNG estáticos hardcodeados</b> (slide4.png / slide5.png), en el azul viejo de Ágora y con chrome de iOS — no la página real del negocio.</div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- EL PROBLEMA -->
+<section>
+  <div class="wrap">
+    <div class="s-head">
+      <span class="eyebrow" style="color:var(--frost-accent)"><span style="background:var(--frost-accent)"></span>El problema</span>
+      <h2>El marco arrastra <b>bugs de render</b> y <b>2 pasos que no son reales</b></h2>
+      <p>Esto es el output real de <b>@agora.pelu</b> (generado el 20/05). El problema no es lo que se ve <em>adentro</em> del teléfono (eso es el producto real), sino <b>el marco</b>. Marcamos en <b style="color:var(--frost-accent)">rojo</b> los bugs y en gris lo de diseño.</p>
+    </div>
+    <div class="pgrid">
+      <div class="pcard">
+        <div class="shot"><span class="slidetag">Feed · 1</span><img src="assets/feed-1.jpg" alt=""></div>
+        <div class="body"><h4>Portada</h4><ul>
+          <li>Título en <b>azul-marino fijo</b>, jamás el mauve de la marca.</li>
+          <li>Mucho aire muerto arriba; sin lockup de marca.</li>
+        </ul></div>
+      </div>
+      <div class="pcard">
+        <div class="shot"><span class="slidetag">Feed · 2</span><img src="assets/feed-2.jpg" alt=""></div>
+        <div class="body"><h4>Paso "1"</h4><ul>
+          <li class="bug"><b>Bug:</b> la línea de progreso negra <b>sangra fuera</b> del canvas por la derecha.</li>
+          <li class="bug"><b>Bug:</b> numeración off-by-one (slide 2 dice "1").</li>
+        </ul></div>
+      </div>
+      <div class="pcard">
+        <div class="shot"><span class="slidetag">Feed · 3</span><img src="assets/feed-3.jpg" alt=""></div>
+        <div class="body"><h4>Paso "2"</h4><ul>
+          <li class="bug"><b>Bug:</b> el título <b>"realizar" queda cortado</b> contra el borde derecho.</li>
+          <li>Miniaturas grises = el negocio no cargó fotos (no es bug del template).</li>
+        </ul></div>
+      </div>
+      <div class="pcard">
+        <div class="shot"><span class="slidetag">Feed · 4</span><img src="assets/feed-4.jpg" alt=""></div>
+        <div class="body"><h4>Paso "3"</h4><ul>
+          <li class="bug"><b>No es el iframe vivo:</b> PNG estático hardcodeado.</li>
+          <li>Chrome de iOS + datos genéricos. Debería ser la captura real del flujo.</li>
+        </ul></div>
+      </div>
+      <div class="pcard">
+        <div class="shot"><span class="slidetag">Feed · 5</span><img src="assets/feed-5.jpg" alt=""></div>
+        <div class="body"><h4>Paso "4"</h4><ul>
+          <li class="bug"><b>No es el iframe vivo:</b> otro PNG estático.</li>
+          <li>"$5.000" ≠ los $20.000 reales del negocio. Desactualizado.</li>
+        </ul></div>
+      </div>
+      <div class="pcard">
+        <div class="shot"><span class="slidetag">Feed · 6</span><img src="assets/feed-6.jpg" alt=""></div>
+        <div class="body"><h4>Cierre "5"</h4><ul>
+          <li class="bug"><b>Bug:</b> el texto a la derecha <b>pisa el borde izquierdo</b>.</li>
+          <li>CTA débil: no destaca la URL ni invita a reservar.</li>
+        </ul></div>
+      </div>
+    </div>
+
+    <div class="tvers">
+      <div class="tv"><div class="num">01</div><div><h4>El marco ignora al negocio</h4><p>Títulos en navy fijo, sin el color, el logo ni el lockup del negocio. El marco no aporta identidad.</p></div></div>
+      <div class="tv"><div class="num">02</div><div><h4>2 pasos no son reales</h4><p>"Fecha/hora" y "datos" son PNG estáticos viejos, no el iframe vivo: chrome de iOS y precios que no son los del negocio.</p></div></div>
+      <div class="tv"><div class="num">03</div><div><h4>Estética wireframe</h4><p>Fondo blanco plano, marcos de dispositivo inconsistentes (browser, phone, screenshot, phone verde) y un solo peso tipográfico.</p></div></div>
+      <div class="tv"><div class="num">04</div><div><h4>Explica, pero no vende</h4><p>story-1 ≈ story-6 (casi duplicadas). Sin portada con gancho ni cierre con CTA. Nadie lo postea con orgullo.</p></div></div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- LA PROPUESTA -->
+<section>
+  <div class="wrap">
+    <div class="s-head">
+      <span class="eyebrow" style="color:var(--pelu-deep)"><span style="background:var(--pelu-deep)"></span>La propuesta</span>
+      <h2>Un carrusel <b>editorial, co-branded</b> Ágora × Negocio</h2>
+      <p>El contenido del teléfono es el <b>producto real</b> (el iframe del storefront y del flujo de reserva): eso no se toca. Lo que rediseñamos es <b>el marco</b> — la marca del negocio como sistema, grilla consistente, device unificado y los bugs corregidos. Acá, lado a lado, con la marca real de @agora.pelu.</p>
+    </div>
+
+    <div class="rule" style="max-width:860px;margin:0 0 38px;font-size:14px">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B8918E" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2.5"/><path d="M10 18h4"/></svg>
+      <div><b>Qué NO se toca:</b> las pantallas adentro del teléfono son el <b>iframe real del producto</b> (storefront mauve y flujo de reserva azul) — esa es la verdad de cómo se ve, y se preserva tal cual. &nbsp; <b>Qué cambia:</b> solo el marco — fondo, título, numeración, stepper, lockup de marca, CTA y la corrección de los bugs.</div>
+    </div>
+
+    <!-- FEED -->
+    <div class="cmp-row-head"><div class="k">Feed · 1080×1350</div><h3>Slide 1 — <b>Portada</b></h3></div>
+    <div class="cmp">
+      <figure class="col"><span class="tag tag--antes">Antes</span><div class="stage stage--feed"><img src="assets/feed-1.jpg" alt=""></div></figure>
+      <div class="vs"><span>vs</span><div class="ar">→</div></div>
+      <figure class="col"><span class="tag tag--ahora">Ahora</span>
+        <div class="stage stage--feed"><div class="scaler"><div class="canvas canvas--feed placa dark">
+          <div class="grain"></div>
+          <div class="pl-pad">
+            <div class="pl-top"><span class="kicker">Cómo reservar · 4 pasos</span><span class="madeby"><span class="tri"></span>Hecho con Ágora</span></div>
+            <div style="margin-top:70px">
+              <div class="ptitle" style="font-size:118px">Reservá tu turno online</div>
+              <div class="psub" style="font-size:40px;margin-top:30px">Sin llamadas, sin esperar respuesta.<br>En menos de 1 minuto.</div>
+            </div>
+            <div class="f1"></div>
+            <div class="row aic between" style="align-items:flex-end">
+              <div class="lockup">
+                <div class="ava"><span class="paw" style="width:40px;height:36px;color:#fff"><i style="width:11px;height:14px;left:0;top:8px"></i><i style="width:11px;height:14px;right:0;top:8px"></i><i style="width:10px;height:13px;left:8px;top:0"></i><i style="width:10px;height:13px;right:8px;top:0"></i><i style="width:24px;height:18px;left:8px;bottom:0;border-radius:50% 50% 45% 45%"></i></span></div>
+                <div><div class="nm" style="color:#fff">Peluquería canina</div><div class="ur">www.agora.red/agora.pelu</div></div>
+              </div>
+              <div class="kicker" style="font-size:30px;opacity:.85">01 / 06</div>
+            </div>
+          </div>
+        </div></div></div>
+      </figure>
+    </div>
+    <p class="cmp-note">La portada arranca con la <b>marca del negocio</b> y un gancho claro, no con texto navy flotando en blanco.</p>
+
+    <div class="cmp-row-head"><div class="k">Feed · 1080×1350</div><h3>Slide 2 — Paso 01 · <b>Entrá a la página</b></h3></div>
+    <div class="cmp">
+      <figure class="col"><span class="tag tag--antes">Antes</span><div class="stage stage--feed"><img src="assets/feed-2.jpg" alt=""></div></figure>
+      <div class="vs"><span>vs</span><div class="ar">→</div></div>
+      <figure class="col"><span class="tag tag--ahora">Ahora</span>
+        <div class="stage stage--feed"><div class="scaler"><div class="canvas canvas--feed placa">
+          <div class="grain"></div>
+          <div class="pl-pad">
+            <div class="pl-top"><span class="kicker">Paso 01</span><span class="madeby"><span class="tri"></span>Hecho con Ágora</span></div>
+            <div class="row f1 aic" style="gap:56px;margin-top:30px">
+              <div class="col" style="flex:1;gap:34px">
+                <div class="stepnum">01</div>
+                <div class="ptitle" style="font-size:84px">Entrá a nuestra página</div>
+                <div class="purl"><span class="lk"></span>www.agora.red/agora.pelu</div>
+              </div>
+              <div class="device" style="width:430px;height:864px;flex-shrink:0">
+                <div class="screen"><img class="real" src="assets/screen-storefront.jpg" alt="storefront real del negocio"></div>
+              </div>
+            </div>
+            <div class="stepper" style="margin-top:24px"><span class="seg on"></span><span class="seg"></span><span class="seg"></span><span class="seg"></span></div>
+          </div>
+        </div></div></div>
+      </figure>
+    </div>
+    <p class="cmp-note">Texto y device en una grilla que <b>llena el canvas</b>; número de paso grande; URL como chip; stepper contenido (jamás sangra).</p>
+
+    <div class="cmp-row-head"><div class="k">Feed · 1080×1350</div><h3>Slide 3 — Paso 02 · <b>Elegí tu servicio</b></h3></div>
+    <div class="cmp">
+      <figure class="col"><span class="tag tag--antes">Antes</span><div class="stage stage--feed"><img src="assets/feed-3.jpg" alt=""></div></figure>
+      <div class="vs"><span>vs</span><div class="ar">→</div></div>
+      <figure class="col"><span class="tag tag--ahora">Ahora</span>
+        <div class="stage stage--feed"><div class="scaler"><div class="canvas canvas--feed placa">
+          <div class="grain"></div>
+          <div class="pl-pad">
+            <div class="pl-top"><span class="kicker">Paso 02</span><span class="madeby"><span class="tri"></span>Hecho con Ágora</span></div>
+            <div class="row f1 aic" style="gap:56px;margin-top:30px;flex-direction:row-reverse">
+              <div class="col" style="flex:1;gap:34px">
+                <div class="stepnum">02</div>
+                <div class="ptitle" style="font-size:84px">Elegí tu servicio</div>
+                <div class="psub" style="font-size:34px">Mirás precio y seña al toque.</div>
+              </div>
+              <div class="device" style="width:430px;height:864px;flex-shrink:0">
+                <div class="screen"><img class="real" src="assets/screen-reservar.jpg" alt="flujo de reserva real"></div>
+              </div>
+            </div>
+            <div class="stepper" style="margin-top:24px"><span class="seg on"></span><span class="seg on"></span><span class="seg"></span><span class="seg"></span></div>
+          </div>
+        </div></div></div>
+      </figure>
+    </div>
+    <p class="cmp-note">El device alterna de lado (ritmo visual) y muestra el <b>flujo de reserva real</b> del producto, tal cual. Las miniaturas grises son del negocio (<b>no cargó fotos de servicio</b>) — se arregla cargando fotos, no tocando el template.</p>
+
+    <div class="cmp-row-head"><div class="k">Feed · 1080×1350</div><h3>Slide 4 — Paso 03 · <b>Elegí día y hora</b></h3></div>
+    <div class="cmp">
+      <figure class="col"><span class="tag tag--antes">Antes</span><div class="stage stage--feed"><img src="assets/feed-4.jpg" alt=""></div></figure>
+      <div class="vs"><span>vs</span><div class="ar">→</div></div>
+      <figure class="col"><span class="tag tag--ahora">Ahora</span>
+        <div class="stage stage--feed"><div class="scaler"><div class="canvas canvas--feed placa">
+          <div class="grain"></div>
+          <div class="pl-pad">
+            <div class="pl-top"><span class="kicker">Paso 03</span><span class="madeby"><span class="tri"></span>Hecho con Ágora</span></div>
+            <div class="row f1 aic" style="gap:56px;margin-top:30px">
+              <div class="col" style="flex:1;gap:34px">
+                <div class="stepnum">03</div>
+                <div class="ptitle" style="font-size:84px">Elegí el día y la hora</div>
+                <div class="psub" style="font-size:34px">Ves la disponibilidad real, al instante.</div>
+              </div>
+              <div class="device" style="width:430px;height:864px;flex-shrink:0">
+                <div class="screen"><img class="real" src="assets/screen-fecha.png" alt="paso elegir fecha y hora"></div>
+              </div>
+            </div>
+            <div class="stepper" style="margin-top:24px"><span class="seg on"></span><span class="seg on"></span><span class="seg on"></span><span class="seg"></span></div>
+          </div>
+        </div></div></div>
+      </figure>
+    </div>
+    <p class="cmp-note"><b>Acá el cambio no es el color</b> (el flujo es azul porque es la UI del producto): hoy este paso es un <b>PNG estático viejo</b> (chrome de iOS, "$5.000" genérico). Debería ser la <b>captura en vivo</b> del flujo real de este negocio.</p>
+
+    <div class="cmp-row-head"><div class="k">Feed · 1080×1350</div><h3>Slide 5 — Paso 04 · <b>Tus datos y la seña</b></h3></div>
+    <div class="cmp">
+      <figure class="col"><span class="tag tag--antes">Antes</span><div class="stage stage--feed"><img src="assets/feed-5.jpg" alt=""></div></figure>
+      <div class="vs"><span>vs</span><div class="ar">→</div></div>
+      <figure class="col"><span class="tag tag--ahora">Ahora</span>
+        <div class="stage stage--feed"><div class="scaler"><div class="canvas canvas--feed placa">
+          <div class="grain"></div>
+          <div class="pl-pad">
+            <div class="pl-top"><span class="kicker">Paso 04</span><span class="madeby"><span class="tri"></span>Hecho con Ágora</span></div>
+            <div class="row f1 aic" style="gap:56px;margin-top:30px;flex-direction:row-reverse">
+              <div class="col" style="flex:1;gap:28px">
+                <div class="stepnum">04</div>
+                <div class="ptitle" style="font-size:80px">Completá tus datos</div>
+                <div class="psub" style="font-size:34px">Confirmás dejando la seña. ¡Listo!</div>
+              </div>
+              <div class="device" style="width:430px;height:864px;flex-shrink:0">
+                <div class="screen"><img class="real" src="assets/screen-datos.png" alt="paso completar datos"></div>
+              </div>
+            </div>
+            <div class="stepper" style="margin-top:24px"><span class="seg on"></span><span class="seg on"></span><span class="seg on"></span><span class="seg on"></span></div>
+          </div>
+        </div></div></div>
+      </figure>
+    </div>
+    <p class="cmp-note">Mismo caso que el paso anterior: debería ser la <b>captura real</b> del checkout de este negocio (con la seña real), no un screenshot genérico hardcodeado.</p>
+
+    <div class="cmp-row-head"><div class="k">Feed · 1080×1350</div><h3>Slide 6 — <b>Cierre + CTA</b></h3></div>
+    <div class="cmp">
+      <figure class="col"><span class="tag tag--antes">Antes</span><div class="stage stage--feed"><img src="assets/feed-6.jpg" alt=""></div></figure>
+      <div class="vs"><span>vs</span><div class="ar">→</div></div>
+      <figure class="col"><span class="tag tag--ahora">Ahora</span>
+        <div class="stage stage--feed"><div class="scaler"><div class="canvas canvas--feed placa dark">
+          <div class="grain"></div>
+          <div class="pl-pad" style="align-items:center;text-align:center">
+            <div class="pl-top" style="width:100%"><span class="kicker">¡Y listo!</span><span class="madeby"><span class="tri"></span>Hecho con Ágora</span></div>
+            <div class="f1 col jcc aic" style="gap:46px">
+              <div class="okwrap" style="width:280px;height:280px;border-radius:50%;flex:none;background:rgba(255,255,255,.16)">
+                <div class="ring" style="background:rgba(255,255,255,.22)"><svg width="92" height="92" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div>
+              </div>
+              <div class="ptitle" style="font-size:104px;color:#fff">Reservá ahora</div>
+              <div class="cta-pelu">www.agora.red/agora.pelu</div>
+            </div>
+            <div class="lockup" style="margin-top:10px">
+              <div class="ava"><span class="paw" style="width:36px;height:32px;color:#fff"><i style="width:10px;height:13px;left:0;top:7px"></i><i style="width:10px;height:13px;right:0;top:7px"></i><i style="width:9px;height:12px;left:7px;top:0"></i><i style="width:9px;height:12px;right:7px;top:0"></i><i style="width:22px;height:16px;left:7px;bottom:0;border-radius:50% 50% 45% 45%"></i></span></div>
+              <div class="nm" style="color:#fff">Peluquería canina</div>
+            </div>
+          </div>
+        </div></div></div>
+      </figure>
+    </div>
+    <p class="cmp-note">Cierre fuerte: la <b>URL como botón gigante</b> y la confirmación como recompensa. Es la slide que mueve la reserva.</p>
+
+    <!-- STORIES -->
+    <div class="cmp-row-head" style="margin-top:50px"><div class="k">Stories · 1080×1920</div><h3>Las mismas piezas, <b>nativas para Story</b></h3></div>
+    <div class="story-row">
+      <figure class="col"><span class="tag tag--antes">Antes · Story 1</span><div class="stage stage--story"><img src="assets/story-1.jpg" alt=""></div></figure>
+      <div class="vs"><span>vs</span><div class="ar">→</div></div>
+      <figure class="col"><span class="tag tag--ahora">Ahora · Portada</span>
+        <div class="stage stage--story"><div class="scaler"><div class="canvas canvas--story placa dark pl-story">
+          <div class="grain"></div>
+          <div class="pl-pad" style="text-align:center;align-items:center">
+            <div class="pl-top" style="width:100%"><span class="kicker">Cómo reservar</span><span class="madeby"><span class="tri"></span>Ágora</span></div>
+            <div style="margin-top:80px"><div class="ptitle" style="font-size:128px;color:#fff">Reservá tu turno online</div>
+              <div class="psub" style="font-size:46px;margin-top:34px">En menos de 1 minuto</div></div>
+            <div class="device" style="width:560px;height:980px;margin:80px auto 0;flex-shrink:0">
+              <div class="screen"><img class="real" src="assets/screen-storefront.jpg" alt="storefront real del negocio"></div>
+            </div>
+            <div class="f1"></div>
+            <div class="lockup jcc" style="justify-content:center"><div class="nm" style="color:#fff">www.agora.red/agora.pelu</div></div>
+          </div>
+        </div></div></div>
+      </figure>
+      <figure class="col" style="grid-column:auto"><span class="tag tag--ahora">Ahora · Paso 03</span>
+        <div class="stage stage--story"><div class="scaler"><div class="canvas canvas--story placa pl-story">
+          <div class="grain"></div>
+          <div class="pl-pad" style="text-align:center;align-items:center">
+            <div class="pl-top" style="width:100%"><span class="kicker">Paso 03</span><span class="madeby"><span class="tri"></span>Ágora</span></div>
+            <div class="stepnum" style="font-size:200px;margin-top:30px">03</div>
+            <div class="ptitle" style="font-size:104px;margin-top:10px">Elegí día y hora</div>
+            <div class="device" style="width:540px;height:820px;margin:54px auto 0;flex-shrink:0">
+              <div class="screen"><img class="real" src="assets/screen-fecha.png" alt="paso elegir fecha y hora"></div>
+            </div>
+            <div class="f1"></div>
+            <div class="stepper" style="width:100%"><span class="seg on"></span><span class="seg on"></span><span class="seg on"></span><span class="seg"></span></div>
+          </div>
+        </div></div></div>
+      </figure>
+    </div>
+    <p class="cmp-note">El Story usa el alto real: kicker arriba, device al centro, stepper abajo. Y elimina la redundancia de hoy (story&nbsp;1 ≈ story&nbsp;6).</p>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- SISTEMA DE DISEÑO -->
+<section>
+  <div class="wrap">
+    <div class="s-head">
+      <span class="eyebrow">Sistema de diseño</span>
+      <h2>Una sola receta, <b>cualquier negocio</b></h2>
+      <p>El esqueleto es fijo; lo que cambia es el brand-kit del vendor (color + fuentes, que ya tenemos en el storefront). Así los 6 slides son siempre una familia.</p>
+    </div>
+    <div class="ds">
+      <div class="panel">
+        <h4>Paleta — dual brand</h4>
+        <div class="sw" style="margin-bottom:18px">
+          <div class="swatch"><div class="b" style="background:#C9A9A6"></div><div class="l">Vendor primary</div><div class="h">#C9A9A6</div></div>
+          <div class="swatch"><div class="b" style="background:#B8918E"></div><div class="l">Vendor deep</div><div class="h">#B8918E</div></div>
+          <div class="swatch"><div class="b" style="background:#FDF8F6;border-color:#eadfda"></div><div class="l">Cream</div><div class="h">#FDF8F6</div></div>
+          <div class="swatch"><div class="b" style="background:#2D2926"></div><div class="l">Ink</div><div class="h">#2D2926</div></div>
+        </div>
+        <div class="sw">
+          <div class="swatch"><div class="b" style="background:#0072FB"></div><div class="l">Ágora (chrome)</div><div class="h">#0072FB</div></div>
+          <div class="swatch"><div class="b" style="background:#16A34A"></div><div class="l">Éxito</div><div class="h">#16A34A</div></div>
+          <div class="swatch"><div class="b" style="background:linear-gradient(135deg,#C9A9A6,#B8918E)"></div><div class="l">Gradiente dark</div><div class="h">primary→deep</div></div>
+        </div>
+        <div class="rule" style="margin-top:18px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B8918E" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg><div><b>Color como sistema:</b> el primario del vendor pinta fondos, números, líneas, stepper y CTA. Ágora aparece chico, nunca tapa.</div></div>
+      </div>
+      <div class="panel typ">
+        <h4>Tipografía</h4>
+        <div class="pf">Playfair Display — Títulos</div>
+        <div class="rl">Raleway — cuerpo, datos y chips. Legible, cálida, tabular para precios y horarios. La fuente sale del brand-kit del vendor; acá Playfair + Raleway.</div>
+        <div class="kk">Kicker · tracked · uppercase</div>
+        <div class="rule" style="margin-top:18px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B8918E" stroke-width="2"><path d="M4 7V5h16v2M9 19h6M12 5v14"/></svg><div><b>Anti-overflow:</b> los títulos usan <code style="font-family:ui-monospace,monospace;font-size:11px">clamp()</code> + auto-fit. El español largo nunca se corta contra el borde.</div></div>
+      </div>
+    </div>
+    <div class="ds" style="margin-top:22px">
+      <div class="panel">
+        <h4>Componentes</h4>
+        <div class="comp">
+          <div class="it"><span class="lab">Número de paso</span><span class="mini-step">3</span></div>
+          <div class="it"><span class="lab">Stepper (contenido)</span><span class="mini-stepper"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div>
+          <div class="it"><span class="lab">URL chip</span><span class="mini-url"><span style="width:12px;height:12px;border:2px solid var(--pelu-deep);border-radius:4px"></span>www.agora.red/agora.pelu</span></div>
+          <div class="it"><span class="lab">CTA</span><span class="mini-cta">Reservá ahora</span></div>
+          <div class="it"><span class="lab">Lockup</span><span style="display:flex;align-items:center;gap:10px"><span style="width:36px;height:36px;border-radius:50%;background:radial-gradient(circle at 38% 32%,#C9A9A6,#B8918E)"></span><span style="font-family:var(--serif);font-weight:700;font-size:16px;color:var(--pelu-ink)">Peluquería canina</span></span></div>
+        </div>
+      </div>
+      <div class="panel">
+        <h4>Device frame — unificado</h4>
+        <p style="font-size:13px;color:var(--frost-muted);font-weight:300;line-height:1.6">Un único marco premium (mismo radio, notch, sombra realista) para <b style="color:var(--frost-ink);font-weight:600">los 6 pasos</b>. Adentro va <b style="color:var(--frost-ink);font-weight:600">el iframe real del producto</b> — no se rediseña. Lo que unificamos es el marco: nunca un browser-chrome en uno y un screenshot de iOS en otro.</p>
+        <div style="display:flex;gap:18px;margin-top:18px;align-items:center">
+          <div class="device" style="width:120px;height:240px"><div class="screen"><div class="sf-bar" style="padding:14px 12px 8px"><span class="sf-h" style="font-size:11px">/agora.pelu <i class="dot" style="width:6px;height:6px"></i></span></div><div class="sf-hero" style="height:60px"><div class="sf-ava" style="width:42px;height:42px;bottom:-21px;border-width:4px"></div></div><div class="sf-body" style="padding:30px 14px 0"><div class="sf-name" style="font-size:15px">Peluquería canina</div></div></div></div>
+          <div style="font-size:12.5px;color:var(--frost-muted);font-weight:300;line-height:1.6">Mismo frame,<br>cualquier paso,<br>cualquier negocio.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- IMPACTO -->
+<section>
+  <div class="wrap">
+    <div class="s-head">
+      <span class="eyebrow">Impacto</span>
+      <h2>De "lo bajo y no lo uso" a <b>"lo posteo hoy"</b></h2>
+    </div>
+    <div class="impact">
+      <div class="ic"><div class="big">+ Reservas</div><h4>Más self-service</h4><p>Un tutorial claro y lindo baja la fricción para que el cliente reserve solo, sin chat de por medio.</p></div>
+      <div class="ic"><div class="big">Marca propia</div><h4>El negocio se luce</h4><p>Sale con su color, su nombre y su página. Es un asset que quiere postear, no esconder.</p></div>
+      <div class="ic"><div class="big">0 bugs</div><h4>Render confiable</h4><p>Grilla con safe-area + anti-overflow: nada se corta, nada sangra, numeración correcta.</p></div>
+    </div>
+    <div class="next">
+      <h3>Próximos <b>pasos</b></h3>
+      <ol>
+        <li>Validar dirección de arte con el equipo (este documento).</li>
+        <li>Rehacer <code style="font-family:ui-monospace,monospace;font-size:12px;background:rgba(255,255,255,.12);padding:1px 6px;border-radius:5px;color:#fff">FeedPreview.tsx</code> / <code style="font-family:ui-monospace,monospace;font-size:12px;background:rgba(255,255,255,.12);padding:1px 6px;border-radius:5px;color:#fff">StoryPreview.tsx</code> con el sistema y tokens del brand-kit.</li>
+        <li>Reemplazar los PNG estáticos (pasos 3 y 4) por capturas reales del flujo del vendor.</li>
+        <li>QA de overflow en nombres y servicios largos + regenerar para 3-4 vendors piloto.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap row">
+    <div class="mk">
+      <svg width="86" height="20" viewBox="0 0 153 36" xmlns="http://www.w3.org/2000/svg" aria-label="Ágora"><path d="M41.3822 30.3938L38.187 35.7712L3.11719 35.8491L17.5348 10.9106L20.6466 16.2974L15.7314 24.9347L12.625 30.3938H41.3822Z" fill="#E2E8F0"/><path d="M20.6467 16.2973L17.5349 10.9106L3.11731 35.8491L0 30.3938L17.5349 0L31.8745 24.9385H25.6399L20.6467 16.2973Z" fill="#0072FF"/><path d="M23.8473 0L41.3822 30.3938H12.625L15.7314 24.9346L15.7384 24.9385H25.6398H31.8744L17.5348 0H23.8473Z" fill="#FF4658"/><path d="M76.7893 7.41158V4.76367H69.5647V7.41158H76.7893ZM72.2126 26.6334C74.4029 26.6334 76.3316 25.7835 77.6065 24.2797V26.3065H81.2351V10.1249H77.6065V12.1844C76.3316 10.6806 74.4029 9.79797 72.2126 9.79797C67.7668 9.79797 64.7266 13.5573 64.7266 18.232C64.7266 22.8741 67.7668 26.6334 72.2126 26.6334ZM73.1279 23.1356C70.382 23.1356 68.4206 21.0761 68.4206 18.232C68.4206 15.388 70.382 13.2958 73.1279 13.2958C75.7105 13.2958 77.6065 15.388 77.6065 18.232C77.6065 21.1088 75.6778 23.1356 73.1279 23.1356ZM92.2844 31.112C96.9264 31.112 100.718 28.2679 100.718 22.6125V10.1249H97.2533V12.5439C96.4034 10.9421 94.2131 9.79797 91.7614 9.79797C87.2828 9.79797 84.3407 13.2958 84.3407 17.6436C84.3407 21.9914 87.2828 25.4566 91.7614 25.4566C94.7035 25.4566 96.4361 23.9855 97.0899 22.6779V22.8087C97.0899 26.1104 95.39 28.3333 91.9248 28.3333C90.2576 28.3333 88.3616 27.7776 87.0867 26.6661L85.681 28.9544C87.1847 30.2947 89.5058 31.112 92.2844 31.112ZM92.5459 22.2856C89.9961 22.2856 88.0347 20.3242 88.0347 17.6436C88.0347 14.963 89.9961 12.9689 92.5459 12.9689C95.0958 12.9689 97.0899 14.9303 97.0899 17.5129C97.0899 20.3242 95.1612 22.2856 92.5459 22.2856ZM112.422 26.6334C117.194 26.6334 121.019 22.9067 121.019 18.232C121.019 13.5247 117.194 9.79797 112.422 9.79797C107.649 9.79797 103.824 13.5247 103.824 18.232C103.824 22.9067 107.649 26.6334 112.422 26.6334ZM112.422 23.1356C109.643 23.1356 107.518 21.0434 107.518 18.232C107.518 15.388 109.643 13.2958 112.422 13.2958C115.2 13.2958 117.325 15.388 117.325 18.232C117.325 21.0434 115.2 23.1356 112.422 23.1356ZM127.753 26.3065V19.7031C127.753 15.4534 130.042 13.7535 133.605 13.7535V9.79797C130.14 9.79797 128.374 11.694 127.753 13.3285V10.1249H124.125V26.3065H127.753ZM143.118 26.6334C145.308 26.6334 147.237 25.7835 148.512 24.2797V26.3065H152.14V10.1249H148.512V12.1844C147.237 10.6806 145.308 9.79797 143.118 9.79797C138.672 9.79797 135.632 13.5573 135.632 18.232C135.632 22.8741 138.672 26.6334 143.118 26.6334ZM144.033 23.1356C141.287 23.1356 139.326 21.0761 139.326 18.232C139.326 15.388 141.287 13.2958 144.033 13.2958C146.616 13.2958 148.512 15.388 148.512 18.232C148.512 21.1088 146.583 23.1356 144.033 23.1356Z" fill="#0F172A"/></svg>
+      <span>Design Studio · Placas de Reserva</span>
+    </div>
+    <div class="mk">Caso real: @agora.pelu · 12 placas · Mayo 2026</div>
+  </div>
+</footer>
+
+</body>
+</html>

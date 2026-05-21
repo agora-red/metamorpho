@@ -1,0 +1,2 @@
+{"ts":"2026-05-21T19:33:00Z","instruction":"stories row se apilaba mal (4 items en grid de 3 col)","diff_summary":".cmp → .story-row flex; las 3 piezas (antes + 2 ahora) en una sola fila"}
+{"ts":"2026-05-21T19:42:00Z","instruction":"preservar el iframe real del producto: no recrear las pantallas en mauve","diff_summary":"6 device-screens mock → <img> con capturas reales (storefront+reservar en vivo, fecha/datos actuales); copy del problema/propuesta corregido (el azul del flujo es la UI del producto, no un defecto)"}
