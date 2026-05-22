@@ -4,6 +4,16 @@
   "updated_at": "2026-05-22",
   "outputs": [
     {
+      "type": "deck",
+      "typeLabel": "Deck",
+      "title": "Agente CS con IA · Intercom",
+      "description": "Propuesta interna para automatizar el soporte al cliente con un agente de IA integrado en Intercom. Pipeline Claude Haiku + Sonnet, rollout en 3 etapas, costos verificados y base de conocimiento.",
+      "detail": "11 slides · propuesta interna · Mayo 2026",
+      "date": "MAY 2026",
+      "href": "./agente-cs-pitch-2026-05/index.html",
+      "slug": "agente-cs-pitch-2026-05"
+    },
+    {
       "type": "proposal",
       "typeLabel": "Review",
       "title": "Placas de Reserva · Rediseño implementado",

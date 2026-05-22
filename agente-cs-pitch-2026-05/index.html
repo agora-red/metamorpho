@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agente de IA — CS · Ágora</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --frost-primary:       #0072FB;
+  --frost-primary-hover: #005CD4;
+  --frost-primary-soft:  #EEF6FF;
+  --frost-primary-wash:  rgba(0,114,251,0.08);
+  --frost-accent:        #FF4658;
+  --frost-accent-soft:   #FFE3E6;
+  --frost-success:       #10B981;
+  --frost-success-soft:  #A9FFE7;
+  --frost-warning:       #F59E0B;
+  --frost-warning-soft:  #FFE77B;
+  --frost-ink:           #0F172A;
+  --frost-ink-soft:      #3A3A3A;
+  --frost-muted:         #868686;
+  --frost-faint:         #B5B5B5;
+  --frost-surface:       #FFFFFF;
+  --frost-surface-muted: #EFF3F9;
+  --frost-border:        #E2E8F0;
+  --frost-border-soft:   #F2F2F2;
+  --r-sm:    6px;
+  --r-item:  10px;
+  --r-btn:   12px;
+  --r-card:  20px;
+  --r-shell: 28px;
+  --r-chip:  999px;
+  --sh-xs:   0 1px 2px rgba(15,23,42,0.04);
+  --sh-sm:   0 4px 12px -4px rgba(15,23,42,0.10);
+  --sh-md:   0 10px 30px -12px rgba(15,23,42,0.15);
+  --sh-lg:   0 20px 50px -20px rgba(15,23,42,0.25);
+  --sh-glow: 0 4px 18px -2px rgba(0,114,251,0.30);
+  --sans:    'Montserrat', system-ui, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-snap-type: y mandatory; overflow-y: scroll; height: 100%; }
+body { font-family: var(--sans); font-variant-numeric: tabular-nums; background: var(--frost-ink); color: var(--frost-ink); height: 100%; }
+
+.slide {
+  scroll-snap-align: start;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 48px 64px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Nav */
+.nav { position: fixed; right: 24px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 8px; z-index: 100; }
+.nav-dot { width: 8px; height: 8px; border-radius: var(--r-chip); background: rgba(255,255,255,0.2); border: none; cursor: pointer; transition: background .2s, transform .2s; }
+.nav-dot.active { background: #fff; transform: scale(1.3); }
+
+/* Logo */
+.logo { display: inline-flex; align-items: center; margin-bottom: 36px; }
+
+/* Kicker */
+.kicker { font-size: 10.5px; font-weight: 600; letter-spacing: 0.20em; text-transform: uppercase; margin-bottom: 14px; color: var(--frost-muted); }
+
+/* Badge */
+.badge { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: var(--r-chip); font-size: 11px; font-weight: 600; }
+.badge-verified { background: var(--frost-success-soft); color: #065f46; }
+.badge-estimate { background: var(--frost-warning-soft); color: #92400e; }
+.badge-tech     { background: var(--frost-primary-soft); color: #1e3a8a; }
+.badge-nocode   { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+.badge-code     { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
+
+/* Audience tag */
+.audience-tag { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: var(--r-chip); font-size: 10.5px; font-weight: 600; letter-spacing: 0.10em; text-transform: uppercase; margin-bottom: 18px; }
+.tag-biz  { background: rgba(16,185,129,0.12); color: #065f46; }
+.tag-tech { background: rgba(0,114,251,0.12);  color: #1e3a8a; }
+.tag-impl { background: rgba(245,158,11,0.12); color: #92400e; }
+.tag-neutral { background: var(--frost-surface-muted); color: var(--frost-muted); border: 1px solid var(--frost-border); }
+.slide-ink .audience-tag { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); }
+
+/* Stat grid */
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; margin-top: 28px; }
+.stat-card { background: var(--frost-surface); border-radius: var(--r-card); padding: 22px; box-shadow: var(--sh-sm); }
+.stat-card .num { font-size: 34px; font-weight: 200; line-height: 1; margin-bottom: 6px; }
+.stat-card .label { font-size: 12px; font-weight: 500; color: var(--frost-muted); line-height: 1.4; }
+.stat-card .source { margin-top: 10px; }
+
+/* Pipeline */
+.pipeline { display: flex; align-items: stretch; gap: 8px; margin-top: 28px; flex-wrap: wrap; }
+.pipe-node { background: var(--frost-surface); border-radius: var(--r-card); padding: 16px 18px; box-shadow: var(--sh-sm); flex: 1; min-width: 130px; }
+.pipe-node .pipe-label { font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--frost-muted); margin-bottom: 5px; }
+.pipe-node .pipe-name { font-size: 13px; font-weight: 600; color: var(--frost-ink); margin-bottom: 4px; }
+.pipe-node .pipe-desc { font-size: 11px; color: var(--frost-muted); line-height: 1.5; }
+.pipe-arrow { font-size: 16px; color: var(--frost-faint); flex-shrink: 0; align-self: center; }
+
+/* Row list */
+.row-list { display: flex; flex-direction: column; gap: 8px; margin-top: 20px; }
+.row-item { display: flex; align-items: flex-start; gap: 14px; background: var(--frost-surface); border-radius: var(--r-item); padding: 14px 16px; box-shadow: var(--sh-xs); }
+.row-item.dark { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); }
+.row-icon { width: 30px; height: 30px; border-radius: var(--r-btn); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+.icon-blue  { background: var(--frost-primary-soft); color: var(--frost-primary); }
+.icon-green { background: var(--frost-success-soft); color: #065f46; }
+.icon-amber { background: var(--frost-warning-soft); color: #92400e; }
+.icon-red   { background: var(--frost-accent-soft);  color: var(--frost-accent); }
+.icon-blue-dark  { background: rgba(0,114,251,0.2); color: #93c5fd; }
+.icon-green-dark { background: rgba(16,185,129,0.2); color: #6ee7b7; }
+.icon-amber-dark { background: rgba(245,158,11,0.2); color: #fcd34d; }
+.row-title { font-size: 13px; font-weight: 600; color: var(--frost-ink); margin-bottom: 2px; }
+.row-sub   { font-size: 12px; color: var(--frost-muted); line-height: 1.5; }
+.row-title.light { color: #fff; }
+.row-sub.light   { color: rgba(255,255,255,0.5); }
+
+/* Two col */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 28px; }
+.col-card { background: var(--frost-surface); border-radius: var(--r-card); padding: 24px; box-shadow: var(--sh-sm); }
+.col-card h3 { font-size: 12.5px; font-weight: 600; color: var(--frost-ink); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+
+/* API row */
+.api-row { display: flex; align-items: center; justify-content: space-between; padding: 11px 16px; border-radius: var(--r-item); background: var(--frost-surface-muted); margin-bottom: 6px; font-size: 12.5px; }
+.api-row .api-name { font-weight: 500; color: var(--frost-ink); }
+.api-status.ok  { font-size: 12px; font-weight: 600; color: #065f46; }
+.api-status.no  { font-size: 12px; font-weight: 600; color: #9f1239; }
+.api-status.warn { font-size: 12px; font-weight: 600; color: #92400e; }
+
+/* Cost table */
+.cost-table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 24px; background: var(--frost-surface); border-radius: var(--r-card); box-shadow: var(--sh-sm); overflow: hidden; }
+.cost-table th { background: var(--frost-surface-muted); font-size: 10.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--frost-muted); padding: 11px 18px; text-align: left; border-bottom: 1px solid var(--frost-border); }
+.cost-table td { padding: 13px 18px; font-size: 12.5px; color: var(--frost-ink-soft); border-bottom: 1px solid var(--frost-border-soft); }
+.cost-table tr:last-child td { border-bottom: none; }
+.cost-table tr.hl td { background: var(--frost-primary-wash); font-weight: 600; color: var(--frost-ink); }
+
+/* Timeline */
+.timeline { display: flex; flex-direction: column; gap: 6px; margin-top: 24px; }
+.tl-item { display: grid; grid-template-columns: 90px 1fr; gap: 14px; align-items: start; }
+.tl-label { font-size: 11px; font-weight: 600; color: var(--frost-muted); padding-top: 14px; text-align: right; line-height: 1.4; }
+.tl-body { background: var(--frost-surface); border-radius: var(--r-item); padding: 13px 16px; box-shadow: var(--sh-xs); }
+.tl-body.dark { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); }
+.tl-title { font-size: 13px; font-weight: 600; color: var(--frost-ink); margin-bottom: 3px; }
+.tl-title.light { color: #fff; }
+.tl-desc  { font-size: 12px; color: var(--frost-muted); line-height: 1.5; }
+.tl-desc.light { color: rgba(255,255,255,0.5); }
+.tl-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+
+/* Slide counter */
+.slide-counter { position: absolute; bottom: 24px; right: 64px; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; opacity: 0.25; }
+
+/* Themes */
+.slide-cover  { background: var(--frost-ink); color: #fff; }
+.slide-light  { background: var(--frost-surface-muted); }
+.slide-white  { background: var(--frost-surface); }
+.slide-ink    { background: var(--frost-ink); color: #fff; }
+.slide-blue   { background: linear-gradient(135deg, var(--frost-primary) 0%, var(--frost-primary-hover) 100%); color: #fff; }
+
+.slide-cover h1, .slide-ink h2, .slide-blue h2 { color: #fff; }
+.slide-light h2, .slide-white h2 { color: var(--frost-ink); }
+
+h1 { font-size: clamp(28px, 3.5vw, 46px); font-weight: 200; line-height: 1.15; max-width: 700px; margin-bottom: 20px; }
+h1 strong { font-weight: 600; color: var(--frost-primary); }
+h2 { font-size: clamp(20px, 2.2vw, 32px); font-weight: 300; line-height: 1.2; margin-bottom: 8px; }
+
+.subtitle { font-size: 15px; font-weight: 300; color: rgba(255,255,255,0.55); max-width: 540px; line-height: 1.65; }
+.slide-sub  { font-size: 14px; color: var(--frost-muted); max-width: 680px; line-height: 1.6; margin-bottom: 6px; }
+.slide-sub.light { color: rgba(255,255,255,0.55); }
+
+.cover-chips { display: flex; gap: 10px; margin-top: 40px; flex-wrap: wrap; }
+.cover-chip { padding: 7px 14px; border-radius: var(--r-chip); background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.7); }
+
+/* Skills cards */
+.skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-top: 24px; }
+.skill-card { background: var(--frost-surface); border-radius: var(--r-card); padding: 22px; box-shadow: var(--sh-sm); border-top: 3px solid transparent; }
+.skill-card.haiku  { border-top-color: var(--frost-success); }
+.skill-card.sonnet { border-top-color: var(--frost-primary); }
+.skill-card.cyclone { border-top-color: var(--frost-warning); }
+.skill-card .sk-label { font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--frost-muted); margin-bottom: 6px; }
+.skill-card .sk-name { font-size: 15px; font-weight: 600; color: var(--frost-ink); margin-bottom: 8px; }
+.skill-card .sk-desc { font-size: 12px; color: var(--frost-muted); line-height: 1.5; }
+.skill-card .sk-cost { font-size: 11px; font-weight: 600; margin-top: 10px; }
+
+/* KB section */
+.kb-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 22px; }
+.kb-card { border-radius: var(--r-card); padding: 20px; }
+.kb-card.missing { background: var(--frost-accent-soft); border: 1px solid #fca5a5; }
+.kb-card.has     { background: var(--frost-success-soft); border: 1px solid #6ee7b7; }
+.kb-card h4 { font-size: 12px; font-weight: 700; letter-spacing: 0.10em; text-transform: uppercase; margin-bottom: 12px; }
+.kb-card.missing h4 { color: #9f1239; }
+.kb-card.has h4     { color: #065f46; }
+.kb-item { font-size: 12px; color: var(--frost-ink-soft); padding: 5px 0; border-bottom: 1px solid rgba(0,0,0,0.06); line-height: 1.4; display: flex; gap: 8px; }
+.kb-item:last-child { border-bottom: none; }
+
+/* Step cols */
+.step-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 22px; }
+.step-col-header { font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; padding: 10px 16px; border-radius: var(--r-item) var(--r-item) 0 0; margin-bottom: 0; }
+.step-col-header.nocode { background: #dcfce7; color: #166534; }
+.step-col-header.code   { background: #dbeafe; color: #1e40af; }
+.step-col-body { background: var(--frost-surface); border-radius: 0 0 var(--r-card) var(--r-card); padding: 4px 0 8px; box-shadow: var(--sh-sm); }
+.step-row { padding: 11px 16px; border-bottom: 1px solid var(--frost-border-soft); }
+.step-row:last-child { border-bottom: none; }
+.step-row .sr-title { font-size: 12.5px; font-weight: 600; color: var(--frost-ink); margin-bottom: 2px; }
+.step-row .sr-desc  { font-size: 11.5px; color: var(--frost-muted); line-height: 1.5; }
+.step-row .sr-time  { font-size: 10.5px; font-weight: 600; color: var(--frost-primary); margin-top: 4px; }
+
+/* FAQ */
+.faq-list { display: flex; flex-direction: column; gap: 10px; margin-top: 22px; }
+.faq-item { background: var(--frost-surface); border-radius: var(--r-item); overflow: hidden; box-shadow: var(--sh-xs); }
+.faq-q { padding: 13px 18px; font-size: 13px; font-weight: 600; color: var(--frost-ink); cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.faq-q:hover { background: var(--frost-surface-muted); }
+.faq-q .faq-arrow { font-size: 10px; color: var(--frost-muted); transition: transform .2s; flex-shrink: 0; }
+.faq-a { display: none; padding: 0 18px 14px; font-size: 12.5px; color: var(--frost-muted); line-height: 1.65; border-top: 1px solid var(--frost-border-soft); padding-top: 12px; }
+.faq-item.open .faq-a { display: block; }
+.faq-item.open .faq-arrow { transform: rotate(180deg); }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav"></nav>
+
+<!-- ══ SLIDE 1 · COVER ══ -->
+<section class="slide slide-cover" id="s0">
+  <div class="logo">
+    <svg width="110" height="26" viewBox="0 0 153 36" xmlns="http://www.w3.org/2000/svg">
+      <path d="M41.3822 30.3938L38.187 35.7712L3.11719 35.8491L17.5348 10.9106L20.6466 16.2974L15.7314 24.9347L12.625 30.3938H41.3822Z" fill="#E2E8F0" opacity="0.3"/>
+      <path d="M20.6467 16.2973L17.5349 10.9106L3.11731 35.8491L0 30.3938L17.5349 0L31.8745 24.9385H25.6399L20.6467 16.2973Z" fill="#0072FF"/>
+      <path d="M23.8473 0L41.3822 30.3938H12.625L15.7314 24.9346L15.7384 24.9385H25.6398H31.8744L17.5348 0H23.8473Z" fill="#FF4658"/>
+      <path d="M76.7893 7.41158V4.76367H69.5647V7.41158H76.7893ZM72.2126 26.6334C74.4029 26.6334 76.3316 25.7835 77.6065 24.2797V26.3065H81.2351V10.1249H77.6065V12.1844C76.3316 10.6806 74.4029 9.79797 72.2126 9.79797C67.7668 9.79797 64.7266 13.5573 64.7266 18.232C64.7266 22.8741 67.7668 26.6334 72.2126 26.6334ZM73.1279 23.1356C70.382 23.1356 68.4206 21.0761 68.4206 18.232C68.4206 15.388 70.382 13.2958 73.1279 13.2958C75.7105 13.2958 77.6065 15.388 77.6065 18.232C77.6065 21.1088 75.6778 23.1356 73.1279 23.1356ZM92.2844 31.112C96.9264 31.112 100.718 28.2679 100.718 22.6125V10.1249H97.2533V12.5439C96.4034 10.9421 94.2131 9.79797 91.7614 9.79797C87.2828 9.79797 84.3407 13.2958 84.3407 17.6436C84.3407 21.9914 87.2828 25.4566 91.7614 25.4566C94.7035 25.4566 96.4361 23.9855 97.0899 22.6779V22.8087C97.0899 26.1104 95.39 28.3333 91.9248 28.3333C90.2576 28.3333 88.3616 27.7776 87.0867 26.6661L85.681 28.9544C87.1847 30.2947 89.5058 31.112 92.2844 31.112ZM92.5459 22.2856C89.9961 22.2856 88.0347 20.3242 88.0347 17.6436C88.0347 14.963 89.9961 12.9689 92.5459 12.9689C95.0958 12.9689 97.0899 14.9303 97.0899 17.5129C97.0899 20.3242 95.1612 22.2856 92.5459 22.2856ZM112.422 26.6334C117.194 26.6334 121.019 22.9067 121.019 18.232C121.019 13.5247 117.194 9.79797 112.422 9.79797C107.649 9.79797 103.824 13.5247 103.824 18.232C103.824 22.9067 107.649 26.6334 112.422 26.6334ZM112.422 23.1356C109.643 23.1356 107.518 21.0434 107.518 18.232C107.518 15.388 109.643 13.2958 112.422 13.2958C115.2 13.2958 117.325 15.388 117.325 18.232C117.325 21.0434 115.2 23.1356 112.422 23.1356ZM127.753 26.3065V19.7031C127.753 15.4534 130.042 13.7535 133.605 13.7535V9.79797C130.14 9.79797 128.374 11.694 127.753 13.3285V10.1249H124.125V26.3065H127.753ZM143.118 26.6334C145.308 26.6334 147.237 25.7835 148.512 24.2797V26.3065H152.14V10.1249H148.512V12.1844C147.237 10.6806 145.308 9.79797 143.118 9.79797C138.672 9.79797 135.632 13.5573 135.632 18.232C135.632 22.8741 138.672 26.6334 143.118 26.6334ZM144.033 23.1356C141.287 23.1356 139.326 21.0761 139.326 18.232C139.326 15.388 141.287 13.2958 144.033 13.2958C146.616 13.2958 148.512 15.388 148.512 18.232C148.512 21.1088 146.583 23.1356 144.033 23.1356Z" fill="rgba(255,255,255,0.85)"/>
+      <rect x="52.7876" y="3.5874" width="0.683334" height="28.5292" fill="rgba(255,255,255,0.2)"/>
+    </svg>
+  </div>
+
+  <div class="audience-tag">Propuesta interna · Mayo 2026</div>
+  <h1>Automatizar el soporte al cliente<br>con <strong>IA integrada en Intercom</strong></h1>
+  <p class="subtitle">Un agente que clasifica, responde y escala conversaciones en el tono del equipo, con datos reales del negocio. Rollout progresivo sin riesgo.</p>
+
+  <div class="cover-chips">
+    <span class="cover-chip">1.120 convs / mes ✓ verificado</span>
+    <span class="cover-chip">$12–$38 / mes estimado</span>
+    <span class="cover-chip">~3–4 semanas para etapa 1</span>
+    <span class="cover-chip">Cero automatización hacia el cliente en el arranque</span>
+  </div>
+
+  <div class="slide-counter" style="color:#fff;">01 / 11</div>
+</section>
+
+<!-- ══ SLIDE 2 · EL PROBLEMA ══ -->
+<section class="slide slide-light" id="s1">
+  <div class="audience-tag tag-biz">Impacto comercial</div>
+  <div class="kicker">El problema</div>
+  <h2>El soporte escala con el equipo,<br>no con el producto</h2>
+  <p class="slide-sub">Datos verificados contra la API de Intercom. Los marcados con ⚠ vienen de una muestra de 30 conversaciones recientes.</p>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="num" style="color:var(--frost-ink)">1.120</div>
+      <div class="label">conversaciones por mes</div>
+      <div class="source"><span class="badge badge-verified">✓ Verificado API</span></div>
+    </div>
+    <div class="stat-card">
+      <div class="num" style="color:var(--frost-primary)">90%</div>
+      <div class="label">requieren respuesta de Lautaro o Fermín</div>
+      <div class="source"><span class="badge badge-estimate">⚠ Muestra 30 convs</span></div>
+    </div>
+    <div class="stat-card">
+      <div class="num" style="color:var(--frost-ink)">68%</div>
+      <div class="label">de los mensajes CS los escribe Lautaro</div>
+      <div class="source"><span class="badge badge-estimate">⚠ Misma muestra</span></div>
+    </div>
+    <div class="stat-card">
+      <div class="num" style="color:var(--frost-ink)">4,23</div>
+      <div class="label">mensajes del equipo por conversación en promedio</div>
+      <div class="source"><span class="badge badge-estimate">⚠ Muestra 30 convs</span></div>
+    </div>
+  </div>
+
+  <p style="font-size:12px;color:var(--frost-muted);margin-top:16px;">Distribución: 30% de conversaciones tiene 1 solo mensaje · 30% tiene 2–3 · 40% tiene 4 o más</p>
+
+  <div class="slide-counter">02 / 11</div>
+</section>
+
+<!-- ══ SLIDE 3 · CÓMO FUNCIONA ══ -->
+<section class="slide slide-white" id="s2">
+  <div class="audience-tag tag-neutral">Arquitectura general</div>
+  <div class="kicker">Cómo funciona</div>
+  <h2>Pipeline de dos pasos con Intercom como hub</h2>
+  <p class="slide-sub">El webhook es la "oreja" — Intercom nos avisa. La API es la "boca" — nosotros actuamos. Ambos extremos están verificados.</p>
+
+  <div class="pipeline">
+    <div class="pipe-node" style="border-top:3px solid var(--frost-faint);">
+      <div class="pipe-label">Entrada</div>
+      <div class="pipe-name">Webhook Intercom</div>
+      <div class="pipe-desc">Dispara por cada mensaje del cliente. Respuesta al webhook en &lt;200ms. Procesamiento asíncrono.</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-node" style="border-top:3px solid var(--frost-success);">
+      <div class="pipe-label">Paso 1 · Clasificación</div>
+      <div class="pipe-name">Claude Haiku</div>
+      <div class="pipe-desc">Categoría, score 0–1, decisión. ~$0.0002 / mensaje. ~300ms.</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-node" style="border-top:3px solid var(--frost-primary);">
+      <div class="pipe-label">Paso 2 · Generación</div>
+      <div class="pipe-name">Claude Sonnet</div>
+      <div class="pipe-desc">Respuesta con contexto del vendor + Help Center + estilo del equipo. Solo si score ≥ 0.75.</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-node" style="border-top:3px solid var(--frost-warning);">
+      <div class="pipe-label">Salida</div>
+      <div class="pipe-name">Intercom API</div>
+      <div class="pipe-desc">Nota interna, respuesta directa, o asignación al equipo según confianza.</div>
+    </div>
+  </div>
+
+  <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;">
+    <span class="badge badge-tech">Debounce 10s — agrupa mensajes fragmentados</span>
+    <span class="badge badge-tech">Máx. 2 turnos del agente por conversación</span>
+    <span class="badge badge-tech">Integra DB de Cyclone para contexto del vendor en runtime</span>
+    <span class="badge badge-tech">Patrón asíncrono ya existe en Cyclone (webhooks Boxful/Stripe)</span>
+  </div>
+
+  <div class="slide-counter">03 / 11</div>
+</section>
+
+<!-- ══ SLIDE 4 · MODELOS DE IA ══ -->
+<section class="slide slide-light" id="s3">
+  <div class="audience-tag tag-tech">Requerimientos técnicos</div>
+  <div class="kicker">Modelos de IA que intervienen</div>
+  <h2>Dos modelos de Claude vía API — sin "skills" adicionales</h2>
+  <p class="slide-sub">El agente usa la API de Anthropic directamente. No requiere fine-tuning ni modelos especializados. Los prompts son el mecanismo de configuración.</p>
+
+  <div class="skills-grid">
+    <div class="skill-card haiku">
+      <div class="sk-label">Paso 1 · Clasificación</div>
+      <div class="sk-name">Claude Haiku</div>
+      <div class="sk-desc">Modelo liviano y rápido. Lee el mensaje del cliente, determina categoría, calcula score de confianza y decide si escalar. Structured output (JSON) con campos: <code style="font-size:11px;background:#f1f5f9;padding:1px 4px;border-radius:4px;">category</code>, <code style="font-size:11px;background:#f1f5f9;padding:1px 4px;border-radius:4px;">confidence</code>, <code style="font-size:11px;background:#f1f5f9;padding:1px 4px;border-radius:4px;">needs_human</code>, <code style="font-size:11px;background:#f1f5f9;padding:1px 4px;border-radius:4px;">has_context</code>.</div>
+      <div class="sk-cost" style="color:var(--frost-success);">~$0.0002 / mensaje</div>
+    </div>
+    <div class="skill-card sonnet">
+      <div class="sk-label">Paso 2 · Generación</div>
+      <div class="sk-name">Claude Sonnet</div>
+      <div class="sk-desc">Modelo principal. Recibe historial de conversación + contexto del vendor desde la DB + artículos del Help Center relevantes + perfil de estilo del equipo. Solo se llama si Haiku da luz verde.</div>
+      <div class="sk-cost" style="color:var(--frost-primary);">~$0.015–$0.020 / llamada (estimado)</div>
+    </div>
+    <div class="skill-card cyclone">
+      <div class="sk-label">Infraestructura existente</div>
+      <div class="sk-name">Cyclone (Express API)</div>
+      <div class="sk-desc">El agente vive en <code style="font-size:11px;background:#f1f5f9;padding:1px 4px;border-radius:4px;">src/services/intercom/ai-processor.ts</code>. Se integra al webhook existente de Intercom en <code style="font-size:11px;background:#f1f5f9;padding:1px 4px;border-radius:4px;">src/controllers/</code>. Patrón idéntico al webhook de Boxful — ya está probado en producción.</div>
+      <div class="sk-cost" style="color:var(--frost-warning);">Sin costo adicional de infraestructura</div>
+    </div>
+  </div>
+
+  <p style="font-size:12px;color:var(--frost-muted);margin-top:14px;">
+    ⚠ El costo por llamada a Sonnet depende del largo real de los historiales de conversación y del contexto del vendor — no fue medido todavía.
+  </p>
+
+  <div class="slide-counter">04 / 11</div>
+</section>
+
+<!-- ══ SLIDE 5 · VALIDACIÓN TÉCNICA ══ -->
+<section class="slide slide-white" id="s4">
+  <div class="audience-tag tag-tech">Requerimientos técnicos</div>
+  <div class="kicker">Validación de API</div>
+  <h2>Qué está probado — qué hay que construir</h2>
+  <p class="slide-sub">Todo lo confirmado fue testeado contra la API de Intercom en producción antes de escribir esta propuesta.</p>
+
+  <div class="two-col">
+    <div class="col-card">
+      <h3><span style="color:var(--frost-success)">✓</span> Confirmado — existe y funciona</h3>
+      <div class="api-row"><span class="api-name">Nota interna (solo equipo, cliente no la ve)</span><span class="api-status ok">✓ Testeado</span></div>
+      <div class="api-row"><span class="api-name">Reply directo al cliente</span><span class="api-status ok">✓ Testeado</span></div>
+      <div class="api-row"><span class="api-name">Asignar conversación a admin o equipo</span><span class="api-status ok">✓ Testeado</span></div>
+      <div class="api-row"><span class="api-name">Webhook por cada mensaje entrante</span><span class="api-status ok">✓ Confirmado</span></div>
+      <div class="api-row"><span class="api-name">Patrón webhook asíncrono en Cyclone</span><span class="api-status ok">✓ Ya en prod</span></div>
+      <div class="api-row"><span class="api-name">Servicio Intercom en Cyclone (<code style="font-size:11px">src/services/intercom/</code>)</span><span class="api-status ok">✓ Existe</span></div>
+    </div>
+    <div class="col-card">
+      <h3><span style="color:var(--frost-accent)">✗</span> No disponible vía API</h3>
+      <div class="api-row"><span class="api-name">Draft reply (pre-carga el compositor)</span><span class="api-status no">✗ Solo UI</span></div>
+      <p style="font-size:12px;color:var(--frost-muted);margin-top:12px;line-height:1.6;">
+        En etapa 1, esto significa que el operador tiene que <strong>copiar y pegar</strong> la respuesta sugerida de la nota interna. No existe botón de "aprobar con un clic" via API de Intercom.
+      </p>
+
+      <h3 style="margin-top:18px;"><span style="color:var(--frost-warning)">⚙</span> Por construir</h3>
+      <div class="api-row"><span class="api-name">ai-processor.ts + debounce + contador de turnos</span><span class="api-status warn">Por construir</span></div>
+      <div class="api-row"><span class="api-name">Integración DB Cyclone → contexto vendor</span><span class="api-status warn">Por construir</span></div>
+      <div class="api-row"><span class="api-name">Base de conocimiento interna</span><span class="api-status warn">Por construir</span></div>
+      <div class="api-row"><span class="api-name">Perfil de estilo del equipo</span><span class="api-status warn">Por construir</span></div>
+    </div>
+  </div>
+
+  <div class="slide-counter">05 / 11</div>
+</section>
+
+<!-- ══ SLIDE 6 · BASE DE CONOCIMIENTO ══ -->
+<section class="slide slide-light" id="s5">
+  <div class="audience-tag tag-impl">El trabajo más importante</div>
+  <div class="kicker">Base de conocimiento</div>
+  <h2>El Help Center actual es insuficiente — hay que construirlo antes de lanzar</h2>
+  <p class="slide-sub">Sin base de conocimiento sólida, el agente alucina o escala todo. Es la inversión de tiempo más grande y la única parte que <strong>no se puede automatizar</strong>.</p>
+
+  <div class="kb-grid">
+    <div class="kb-card missing">
+      <h4>❌ Falta en el Help Center</h4>
+      <div class="kb-item"><span>→</span>Período de gracia: qué pasa, cuánto dura, cómo se sale</div>
+      <div class="kb-item"><span>→</span>Estados de facturación de Boxful (scheduled, paid, dunning, unpaid, cancelled) y qué significa cada uno para el vendor</div>
+      <div class="kb-item"><span>→</span>Códigos de rechazo de tarjetas (4014 fondos insuf., 4018, 4040, etc.) — qué decirle al cliente</div>
+      <div class="kb-item"><span>→</span>Diferencia entre plan activo y suscripción al día</div>
+      <div class="kb-item"><span>→</span>Qué hace el agente con imágenes/videos (no puede procesarlos)</div>
+    </div>
+    <div class="kb-card missing">
+      <h4>⚠ Bugs activos sin documentar</h4>
+      <div class="kb-item"><span>→</span>Bug período de gracia: se muestra mal en el panel del vendor</div>
+      <div class="kb-item"><span>→</span>Bug facturación: planes unpaid aparecen como activos</div>
+      <div class="kb-item"><span>→</span>Bug CTA "Pagar ahora": no siempre aparece cuando debería</div>
+      <div class="kb-item"><span>→</span>Inconsistencia WA: contador de mensajes no coincide entre vistas</div>
+      <div class="kb-item"><span>→</span>Bug reserva "cualquier profesional": asignación incorrecta</div>
+      <p style="font-size:11px;margin-top:8px;color:#9f1239;font-weight:600;">Cada uno de estos debe documentarse como "escalar siempre" para que el agente no los responda mal.</p>
+    </div>
+    <div class="kb-card has">
+      <h4>✓ Ya existe (parcialmente)</h4>
+      <div class="kb-item"><span>→</span>Artículos de Help Center: configuración de servicios, horarios, eventos</div>
+      <div class="kb-item"><span>→</span>Gift cards: documentación completa disponible</div>
+      <div class="kb-item"><span>→</span>Conexión de MercadoPago y medios de pago</div>
+      <div class="kb-item"><span>→</span>Creación de planes mensuales y gestión de clientes</div>
+    </div>
+    <div class="kb-card has">
+      <h4>✓ También hay que construir</h4>
+      <div class="kb-item"><span>→</span>Perfil de estilo: ~247 conversaciones de Lautaro y Fermín ya están disponibles para entrenamiento</div>
+      <div class="kb-item"><span>→</span>Mapa de categorías → artículos (KB_MAP): qué artículos inyectar según el tipo de pregunta</div>
+      <div class="kb-item"><span>→</span>Lista de casos de escalación forzada (bugs + situaciones complejas)</div>
+    </div>
+  </div>
+
+  <div class="slide-counter">06 / 11</div>
+</section>
+
+<!-- ══ SLIDE 7 · PASO A PASO NO CODE ══ -->
+<section class="slide slide-white" id="s6">
+  <div class="audience-tag tag-impl">Guía de implementación</div>
+  <div class="kicker">Paso a paso — sin código</div>
+  <h2>Lo que no requiere programar</h2>
+  <p class="slide-sub">Esta parte la puede hacer cualquier persona del equipo con acceso a Intercom, Notion y las conversaciones de soporte. Es el cuello de botella real del proyecto.</p>
+
+  <div style="margin-top:20px;">
+    <div class="step-col-header nocode">Trabajo editorial y de contexto — estimado 5–8 días</div>
+    <div class="step-col-body">
+      <div class="step-row">
+        <div class="sr-title">1. Auditoría de bugs activos</div>
+        <div class="sr-desc">Listar los bugs conocidos del producto con descripción del síntoma, cuándo ocurre y qué decirle al cliente mientras no está resuelto. Cada bug se convierte en una regla de "escalar siempre".</div>
+        <div class="sr-time">1 día · Con Lautaro o Fermín</div>
+      </div>
+      <div class="step-row">
+        <div class="sr-title">2. Completar el Help Center</div>
+        <div class="sr-desc">Escribir los artículos faltantes: período de gracia, estados de facturación Boxful, códigos de rechazo de tarjeta, diferencia entre plan activo y suscripción. Estos artículos son los que el agente va a inyectar como contexto al responder.</div>
+        <div class="sr-time">2–3 días · Con Lautaro + conocimiento del producto</div>
+      </div>
+      <div class="step-row">
+        <div class="sr-title">3. Construir la lista de escalación forzada</div>
+        <div class="sr-desc">Documentar todos los casos que el agente NO puede responder bajo ninguna circunstancia: cancelaciones, cobros incorrectos, bugs activos, situaciones legales, preguntas sobre funciones que no existen, conversaciones con enojo explícito.</div>
+        <div class="sr-time">0.5 días</div>
+      </div>
+      <div class="step-row">
+        <div class="sr-title">4. Armar el perfil de estilo del equipo</div>
+        <div class="sr-desc">Seleccionar 30–50 conversaciones representativas de Lautaro y Fermín (bien resueltas, en diferentes categorías) y redactar una guía de tono: vocabulario habitual, cómo saludan, cómo piden información adicional, cómo cierran. El desarrollador lo convierte en el system prompt del agente.</div>
+        <div class="sr-time">1–2 días</div>
+      </div>
+      <div class="step-row">
+        <div class="sr-title">5. Definir el mapa de categorías</div>
+        <div class="sr-desc">Para cada categoría de pregunta (pagos, configuración, planes, WhatsApp, reservas, etc.), listar qué artículos del Help Center son relevantes. Esto permite que el agente inyecte solo la información necesaria y no todo el Help Center.</div>
+        <div class="sr-time">1 día</div>
+      </div>
+      <div class="step-row">
+        <div class="sr-title">6. Revisión manual durante testing (etapa 1)</div>
+        <div class="sr-desc">Durante las primeras 2 semanas de funcionamiento en modo nota interna, revisar cada respuesta sugerida por el agente. Anotar qué estuvo bien y qué estuvo mal. Esa retroalimentación alimenta el ajuste de prompts y la base de conocimiento.</div>
+        <div class="sr-time">Ongoing · 30 min/día aprox.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-counter">07 / 11</div>
+</section>
+
+<!-- ══ SLIDE 8 · PASO A PASO CODE ══ -->
+<section class="slide slide-light" id="s7">
+  <div class="audience-tag tag-tech">Requerimientos técnicos</div>
+  <div class="kicker">Paso a paso — con código</div>
+  <h2>Lo que requiere desarrollo</h2>
+  <p class="slide-sub">Todo vive en Cyclone (Express/TypeScript). El patrón de webhook asíncrono ya existe — se reutiliza.</p>
+
+  <div style="margin-top:16px;">
+    <div class="step-col-header code">Desarrollo en Cyclone — estimado 6–8 días</div>
+    <div class="step-col-body">
+      <div class="step-row">
+        <div class="sr-title">1. Webhook + debounce (<code style="font-size:11px">intercom.webhook.ts</code>)</div>
+        <div class="sr-desc">Recibir eventos de Intercom, validar HMAC, responder en &lt;200ms. Implementar timer de 10 segundos que acumula mensajes fragmentados antes de procesar. Patrón idéntico al webhook de Boxful.</div>
+        <div class="sr-time">1.5 días</div>
+      </div>
+      <div class="step-row">
+        <div class="sr-title">2. Clasificador Haiku (<code style="font-size:11px">ai-processor.ts</code> — Paso 1)</div>
+        <div class="sr-desc">Llamada a Claude Haiku con structured output. Devuelve: categoría, score, needs_human, has_context, agent_turn_count. Implementar el contador de turnos por conversación (máx. 2 en etapa 1, configurable).</div>
+        <div class="sr-time">1.5 días</div>
+      </div>
+      <div class="step-row">
+        <div class="sr-title">3. Generador Sonnet (<code style="font-size:11px">ai-processor.ts</code> — Paso 2)</div>
+        <div class="sr-desc">Llamada a Claude Sonnet con: historial de conversación + contexto del vendor desde DB + artículos del Help Center según KB_MAP + perfil de estilo. Sistema de prompt caching para reducir costo ~90% en tokens repetidos.</div>
+        <div class="sr-time">2 días</div>
+      </div>
+      <div class="step-row">
+        <div class="sr-title">4. Integración Intercom API (<code style="font-size:11px">src/services/intercom/index.ts</code>)</div>
+        <div class="sr-desc">Agregar 3 métodos al servicio existente: <code style="font-size:11px">getConversation()</code>, <code style="font-size:11px">createInternalNote()</code>, <code style="font-size:11px">assignConversation()</code>. El servicio base ya existe.</div>
+        <div class="sr-time">0.5 días</div>
+      </div>
+      <div class="step-row">
+        <div class="sr-title">5. Contexto del vendor en runtime</div>
+        <div class="sr-desc">Dado el external_id del cliente en Intercom, obtener de la DB: plan activo, país, cantidad de staff, estado de pago, período de gracia. Este contexto se inyecta en cada llamada a Sonnet.</div>
+        <div class="sr-time">1 día</div>
+      </div>
+      <div class="step-row">
+        <div class="sr-title">6. Testing + calibración de confianza</div>
+        <div class="sr-desc">Correr el agente en modo nota interna sobre conversaciones reales. Ajustar threshold de confianza (default 0.75) y prompts según los resultados de revisión manual.</div>
+        <div class="sr-time">1.5 días</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-counter">08 / 11</div>
+</section>
+
+<!-- ══ SLIDE 9 · ROLLOUT ══ -->
+<section class="slide slide-white" id="s8">
+  <div class="audience-tag tag-neutral">Plan de lanzamiento</div>
+  <div class="kicker">Rollout progresivo</div>
+  <h2>Tres etapas — el cliente no recibe nada automático hasta la etapa 2</h2>
+  <p class="slide-sub">Solo se avanza a la siguiente etapa si los datos de la anterior lo justifican.</p>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-label">Semanas<br>1–2</div>
+      <div class="tl-body">
+        <div class="tl-title">Etapa 1 — Solo notas internas</div>
+        <div class="tl-desc">El agente genera respuestas pero las escribe como nota interna visible solo para el equipo. Lautaro o Fermín leen, copian el texto y envían manualmente. Cero automatización hacia el cliente. Objetivo: calibrar base de conocimiento y medir tasa de precisión real.</div>
+        <div class="tl-tags"><span class="badge badge-nocode">Sin riesgo para el cliente</span><span class="badge badge-estimate">⚠ Requiere 30 min/día de revisión</span></div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-label">Semanas<br>3–4</div>
+      <div class="tl-body">
+        <div class="tl-title">Etapa 2 — Semi-automático en categorías acotadas</div>
+        <div class="tl-desc">Con datos reales de etapa 1, activar publicación directa solo en categorías con score consistentemente alto y cero errores (ej: saludos, preguntas de configuración básica con respuesta inequívoca). El resto sigue como nota interna.</div>
+        <div class="tl-tags"><span class="badge badge-tech">Configurable por categoría sin tocar código</span></div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-label">Semana 5<br>en adelante</div>
+      <div class="tl-body">
+        <div class="tl-title">Etapa 3 — Automático con supervisión</div>
+        <div class="tl-desc">El agente publica directamente en la mayoría de los casos. Nota interna cuando confianza es media. Escala sin respuesta cuando es baja. Siempre escala: cancelaciones, cobros incorrectos, bugs sin resolver, imágenes/video, enojo explícito, conversaciones con humano ya asignado.</div>
+        <div class="tl-tags"><span class="badge badge-verified">Meta: 30–50% de convs resueltas sin intervención humana</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-counter">09 / 11</div>
+</section>
+
+<!-- ══ SLIDE 10 · COSTOS ══ -->
+<section class="slide slide-light" id="s9">
+  <div class="audience-tag tag-biz">Impacto comercial</div>
+  <div class="kicker">Análisis de costos</div>
+  <h2>$12–$38 / mes estimado en API de Claude</h2>
+  <p class="slide-sub">El costo real se sabrá en etapa 1. Los tres escenarios son estimados — no datos medidos.</p>
+
+  <table class="cost-table">
+    <thead>
+      <tr>
+        <th>Escenario</th>
+        <th>Convs resueltas / mes</th>
+        <th>Costo mensual</th>
+        <th>Costo / conv resuelta</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>30% resolución automática</td>
+        <td>~336</td>
+        <td>~$20</td>
+        <td>~$0.060</td>
+      </tr>
+      <tr class="hl">
+        <td>40% resolución automática <span style="font-size:11px;font-weight:400;color:var(--frost-muted)">(escenario de referencia)</span></td>
+        <td>~450</td>
+        <td>~$26</td>
+        <td>~$0.058</td>
+      </tr>
+      <tr>
+        <td>50% resolución automática</td>
+        <td>~560</td>
+        <td>~$32</td>
+        <td>~$0.057</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">
+    <span class="badge badge-verified">✓ 1.120 conv/mes — verificado API</span>
+    <span class="badge badge-estimate">⚠ % de resolución — a medir en etapa 1</span>
+    <span class="badge badge-estimate">⚠ Costo / token — estimado, no medido</span>
+  </div>
+
+  <p style="font-size:12px;color:var(--frost-muted);margin-top:12px;max-width:660px;line-height:1.6;">
+    Incluso en el peor escenario razonable (~15% de resolución), el costo mensual sería ~$12. El techo realista (~60%) sería ~$38/mes. No hay infraestructura adicional — el agente corre en Cyclone que ya está en producción.
+  </p>
+
+  <div class="slide-counter">10 / 11</div>
+</section>
+
+<!-- ══ SLIDE 11 · FAQ + PRÓXIMOS PASOS ══ -->
+<section class="slide slide-ink" id="s10">
+  <div class="audience-tag">Preguntas frecuentes</div>
+  <div class="kicker" style="color:rgba(255,255,255,0.4);">Cierre</div>
+  <h2>Respuestas a las preguntas más probables</h2>
+
+  <div class="faq-list" style="max-width:720px;">
+    <div class="faq-item">
+      <div class="faq-q">¿Qué pasa si el agente responde algo incorrecto? <span class="faq-arrow">▾</span></div>
+      <div class="faq-a">En etapa 1 es imposible — el cliente nunca ve las notas internas. En etapa 2 y 3, el agente solo publica en categorías donde históricamente tuvo score alto y cero errores. Además, todos los bugs activos están documentados como "escalar siempre" — el agente no los toca.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">¿Cuánto tiempo lleva construirlo? <span class="faq-arrow">▾</span></div>
+      <div class="faq-a">El desarrollo en Cyclone son 6–8 días. El cuello de botella real es la base de conocimiento: completar el Help Center, documentar bugs y armar el perfil de estilo lleva 5–8 días más. Total estimado para lanzar etapa 1: 3–4 semanas incluyendo testing.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">¿Qué pasa con los mensajes de audio de WhatsApp? <span class="faq-arrow">▾</span></div>
+      <div class="faq-a">Los audios de WhatsApp llegan como archivos video/mp4 a Intercom — el agente no puede transcribirlos ni procesarlos. Esas conversaciones (~10% del total) se escalan directamente al equipo sin que el agente intente responder.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">¿El agente puede tomar acciones en el sistema? <span class="faq-arrow">▾</span></div>
+      <div class="faq-a">No. En esta versión el agente solo informa y guía — no puede cancelar planes, procesar reembolsos, cambiar configuraciones ni modificar datos del vendor. Cualquier acción que requiera intervención en el sistema se escala al equipo.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">¿Cómo medimos si funciona? <span class="faq-arrow">▾</span></div>
+      <div class="faq-a">Cuatro métricas: % de conversaciones resueltas sin intervención humana (meta ≥30%), CSAT de conversaciones resueltas por IA vs. CSAT actual, tasa de respuestas incorrectas publicadas (meta &lt;1%), y tiempo de primera respuesta (meta &lt;2 minutos). Para medir CSAT hay que establecer la línea de base antes de lanzar.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">¿Qué pasa si el volumen de conversaciones crece mucho? <span class="faq-arrow">▾</span></div>
+      <div class="faq-a">El costo escala linealmente con el volumen — si las conversaciones se triplican, el costo pasa de ~$26 a ~$78/mes. La arquitectura es stateless y corre en el mismo Cyclone que ya maneja producción, sin necesidad de infraestructura adicional.</div>
+    </div>
+  </div>
+
+  <div style="margin-top:24px;padding:16px 20px;background:rgba(255,255,255,0.06);border-radius:var(--r-item);border:1px solid rgba(255,255,255,0.1);max-width:720px;">
+    <p style="font-size:13px;font-weight:600;color:#fff;margin-bottom:6px;">Para arrancar necesitamos:</p>
+    <p style="font-size:12.5px;color:rgba(255,255,255,0.55);line-height:1.65;">
+      (1) Luz verde para empezar · (2) Tiempo de Lautaro/Fermín para la base de conocimiento (~5–8 días en paralelo con el desarrollo) · (3) Establecer métricas de CSAT actuales antes del lanzamiento
+    </p>
+  </div>
+
+  <div class="slide-counter" style="color:#fff;">11 / 11</div>
+</section>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const nav = document.getElementById('nav');
+
+slides.forEach((_, i) => {
+  const dot = document.createElement('button');
+  dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+  dot.title = `Slide ${i + 1}`;
+  dot.onclick = () => slides[i].scrollIntoView({ behavior: 'smooth' });
+  nav.appendChild(dot);
+});
+
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      document.querySelectorAll('.nav-dot').forEach((d, i) => {
+        d.classList.toggle('active', slides[i] === e.target);
+      });
+    }
+  });
+}, { threshold: 0.5 });
+
+slides.forEach(s => obs.observe(s));
+
+// FAQ toggle
+document.querySelectorAll('.faq-q').forEach(q => {
+  q.addEventListener('click', () => {
+    q.closest('.faq-item').classList.toggle('open');
+  });
+});
+</script>
+</body>
+</html>
