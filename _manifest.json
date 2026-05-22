@@ -4,6 +4,16 @@
   "updated_at": "2026-05-22",
   "outputs": [
     {
+      "type": "proposal",
+      "typeLabel": "Review",
+      "title": "Placas de Reserva · Rediseño implementado",
+      "description": "Capturas del build local del rediseño implementado de las placas de reserva que genera Alfred (6 Feed + 6 Story de 'cómo reservar'). El marco toma la marca real del negocio (color + tipografías del storefront por username), el iframe del producto queda intacto, y se corrigieron los bugs de render (texto cortado, línea fuera del canvas, numeración off-by-one). Incluye stress-test con 3 vendors de distinto color (mauve, charcoal, blanco→fallback azul) y notas de qué queda para Fase 2 (fecha/datos en vivo). Para feedback de #development antes de deployar.",
+      "detail": "review · 12 placas + 3 vendors · pre-deploy",
+      "date": "MAY 2026",
+      "href": "./placas-reserva-implementado-2026-05/index.html",
+      "slug": "placas-reserva-implementado-2026-05"
+    },
+    {
       "type": "deck",
       "typeLabel": "Deck",
       "title": "Ágora Pulse · Pitch Brainstorming",
