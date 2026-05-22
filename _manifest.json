@@ -1,8 +1,18 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
   "version": 1,
-  "updated_at": "2026-05-21",
+  "updated_at": "2026-05-22",
   "outputs": [
+    {
+      "type": "deck",
+      "typeLabel": "Deck",
+      "title": "Ágora Pulse · Pitch Brainstorming",
+      "description": "Pitch de producto para el brainstorming: Ágora Pulse, una banda semanal in-app en Flash (pro.agora.red) que le da a cada profesional un brief de 30 segundos — cómo le fue su semana (reservas, ingresos, ocupación), una cosa accionable para hacer (insight con IA sobre clientes dormidos/huecos), las novedades de Ágora y un tip de su rubro. Incluye mockup fiel de la card, placement en el dashboard real + campanita, fuentes de datos por bloque (3 de 4 son SQL puro, IA solo en el insight con gpt-4o-mini ~$2/mes), condicionales de a quién/cuándo se muestra, y el flujo de aprobación semanal vía un nuevo canal #pulse-semanal (capa global revisada + 5 ejemplos personalizados → aprobar → publicar). Data real de prod: 1.197 vendors activos, 89% con reservas/semana, 241 clientes promedio.",
+      "detail": "12 slides · pitch de producto · mockups de UI",
+      "date": "MAY 2026",
+      "href": "./agora-pulse-2026-05/index.html",
+      "slug": "agora-pulse-2026-05"
+    },
     {
       "type": "proposal",
       "typeLabel": "Proposal",

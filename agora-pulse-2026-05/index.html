@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ágora Pulse · Pitch Brainstorming</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;500;600;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --frost-primary:#0072FB; --frost-primary-hover:#005CD4; --frost-primary-soft:#EEF6FF; --frost-primary-wash:rgba(0,114,251,0.08);
+  --frost-accent:#FF4658; --frost-accent-soft:#FFE3E6; --frost-accent-wash:rgba(255,70,88,0.08);
+  --frost-success:#10B981; --frost-success-soft:#A9FFE7; --frost-warning:#F59E0B; --frost-warning-soft:#FFE77B;
+  --frost-ink:#0F172A; --frost-ink-soft:#3A3A3A; --frost-muted:#868686; --frost-faint:#B5B5B5;
+  --frost-surface:#FFFFFF; --frost-surface-muted:#EFF3F9; --frost-border:#E2E8F0; --frost-border-soft:#F2F2F2;
+  --r-sm:6px; --r-item:10px; --r-btn:12px; --r-card:20px; --r-shell:28px; --r-chip:999px;
+  --sh-xs:0 1px 2px rgba(15,23,42,0.04); --sh-sm:0 4px 12px -4px rgba(15,23,42,0.10);
+  --sh-md:0 10px 30px -12px rgba(15,23,42,0.15); --sh-lg:0 20px 50px -20px rgba(15,23,42,0.25);
+  --sh-glow:0 4px 18px -2px rgba(0,114,251,0.30); --sh-glow-lg:0 8px 30px -4px rgba(0,114,251,0.40);
+  --sans:'Montserrat',system-ui,-apple-system,sans-serif;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-snap-type:y mandatory; scroll-behavior:smooth; }
+body { font-family:var(--sans); color:var(--frost-ink); background:var(--frost-surface-muted);
+  font-variant-numeric:tabular-nums; -webkit-font-smoothing:antialiased; }
+.slide { min-height:100vh; scroll-snap-align:start; position:relative;
+  display:flex; flex-direction:column; justify-content:center; padding:clamp(38px,6vw,100px); overflow:hidden; }
+.kicker { font-size:11.5px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase;
+  color:var(--frost-primary); margin-bottom:18px; display:flex; align-items:center; gap:10px; }
+.kicker::before { content:""; width:26px; height:2px; background:var(--frost-primary); display:inline-block; }
+h1 { font-weight:200; font-size:clamp(40px,6vw,76px); line-height:1.02; letter-spacing:-0.02em; }
+h1 b { font-weight:600; }
+h2 { font-weight:300; font-size:clamp(26px,3.4vw,44px); line-height:1.08; letter-spacing:-0.015em; margin-bottom:12px; }
+h2 b { font-weight:600; }
+.lead { font-weight:300; font-size:clamp(15px,1.4vw,20px); color:var(--frost-ink-soft); line-height:1.55; max-width:62ch; }
+.chrome { position:absolute; top:34px; left:clamp(38px,6vw,100px); right:clamp(38px,6vw,100px);
+  display:flex; align-items:center; justify-content:space-between; z-index:5; }
+.pageno { font-size:11.5px; font-weight:600; letter-spacing:0.18em; color:var(--frost-faint); }
+.wordmark { display:flex; align-items:center; gap:9px; font-weight:500; font-size:15px; letter-spacing:-0.01em; }
+.wordmark .dot { width:9px; height:9px; border-radius:50%; background:var(--frost-primary); }
+.lwm { display:flex; align-items:center; gap:9px; font-weight:500; font-size:14px; color:var(--frost-ink); }
+.lwm .dot { width:8px; height:8px; border-radius:50%; background:var(--frost-primary); }
+
+/* COVER */
+.cover { background:linear-gradient(160deg,#0B1220 0%,#0F172A 55%,#142A52 100%); color:#fff; }
+.cover .kicker { color:#7FB4FF; } .cover .kicker::before { background:#7FB4FF; }
+.cover h1 { color:#fff; max-width:18ch; }
+.cover .lead { color:rgba(255,255,255,0.72); margin-top:24px; }
+.cover .orbit { position:absolute; width:620px; height:620px; right:-160px; top:50%; transform:translateY(-50%);
+  border-radius:50%; background:radial-gradient(circle at 35% 35%,rgba(0,114,251,0.55),transparent 62%); filter:blur(10px); opacity:0.65; }
+.cover .ping { position:absolute; right:120px; top:50%; transform:translateY(-50%); width:14px; height:14px; border-radius:50%;
+  background:var(--frost-success); animation:ping 2.4s infinite; }
+@keyframes ping { 0%{box-shadow:0 0 0 0 rgba(16,185,129,0.45);} 70%{box-shadow:0 0 0 38px rgba(16,185,129,0);} 100%{box-shadow:0 0 0 0 rgba(16,185,129,0);} }
+.cover .wordmark { color:#fff; } .cover .wordmark .dot { background:#7FB4FF; }
+
+/* PROBLEM */
+.cols { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:38px; }
+.pcard { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); padding:26px; box-shadow:var(--sh-sm); }
+.pcard .ic { width:42px; height:42px; border-radius:var(--r-btn); display:flex; align-items:center; justify-content:center;
+  background:var(--frost-accent-wash); color:var(--frost-accent); font-size:20px; margin-bottom:15px; }
+.pcard h3 { font-size:16.5px; font-weight:600; margin-bottom:7px; }
+.pcard p { font-size:13.5px; font-weight:300; color:var(--frost-muted); line-height:1.5; }
+
+/* SPLIT */
+.split { display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; }
+@media(max-width:980px){ .split{ grid-template-columns:1fr; gap:32px; } .cols{ grid-template-columns:1fr; } }
+
+/* PULSE CARD */
+.flash-frame { background:var(--frost-surface-muted); border:1px solid var(--frost-border); border-radius:var(--r-shell);
+  padding:18px; box-shadow:var(--sh-lg); position:relative; }
+.flash-topbar { display:flex; align-items:center; justify-content:space-between; padding:4px 8px 16px; }
+.flash-topbar .dots { display:flex; gap:6px; }
+.flash-topbar .dots span { width:9px; height:9px; border-radius:50%; background:var(--frost-border); }
+.flash-topbar .url { font-size:11px; color:var(--frost-faint); font-weight:500; }
+.pulse { background:var(--frost-surface); border-radius:var(--r-card); box-shadow:var(--sh-md); overflow:hidden; border:1px solid var(--frost-border); }
+.pulse-head { padding:18px 20px 14px; background:linear-gradient(135deg,#0F172A 0%,#16315E 100%); color:#fff;
+  display:flex; align-items:flex-start; justify-content:space-between; }
+.pulse-head .t { display:flex; align-items:center; gap:9px; font-weight:600; font-size:14px; }
+.pulse-head .t .pdot { width:8px; height:8px; border-radius:50%; background:var(--frost-success); animation:ping 2.4s infinite; }
+.pulse-head .sub { font-size:11px; font-weight:300; color:rgba(255,255,255,0.6); margin-top:3px; }
+.pulse-head .close { color:rgba(255,255,255,0.5); font-size:15px; }
+.pulse-body { padding:6px 18px 16px; }
+.block { padding:15px 0; border-bottom:1px solid var(--frost-border-soft); }
+.block:last-child { border-bottom:none; }
+.block .lbl { font-size:10px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:var(--frost-faint);
+  margin-bottom:11px; display:flex; align-items:center; gap:7px; }
+.block .lbl .n { width:17px; height:17px; border-radius:50%; background:var(--frost-primary-soft); color:var(--frost-primary);
+  display:flex; align-items:center; justify-content:center; font-size:9.5px; }
+.metrics { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+.metric { background:var(--frost-surface-muted); border-radius:var(--r-item); padding:11px 12px; }
+.metric .v { font-size:21px; font-weight:600; letter-spacing:-0.02em; line-height:1; }
+.metric .k { font-size:10.5px; font-weight:500; color:var(--frost-muted); margin-top:5px; }
+.metric .d { font-size:10.5px; font-weight:600; margin-top:6px; display:inline-flex; align-items:center; gap:3px; }
+.up { color:var(--frost-success); } .down { color:var(--frost-accent); }
+.insight { background:var(--frost-primary-soft); border:1px solid rgba(0,114,251,0.16); border-radius:var(--r-item);
+  padding:13px 14px; display:flex; gap:12px; align-items:flex-start; }
+.insight .spark { font-size:17px; line-height:1; }
+.insight p { font-size:13px; font-weight:500; color:var(--frost-ink); line-height:1.45; }
+.insight .cta { margin-top:9px; display:inline-block; background:var(--frost-primary); color:#fff; font-size:11.5px; font-weight:600;
+  padding:7px 13px; border-radius:var(--r-btn); box-shadow:var(--sh-glow); }
+.novedad { display:flex; gap:11px; align-items:center; }
+.novedad .pill { background:var(--frost-warning-soft); color:#92610a; font-size:9.5px; font-weight:600; letter-spacing:0.04em;
+  text-transform:uppercase; padding:4px 9px; border-radius:var(--r-chip); white-space:nowrap; }
+.novedad p { font-size:12.5px; font-weight:500; color:var(--frost-ink-soft); line-height:1.4; }
+.tip { display:flex; gap:11px; align-items:center; }
+.tip .ic { font-size:16px; }
+.tip p { font-size:12.5px; font-weight:300; color:var(--frost-muted); line-height:1.45; }
+.tip p b { font-weight:600; color:var(--frost-ink-soft); }
+
+.bullets { margin-top:28px; display:flex; flex-direction:column; gap:15px; }
+.bullets li { list-style:none; display:flex; gap:14px; align-items:flex-start; }
+.bullets .num { flex-shrink:0; width:30px; height:30px; border-radius:var(--r-btn); background:var(--frost-ink); color:#fff;
+  display:flex; align-items:center; justify-content:center; font-weight:600; font-size:13px; }
+.bullets b { font-weight:600; font-size:15px; }
+.bullets span { display:block; font-weight:300; font-size:13px; color:var(--frost-muted); margin-top:2px; line-height:1.45; }
+
+/* DASHBOARD MOCK (placement) */
+.dash { background:#fff; border:1px solid var(--frost-border); border-radius:var(--r-shell); box-shadow:var(--sh-lg);
+  padding:24px 26px; position:relative; }
+.dash .greet { display:flex; align-items:center; justify-content:space-between; margin-bottom:18px; }
+.dash .greet h4 { font-weight:300; font-size:24px; letter-spacing:-0.01em; }
+.dash .greet h4 b { font-weight:600; }
+.dash .greet .right { display:flex; align-items:center; gap:14px; }
+.bell { position:relative; width:34px; height:34px; border-radius:var(--r-chip); background:var(--frost-surface-muted);
+  display:flex; align-items:center; justify-content:center; font-size:16px; }
+.bell .badge { position:absolute; top:-2px; right:-2px; min-width:16px; height:16px; padding:0 4px; border-radius:var(--r-chip);
+  background:var(--frost-accent); color:#fff; font-size:9.5px; font-weight:700; display:flex; align-items:center; justify-content:center; border:2px solid #fff; }
+.dash .pulse-band { border-radius:var(--r-card); padding:16px 18px; background:linear-gradient(120deg,#0F172A,#16315E);
+  color:#fff; display:flex; align-items:center; gap:16px; box-shadow:0 0 0 3px rgba(0,114,251,0.25), var(--sh-glow); position:relative; }
+.dash .pulse-band .pdot { width:9px; height:9px; border-radius:50%; background:var(--frost-success); flex-shrink:0; animation:ping 2.4s infinite; }
+.dash .pulse-band .txt b { font-weight:600; font-size:14px; }
+.dash .pulse-band .txt span { display:block; font-size:11.5px; font-weight:300; color:rgba(255,255,255,0.65); margin-top:2px; }
+.dash .pulse-band .open { margin-left:auto; background:#fff; color:var(--frost-ink); font-size:11.5px; font-weight:600;
+  padding:7px 14px; border-radius:var(--r-btn); white-space:nowrap; }
+.dash .skeleton { margin-top:14px; }
+.dash .skeleton .srow { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.dash .skeleton .sk { background:var(--frost-surface-muted); border-radius:var(--r-card); height:78px; border:1px solid var(--frost-border-soft);
+  display:flex; align-items:center; padding:0 16px; }
+.dash .skeleton .sk .lbl2 { font-size:10px; font-weight:600; letter-spacing:0.14em; color:var(--frost-faint); text-transform:uppercase; }
+.tag-above { display:inline-flex; align-items:center; gap:6px; background:var(--frost-primary-wash); color:var(--frost-primary);
+  font-size:10px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; padding:5px 10px; border-radius:var(--r-chip); margin-bottom:10px; }
+
+/* SOURCES table */
+.srctable { margin-top:36px; border:1px solid var(--frost-border); border-radius:var(--r-card); overflow:hidden; background:#fff; box-shadow:var(--sh-sm); max-width:1080px; }
+.srctable .hrow, .srctable .row { display:grid; grid-template-columns:1.1fr 2fr 0.8fr; gap:0; }
+.srctable .hrow { background:var(--frost-surface-muted); }
+.srctable .hrow div { font-size:10.5px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:var(--frost-muted); padding:13px 18px; }
+.srctable .row { border-top:1px solid var(--frost-border-soft); align-items:center; }
+.srctable .row > div { padding:15px 18px; }
+.srctable .row .bk { font-size:14px; font-weight:600; }
+.srctable .row .src { font-size:12.5px; font-weight:300; color:var(--frost-ink-soft); line-height:1.4; }
+.srctable .row .src code { font-family:var(--sans); font-weight:600; background:var(--frost-surface-muted); padding:1px 6px; border-radius:var(--r-sm); font-size:11.5px; color:var(--frost-ink); }
+.aitag { font-size:10.5px; font-weight:600; padding:5px 11px; border-radius:var(--r-chip); white-space:nowrap; display:inline-block; }
+.ai-no { background:var(--frost-success-soft); color:#0a7a5a; }
+.ai-yes { background:var(--frost-primary-soft); color:var(--frost-primary); }
+.src-note { margin-top:20px; font-size:13.5px; font-weight:500; color:var(--frost-ink-soft); }
+.src-note b { color:var(--frost-primary); }
+
+/* COST */
+.cost-wrap { display:grid; grid-template-columns:1.1fr 1fr; gap:50px; align-items:center; margin-top:30px; }
+@media(max-width:980px){ .cost-wrap{ grid-template-columns:1fr; gap:30px; } }
+.cost-hero { background:linear-gradient(150deg,#0F172A,#16315E); color:#fff; border-radius:var(--r-card); padding:40px; text-align:center; box-shadow:var(--sh-lg); }
+.cost-hero .big { font-size:clamp(50px,7vw,84px); font-weight:200; letter-spacing:-0.03em; line-height:0.9; }
+.cost-hero .big small { font-size:0.4em; font-weight:500; color:#7FB4FF; }
+.cost-hero .cap { font-size:13.5px; font-weight:300; color:rgba(255,255,255,0.7); margin-top:14px; }
+.cost-list { display:flex; flex-direction:column; gap:14px; }
+.cost-list .ci { display:flex; gap:13px; align-items:flex-start; }
+.cost-list .ci .k { flex-shrink:0; width:26px; height:26px; border-radius:var(--r-btn); background:var(--frost-primary-soft); color:var(--frost-primary);
+  display:flex; align-items:center; justify-content:center; font-size:13px; }
+.cost-list .ci p { font-size:14px; font-weight:300; color:var(--frost-ink-soft); line-height:1.5; }
+.cost-list .ci p b { font-weight:600; color:var(--frost-ink); }
+
+/* CONDITIONS */
+.cond { margin-top:34px; display:grid; grid-template-columns:repeat(2,1fr); gap:16px; max-width:1000px; }
+@media(max-width:980px){ .cond{ grid-template-columns:1fr; } }
+.cond .c { display:flex; gap:14px; align-items:flex-start; background:#fff; border:1px solid var(--frost-border); border-radius:var(--r-card); padding:20px 22px; box-shadow:var(--sh-sm); }
+.cond .c .ck { flex-shrink:0; width:34px; height:34px; border-radius:var(--r-btn); background:var(--frost-primary-wash); color:var(--frost-primary);
+  display:flex; align-items:center; justify-content:center; font-size:17px; }
+.cond .c h3 { font-size:15px; font-weight:600; margin-bottom:4px; }
+.cond .c p { font-size:13px; font-weight:300; color:var(--frost-muted); line-height:1.45; }
+
+/* APPROVAL FLOW */
+.layers { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin:30px 0 28px; max-width:1000px; }
+@media(max-width:980px){ .layers{ grid-template-columns:1fr; } }
+.layer { border-radius:var(--r-card); padding:20px 22px; border:1px solid var(--frost-border); }
+.layer.global { background:var(--frost-primary-soft); border-color:rgba(0,114,251,0.2); }
+.layer.auto { background:#fff; }
+.layer .lh { font-size:10.5px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; margin-bottom:10px; }
+.layer.global .lh { color:var(--frost-primary); }
+.layer.auto .lh { color:var(--frost-muted); }
+.layer p { font-size:13.5px; font-weight:500; color:var(--frost-ink-soft); line-height:1.5; }
+.layer p span { color:var(--frost-muted); font-weight:300; }
+.pipe { display:flex; align-items:stretch; gap:0; max-width:1080px; }
+.pipe .step { flex:1; background:#fff; border:1px solid var(--frost-border); border-radius:var(--r-card); padding:18px 16px; box-shadow:var(--sh-sm); position:relative; }
+.pipe .arrow { display:flex; align-items:center; color:var(--frost-faint); font-size:20px; padding:0 8px; }
+.pipe .step .when { font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--frost-primary); margin-bottom:8px; }
+.pipe .step .ic { font-size:22px; margin-bottom:8px; }
+.pipe .step h4 { font-size:13.5px; font-weight:600; margin-bottom:4px; line-height:1.25; }
+.pipe .step p { font-size:11.5px; font-weight:300; color:var(--frost-muted); line-height:1.4; }
+.pipe .step.ok { background:linear-gradient(150deg,#0F172A,#16315E); color:#fff; border:none; }
+.pipe .step.ok .when { color:#7FB4FF; }
+.pipe .step.ok p { color:rgba(255,255,255,0.7); }
+.chan { display:inline-flex; align-items:center; gap:6px; font-weight:600; color:var(--frost-primary); }
+@media(max-width:980px){ .pipe{ flex-direction:column; gap:10px; } .pipe .arrow{ transform:rotate(90deg); justify-content:center; padding:0; } }
+
+/* DATA */
+.data-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-top:42px; }
+@media(max-width:980px){ .data-grid{ grid-template-columns:repeat(2,1fr); } }
+.stat { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); padding:24px 22px; box-shadow:var(--sh-sm); }
+.stat .big { font-size:clamp(32px,3.8vw,50px); font-weight:200; letter-spacing:-0.03em; line-height:0.95; }
+.stat .big .pct { color:var(--frost-primary); font-weight:600; }
+.stat .cap { font-size:12.5px; font-weight:500; color:var(--frost-muted); margin-top:11px; line-height:1.4; }
+.data-note { margin-top:30px; font-size:13px; font-weight:300; color:var(--frost-muted); }
+.data-note .b { color:var(--frost-success); font-weight:600; }
+
+/* WHY */
+.why { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:38px; }
+.why .w { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); padding:26px; box-shadow:var(--sh-sm); }
+.why .w .ic { width:44px; height:44px; border-radius:var(--r-btn); background:var(--frost-primary-wash); color:var(--frost-primary);
+  display:flex; align-items:center; justify-content:center; font-size:21px; margin-bottom:15px; }
+.why .w h3 { font-size:16px; font-weight:600; margin-bottom:7px; }
+.why .w p { font-size:13px; font-weight:300; color:var(--frost-muted); line-height:1.5; }
+.bar { margin-top:36px; max-width:900px; }
+.bar .track { height:16px; background:var(--frost-border); border-radius:var(--r-chip); overflow:hidden; }
+.bar .fill { height:100%; width:60%; background:linear-gradient(90deg,var(--frost-primary),var(--frost-primary-hover));
+  border-radius:var(--r-chip); display:flex; align-items:center; justify-content:flex-end; padding-right:12px; color:#fff; font-size:10.5px; font-weight:600; }
+.bar .legend { margin-top:10px; font-size:12.5px; font-weight:500; color:var(--frost-muted); }
+
+/* CLOSE */
+.close { background:linear-gradient(160deg,#0B1220 0%,#0F172A 60%,#142A52 100%); color:#fff; }
+.close .kicker { color:#7FB4FF; } .close .kicker::before{ background:#7FB4FF; }
+.close h2 { color:#fff; }
+.debate { margin-top:32px; display:grid; grid-template-columns:1fr 1fr; gap:14px 40px; max-width:1000px; }
+@media(max-width:980px){ .debate{ grid-template-columns:1fr; } }
+.debate .q { display:flex; gap:14px; align-items:flex-start; padding:15px 0; border-top:1px solid rgba(255,255,255,0.12); }
+.debate .q .qm { color:#7FB4FF; font-weight:600; font-size:15px; }
+.debate .q p { font-size:14.5px; font-weight:300; color:rgba(255,255,255,0.86); line-height:1.45; }
+.pilot { margin-top:34px; display:inline-flex; align-items:center; gap:12px; background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.16); border-radius:var(--r-chip); padding:11px 20px; font-size:13.5px; font-weight:500; }
+.pilot .tag { background:var(--frost-primary); color:#fff; font-size:10.5px; font-weight:600; letter-spacing:0.08em;
+  text-transform:uppercase; padding:4px 10px; border-radius:var(--r-chip); }
+
+/* NAV */
+.nav { position:fixed; right:22px; top:50%; transform:translateY(-50%); display:flex; flex-direction:column; gap:10px; z-index:30; }
+.nav a { width:8px; height:8px; border-radius:50%; background:var(--frost-border); border:1px solid rgba(15,23,42,0.12); display:block; transition:.2s; }
+.nav a:hover { background:var(--frost-primary); transform:scale(1.4); }
+@media(max-width:980px){ .nav{ display:none; } }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="#s1"></a><a href="#s2"></a><a href="#s3"></a><a href="#s4"></a><a href="#s5"></a><a href="#s6"></a>
+  <a href="#s7"></a><a href="#s8"></a><a href="#s9"></a><a href="#s10"></a><a href="#s11"></a><a href="#s12"></a>
+</nav>
+
+<!-- 1 · COVER -->
+<section class="slide cover" id="s1">
+  <div class="chrome"><div class="wordmark"><span class="dot"></span>Ágora</div><span class="pageno" style="color:rgba(255,255,255,.45)">BRAINSTORMING · 22 MAY 2026</span></div>
+  <div class="orbit"></div><div class="ping"></div>
+  <div class="kicker">Idea de producto</div>
+  <h1>Ágora <b>Pulse</b></h1>
+  <p class="lead">El brief semanal de cada profesional. Cómo le fue, una cosa para hacer esta semana, y qué hay nuevo en Ágora — en una lectura de 30 segundos, dentro de Flash.</p>
+</section>
+
+<!-- 2 · PROBLEM -->
+<section class="slide" id="s2">
+  <div class="chrome"><div class="lwm"><span class="dot"></span>Ágora</div><span class="pageno">02</span></div>
+  <div class="kicker">El problema</div>
+  <h2>El profesional entra, hace lo suyo y se va.<br><b>No hay un momento de "cómo voy".</b></h2>
+  <p class="lead">Flash es operativo: tomás reservas, cobrás, configurás. Pero no hay un lugar que te devuelva la foto de tu negocio ni te empuje a la próxima acción. Tres consecuencias:</p>
+  <div class="cols">
+    <div class="pcard"><div class="ic">📉</div><h3>Retención frágil</h3><p>Sin una razón recurrente para volver, el vendor solo entra cuando "tiene que hacer algo". Menos hábito, más riesgo de churn.</p></div>
+    <div class="pcard"><div class="ic">🫥</div><h3>Features invisibles</h3><p>Lanzamos cosas (dark mode, recordatorios, cursos) y casi nadie las descubre. No tenemos un canal in-app para contarlas.</p></div>
+    <div class="pcard"><div class="ic">💤</div><h3>Data dormida</h3><p>Sabemos qué clientes no vuelven y dónde tiene huecos — pero esa señal nunca llega al profesional en forma de acción.</p></div>
+  </div>
+</section>
+
+<!-- 3 · THE IDEA -->
+<section class="slide" id="s3">
+  <div class="chrome"><div class="lwm"><span class="dot"></span>Ágora</div><span class="pageno">03</span></div>
+  <div class="split">
+    <div>
+      <div class="kicker">La idea</div>
+      <h2>Un <b>Pulse</b> semanal, arriba del dashboard.</h2>
+      <p class="lead">Una card que aparece los lunes a la mañana y se lee en 30 segundos. No es un dashboard más: es un brief con tono cercano, como el resumen que te mandaría un socio.</p>
+      <ul class="bullets">
+        <li><span class="num">1</span><div><b>In-app, no email</b><span>Card arriba del dashboard de Flash. No depende de deliverability ni open rates.</span></div></li>
+        <li><span class="num">2</span><div><b>Personalizada con su data</b><span>Cada Pulse usa las reservas, ingresos y clientes reales de ese vendor.</span></div></li>
+        <li><span class="num">3</span><div><b>Detrás de un beta flag</b><span>Se testea A/B con god-mode, igual que lanzamos dark mode.</span></div></li>
+      </ul>
+    </div>
+    <div class="flash-frame">
+      <div class="flash-topbar"><div class="dots"><span></span><span></span><span></span></div><span class="url">pro.agora.red/dashboard</span></div>
+      <div style="background:var(--frost-surface);border-radius:var(--r-card);padding:14px 16px;box-shadow:var(--sh-xs);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;">
+        <div style="font-weight:600;font-size:14px;">¡Hola, Calu! 👋</div>
+        <div style="font-size:11px;color:var(--frost-faint);font-weight:500;">Lunes 19 de mayo</div>
+      </div>
+      <div style="text-align:center;font-size:11px;color:var(--frost-primary);font-weight:600;letter-spacing:0.14em;text-transform:uppercase;">↓ Tu Pulse de la semana</div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 · THE CARD -->
+<section class="slide" id="s4" style="background:var(--frost-surface-muted);">
+  <div class="chrome"><div class="lwm"><span class="dot"></span>Ágora</div><span class="pageno">04</span></div>
+  <div class="split">
+    <div>
+      <div class="kicker">El producto</div>
+      <h2>Así se ve <b>el Pulse</b>.</h2>
+      <p class="lead">Una sola card, cuatro bloques, jerarquía clara. Lo importante arriba (tu semana), la acción al medio, las novedades y el tip abajo. Tono WhatsApp, cero jerga.</p>
+      <div style="margin-top:28px;display:flex;flex-direction:column;gap:12px;">
+        <div style="display:flex;align-items:center;gap:11px;font-size:14px;font-weight:500;"><span style="width:24px;height:24px;border-radius:50%;background:var(--frost-primary-soft);color:var(--frost-primary);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;">1</span>Tu semana en números</div>
+        <div style="display:flex;align-items:center;gap:11px;font-size:14px;font-weight:500;"><span style="width:24px;height:24px;border-radius:50%;background:var(--frost-primary-soft);color:var(--frost-primary);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;">2</span>Una cosa para hacer (IA)</div>
+        <div style="display:flex;align-items:center;gap:11px;font-size:14px;font-weight:500;"><span style="width:24px;height:24px;border-radius:50%;background:var(--frost-primary-soft);color:var(--frost-primary);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;">3</span>Novedades de Ágora</div>
+        <div style="display:flex;align-items:center;gap:11px;font-size:14px;font-weight:500;"><span style="width:24px;height:24px;border-radius:50%;background:var(--frost-primary-soft);color:var(--frost-primary);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;">4</span>Tip de tu categoría</div>
+      </div>
+    </div>
+    <div class="pulse">
+      <div class="pulse-head">
+        <div><div class="t"><span class="pdot"></span>Tu Pulse semanal</div><div class="sub">Semana del 12 al 18 de mayo</div></div>
+        <div class="close">✕</div>
+      </div>
+      <div class="pulse-body">
+        <div class="block">
+          <div class="lbl"><span class="n">1</span>Tu semana</div>
+          <div class="metrics">
+            <div class="metric"><div class="v">31</div><div class="k">Reservas</div><div class="d up">▲ 18%</div></div>
+            <div class="metric"><div class="v">$184k</div><div class="k">Ingresos netos</div><div class="d up">▲ 9%</div></div>
+            <div class="metric"><div class="v">82%</div><div class="k">Ocupación</div><div class="d down">▼ 4%</div></div>
+          </div>
+        </div>
+        <div class="block">
+          <div class="lbl"><span class="n">2</span>Una cosa para hacer</div>
+          <div class="insight"><span class="spark">✨</span><div>
+            <p>Tenés <b>18 clientes</b> que no reservan hace más de 60 días. Un mensajito puede traer varios de vuelta esta semana.</p>
+            <span class="cta">Ver clientes →</span>
+          </div></div>
+        </div>
+        <div class="block">
+          <div class="lbl"><span class="n">3</span>Nuevo en Ágora</div>
+          <div class="novedad"><span class="pill">Nuevo</span><p>Ya podés activar <b>modo oscuro</b> en tu panel. Probalo desde el menú lateral.</p></div>
+        </div>
+        <div class="block">
+          <div class="lbl"><span class="n">4</span>Tip de tu rubro</div>
+          <div class="tip"><span class="ic">💡</span><p>Las peluquerías que activaron <b>recordatorios por WhatsApp</b> bajaron sus ausencias un <b>30%</b>.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 · WHERE IT LIVES -->
+<section class="slide" id="s5">
+  <div class="chrome"><div class="lwm"><span class="dot"></span>Ágora</div><span class="pageno">05</span></div>
+  <div class="split">
+    <div>
+      <div class="kicker">Dónde vive</div>
+      <h2>Una <b>banda</b> arriba del dashboard.</h2>
+      <p class="lead">Aparece los lunes, justo debajo del saludo y por encima del “Resumen del día”. No compite con lo operativo: es el primer vistazo de la semana y se puede cerrar.</p>
+      <ul class="bullets">
+        <li><span class="num">🔔</span><div><b>+ aviso en la campanita</b><span>El que no entra el lunes igual lo ve: una notificación in-app lo lleva al Pulse cuando vuelve.</span></div></li>
+        <li><span class="num">✓</span><div><b>Se cierra y vuelve la próxima</b><span>Una vez leída, la banda se colapsa. El lunes siguiente aparece la nueva.</span></div></li>
+      </ul>
+    </div>
+    <div class="dash">
+      <div class="greet">
+        <h4>Buenas tardes, <b>Florencia.</b></h4>
+        <div class="right"><div class="bell">🔔<span class="badge">1</span></div></div>
+      </div>
+      <span class="tag-above">↓ Acá entra el Pulse</span>
+      <div class="pulse-band">
+        <span class="pdot"></span>
+        <div class="txt"><b>Tu Pulse semanal está listo</b><span>31 reservas · 18 clientes para reactivar · 1 novedad</span></div>
+        <span class="open">Abrir →</span>
+      </div>
+      <div class="skeleton">
+        <div class="srow">
+          <div class="sk"><span class="lbl2">Resumen del día</span></div>
+          <div class="sk"><span class="lbl2">Asistencias</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 · DATA SOURCES -->
+<section class="slide" id="s6" style="background:var(--frost-surface-muted);">
+  <div class="chrome"><div class="lwm"><span class="dot"></span>Ágora</div><span class="pageno">06</span></div>
+  <div class="kicker">De dónde sale cada dato</div>
+  <h2><b>3 de 4 bloques</b> son SQL puro. La IA toca uno solo.</h2>
+  <div class="srctable">
+    <div class="hrow"><div>Bloque</div><div>Fuente de datos</div><div>¿Usa IA?</div></div>
+    <div class="row">
+      <div class="bk">Tu semana</div>
+      <div class="src"><code>bookings</code> · <code>payments</code> · <code>vendor_clients_base</code> — reservas, ingresos netos (monto − fee) y ocupación de esa semana</div>
+      <div><span class="aitag ai-no">No · SQL</span></div>
+    </div>
+    <div class="row">
+      <div class="bk">Una cosa para hacer</div>
+      <div class="src">Señal por SQL (<code>vendor_clients_base</code> + <code>bookings</code> + <code>vendor_working_hours</code>) → <b>business-advisor</b> la redacta en tono natural</div>
+      <div><span class="aitag ai-yes">Sí · gpt-4o-mini</span></div>
+    </div>
+    <div class="row">
+      <div class="bk">Nuevo en Ágora</div>
+      <div class="src">Changelog curado por el equipo — acá entra la novedad de la semana (ej. el lanzamiento de <b>modo oscuro</b>)</div>
+      <div><span class="aitag ai-no">No · manual</span></div>
+    </div>
+    <div class="row">
+      <div class="bk">Tip de tu rubro</div>
+      <div class="src">Librería de tips por <code>vendors.category</code>, curada y respaldada por benchmarks agregados de la base</div>
+      <div><span class="aitag ai-no">No · curado</span></div>
+    </div>
+  </div>
+  <p class="src-note">La IA <b>no inventa números</b>: solo redacta el insight a partir de una señal calculada por SQL. Todo lo demás es data o contenido determinístico.</p>
+</section>
+
+<!-- 7 · COST -->
+<section class="slide" id="s7">
+  <div class="chrome"><div class="lwm"><span class="dot"></span>Ágora</div><span class="pageno">07</span></div>
+  <div class="kicker">Cuánto cuesta la IA</div>
+  <h2>El costo es, literalmente, <b>despreciable</b>.</h2>
+  <div class="cost-wrap">
+    <div class="cost-hero">
+      <div class="big">~$2<small>/mes</small></div>
+      <div class="cap">en IA para los 1.197 vendors activos · gpt-4o-mini, 1 insight por vendor por semana</div>
+    </div>
+    <div class="cost-list">
+      <div class="ci"><span class="k">📐</span><p><b>~$0,0004 por vendor por semana.</b> 1.197 vendors × 4 semanas ≈ <b>$1,9 / mes</b>.</p></div>
+      <div class="ci"><span class="k">🧱</span><p>Aunque cuadrupliquemos el contexto del prompt, sigue <b>por debajo de $10 / mes</b>.</p></div>
+      <div class="ci"><span class="k">🆓</span><p>Los otros 3 bloques cuestan <b>$0</b>: son consultas SQL + contenido curado.</p></div>
+      <div class="ci"><span class="k">🎨</span><p>Para comparar: <b>una sola imagen</b> del motor de social-posting cuesta más que un mes entero de Pulses.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 · CONDITIONS -->
+<section class="slide" id="s8" style="background:var(--frost-surface-muted);">
+  <div class="chrome"><div class="lwm"><span class="dot"></span>Ágora</div><span class="pageno">08</span></div>
+  <div class="kicker">A quién y cuándo</div>
+  <h2>Reglas para que <b>nunca llegue vacío ni a destiempo</b>.</h2>
+  <div class="cond">
+    <div class="c"><span class="ck">✅</span><div><h3>Solo vendors activos</h3><p>Status <b>active</b>. No se le muestra a quien está en onboarding o con el setup a medias — no tendría data ni sentido.</p></div></div>
+    <div class="c"><span class="ck">📊</span><div><h3>Con actividad mínima</h3><p>Al menos algo de movimiento la semana (reservas o base de clientes). Si no hay nada que contar, no se genera.</p></div></div>
+    <div class="c"><span class="ck">📅</span><div><h3>Cadencia semanal</h3><p>Se arma el lunes temprano. Persiste hasta que lo lee o hasta que llega el Pulse siguiente.</p></div></div>
+    <div class="c"><span class="ck">🔕</span><div><h3>Control del vendor</h3><p>Lo puede cerrar o marcar como leído. Si nunca lo abre, la campanita insiste de forma suave, sin spamear.</p></div></div>
+  </div>
+</section>
+
+<!-- 9 · APPROVAL FLOW -->
+<section class="slide" id="s9">
+  <div class="chrome"><div class="lwm"><span class="dot"></span>Ágora</div><span class="pageno">09</span></div>
+  <div class="kicker">Cómo se aprueba</div>
+  <h2>Nada sale a 1.197 vendors <b>sin pasar por revisión</b>.</h2>
+  <div class="layers">
+    <div class="layer global"><div class="lh">Capa global · se revisa</div><p>Novedades + tip de cada rubro<br><span>Igual para todos. Es lo que el equipo corrige y aprueba cada semana.</span></p></div>
+    <div class="layer auto"><div class="lh">Capa personalizada · automática</div><p>Tu semana (números) + insight<br><span>Único por vendor. Se calcula al publicar; en el canal se muestran 5 ejemplos reales para spot-check.</span></p></div>
+  </div>
+  <div class="pipe">
+    <div class="step"><div class="when">Domingo</div><div class="ic">🧩</div><h4>Se arma el draft</h4><p>Capa global + 5 Pulses de ejemplo reales</p></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="when">Domingo</div><div class="ic">💬</div><h4>Se postea en <span class="chan">#pulse-semanal</span></h4><p>Canal nuevo. Preview completo del Pulse de la semana</p></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="when">Domingo / Lunes</div><div class="ic">✏️</div><h4>El equipo revisa</h4><p>Corrige novedades y tips, spot-check de números e insights</p></div>
+    <div class="arrow">→</div>
+    <div class="step ok"><div class="when">Lunes 8:00</div><div class="ic">🚀</div><h4>Aprobado → publica</h4><p>Sale a todos + aviso en la campanita</p></div>
+  </div>
+</section>
+
+<!-- 10 · WHY VIABLE -->
+<section class="slide" id="s10" style="background:var(--frost-surface-muted);">
+  <div class="chrome"><div class="lwm"><span class="dot"></span>Ágora</div><span class="pageno">10</span></div>
+  <div class="kicker">Por qué es viable ya</div>
+  <h2><b>~60%</b> ya existe en código.</h2>
+  <p class="lead">El MVP es ensamblaje + una card + el flujo de aprobación. No empezamos de cero.</p>
+  <div class="why">
+    <div class="w"><div class="ic">🧮</div><h3>Métricas</h3><p>Reservas, ingresos y ocupación ya viven en la DB y en el consumption-calculator.</p></div>
+    <div class="w"><div class="ic">🤖</div><h3>Insights con IA</h3><p>El motor business-advisor ya genera recomendaciones por vendor. Solo hay que envasarlas.</p></div>
+    <div class="w"><div class="ic">📨</div><h3>Patrón daily-brief</h3><p>Ya lo resolvimos con Multiplex. Reusamos la lógica de armado del brief.</p></div>
+  </div>
+  <div class="bar">
+    <div class="track"><div class="fill">~60% reusable</div></div>
+    <div class="legend">Lo nuevo: la card en Flash + el ensamblado semanal + el canal de aprobación + el beta flag.</div>
+  </div>
+</section>
+
+<!-- 11 · DATA -->
+<section class="slide" id="s11">
+  <div class="chrome"><div class="lwm"><span class="dot"></span>Ágora</div><span class="pageno">11</span></div>
+  <div class="kicker">La data de hoy · 22 May 2026</div>
+  <h2>El Pulse <b>nunca llega vacío</b>.</h2>
+  <p class="lead">El 89% de los vendors activos genera reservas nuevas cada semana. Hay contenido real para personalizar la card desde el día 1.</p>
+  <div class="data-grid">
+    <div class="stat"><div class="big">1.197</div><div class="cap">vendors activos — el universo del Pulse</div></div>
+    <div class="stat"><div class="big"><span class="pct">89%</span></div><div class="cap">tuvo reservas en los últimos 7 días → contenido fresco garantizado</div></div>
+    <div class="stat"><div class="big">241</div><div class="cap">clientes promedio en la base de cada vendor</div></div>
+    <div class="stat"><div class="big"><span class="pct">78%</span></div><div class="cap">tiene 50+ clientes → munición para el insight de re-engagement</div></div>
+  </div>
+  <div class="data-note"><span class="b">29.138 reservas</span> en los últimos 7 días · ~27 por vendor por semana de promedio</div>
+</section>
+
+<!-- 12 · DEBATE -->
+<section class="slide close" id="s12">
+  <div class="chrome"><div class="wordmark"><span class="dot"></span>Ágora</div><span class="pageno" style="color:rgba(255,255,255,.45)">12</span></div>
+  <div class="kicker">Para discutir</div>
+  <h2>¿Lo construimos?</h2>
+  <div class="debate">
+    <div class="q"><span class="qm">?</span><p><b>La banda:</b> ¿arriba del dashboard + campanita, o solo campanita para no invadir?</p></div>
+    <div class="q"><span class="qm">?</span><p><b>El canal:</b> ¿quién es el dueño de revisar y aprobar el Pulse cada semana en <b>#pulse-semanal</b>?</p></div>
+    <div class="q"><span class="qm">?</span><p><b>Las métricas:</b> ¿arrancamos con reservas + ingresos + clientes nuevos y dejamos ocupación para fase 2?</p></div>
+    <div class="q"><span class="qm">?</span><p><b>El alcance:</b> ¿card sola ahora y email como fase 2 una vez validada?</p></div>
+  </div>
+  <div class="pilot"><span class="tag">Piloto</span> Peluquerías (alta densidad de data) o top 50 vendors activos · 2 semanas</div>
+</section>
+
+</body>
+</html>
