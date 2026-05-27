@@ -24,14 +24,12 @@ body{font-family:var(--sans);font-variant-numeric:tabular-nums;color:var(--frost
 .slide{height:100vh;width:100%;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:center;padding:6vh 8vw;position:relative;overflow:hidden}
 .slide.ink{background:var(--frost-ink);color:#fff}
 .slide.ink .kicker{color:var(--frost-primary)}
-/* chrome */
 .chrome{position:absolute;top:4vh;left:8vw;right:8vw;display:flex;justify-content:space-between;align-items:center}
 .chrome .num{font-size:12px;font-weight:600;letter-spacing:.12em;color:var(--frost-faint)}
 .slide.ink .chrome .num{color:rgba(255,255,255,.45)}
 .wordmark{display:flex;align-items:center;gap:9px;font-weight:500;font-size:17px;letter-spacing:-.01em}
 .wordmark .dot{width:9px;height:9px;border-radius:50%;background:var(--frost-primary);box-shadow:0 0 10px var(--frost-primary)}
 .slide.ink .wordmark{color:#fff}
-/* type */
 .kicker{font-size:13px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--frost-primary);margin-bottom:26px}
 h1{font-weight:200;font-size:clamp(54px,9vw,118px);line-height:.96;letter-spacing:-.02em}
 h2{font-weight:300;font-size:clamp(30px,4.6vw,58px);line-height:1.06;letter-spacing:-.015em;max-width:16ch}
@@ -41,16 +39,13 @@ h2 b,h1 b{font-weight:600}
 .sub{font-size:clamp(18px,2vw,26px);font-weight:300;color:rgba(255,255,255,.82);margin-top:20px;max-width:30ch}
 .tiny{font-size:13.5px;color:var(--frost-muted);margin-top:30px;font-weight:500}
 .slide.ink .tiny{color:rgba(255,255,255,.5)}
-/* chips */
 .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
 .chip{padding:9px 18px;border-radius:var(--r-chip);background:var(--frost-surface);border:1px solid var(--frost-border);font-size:14.5px;font-weight:500;box-shadow:var(--sh-sm)}
-/* cards row */
 .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:38px;max-width:920px}
 .card{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-card);padding:22px;box-shadow:var(--sh-sm)}
 .card .ic{font-size:22px;margin-bottom:12px}
 .card h3{font-size:16px;font-weight:600;margin-bottom:6px}
 .card p{font-size:13.5px;font-weight:300;color:var(--frost-muted);line-height:1.5}
-/* arch flow */
 .flow{display:flex;align-items:stretch;gap:14px;margin-top:40px;flex-wrap:wrap}
 .inputs{display:grid;grid-template-columns:1fr 1fr;gap:12px;flex:1;min-width:300px}
 .node{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:16px;padding:16px 18px;box-shadow:var(--sh-sm)}
@@ -63,7 +58,6 @@ h2 b,h1 b{font-weight:600}
 .outbox{background:var(--frost-primary-soft);border:1px solid rgba(0,114,251,.2);border-radius:16px;padding:15px 18px}
 .outbox .lbl{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--frost-primary)}
 .outbox .d{font-size:13.5px;font-weight:500;margin-top:3px}
-/* demo list */
 .dlist{display:flex;flex-direction:column;gap:14px;margin-top:34px;max-width:760px}
 .ditem{display:flex;gap:18px;align-items:flex-start;background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:16px;padding:18px 22px;box-shadow:var(--sh-sm)}
 .ditem .n{font-weight:600;font-size:20px;color:var(--frost-primary);min-width:30px}
@@ -72,29 +66,41 @@ h2 b,h1 b{font-weight:600}
 .metric .v{font-size:clamp(34px,4.5vw,52px);font-weight:200;letter-spacing:-.02em;color:var(--frost-ink)}
 .slide.ink .metric .v{color:#fff}
 .metric .k{font-size:12.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--frost-muted);margin-top:4px}
-/* cost */
-.costrow{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px;max-width:880px}
-.cost{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-card);padding:26px 24px;box-shadow:var(--sh-sm)}
-.cost.hi{background:var(--frost-primary);color:#fff;box-shadow:var(--sh-glow)}
-.cost .v{font-size:clamp(32px,4vw,46px);font-weight:200;letter-spacing:-.02em}
-.cost .k{font-size:13px;font-weight:500;color:var(--frost-muted);margin-top:8px;line-height:1.4}
-.cost.hi .k{color:rgba(255,255,255,.85)}
-.note-pill{display:inline-block;margin-top:30px;background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-btn);padding:14px 20px;font-size:14px;font-weight:300;color:var(--frost-ink-soft);box-shadow:var(--sh-sm);max-width:60ch;line-height:1.5}
+/* two-col capabilities */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:36px;max-width:960px}
+.col{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-card);padding:24px;box-shadow:var(--sh-sm)}
+.col.lock{background:var(--frost-ink);color:#fff}
+.col h3{font-size:14px;font-weight:600;letter-spacing:.04em;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.col.lock h3{color:#fff}
+.col ul{list-style:none}
+.col li{font-size:14.5px;font-weight:300;line-height:1.5;padding:8px 0 8px 26px;position:relative;border-top:1px solid var(--frost-border-soft)}
+.col li:first-child{border-top:0}
+.col.lock li{border-top-color:rgba(255,255,255,.1);color:rgba(255,255,255,.85)}
+.col li::before{position:absolute;left:0;top:8px;font-size:14px}
+.col.do li::before{content:'✓';color:var(--frost-success);font-weight:700}
+.col.lock li::before{content:'🔒'}
+.col li b{font-weight:600}.col.do li b{color:var(--frost-ink)}.col.lock li b{color:#fff}
+/* cost table */
+.costtable{margin-top:34px;max-width:720px;background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-card);overflow:hidden;box-shadow:var(--sh-sm)}
+.costtable .row{display:flex;justify-content:space-between;align-items:center;padding:16px 24px;border-top:1px solid var(--frost-border-soft);font-size:15px}
+.costtable .row:first-child{border-top:0}
+.costtable .row .lbl{font-weight:300;color:var(--frost-ink-soft)}
+.costtable .row .val{font-weight:600;font-size:18px}
+.costtable .row.hi{background:var(--frost-primary);color:#fff}
+.costtable .row.hi .lbl{color:rgba(255,255,255,.85);font-weight:500}
+.costtable .row.old .val{color:var(--frost-muted);text-decoration:line-through}
+.note-pill{display:inline-block;margin-top:28px;background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-btn);padding:14px 20px;font-size:14px;font-weight:300;color:var(--frost-ink-soft);box-shadow:var(--sh-sm);max-width:62ch;line-height:1.5}
 .note-pill b{font-weight:600;color:var(--frost-ink)}
-/* hint */
 .hint{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--frost-faint);z-index:10;animation:fade 2.4s ease-in-out infinite}
 @keyframes fade{0%,100%{opacity:.3}50%{opacity:.9}}
-@media(max-width:760px){.cards,.costrow{grid-template-columns:1fr}.flow{flex-direction:column}.inputs{grid-template-columns:1fr}}
+@media(max-width:760px){.cards,.cols{grid-template-columns:1fr}.flow{flex-direction:column}.inputs{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
 <!-- 1 · COVER -->
 <section class="slide ink">
-  <div class="chrome">
-    <span class="wordmark" style="color:#fff"><span class="dot"></span>Ágora</span>
-    <span class="num">IA LAB · 27 MAY 2026</span>
-  </div>
+  <div class="chrome"><span class="wordmark" style="color:#fff"><span class="dot"></span>Ágora</span><span class="num">IA LAB · 27 MAY 2026</span></div>
   <div class="kicker">Workshop · IA Lab</div>
   <h1>Multiplex</h1>
   <p class="sub">Un Head&nbsp;de&nbsp;Product que <b style="font-weight:600;color:#fff">nunca duerme</b>.</p>
@@ -103,7 +109,7 @@ h2 b,h1 b{font-weight:600}
 
 <!-- 2 · PROBLEMA -->
 <section class="slide">
-  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">02 / 07</span></div>
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">02 / 08</span></div>
   <div class="kicker">El problema</div>
   <h2>Entender el producto hoy = abrir <b>5 lugares</b> y media hora por cuenta.</h2>
   <div class="chips">
@@ -118,21 +124,21 @@ h2 b,h1 b{font-weight:600}
 
 <!-- 3 · QUÉ ES -->
 <section class="slide">
-  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">03 / 07</span></div>
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">03 / 08</span></div>
   <div class="kicker">Qué es</div>
   <h2>Un <b>miembro del equipo</b> que nunca duerme.</h2>
   <p class="lead">Multiplex investiga la data + el mercado, razona como Head of Product, y deja un <b>brief diario en Slack</b> — solo, 24/7.</p>
   <div class="cards">
     <div class="card"><div class="ic">🔄</div><h3>Proactivo</h3><p>Corre su patrulla todos los días sin que nadie se lo pida.</p></div>
     <div class="card"><div class="ic">🧠</div><h3>Con memoria</h3><p>Un cerebro propio que sabe qué es Ágora, qué se shipeó y cómo se gana plata.</p></div>
-    <div class="card"><div class="ic">🪙</div><h3>Por centavos</h3><p>Vive en un droplet, razona con modelos baratos. Más abajo, los números.</p></div>
+    <div class="card"><div class="ic">🪙</div><h3>Por centavos</h3><p>Vive en un droplet, razona con modelos baratos. Más abajo, los números explícitos.</p></div>
   </div>
   <p class="tiny">Evolución del Multiplex viejo (research batch) → ahora <b>vive y actúa</b> sobre OpenClaw.</p>
 </section>
 
 <!-- 4 · CÓMO FUNCIONA -->
 <section class="slide">
-  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">04 / 07</span></div>
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">04 / 08</span></div>
   <div class="kicker">Cómo funciona</div>
   <h2>Arquitectura simple, todo en <b>un droplet</b>.</h2>
   <div class="flow">
@@ -154,11 +160,11 @@ h2 b,h1 b{font-weight:600}
 
 <!-- 5 · DEMO -->
 <section class="slide">
-  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">05 / 07</span></div>
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">05 / 08</span></div>
   <div class="kicker">Demo en vivo</div>
   <h2>Qué van a ver.</h2>
   <div class="dlist">
-    <div class="ditem"><div class="n">1</div><div class="tx"><h3>El brief diario</h3><p>Lo postea solo en #multiplex-reports — métricas reales + hipótesis de producto.</p></div></div>
+    <div class="ditem"><div class="n">1</div><div class="tx"><h3>El brief diario</h3><p>Lo postea solo en #multiplex-reports — competidores con fuentes, tendencias, macro e hipótesis de producto.</p></div></div>
     <div class="ditem"><div class="n">2</div><div class="tx"><h3>El cerebro Obsidian</h3><p>Notas navegables: qué es cada app, qué se shipeó, cómo se gana plata.</p></div></div>
     <div class="ditem"><div class="n">3</div><div class="tx"><h3>El dashboard</h3><p>Un dashboard propio — estado, modelo, costo y cerebro en un solo lugar.</p></div></div>
   </div>
@@ -169,32 +175,62 @@ h2 b,h1 b{font-weight:600}
   </div>
 </section>
 
-<!-- 6 · COSTO -->
+<!-- 6 · QUÉ PUEDE HACER (Y QUÉ NO) -->
 <section class="slide">
-  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">06 / 07</span></div>
-  <div class="kicker">Costo</div>
-  <h2>Corre 24/7 por <b>centavos</b>.</h2>
-  <div class="costrow">
-    <div class="cost hi"><div class="v">$0.06</div><div class="k">Costo acumulado en todo el testing</div></div>
-    <div class="cost"><div class="v">~$135</div><div class="k">Estimado por mes (Gemini Pro + caching)</div></div>
-    <div class="cost"><div class="v">$3.70</div><div class="k">Lo que costaba cada brief del Multiplex viejo (Opus)</div></div>
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">06 / 08</span></div>
+  <div class="kicker">Qué puede hacer · Responsabilidades</div>
+  <h2>Qué hace, y qué <b>no toca</b>.</h2>
+  <div class="cols">
+    <div class="col do">
+      <h3>✅ Puede hacer</h3>
+      <ul>
+        <li><b>Leer</b> la data de prod (consultas de solo lectura)</li>
+        <li><b>Buscar</b> en la web: competidores, mercado, X</li>
+        <li><b>Mantener</b> su cerebro (vault Obsidian, versionado)</li>
+        <li><b>Escribir</b> el brief y <b>postear</b> a Slack</li>
+      </ul>
+    </div>
+    <div class="col lock">
+      <h3>Límites &amp; responsabilidades</h3>
+      <ul>
+        <li><b>No escribe</b> en la base — read-only, verificado</li>
+        <li><b>Gasto topeado</b>: tope duro de $100/mes en Google</li>
+        <li><b>Propone, no decide</b>: el equipo lee y acciona</li>
+        <li><b>Dueño humano</b>: alguien lo revisa y lo ajusta</li>
+      </ul>
+    </div>
   </div>
-  <span class="note-pill">Elegimos <b>Gemini 3.1 Pro</b> por mejor balance research/costo — corrimos el ranking costo-performance y evitamos Opus (verboso y caro como caballo de batalla).</span>
+  <p class="tiny">El agente <b>no ejecuta cambios de producto</b> — entrega inteligencia; las decisiones son del equipo.</p>
 </section>
 
-<!-- 7 · TAKEAWAY + NEXT -->
+<!-- 7 · COSTO (EXPLÍCITO) -->
+<section class="slide">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">07 / 08</span></div>
+  <div class="kicker">Costo · todo explícito</div>
+  <h2>Corre 24/7 por <b>centavos</b> — y con tope.</h2>
+  <div class="costtable">
+    <div class="row"><span class="lbl">Por brief (Gemini 3.1 Pro · ~1 min)</span><span class="val">~$0.43</span></div>
+    <div class="row"><span class="lbl">Brief diario, lun&nbsp;a&nbsp;vie</span><span class="val">~$13 / mes</span></div>
+    <div class="row"><span class="lbl">Infraestructura (droplet 24/7)</span><span class="val">$24 / mes</span></div>
+    <div class="row hi"><span class="lbl">Total estimado</span><span class="val">~$37 / mes</span></div>
+    <div class="row"><span class="lbl">Tope de gasto (hard cap en Google)</span><span class="val">$100 / mes</span></div>
+    <div class="row old"><span class="lbl">El brief del sistema viejo costaba</span><span class="val">$3.70 c/u</span></div>
+  </div>
+  <span class="note-pill">Tope <b>duro</b> de $100/mes: aunque se dispare el uso, Google corta. Hoy el brief sale <b>~8x más barato</b> que el viejo y en ~1&nbsp;minuto.</span>
+</section>
+
+<!-- 8 · TAKEAWAY + NEXT -->
 <section class="slide ink">
-  <div class="chrome"><span class="wordmark" style="color:#fff"><span class="dot"></span>Ágora</span><span class="num">07 / 07</span></div>
+  <div class="chrome"><span class="wordmark" style="color:#fff"><span class="dot"></span>Ágora</span><span class="num">08 / 08</span></div>
   <div class="kicker">Qué se lleva el equipo</div>
   <h2>Cualquier tarea recurrente puede tener <b style="color:#fff">su agente</b>.</h2>
-  <p class="lead">Research, ops, soporte… un "miembro del equipo" autónomo por tarea, que nunca duerme y cuesta centavos.</p>
-  <p class="tiny" style="margin-top:36px">Próximo paso → la primera tarea que Multiplex se está comiendo entera: <b style="color:#fff">el daily-brief</b>.</p>
+  <p class="lead">Research, ops, soporte… un "miembro del equipo" autónomo por tarea, que nunca duerme, con límites claros y costo topeado.</p>
+  <p class="tiny" style="margin-top:36px">Próximo paso → la primera tarea que Multiplex ya se está comiendo entera: <b style="color:#fff">el daily-brief</b>.</p>
   <p class="tiny" style="margin-top:14px;color:var(--frost-primary)">Ágora · IA Lab</p>
 </section>
 
 <div class="hint">scroll ↓</div>
 <script>
-// ocultar hint al final
 const slides=document.querySelectorAll('.slide');const hint=document.querySelector('.hint');
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const last=e.target===slides[slides.length-1];hint.style.display=last?'none':'block';}}),{threshold:.6});
 slides.forEach(s=>io.observe(s));
