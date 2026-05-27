@@ -1,8 +1,18 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
   "version": 1,
-  "updated_at": "2026-05-22",
+  "updated_at": "2026-05-27",
   "outputs": [
+    {
+      "type": "deck",
+      "typeLabel": "Deck",
+      "title": "Multiplex · IA Lab",
+      "description": "Deck del IA Lab sobre Multiplex — un agente autónomo de research/producto que corre 24/7 sobre OpenClaw: investiga la data y el mercado, mantiene un cerebro propio (vault Obsidian) y deja un brief diario en Slack. Cubre el problema, la arquitectura simple, el demo, el costo (corre por centavos) y la idea de 'un agente miembro del equipo' por cada tarea recurrente.",
+      "detail": "7 slides · scroll-snap",
+      "date": "MAY 2026",
+      "href": "./multiplex-ia-lab-2026-05/index.html",
+      "slug": "multiplex-ia-lab-2026-05"
+    },
     {
       "type": "deck",
       "typeLabel": "Deck",

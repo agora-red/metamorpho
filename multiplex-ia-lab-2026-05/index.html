@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Multiplex · IA Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --frost-primary:#0072FB; --frost-primary-hover:#005CD4; --frost-primary-soft:#EEF6FF; --frost-primary-wash:rgba(0,114,251,0.08);
+  --frost-accent:#FF4658; --frost-success:#10B981; --frost-warning:#F59E0B;
+  --frost-ink:#0F172A; --frost-ink-soft:#3A3A3A; --frost-muted:#868686; --frost-faint:#B5B5B5;
+  --frost-surface:#FFFFFF; --frost-surface-muted:#EFF3F9; --frost-border:#E2E8F0; --frost-border-soft:#F2F2F2;
+  --r-btn:12px; --r-card:20px; --r-shell:28px; --r-chip:999px;
+  --sh-sm:0 4px 12px -4px rgba(15,23,42,0.10); --sh-md:0 10px 30px -12px rgba(15,23,42,0.15); --sh-lg:0 20px 50px -20px rgba(15,23,42,0.25);
+  --sh-glow:0 4px 18px -2px rgba(0,114,251,0.30);
+  --sans:'Montserrat',system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
+body{font-family:var(--sans);font-variant-numeric:tabular-nums;color:var(--frost-ink);background:var(--frost-surface-muted);-webkit-font-smoothing:antialiased}
+.slide{height:100vh;width:100%;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:center;padding:6vh 8vw;position:relative;overflow:hidden}
+.slide.ink{background:var(--frost-ink);color:#fff}
+.slide.ink .kicker{color:var(--frost-primary)}
+/* chrome */
+.chrome{position:absolute;top:4vh;left:8vw;right:8vw;display:flex;justify-content:space-between;align-items:center}
+.chrome .num{font-size:12px;font-weight:600;letter-spacing:.12em;color:var(--frost-faint)}
+.slide.ink .chrome .num{color:rgba(255,255,255,.45)}
+.wordmark{display:flex;align-items:center;gap:9px;font-weight:500;font-size:17px;letter-spacing:-.01em}
+.wordmark .dot{width:9px;height:9px;border-radius:50%;background:var(--frost-primary);box-shadow:0 0 10px var(--frost-primary)}
+.slide.ink .wordmark{color:#fff}
+/* type */
+.kicker{font-size:13px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--frost-primary);margin-bottom:26px}
+h1{font-weight:200;font-size:clamp(54px,9vw,118px);line-height:.96;letter-spacing:-.02em}
+h2{font-weight:300;font-size:clamp(30px,4.6vw,58px);line-height:1.06;letter-spacing:-.015em;max-width:16ch}
+h2 b,h1 b{font-weight:600}
+.lead{font-size:clamp(17px,1.7vw,23px);font-weight:300;color:var(--frost-ink-soft);line-height:1.5;max-width:46ch;margin-top:22px}
+.slide.ink .lead{color:rgba(255,255,255,.78)}
+.sub{font-size:clamp(18px,2vw,26px);font-weight:300;color:rgba(255,255,255,.82);margin-top:20px;max-width:30ch}
+.tiny{font-size:13.5px;color:var(--frost-muted);margin-top:30px;font-weight:500}
+.slide.ink .tiny{color:rgba(255,255,255,.5)}
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
+.chip{padding:9px 18px;border-radius:var(--r-chip);background:var(--frost-surface);border:1px solid var(--frost-border);font-size:14.5px;font-weight:500;box-shadow:var(--sh-sm)}
+/* cards row */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:38px;max-width:920px}
+.card{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-card);padding:22px;box-shadow:var(--sh-sm)}
+.card .ic{font-size:22px;margin-bottom:12px}
+.card h3{font-size:16px;font-weight:600;margin-bottom:6px}
+.card p{font-size:13.5px;font-weight:300;color:var(--frost-muted);line-height:1.5}
+/* arch flow */
+.flow{display:flex;align-items:stretch;gap:14px;margin-top:40px;flex-wrap:wrap}
+.inputs{display:grid;grid-template-columns:1fr 1fr;gap:12px;flex:1;min-width:300px}
+.node{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:16px;padding:16px 18px;box-shadow:var(--sh-sm)}
+.node .lbl{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--frost-primary);margin-bottom:5px}
+.node .d{font-size:13px;font-weight:300;color:var(--frost-ink-soft);line-height:1.4}
+.core{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:var(--frost-ink);color:#fff;border-radius:var(--r-card);padding:26px 22px;min-width:200px;box-shadow:var(--sh-md)}
+.core .t{font-weight:600;font-size:18px}.core .s{font-size:12px;color:rgba(255,255,255,.6);margin-top:6px;font-weight:300}
+.arrow{display:flex;align-items:center;color:var(--frost-faint);font-size:26px}
+.out{display:flex;flex-direction:column;justify-content:center;gap:12px;min-width:190px}
+.outbox{background:var(--frost-primary-soft);border:1px solid rgba(0,114,251,.2);border-radius:16px;padding:15px 18px}
+.outbox .lbl{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--frost-primary)}
+.outbox .d{font-size:13.5px;font-weight:500;margin-top:3px}
+/* demo list */
+.dlist{display:flex;flex-direction:column;gap:14px;margin-top:34px;max-width:760px}
+.ditem{display:flex;gap:18px;align-items:flex-start;background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:16px;padding:18px 22px;box-shadow:var(--sh-sm)}
+.ditem .n{font-weight:600;font-size:20px;color:var(--frost-primary);min-width:30px}
+.ditem .tx h3{font-size:16.5px;font-weight:600}.ditem .tx p{font-size:13.5px;font-weight:300;color:var(--frost-muted);margin-top:3px}
+.metricbar{display:flex;gap:30px;margin-top:34px;flex-wrap:wrap}
+.metric .v{font-size:clamp(34px,4.5vw,52px);font-weight:200;letter-spacing:-.02em;color:var(--frost-ink)}
+.slide.ink .metric .v{color:#fff}
+.metric .k{font-size:12.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--frost-muted);margin-top:4px}
+/* cost */
+.costrow{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px;max-width:880px}
+.cost{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-card);padding:26px 24px;box-shadow:var(--sh-sm)}
+.cost.hi{background:var(--frost-primary);color:#fff;box-shadow:var(--sh-glow)}
+.cost .v{font-size:clamp(32px,4vw,46px);font-weight:200;letter-spacing:-.02em}
+.cost .k{font-size:13px;font-weight:500;color:var(--frost-muted);margin-top:8px;line-height:1.4}
+.cost.hi .k{color:rgba(255,255,255,.85)}
+.note-pill{display:inline-block;margin-top:30px;background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-btn);padding:14px 20px;font-size:14px;font-weight:300;color:var(--frost-ink-soft);box-shadow:var(--sh-sm);max-width:60ch;line-height:1.5}
+.note-pill b{font-weight:600;color:var(--frost-ink)}
+/* hint */
+.hint{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--frost-faint);z-index:10;animation:fade 2.4s ease-in-out infinite}
+@keyframes fade{0%,100%{opacity:.3}50%{opacity:.9}}
+@media(max-width:760px){.cards,.costrow{grid-template-columns:1fr}.flow{flex-direction:column}.inputs{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- 1 · COVER -->
+<section class="slide ink">
+  <div class="chrome">
+    <span class="wordmark" style="color:#fff"><span class="dot"></span>Ágora</span>
+    <span class="num">IA LAB · 27 MAY 2026</span>
+  </div>
+  <div class="kicker">Workshop · IA Lab</div>
+  <h1>Multiplex</h1>
+  <p class="sub">Un Head&nbsp;de&nbsp;Product que <b style="font-weight:600;color:#fff">nunca duerme</b>.</p>
+  <p class="tiny">Agente autónomo de research · corre 24/7 sobre OpenClaw</p>
+</section>
+
+<!-- 2 · PROBLEMA -->
+<section class="slide">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">02 / 07</span></div>
+  <div class="kicker">El problema</div>
+  <h2>Entender el producto hoy = abrir <b>5 lugares</b> y media hora por cuenta.</h2>
+  <div class="chips">
+    <span class="chip">Base de datos</span>
+    <span class="chip">Intercom</span>
+    <span class="chip">Amplitude</span>
+    <span class="chip">Los repos</span>
+    <span class="chip">Google / la competencia</span>
+  </div>
+  <p class="lead">Y nadie lo hace <b>todos los días</b>. El research de producto y mercado queda siempre para después.</p>
+</section>
+
+<!-- 3 · QUÉ ES -->
+<section class="slide">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">03 / 07</span></div>
+  <div class="kicker">Qué es</div>
+  <h2>Un <b>miembro del equipo</b> que nunca duerme.</h2>
+  <p class="lead">Multiplex investiga la data + el mercado, razona como Head of Product, y deja un <b>brief diario en Slack</b> — solo, 24/7.</p>
+  <div class="cards">
+    <div class="card"><div class="ic">🔄</div><h3>Proactivo</h3><p>Corre su patrulla todos los días sin que nadie se lo pida.</p></div>
+    <div class="card"><div class="ic">🧠</div><h3>Con memoria</h3><p>Un cerebro propio que sabe qué es Ágora, qué se shipeó y cómo se gana plata.</p></div>
+    <div class="card"><div class="ic">🪙</div><h3>Por centavos</h3><p>Vive en un droplet, razona con modelos baratos. Más abajo, los números.</p></div>
+  </div>
+  <p class="tiny">Evolución del Multiplex viejo (research batch) → ahora <b>vive y actúa</b> sobre OpenClaw.</p>
+</section>
+
+<!-- 4 · CÓMO FUNCIONA -->
+<section class="slide">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">04 / 07</span></div>
+  <div class="kicker">Cómo funciona</div>
+  <h2>Arquitectura simple, todo en <b>un droplet</b>.</h2>
+  <div class="flow">
+    <div class="inputs">
+      <div class="node"><div class="lbl">Cerebro</div><div class="d">Vault Obsidian — 10 notas con el conocimiento de Ágora</div></div>
+      <div class="node"><div class="lbl">Data de prod</div><div class="d">Lectura de la base — <b>read-only</b></div></div>
+      <div class="node"><div class="lbl">Web search</div><div class="d">Competidores, tendencias, X</div></div>
+      <div class="node"><div class="lbl">Modelo</div><div class="d">Gemini 3.1 Pro · Flash de router</div></div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="core"><div class="t">Multiplex</div><div class="s">OpenClaw · gateway 24/7</div></div>
+    <div class="arrow">→</div>
+    <div class="out">
+      <div class="outbox"><div class="lbl">Output</div><div class="d">💬 Brief diario en Slack</div></div>
+      <div class="outbox"><div class="lbl">Visible en</div><div class="d">📊 Dashboard propio</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 · DEMO -->
+<section class="slide">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">05 / 07</span></div>
+  <div class="kicker">Demo en vivo</div>
+  <h2>Qué van a ver.</h2>
+  <div class="dlist">
+    <div class="ditem"><div class="n">1</div><div class="tx"><h3>El brief diario</h3><p>Lo postea solo en #multiplex-reports — métricas reales + hipótesis de producto.</p></div></div>
+    <div class="ditem"><div class="n">2</div><div class="tx"><h3>El cerebro Obsidian</h3><p>Notas navegables: qué es cada app, qué se shipeó, cómo se gana plata.</p></div></div>
+    <div class="ditem"><div class="n">3</div><div class="tx"><h3>El dashboard</h3><p>Un dashboard propio — estado, modelo, costo y cerebro en un solo lugar.</p></div></div>
+  </div>
+  <div class="metricbar">
+    <div class="metric"><div class="v">24/7</div><div class="k">Siempre corriendo</div></div>
+    <div class="metric"><div class="v">~20s</div><div class="k">Por brief</div></div>
+    <div class="metric"><div class="v">10</div><div class="k">Notas en el cerebro</div></div>
+  </div>
+</section>
+
+<!-- 6 · COSTO -->
+<section class="slide">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">06 / 07</span></div>
+  <div class="kicker">Costo</div>
+  <h2>Corre 24/7 por <b>centavos</b>.</h2>
+  <div class="costrow">
+    <div class="cost hi"><div class="v">$0.06</div><div class="k">Costo acumulado en todo el testing</div></div>
+    <div class="cost"><div class="v">~$135</div><div class="k">Estimado por mes (Gemini Pro + caching)</div></div>
+    <div class="cost"><div class="v">$3.70</div><div class="k">Lo que costaba cada brief del Multiplex viejo (Opus)</div></div>
+  </div>
+  <span class="note-pill">Elegimos <b>Gemini 3.1 Pro</b> por mejor balance research/costo — corrimos el ranking costo-performance y evitamos Opus (verboso y caro como caballo de batalla).</span>
+</section>
+
+<!-- 7 · TAKEAWAY + NEXT -->
+<section class="slide ink">
+  <div class="chrome"><span class="wordmark" style="color:#fff"><span class="dot"></span>Ágora</span><span class="num">07 / 07</span></div>
+  <div class="kicker">Qué se lleva el equipo</div>
+  <h2>Cualquier tarea recurrente puede tener <b style="color:#fff">su agente</b>.</h2>
+  <p class="lead">Research, ops, soporte… un "miembro del equipo" autónomo por tarea, que nunca duerme y cuesta centavos.</p>
+  <p class="tiny" style="margin-top:36px">Próximo paso → la primera tarea que Multiplex se está comiendo entera: <b style="color:#fff">el daily-brief</b>.</p>
+  <p class="tiny" style="margin-top:14px;color:var(--frost-primary)">Ágora · IA Lab</p>
+</section>
+
+<div class="hint">scroll ↓</div>
+<script>
+// ocultar hint al final
+const slides=document.querySelectorAll('.slide');const hint=document.querySelector('.hint');
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const last=e.target===slides[slides.length-1];hint.style.display=last?'none':'block';}}),{threshold:.6});
+slides.forEach(s=>io.observe(s));
+</script>
+</body>
+</html>
