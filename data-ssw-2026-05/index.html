@@ -195,8 +195,8 @@ details:hover{box-shadow:var(--shadow-sm)}
 <!-- 3 · REVENUE -->
 <section id="revenue">
  <div class="sec-head"><span class="sec-num">03</span><h2>Revenue</h2><button class="toggle" aria-label="toggle">▾</button></div>
- <div class="key-insight"><b>MRR $15.0k EoP Apr-26</b> (incl. nume) · ARPU $12.5 · gross margin trending 54% → 81% · <b>91% subscription</b>, 9% marketplace take rate. Plan Pro 75% / Plan Negocio 25% of subscribers. WhatsApp packs attached on 34% of subscribers.</div>
- <p class="sec-sub">MRR &amp; build, ARPU, mix by module &amp; tier, attach rate, active subscribers.</p>
+ <div class="key-insight"><b>MRR $15.0k EoP Apr-26</b> (incl. nume) · ARPU $12.5 · gross margin trending 54% → 81% · <b>91% subscription</b>, 9% marketplace take rate. Plan Pro 75% / Plan Negocio 25% of subscribers.</div>
+ <p class="sec-sub">MRR &amp; build, ARPU, mix by module &amp; tier, active subscribers.</p>
  <div class="sec-body">
   <div class="grid2">
    <div class="card"><h3>MRR — monthly (USD)</h3><div class="h3sub">End-of-period MRR. ~$1k → $15.0k over 20 months (incl. nume).</div><svg id="mrrChart" viewBox="0 0 560 280"></svg></div>
@@ -204,10 +204,9 @@ details:hover{box-shadow:var(--shadow-sm)}
   </div>
   <div class="card"><h3>MRR build — monthly movement (USD) · through Apr-26</h3><div class="h3sub">New subscribers · expansion / contraction (plan price net) · add-on (WA packs, net) · churn → net change &amp; MRR end-of-period. From the company model (incl. nume +$100 new in Mar-25 and +$150 price expansion in Sep-25).</div>
    <div class="scroll"><table id="mrrBuildTable"></table></div></div>
-  <div class="grid3">
+  <div class="grid2">
    <div class="card"><h3>Revenue by module</h3><div class="h3sub">Apr 2026 mix.</div><svg id="moduleChart" viewBox="0 0 340 200"></svg><div id="moduleLeg"></div></div>
    <div class="card"><h3>Revenue by tier</h3><div class="h3sub">Apr 2026.</div><table id="tierTable"></table></div>
-   <div class="card"><h3>Feature attach rate</h3><div class="h3sub">% of active subscribers, Apr 2026.</div><div id="attach"></div></div>
   </div>
   <div class="card"><h3>Active subscribers &amp; monthly renewal · through Apr-26</h3><svg id="subsChart" viewBox="0 0 1080 280"></svg></div>
  </div>
@@ -433,8 +432,6 @@ lineChart('arpuChart',DATA.monthsPnl,[{data:DATA.arpu,color:C.violet}],{max:14,t
  $('moduleLeg').innerHTML='<div class="legend" style="margin-top:10px">'+DATA.revModule.map((m,i)=>`<span><i class="sw sq" style="background:${cols[i]}"></i>${m.m} · ${m.pct}%</span>`).join('')+'</div>';})();
 // tier table
 $('tierTable').innerHTML='<tr><th>Tier</th><th>Subs</th><th>MRR</th><th>Share</th></tr>'+DATA.tiers.map(t=>`<tr><td class="lbl">${t.name}</td><td>${t.subs}</td><td>$${t.rev.toLocaleString()}</td><td>${t.pct}%</td></tr>`).join('');
-// attach bars
-$('attach').innerHTML=DATA.attach.map(a=>`<div style="margin-top:11px"><div style="display:flex;justify-content:space-between;font-size:12.5px"><span style="font-weight:600">${a.f}</span><span class="mono" style="color:#6b6b6b">${a.pct}% · ${a.n}</span></div><div style="height:7px;background:var(--surface-dim);border-radius:5px;margin-top:5px;overflow:hidden"><div style="height:100%;width:${Math.max(a.pct,1.5)}%;background:var(--primary);border-radius:5px"></div></div></div>`).join('');
 // subs active bars
 barChart('subsChart',DATA.months19,DATA.subsActive,C.primary,{max:1300,ticks:[0,650,1300],fmt:v=>v,label:true});
 // 5 · rev + GM combo
