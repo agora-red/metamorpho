@@ -176,8 +176,8 @@ details:hover{box-shadow:var(--shadow-sm)}
     <button class="rev-tog" data-v="usd" style="font-family:inherit;font-weight:700;font-size:12.5px;border:none;padding:7px 14px;border-radius:7px;cursor:pointer;background:none;color:var(--text-secondary)">USD as-reported</button>
    </div>
    <div class="scroll"><table class="tri" id="revTri"></table></div></div>
-  <div class="card"><span class="badge good">Sourced · DB + Slack + Intercom</span>
-   <h3 style="margin-top:10px">Cancellation drivers — Jun 2025 → Apr 2026</h3>
+  <div class="card">
+   <h3>Cancellation drivers</h3>
    <div class="h3sub"><b>Drivers below are either stated explicitly by the vendor at cancellation or abstracted by the customer-success team from their conversation history.</b></div>
    <div class="scroll"><table style="margin-top:14px">
     <tr><th>Driver</th><th>Vendors</th><th>% of identified</th></tr>
@@ -202,13 +202,13 @@ details:hover{box-shadow:var(--shadow-sm)}
    <div class="card"><h3>MRR — monthly (USD)</h3><div class="h3sub">End-of-period MRR. ~$1k → $15.0k over 20 months (incl. nume).</div><svg id="mrrChart" viewBox="0 0 560 280"></svg></div>
    <div class="card"><h3>ARPU — monthly trend (USD)</h3><div class="h3sub">Blended MRR per active subscriber. $4.5 → $12.5.</div><svg id="arpuChart" viewBox="0 0 560 280"></svg></div>
   </div>
-  <div class="card"><h3>MRR build — monthly movement (USD) · through Apr-26</h3><div class="h3sub">New subscribers · expansion / contraction (plan price net) · add-on (WA packs, net) · churn → net change &amp; MRR end-of-period. From the company model (incl. nume +$100 new in Mar-25 and +$150 price expansion in Sep-25).</div>
+  <div class="card"><h3>MRR build — monthly movement (USD)</h3><div class="h3sub">New subscribers · expansion / contraction (plan price net) · add-on (WA packs, net) · churn → net change &amp; MRR end-of-period. From the company model (incl. nume +$100 new in Mar-25 and +$150 price expansion in Sep-25).</div>
    <div class="scroll"><table id="mrrBuildTable"></table></div></div>
   <div class="grid2">
    <div class="card"><h3>Revenue by module</h3><div class="h3sub">Apr 2026 mix.</div><svg id="moduleChart" viewBox="0 0 340 200"></svg><div id="moduleLeg"></div></div>
    <div class="card"><h3>Revenue by tier</h3><div class="h3sub">Apr 2026.</div><table id="tierTable"></table></div>
   </div>
-  <div class="card"><h3>Active subscribers &amp; monthly renewal · through Apr-26</h3><svg id="subsChart" viewBox="0 0 1080 280"></svg></div>
+  <div class="card"><h3>Active subscribers &amp; monthly renewal</h3><svg id="subsChart" viewBox="0 0 1080 280"></svg></div>
  </div>
 </section>
 
@@ -219,7 +219,7 @@ details:hover{box-shadow:var(--shadow-sm)}
  <p class="sec-sub">Activity depth on Flash (vendor portal pro.agora.red) and the action that best predicts retention. Activity from Amplitude (last 12m) + Engagement sheet (historical); booking retention from production DB over an 18-month cohort of 2,097 vendors.</p>
  <div class="sec-body">
   <div class="grid2">
-   <div class="card"><span class="badge good">Sourced · Amplitude + sheet</span><h3 style="margin-top:10px">Activity — DAU · MAU · stickiness</h3>
+   <div class="card"><h3>Activity — DAU · MAU · stickiness</h3>
     <div class="h3sub">Snapshot Apr-2026 · trend Oct-2024 → Apr-2026 (Active = vendors in active status)</div>
     <div class="scroll"><table>
      <tr><th></th><th>All users</th><th>Active vendors</th></tr>
@@ -232,7 +232,7 @@ details:hover{box-shadow:var(--shadow-sm)}
      <b>MAU +95% in 18 months</b> (1,375 → 2,688), plateauing at 2,400–2,700 since Jan-26. <b>Stickiness</b> climbed 24% → 40% All-Users (Jan-25 → Apr-26), crossing Meta's 40% threshold; Active vendors at 69% — roughly every working day. Active vendors are only ~44% of MAU but drive <b>~75% of daily logins</b>.
     </div>
    </div>
-   <div class="card"><span class="badge good">Validated on production data</span><h3 style="margin-top:10px">Booking volume predicts retention</h3>
+   <div class="card"><h3>Booking volume predicts retention</h3>
     <div class="h3sub"><b>Cohort:</b> 2,097 vendors who were paying subscribers at any point during Nov-2024 → May-2026 (broader than the active-today base of 1,125 — includes vendors who already churned). <b>Retention</b> = vendor still in active status today; otherwise counted as churned. <b>Bookings/mo</b> = total confirmed bookings ÷ 18 (normalised monthly rate).</div>
     <div class="callout" style="margin-top:8px"><div class="big">≥10 bookings / mo → 79.4% retention</div>
      <div class="note" style="color:var(--text);font-size:13.5px">vs <b>33.9%</b> below 10 — a <b>+45.5pp gap</b>, more than 2× the rule-of-thumb (18.6pp).</div></div>
@@ -248,14 +248,12 @@ details:hover{box-shadow:var(--shadow-sm)}
     <div class="note">Strictly monotonic. Median = <b>9.4 bookings/mo</b> — half the base sits just below the retention inflection (highest-leverage activation lever). The 20+ bucket (37% of cohort, ~60 bookings/mo avg) is the platform's backbone with 85.6% retention.</div>
    </div>
   </div>
-  <div class="grid2" style="margin-top:14px">
-   <div class="card"><h3>MAU evolution · Oct 2024 → Apr 2026</h3>
-    <div class="legend"><span><i class="sw sq" style="background:var(--primary)"></i>All Users</span><span><i class="sw sq" style="background:var(--violet)"></i>Active vendors</span></div>
-    <svg id="mauChart" viewBox="0 0 1080 280"></svg></div>
-   <div class="card"><h3>DAU evolution · Jan 2025 → Apr 2026</h3>
-    <div class="legend"><span><i class="sw sq" style="background:var(--primary)"></i>All Users</span><span><i class="sw sq" style="background:var(--violet)"></i>Active vendors</span></div>
-    <svg id="dauChart" viewBox="0 0 1080 280"></svg></div>
-  </div>
+  <div class="card" style="margin-top:14px"><h3>MAU evolution</h3>
+   <div class="legend"><span><i class="sw sq" style="background:var(--primary)"></i>All Users</span><span><i class="sw sq" style="background:var(--violet)"></i>Active vendors</span></div>
+   <svg id="mauChart" viewBox="0 0 1080 360"></svg></div>
+  <div class="card"><h3>DAU evolution</h3>
+   <div class="legend"><span><i class="sw sq" style="background:var(--primary)"></i>All Users</span><span><i class="sw sq" style="background:var(--violet)"></i>Active vendors</span></div>
+   <svg id="dauChart" viewBox="0 0 1080 360"></svg></div>
  </div>
 </section>
 
@@ -292,7 +290,7 @@ details:hover{box-shadow:var(--shadow-sm)}
 <section id="customers">
  <div class="sec-head"><span class="sec-num">06</span><h2>Customer Data</h2><button class="toggle" aria-label="toggle">▾</button></div>
  <div class="key-insight"><b>Net additions positive every month.</b> Cancellations scale with the base (15 → 92/mo) but stay well below new subscribers; monthly logo renewal ~91%.</div>
- <p class="sec-sub">New paying subscribers vs cancellations, monthly · through Apr-26.</p>
+ <p class="sec-sub">New paying subscribers vs cancellations, monthly.</p>
  <div class="sec-body">
   <div class="card"><h3>New subscribers, cancellations &amp; active paying base</h3><div class="h3sub">Gross adds (new paying subscribers) and gross churn (cancellations) per month. Purple line: <b>active paying subscribers at month end</b> — i.e. opening base + new − cancellations (same metric as the Active subscribers chart in Revenue).</div>
    <div class="legend"><span><i class="sw sq" style="background:var(--primary)"></i>New subscribers</span><span><i class="sw sq" style="background:var(--accent)"></i>Cancellations</span><span><i class="sw sq" style="background:var(--violet)"></i>Active paying base (right)</span></div>
@@ -513,28 +511,32 @@ barChart('subsChart',DATA.months19,DATA.subsActive,C.primary,{max:1300,ticks:[0,
 document.querySelectorAll('.sec-head').forEach(h=>h.addEventListener('click',()=>h.parentElement.classList.toggle('collapsed')));
 // Engagement — MAU & DAU lines (handle null gaps)
 function nullLineChart(id,labels,series,o){
-  o=o||{};const s=$(id),{W,H}=D(s);const pl=o.pl||44,pr=14,pt=14,pb=30,ph=H-pt-pb;
+  o=o||{};const s=$(id),{W,H}=D(s);const pl=o.pl||44,pr=14,pt=24,pb=34,ph=H-pt-pb;
   const max=o.max,min=o.min||0,x=axisX(W,labels.length,pl,pr),y=v=>pt+ph-((v-min)/(max-min))*ph;
   const ticks=o.ticks||[min,(min+max)/2,max];let g='';
-  ticks.forEach(t=>{g+=`<line x1="${pl}" y1="${y(t)}" x2="${W-pr}" y2="${y(t)}" stroke="#cfd3dd"/><text x="${pl-6}" y="${y(t)+3}" text-anchor="end" font-family="Space Mono" font-size="12" font-weight="700" fill="#52525b">${o.fmt?o.fmt(t):t.toLocaleString()}</text>`;});
-  for(let i=0;i<labels.length;i+=3){g+=`<text x="${x(i)}" y="${H-12}" text-anchor="middle" font-family="Space Mono" font-size="10" font-weight="700" fill="#52525b">${labels[i]}</text>`;}
+  ticks.forEach(t=>{g+=`<line x1="${pl}" y1="${y(t)}" x2="${W-pr}" y2="${y(t)}" stroke="#cfd3dd"/><text x="${pl-6}" y="${y(t)+3}" text-anchor="end" font-family="Space Mono" font-size="11" font-weight="700" fill="#52525b">${o.fmt?o.fmt(t):t.toLocaleString()}</text>`;});
+  for(let i=0;i<labels.length;i+=2){g+=`<text x="${x(i)}" y="${H-12}" text-anchor="middle" font-family="Space Mono" font-size="10.5" font-weight="700" fill="#52525b">${labels[i]}</text>`;}
   series.forEach(ser=>{
     let seg=[];const segs=[];
-    ser.data.forEach((v,i)=>{if(v==null){if(seg.length>1)segs.push(seg);seg=[];}else{seg.push([x(i),y(v)]);}});
+    ser.data.forEach((v,i)=>{if(v==null){if(seg.length>1)segs.push(seg);seg=[];}else{seg.push([x(i),y(v),i,v]);}});
     if(seg.length>1)segs.push(seg);
-    segs.forEach(s2=>{g+=`<polyline fill="none" stroke="${ser.color}" stroke-width="${ser.w||2.4}" points="${s2.map(p=>p[0]+','+p[1]).join(' ')}"/>`;});
-    ser.data.forEach((v,i)=>{if(v!=null)g+=`<circle cx="${x(i)}" cy="${y(v)}" r="2.5" fill="${ser.color}"/>`;});
+    segs.forEach(s2=>{g+=`<polyline fill="none" stroke="${ser.color}" stroke-width="${ser.w||2.6}" points="${s2.map(p=>p[0]+','+p[1]).join(' ')}"/>`;});
+    ser.data.forEach((v,i)=>{if(v!=null)g+=`<circle cx="${x(i)}" cy="${y(v)}" r="3" fill="#fff" stroke="${ser.color}" stroke-width="1.6"/>`;});
+    if(o.showLabels){
+      const off=ser.labelOffset||-10;
+      ser.data.forEach((v,i)=>{if(v!=null)g+=`<text x="${x(i)}" y="${y(v)+off}" text-anchor="middle" font-family="Space Mono" font-size="10" font-weight="700" fill="${ser.color}">${v.toLocaleString()}</text>`;});
+    }
   });
   s.innerHTML=g;
 }
 nullLineChart('mauChart',DATA.months19,[
-  {data:DATA.mauAU,color:C.primary,w:2.6},
-  {data:DATA.mauAV,color:C.violet,w:2.6}
-],{pl:55,max:3000,ticks:[0,750,1500,2250,3000]});
+  {data:DATA.mauAU,color:C.primary,w:2.6,labelOffset:-11},
+  {data:DATA.mauAV,color:C.violet,w:2.6,labelOffset:14}
+],{pl:55,max:3000,ticks:[0,750,1500,2250,3000],showLabels:true});
 nullLineChart('dauChart',DATA.months19,[
-  {data:DATA.dauAU,color:C.primary,w:2.6},
-  {data:DATA.dauAV,color:C.violet,w:2.6}
-],{pl:55,max:1200,ticks:[0,300,600,900,1200]});
+  {data:DATA.dauAU,color:C.primary,w:2.6,labelOffset:-11},
+  {data:DATA.dauAV,color:C.violet,w:2.6,labelOffset:14}
+],{pl:55,max:1200,ticks:[0,300,600,900,1200],showLabels:true});
 
 // Customers — overlay active paying base (subsActive) line on custChart bars
 (function(){const s=$('custChart');if(!s)return;const{W,H}=D(s);
