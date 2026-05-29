@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>State of Ágora · May 2026</title>
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" href="assets/agora-iso.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+ --primary:#0072fb;--primary-soft:#eef6ff;--primary-deep:#005cd4;
+ --accent:#ff4658;--accent-soft:#ffe3e6;
+ --text:#101014;--text-secondary:#52525b;--text-faint:#7e7e88;
+ --border:#d9d9e0;--border-soft:#e7e7ee;--grid:#cfd3dd;
+ --surface:#ffffff;--surface-muted:#f6f6f4;--surface-dim:#eeeef2;
+ --success:#0ad6a1;--success-ink:#066d57;--success-soft:#dffaf1;
+ --sky:#00cdff;--warning:#ffe066;--warning-ink:#6b5400;--warning-soft:#fff5c2;--warning-bg:#fff8dc;
+ --violet:#7c5cff;--violet-soft:#ece7ff;
+ --font-sans:'Montserrat',system-ui,sans-serif;--font-mono:'Space Mono',monospace;
+ --shadow-sm:0 1px 2px rgba(0,0,0,.05),0 4px 14px -4px rgba(0,0,0,.08);
+ --shadow-md:0 2px 4px rgba(0,0,0,.06),0 10px 22px -6px rgba(0,0,0,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);background:var(--surface-muted);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased;font-size:15.5px}
+.mono{font-family:var(--font-mono)}
+/* NAV */
+nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.97);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:18px;padding:14px 32px;flex-wrap:wrap}
+nav img{height:28px}
+nav .links{display:flex;gap:4px;flex-wrap:wrap;margin-left:auto}
+nav a{font-size:13px;font-weight:600;color:var(--text-secondary);text-decoration:none;padding:7px 12px;border-radius:8px}
+nav a:hover{background:var(--primary-soft);color:var(--primary)}
+nav .chip{font-family:var(--font-mono);font-size:11.5px;color:var(--text);border:1px solid var(--border);border-radius:20px;padding:6px 12px;background:var(--surface)}
+/* LAYOUT */
+.wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+header.hero{padding:60px 0 30px}
+.kicker{font-family:var(--font-mono);font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--primary);font-weight:700}
+header.hero h1{font-size:42px;font-weight:800;letter-spacing:-.025em;margin-top:14px;line-height:1.08}
+header.hero p{color:var(--text-secondary);font-size:16px;margin-top:14px;max-width:820px;line-height:1.55}
+/* KPI BAND */
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-top:34px}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 18px 17px}
+.kpi .k{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-faint);font-weight:700}
+.kpi .v{font-size:30px;font-weight:800;letter-spacing:-.02em;margin-top:8px;color:var(--primary);line-height:1}
+.kpi .d{font-size:12px;color:var(--text-secondary);margin-top:6px;line-height:1.4}
+/* SECTION */
+section{padding:38px 0 14px;border-top:1px solid var(--border);margin-top:30px}
+section:first-of-type{border-top:none;margin-top:8px}
+.sec-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap;cursor:pointer;user-select:none}
+.sec-head:hover .sec-num{background:var(--primary);color:#fff}
+.sec-num{font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--primary);background:var(--primary-soft);border-radius:8px;padding:5px 11px;transition:background .15s,color .15s}
+.sec-head h2{font-size:26px;font-weight:800;letter-spacing:-.02em;margin-right:auto}
+.toggle{font-family:var(--font-mono);font-size:18px;font-weight:700;color:var(--text-faint);background:none;border:1px solid var(--border);border-radius:8px;width:32px;height:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .2s}
+section.collapsed .toggle{transform:rotate(-90deg)}
+.sec-sub{color:var(--text-secondary);font-size:14.5px;margin:8px 0 22px;line-height:1.55;max-width:920px}
+section.collapsed .sec-sub,section.collapsed .sec-body{display:none}
+.key-insight{display:none;margin-top:14px;padding:16px 20px;background:var(--primary-soft);border-left:3px solid var(--primary);border-radius:10px;font-size:14px;color:var(--text);line-height:1.55}
+.key-insight b{color:var(--primary-deep)}
+section.collapsed .key-insight{display:block}
+h3{font-size:16px;font-weight:700;margin-bottom:3px;letter-spacing:-.01em}
+.h3sub{font-size:13px;color:var(--text-secondary);margin-bottom:14px;line-height:1.5}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px 24px 20px;margin-bottom:20px;box-shadow:var(--shadow-sm)}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:5px 11px;border-radius:20px}
+.badge.prelim{background:var(--warning-soft);color:var(--warning-ink)}
+.badge.pending{background:var(--surface-dim);color:var(--text-secondary)}
+.badge.good{background:var(--success-soft);color:var(--success-ink)}
+.legend{display:flex;gap:20px;flex-wrap:wrap;margin:4px 0 10px}
+.legend span{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-secondary);font-weight:600}
+.sw{width:18px;height:3px;border-radius:2px}.sw.sq{width:13px;height:13px;border-radius:3px}
+svg{width:100%;height:auto;display:block}
+/* TABLES */
+table{width:100%;border-collapse:collapse;margin-top:4px;font-size:13.5px}
+th{text-align:right;font-family:var(--font-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--text);padding:10px 9px;border-bottom:2px solid var(--border);background:var(--surface-muted);font-weight:700}
+th:first-child,td:first-child{text-align:left}
+td{text-align:right;padding:8px 9px;font-size:13px;font-family:var(--font-mono);border-bottom:1px solid var(--border-soft);color:var(--text)}
+td.lbl{font-family:var(--font-sans);font-weight:600}
+tbody tr:hover td{background:var(--primary-soft)}
+.tri td{padding:4px 5px;font-size:11px;text-align:center;border:1px solid #fff;border-radius:3px;color:var(--text);font-weight:600}
+.tri th{padding:6px 5px;font-size:10px;text-align:center;color:var(--text-secondary)}
+.tri td.lbl,.tri th:first-child{text-align:left;font-family:var(--font-mono)}
+.scroll{overflow-x:auto}
+/* CALLOUTS, METRICS */
+.callout{background:var(--primary-soft);border:1px solid #b4d6ff;border-radius:14px;padding:22px 24px}
+.callout .big{font-size:21px;font-weight:800;color:var(--primary-deep);letter-spacing:-.01em}
+.note{font-size:13px;color:var(--text);margin-top:10px;line-height:1.6}
+.pend-card{display:flex;flex-direction:column;gap:8px;justify-content:center;min-height:130px}
+.metric-tile{background:var(--surface-muted);border:1px solid var(--border);border-radius:12px;padding:18px 18px}
+.metric-tile .k{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-faint);font-weight:700}
+.metric-tile .v{font-size:26px;font-weight:800;letter-spacing:-.02em;margin-top:6px;color:var(--text);line-height:1}
+.metric-tile .d{font-size:12px;color:var(--text-secondary);margin-top:6px;line-height:1.45}
+footer{margin-top:54px;border-top:1px solid var(--border);padding:32px 0 56px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+footer img{height:32px;opacity:.8}
+footer .src{font-family:var(--font-mono);font-size:11.5px;color:var(--text-secondary);line-height:1.7}
+/* P&L annex collapsibles */
+details summary{list-style:none;outline:none}
+details summary::-webkit-details-marker{display:none}
+details summary::marker{display:none}
+.anex-arrow{display:inline-block;transition:transform .2s;color:var(--primary);margin-right:10px;font-family:'Space Mono',monospace;font-size:13px}
+details[open] .anex-arrow{transform:rotate(90deg)}
+details:hover{box-shadow:var(--shadow-sm)}
+/* P&L table polish */
+.pnl-table td,.pnl-table th{font-size:13px;padding:9px 10px}
+.pnl-table tbody tr:hover td{background:rgba(0,114,251,.06)!important}
+.pnl-table tbody tr:last-child td{padding-bottom:18px}
+@media(max-width:980px){.kpis{grid-template-columns:repeat(3,1fr)}.grid2,.grid3{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav>
+ <img src="assets/agora-horizontal.png" alt="Ágora">
+ <div class="links">
+  <a href="#unit">Unit economics</a><a href="#retention">Retention</a><a href="#revenue">Revenue</a>
+  <a href="#engagement">Engagement</a><a href="#financials">Financials</a><a href="#customers">Customers</a>
+ </div>
+ <span class="chip">Sep 2024 – Mar 2026 · USD</span>
+</nav>
+
+<div class="wrap">
+<header class="hero">
+ <div class="kicker">Ágora · Operator's view · May 2026</div>
+ <h1>State of Ágora</h1>
+ <p>Unit economics, retention, revenue, engagement, financials and customer data — as recorded in the production database, the company books and Amplitude. Cohorts grouped by first billing month. Local-currency (ARS &amp; UYU) converted to USD month-by-month. Click any section header to collapse or expand.</p>
+ <div class="kpis" id="kpis"></div>
+</header>
+
+<!-- 1 · UNIT ECONOMICS -->
+<section id="unit">
+ <div class="sec-head"><span class="sec-num">01</span><h2>Unit Economics</h2><button class="toggle" aria-label="toggle">▾</button></div>
+ <div class="key-insight"><b>CAC $41 · LTV ~$159 (3.9× CAC) · payback ~m7.</b> Cohort LTV curves accrue ~linearly (~$5/mo) without plateau; the oldest cohort (Oct-24) has realised $91 per subscriber at m17 and is still climbing.</div>
+ <p class="sec-sub">CAC, LTV by cohort, LTV:CAC and payback. Founder salary allocated 33% to S&amp;M.</p>
+ <div class="sec-body">
+  <div class="card">
+   <h3>CAC formula — what's included</h3>
+   <div class="h3sub mono" style="background:var(--surface-dim);border-radius:8px;padding:12px 16px;color:var(--text);margin-top:10px">CAC = monthly Sales &amp; Marketing spend / new paying customers</div>
+   <ul style="margin:14px 0 0 20px;font-size:14px;line-height:1.75;color:var(--text)">
+    <li><b>Fully-loaded</b> = paid media (Meta) + marketing &amp; sales payroll + agencies (Orange, Bomba) + martech + <b>33% of founder salary</b> (rest → product / G&amp;A)</li>
+    <li><b>Denominator</b> = new paying customers (their first month billed) — not signups, not free trials</li>
+    <li><b>Blended only</b> — channel-level CAC not reported: signup UTM attribution covers only ~46% of vendors (no robust organic attribution), so per-channel breakdowns are not reliable</li>
+   </ul>
+  </div>
+  <div class="card"><h3>Monthly blended CAC</h3><div class="h3sub">Fully-loaded blended CAC per new paying customer (founder salary 33% allocated).</div>
+   <div class="legend"><span><i class="sw" style="background:var(--primary)"></i>Blended CAC</span><span><i class="sw" style="background:var(--text-faint);height:2px;width:16px"></i>blended avg $41</span></div>
+   <svg id="cacChart" viewBox="0 0 1080 300"></svg></div>
+  <div style="display:inline-flex;background:var(--surface-muted);border:1px solid var(--border);border-radius:10px;padding:3px;margin-bottom:12px">
+    <button class="ltv-tog" data-v="cc" style="font-family:inherit;font-weight:700;font-size:12.5px;border:none;padding:7px 14px;border-radius:7px;cursor:pointer;background:var(--primary);color:#fff">Constant currency</button>
+    <button class="ltv-tog" data-v="usd" style="font-family:inherit;font-weight:700;font-size:12.5px;border:none;padding:7px 14px;border-radius:7px;cursor:pointer;background:none;color:var(--text-secondary)">USD as-reported</button>
+  </div>
+  <div class="card"><h3>LTV curves by cohort — cumulative gross profit per subscriber</h3><div class="h3sub">USD, by months since subscription · 18-month observation window. Cohorts colored by <b>acquisition quarter</b>; bold black = blended average. Right axis in <b>× CAC</b>. Toggle above switches between <b>constant currency</b> (FX of cohort's first cycle held flat — strips ARS devaluation noise; default) and <b>USD as-reported</b> (each cycle at its own debit-month FX).</div>
+   <svg id="ltvChart" viewBox="0 0 1080 340"></svg><div id="ltvLeg"></div></div>
+  <div class="card"><h3>LTV : CAC and payback by cohort</h3><div class="h3sub">LTV per subscriber ÷ CAC ($41). <b>Payback shown here is cohort-realized</b> = month at which cumulative gross profit per <i>original</i> cohort subscriber crosses $41. It runs slower than the standard SaaS formula (CAC / ARPU·GM = <b>4.7 mo</b>) because churned subscribers stop contributing — mature cohorts pay back empirically in <b>~6–7 months</b>, with the gap reflecting early-month attrition.</div>
+   <div class="scroll"><table id="cohTable"></table></div></div>
+ </div>
+</section>
+
+<!-- 2 · RETENTION -->
+<section id="retention">
+ <div class="sec-head"><span class="sec-num">02</span><h2>Retention &amp; Churn</h2><button class="toggle" aria-label="toggle">▾</button></div>
+ <div class="key-insight"><b>Trailing-12m NRR 95.6% / GRR ~92% (USD).</b> Logo retention ~70% at month 12 for mature cohorts; revenue retention stays near 100% as expansion offsets logo churn. Among the 638 churns in the 11 months ending Apr-2026, <b>70% of identified drivers are low demand / closure (45%) or incomplete activation (25%)</b> — consistent with the booking-volume signal in Engagement.</div>
+ <p class="sec-sub">Net &amp; gross revenue retention measured in USD (constant currency, strips ARS inflation). Cohort survival.</p>
+ <div class="sec-body">
+  <div class="card"><h3>NRR &amp; GRR — monthly</h3><div class="h3sub">Net vs Gross Revenue Retention, USD. Gap (NRR − GRR) = expansion.</div>
+   <div class="legend"><span><i class="sw" style="background:var(--primary)"></i>NRR</span><span><i class="sw" style="background:var(--accent)"></i>GRR</span><span><i class="sw" style="background:var(--text-faint);height:2px"></i>100%</span></div>
+   <svg id="nrrChart" viewBox="0 0 1080 280"></svg>
+   <div class="note"><b>Reading the swings:</b> measured month-over-month in USD on a few-hundred-vendor base — inherently volatile. Main drivers: <b>(1) FX timing</b> — retained ARS revenue is converted at each month's rate, so a month followed by an ARS devaluation reads lower. The Aug-25 trough (~83%) maps to the Aug→Sep ARS move (1,310 → 1,375), <b>not a churn spike</b> — cancellations were actually below trend that month. <b>(2) Argentine winter seasonality</b> (Jun–Aug service slowdown → more contraction). <b>(3) Dunning batches &amp; small-base noise.</b> Trailing-12m smooths these to NRR 95.6% / GRR ~92%.</div></div>
+  <div class="card"><h3>Logo retention by renewal payment — % of cohort that made each renewal</h3><div class="h3sub">By subscription cohort, measured per payment cycle (drift-robust — not period coverage). <b>M1 = the 2nd payment.</b></div>
+   <div class="scroll"><table class="tri" id="logoTri"></table></div></div>
+  <div class="card"><h3>Revenue retention by cohort — net of churn, contraction &amp; expansion</h3><div class="h3sub">Retained MRR per cohort as % of its first-payment MRR, by payment cycle. <b>Net (includes expansion, contraction &amp; churn)</b>; >100% = expansion outweighs logo churn. Toggle between constant-currency view (FX of cohort's first cycle held flat — isolates real retention from ARS devaluation) and as-reported (each cycle at its own month FX).</div>
+   <div style="display:inline-flex;background:var(--surface-muted);border:1px solid var(--border);border-radius:10px;padding:3px;margin-bottom:12px">
+    <button class="rev-tog" data-v="cc" style="font-family:inherit;font-weight:700;font-size:12.5px;border:none;padding:7px 14px;border-radius:7px;cursor:pointer;background:var(--primary);color:#fff">Constant currency</button>
+    <button class="rev-tog" data-v="usd" style="font-family:inherit;font-weight:700;font-size:12.5px;border:none;padding:7px 14px;border-radius:7px;cursor:pointer;background:none;color:var(--text-secondary)">USD as-reported</button>
+   </div>
+   <div class="scroll"><table class="tri" id="revTri"></table></div></div>
+  <div class="card"><span class="badge good">Sourced · DB + Slack + Intercom</span>
+   <h3 style="margin-top:10px">Cancellation drivers — Jun 2025 → Apr 2026</h3>
+   <div class="h3sub"><b>Drivers below are either stated explicitly by the vendor at cancellation or abstracted by the customer-success team from their conversation history.</b></div>
+   <div class="scroll"><table style="margin-top:14px">
+    <tr><th>Driver</th><th>Vendors</th><th>% of identified</th></tr>
+    <tr><td class="lbl">Low demand or business closure <span style="color:var(--text-secondary);font-weight:400">— "no tengo clientes", "cerré el local", maternity, pausa</span></td><td>40</td><td>45%</td></tr>
+    <tr><td class="lbl">Incomplete activation <span style="color:var(--text-secondary);font-weight:400">— onboarding weak, never experienced product value ("no me sirvió", "no la entendí", "mis clientes no se adaptaron")</span></td><td>22</td><td>25%</td></tr>
+    <tr><td class="lbl">Product failing <span style="color:var(--text-secondary);font-weight:400">— bugs, missing features, UX friction</span></td><td>12</td><td>13%</td></tr>
+    <tr><td class="lbl">Price not justified <span style="color:var(--text-secondary);font-weight:400">— "es caro", "no llego a cubrir el gasto"</span></td><td>11</td><td>12%</td></tr>
+    <tr><td class="lbl">Switched to competitor <span style="color:var(--text-secondary);font-weight:400">— Meta, other agendas, in-house tool</span></td><td>4</td><td>5%</td></tr>
+    <tr style="background:var(--surface-muted);font-weight:700"><td class="lbl">Total with identified driver</td><td>89</td><td>100%</td></tr>
+   </table></div>
+  </div>
+ </div>
+</section>
+
+<!-- 3 · REVENUE -->
+<section id="revenue">
+ <div class="sec-head"><span class="sec-num">03</span><h2>Revenue</h2><button class="toggle" aria-label="toggle">▾</button></div>
+ <div class="key-insight"><b>MRR $15.0k EoP Apr-26</b> (incl. nume) · ARPU $12.5 · gross margin trending 54% → 81% · <b>91% subscription</b>, 9% marketplace take rate. Plan Pro 75% / Plan Negocio 25% of subscribers. WhatsApp packs attached on 34% of subscribers.</div>
+ <p class="sec-sub">MRR &amp; build, ARPU, mix by module &amp; tier, attach rate, active subscribers.</p>
+ <div class="sec-body">
+  <div class="grid2">
+   <div class="card"><h3>MRR — monthly (USD)</h3><div class="h3sub">End-of-period MRR. ~$1k → $15.0k over 20 months (incl. nume).</div><svg id="mrrChart" viewBox="0 0 560 280"></svg></div>
+   <div class="card"><h3>ARPU — monthly trend (USD)</h3><div class="h3sub">Blended MRR per active subscriber. $4.5 → $12.5.</div><svg id="arpuChart" viewBox="0 0 560 280"></svg></div>
+  </div>
+  <div class="card"><h3>MRR build — monthly movement (USD) · through Apr-26</h3><div class="h3sub">New subscribers · expansion / contraction (plan price net) · add-on (WA packs, net) · churn → net change &amp; MRR end-of-period. From the company model (incl. nume +$100 new in Mar-25 and +$150 price expansion in Sep-25).</div>
+   <div class="scroll"><table id="mrrBuildTable"></table></div></div>
+  <div class="grid3">
+   <div class="card"><h3>Revenue by module</h3><div class="h3sub">Apr 2026 mix.</div><svg id="moduleChart" viewBox="0 0 340 200"></svg><div id="moduleLeg"></div></div>
+   <div class="card"><h3>Revenue by tier</h3><div class="h3sub">Apr 2026.</div><table id="tierTable"></table></div>
+   <div class="card"><h3>Feature attach rate</h3><div class="h3sub">% of active subscribers, Apr 2026.</div><div id="attach"></div></div>
+  </div>
+  <div class="card"><h3>Active subscribers &amp; monthly renewal · through Apr-26</h3><svg id="subsChart" viewBox="0 0 1080 280"></svg></div>
+ </div>
+</section>
+
+<!-- 4 · ENGAGEMENT -->
+<section id="engagement">
+ <div class="sec-head"><span class="sec-num">04</span><h2>Engagement</h2><button class="toggle" aria-label="toggle">▾</button></div>
+ <div class="key-insight"><b>DAU/MAU 40% — crossed Meta's stickiness benchmark.</b> Active vendors use the platform ~21 days/mo. Booking volume is the strongest retention signal: <b>≥10 bookings/mo → 79.4% retention vs 33.9%</b> below (45.5pp gap, 2× the rule-of-thumb).</div>
+ <p class="sec-sub">Activity depth on Flash (vendor portal pro.agora.red) and the action that best predicts retention. Activity from Amplitude (last 12m) + Engagement sheet (historical); booking retention from production DB over an 18-month cohort of 2,097 vendors.</p>
+ <div class="sec-body">
+  <div class="grid2">
+   <div class="card"><span class="badge good">Sourced · Amplitude + sheet</span><h3 style="margin-top:10px">Activity — DAU · MAU · stickiness</h3>
+    <div class="h3sub">Snapshot Apr-2026 · trend Oct-2024 → Apr-2026 (Active = vendors in active status)</div>
+    <div class="scroll"><table>
+     <tr><th></th><th>All users</th><th>Active vendors</th></tr>
+     <tr><td class="lbl">MAU</td><td>2,688</td><td>1,170</td></tr>
+     <tr><td class="lbl">avg DAU</td><td>1,076</td><td>809</td></tr>
+     <tr><td class="lbl">DAU / MAU</td><td>40.0%</td><td>69.1%</td></tr>
+     <tr><td class="lbl">~ active days / month</td><td>12.0</td><td>20.7</td></tr>
+    </table></div>
+    <div class="note">
+     <b>MAU +95% in 18 months</b> (1,375 → 2,688), plateauing at 2,400–2,700 since Jan-26. <b>Stickiness</b> climbed 24% → 40% All-Users (Jan-25 → Apr-26), crossing Meta's 40% threshold; Active vendors at 69% — roughly every working day. Active vendors are only ~44% of MAU but drive <b>~75% of daily logins</b>.
+    </div>
+   </div>
+   <div class="card"><span class="badge good">Validated on production data</span><h3 style="margin-top:10px">Booking volume predicts retention</h3>
+    <div class="h3sub"><b>Cohort:</b> 2,097 vendors who were paying subscribers at any point during Nov-2024 → May-2026 (broader than the active-today base of 1,125 — includes vendors who already churned). <b>Retention</b> = vendor still in active status today; otherwise counted as churned. <b>Bookings/mo</b> = total confirmed bookings ÷ 18 (normalised monthly rate).</div>
+    <div class="callout" style="margin-top:8px"><div class="big">≥10 bookings / mo → 79.4% retention</div>
+     <div class="note" style="color:var(--text);font-size:13.5px">vs <b>33.9%</b> below 10 — a <b>+45.5pp gap</b>, more than 2× the rule-of-thumb (18.6pp).</div></div>
+    <div class="scroll"><table style="margin-top:14px">
+     <tr><th>Avg bookings / mo</th><th>Vendors</th><th>% of cohort</th><th>Retention</th></tr>
+     <tr><td class="lbl">0</td><td>143</td><td>6.8%</td><td>14.0%</td></tr>
+     <tr><td class="lbl">1–4 <span style="color:#cf3b3b">(churn risk)</span></td><td>679</td><td>32.4%</td><td>31.4%</td></tr>
+     <tr><td class="lbl">5–9</td><td>246</td><td>11.7%</td><td>52.4%</td></tr>
+     <tr><td class="lbl">10–19</td><td>250</td><td>11.9%</td><td>60.0%</td></tr>
+     <tr><td class="lbl">20+ <span style="color:#1f9d52">(backbone)</span></td><td>779</td><td>37.1%</td><td>85.6%</td></tr>
+     <tr style="background:var(--surface-muted);font-weight:700"><td class="lbl">Total cohort</td><td>2,097</td><td>100%</td><td>56.2%</td></tr>
+    </table></div>
+    <div class="note">Strictly monotonic. Median = <b>9.4 bookings/mo</b> — half the base sits just below the retention inflection (highest-leverage activation lever). The 20+ bucket (37% of cohort, ~60 bookings/mo avg) is the platform's backbone with 85.6% retention.</div>
+   </div>
+  </div>
+  <div class="grid2" style="margin-top:14px">
+   <div class="card"><h3>MAU evolution · Oct 2024 → Apr 2026</h3>
+    <div class="h3sub">Monthly active users. <b>All Users</b> = anyone logged-in that month; <b>Active vendors</b> = logged-in users whose vendor status is active. Sheet (Oct-24 → Jul-25) + Amplitude (Jun-25 onwards); active-vendor breakdown not available pre Apr-25.</div>
+    <div class="legend"><span><i class="sw sq" style="background:var(--primary)"></i>All Users</span><span><i class="sw sq" style="background:var(--violet)"></i>Active vendors</span></div>
+    <svg id="mauChart" viewBox="0 0 1080 280"></svg></div>
+   <div class="card"><h3>DAU evolution · Jan 2025 → Apr 2026</h3>
+    <div class="h3sub">Average daily active users per month. Sheet (Jan-25 → Mar-25) + Amplitude (Jun-25 onwards). Apr-25 &amp; May-25 are linear-interpolated between known endpoints (sheet had only 4 days for May-25; Apr-25 missing from sheet entirely).</div>
+    <div class="legend"><span><i class="sw sq" style="background:var(--primary)"></i>All Users</span><span><i class="sw sq" style="background:var(--violet)"></i>Active vendors</span></div>
+    <svg id="dauChart" viewBox="0 0 1080 280"></svg></div>
+  </div>
+ </div>
+</section>
+
+<!-- 5 · FINANCIALS -->
+<section id="financials">
+ <div class="sec-head"><span class="sec-num">05</span><h2>Financials — Monthly P&amp;L</h2><button class="toggle" aria-label="toggle">▾</button></div>
+ <div class="key-insight"><b>Near breakeven.</b> Avg burn $742/mo (19-mo window); trailing-3m run-rate <b>net cash positive (+$501/mo)</b>. Cash $12,200 at 31-Mar-2026 → <b>~16 mo runway</b> at trend avg, materially longer at current trajectory.</div>
+ <p class="sec-sub">Revenue, cost of revenue &amp; gross margin, S&amp;M, R&amp;D, G&amp;A, and EBT (pre-interest/D&amp;A — no I, D or A). USD.</p>
+ <div class="sec-body">
+  <div class="card" style="padding:16px 20px;background:var(--surface-muted)"><div class="note" style="margin:0"><b>Cost of revenue composition</b> — costs directly tied to delivering &amp; collecting the service: cloud hosting &amp; infrastructure (Digital Ocean, Vercel, Cloudflare), payment-processing fees (Mercado Pago, Stripe, Boxful), transactional comms (Mandrill email, Meta WhatsApp API), auth (Auth0), product APIs (Google Maps/Places), customer-support tooling &amp; support payroll. Excludes marketing, sales, R&amp;D and G&amp;A.</div></div>
+  <div class="card"><h3>Revenue &amp; gross margin</h3><div class="h3sub">Monthly revenue (bars, in USD thousands) and gross-margin % (line). GM expanding 54% → 81%.</div>
+   <div class="legend"><span><i class="sw sq" style="background:var(--primary)"></i>Revenue</span><span><i class="sw" style="background:var(--success)"></i>Gross margin %</span></div>
+   <svg id="revGmChart" viewBox="0 0 1080 320"></svg></div>
+  <div class="card"><h3>EBT &amp; burn</h3><div class="h3sub">Earnings before tax (USD). Near breakeven; positive Nov-25 → Feb-26. Avg burn ~$742/mo.</div>
+   <svg id="ebtChart" viewBox="0 0 1080 320"></svg></div>
+  <div class="card"><h3>Cash &amp; runway</h3><div class="h3sub">Cash balance at end of March 2026; runway computed against the 19-month average burn and the recent run-rate.</div>
+   <div class="grid3" style="margin-top:6px">
+    <div class="metric-tile"><div class="k">Cash balance</div><div class="v">$12,200</div><div class="d">as of 31-Mar-2026</div></div>
+    <div class="metric-tile"><div class="k">Avg monthly burn (19-mo)</div><div class="v">$742</div><div class="d">runway → <b>~16.4 months</b> at this pace</div></div>
+    <div class="metric-tile"><div class="k">Trailing-3m run-rate</div><div class="v" style="color:var(--success-ink)">+$501/mo</div><div class="d">net cash positive — runway extends materially if trend holds</div></div>
+   </div></div>
+  <div class="card"><h3>Monthly P&amp;L table (USD)</h3><div class="h3sub">Revenue disaggregated into subscription MRR (incl. nume) and marketplace take rate. The annex below the table expands the line-item composition of cost of revenue and S&amp;M for Mar 2026.</div>
+   <div class="scroll"><table id="pnlTable" class="pnl-table"></table></div>
+   <div style="margin-top:30px;padding-top:24px;border-top:1px solid var(--border-soft)">
+    <h3 style="font-size:14.5px;margin-bottom:4px">Annex — composition by category (Mar 2026)</h3>
+    <div class="h3sub" style="margin-bottom:14px">Click each section to expand the underlying line items.</div>
+    <div id="pnlAnnex"></div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- 6 · CUSTOMERS -->
+<section id="customers">
+ <div class="sec-head"><span class="sec-num">06</span><h2>Customer Data</h2><button class="toggle" aria-label="toggle">▾</button></div>
+ <div class="key-insight"><b>Net additions positive every month.</b> Cancellations scale with the base (15 → 92/mo) but stay well below new subscribers; monthly logo renewal ~91%.</div>
+ <p class="sec-sub">New paying subscribers vs cancellations, monthly · through Apr-26.</p>
+ <div class="sec-body">
+  <div class="card"><h3>New subscribers, cancellations &amp; active paying base</h3><div class="h3sub">Gross adds (new paying subscribers) and gross churn (cancellations) per month. Purple line: <b>active paying subscribers at month end</b> — i.e. opening base + new − cancellations (same metric as the Active subscribers chart in Revenue).</div>
+   <div class="legend"><span><i class="sw sq" style="background:var(--primary)"></i>New subscribers</span><span><i class="sw sq" style="background:var(--accent)"></i>Cancellations</span><span><i class="sw sq" style="background:var(--violet)"></i>Active paying base (right)</span></div>
+   <svg id="custChart" viewBox="0 0 1080 280"></svg></div>
+  <div class="card" style="padding:0;overflow:hidden;border:1px solid var(--primary)">
+   <details>
+    <summary style="cursor:pointer;list-style:none;padding:18px 22px;font-family:Montserrat,sans-serif;font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(0deg,var(--surface-muted),#fff);border-bottom:1px dashed var(--border-soft);transition:background .15s">
+     <span style="display:flex;align-items:center;gap:12px">
+      <span style="display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:var(--primary);color:#fff;font-family:Space Mono,monospace;font-size:14px;font-weight:700;line-height:1;transition:transform .2s" class="expand-icon">+</span>
+      <span>Active subscribers — full vendor listing</span>
+      <span style="font-family:Space Mono,monospace;font-size:11px;color:var(--text-secondary);font-weight:400;letter-spacing:.04em;text-transform:uppercase">1,125 in Mar · 1,151 in Apr</span>
+     </span>
+     <span style="font-family:Space Mono,monospace;font-size:12px;color:var(--primary);font-weight:700;letter-spacing:.04em">CLICK TO EXPAND ▾</span>
+    </summary>
+    <iframe src="assets/vendor-listing.html?v=4" style="width:100%;height:900px;border:0;display:block" loading="lazy"></iframe>
+   </details>
+  </div>
+  <style>details[open] summary .expand-icon{transform:rotate(45deg)} details[open] summary{background:var(--surface-muted)!important}</style>
+ </div>
+</section>
+
+<footer>
+ <img src="assets/agora-iso.png" alt="Ágora">
+ <div class="src">Source: Ágora production database + company P&amp;L · USD, FX-converted month-by-month · DAU·MAU pending Amplitude · Cash &amp; runway as of 31-Mar-2026 · Generated 2026-05-28</div>
+</footer>
+</div>
+
+<script>
+const DATA =
+{"months18": ["Oct 24", "Nov 24", "Dec 24", "Jan 25", "Feb 25", "Mar 25", "Apr 25", "May 25", "Jun 25", "Jul 25", "Aug 25", "Sep 25", "Oct 25", "Nov 25", "Dec 25", "Jan 26", "Feb 26", "Mar 26"], "monthsPnl": ["09 24", "10 24", "11 24", "12 24", "01 25", "02 25", "03 25", "04 25", "05 25", "06 25", "07 25", "08 25", "09 25", "10 25", "11 25", "12 25", "01 26", "02 26", "03 26", "Apr 26"], "cacBlended": [55, 44, 57, 30, 32, 33, 34, 34, 40, 26, 46, 35, 51, 29, 67, 52, 56, 44], "cacMeta": [null, 59, 61, 83, 58, 50, 98, 43, 65, 43, 51, 53, 161, 77, 112, 148, 167, 127], "cohorts": [{"n": 1, "month": "2024-10", "size": 42, "obs": 18, "ltv": [5.4, 10.9, 16.6, 21.8, 26.6, 31.4, 35.6, 40.0, 44.3, 48.8, 53.1, 57.2, 61.4, 65.5, 69.7, 74.4, 78.6, 82.1], "final": 82, "pb": 8}, {"n": 2, "month": "2024-11", "size": 58, "obs": 17, "ltv": [9.1, 18.2, 23.9, 29.0, 34.2, 38.8, 42.4, 46.5, 50.4, 53.8, 57.3, 60.5, 63.5, 66.6, 69.9, 73.2, 76.4], "final": 76, "pb": 6}, {"n": 3, "month": "2024-12", "size": 42, "obs": 16, "ltv": [6.6, 12.5, 17.3, 22.5, 27.4, 31.6, 35.4, 39.3, 42.7, 46.0, 48.1, 49.9, 51.8, 53.8, 55.4, 56.9], "final": 57, "pb": 8}, {"n": 4, "month": "2025-01", "size": 83, "obs": 15, "ltv": [5.7, 11.2, 17.0, 22.8, 28.4, 34.0, 39.4, 44.1, 48.7, 53.0, 57.4, 61.9, 66.4, 71.0, 75.5], "final": 76, "pb": 7}, {"n": 5, "month": "2025-02", "size": 94, "obs": 14, "ltv": [10.8, 16.9, 22.1, 27.1, 31.7, 36.0, 40.2, 44.4, 48.5, 52.7, 56.7, 61.0, 65.1, 69.4], "final": 69, "pb": 7}, {"n": 6, "month": "2025-03", "size": 104, "obs": 13, "ltv": [7.7, 14.6, 20.5, 26.5, 32.4, 38.2, 45.0, 51.2, 57.7, 64.4, 70.9, 77.5, 84.1], "final": 84, "pb": 6}, {"n": 7, "month": "2025-04", "size": 93, "obs": 12, "ltv": [6.6, 12.3, 17.6, 22.8, 27.5, 32.0, 36.2, 40.3, 44.5, 48.6, 52.5, 56.2], "final": 56, "pb": 8}, {"n": 8, "month": "2025-05", "size": 88, "obs": 11, "ltv": [7.0, 12.5, 17.6, 22.4, 26.6, 30.9, 35.2, 39.8, 44.3, 48.8, 53.0], "final": 53, "pb": 8}, {"n": 9, "month": "2025-06", "size": 77, "obs": 10, "ltv": [6.9, 12.5, 17.9, 22.9, 27.4, 32.0, 36.9, 41.5, 45.7, 50.1], "final": 50, "pb": 7}, {"n": 10, "month": "2025-07", "size": 142, "obs": 9, "ltv": [9.0, 14.6, 20.5, 26.4, 32.5, 38.5, 44.3, 49.8, 54.9], "final": 55, "pb": 6}, {"n": 11, "month": "2025-08", "size": 99, "obs": 8, "ltv": [8.6, 15.6, 23.0, 30.1, 35.5, 41.0, 46.0, 51.0], "final": 51, "pb": 5}, {"n": 12, "month": "2025-09", "size": 120, "obs": 7, "ltv": [6.5, 11.7, 17.5, 23.5, 28.8, 34.2, 39.2], "final": 39, "pb": null}, {"n": 13, "month": "2025-10", "size": 101, "obs": 6, "ltv": [6.7, 12.0, 17.0, 21.7, 26.3, 30.3], "final": 30, "pb": null}, {"n": 14, "month": "2025-11", "size": 126, "obs": 5, "ltv": [7.8, 15.3, 22.7, 29.8, 36.5], "final": 36, "pb": null}, {"n": 15, "month": "2025-12", "size": 78, "obs": 4, "ltv": [8.0, 14.7, 20.8, 26.4], "final": 26, "pb": null}, {"n": 16, "month": "2026-01", "size": 105, "obs": 3, "ltv": [7.6, 15.4, 22.6], "final": 23, "pb": null}, {"n": 17, "month": "2026-02", "size": 98, "obs": 2, "ltv": [7.9, 15.2], "final": 15, "pb": null}, {"n": 18, "month": "2026-03", "size": 134, "obs": 1, "ltv": [9.2], "final": 9, "pb": null}], "nrrMonths": ["Jan 25", "Feb 25", "Mar 25", "Apr 25", "May 25", "Jun 25", "Jul 25", "Aug 25", "Sep 25", "Oct 25", "Nov 25", "Dec 25", "Jan 26", "Feb 26"], "nrr": [96.1, 101.1, 99.4, 99.2, 94.1, 90.1, 97.0, 83.5, 94.8, 101.7, 96.2, 97.2, 97.4, 96.5], "grr": [94.2, 91.8, 95.3, 91.9, 91.8, 87.5, 94.5, 81.1, 91.9, 94.0, 90.8, 92.6, 92.1, 93.0], "logoTri": [{"cohort": "2024-10", "size": 42, "ret": [100, 95, 88, 83, 76, 67, 62, 57, 57, 57, 55, 55, 55, 50, 50, 50, 48, 38]}, {"cohort": "2024-11", "size": 58, "ret": [100, 90, 81, 71, 67, 57, 48, 47, 45, 41, 41, 38, 36, 36, 34, 33, 31, null]}, {"cohort": "2024-12", "size": 42, "ret": [100, 93, 79, 76, 67, 55, 50, 50, 45, 45, 33, 29, 29, 29, 21, 21, null, null]}, {"cohort": "2025-01", "size": 83, "ret": [100, 88, 81, 78, 75, 70, 64, 60, 59, 57, 54, 53, 51, 51, 51, null, null, null]}, {"cohort": "2025-02", "size": 94, "ret": [100, 85, 78, 70, 64, 59, 56, 56, 54, 52, 49, 48, 47, 46, null, null, null, null]}, {"cohort": "2025-03", "size": 104, "ret": [100, 88, 78, 71, 68, 62, 60, 55, 53, 51, 48, 47, 44, null, null, null, null, null]}, {"cohort": "2025-04", "size": 93, "ret": [100, 85, 74, 70, 62, 61, 57, 55, 53, 47, 44, 41, null, null, null, null, null, null]}, {"cohort": "2025-05", "size": 88, "ret": [100, 84, 72, 68, 62, 60, 57, 55, 53, 51, 45, null, null, null, null, null, null, null]}, {"cohort": "2025-06", "size": 77, "ret": [100, 87, 78, 71, 65, 62, 61, 57, 51, 48, null, null, null, null, null, null, null, null]}, {"cohort": "2025-07", "size": 142, "ret": [100, 83, 78, 74, 73, 68, 64, 58, 54, null, null, null, null, null, null, null, null, null]}, {"cohort": "2025-08", "size": 99, "ret": [100, 80, 78, 69, 65, 60, 56, 53, null, null, null, null, null, null, null, null, null, null]}, {"cohort": "2025-09", "size": 120, "ret": [100, 85, 79, 74, 62, 59, 52, null, null, null, null, null, null, null, null, null, null, null]}, {"cohort": "2025-10", "size": 101, "ret": [100, 75, 65, 58, 56, 50, null, null, null, null, null, null, null, null, null, null, null, null]}, {"cohort": "2025-11", "size": 126, "ret": [100, 80, 74, 68, 65, null, null, null, null, null, null, null, null, null, null, null, null, null]}, {"cohort": "2025-12", "size": 78, "ret": [100, 74, 65, 56, null, null, null, null, null, null, null, null, null, null, null, null, null, null]}, {"cohort": "2026-01", "size": 105, "ret": [100, 89, 81, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]}, {"cohort": "2026-02", "size": 98, "ret": [100, 83, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]}, {"cohort": "2026-03", "size": 134, "ret": [100, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]}], "revTri": [{"cohort": "2024-10", "rev": [100, 97, 103, 99, 91, 92, 80, 79, 79, 87, 86, 84, 91, 88, 89, 99, 89, 72]}, {"cohort": "2024-11", "rev": [100, 103, 68, 59, 62, 55, 41, 47, 46, 42, 44, 40, 39, 39, 42, 41, 39, null]}, {"cohort": "2024-12", "rev": [100, 96, 77, 86, 79, 64, 61, 64, 57, 58, 39, 33, 34, 37, 27, 28, null, null]}, {"cohort": "2025-01", "rev": [100, 94, 103, 101, 95, 95, 94, 85, 84, 82, 84, 84, 86, 84, 84, null, null, null]}, {"cohort": "2025-02", "rev": [100, 57, 48, 45, 42, 40, 40, 42, 42, 43, 42, 44, 43, 43, null, null, null, null]}, {"cohort": "2025-03", "rev": [100, 88, 74, 75, 76, 77, 91, 86, 89, 92, 90, 88, 89, null, null, null, null, null]}, {"cohort": "2025-04", "rev": [100, 83, 79, 81, 75, 74, 71, 72, 72, 70, 66, 61, null, null, null, null, null, null]}, {"cohort": "2025-05", "rev": [100, 81, 79, 76, 71, 73, 76, 79, 78, 77, 71, null, null, null, null, null, null, null]}, {"cohort": "2025-06", "rev": [100, 87, 84, 82, 76, 79, 83, 77, 71, 72, null, null, null, null, null, null, null, null]}, {"cohort": "2025-07", "rev": [100, 64, 69, 71, 75, 73, 70, 64, 61, null, null, null, null, null, null, null, null, null]}, {"cohort": "2025-08", "rev": [100, 85, 92, 89, 69, 69, 62, 62, null, null, null, null, null, null, null, null, null, null]}, {"cohort": "2025-09", "rev": [100, 83, 93, 95, 85, 84, 76, null, null, null, null, null, null, null, null, null, null, null]}, {"cohort": "2025-10", "rev": [100, 80, 75, 69, 66, 57, null, null, null, null, null, null, null, null, null, null, null, null]}, {"cohort": "2025-11", "rev": [100, 95, 94, 88, 83, null, null, null, null, null, null, null, null, null, null, null, null, null]}, {"cohort": "2025-12", "rev": [100, 83, 74, 67, null, null, null, null, null, null, null, null, null, null, null, null, null, null]}, {"cohort": "2026-01", "rev": [100, 100, 92, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]}, {"cohort": "2026-02", "rev": [100, 92, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]}, {"cohort": "2026-03", "rev": [100, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]}], "mrrEop": [1281, 1622, 2230, 2664, 3074, 3738, 4845, 5525, 6237, 6543, 7515, 7955, 8546, 9600, 10542, 11125, 11788, 12752, 13837, 15010], "mrrBuild": {"2024-09": {"new": 247, "pric": -1, "wa": 7, "churn": -87, "eop": 1281}, "2024-10": {"new": 313, "pric": 12, "wa": 30, "churn": -65, "eop": 1622}, "2024-11": {"new": 564, "pric": 2, "wa": 35, "churn": -80, "eop": 2230}, "2024-12": {"new": 345, "pric": 224, "wa": 18, "churn": -138, "eop": 2664}, "2025-01": {"new": 649, "pric": 28, "wa": 21, "churn": -128, "eop": 3074}, "2025-02": {"new": 840, "pric": 4, "wa": 20, "churn": -208, "eop": 3738}, "2025-03": {"new": 1081, "pric": 333, "wa": 22, "churn": -256, "eop": 4845}, "2025-04": {"new": 830, "pric": 8, "wa": 20, "churn": -273, "eop": 5525}, "2025-05": {"new": 864, "pric": 20, "wa": 14, "churn": -468, "eop": 6237}, "2025-06": {"new": 752, "pric": 15, "wa": 10, "churn": -417, "eop": 6543}, "2025-07": {"new": 1401, "pric": 311, "wa": 33, "churn": -309, "eop": 7515}, "2025-08": {"new": 919, "pric": -13, "wa": 28, "churn": -401, "eop": 7955}, "2025-09": {"new": 1063, "pric": 255, "wa": 40, "churn": -460, "eop": 8546}, "2025-10": {"new": 919, "pric": 880, "wa": 39, "churn": -395, "eop": 9600}, "2025-11": {"new": 1352, "pric": 319, "wa": 26, "churn": -762, "eop": 10542}, "2025-12": {"new": 836, "pric": 265, "wa": 10, "churn": -547, "eop": 11125}, "2026-01": {"new": 1123, "pric": 61, "wa": 23, "churn": -630, "eop": 11788}, "2026-02": {"new": 1085, "pric": 104, "wa": 31, "churn": -538, "eop": 12752}, "2026-03": {"new": 1570, "pric": 147, "wa": 34, "churn": -757, "eop": 13837}, "2026-04": {"new": 962, "pric": 1226, "wa": 3, "churn": -947, "eop": 15010}}, "arpu": [5.9, 6.7, 8.8, 8.6, 8.0, 7.8, 9.2, 9.3, 10.2, 10.0, 10.3, 10.2, 10.3, 10.0, 10.6, 11.0, 11.4, 11.5, 12.1, 12.5], "subsActive": [220, 270, 297, 358, 426, 491, 556, 599, 625, 718, 777, 849, 898, 954, 967, 1000, 1055, 1125, 1151], "newSubs": [45, 66, 44, 84, 96, 110, 109, 98, 84, 148, 118, 144, 118, 141, 94, 126, 125, 159, 118], "cancels": [15, 16, 17, 23, 28, 45, 44, 55, 58, 55, 59, 72, 69, 85, 81, 93, 70, 89, 92], "pnl": {"2024-09": {"rev": 1928, "cogs": 879, "sm": 1228, "rd": 564, "ga": 1051, "tot": 3723, "gm": 54, "ebt": -1795}, "2024-10": {"rev": 2189, "cogs": 1198, "sm": 2315, "rd": 804, "ga": 598, "tot": 4914, "gm": 45, "ebt": -2725}, "2024-11": {"rev": 2473, "cogs": 1287, "sm": 2568, "rd": 881, "ga": 585, "tot": 5322, "gm": 48, "ebt": -2849}, "2024-12": {"rev": 2840, "cogs": 1620, "sm": 2383, "rd": 800, "ga": 584, "tot": 5387, "gm": 43, "ebt": -2547}, "2025-01": {"rev": 3173, "cogs": 1257, "sm": 2500, "rd": 954, "ga": 789, "tot": 5500, "gm": 60, "ebt": -2327}, "2025-02": {"rev": 3896, "cogs": 1385, "sm": 3035, "rd": 662, "ga": 708, "tot": 5791, "gm": 64, "ebt": -1895}, "2025-03": {"rev": 5138, "cogs": 1493, "sm": 3366, "rd": 886, "ga": 649, "tot": 6394, "gm": 71, "ebt": -1256}, "2025-04": {"rev": 5887, "cogs": 1618, "sm": 3139, "rd": 1107, "ga": 1145, "tot": 7009, "gm": 73, "ebt": -1122}, "2025-05": {"rev": 6358, "cogs": 1541, "sm": 2970, "rd": 916, "ga": 941, "tot": 6368, "gm": 76, "ebt": -10}, "2025-06": {"rev": 6744, "cogs": 1914, "sm": 3050, "rd": 1029, "ga": 662, "tot": 6656, "gm": 72, "ebt": 88}, "2025-07": {"rev": 7673, "cogs": 1703, "sm": 4422, "rd": 1223, "ga": 331, "tot": 7679, "gm": 78, "ebt": -6}, "2025-08": {"rev": 8146, "cogs": 2061, "sm": 6190, "rd": 77, "ga": 1023, "tot": 9352, "gm": 75, "ebt": -1206}, "2025-09": {"rev": 8862, "cogs": 2686, "sm": 6174, "rd": 50, "ga": 287, "tot": 9197, "gm": 70, "ebt": -335}, "2025-10": {"rev": 9910, "cogs": 2374, "sm": 7287, "rd": 54, "ga": 391, "tot": 10106, "gm": 76, "ebt": -196}, "2025-11": {"rev": 10983, "cogs": 2554, "sm": 5801, "rd": 52, "ga": 306, "tot": 8713, "gm": 77, "ebt": 2270}, "2025-12": {"rev": 11566, "cogs": 2583, "sm": 7907, "rd": 211, "ga": 556, "tot": 11257, "gm": 78, "ebt": 309}, "2026-01": {"rev": 12710, "cogs": 2689, "sm": 8282, "rd": 212, "ga": 565, "tot": 11747, "gm": 79, "ebt": 962}, "2026-02": {"rev": 13566, "cogs": 2809, "sm": 8413, "rd": 217, "ga": 1540, "tot": 12979, "gm": 79, "ebt": 587}, "2026-03": {"rev": 15151, "cogs": 2845, "sm": 8933, "rd": 217, "ga": 3200, "tot": 15196, "gm": 81, "ebt": -45}}, "pnlOrder": ["2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03"], "tiers": [{"name": "Plan Pro", "subs": 866, "rev": 8797, "pct": 59}, {"name": "Plan Negocio", "subs": 284, "rev": 5962, "pct": 39}, {"name": "Enterprise (nume)", "subs": 1, "rev": 250, "pct": 2}], "attach": [{"f": "WhatsApp packs", "pct": 34, "n": "395 / 1.151 subs"}, {"f": "Trainings", "pct": 4, "n": "44 vendors (trailing 12-mo sellers)"}, {"f": "Courses", "pct": 1, "n": "8 vendors"}, {"f": "Gift cards", "pct": 0, "n": "0 (feature launched May 2026; 23 active subs use it today)"}], "revModule": [{"m": "Suscripción (planes)", "pct": 91}, {"m": "Take rate marketplace", "pct": 9}], "kpis": [{"k": "CAC", "v": "$41", "d": "fully-loaded, blended"}, {"k": "LTV", "v": "~$159", "d": "with expansion (NRR 95.6%)"}, {"k": "LTV : CAC", "v": "~3.9x", "d": "floor logo-churn 2.5x"}, {"k": "CAC payback", "v": "4.7 mo", "d": "Standard SaaS formula (CAC / ARPU·GM); cohort-realized ~6–7 mo incl. churn"}, {"k": "Gross margin", "v": "78%", "d": "81% latest · ↗ from 54%"}, {"k": "NRR", "v": "95.6%", "d": "USD, trailing-12m · GRR 92%"}], "renewBookings": {"hi": 90.7, "lo": 72.1}, "months19": ["Oct 24", "Nov 24", "Dec 24", "Jan 25", "Feb 25", "Mar 25", "Apr 25", "May 25", "Jun 25", "Jul 25", "Aug 25", "Sep 25", "Oct 25", "Nov 25", "Dec 25", "Jan 26", "Feb 26", "Mar 26", "Apr 26"], "mrrBuildOrder": ["2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04"], "cash": {"balance": 12200, "asOf": "2026-03-31", "avgBurn": 742, "last3mEbt": 501, "runwayAvg": 16.4}, "revTri_USD": [{"cohort": "2024-10", "rev": [100, 102, 106, 97, 89, 89, 78, 81, 80, 83, 80, 76, 79, 76, 77, 87, 79, 65]}, {"cohort": "2024-11", "rev": [100, 100, 63, 55, 57, 51, 40, 45, 42, 38, 39, 34, 34, 34, 37, 36, 35, null]}, {"cohort": "2024-12", "rev": [100, 90, 72, 80, 74, 64, 59, 58, 52, 50, 32, 27, 28, 31, 24, 24, null, null]}, {"cohort": "2025-01", "rev": [100, 95, 102, 101, 98, 97, 93, 83, 79, 76, 77, 78, 79, 79, 79, null, null, null]}, {"cohort": "2025-02", "rev": [100, 56, 47, 46, 43, 39, 39, 39, 37, 39, 38, 39, 39, 39, null, null, null, null]}, {"cohort": "2025-03", "rev": [100, 89, 77, 78, 77, 76, 89, 82, 84, 87, 85, 85, 86, null, null, null, null, null]}, {"cohort": "2025-04", "rev": [100, 87, 82, 79, 72, 68, 63, 63, 64, 62, 60, 56, null, null, null, null, null, null]}, {"cohort": "2025-05", "rev": [100, 79, 73, 68, 61, 61, 63, 65, 65, 65, 60, null, null, null, null, null, null, null]}, {"cohort": "2025-06", "rev": [100, 81, 77, 73, 65, 67, 71, 66, 62, 63, null, null, null, null, null, null, null, null]}, {"cohort": "2025-07", "rev": [100, 63, 65, 65, 68, 67, 64, 60, 57, null, null, null, null, null, null, null, null, null]}, {"cohort": "2025-08", "rev": [100, 83, 86, 83, 63, 63, 59, 59, null, null, null, null, null, null, null, null, null, null]}, {"cohort": "2025-09", "rev": [100, 79, 89, 91, 82, 83, 76, null, null, null, null, null, null, null, null, null, null, null]}, {"cohort": "2025-10", "rev": [100, 80, 75, 70, 68, 60, null, null, null, null, null, null, null, null, null, null, null, null]}, {"cohort": "2025-11", "rev": [100, 96, 95, 91, 86, null, null, null, null, null, null, null, null, null, null, null, null, null]}, {"cohort": "2025-12", "rev": [100, 84, 76, 70, null, null, null, null, null, null, null, null, null, null, null, null, null, null]}, {"cohort": "2026-01", "rev": [100, 103, 95, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]}, {"cohort": "2026-02", "rev": [100, 93, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]}, {"cohort": "2026-03", "rev": [100, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]}], "cohorts_cc": [{"n": 1, "month": "2024-10", "size": 42, "obs": 18, "ltv": [5.4, 10.6, 16.2, 21.5, 26.4, 31.4, 35.7, 39.9, 44.2, 48.9, 53.5, 58.0, 62.9, 67.6, 72.4, 77.8, 82.6, 86.5], "final": 86, "pb": 8}, {"n": 2, "month": "2024-11", "size": 58, "obs": 17, "ltv": [9.1, 18.4, 24.6, 30.0, 35.6, 40.6, 44.3, 48.5, 52.8, 56.6, 60.6, 64.2, 67.8, 71.3, 75.2, 78.9, 82.4], "final": 82, "pb": 6}, {"n": 3, "month": "2024-12", "size": 42, "obs": 16, "ltv": [6.6, 12.9, 18.0, 23.6, 28.8, 33.0, 37.0, 41.2, 45.0, 48.8, 51.3, 53.5, 55.7, 58.1, 59.9, 61.7], "final": 62, "pb": 7}, {"n": 4, "month": "2025-01", "size": 83, "obs": 15, "ltv": [5.7, 11.1, 17.0, 22.8, 28.2, 33.6, 39.0, 43.9, 48.7, 53.4, 58.2, 63.1, 68.0, 72.8, 77.6], "final": 78, "pb": 7}, {"n": 5, "month": "2025-02", "size": 94, "obs": 14, "ltv": [10.8, 17.0, 22.2, 27.1, 31.7, 36.1, 40.4, 45.0, 49.5, 54.2, 58.8, 63.5, 68.2, 72.8], "final": 73, "pb": 7}, {"n": 6, "month": "2025-03", "size": 104, "obs": 13, "ltv": [7.7, 14.4, 20.1, 25.8, 31.7, 37.6, 44.6, 51.3, 58.1, 65.1, 72.0, 78.8, 85.6], "final": 86, "pb": 6}, {"n": 7, "month": "2025-04", "size": 93, "obs": 12, "ltv": [6.6, 12.0, 17.2, 22.5, 27.4, 32.2, 36.9, 41.6, 46.3, 50.9, 55.2, 59.3], "final": 59, "pb": 7}, {"n": 8, "month": "2025-05", "size": 88, "obs": 11, "ltv": [7.0, 12.6, 18.1, 23.4, 28.4, 33.4, 38.7, 44.3, 49.7, 55.0, 60.0], "final": 60, "pb": 7}, {"n": 9, "month": "2025-06", "size": 77, "obs": 10, "ltv": [6.9, 12.9, 18.7, 24.4, 29.6, 35.1, 40.8, 46.1, 51.1, 56.0], "final": 56, "pb": 7}, {"n": 10, "month": "2025-07", "size": 142, "obs": 9, "ltv": [9.0, 14.7, 20.9, 27.3, 34.1, 40.6, 46.9, 52.7, 58.2], "final": 58, "pb": 6}, {"n": 11, "month": "2025-08", "size": 99, "obs": 8, "ltv": [8.6, 15.8, 23.7, 31.4, 37.3, 43.2, 48.5, 53.9], "final": 54, "pb": 5}, {"n": 12, "month": "2025-09", "size": 120, "obs": 7, "ltv": [6.5, 12.0, 18.0, 24.3, 29.8, 35.4, 40.3], "final": 40, "pb": null}, {"n": 13, "month": "2025-10", "size": 101, "obs": 6, "ltv": [6.7, 12.0, 17.0, 21.6, 26.0, 29.8], "final": 30, "pb": null}, {"n": 14, "month": "2025-11", "size": 126, "obs": 5, "ltv": [7.8, 15.3, 22.6, 29.4, 35.9], "final": 36, "pb": null}, {"n": 15, "month": "2025-12", "size": 78, "obs": 4, "ltv": [8.0, 14.6, 20.5, 25.9], "final": 26, "pb": null}, {"n": 16, "month": "2026-01", "size": 105, "obs": 3, "ltv": [7.6, 15.2, 22.2], "final": 22, "pb": null}, {"n": 17, "month": "2026-02", "size": 98, "obs": 2, "ltv": [7.9, 15.2], "final": 15, "pb": null}, {"n": 18, "month": "2026-03", "size": 134, "obs": 1, "ltv": [9.2], "final": 9, "pb": null}], "cohorts_fx": [{"n": 1, "month": "2024-10", "size": 42, "obs": 18, "ltv": [5.4, 10.9, 16.6, 21.8, 26.6, 31.4, 35.6, 40.0, 44.3, 48.8, 53.1, 57.2, 61.4, 65.5, 69.7, 74.4, 78.6, 82.1], "final": 82, "pb": 8}, {"n": 2, "month": "2024-11", "size": 58, "obs": 17, "ltv": [9.1, 18.2, 23.9, 29.0, 34.2, 38.8, 42.4, 46.5, 50.4, 53.8, 57.3, 60.5, 63.5, 66.6, 69.9, 73.2, 76.4], "final": 76, "pb": 6}, {"n": 3, "month": "2024-12", "size": 42, "obs": 16, "ltv": [6.6, 12.5, 17.3, 22.5, 27.4, 31.6, 35.4, 39.3, 42.7, 46.0, 48.1, 49.9, 51.8, 53.8, 55.4, 56.9], "final": 57, "pb": 8}, {"n": 4, "month": "2025-01", "size": 83, "obs": 15, "ltv": [5.7, 11.2, 17.0, 22.8, 28.4, 34.0, 39.4, 44.1, 48.7, 53.0, 57.4, 61.9, 66.4, 71.0, 75.5], "final": 76, "pb": 7}, {"n": 5, "month": "2025-02", "size": 94, "obs": 14, "ltv": [10.8, 16.9, 22.1, 27.1, 31.7, 36.0, 40.2, 44.4, 48.5, 52.7, 56.7, 61.0, 65.1, 69.4], "final": 69, "pb": 7}, {"n": 6, "month": "2025-03", "size": 104, "obs": 13, "ltv": [7.7, 14.6, 20.5, 26.5, 32.4, 38.2, 45.0, 51.2, 57.7, 64.4, 70.9, 77.5, 84.1], "final": 84, "pb": 6}, {"n": 7, "month": "2025-04", "size": 93, "obs": 12, "ltv": [6.6, 12.3, 17.6, 22.8, 27.5, 32.0, 36.2, 40.3, 44.5, 48.6, 52.5, 56.2], "final": 56, "pb": 8}, {"n": 8, "month": "2025-05", "size": 88, "obs": 11, "ltv": [7.0, 12.5, 17.6, 22.4, 26.6, 30.9, 35.2, 39.8, 44.3, 48.8, 53.0], "final": 53, "pb": 8}, {"n": 9, "month": "2025-06", "size": 77, "obs": 10, "ltv": [6.9, 12.5, 17.9, 22.9, 27.4, 32.0, 36.9, 41.5, 45.7, 50.1], "final": 50, "pb": 7}, {"n": 10, "month": "2025-07", "size": 142, "obs": 9, "ltv": [9.0, 14.6, 20.5, 26.4, 32.5, 38.5, 44.3, 49.8, 54.9], "final": 55, "pb": 6}, {"n": 11, "month": "2025-08", "size": 99, "obs": 8, "ltv": [8.6, 15.6, 23.0, 30.1, 35.5, 41.0, 46.0, 51.0], "final": 51, "pb": 5}, {"n": 12, "month": "2025-09", "size": 120, "obs": 7, "ltv": [6.5, 11.7, 17.5, 23.5, 28.8, 34.2, 39.2], "final": 39, "pb": null}, {"n": 13, "month": "2025-10", "size": 101, "obs": 6, "ltv": [6.7, 12.0, 17.0, 21.7, 26.3, 30.3], "final": 30, "pb": null}, {"n": 14, "month": "2025-11", "size": 126, "obs": 5, "ltv": [7.8, 15.3, 22.7, 29.8, 36.5], "final": 36, "pb": null}, {"n": 15, "month": "2025-12", "size": 78, "obs": 4, "ltv": [8.0, 14.7, 20.8, 26.4], "final": 26, "pb": null}, {"n": 16, "month": "2026-01", "size": 105, "obs": 3, "ltv": [7.6, 15.4, 22.6], "final": 23, "pb": null}, {"n": 17, "month": "2026-02", "size": 98, "obs": 2, "ltv": [7.9, 15.2], "final": 15, "pb": null}, {"n": 18, "month": "2026-03", "size": 134, "obs": 1, "ltv": [9.2], "final": 9, "pb": null}], "pnlAnnex": {"Cost Of Revenue": [{"lab": "Customer Success Analyst 1", "v": 647}, {"lab": "Mercado Pago - Payment processing", "v": 404}, {"lab": "Boxful", "v": 335}, {"lab": "CS Platform - Intercom", "v": 326}, {"lab": "Meta - WhatsApp API", "v": 279}, {"lab": "Servers + DB - Digital Ocean", "v": 188}, {"lab": "Transactional email - Mandrilll", "v": 165}, {"lab": "Servers - Digital Ocean", "v": 158}, {"lab": "Stripe - Payment processing", "v": 136}, {"lab": "Servers - Vercel", "v": 106}, {"lab": "Facturante", "v": 70}, {"lab": "Email marketing - Mailchimp", "v": 20}, {"lab": "Google APIs", "v": 10}], "Sales & Marketing": [{"lab": "CEO", "v": 4386}, {"lab": "Investment in Meta Ads", "v": 2548}, {"lab": "Marketing Agency", "v": 2000}], "R&D / Engineering": [{"lab": "Labor costs / taxes / insurance", "v": 217}], "General & Administrative": [{"lab": "Operations manager", "v": 1799}, {"lab": "Accounting (Arg)", "v": 599}, {"lab": "Anthropic", "v": 220}, {"lab": "Team building", "v": 180}, {"lab": "Taxes: Monotributo / Autónomos Argentina", "v": 147}, {"lab": "Taxes: debits and credits", "v": 130}, {"lab": "Slack", "v": 35}, {"lab": "Google Workspace", "v": 29}, {"lab": "OpenAI", "v": 20}, {"lab": "Vercel", "v": 20}, {"lab": "Income tax (IIGG)", "v": 19}, {"lab": "Microsoft", "v": 3}]}, "revBreakdown": {"2023-12": {"sub": 280, "take": 183}, "2024-01": {"sub": 313, "take": 183}, "2024-02": {"sub": 374, "take": 283}, "2024-03": {"sub": 593, "take": 427}, "2024-04": {"sub": 710, "take": 365}, "2024-05": {"sub": 786, "take": 535}, "2024-06": {"sub": 796, "take": 707}, "2024-07": {"sub": 832, "take": 477}, "2024-08": {"sub": 1049, "take": 457}, "2024-09": {"sub": 1281, "take": 647}, "2024-10": {"sub": 1622, "take": 567}, "2024-11": {"sub": 2230, "take": 243}, "2024-12": {"sub": 2664, "take": 176}, "2025-01": {"sub": 3074, "take": 99}, "2025-02": {"sub": 3738, "take": 158}, "2025-03": {"sub": 4845, "take": 293}, "2025-04": {"sub": 5525, "take": 362}, "2025-05": {"sub": 6237, "take": 121}, "2025-06": {"sub": 6543, "take": 201}, "2025-07": {"sub": 7515, "take": 158}, "2025-08": {"sub": 7955, "take": 191}, "2025-09": {"sub": 8546, "take": 316}, "2025-10": {"sub": 9600, "take": 310}, "2025-11": {"sub": 10542, "take": 441}, "2025-12": {"sub": 11125, "take": 441}, "2026-01": {"sub": 11788, "take": 922}, "2026-02": {"sub": 12752, "take": 814}, "2026-03": {"sub": 13837, "take": 1314}, "2026-04": {"sub": 14760, "take": 1533}}, "mauAU": [1375, 1599, 1422, 1657, 1699, 1794, 1773, 1752, 1731, 2131, 2142, 2157, 2296, 2380, 2458, 2539, 2400, 2699, 2688], "mauAV": [null, null, null, null, null, null, 639, 631, 624, 712, 777, 850, 897, 944, 991, 1038, 1075, 1158, 1170], "dauAU": [null, null, null, 395, 421, 451, 474, 497, 521, 604, 647, 727, 797, 836, 891, 915, 973, 1043, 1076], "dauAV": [null, null, null, 296, 316, 338, 356, 374, 392, 443, 495, 554, 603, 627, 682, 674, 730, 787, 809], "cumActive": [45, 111, 155, 239, 335, 445, 554, 652, 736, 884, 1002, 1146, 1264, 1405, 1499, 1625, 1750, 1909, 2027]};
+const $=id=>document.getElementById(id);
+const D=v=>{const a=v.getAttribute('viewBox').split(' ').map(Number);return{W:a[2],H:a[3]};};
+const C={primary:'#0072fb',accent:'#ff4658',success:'#0ad6a1',sky:'#00cdff',violet:'#7c5cff',faint:'#b5b5b5',grid:'#eef0f3',ink:'#1a1a1a'};
+function axisX(W,n,pl,pr){return i=>pl+((W-pl-pr)/(n-1))*i;}
+// generic multi-line chart
+function lineChart(id,labels,series,o){o=o||{};const s=$(id),{W,H}=D(s);const pl=o.pl||40,pr=14,pt=14,pb=30,ph=H-pt-pb;
+ const max=o.max,min=o.min||0,x=axisX(W,labels.length,pl,pr),y=v=>pt+ph-((v-min)/(max-min))*ph;
+ const ticks=o.ticks||[min,(min+max)/2,max];let g='';
+ ticks.forEach(t=>{g+=`<line x1="${pl}" y1="${y(t)}" x2="${W-pr}" y2="${y(t)}" stroke="#cfd3dd"/><text x="${pl-6}" y="${y(t)+3}" text-anchor="end" font-family="Space Mono" font-size="13" font-weight="700" fill="#52525b">${o.fmt?o.fmt(t):t}</text>`;});
+ if(o.ref!=null)g+=`<line x1="${pl}" y1="${y(o.ref)}" x2="${W-pr}" y2="${y(o.ref)}" stroke="${C.faint}" stroke-width="1.8" stroke-dasharray="5 4"/>`;
+ const step=o.everyX||(labels.length>14?2:1);
+ labels.forEach((m,i)=>{if(i%step===0)g+=`<text x="${x(i)}" y="${H-10}" text-anchor="middle" font-family="Space Mono" font-size="12" font-weight="700" fill="#52525b">${m}</text>`;});
+ series.forEach(se=>{const pts=se.data.map((v,i)=>v==null?null:x(i)+','+y(v)).filter(Boolean);
+  g+=`<polyline fill="none" stroke="${se.color}" stroke-width="3" ${se.dash?'stroke-dasharray="5 4"':''} points="${pts.join(' ')}"/>`;
+  se.data.forEach((v,i)=>{if(v!=null)g+=`<circle cx="${x(i)}" cy="${y(v)}" r="3.6" fill="#fff" stroke="${se.color}" stroke-width="1.8"><title>${labels[i]}: ${o.fmt?o.fmt(v):v}</title></circle>`;});});
+ s.innerHTML=g;}
+// bars (single)
+function barChart(id,labels,data,color,o){o=o||{};const s=$(id),{W,H}=D(s);const pl=o.pl||40,pr=14,pt=14,pb=30,ph=H-pt-pb,pw=W-pl-pr;
+ const max=o.max,y=v=>pt+ph-(v/max)*ph,bw=pw/labels.length*0.62,gap=pw/labels.length;
+ const ticks=o.ticks||[0,max/2,max];let g='';
+ ticks.forEach(t=>{g+=`<line x1="${pl}" y1="${y(t)}" x2="${W-pr}" y2="${y(t)}" stroke="#cfd3dd"/><text x="${pl-6}" y="${y(t)+3}" text-anchor="end" font-family="Space Mono" font-size="13" font-weight="700" fill="#52525b">${o.fmt?o.fmt(t):t}</text>`;});
+ const step=labels.length>14?2:1;
+ data.forEach((v,i)=>{const cx=pl+gap*i+gap/2;g+=`<rect x="${cx-bw/2}" y="${y(v)}" width="${bw}" height="${pt+ph-y(v)}" rx="2.5" fill="${color}"><title>${labels[i]}: ${o.fmt?o.fmt(v):v}</title></rect>`;
+  if(o.label)g+=`<text x="${cx}" y="${y(v)-4}" text-anchor="middle" font-family="Space Mono" font-size="10.5" font-weight="700" fill="${C.ink}">${o.labelFmt?o.labelFmt(v):(o.fmt?o.fmt(v):v)}</text>`;
+  if(i%step===0)g+=`<text x="${cx}" y="${H-10}" text-anchor="middle" font-family="Space Mono" font-size="12" font-weight="700" fill="#52525b">${labels[i]}</text>`;});
+ s.innerHTML=g;}
+// retention heatmap color
+function retColor(v){if(v==null)return'transparent';const t=Math.max(0,Math.min(1,(v-55)/45));
+ const a=[255,227,230],b=[10,214,161];const c=a.map((x,i)=>Math.round(x+(b[i]-x)*t));return`rgb(${c[0]},${c[1]},${c[2]})`;}
+function triTable(id,rows,key,labelFmt){let h='<tr><th>Cohort</th>';for(let m=0;m<18;m++)h+=`<th>m${m}</th>`;h+='</tr>';
+ rows.forEach(r=>{h+=`<tr><td class="lbl">${r.cohort}${r.size?` <span style="color:#b5b5b5">(${r.size})</span>`:''}</td>`;
+  r[key].forEach(v=>{h+=`<td style="background:${retColor(v)}">${v==null?'':labelFmt(v)}</td>`;});h+='</tr>';});
+ $(id).innerHTML=h;}
+
+// ---------- render ----------
+// KPIs
+$('kpis').innerHTML=DATA.kpis.map(k=>`<div class="kpi"><div class="k">${k.k}</div><div class="v">${k.v}</div><div class="d">${k.d}</div></div>`).join('');
+
+// 1 · CAC
+lineChart('cacChart',DATA.months18,[{data:DATA.cacBlended,color:C.primary}],{max:80,ticks:[0,20,40,60,80],ref:41,fmt:v=>'$'+v});
+// LTV curves + cohort table (FX-switchable) — 24-month observation window
+function renderLTVCurves(cohorts){const s=$('ltvChart'),{W,H}=D(s),pl=40,pr=44,pt=14,pb=40,ph=H-pt-pb,pw=W-pl-pr;
+ const maxAge=24,max=130,x=a=>pl+(pw/(maxAge-1))*a,y=v=>pt+ph-(v/max)*ph;
+ const qcol=m=>{const yr=+m.slice(0,4),mo=+m.slice(5,7);if(yr===2024)return'#0072fb';
+   if(yr===2025)return mo<=3?'#00cdff':mo<=6?'#0ad6a1':mo<=9?'#7c5cff':'#e8902a';return'#ff4658';};
+ let g='';
+ [0,40,80,120].forEach(t=>{g+=`<line x1="${pl}" y1="${y(t)}" x2="${W-pr}" y2="${y(t)}" stroke="#cfd3dd"/><text x="${pl-6}" y="${y(t)+3}" text-anchor="end" font-family="Space Mono" font-size="13" font-weight="700" fill="#52525b">$${t}</text>`;});
+ [1,2,3].forEach(k=>{const v=41*k;if(v<=max)g+=`<text x="${W-pr+5}" y="${y(v)+3}" font-family="Space Mono" font-size="10" font-weight="700" fill="${C.accent}">${k}×</text>`;});
+ g+=`<text x="${W-pr+5}" y="${y(130)+10}" font-family="Space Mono" font-size="8" fill="${C.accent}">× CAC</text>`;
+ for(let a=0;a<maxAge;a+=4)g+=`<text x="${x(a)}" y="${H-22}" text-anchor="middle" font-family="Space Mono" font-size="12" font-weight="700" fill="#52525b">m${a}</text>`;
+ g+=`<line x1="${pl}" y1="${y(41)}" x2="${W-pr}" y2="${y(41)}" stroke="${C.accent}" stroke-width="1.3" stroke-dasharray="4 4"/><text x="${pl+4}" y="${y(41)-4}" font-family="Space Mono" font-size="10" font-weight="700" fill="${C.accent}">CAC $41 · 1×</text>`;
+ cohorts.forEach(c=>{const col=qcol(c.month);g+=`<polyline fill="none" stroke="${col}" stroke-width="1.8" opacity="0.75" points="${c.ltv.map((v,a)=>x(a)+','+y(v)).join(' ')}"><title>Cohort ${c.n} ${c.month}</title></polyline>`;});
+ const bl=[];for(let a=0;a<18;a++){const vs=cohorts.filter(c=>c.ltv[a]!=null).map(c=>c.ltv[a]);if(vs.length)bl[a]=vs.reduce((p,q)=>p+q,0)/vs.length;}
+ const last=bl.length-1;
+ g+=`<polyline fill="none" stroke="#1a1a1a" stroke-width="3.4" points="${bl.map((v,a)=>x(a)+','+y(v)).join(' ')}"/>`;
+ const slope=(bl[last]-bl[11])/(last-11),proj=[[last,bl[last]]];let a=last,v=bl[last];
+ while(a<maxAge-1){a++;v+=slope;proj.push([a,v]);}
+ g+=`<polyline fill="none" stroke="#1a1a1a" stroke-width="2" stroke-dasharray="5 4" points="${proj.map(p=>x(p[0])+','+y(p[1])).join(' ')}"/>`;
+ g+=`<text x="${x(maxAge-1)-4}" y="${y(proj[proj.length-1][1])-6}" text-anchor="end" font-family="Space Mono" font-size="10" font-weight="700" fill="#1a1a1a">→ $159 lifetime (proj.) at ~m32</text>`;
+ const pbk=bl.findIndex(z=>z>=41);if(pbk>0){g+=`<circle cx="${x(pbk)}" cy="${y(bl[pbk])}" r="4" fill="#fff" stroke="#1a1a1a" stroke-width="2"/><text x="${x(pbk)}" y="${y(bl[pbk])-8}" text-anchor="middle" font-family="Space Mono" font-size="10" font-weight="700" fill="#1a1a1a">payback ~m${pbk}</text>`;}
+ s.innerHTML=g;
+ const qs=[['Q4 24','#0072fb'],['Q1 25','#00cdff'],['Q2 25','#0ad6a1'],['Q3 25','#7c5cff'],['Q4 25','#e8902a'],['Q1 26','#ff4658'],['Blended','#1a1a1a']];
+ $('ltvLeg').innerHTML='<div class="legend" style="margin-top:10px">'+qs.map(([l,c])=>`<span><i class="sw" style="background:${c};height:3px"></i>${l}</span>`).join('')+'<span><i class="sw" style="background:#1a1a1a;height:3px;border-bottom:2px dashed #1a1a1a"></i>Projected</span></div>';}
+function renderCohortTable(cohorts){let h='<tr><th>#</th><th>Cohort</th><th>Subs</th><th>Obs</th><th>LTV / sub</th><th>Total LTV</th><th>CAC at acq.</th><th>Total CAC</th><th>LTV : CAC</th><th>Payback</th></tr>';
+ cohorts.forEach((c,i)=>{
+  const mcac=DATA.cacBlended[i];
+  const totalLTV=c.final*c.size;
+  const totalCAC=mcac*c.size;
+  const ratio=totalLTV/totalCAC;
+  h+=`<tr><td class="lbl">${c.n}</td><td>${c.month}</td><td>${c.size}</td><td>${c.obs}</td><td>$${c.final}</td><td>$${totalLTV.toLocaleString()}</td><td>$${mcac}</td><td>$${totalCAC.toLocaleString()}</td><td>${ratio.toFixed(1)}x</td><td>${c.pb?c.pb+' mo':'<span style="color:#b5b5b5">&gt; obs</span>'}</td></tr>`;});
+ $('cohTable').innerHTML=h;}
+function renderLTV(view){const cohorts=view==='cc'?DATA.cohorts_cc:DATA.cohorts_fx;renderLTVCurves(cohorts);renderCohortTable(cohorts);}
+renderLTV('cc');
+document.querySelectorAll('.ltv-tog').forEach(b=>b.onclick=()=>{document.querySelectorAll('.ltv-tog').forEach(x=>{x.style.background='none';x.style.color='var(--text-secondary)';});b.style.background='var(--primary)';b.style.color='#fff';renderLTV(b.dataset.v);});
+
+// 2 · NRR/GRR
+lineChart('nrrChart',DATA.nrrMonths,[{data:DATA.nrr,color:C.primary},{data:DATA.grr,color:C.accent}],{max:110,min:75,ticks:[75,85,95,105],ref:100,everyX:1,fmt:v=>v+'%'});
+triTable('logoTri',DATA.logoTri,'ret',v=>v+'%');
+function renderRevTri(view){triTable('revTri',view==='cc'?DATA.revTri:DATA.revTri_USD,'rev',v=>v+'%');}
+renderRevTri('cc');
+document.querySelectorAll('.rev-tog').forEach(b=>b.onclick=()=>{document.querySelectorAll('.rev-tog').forEach(x=>{x.style.background='none';x.style.color='var(--text-secondary)';});b.style.background='var(--primary)';b.style.color='#fff';renderRevTri(b.dataset.v);});
+
+// 3 · Revenue
+barChart('mrrChart',DATA.monthsPnl,DATA.mrrEop,C.primary,{max:15000,ticks:[0,5000,10000,15000],fmt:v=>'$'+(v/1000).toFixed(1)+'k',label:true,labelFmt:v=>(v/1000).toFixed(1)+'k'});
+lineChart('arpuChart',DATA.monthsPnl,[{data:DATA.arpu,color:C.violet}],{max:14,ticks:[0,7,14],fmt:v=>'$'+v});
+// MRR build table — consolidated movement rows
+(function(){const ord=DATA.mrrBuildOrder;
+ const rows=[['New subscribers','new'],['Expansion / contraction (plan price net)','pric'],['Add-on (WA packs, net)','wa'],['Churn','churn'],['Net change','net'],['MRR end-of-period','eop']];
+ let h='<tr><th>USD</th>'+ord.map(m=>`<th>${m.slice(5)}/${m.slice(2,4)}</th>`).join('')+'</tr>';
+ rows.forEach(([lab,k])=>{h+=`<tr><td class="lbl">${lab}</td>`+ord.map(m=>{const b=DATA.mrrBuild[m];
+   let v;
+   if(k==='net')v=b.new+b.pric+b.wa+b.churn;
+   else v=b[k];
+   const isNeg=(k==='churn');
+   const col=isNeg?'color:#ff4658':(k==='eop'?'font-weight:700':(v<0?'color:#ff4658':''));
+   const txt=v<0?'-$'+Math.abs(Math.round(v)).toLocaleString():'$'+Math.round(v).toLocaleString();
+   return `<td style="${col}">${Math.round(v)===0?'–':txt}</td>`;}).join('')+'</tr>';});
+ $('mrrBuildTable').innerHTML=h;})();
+// module donut
+(function(){const s=$('moduleChart'),{W,H}=D(s),cx=W/2,cy=H/2,r=62,circ=2*Math.PI*r;let off=0,g='';
+ const cols=[C.primary,C.sky];DATA.revModule.forEach((m,i)=>{const len=circ*m.pct/100;
+  g+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${cols[i]}" stroke-width="26" stroke-dasharray="${len} ${circ-len}" stroke-dashoffset="${-off}" transform="rotate(-90 ${cx} ${cy})"/>`;off+=len;});
+ g+=`<text x="${cx}" y="${cy-2}" text-anchor="middle" font-family="Montserrat" font-weight="800" font-size="22" fill="${C.ink}">91%</text><text x="${cx}" y="${cy+15}" text-anchor="middle" font-family="Space Mono" font-size="9" fill="${C.faint}">subscription</text>`;
+ s.innerHTML=g;
+ $('moduleLeg').innerHTML='<div class="legend" style="margin-top:10px">'+DATA.revModule.map((m,i)=>`<span><i class="sw sq" style="background:${cols[i]}"></i>${m.m} · ${m.pct}%</span>`).join('')+'</div>';})();
+// tier table
+$('tierTable').innerHTML='<tr><th>Tier</th><th>Subs</th><th>MRR</th><th>Share</th></tr>'+DATA.tiers.map(t=>`<tr><td class="lbl">${t.name}</td><td>${t.subs}</td><td>$${t.rev.toLocaleString()}</td><td>${t.pct}%</td></tr>`).join('');
+// attach bars
+$('attach').innerHTML=DATA.attach.map(a=>`<div style="margin-top:11px"><div style="display:flex;justify-content:space-between;font-size:12.5px"><span style="font-weight:600">${a.f}</span><span class="mono" style="color:#6b6b6b">${a.pct}% · ${a.n}</span></div><div style="height:7px;background:var(--surface-dim);border-radius:5px;margin-top:5px;overflow:hidden"><div style="height:100%;width:${Math.max(a.pct,1.5)}%;background:var(--primary);border-radius:5px"></div></div></div>`).join('');
+// subs active bars
+barChart('subsChart',DATA.months19,DATA.subsActive,C.primary,{max:1300,ticks:[0,650,1300],fmt:v=>v,label:true});
+// 5 · rev + GM combo
+(function(){const s=$('revGmChart'),{W,H}=D(s),pl=48,pr=46,pt=20,pb=32,ph=H-pt-pb,pw=W-pl-pr;
+ const ord=DATA.pnlOrder,maxR=16000,y=v=>pt+ph-(v/maxR)*ph,gap=pw/ord.length,bw=gap*0.62;
+ const yg=p=>pt+ph-(p/100)*ph;let g='';
+ [0,4000,8000,12000,16000].forEach(t=>{g+=`<line x1="${pl}" y1="${y(t)}" x2="${W-pr}" y2="${y(t)}" stroke="#cfd3dd"/><text x="${pl-7}" y="${y(t)+3}" text-anchor="end" font-family="Space Mono" font-size="13" font-weight="700" fill="#52525b">$${(t/1000)}k</text>`;});
+ [0,50,100].forEach(t=>{g+=`<text x="${W-pr+6}" y="${yg(t)+3}" font-family="Space Mono" font-size="13" font-weight="700" fill="${C.success}">${t}%</text>`;});
+ ord.forEach((m,i)=>{const p=DATA.pnl[m],cx=pl+gap*i+gap/2;
+  g+=`<rect x="${cx-bw/2}" y="${y(p.rev)}" width="${bw}" height="${pt+ph-y(p.rev)}" rx="2" fill="${C.primary}" opacity=".85"><title>${m} rev $${p.rev}</title></rect>`;
+  g+=`<text x="${cx}" y="${y(p.rev)-4}" text-anchor="middle" font-family="Space Mono" font-size="10" font-weight="700" fill="${C.primary}">$${(p.rev/1000).toFixed(1)}k</text>`;});
+ const gp=ord.map((m,i)=>(pl+gap*i+gap/2)+','+yg(DATA.pnl[m].gm)).join(' ');
+ g+=`<polyline fill="none" stroke="${C.success}" stroke-width="3" points="${gp}"/>`;
+ ord.forEach((m,i)=>{g+=`<circle cx="${pl+gap*i+gap/2}" cy="${yg(DATA.pnl[m].gm)}" r="3.6" fill="#fff" stroke="${C.success}" stroke-width="1.8"><title>${m} GM ${DATA.pnl[m].gm}%</title></circle>`;
+  g+=`<text x="${pl+gap*i+gap/2}" y="${H-9}" text-anchor="middle" font-family="Space Mono" font-size="12" font-weight="700" fill="#52525b">${m.slice(5)}/${m.slice(2,4)}</text>`;});
+ const lastIdx=ord.length-1,lastM=ord[lastIdx],lastGm=DATA.pnl[lastM].gm,lastCx=pl+gap*lastIdx+gap/2;
+ g+=`<text x="${lastCx}" y="${yg(lastGm)-10}" text-anchor="middle" font-family="Space Mono" font-size="11" font-weight="700" fill="${C.success}">${lastGm}%</text>`;
+ s.innerHTML=g;})();
+// EBT bars pos/neg
+(function(){const s=$('ebtChart'),{W,H}=D(s),pl=44,pr=14,pt=14,pb=30,ph=H-pt-pb,pw=W-pl-pr;
+ const ord=DATA.pnlOrder,max=2500,min=-3000,y=v=>pt+ph-((v-min)/(max-min))*ph,gap=pw/ord.length,bw=gap*0.6;let g='';
+ [-3000,-1500,0,1500].forEach(t=>{g+=`<line x1="${pl}" y1="${y(t)}" x2="${W-pr}" y2="${y(t)}" stroke="${t===0?C.faint:C.grid}"/><text x="${pl-5}" y="${y(t)+3}" text-anchor="end" font-family="Space Mono" font-size="8.5" fill="${C.faint}">$${(t/1000).toFixed(1)}k</text>`;});
+ ord.forEach((m,i)=>{const v=DATA.pnl[m].ebt,cx=pl+gap*i+gap/2,col=v>=0?C.success:C.accent;
+  g+=`<rect x="${cx-bw/2}" y="${Math.min(y(v),y(0))}" width="${bw}" height="${Math.abs(y(v)-y(0))}" rx="2" fill="${col}"><title>${m} EBT $${v}</title></rect>`;
+  const lblY=v>=0?y(v)-5:y(v)+11;
+  g+=`<text x="${cx}" y="${lblY}" text-anchor="middle" font-family="Space Mono" font-size="9" font-weight="700" fill="${v>=0?'#066d57':'#cf3b3b'}">${v>=0?'$':'-$'}${Math.abs(v).toLocaleString()}</text>`;
+  if(i%2===0)g+=`<text x="${cx}" y="${H-9}" text-anchor="middle" font-family="Space Mono" font-size="12" font-weight="700" fill="#52525b">${m.slice(5)}/${m.slice(2,4)}</text>`;});
+ s.innerHTML=g;})();
+// P&L table — with revenue disaggregation
+(function(){const ord=DATA.pnlOrder;
+ const rows=[
+  ['Subscription MRR','sub',{indent:1}],
+  ['Marketplace take rate','take',{indent:1}],
+  ['Revenue (total)','rev',{bold:true,bg:'#eef6ff'}],
+  ['Cost of revenue','cogs',{}],
+  ['Gross margin %','gm',{italic:true,bg:'#f6f6f4'}],
+  ['Sales & Marketing','sm',{}],
+  ['R&D / Engineering','rd',{}],
+  ['G&A','ga',{}],
+  ['Total expenses','tot',{bold:true,bg:'#f6f6f4'}],
+  ['EBT','ebt',{bold:true,bg:'#eef6ff'}]];
+ let h='<tr><th>USD</th>'+ord.map(m=>`<th>${m.slice(5)}/${m.slice(2,4)}</th>`).join('')+'</tr>';
+ rows.forEach(([lab,k,opt])=>{const sty=`${opt.bold?'font-weight:700;':''}${opt.italic?'font-style:italic;':''}${opt.bg?`background:${opt.bg};`:''}`;
+  h+=`<tr style="${sty}"><td class="lbl" style="${opt.indent?'padding-left:24px;color:#52525b;':''}${sty}">${lab}</td>`+ord.map(m=>{
+   let v;
+   if(k==='sub') v=DATA.revBreakdown[m]?.sub||0;
+   else if(k==='take') v=DATA.revBreakdown[m]?.take||0;
+   else v=DATA.pnl[m][k];
+   if(k==='gm')return `<td style="${sty}">${v}%</td>`;
+   const col=k==='ebt'?(v>=0?'color:#066d57':'color:#cf3b3b'):(v<0?'color:#cf3b3b':'');
+   return `<td style="${col};${sty}">${v<0?'-$'+Math.abs(v).toLocaleString():'$'+v.toLocaleString()}</td>`;
+  }).join('')+'</tr>';});
+ $('pnlTable').innerHTML=h;})();
+// P&L annex — collapsible by category
+(function(){const cats=DATA.pnlAnnex;
+ const order=['Cost Of Revenue','Sales & Marketing'];
+ let h='';
+ order.forEach(name=>{const items=cats[name];if(!items||!items.length)return;
+  const total=items.reduce((s,i)=>s+i.v,0);
+  h+=`<details style="border:1px solid var(--border);border-radius:10px;margin-bottom:8px;background:var(--surface)">
+   <summary style="padding:14px 18px;font-weight:700;font-size:14px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;list-style:none">
+    <span><span class="anex-arrow">▸</span>${name}</span>
+    <span class="mono" style="color:var(--text-secondary);font-weight:700">$${total.toLocaleString()} · ${items.length} items</span>
+   </summary>
+   <table style="margin:0;border-top:1px solid var(--border-soft)">`;
+  items.forEach(i=>{h+=`<tr><td class="lbl" style="padding-left:24px;">${i.lab}</td><td>$${i.v.toLocaleString()}</td></tr>`;});
+  h+='</table></details>';});
+ $('pnlAnnex').innerHTML=h;})();
+// 6 · customers grouped
+(function(){const s=$('custChart'),{W,H}=D(s),pl=40,pr=14,pt=14,pb=30,ph=H-pt-pb,pw=W-pl-pr;
+ const n=DATA.months19.length,max=160,y=v=>pt+ph-(v/max)*ph,gap=pw/n,bw=gap*0.34;let g='';
+ [0,80,160].forEach(t=>{g+=`<line x1="${pl}" y1="${y(t)}" x2="${W-pr}" y2="${y(t)}" stroke="#eef0f3"/>`;});
+ DATA.months19.forEach((m,i)=>{const cx=pl+gap*i+gap/2;
+  g+=`<rect x="${cx-bw-1}" y="${y(DATA.newSubs[i])}" width="${bw}" height="${pt+ph-y(DATA.newSubs[i])}" rx="2" fill="${C.primary}"><title>${m} new ${DATA.newSubs[i]}</title></rect>`;
+  g+=`<rect x="${cx+1}" y="${y(DATA.cancels[i])}" width="${bw}" height="${pt+ph-y(DATA.cancels[i])}" rx="2" fill="${C.accent}"><title>${m} cancels ${DATA.cancels[i]}</title></rect>`;
+  g+=`<text x="${cx-bw/2-1}" y="${y(DATA.newSubs[i])-3}" text-anchor="middle" font-family="Space Mono" font-size="10" font-weight="700" fill="${C.primary}">${DATA.newSubs[i]}</text>`;
+  g+=`<text x="${cx+bw/2+1}" y="${y(DATA.cancels[i])-3}" text-anchor="middle" font-family="Space Mono" font-size="10" font-weight="700" fill="${C.accent}">${DATA.cancels[i]}</text>`;
+  if(i%2===0)g+=`<text x="${cx}" y="${H-9}" text-anchor="middle" font-family="Space Mono" font-size="12" font-weight="700" fill="#52525b">${m}</text>`;});
+ s.innerHTML=g;})();
+// Collapsibles
+document.querySelectorAll('.sec-head').forEach(h=>h.addEventListener('click',()=>h.parentElement.classList.toggle('collapsed')));
+// Engagement — MAU & DAU lines (handle null gaps)
+function nullLineChart(id,labels,series,o){
+  o=o||{};const s=$(id),{W,H}=D(s);const pl=o.pl||44,pr=14,pt=14,pb=30,ph=H-pt-pb;
+  const max=o.max,min=o.min||0,x=axisX(W,labels.length,pl,pr),y=v=>pt+ph-((v-min)/(max-min))*ph;
+  const ticks=o.ticks||[min,(min+max)/2,max];let g='';
+  ticks.forEach(t=>{g+=`<line x1="${pl}" y1="${y(t)}" x2="${W-pr}" y2="${y(t)}" stroke="#cfd3dd"/><text x="${pl-6}" y="${y(t)+3}" text-anchor="end" font-family="Space Mono" font-size="12" font-weight="700" fill="#52525b">${o.fmt?o.fmt(t):t.toLocaleString()}</text>`;});
+  for(let i=0;i<labels.length;i+=3){g+=`<text x="${x(i)}" y="${H-12}" text-anchor="middle" font-family="Space Mono" font-size="10" font-weight="700" fill="#52525b">${labels[i]}</text>`;}
+  series.forEach(ser=>{
+    let seg=[];const segs=[];
+    ser.data.forEach((v,i)=>{if(v==null){if(seg.length>1)segs.push(seg);seg=[];}else{seg.push([x(i),y(v)]);}});
+    if(seg.length>1)segs.push(seg);
+    segs.forEach(s2=>{g+=`<polyline fill="none" stroke="${ser.color}" stroke-width="${ser.w||2.4}" points="${s2.map(p=>p[0]+','+p[1]).join(' ')}"/>`;});
+    ser.data.forEach((v,i)=>{if(v!=null)g+=`<circle cx="${x(i)}" cy="${y(v)}" r="2.5" fill="${ser.color}"/>`;});
+  });
+  s.innerHTML=g;
+}
+nullLineChart('mauChart',DATA.months19,[
+  {data:DATA.mauAU,color:C.primary,w:2.6},
+  {data:DATA.mauAV,color:C.violet,w:2.6}
+],{pl:55,max:3000,ticks:[0,750,1500,2250,3000]});
+nullLineChart('dauChart',DATA.months19,[
+  {data:DATA.dauAU,color:C.primary,w:2.6},
+  {data:DATA.dauAV,color:C.violet,w:2.6}
+],{pl:55,max:1200,ticks:[0,300,600,900,1200]});
+
+// Customers — overlay active paying base (subsActive) line on custChart bars
+(function(){const s=$('custChart');if(!s)return;const{W,H}=D(s);
+ const pl=40,pr=18,pt=14,pb=30,ph=H-pt-pb;
+ const series=DATA.subsActive;
+ const max=1300,x=i=>pl+((W-pl-pr)/(DATA.months19.length-1))*i,y=v=>pt+ph-(v/max)*ph;
+ let g=s.innerHTML;
+ const pts=series.map((v,i)=>x(i)+','+y(v));
+ g+=`<polyline fill="none" stroke="${C.violet}" stroke-width="3" points="${pts.join(' ')}"/>`;
+ series.forEach((v,i)=>{g+=`<circle cx="${x(i)}" cy="${y(v)}" r="3.2" fill="${C.violet}"/><title>${DATA.months19[i]}: ${v.toLocaleString()} active paying subs</title>`;});
+ const last=series.length-1,lv=series[last];
+ g+=`<text x="${x(last)-6}" y="${y(lv)-9}" text-anchor="end" font-family="Space Mono" font-size="12" font-weight="700" fill="${C.violet}">${lv.toLocaleString()}</text>`;
+ s.innerHTML=g;})();
+
+</script>
+</body>
+</html>
