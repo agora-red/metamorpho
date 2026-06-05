@@ -259,7 +259,7 @@ body { font-family: var(--sans); font-variant-numeric: tabular-nums; background:
       <div class="stat-label light">conversaciones totales</div>
     </div>
     <div class="stat-card dark">
-      <div class="stat-num red">7</div>
+      <div class="stat-num red">3</div>
       <div class="stat-label light">bugs activos / alta prioridad</div>
     </div>
     <div class="stat-card dark">
@@ -368,41 +368,9 @@ body { font-family: var(--sans); font-variant-numeric: tabular-nums; background:
 <!-- ─────────────────────────────────── SLIDE 3 · BUGS ALTA PRIORIDAD -->
 <section class="slide slide-ink" id="s3">
   <div class="kicker kicker-white">Bugs · <span style="color:#FF4658">Alta prioridad</span></div>
-  <h2 class="h-section" style="color:#fff">7 bugs <em style="color:#FF4658">activos</em><br>esta semana</h2>
+  <h2 class="h-section" style="color:#fff">3 bugs <em style="color:#FF4658">activos</em><br>+ 4 resueltos esta semana</h2>
 
   <div class="row-list">
-    <div class="row-item dark">
-      <div class="row-icon icon-red-dk">🔥</div>
-      <div class="row-body">
-        <div class="row-title light">Template dunning con <code style="background:rgba(255,70,88,0.2);color:#fca5a5;padding:1px 6px;border-radius:4px;font-size:12px">_REPLACE_THIS_</code></div>
-        <div class="row-sub light">El email de cobro fallido envía el placeholder sin reemplazar a usuarios reales. Fix urgente en template.</div>
-        <div class="row-meta"><span class="pill pill-red">Producción</span><span class="pill" style="background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.4);font-size:10px">1 caso confirmado</span></div>
-      </div>
-    </div>
-    <div class="row-item dark">
-      <div class="row-icon icon-red-dk">⚠️</div>
-      <div class="row-body">
-        <div class="row-title light">Superposición de turnos</div>
-        <div class="row-sub light">Dos clientes reservaron 10:00 y 10:10 al mismo profesional. El sistema no lo bloqueó. Posible race condition.</div>
-        <div class="row-meta"><span class="pill pill-red">Sin resolver</span><span class="pill" style="background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.4);font-size:10px">conv. 215474562008026</span></div>
-      </div>
-    </div>
-    <div class="row-item dark">
-      <div class="row-icon icon-red-dk">🔄</div>
-      <div class="row-body">
-        <div class="row-title light">Loop en onboarding al aceptar T&C</div>
-        <div class="row-sub light">"Completo todo y al aceptar términos me regresa al inicio." Bloquea activación de cuentas nuevas. Activo y sin resolución.</div>
-        <div class="row-meta"><span class="pill pill-red">Activo</span></div>
-      </div>
-    </div>
-    <div class="row-item dark">
-      <div class="row-icon icon-amber-dk">🔗</div>
-      <div class="row-body">
-        <div class="row-title light">Link de turno roto por 2 semanas</div>
-        <div class="row-sub light">Vendor reporta que su link no funciona hace 14 días. Sin resolución registrada en conversación.</div>
-        <div class="row-meta"><span class="pill pill-amber">Sin resolver</span></div>
-      </div>
-    </div>
     <div class="row-item dark">
       <div class="row-icon icon-amber-dk">📊</div>
       <div class="row-body">
@@ -425,6 +393,30 @@ body { font-family: var(--sans); font-variant-numeric: tabular-nums; background:
         <div class="row-title light">Imágenes IG generadas todas iguales — <span style="color:#6ee7b7">resuelto</span></div>
         <div class="row-sub light">Las 6 imágenes del generador salían idénticas. Reportado y solucionado durante la semana. ✓</div>
         <div class="row-meta"><span class="pill pill-green">Cerrado</span></div>
+      </div>
+    </div>
+    <div class="row-item dark">
+      <div class="row-icon icon-green-dk">✅</div>
+      <div class="row-body">
+        <div class="row-title light">Superposición de turnos — <span style="color:#6ee7b7">resuelto</span></div>
+        <div class="row-sub light">Dos clientes reservaron 10:00 y 10:10 al mismo profesional. Investigado y cerrado.</div>
+        <div class="row-meta"><span class="pill pill-green">Cerrado</span></div>
+      </div>
+    </div>
+    <div class="row-item dark">
+      <div class="row-icon icon-green-dk">✅</div>
+      <div class="row-body">
+        <div class="row-title light">Loop en onboarding al aceptar T&C — <span style="color:#6ee7b7">resuelto</span></div>
+        <div class="row-sub light">"Completo todo y al aceptar términos me regresa al inicio." Resuelto durante la semana.</div>
+        <div class="row-meta"><span class="pill pill-green">Cerrado</span></div>
+      </div>
+    </div>
+    <div class="row-item dark">
+      <div class="row-icon icon-green-dk">✅</div>
+      <div class="row-body">
+        <div class="row-title light">Link de turno "roto" — <span style="color:#6ee7b7">resuelto</span></div>
+        <div class="row-sub light">Era un error en el link que el vendor tenía configurado en su Instagram. No era un bug de la plataforma.</div>
+        <div class="row-meta"><span class="pill pill-green">Cerrado · error de usuario</span></div>
       </div>
     </div>
   </div>
@@ -537,39 +529,15 @@ body { font-family: var(--sans); font-variant-numeric: tabular-nums; background:
 
 <!-- ─────────────────────────────────── SLIDE 6 · ACCIONABLES URGENTES -->
 <section class="slide slide-ink" id="s6">
-  <div class="kicker kicker-white">Accionables · <span style="color:#FF4658">Esta semana</span></div>
-  <h2 class="h-section" style="color:#fff">5 cosas que hay que<br><em style="color:#FF4658">hacer ahora</em></h2>
+  <div class="kicker kicker-white">Accionables · <span style="color:#F59E0B">Esta semana</span></div>
+  <h2 class="h-section" style="color:#fff">2 cosas que hay que<br><em style="color:#F59E0B">resolver ahora</em></h2>
 
   <div class="action-list">
-    <div class="action-row urgent">
-      <span class="action-check">🔥</span>
-      <div class="action-text">
-        <div class="action-title r">Fix template dunning: reemplazar <code style="font-size:11px;background:rgba(255,70,88,0.2);padding:1px 5px;border-radius:4px">_REPLACE_THIS_</code></div>
-        <div class="action-sub">Bug de producción visible para usuarios. Prioridad máxima — cada email de cobro fallido muestra el placeholder.</div>
-      </div>
-      <span class="action-owner owner-eng">ENG</span>
-    </div>
-    <div class="action-row urgent">
-      <span class="action-check">⚠️</span>
-      <div class="action-text">
-        <div class="action-title r">Investigar superposición de turnos</div>
-        <div class="action-sub">Reproducir el escenario de reserva concurrent (10:00 + 10:10, mismo profesional). Confirmar si es race condition o edge case de config.</div>
-      </div>
-      <span class="action-owner owner-eng">ENG</span>
-    </div>
-    <div class="action-row urgent">
-      <span class="action-check">🔄</span>
-      <div class="action-text">
-        <div class="action-title r">Reproducir loop de onboarding en T&C</div>
-        <div class="action-sub">Puede estar frenando activaciones nuevas silenciosamente. Prioridad alta para no perder leads en período de prueba.</div>
-      </div>
-      <span class="action-owner owner-eng">ENG</span>
-    </div>
     <div class="action-row medium">
       <span class="action-check">📱</span>
       <div class="action-text">
         <div class="action-title a">Revisar job de reset contador WA</div>
-        <div class="action-sub">Usuarios que renovaron siguen viendo la alerta. Verificar condición de carrera en el job de reset post-renovación.</div>
+        <div class="action-sub">Usuarios que renovaron siguen viendo la alerta de límite excedido. Verificar condición de carrera en el job de reset post-renovación.</div>
       </div>
       <span class="action-owner owner-eng">ENG</span>
     </div>
@@ -675,8 +643,8 @@ body { font-family: var(--sans); font-variant-numeric: tabular-nums; background:
       <div class="closing-lbl">Conversaciones</div>
     </div>
     <div class="closing-card">
-      <div class="closing-num" style="color:var(--frost-accent)">7</div>
-      <div class="closing-lbl">Bugs a resolver</div>
+      <div class="closing-num" style="color:var(--frost-accent)">3</div>
+      <div class="closing-lbl">Bugs activos</div>
     </div>
     <div class="closing-card">
       <div class="closing-num" style="color:#EC4899">1</div>
