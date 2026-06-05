@@ -14,6 +14,26 @@
       "slug": "intercom-weekly-2026-06"
     },
     {
+      "type": "landing",
+      "typeLabel": "Prototype",
+      "title": "Crear con IA · storefront mágico",
+      "description": "Prototipo interactivo navegable de la nueva experiencia 'Crear con IA' del editor de página de Ágora. Reemplaza el clasificador ciego que hoy elige 1 de 8 plantillas hardcodeadas por una experiencia con preview en vivo: la IA 'lee' tu Instagram y extrae la paleta de tus fotos (motes de color que vuelan a los swatches), después una calibración A/B tipo Akinator de diseño donde cada decisión muta el storefront en vivo, 3 variantes coherentes para elegir, y un reveal narrado que explica el porqué de cada decisión. Escenario 'atelier de luz': ink profundo con un aura de color viva que respira y muta con la identidad del vendor. Caso: Studio Lumière (nail art & beauty). Para feedback de JP/Fermin antes de construir.",
+      "detail": "prototipo interactivo · seed → calibración A/B → variantes → reveal",
+      "date": "JUN 2026",
+      "href": "./crear-con-ia-storefront-2026-06/index.html",
+      "slug": "crear-con-ia-storefront-2026-06"
+    },
+    {
+      "type": "deck",
+      "typeLabel": "Deck",
+      "title": "Multiplex · IA Lab",
+      "description": "Deck del IA Lab sobre Multiplex — un agente autónomo de research/producto que corre 24/7 sobre OpenClaw: investiga la data y el mercado, mantiene un cerebro propio (vault Obsidian) y deja un brief diario en Slack. Cubre el problema, la arquitectura simple, el demo, el costo (corre por centavos) y la idea de 'un agente miembro del equipo' por cada tarea recurrente.",
+      "detail": "7 slides · scroll-snap",
+      "date": "MAY 2026",
+      "href": "./multiplex-ia-lab-2026-05/index.html",
+      "slug": "multiplex-ia-lab-2026-05"
+    },
+    {
       "type": "deck",
       "typeLabel": "Deck",
       "title": "Agente CS con IA · Intercom",
