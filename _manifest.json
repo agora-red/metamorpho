@@ -1,8 +1,18 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
   "version": 1,
-  "updated_at": "2026-05-22",
+  "updated_at": "2026-06-05",
   "outputs": [
+    {
+      "type": "deck",
+      "typeLabel": "Deck",
+      "title": "Intercom Weekly · 1-5 Jun 2026",
+      "description": "Análisis de 206 conversaciones de soporte de la semana. Distribución por categoría, 7 bugs activos con prioridad (incl. template dunning con _REPLACE_THIS_ en producción, superposición de turnos, loop en onboarding), 8 feature requests rankeados, accionables urgentes y de mediano plazo, y señales de churn con motivos.",
+      "detail": "8 slides · soporte · análisis semanal · Jun 2026",
+      "date": "JUN 2026",
+      "href": "./intercom-weekly-2026-06/index.html",
+      "slug": "intercom-weekly-2026-06"
+    },
     {
       "type": "deck",
       "typeLabel": "Deck",
