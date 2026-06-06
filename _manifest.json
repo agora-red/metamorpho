@@ -1,8 +1,18 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
   "version": 1,
-  "updated_at": "2026-06-05",
+  "updated_at": "2026-06-06",
   "outputs": [
+    {
+      "type": "one-pager",
+      "typeLabel": "HR",
+      "title": "Candidatos · Búsquedas Analíticas 2026",
+      "description": "Tablero de candidatos para las búsquedas de Growth Analyst y Customer Success Analyst. Tab con los 8 CVs recibidos (residencia, contacto, carrera, skills, fit por rol, estado de entrevista) y tab con los 4 que avanzan a 2da ronda (Virginia, Isabella, Agustín, Trinidad) con briefing fáctico de la 1ra entrevista.",
+      "detail": "2 tabs · 8 candidatos · 4 a 2da ronda",
+      "date": "JUN 2026",
+      "href": "./candidatos-busquedas-analytics-2026-06/index.html",
+      "slug": "candidatos-busquedas-analytics-2026-06"
+    },
     {
       "type": "landing",
       "typeLabel": "Prototype",

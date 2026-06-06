@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Candidatos · Growth & Customer Success Analyst · 2026</title>
+<style>
+  :root{
+    --blue:#2f5bff; --violet:#7c3aed; --berry:#c81e5b; --ink:#16181d;
+    --muted:#6b7280; --line:#e6e8ee; --bg:#f6f7f9; --card:#fff;
+    --green:#16a34a; --amber:#d97706; --red:#dc2626;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:13px; line-height:1.45;
+  }
+  .wrap{max-width:1500px; margin:0 auto; padding:28px 22px 60px}
+  header h1{font-size:22px; margin:0 0 4px; letter-spacing:-.3px}
+  header .sub{color:var(--muted); font-size:13px; margin:0 0 2px}
+
+  /* Tabs */
+  .tabs{display:flex; gap:6px; margin:20px 0 0; border-bottom:1px solid var(--line)}
+  .tab{
+    appearance:none; border:none; background:transparent; cursor:pointer;
+    font:inherit; font-size:13px; font-weight:600; color:var(--muted);
+    padding:11px 16px; border-bottom:2px solid transparent; margin-bottom:-1px;
+  }
+  .tab .count{font-size:11px; color:#9aa1ad; margin-left:6px; font-weight:600}
+  .tab:hover{color:var(--ink)}
+  .tab.active{color:var(--blue); border-bottom-color:var(--blue)}
+  .tab.active .count{color:var(--blue)}
+  .panel{display:none; padding-top:20px}
+  .panel.active{display:block}
+
+  .legend{display:flex; gap:18px; flex-wrap:wrap; margin:0 0 16px; font-size:12px; color:var(--muted)}
+  .legend b{color:var(--ink)}
+  .fit{display:inline-block; padding:2px 9px; border-radius:999px; font-size:11px; font-weight:700; white-space:nowrap}
+  .fit.alto{background:#e7f6ec; color:#137a37}
+  .fit.medio{background:#fef4e3; color:#9a5b00}
+  .fit.bajo{background:#fdeaea; color:#b22020}
+  .tablewrap{background:var(--card); border:1px solid var(--line); border-radius:12px; overflow:auto; box-shadow:0 1px 3px rgba(16,24,40,.04)}
+  table{border-collapse:collapse; width:100%; min-width:1280px}
+  thead th{
+    position:sticky; top:0; background:#101626; color:#fff; text-align:left;
+    font-size:11px; text-transform:uppercase; letter-spacing:.4px; font-weight:600;
+    padding:11px 12px; vertical-align:bottom; z-index:2;
+  }
+  tbody td{padding:11px 12px; border-top:1px solid var(--line); vertical-align:top}
+  tbody tr:hover{background:#fafbff}
+  .name{font-weight:700; font-size:14px; white-space:nowrap}
+  .role-tag{font-size:11px; color:var(--muted); display:block; margin-top:2px; font-weight:500}
+  .contact{font-size:12px; white-space:nowrap}
+  .contact a{color:var(--blue); text-decoration:none}
+  .skills{font-size:12px; color:#374151; max-width:300px}
+  .career{font-size:12.5px}
+  .career small{color:var(--muted); display:block; margin-top:2px}
+  .fitcell{font-size:12px; min-width:210px}
+  .fitcell .why{display:block; margin-top:4px; color:#374151; font-size:11.5px; line-height:1.4}
+  .iv{text-align:center; white-space:nowrap}
+  .iv label{display:inline-flex; align-items:center; gap:6px; cursor:pointer; font-size:11px; color:var(--muted)}
+  .iv input{width:16px; height:16px; accent-color:var(--blue); cursor:pointer}
+  .flag{font-size:11px; color:var(--amber); font-weight:600; white-space:nowrap}
+  .strip{height:5px; background:linear-gradient(90deg,var(--blue),var(--violet),var(--berry)); border-radius:6px 6px 0 0; max-width:1500px; margin:0 auto}
+  footer{color:var(--muted); font-size:11px; margin-top:14px; text-align:right}
+
+  /* 2da entrevista — cards */
+  .cards{display:grid; grid-template-columns:repeat(2,1fr); gap:18px}
+  @media (max-width:880px){ .cards{grid-template-columns:1fr} }
+  .pcard{background:var(--card); border:1px solid var(--line); border-radius:14px; box-shadow:0 1px 3px rgba(16,24,40,.05); overflow:hidden}
+  .pcard .top{padding:18px 20px 14px; border-bottom:1px solid var(--line)}
+  .pcard .pname{font-size:18px; font-weight:700; margin:0; letter-spacing:-.2px}
+  .pcard .ptag{color:var(--muted); font-size:12.5px; margin:2px 0 12px}
+  .meta{display:flex; flex-wrap:wrap; gap:6px 8px; font-size:12px}
+  .meta .m{background:#f3f5f9; border:1px solid var(--line); border-radius:8px; padding:4px 9px; color:#374151}
+  .meta .m a{color:var(--blue); text-decoration:none}
+  .fits{display:flex; gap:8px; margin-top:12px; flex-wrap:wrap}
+  .fits .ft{font-size:11.5px; color:#374151}
+  .pcard .body{padding:16px 20px 20px}
+  .sect-title{font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:var(--muted); font-weight:700; margin:0 0 8px}
+  .sect-title .doc{float:right; font-size:11px; font-weight:600; text-transform:none; letter-spacing:0}
+  .sect-title .doc a{color:var(--blue); text-decoration:none}
+  ul.brief{margin:0; padding-left:18px}
+  ul.brief li{margin:0 0 6px; font-size:12.5px; color:#23272f; line-height:1.5}
+  ul.brief li.placeholder{color:var(--amber); list-style:none; margin-left:-18px; padding:8px 10px; background:#fff8ec; border:1px dashed #f0c674; border-radius:8px}
+  .next{margin-top:14px; padding:10px 12px; background:#f0f4ff; border:1px solid #d8e2ff; border-radius:8px; font-size:12px; color:#2a3a66}
+  .next b{color:#1c2a52}
+</style>
+</head>
+<body>
+<div class="strip"></div>
+<div class="wrap">
+  <header>
+    <h1>Candidatos · Búsquedas Analíticas 2026</h1>
+    <p class="sub">8 CVs recibidos · evaluación de fit vs. <b>Growth Analyst</b> (adquisición + activación) y <b>Customer Success Analyst</b> (engagement + retención)</p>
+    <p class="sub">Ambos roles: Full Time · Híbrido (2 días presenciales) · CABA · perfil analítico + operativo · Claude/AI mindset</p>
+  </header>
+
+  <!-- TABS -->
+  <div class="tabs" role="tablist">
+    <button class="tab active" data-panel="todos" role="tab">Todos los candidatos<span class="count">8</span></button>
+    <button class="tab" data-panel="segunda" role="tab">Avanzan a 2da entrevista<span class="count">4</span></button>
+  </div>
+
+  <!-- ============ PANEL 1 · TODOS ============ -->
+  <section class="panel active" id="todos">
+    <div class="legend">
+      <span><span class="fit alto">Alto</span> calza fuerte</span>
+      <span><span class="fit medio">Medio</span> calza parcial / a validar</span>
+      <span><span class="fit bajo">Bajo</span> gap importante</span>
+      <span style="margin-left:auto">El check de entrevista se guarda en este navegador.</span>
+    </div>
+
+    <div class="tablewrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Candidato</th>
+          <th>Residencia</th>
+          <th>Contacto</th>
+          <th>Carrera / Fin</th>
+          <th>Skills relevantes</th>
+          <th>Fit · Growth</th>
+          <th>Fit · Customer Success</th>
+          <th>Entrevista</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <!-- VIRGINIA -->
+        <tr>
+          <td class="name">Virginia Muniz Barreto<span class="role-tag">Marketing analítico</span></td>
+          <td>San Isidro, GBA</td>
+          <td class="contact">+54 11 3587-1122<br><a href="mailto:virginiamunizb@gmail.com">virginiamunizb@gmail.com</a></td>
+          <td class="career">Lic. en Marketing — UCEMA<small>Graduada Nov 2025 · con Honores (beca x promedio)</small></td>
+          <td class="skills">Análisis de datos y métricas, Excel avanzado, Google Analytics, Google/Meta Ads (certificada), Mailchimp, SPSS, investigación de mercado, reporting. Inglés B2+, portugués inicial.</td>
+          <td class="fitcell"><span class="fit alto">Alto</span><span class="why">Marketing + analítica + ads + reporting: núcleo de adquisición. Le falta probar outreach/ventas en 1ra persona (experiencia es voluntariado).</span></td>
+          <td class="fitcell"><span class="fit medio">Medio</span><span class="why">Muy sólida en datos/reporting, pero sin experiencia cara al cliente ni señal clara de retención/exit interviews.</span></td>
+          <td class="iv"><label><input type="checkbox" data-k="virginia" checked> sí</label></td>
+        </tr>
+
+        <!-- ISABELLA -->
+        <tr>
+          <td class="name">Isabella María Picasso<span class="role-tag">Negocios digitales · data</span></td>
+          <td>Buenos Aires (CABA)</td>
+          <td class="contact">+54 911 6201 6794<br><a href="mailto:picassoisabella@gmail.com">picassoisabella@gmail.com</a></td>
+          <td class="career">Lic. en Negocios Digitales — UCEMA<small>En curso (2022–actualidad)</small></td>
+          <td class="skills">Excel, SQL, Power BI, MySQL, Python/HTML/CSS, Google Ads (Search/Display/Video, certif. 2025), Canva. Inglés avanzado (FCE/IGCSE).</td>
+          <td class="fitcell"><span class="fit alto">Alto</span><span class="why">Perfil técnico-analítico fuerte (SQL + BI) + certificaciones de paid/SEM. Falta experiencia laboral concreta de ventas/outreach.</span></td>
+          <td class="fitcell"><span class="fit medio">Medio</span><span class="why">Analítica muy fuerte, pero sin componente empático/cara al cliente demostrado en el CV.</span></td>
+          <td class="iv"><label><input type="checkbox" data-k="isabella" checked> sí</label></td>
+        </tr>
+
+        <!-- IARA -->
+        <tr>
+          <td class="name">Iara Singermann<span class="role-tag">Negocios digitales · social</span></td>
+          <td>CABA, Argentina</td>
+          <td class="contact">+54 9 11 6363-6562<br><a href="mailto:iarasingermann@gmail.com">iarasingermann@gmail.com</a></td>
+          <td class="career">Lic. en Negocios Digitales — UCEMA<small>En curso (2023–actualidad)</small></td>
+          <td class="skills">Office, Python básico, manejo integral de redes sociales, Canva Pro, community management (curso CoderHouse). Liderazgo de grupos.</td>
+          <td class="fitcell"><span class="fit medio">Medio</span><span class="why">Carrera afín + redes/contenido, pero analítica floja y sin experiencia growth/ventas concreta. Junior.</span></td>
+          <td class="fitcell"><span class="fit medio">Medio</span><span class="why">Perfil empático (líder de grupo: seguimiento individual, acompañamiento), pero poca analítica y poca experiencia profesional.</span></td>
+          <td class="iv"><label><input type="checkbox" data-k="iara" checked> sí</label></td>
+        </tr>
+
+        <!-- TRINIDAD -->
+        <tr>
+          <td class="name">Trinidad Tonini Martinez<span class="role-tag">Media buyer · emprendedora</span></td>
+          <td>Haedo, Pcia. Buenos Aires</td>
+          <td class="contact">+54 9 11 6858-1221<br><a href="mailto:toninitrini@gmail.com">toninitrini@gmail.com</a></td>
+          <td class="career">Lic. en Marketing y Negocios Digitales — UADE<small>En curso (desde 2022)</small></td>
+          <td class="skills">Media buyer Meta/TikTok/Google Ads, content creator, emprendimiento propio, Tienda Nube, Illustrator/Photoshop/Canva/CapCut, fichas técnicas, trato con proveedores y clientes.</td>
+          <td class="fitcell"><span class="fit alto">Alto</span><span class="why">Paid multicanal en 1ra persona + emprendimiento propio (vendió algo) + entrevistas con clientes: muy alineado a adquisición.</span></td>
+          <td class="fitcell"><span class="fit medio">Medio</span><span class="why">Trato directo con clientes y asesoramiento, pero perfil más creativo/marketing que analítico-retención.</span></td>
+          <td class="iv"><label><input type="checkbox" data-k="trinidad" checked> sí</label></td>
+        </tr>
+
+        <!-- FIORELLA -->
+        <tr>
+          <td class="name">Fiorella Aranovich<span class="role-tag">Customer Success B2B</span></td>
+          <td>No declarado en CV<span class="flag"> · confirmar</span></td>
+          <td class="contact"><span style="color:var(--muted)">Sin tel./email en el CV</span><span class="flag"> · pedir</span></td>
+          <td class="career">Analista en Relaciones Públicas — UNLaM<small>Título intermedio 2025 · carrera en curso (→2027)</small></td>
+          <td class="skills">Customer Success B2B 3+ años, Sales Navigator/SDR, HubSpot, eventos comerciales, PR, SEO/contenido (Semrush, GA, Clarity), inbound-led outbound, articulación con producto. FCE Cambridge.</td>
+          <td class="fitcell"><span class="fit alto">Alto</span><span class="why">Outreach inbound/outbound real, calificación de leads, eventos, SEO y paid-adjacent: pega de lleno en adquisición.</span></td>
+          <td class="fitcell"><span class="fit alto">Alto</span><span class="why">Título "Customer Success", articulación con producto y feedback de usuarios. La más alineada al combo engagement+retención.</span></td>
+          <td class="iv"><label><input type="checkbox" data-k="fiorella"> —</label></td>
+        </tr>
+
+        <!-- AGUSTIN -->
+        <tr>
+          <td class="name">Agustín Belizán<span class="role-tag">Data / Product analyst</span></td>
+          <td>Recoleta, CABA</td>
+          <td class="contact">+54 9 11 2319-1770<br><a href="mailto:agbelizan0@gmail.com">agbelizan0@gmail.com</a></td>
+          <td class="career">Lic. en Administración de Empresas — UCEMA<small>Finalizado (sin fecha en CV) · +Cert. Analista de Negocios 2023</small></td>
+          <td class="skills">SQL, Excel avanzado, Power BI, Looker, Alteryx, Figma. 2 años analista de datos en PwC (impuestos US, conciliaciones, automatización). Inglés avanzado.</td>
+          <td class="fitcell"><span class="fit medio">Medio</span><span class="why">Analítica/SQL muy fuerte, pero cero adquisición/ventas/outreach. Apunta a APM/Product Analyst.</span></td>
+          <td class="fitcell"><span class="fit medio">Medio</span><span class="why">Fuerte en datos y procesos, pero sin componente empático/cara al cliente. Posible para el lado "health-scores".</span></td>
+          <td class="iv"><label><input type="checkbox" data-k="agustin" checked> sí</label></td>
+        </tr>
+
+        <!-- GUADALUPE -->
+        <tr>
+          <td class="name">Guadalupe Galli<span class="role-tag">RRHH</span></td>
+          <td>Bella Vista, Pcia. Buenos Aires</td>
+          <td class="contact">+54 11 3889-2915<br><a href="mailto:guadagalli04@gmail.com">guadagalli04@gmail.com</a></td>
+          <td class="career">Lic. en Administración de RRHH — USAL<small>Egresada Dic 2025</small></td>
+          <td class="skills">Atención al personal, escucha activa, empatía, gestión administrativa. Office, Power BI nivel intermedio. Pasantía RRHH (municipalidad).</td>
+          <td class="fitcell"><span class="fit bajo">Bajo</span><span class="why">Perfil RRHH, sin adquisición, ventas ni marketing digital.</span></td>
+          <td class="fitcell"><span class="fit medio">Medio</span><span class="why">Empatía / escucha activa / atención y seguimiento de casos calzan con el costado humano del rol; falta analítica de negocio y SQL.</span></td>
+          <td class="iv"><label><input type="checkbox" data-k="guadalupe"> —</label></td>
+        </tr>
+
+        <!-- GERAL -->
+        <tr>
+          <td class="name">Geral Eduardo Perez<span class="role-tag">Ops / retail</span></td>
+          <td>Chile<span class="flag"> · disp. para Argentina — validar relocación</span></td>
+          <td class="contact">+56 9 7654-2978 (WA)<br><a href="mailto:geduardop89@gmail.com">geduardop89@gmail.com</a></td>
+          <td class="career">Ingeniería Industrial — Título profesional<small>Sin fecha en CV · perfil más senior</small></td>
+          <td class="skills">Gestión de operaciones, administración de supermercados, liderazgo de planta, mejora continua, atención al cliente. Notion/Trello/Asana, Excel/Sheets, WhatsApp Business, Zendesk.</td>
+          <td class="fitcell"><span class="fit bajo">Bajo</span><span class="why">Sin growth/marketing/analítica de adquisición. Perfil ops senior, fuera del target del rol.</span></td>
+          <td class="fitcell"><span class="fit bajo">Bajo</span><span class="why">Tiene atención al cliente y Zendesk, pero no es analítico de negocio, está en Chile y el perfil/seniority no encaja con la búsqueda junior CABA.</span></td>
+          <td class="iv"><label><input type="checkbox" data-k="geral"> —</label></td>
+        </tr>
+
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <!-- ============ PANEL 2 · 2DA ENTREVISTA ============ -->
+  <section class="panel" id="segunda">
+    <div class="legend" style="margin-bottom:18px">
+      <span>Candidatos que pasaron la 1ra entrevista. Briefing = resumen del perfil que dejó la 1ra ronda.</span>
+    </div>
+    <div class="cards">
+
+      <!-- VIRGINIA card -->
+      <div class="pcard">
+        <div class="top">
+          <p class="pname">Virginia Muniz Barreto</p>
+          <p class="ptag">Marketing analítico · Lic. en Marketing UCEMA (graduada con Honores, Nov 2025)</p>
+          <div class="meta">
+            <span class="m">San Isidro, GBA · viaja seguido a CABA (antes vivía en Palermo)</span>
+            <span class="m">+54 11 3587-1122</span>
+            <span class="m"><a href="mailto:virginiamunizb@gmail.com">virginiamunizb@gmail.com</a></span>
+            <span class="m" style="background:#eef2ff;border-color:#d8e2ff;color:#2a3a66">📅 Entrevista: 26 May 2026</span>
+          </div>
+          <div class="fits">
+            <span class="ft">Fit Growth: <span class="fit alto">Alto</span></span>
+            <span class="ft">Fit Customer Success: <span class="fit medio">Medio</span></span>
+          </div>
+        </div>
+        <div class="body">
+          <p class="sect-title">Briefing 1ra entrevista · 26 May 2026
+            <span class="doc"><a href="https://docs.google.com/document/d/1qYIdzh9geM-KayyzeAdyYvVb088gE21Y9VtSu_pxiqQ/edit" target="_blank">📄 notas →</a></span>
+          </p>
+          <ul class="brief">
+            <li><b>Formación:</b> recién graduada en negocios y marketing. Materias favoritas: comportamiento del consumidor, investigación de mercado y precios. Cursó electivas de liderazgo (en inglés), neurociencia/neuroliderazgo y psicología de la autorrealización. Evaluó hacer una maestría en economía.</li>
+            <li><b>Idiomas:</b> estudia portugués hace 3 años (rinde examen pronto) y cursa una materia de metodología experimental en inglés (5 sesiones, con un profesor de Chicago). Dice que los idiomas son su "tercer hobby".</li>
+            <li><b>Experiencia:</b> sin experiencia full-time formal. Voluntariados por proyecto en ONGs durante la facultad; hoy ayuda a su hermano con branding y feedback de diseño para una marca de ropa.</li>
+            <li><b>Intereses:</b> combinar negocios, economía y marketing; le atraen el pricing y los modelos econométricos.</li>
+            <li><b>Cómo se describe:</b> busca un primer trabajo dinámico que combine creatividad y analítica; valora aprender de forma constante y evitar roles estáticos; personalidad estructurada.</li>
+            <li><b>Una observación propia:</b> el curso de marketing digital que hizo le pareció desactualizado y con pocas herramientas prácticas.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ISABELLA card -->
+      <div class="pcard">
+        <div class="top">
+          <p class="pname">Isabella María Picasso</p>
+          <p class="ptag">Negocios digitales · data · Lic. Negocios Digitales UCEMA (en curso)</p>
+          <div class="meta">
+            <span class="m">Retiro, CABA (cerca de Recoleta · vive con los padres)</span>
+            <span class="m">+54 911 6201 6794</span>
+            <span class="m"><a href="mailto:picassoisabella@gmail.com">picassoisabella@gmail.com</a></span>
+            <span class="m" style="background:#eef2ff;border-color:#d8e2ff;color:#2a3a66">📅 Entrevista: 28 May 2026</span>
+          </div>
+          <div class="fits">
+            <span class="ft">Fit Growth: <span class="fit alto">Alto</span></span>
+            <span class="ft">Fit Customer Success: <span class="fit medio">Medio</span></span>
+          </div>
+        </div>
+        <div class="body">
+          <p class="sect-title">Briefing 1ra entrevista · 28 May 2026
+            <span class="doc"><a href="https://docs.google.com/document/d/1_Pm95TzjY2F9VpVTh8hS4AECoarK3x2Aa0NpE39HPmU/edit" target="_blank">📄 notas →</a></span>
+          </p>
+          <ul class="brief">
+            <li><b>Formación:</b> termina la carrera a mediados/fines de julio. Cursa tardes y noches (los jueves desde las 15 h).</li>
+            <li><b>Proyectos de la carrera:</b> en e-commerce creó con su equipo "Timonazo", un juego de mesa sobre el proceso de venta online. En negocios digitales avanzados desarrolla un MVP para la industria deportiva — base de datos interactiva con data de sensores de ritmo cardíaco para análisis de rendimiento de jugadores.</li>
+            <li><b>Antecedente:</b> en Junior Achievement fue CEO de un proyecto de productos de belleza (toallitas desmaquillantes).</li>
+            <li><b>Herramientas de AI:</b> mucho ChatGPT ("puro chat"); pasó a Gemini por el ecosistema Google; usa Stitch y Pomeli (Google Labs); empezó a explorar Claude para diseño de páginas. Se describe "medio verde todavía" con código.</li>
+            <li><b>Búsqueda:</b> es su primer trabajo; postuló de forma selectiva y eligió Ágora por la conexión con el sector belleza.</li>
+            <li><b>Sobre los roles:</b> se le explicó que ambas posiciones comparten ~80% de skills, con peso en interacción con cliente, empatía, manejo de conflicto y traducción de feedback a producto.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- AGUSTIN card -->
+      <div class="pcard">
+        <div class="top">
+          <p class="pname">Agustín Belizán</p>
+          <p class="ptag">Data / Product analyst · Lic. Administración de Empresas UCEMA (finalizado)</p>
+          <div class="meta">
+            <span class="m">Recoleta, CABA</span>
+            <span class="m">+54 9 11 2319-1770</span>
+            <span class="m"><a href="mailto:agbelizan0@gmail.com">agbelizan0@gmail.com</a></span>
+            <span class="m" style="background:#eef2ff;border-color:#d8e2ff;color:#2a3a66">📅 Entrevista: 5 Jun 2026</span>
+          </div>
+          <div class="fits">
+            <span class="ft">Fit Growth: <span class="fit medio">Medio</span></span>
+            <span class="ft">Fit Customer Success: <span class="fit medio">Medio</span></span>
+          </div>
+        </div>
+        <div class="body">
+          <p class="sect-title">Briefing 1ra entrevista · 5 Jun 2026
+            <span class="doc"><a href="https://docs.google.com/document/d/1zDc3oZAsdNRcOSrl-bTr58rXljsUj12AhBq0KL3QLDY/edit" target="_blank">📄 notas →</a></span>
+          </p>
+          <ul class="brief">
+            <li><b>Formación reciente:</b> hizo un curso de Product Management que cubrió diseño UX/UI, metodologías ágiles y gestión de proyectos.</li>
+            <li><b>Técnico:</b> usó Python y SQL para gestión de bases de datos, con foco en queries eficientes.</li>
+            <li><b>Portfolio:</b> armó varios proyectos web con AI — entre ellos una landing para una agencia y una tienda en WordPress para una librería.</li>
+            <li><b>Herramientas:</b> menciona plataformas de automatización de workflows (N8N, Alteryx).</li>
+            <li><b>Sobre su CV:</b> abierto a adaptarlo por aplicación, priorizando sus proyectos tech personales por sobre la experiencia corporativa (PwC); ese fue el feedback que se le dio en la entrevista.</li>
+            <li><b>Velocidad de aprendizaje:</b> la mencionó como su punto fuerte.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- TRINIDAD card -->
+      <div class="pcard">
+        <div class="top">
+          <p class="pname">Trinidad Tonini Martinez</p>
+          <p class="ptag">Media buyer · emprendedora · Lic. Marketing y Negocios Digitales UADE (en curso)</p>
+          <div class="meta">
+            <span class="m">Haedo, Pcia. Buenos Aires (vive con la familia)</span>
+            <span class="m">+54 9 11 6858-1221</span>
+            <span class="m"><a href="mailto:toninitrini@gmail.com">toninitrini@gmail.com</a></span>
+            <span class="m" style="background:#eef2ff;border-color:#d8e2ff;color:#2a3a66">📅 Entrevista: 5 Jun 2026</span>
+          </div>
+          <div class="fits">
+            <span class="ft">Fit Growth: <span class="fit alto">Alto</span></span>
+            <span class="ft">Fit Customer Success: <span class="fit medio">Medio</span></span>
+          </div>
+        </div>
+        <div class="body">
+          <p class="sect-title">Briefing 1ra entrevista · 5 Jun 2026
+            <span class="doc"><a href="https://docs.google.com/document/d/1H06ItNB8Q9n5toyrw6uqGXTndqcyKMpsRd58KcPWs8w/edit" target="_blank">📄 notas →</a></span>
+          </p>
+          <ul class="brief">
+            <li><b>Formación:</b> cursa 3er año de Marketing. Terminó el secundario en 2021 y estudió diseño dos años antes de cambiarse a Marketing, por su interés en el desarrollo de producto.</li>
+            <li><b>Trabajo actual:</b> trabaja en un estudio con otras tres personas; pasó de tareas de producción a marketing y expansión de marca. Lleva las estrategias de redes, sobre todo TikTok e Instagram, con guionado y edición de video.</li>
+            <li><b>Herramientas:</b> usa Gemini para generación de imágenes, Gamma para presentaciones y Claude para recomendaciones de campañas en Meta.</li>
+            <li><b>Contexto:</b> vive en Haedo con su familia; practica hockey y atletismo. Hoy trabaja 4 horas diarias y cursa de noche.</li>
+            <li><b>Motivación / interés en Ágora:</b> busca un entorno más desafiante y con más aprendizaje. Llegó a la búsqueda investigando la presencia de Ágora en redes; valora las herramientas que ofrece a emprendedores.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+    <p class="next">Por ahora avanzan <b>Virginia</b>, <b>Isabella</b>, <b>Agustín</b> y <b>Trinidad</b>. Para sumar a alguien más a esta pestaña, decímelo y lo agrego.</p>
+  </section>
+
+  <footer>Generado 2026-06-03 · 8 candidatos · ordenados por fit estimado. Datos extraídos de los CVs recibidos.</footer>
+</div>
+
+<script>
+  // Persistencia local del check de entrevista
+  document.querySelectorAll('.iv input').forEach(function(box){
+    var key = 'iv_' + box.dataset.k;
+    var saved = localStorage.getItem(key);
+    if(saved !== null){ box.checked = saved === '1'; }
+    var lbl = box.parentElement;
+    function sync(){ lbl.lastChild.textContent = box.checked ? ' sí' : ' —'; }
+    sync();
+    box.addEventListener('change', function(){
+      localStorage.setItem(key, box.checked ? '1' : '0');
+      sync();
+    });
+  });
+
+  // Tabs
+  document.querySelectorAll('.tab').forEach(function(tab){
+    tab.addEventListener('click', function(){
+      document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
+      document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.panel).classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
