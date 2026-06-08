@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preguntas · 2da Entrevista · Growth & CS Analyst · 2026</title>
+<style>
+  :root{
+    --blue:#2f5bff; --violet:#7c3aed; --berry:#c81e5b; --ink:#16181d;
+    --muted:#6b7280; --line:#e6e8ee; --bg:#f6f7f9; --card:#fff;
+    --green:#16a34a; --amber:#d97706; --red:#dc2626;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.5}
+  .strip{height:5px;background:linear-gradient(90deg,var(--blue),var(--violet),var(--berry))}
+  .wrap{max-width:960px;margin:0 auto;padding:28px 22px 60px}
+
+  header{margin-bottom:28px}
+  header h1{font-size:22px;letter-spacing:-.3px;margin-bottom:4px}
+  header .sub{color:var(--muted);font-size:13px}
+
+  .role-tabs{display:flex;gap:20px;margin-bottom:24px;border-bottom:2px solid var(--line);padding-bottom:0}
+  .role-tab{font-size:13px;font-weight:700;color:var(--muted);padding:8px 0 10px;border-bottom:2px solid transparent;margin-bottom:-2px;cursor:default}
+  .role-tab.growth{color:var(--blue);border-bottom-color:var(--blue)}
+  .role-tab.cs{color:var(--violet);border-bottom-color:var(--violet)}
+
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+  @media(max-width:720px){.grid{grid-template-columns:1fr}}
+
+  .qcard{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 1px 4px rgba(16,24,40,.05);overflow:hidden}
+  .qcard .top{padding:16px 20px 14px;border-bottom:1px solid var(--line)}
+  .qcard .role-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px}
+  .qcard .role-badge.growth{background:#eef2ff;color:#2f5bff}
+  .qcard .role-badge.cs{background:#f3eeff;color:#7c3aed}
+  .qcard .role-badge.both{background:#f3f5f9;color:#374151}
+  .qcard .qtype{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:6px}
+  .qcard .question{font-size:15px;font-weight:700;line-height:1.45;letter-spacing:-.1px;color:var(--ink)}
+  .qcard .body{padding:14px 20px 18px}
+
+  .meta-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+  .meta-chip{font-size:11px;background:#f3f5f9;border:1px solid var(--line);border-radius:7px;padding:3px 9px;color:#374151}
+  .meta-chip.highlight{background:#eef2ff;border-color:#d8e2ff;color:#2a3a66}
+  .meta-chip.highlight.cs{background:#f3eeff;border-color:#ddd2f9;color:#4a1e8a}
+
+  .subsect{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:7px;margin-top:12px}
+  .subsect:first-child{margin-top:0}
+
+  ul.points{list-style:none;display:flex;flex-direction:column;gap:6px}
+  ul.points li{font-size:12.5px;color:#23272f;line-height:1.45;display:flex;gap:8px}
+  ul.points li::before{content:'·';color:var(--muted);font-weight:700;flex-shrink:0;margin-top:0}
+
+  ul.signal{list-style:none;display:flex;flex-direction:column;gap:5px}
+  ul.signal li{font-size:12px;color:#374151;line-height:1.4;display:flex;gap:7px}
+  ul.signal.pos li::before{content:'↑';color:var(--green);font-weight:700;flex-shrink:0}
+  ul.signal.neg li::before{content:'↓';color:var(--red);font-weight:700;flex-shrink:0}
+
+  .for-who{margin-top:14px;padding:10px 12px;background:#f6f7f9;border:1px solid var(--line);border-radius:8px;font-size:12px;color:#374151}
+  .for-who strong{color:var(--ink)}
+
+  /* Dataset card full-width */
+  .dataset-card{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 1px 4px rgba(16,24,40,.05);overflow:hidden;margin-bottom:18px}
+  .dataset-card .top{padding:16px 20px 14px;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+  .dataset-card .top-left{}
+  .dataset-card .ds-title{font-size:16px;font-weight:800;letter-spacing:-.2px;margin-bottom:4px}
+  .dataset-card .ds-sub{font-size:12.5px;color:var(--muted)}
+  .dataset-card .body{padding:0}
+
+  .variants{display:grid;grid-template-columns:1fr 1fr}
+  @media(max-width:720px){.variants{grid-template-columns:1fr}}
+  .variant{padding:16px 20px 20px;border-right:1px solid var(--line)}
+  .variant:last-child{border-right:none}
+  .variant .v-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px}
+  .variant .v-badge.growth{background:#eef2ff;color:#2f5bff}
+  .variant .v-badge.cs{background:#f3eeff;color:#7c3aed}
+  .variant .v-task{font-size:14px;font-weight:700;line-height:1.45;margin-bottom:12px;letter-spacing:-.1px}
+  .divider-note{background:#f6f7f9;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:9px 20px;font-size:12px;color:var(--muted);font-style:italic}
+
+  .csv-box{background:#101626;border-radius:0 0 14px 14px;padding:14px 20px;overflow-x:auto}
+  .csv-box pre{font-family:'SF Mono','Fira Code',Menlo,monospace;font-size:11.5px;color:#e2e8f0;line-height:1.6;white-space:pre}
+  .csv-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#6b7280;margin-bottom:8px}
+
+  .section-title{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+  .section-title::after{content:'';flex:1;height:1px;background:var(--line)}
+
+  footer{color:var(--muted);font-size:11px;margin-top:14px;text-align:right}
+</style>
+</head>
+<body>
+<div class="strip"></div>
+<div class="wrap">
+
+  <header>
+    <h1>Preguntas · 2da Entrevista · Growth &amp; CS Analyst</h1>
+    <p class="sub">Búsquedas analíticas 2026 · Virginia · Isabella · Agustín · Trinidad</p>
+  </header>
+
+  <!-- EJERCICIO CON DATASET -->
+  <div class="section-title">Ejercicio · Live prompting con dataset (15 min · claude.ai)</div>
+
+  <div class="dataset-card">
+    <div class="top">
+      <div class="top-left">
+        <div class="ds-title">Dataset de activación de vendors</div>
+        <div class="ds-sub">Dar este contexto en voz alta: <em>"Ágora es una plataforma donde profesionales crean su perfil y reciben reservas. Este dataset tiene 25 vendors reales. Usá Claude para encontrar el patrón principal y terminá con un mensaje de WhatsApp para el segmento más crítico."</em></div>
+      </div>
+    </div>
+
+    <div class="variants">
+
+      <div class="variant">
+        <span class="v-badge growth">Growth Analyst</span>
+        <div class="v-task">¿Dónde se rompe el funnel de activación y cuál es el segmento al que escribirías primero?</div>
+        <div class="subsect">Qué testea</div>
+        <ul class="points">
+          <li>Capacidad de cruzar variables (no solo describir columnas)</li>
+          <li>Si priorizan el segmento correcto para impacto en adquisición</li>
+          <li>Velocidad de síntesis bajo presión de tiempo</li>
+          <li>Calidad del mensaje WA: tono, CTA, específico vs. genérico</li>
+        </ul>
+        <div class="for-who">
+          <strong>Para:</strong> Virginia, Isabella, Trinidad — las tres tienen fit Growth Alto. Es especialmente reveladora con <strong>Trinidad</strong> (intuición de media buyer → ver si traslada a pensamiento analítico) y <strong>Virginia</strong> (fuerte en econometría → ver si baja eso a acción operativa rápida).
+        </div>
+      </div>
+
+      <div class="variant">
+        <span class="v-badge cs">Customer Success</span>
+        <div class="v-task">¿A cuáles vendors escribirías proactivamente esta semana para evitar que lleguen a frustrarse, y qué les dirías?</div>
+        <div class="subsect">Qué testea</div>
+        <ul class="points">
+          <li>Si identifica el segmento en riesgo antes de que escalen (health scores)</li>
+          <li>Si propone intervención proactiva vs. reactiva</li>
+          <li>Equilibrio entre ojo analítico y mensaje empático</li>
+          <li>Si el WA tiene el tono correcto para retener, no para cerrar un ticket</li>
+        </ul>
+        <div class="for-who">
+          <strong>Para:</strong> <strong>Agustín</strong> — su única variante real del ejercicio. Primero el dataset (15 min, revela el lado analítico), después la pregunta situacional del vendor furioso (5 min, revela si tiene el lado humano). Los 20 min juntos dan una lectura completa.
+        </div>
+      </div>
+
+    </div>
+
+    <div class="divider-note">El dataset es el mismo para ambas variantes — solo cambia el encuadre de la tarea que se le da al candidato.</div>
+
+    <div class="csv-box">
+      <div class="csv-label">dataset.csv — pegar en Claude o compartir como archivo</div>
+      <pre>vendor_id,categoria,dias_desde_registro,onboarding_completo,servicios_creados,primera_reserva,login_48h,ultimo_login_hace_dias,status
+V001,beauty,45,sí,3,sí,sí,2,activo
+V002,beauty,40,sí,1,no,no,35,inactivo
+V003,beauty,38,sí,2,sí,sí,5,activo
+V004,wellness,52,sí,2,sí,sí,3,activo
+V005,beauty,30,sí,0,no,no,28,inactivo
+V006,art,60,sí,1,no,no,55,churned
+V007,beauty,25,sí,1,no,sí,20,inactivo
+V008,health,48,sí,2,sí,sí,1,activo
+V009,beauty,55,no,0,no,no,54,churned
+V010,art,70,sí,1,no,sí,65,churned
+V011,wellness,35,sí,0,no,no,30,inactivo
+V012,beauty,42,sí,3,sí,sí,4,activo
+V013,others,50,sí,1,no,no,45,churned
+V014,beauty,28,sí,2,sí,sí,7,activo
+V015,health,60,sí,1,no,no,55,churned
+V016,beauty,33,no,0,no,no,32,churned
+V017,wellness,47,sí,3,sí,sí,2,activo
+V018,art,55,sí,2,no,no,50,inactivo
+V019,others,40,sí,0,no,no,38,inactivo
+V020,beauty,36,sí,1,no,sí,25,inactivo
+V021,health,44,sí,2,sí,sí,6,activo
+V022,beauty,50,sí,2,sí,no,10,activo
+V023,art,65,sí,0,no,no,63,churned
+V024,wellness,38,sí,1,no,no,30,inactivo
+V025,beauty,45,sí,3,sí,sí,3,activo</pre>
+    </div>
+  </div>
+
+  <!-- PREGUNTAS SITUACIONALES -->
+  <div class="section-title">Preguntas situacionales · después del ejercicio</div>
+
+  <div class="grid">
+
+    <!-- GROWTH -->
+    <div class="qcard">
+      <div class="top">
+        <span class="role-badge growth">Growth Analyst</span>
+        <div class="qtype">Hipótesis + priorización</div>
+        <div class="question">Mirás los datos del mes y ves que los vendors de la categoría "art" tienen un 80% menos de probabilidad de recibir su primera reserva que los de beauty. ¿Cuáles son tus tres hipótesis de por qué pasa eso, y cuál probarías primero con los recursos de esta semana?</div>
+      </div>
+      <div class="body">
+        <div class="meta-row">
+          <span class="meta-chip">5 min</span>
+          <span class="meta-chip highlight">Hipótesis estructuradas</span>
+          <span class="meta-chip highlight">Priorización con restricción</span>
+          <span class="meta-chip highlight">Experimento concreto vs. teoría</span>
+        </div>
+
+        <div class="subsect">Respuesta fuerte tiene</div>
+        <ul class="signal pos">
+          <li>Tres hipótesis de distinto tipo: demanda (pocos clientes buscan art), producto (la categoría no encaja con el flujo de reservas) y activación (art vendors no cargan servicios relevantes)</li>
+          <li>Prioriza basándose en qué es más fácil de medir esta semana, no en cuál le parece más interesante</li>
+          <li>Propone un experimento pequeño y concreto: entrevistar a 3 vendors de art, revisar sus perfiles, o cruzar con datos de búsqueda</li>
+        </ul>
+
+        <div class="subsect" style="margin-top:10px">Señales de alerta</div>
+        <ul class="signal neg">
+          <li>Una sola hipótesis, o tres variaciones de la misma</li>
+          <li>Propone un análisis de meses para responder algo que se puede validar en días</li>
+          <li>No puede priorizar sin más información ("dependería de...")</li>
+        </ul>
+
+        <div class="for-who">
+          <strong>Para:</strong> Virginia, Isabella y Trinidad. Especialmente útil con <strong>Trinidad</strong> — tiene la intuición de haber manejado campañas en 1ra persona, pero hay que ver si genera hipótesis estructuradas o sólo instinto. Con <strong>Virginia</strong> el riesgo opuesto: hipótesis muy acadéicas, sin experimento operativo.
+        </div>
+      </div>
+    </div>
+
+    <!-- CS -->
+    <div class="qcard">
+      <div class="top">
+        <span class="role-badge cs">Customer Success</span>
+        <div class="qtype">Situacional · retención bajo presión</div>
+        <div class="question">Un vendor lleva 3 semanas activo, cargó 2 servicios, tiene todo configurado, pero no recibió ninguna reserva. Te escribe por WhatsApp: "Pagué el plan y no sirvió de nada, quiero darme de baja." ¿Qué hacés en los próximos 10 minutos y qué le decís?</div>
+      </div>
+      <div class="body">
+        <div class="meta-row">
+          <span class="meta-chip">5 min</span>
+          <span class="meta-chip highlight cs">Empatía antes de resolver</span>
+          <span class="meta-chip highlight cs">Diagnóstico rápido</span>
+          <span class="meta-chip highlight cs">Retención vs. cierre rápido</span>
+        </div>
+
+        <div class="subsect">Respuesta fuerte tiene</div>
+        <ul class="signal pos">
+          <li>Lo primero que hacen es contener: acusan recibo, no explican ni se defienden todavía</li>
+          <li>Antes de responder buscan el dato: ¿tiene disponibilidad cargada? ¿precios visibles? ¿el perfil está completo?</li>
+          <li>La respuesta al vendor nombra su situación específica, no es un template genérico</li>
+          <li>Proponen un paso concreto para esta semana, no "esperá unos días más"</li>
+        </ul>
+
+        <div class="subsect" style="margin-top:10px">Señales de alerta</div>
+        <ul class="signal neg">
+          <li>Responden de entrada con explicaciones o defensas del producto</li>
+          <li>No buscan el dato antes de responder (dan respuesta sin diagnóstico)</li>
+          <li>Priorizan cerrar el ticket rápido por sobre retener</li>
+          <li>Respuesta genérica que sirve para cualquier vendor</li>
+        </ul>
+
+        <div class="for-who">
+          <strong>Para:</strong> <strong>Agustín</strong> — usar después del ejercicio con dataset. Si en el dataset identificó bien el segmento en riesgo (lado analítico) y acá muestra instinto empático (lado humano), su fit sube de Medio a Alto para CS.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>Búsqueda Growth &amp; CS Analyst · Jun 2026 · 4 candidatos en 2da entrevista</footer>
+</div>
+</body>
+</html>
