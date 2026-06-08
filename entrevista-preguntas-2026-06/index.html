@@ -179,30 +179,30 @@
         <thead>
           <tr>
             <th>Candidato</th>
-            <th>Variante del ejercicio (15 min)</th>
+            <th>Ejercicio con dataset (15 min)</th>
             <th>Pregunta situacional (5 min)</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><span class="cand growth"><span class="ini">V</span>Virginia</span></td>
-            <td><span class="cand growth"><span class="ini">G</span>Growth · ¿Dónde se rompe el funnel?</span></td>
-            <td><span class="cand growth"><span class="ini">G</span>Hipótesis categoría art</span></td>
+            <td style="font-size:12.5px">¿Qué predice si un vendor recibe su primera reserva?</td>
+            <td style="font-size:12.5px">Vendor furioso que quiere darse de baja</td>
           </tr>
           <tr>
             <td><span class="cand growth"><span class="ini">I</span>Isabella</span></td>
-            <td><span class="cand growth"><span class="ini">G</span>Growth · ¿Dónde se rompe el funnel?</span></td>
-            <td><span class="cand growth"><span class="ini">G</span>Hipótesis categoría art</span></td>
+            <td style="font-size:12.5px">¿Qué predice si un vendor recibe su primera reserva?</td>
+            <td style="font-size:12.5px">Vendor furioso que quiere darse de baja</td>
           </tr>
           <tr>
             <td><span class="cand growth"><span class="ini">T</span>Trinidad</span></td>
-            <td><span class="cand growth"><span class="ini">G</span>Growth · ¿Dónde se rompe el funnel?</span></td>
-            <td><span class="cand growth"><span class="ini">G</span>Hipótesis categoría art</span></td>
+            <td style="font-size:12.5px">¿Qué predice si un vendor recibe su primera reserva?</td>
+            <td style="font-size:12.5px">Vendor furioso que quiere darse de baja</td>
           </tr>
           <tr>
             <td><span class="cand cs"><span class="ini">A</span>Agustín</span></td>
-            <td><span class="cand cs"><span class="ini">CS</span>CS · ¿A quién escribís proactivamente?</span></td>
-            <td><span class="cand cs"><span class="ini">CS</span>Vendor furioso que quiere darse de baja</span></td>
+            <td style="font-size:12.5px">¿Qué predice si un vendor recibe su primera reserva?</td>
+            <td style="font-size:12.5px">Vendor furioso que quiere darse de baja</td>
           </tr>
         </tbody>
       </table>
@@ -216,57 +216,28 @@
         <div class="ds-note">Compartir el CSV al candidato. Leer en voz alta la consigna de su variante.</div>
       </div>
 
-      <div class="variants">
+      <div style="padding:16px 20px 20px">
+        <div class="cand-chips">
+          <span class="cand growth"><span class="ini">V</span>Virginia</span>
+          <span class="cand growth"><span class="ini">I</span>Isabella</span>
+          <span class="cand growth"><span class="ini">T</span>Trinidad</span>
+          <span class="cand cs"><span class="ini">A</span>Agustín</span>
+        </div>
+        <div style="font-size:15px;font-weight:800;letter-spacing:-.2px;margin-bottom:14px;color:var(--ink)">¿Qué predice si un vendor va a recibir su primera reserva?</div>
 
-        <!-- GROWTH -->
-        <div class="variant">
-          <span class="v-badge growth">Growth Analyst</span>
-          <div class="cand-chips">
-            <span class="cand growth"><span class="ini">V</span>Virginia</span>
-            <span class="cand growth"><span class="ini">I</span>Isabella</span>
-            <span class="cand growth"><span class="ini">T</span>Trinidad</span>
-          </div>
-          <div style="font-size:15px;font-weight:800;letter-spacing:-.2px;margin-bottom:12px;color:var(--ink)">¿Dónde se rompe el funnel de activación?</div>
-
-          <div class="consigna">
-            <div class="c-label">Leer en voz alta</div>
-            <p>"Ágora es una plataforma donde profesionales de servicios —peluqueras, coaches, instructores— crean su perfil y reciben reservas de clientes. Te paso un dataset de 25 vendors con datos de su activación. Tu tarea: usá Claude para identificar qué variable o combinación de variables predice mejor si un vendor va a recibir su primera reserva. Terminá con un mensaje de WhatsApp listo para enviarle al segmento más crítico. Tenés 15 minutos."</p>
-          </div>
-
-          <div class="subsect">Qué testea</div>
-          <ul class="points">
-            <li>Si cruzan variables (no solo describen columnas)</li>
-            <li>Si priorizan el segmento con mayor impacto en activación</li>
-            <li>Velocidad de síntesis bajo presión de tiempo</li>
-            <li>WA: tono real, CTA concreto, menos de 4 líneas</li>
-          </ul>
+        <div class="consigna">
+          <div class="c-label">Leer en voz alta</div>
+          <p>"Ágora es una plataforma donde profesionales de servicios —peluqueras, coaches, instructores— crean su perfil y reciben reservas de clientes. Te paso un dataset de 25 vendors con datos de su activación. Tu tarea: usá Claude para identificar qué variable o combinación de variables predice mejor si un vendor va a recibir su primera reserva. Terminá con un mensaje de WhatsApp listo para enviarle al segmento más en riesgo. Tenés 15 minutos."</p>
         </div>
 
-        <!-- CS -->
-        <div class="variant">
-          <span class="v-badge cs">Customer Success</span>
-          <div class="cand-chips">
-            <span class="cand cs"><span class="ini">A</span>Agustín</span>
-          </div>
-          <div style="font-size:15px;font-weight:800;letter-spacing:-.2px;margin-bottom:12px;color:var(--ink)">¿A quién escribís proactivamente esta semana?</div>
-
-          <div class="consigna">
-            <div class="c-label">Leer en voz alta</div>
-            <p>"Ágora es una plataforma donde profesionales de servicios —peluqueras, coaches, instructores— crean su perfil y reciben reservas de clientes. Te paso un dataset de 25 vendors con datos de su activación. Tu tarea: usá Claude para identificar a cuáles vendors escribirías proactivamente esta semana —antes de que lleguen a frustrarse— y terminá con el mensaje exacto que les mandarías. Tenés 15 minutos."</p>
-          </div>
-
-          <div class="subsect">Qué testea</div>
-          <ul class="points">
-            <li>Si identifica el segmento en riesgo antes de que escale</li>
-            <li>Intervención proactiva vs. reactiva</li>
-            <li>Equilibrio entre ojo analítico y mensaje empático</li>
-            <li>WA: tono para retener, no para cerrar un ticket</li>
-          </ul>
-        </div>
-
+        <div class="subsect">Qué testea</div>
+        <ul class="points">
+          <li>Si cruzan variables (no solo describen columnas)</li>
+          <li>Si priorizan el segmento correcto y justifican por qué</li>
+          <li>Velocidad de síntesis bajo presión de tiempo</li>
+          <li>WA: tono real, tuteo, CTA concreto, menos de 4 líneas</li>
+        </ul>
       </div>
-
-      <div class="divider-note">El dataset es el mismo para ambas variantes — solo cambia la consigna.</div>
 
       <div class="csv-box">
         <div class="csv-label">dataset.csv — compartir como archivo o pegar en Claude</div>
@@ -299,84 +270,46 @@ V025,beauty,45,sí,3,sí,sí,3,activo</pre>
       </div>
     </div>
 
-    <!-- SITUACIONALES -->
-    <div class="section-title">Preguntas situacionales · después del ejercicio</div>
+    <!-- SITUACIONAL -->
+    <div class="section-title">Pregunta situacional · después del ejercicio</div>
 
-    <div class="grid">
-
-      <div class="qcard">
-        <div class="top">
-          <span class="role-badge growth">Growth Analyst</span>
-          <div class="cand-chips" style="margin-top:8px">
-            <span class="cand growth"><span class="ini">V</span>Virginia</span>
-            <span class="cand growth"><span class="ini">I</span>Isabella</span>
-            <span class="cand growth"><span class="ini">T</span>Trinidad</span>
-          </div>
-          <div style="font-size:15px;font-weight:800;letter-spacing:-.2px;margin-bottom:6px;color:var(--ink)">Hipótesis categoría art</div>
-          <div class="qtype">Hipótesis + priorización</div>
-          <div class="consigna" style="margin-top:10px">
-            <div class="c-label">Leer en voz alta</div>
-            <p>"Mirás los datos del mes y ves que los vendors de la categoría 'art' tienen un 80% menos de probabilidad de recibir su primera reserva que los de beauty. ¿Cuáles son tus tres hipótesis de por qué pasa eso, y cuál probarías primero con los recursos de esta semana?"</p>
-          </div>
+    <div class="qcard" style="margin-bottom:18px">
+      <div class="top">
+        <div class="cand-chips" style="margin-bottom:8px">
+          <span class="cand growth"><span class="ini">V</span>Virginia</span>
+          <span class="cand growth"><span class="ini">I</span>Isabella</span>
+          <span class="cand growth"><span class="ini">T</span>Trinidad</span>
+          <span class="cand cs"><span class="ini">A</span>Agustín</span>
         </div>
-        <div class="body">
-          <div class="meta-row">
-            <span class="meta-chip">5 min</span>
-            <span class="meta-chip g">Hipótesis estructuradas</span>
-            <span class="meta-chip g">Priorización con restricción</span>
-          </div>
-          <div class="subsect">Respuesta fuerte</div>
-          <ul class="signal pos">
-            <li>Tres hipótesis de tipo distinto: demanda (pocos clientes buscan art), producto (no encaja el flujo) y activación (no cargan servicios relevantes)</li>
-            <li>Prioriza por facilidad de validar esta semana, no por interés personal</li>
-            <li>Propone un experimento concreto y pequeño: entrevistar a 3 vendors, revisar sus perfiles</li>
-          </ul>
-          <div class="subsect">Alerta</div>
-          <ul class="signal neg">
-            <li>Una sola hipótesis o tres variaciones de la misma</li>
-            <li>Propone un análisis de meses para algo validable en días</li>
-            <li>No puede priorizar sin más info ("dependería de...")</li>
-          </ul>
-          <div class="for-who">Trinidad: ver si genera hipótesis estructuradas o solo instinto. Virginia: riesgo inverso — hipótesis muy académicas sin experimento operativo.</div>
+        <div style="font-size:15px;font-weight:800;letter-spacing:-.2px;margin-bottom:6px;color:var(--ink)">Vendor furioso que quiere darse de baja</div>
+        <div class="qtype">Empatía · diagnóstico · retención · 5 min</div>
+        <div class="consigna" style="margin-top:10px">
+          <div class="c-label">Leer en voz alta</div>
+          <p>"Un vendor lleva 3 semanas activo, cargó 2 servicios, tiene todo configurado, pero no recibió ninguna reserva. Te escribe por WhatsApp: 'Pagué el plan y no sirvió de nada, quiero darme de baja.' ¿Qué hacés en los próximos 10 minutos y qué le decís?"</p>
         </div>
       </div>
-
-      <div class="qcard">
-        <div class="top">
-          <span class="role-badge cs">Customer Success</span>
-          <div class="cand-chips" style="margin-top:8px">
-            <span class="cand cs"><span class="ini">A</span>Agustín</span>
-          </div>
-          <div style="font-size:15px;font-weight:800;letter-spacing:-.2px;margin-bottom:6px;color:var(--ink)">Vendor furioso que quiere darse de baja</div>
-          <div class="qtype">Retención bajo presión</div>
-          <div class="consigna" style="margin-top:10px">
-            <div class="c-label">Leer en voz alta</div>
-            <p>"Un vendor lleva 3 semanas activo, cargó 2 servicios, tiene todo configurado, pero no recibió ninguna reserva. Te escribe por WhatsApp: 'Pagué el plan y no sirvió de nada, quiero darme de baja.' ¿Qué hacés en los próximos 10 minutos y qué le decís?"</p>
-          </div>
+      <div class="body">
+        <div class="meta-row">
+          <span class="meta-chip">5 min</span>
+          <span class="meta-chip g">Empatía antes de resolver</span>
+          <span class="meta-chip g">Diagnóstico rápido</span>
+          <span class="meta-chip g">Retención vs. cierre rápido</span>
         </div>
-        <div class="body">
-          <div class="meta-row">
-            <span class="meta-chip">5 min</span>
-            <span class="meta-chip c">Empatía antes de resolver</span>
-            <span class="meta-chip c">Diagnóstico rápido</span>
-          </div>
-          <div class="subsect">Respuesta fuerte</div>
-          <ul class="signal pos">
-            <li>Primero contiene: acusa recibo, no explica ni se defiende todavía</li>
-            <li>Busca el dato antes de responder: ¿tiene disponibilidad? ¿precios visibles?</li>
-            <li>Respuesta nombra la situación específica del vendor, no es template</li>
-            <li>Propone un paso concreto esta semana, no "esperá unos días más"</li>
-          </ul>
-          <div class="subsect">Alerta</div>
-          <ul class="signal neg">
-            <li>Responde con explicaciones o defensas del producto de entrada</li>
-            <li>Da respuesta sin diagnóstico previo</li>
-            <li>Prioriza cerrar el ticket por sobre retener</li>
-          </ul>
-          <div class="for-who">Usar después del dataset. Si en el dataset identificó el segmento (analítico) y acá muestra instinto empático (humano), el fit sube de Medio a Alto.</div>
-        </div>
+        <div class="subsect">Respuesta fuerte</div>
+        <ul class="signal pos">
+          <li>Primero contiene: acusa recibo, no explica ni se defiende todavía</li>
+          <li>Busca el dato antes de responder: ¿tiene disponibilidad cargada? ¿precios visibles? ¿perfil completo?</li>
+          <li>La respuesta nombra la situación específica del vendor, no es un template genérico</li>
+          <li>Propone un paso concreto esta semana, no "esperá unos días más"</li>
+        </ul>
+        <div class="subsect">Alerta</div>
+        <ul class="signal neg">
+          <li>Responde con explicaciones o defensas del producto de entrada</li>
+          <li>Da respuesta sin diagnóstico previo</li>
+          <li>Prioriza cerrar el ticket por sobre retener</li>
+          <li>Respuesta genérica que sirve para cualquier vendor</li>
+        </ul>
       </div>
-
     </div>
   </div>
 
@@ -543,86 +476,38 @@ V025,beauty,45,sí,3,sí,sí,3,activo</pre>
       </div>
     </div>
 
-    <!-- RESPUESTAS SITUACIONALES -->
-    <div class="section-title">Claves de las preguntas situacionales</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
-
-      <!-- GROWTH: art -->
-      <div class="ins-card" style="margin-bottom:0">
-        <div style="padding:13px 18px 11px;border-bottom:1px solid var(--line)">
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
-            <span class="cand growth" style="font-size:11px"><span class="ini">V</span>Virginia</span>
-            <span class="cand growth" style="font-size:11px"><span class="ini">I</span>Isabella</span>
-            <span class="cand growth" style="font-size:11px"><span class="ini">T</span>Trinidad</span>
-          </div>
-          <div style="font-weight:700;font-size:13px">Hipótesis categoría art</div>
-          <div style="font-size:11.5px;color:var(--muted);margin-top:2px">Hipótesis + priorización · 5 min</div>
+    <!-- RESPUESTA SITUACIONAL -->
+    <div class="section-title">Clave de la pregunta situacional · Vendor furioso</div>
+    <div class="ins-card" style="margin-bottom:16px">
+      <div style="padding:13px 18px 11px;border-bottom:1px solid var(--line)">
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px">
+          <span class="cand growth" style="font-size:11px"><span class="ini">V</span>Virginia</span>
+          <span class="cand growth" style="font-size:11px"><span class="ini">I</span>Isabella</span>
+          <span class="cand growth" style="font-size:11px"><span class="ini">T</span>Trinidad</span>
+          <span class="cand cs" style="font-size:11px"><span class="ini">A</span>Agustín</span>
         </div>
-        <div class="body" style="padding:13px 18px 16px">
-          <div class="subsect" style="margin-top:0">Respuesta fuerte</div>
-          <ul class="signal pos">
-            <li>Tres hipótesis de tipo distinto: demanda (pocos clientes buscan art), producto (el flujo no encaja) y activación (no cargan servicios relevantes)</li>
-            <li>Prioriza por facilidad de validar esta semana, no por lo que le parece más interesante</li>
-            <li>Propone un experimento concreto y pequeño: 3 entrevistas a vendors art, revisar sus perfiles</li>
-          </ul>
-          <div class="subsect">Alerta</div>
-          <ul class="signal neg">
-            <li>Una sola hipótesis o tres variaciones de la misma idea</li>
-            <li>Propone análisis de meses para algo validable en días</li>
-            <li>No puede priorizar sin más info ("dependería de...")</li>
-          </ul>
-          <div style="margin-top:10px;padding:9px 11px;background:#f6f7f9;border:1px solid var(--line);border-radius:8px;font-size:12px;color:#374151;line-height:1.45">
-            <strong>Trinidad:</strong> ver si genera hipótesis estructuradas o solo instinto. <strong>Virginia:</strong> riesgo inverso — hipótesis muy académicas sin experimento operativo.
-          </div>
-        </div>
+        <div style="font-weight:700;font-size:13px">Empatía · diagnóstico · retención · 5 min</div>
       </div>
-
-      <!-- CS: vendor furioso -->
-      <div class="ins-card" style="margin-bottom:0">
-        <div style="padding:13px 18px 11px;border-bottom:1px solid var(--line)">
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
-            <span class="cand cs" style="font-size:11px"><span class="ini">A</span>Agustín</span>
+      <div class="body" style="padding:13px 18px 16px">
+        <div class="two-col">
+          <div>
+            <div class="subsect" style="margin-top:0">Respuesta fuerte</div>
+            <ul class="signal pos">
+              <li>Primero contiene: acusa recibo, no explica ni se defiende todavía</li>
+              <li>Busca el dato antes de responder: ¿tiene disponibilidad? ¿precios visibles? ¿perfil completo?</li>
+              <li>La respuesta nombra la situación específica, no es template genérico</li>
+              <li>Propone un paso concreto esta semana, no "esperá unos días más"</li>
+            </ul>
           </div>
-          <div style="font-weight:700;font-size:13px">Vendor furioso que quiere darse de baja</div>
-          <div style="font-size:11.5px;color:var(--muted);margin-top:2px">Retención bajo presión · 5 min</div>
-        </div>
-        <div class="body" style="padding:13px 18px 16px">
-          <div class="subsect" style="margin-top:0">Respuesta fuerte</div>
-          <ul class="signal pos">
-            <li>Primero contiene: acusa recibo, no explica ni se defiende todavía</li>
-            <li>Busca el dato antes de responder: ¿tiene disponibilidad? ¿precios visibles? ¿perfil completo?</li>
-            <li>La respuesta nombra la situación específica del vendor, no es template</li>
-            <li>Propone un paso concreto esta semana, no "esperá unos días más"</li>
-          </ul>
-          <div class="subsect">Alerta</div>
-          <ul class="signal neg">
-            <li>Responde con explicaciones o defensas del producto de entrada</li>
-            <li>Da respuesta sin diagnóstico previo</li>
-            <li>Prioriza cerrar el ticket por sobre retener</li>
-            <li>Respuesta genérica que sirve para cualquier vendor</li>
-          </ul>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- NOTA AGUSTÍN -->
-    <div class="section-title">Nota especial · Agustín</div>
-    <div style="background:#f0f4ff;border:1px solid #d8e2ff;border-radius:10px;padding:14px 18px;margin-bottom:16px">
-      <div style="font-size:12px;font-weight:700;color:#1c2a52;margin-bottom:8px">¿Por qué hacerle las dos preguntas?</div>
-      <p style="font-size:12.5px;color:#2a3a66;line-height:1.5;margin-bottom:10px">La pregunta del vendor furioso testea el instinto empático. El dataset testea el lado analítico / health scores. Agustín necesita mostrar ambos para subir su fit de Medio a Alto en CS.</p>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;font-size:12px">
-        <div style="background:var(--card);border:1px solid #d8e2ff;border-radius:8px;padding:10px 12px;color:#2a3a66">
-          <strong style="display:block;margin-bottom:3px">Dataset CS (15 min)</strong>
-          Identifica correctamente el segmento en riesgo → tiene el ojo analítico del rol
-        </div>
-        <div style="background:var(--card);border:1px solid #d8e2ff;border-radius:8px;padding:10px 12px;color:#2a3a66">
-          <strong style="display:block;margin-bottom:3px">Vendor furioso (5 min)</strong>
-          Muestra instinto empático + diagnóstico → tiene el equilibrio que el rol necesita
-        </div>
-        <div style="background:var(--card);border:1px solid #d8e2ff;border-radius:8px;padding:10px 12px;color:#2a3a66">
-          <strong style="display:block;margin-bottom:3px">Los dos juntos</strong>
-          Dataset primero, situacional después. 20 min totales dan una lectura completa.
+          <div>
+            <div class="subsect" style="margin-top:0">Alerta</div>
+            <ul class="signal neg">
+              <li>Responde con explicaciones o defensas del producto de entrada</li>
+              <li>Da respuesta sin diagnóstico previo</li>
+              <li>Prioriza cerrar el ticket por sobre retener</li>
+              <li>Respuesta genérica que sirve para cualquier vendor</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
