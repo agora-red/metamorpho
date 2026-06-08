@@ -137,6 +137,23 @@
   .obs-col.neg ul li::before{content:'↓';color:var(--red);font-weight:700;flex-shrink:0}
 
   footer{color:var(--muted);font-size:11px;margin-top:14px;text-align:right}
+
+  /* ── Candidate chips ── */
+  .cand-chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
+  .cand{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;white-space:nowrap}
+  .cand .ini{width:20px;height:20px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0}
+  .cand.growth{background:#eef2ff;color:#1d3db5;border:1px solid #c7d4ff}
+  .cand.growth .ini{background:#2f5bff;color:#fff}
+  .cand.cs{background:#f3eeff;color:#4a1e8a;border:1px solid #d5c7f9}
+  .cand.cs .ini{background:#7c3aed;color:#fff}
+
+  /* ── Mapping summary ── */
+  .map-card{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:20px;overflow:hidden;box-shadow:0 1px 3px rgba(16,24,40,.04)}
+  .map-card table{border-collapse:collapse;width:100%}
+  .map-card thead th{background:#101626;color:#fff;font-size:11px;text-transform:uppercase;letter-spacing:.4px;padding:10px 16px;text-align:left;font-weight:600}
+  .map-card tbody td{padding:11px 16px;border-top:1px solid var(--line);font-size:12.5px;vertical-align:middle}
+  .map-card tbody tr:hover{background:#fafbff}
+  .map-card .cand-name{font-weight:700;font-size:13px}
 </style>
 </head>
 <body>
@@ -156,6 +173,41 @@
   <!-- ═══════════ PANEL: PREGUNTAS ═══════════ -->
   <div class="panel active" id="preguntas">
 
+    <!-- MAPA DE CANDIDATOS -->
+    <div class="map-card">
+      <table>
+        <thead>
+          <tr>
+            <th>Candidato</th>
+            <th>Variante del ejercicio (15 min)</th>
+            <th>Pregunta situacional (5 min)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="cand growth"><span class="ini">V</span>Virginia</span></td>
+            <td><span class="cand growth"><span class="ini">G</span>Growth · ¿Dónde se rompe el funnel?</span></td>
+            <td><span class="cand growth"><span class="ini">G</span>Hipótesis categoría art</span></td>
+          </tr>
+          <tr>
+            <td><span class="cand growth"><span class="ini">I</span>Isabella</span></td>
+            <td><span class="cand growth"><span class="ini">G</span>Growth · ¿Dónde se rompe el funnel?</span></td>
+            <td><span class="cand growth"><span class="ini">G</span>Hipótesis categoría art</span></td>
+          </tr>
+          <tr>
+            <td><span class="cand growth"><span class="ini">T</span>Trinidad</span></td>
+            <td><span class="cand growth"><span class="ini">G</span>Growth · ¿Dónde se rompe el funnel?</span></td>
+            <td><span class="cand growth"><span class="ini">G</span>Hipótesis categoría art</span></td>
+          </tr>
+          <tr>
+            <td><span class="cand cs"><span class="ini">A</span>Agustín</span></td>
+            <td><span class="cand cs"><span class="ini">CS</span>CS · ¿A quién escribís proactivamente?</span></td>
+            <td><span class="cand cs"><span class="ini">CS</span>Vendor furioso que quiere darse de baja</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <div class="section-title">Ejercicio · Live prompting con dataset (15 min · claude.ai)</div>
 
     <div class="dataset-card">
@@ -168,7 +220,12 @@
 
         <!-- GROWTH -->
         <div class="variant">
-          <span class="v-badge growth">Growth Analyst · Virginia, Isabella, Trinidad</span>
+          <span class="v-badge growth">Growth Analyst</span>
+          <div class="cand-chips">
+            <span class="cand growth"><span class="ini">V</span>Virginia</span>
+            <span class="cand growth"><span class="ini">I</span>Isabella</span>
+            <span class="cand growth"><span class="ini">T</span>Trinidad</span>
+          </div>
 
           <div class="consigna">
             <div class="c-label">Leer en voz alta</div>
@@ -186,7 +243,10 @@
 
         <!-- CS -->
         <div class="variant">
-          <span class="v-badge cs">Customer Success · Agustín</span>
+          <span class="v-badge cs">Customer Success</span>
+          <div class="cand-chips">
+            <span class="cand cs"><span class="ini">A</span>Agustín</span>
+          </div>
 
           <div class="consigna">
             <div class="c-label">Leer en voz alta</div>
@@ -245,7 +305,12 @@ V025,beauty,45,sí,3,sí,sí,3,activo</pre>
       <div class="qcard">
         <div class="top">
           <span class="role-badge growth">Growth Analyst</span>
-          <div class="qtype">Hipótesis + priorización · Virginia, Isabella, Trinidad</div>
+          <div class="cand-chips" style="margin-top:8px">
+            <span class="cand growth"><span class="ini">V</span>Virginia</span>
+            <span class="cand growth"><span class="ini">I</span>Isabella</span>
+            <span class="cand growth"><span class="ini">T</span>Trinidad</span>
+          </div>
+          <div class="qtype">Hipótesis + priorización</div>
           <div class="consigna" style="margin-top:10px">
             <div class="c-label">Leer en voz alta</div>
             <p>"Mirás los datos del mes y ves que los vendors de la categoría 'art' tienen un 80% menos de probabilidad de recibir su primera reserva que los de beauty. ¿Cuáles son tus tres hipótesis de por qué pasa eso, y cuál probarías primero con los recursos de esta semana?"</p>
@@ -276,7 +341,10 @@ V025,beauty,45,sí,3,sí,sí,3,activo</pre>
       <div class="qcard">
         <div class="top">
           <span class="role-badge cs">Customer Success</span>
-          <div class="qtype">Retención bajo presión · Agustín</div>
+          <div class="cand-chips" style="margin-top:8px">
+            <span class="cand cs"><span class="ini">A</span>Agustín</span>
+          </div>
+          <div class="qtype">Retención bajo presión</div>
           <div class="consigna" style="margin-top:10px">
             <div class="c-label">Leer en voz alta</div>
             <p>"Un vendor lleva 3 semanas activo, cargó 2 servicios, tiene todo configurado, pero no recibió ninguna reserva. Te escribe por WhatsApp: 'Pagué el plan y no sirvió de nada, quiero darme de baja.' ¿Qué hacés en los próximos 10 minutos y qué le decís?"</p>
