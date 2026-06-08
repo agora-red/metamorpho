@@ -24,6 +24,16 @@
       "slug": "storefront-secundario-dna-2026-06"
     },
     {
+      "type": "wiki",
+      "typeLabel": "Scope",
+      "title": "WA Asesor · Scope para discusión",
+      "description": "Documento de scope (pre-spec) para discutir el rediseño del bot de WhatsApp: de bot de reserva a asesor personalizado. En lenguaje simple. Cubre el cambio de paradigma (de order-taker a asesor con contexto), cómo lo vive el cliente (chat mock), las 4 capas de contexto que alimentan al bot (quién es el negocio · qué ofrece, con descripciones, fotos y adicionales · las reglas: políticas de reserva/cancelación, señas, medios de pago y descuentos por medio de pago · estado en vivo: disponibilidad e historial), cómo arma el link de reserva (solo servicio(s) precargado(s); el profesional se elige en la página), reglas de hand-off simples (3 triggers + pausa), lo que el bot nunca hace, y los cambios de cara al usuario. Decisiones cerradas: cada negocio conecta su propio WhatsApp Business + contexto automático + sección 'Sobre el negocio'. Abiertas: canal de aviso del hand-off y billing del volumen de mensajes. Para discutir con Fer y Beto.",
+      "detail": "wiki · 8 secciones · scope · interno",
+      "date": "JUN 2026",
+      "href": "./wa-asesor-scope-2026-06/index.html",
+      "slug": "wa-asesor-scope-2026-06"
+    },
+    {
       "type": "one-pager",
       "typeLabel": "HR",
       "title": "Candidatos · Búsquedas Analíticas 2026",

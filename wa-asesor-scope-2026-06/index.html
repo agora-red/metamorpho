@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>WA Asesor · Scope para discusión · Ágora</title>
+    <link rel="icon" href="./assets/agora-iso.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #0072fb; --primary-hover: #005cd4; --primary-soft: #eef6ff;
+        --accent: #ff4658; --accent-soft: #ffe3e6;
+        --text: #1a1a1a; --text-secondary: #6b6b6b; --text-faint: #b5b5b5;
+        --border: #e9e9e9; --border-soft: #f2f2f2;
+        --surface: #ffffff; --surface-muted: #fafafa; --surface-cream: #faf7f2; --surface-dim: #f4f4f6;
+        --success: #0ad6a1; --success-soft: #a9ffe7; --success-ink: #07806a;
+        --sky: #00cdff; --sky-soft: #d6f8ff;
+        --warning: #ffe066; --warning-soft: #fff5c2; --warning-ink: #8a6d00;
+        --violet: #7c5cff; --violet-soft: #ece7ff;
+        --wa: #25d366; --wa-bg: #e7ffdb;
+        --shadow-sm: 0 1px 2px rgba(0,0,0,.04), 0 4px 12px -4px rgba(0,0,0,.06);
+        --shadow-md: 0 1px 2px rgba(0,0,0,.04), 0 8px 18px -4px rgba(0,0,0,.08), 0 18px 38px -8px rgba(0,0,0,.10);
+        --font-sans: 'Montserrat', system-ui, -apple-system, sans-serif;
+        --font-mono: 'Space Mono', ui-monospace, Menlo, monospace;
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+      body {
+        font-family: var(--font-sans); color: var(--text); background: var(--surface-cream);
+        line-height: 1.55; -webkit-font-smoothing: antialiased;
+      }
+      .app { display: grid; grid-template-columns: 256px 1fr; max-width: 1280px; margin: 0 auto; min-height: 100vh; }
+
+      /* ---------- Sidebar / TOC ---------- */
+      .sidebar {
+        position: sticky; top: 0; align-self: start; height: 100vh;
+        padding: 32px 22px; border-right: 1px solid var(--border);
+        background: var(--surface); display: flex; flex-direction: column; gap: 4px;
+        overflow-y: auto;
+      }
+      .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 26px; }
+      .brand img { height: 22px; }
+      .brand .tag {
+        font-family: var(--font-mono); font-size: 9px; letter-spacing: .12em; text-transform: uppercase;
+        color: var(--primary); background: var(--primary-soft); padding: 3px 7px; border-radius: 5px;
+      }
+      .toc-label {
+        font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+        color: var(--text-faint); margin: 18px 0 8px; padding-left: 12px;
+      }
+      .sidebar a {
+        display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-secondary);
+        font-size: 13.5px; font-weight: 500; padding: 8px 12px; border-radius: 9px; transition: all .15s var(--ease);
+      }
+      .sidebar a:hover { background: var(--surface-dim); color: var(--text); }
+      .sidebar a .n { font-family: var(--font-mono); font-size: 11px; color: var(--text-faint); width: 16px; }
+      .sidebar a.active { background: var(--primary-soft); color: var(--primary); }
+      .sidebar a.active .n { color: var(--primary); }
+      .side-foot { margin-top: auto; padding-top: 22px; font-size: 11px; color: var(--text-faint); font-family: var(--font-mono); }
+
+      /* ---------- Main ---------- */
+      .main { padding: 0 0 120px; }
+      section { padding: 56px 64px 0; scroll-margin-top: 20px; max-width: 920px; }
+      .kicker {
+        display: inline-flex; align-items: center; gap: 7px;
+        font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+        color: var(--primary); margin-bottom: 14px;
+      }
+      .kicker .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+      h1 { font-size: 46px; font-weight: 800; line-height: 1.05; letter-spacing: -.02em; margin-bottom: 18px; }
+      h1 .hl { color: var(--primary); }
+      h2 { font-size: 28px; font-weight: 800; letter-spacing: -.01em; margin-bottom: 8px; }
+      .sec-q { display: block; font-size: 15px; font-weight: 500; color: var(--text-secondary); margin-top: 4px; margin-bottom: 26px; }
+      h3 { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+      p { font-size: 15.5px; color: #333; margin-bottom: 14px; }
+      p.lead { font-size: 18px; color: var(--text-secondary); max-width: 700px; }
+      b, strong { font-weight: 700; color: var(--text); }
+      .mono { font-family: var(--font-mono); }
+
+      /* ---------- Hero ---------- */
+      .hero { padding-top: 72px; }
+      .hero-meta {
+        display: flex; gap: 22px; margin-top: 30px; flex-wrap: wrap;
+        padding-top: 26px; border-top: 1px solid var(--border);
+      }
+      .hero-meta .m .k { font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 3px; }
+      .hero-meta .m .v { font-size: 14px; font-weight: 600; }
+
+      /* ---------- Before/After ---------- */
+      .ba { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 8px; }
+      .ba-card { border-radius: 16px; padding: 26px; border: 1px solid var(--border); background: var(--surface); }
+      .ba-card.before { background: var(--surface-dim); }
+      .ba-card.after { background: var(--primary-soft); border-color: #cfe2ff; }
+      .ba-tag {
+        font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+        padding: 4px 9px; border-radius: 6px; display: inline-block; margin-bottom: 14px; font-weight: 700;
+      }
+      .ba-card.before .ba-tag { background: #e2e2e6; color: var(--text-secondary); }
+      .ba-card.after .ba-tag { background: var(--primary); color: #fff; }
+      .ba-card h3 { font-size: 19px; margin-bottom: 12px; }
+      .ba-card ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+      .ba-card li { font-size: 14px; padding-left: 24px; position: relative; color: #333; }
+      .ba-card.before li::before { content: '✕'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+      .ba-card.after li::before { content: '✓'; position: absolute; left: 0; color: var(--success-ink); font-weight: 700; }
+
+      /* ---------- WA chat mock ---------- */
+      .chat-wrap { display: grid; grid-template-columns: 320px 1fr; gap: 32px; align-items: start; margin-top: 8px; }
+      .phone {
+        background: #0b141a; border-radius: 26px; padding: 10px; box-shadow: var(--shadow-md);
+      }
+      .phone-head {
+        background: #1f2c34; border-radius: 18px 18px 0 0; padding: 12px 14px; display: flex; align-items: center; gap: 10px;
+      }
+      .phone-head .av { width: 34px; height: 34px; border-radius: 50%; background: var(--wa); display: flex; align-items: center; justify-content: center; font-weight: 700; color: #fff; font-size: 14px; }
+      .phone-head .nm { color: #fff; font-size: 13px; font-weight: 600; line-height: 1.2; }
+      .phone-head .st { color: #8aa; font-size: 10.5px; font-family: var(--font-mono); }
+      .chat {
+        background: #0b141a url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='4' cy='4' r='1' fill='%23ffffff08'/%3E%3C/svg%3E");
+        padding: 16px 12px; display: flex; flex-direction: column; gap: 8px; border-radius: 0 0 18px 18px; min-height: 380px;
+      }
+      .bub { max-width: 82%; padding: 8px 11px; border-radius: 9px; font-size: 12.5px; line-height: 1.4; position: relative; }
+      .bub.in { background: #fff; color: #111; align-self: flex-start; border-top-left-radius: 2px; }
+      .bub.out { background: var(--wa-bg); color: #111; align-self: flex-end; border-top-right-radius: 2px; }
+      .bub .t { font-family: var(--font-mono); font-size: 8.5px; color: #8a9; display: block; text-align: right; margin-top: 3px; }
+      .bub .link { color: var(--primary); font-weight: 700; word-break: break-all; }
+      .bub .card-link { margin-top: 6px; background: #f4f7fb; border: 1px solid #dde6f2; border-radius: 8px; padding: 8px; }
+      .bub .card-link .cl-t { font-weight: 700; font-size: 12px; color: #111; }
+      .bub .card-link .cl-s { font-size: 10.5px; color: #555; }
+      .chat-notes { display: flex; flex-direction: column; gap: 14px; padding-top: 6px; }
+      .step { display: flex; gap: 14px; align-items: flex-start; }
+      .step .num { flex: none; width: 30px; height: 30px; border-radius: 9px; background: var(--primary-soft); color: var(--primary); font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); }
+      .step .sx h4 { font-size: 14.5px; font-weight: 700; margin-bottom: 2px; }
+      .step .sx p { font-size: 13.5px; margin: 0; color: var(--text-secondary); }
+
+      /* ---------- Context layers ---------- */
+      .layers { display: flex; flex-direction: column; gap: 16px; margin-top: 8px; }
+      .layer { border: 1px solid var(--border); border-radius: 16px; background: var(--surface); padding: 24px 26px; position: relative; overflow: hidden; }
+      .layer::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; }
+      .layer.l1::before { background: var(--primary); }
+      .layer.l2::before { background: var(--success); }
+      .layer.l3::before { background: var(--warning); }
+      .layer.l4::before { background: var(--violet); }
+      .layer-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 4px; flex-wrap: wrap; }
+      .layer-n { font-family: var(--font-mono); font-size: 12px; font-weight: 700; padding: 3px 8px; border-radius: 6px; }
+      .layer.l1 .layer-n { background: var(--primary-soft); color: var(--primary); }
+      .layer.l2 .layer-n { background: var(--success-soft); color: var(--success-ink); }
+      .layer.l3 .layer-n { background: var(--warning-soft); color: var(--warning-ink); }
+      .layer.l4 .layer-n { background: var(--violet-soft); color: var(--violet); }
+      .layer h3 { font-size: 19px; }
+      .layer .why { font-size: 13px; font-weight: 600; color: var(--text-secondary); font-style: italic; }
+      .layer p.desc { font-size: 14.5px; margin: 8px 0 14px; }
+      .chips { display: flex; flex-wrap: wrap; gap: 7px; }
+      .chip { font-size: 12.5px; background: var(--surface-dim); border: 1px solid var(--border); border-radius: 999px; padding: 5px 12px; color: #444; }
+      .badge-v2 { font-family: var(--font-mono); font-size: 10px; letter-spacing: .08em; background: var(--text); color: #fff; padding: 3px 8px; border-radius: 5px; }
+
+      /* ---------- Sourcing callout ---------- */
+      .sourcing { margin-top: 22px; border: 1px solid var(--border); border-radius: 16px; background: var(--surface); overflow: hidden; }
+      .sourcing-top { padding: 18px 24px; background: var(--primary-soft); border-bottom: 1px solid #cfe2ff; }
+      .sourcing-top h3 { font-size: 16px; margin: 0; color: var(--primary); }
+      .sourcing-grid { display: grid; grid-template-columns: 1fr 1fr; }
+      .src { padding: 22px 24px; }
+      .src + .src { border-left: 1px solid var(--border); }
+      .src .src-tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; font-weight: 700; padding: 4px 9px; border-radius: 6px; display: inline-block; margin-bottom: 10px; }
+      .src.auto .src-tag { background: var(--success-soft); color: var(--success-ink); }
+      .src.manual .src-tag { background: var(--violet-soft); color: var(--violet); }
+      .src h4 { font-size: 15.5px; font-weight: 700; margin-bottom: 6px; }
+      .src p { font-size: 13.5px; margin: 0; color: var(--text-secondary); }
+      .src p b { color: var(--text); }
+
+      /* ---------- Tables ---------- */
+      .tbl { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 14px; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+      .tbl th { background: var(--surface-dim); text-align: left; padding: 12px 16px; font-size: 12px; font-family: var(--font-mono); letter-spacing: .04em; text-transform: uppercase; color: var(--text-secondary); font-weight: 700; }
+      .tbl td { padding: 13px 16px; border-top: 1px solid var(--border); vertical-align: top; }
+      .tbl tr:nth-child(even) td { background: var(--surface-muted); }
+      .tbl .mono { font-size: 12.5px; color: var(--primary); }
+
+      /* ---------- URL example ---------- */
+      .url-demo { background: #0b141a; border-radius: 14px; padding: 22px 24px; margin-top: 8px; }
+      .url-demo .lbl { font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: #6b8; margin-bottom: 10px; }
+      .url-demo .u { font-family: var(--font-mono); font-size: 15px; line-height: 1.7; word-break: break-all; color: #e6edf3; }
+      .url-demo .u .base { color: #8aa; }
+      .url-demo .u .p-svc { color: var(--success); }
+      .url-demo .u .p-staff { color: var(--sky); }
+      .url-demo .note { font-size: 12.5px; color: #8aa; margin-top: 12px; }
+
+      /* ---------- Handoff ---------- */
+      .triggers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 8px 0 26px; }
+      .trig { border: 1px solid var(--border); border-radius: 14px; padding: 20px; background: var(--surface); }
+      .trig .ic { width: 38px; height: 38px; border-radius: 10px; background: var(--accent-soft); display: flex; align-items: center; justify-content: center; margin-bottom: 12px; font-size: 19px; }
+      .trig h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+      .trig p { font-size: 13px; margin: 0; color: var(--text-secondary); }
+      .flow { display: flex; align-items: stretch; gap: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+      .flow .fstep { flex: 1; padding: 18px 20px; border-right: 1px solid var(--border); position: relative; }
+      .flow .fstep:last-child { border-right: none; }
+      .flow .fstep .fn { font-family: var(--font-mono); font-size: 11px; color: var(--primary); font-weight: 700; margin-bottom: 6px; }
+      .flow .fstep p { font-size: 13px; margin: 0; }
+
+      /* ---------- Never list ---------- */
+      .never { background: #2a1416; border: 1px solid #4a2228; border-radius: 16px; padding: 26px 28px; margin-top: 8px; }
+      .never h3 { color: #ff8a96; font-size: 16px; display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+      .never ul { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+      .never li { font-size: 14px; color: #ffd5d9; padding-left: 22px; position: relative; }
+      .never li::before { content: '⊘'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+
+      /* ---------- User changes ---------- */
+      .twocol { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 8px; }
+      .ucol { border: 1px solid var(--border); border-radius: 16px; background: var(--surface); padding: 26px; }
+      .ucol .uhead { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+      .ucol .uhead .ic { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+      .ucol.cliente .uhead .ic { background: var(--sky-soft); }
+      .ucol.vendor .uhead .ic { background: var(--violet-soft); }
+      .ucol h3 { font-size: 18px; }
+      .ucol ul { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+      .ucol li { font-size: 14px; padding-left: 24px; position: relative; color: #333; }
+      .ucol li::before { content: '→'; position: absolute; left: 0; color: var(--primary); font-weight: 700; }
+
+      /* ---------- Decisions ---------- */
+      .decisions { display: flex; flex-direction: column; gap: 14px; margin-top: 8px; }
+      .dec { border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: 12px; background: var(--surface); padding: 20px 24px; }
+      .dec .dn { font-family: var(--font-mono); font-size: 11px; color: var(--accent); font-weight: 700; letter-spacing: .06em; }
+      .dec h4 { font-size: 16px; font-weight: 700; margin: 4px 0 6px; }
+      .dec p { font-size: 14px; margin: 0; color: var(--text-secondary); }
+      .dec .crit { display: inline-block; margin-top: 8px; font-family: var(--font-mono); font-size: 10px; background: var(--accent-soft); color: #b21f2e; padding: 3px 8px; border-radius: 5px; letter-spacing: .04em; }
+      .dec.resolved { border-left-color: var(--success); }
+      .dec.resolved .dn { color: var(--success-ink); }
+      .dec.resolved .crit { background: var(--success-soft); color: var(--success-ink); }
+
+      .footer-note { margin: 60px 64px 0; max-width: 920px; padding: 24px; background: var(--surface-dim); border-radius: 14px; font-size: 13.5px; color: var(--text-secondary); }
+      .footer-note b { color: var(--text); }
+
+      @media (max-width: 900px) {
+        .app { grid-template-columns: 1fr; }
+        .sidebar { display: none; }
+        section { padding: 44px 28px 0; }
+        .ba, .chat-wrap, .twocol, .triggers { grid-template-columns: 1fr; }
+        .never ul { grid-template-columns: 1fr; }
+        .flow { flex-direction: column; }
+        .flow .fstep { border-right: none; border-bottom: 1px solid var(--border); }
+        h1 { font-size: 34px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <!-- ============ SIDEBAR ============ -->
+      <aside class="sidebar">
+        <div class="brand">
+          <img src="./assets/agora-horizontal.png" alt="Ágora" />
+          <span class="tag">Interno</span>
+        </div>
+        <div class="toc-label">En esta página</div>
+        <a href="#intro" class="active"><span class="n">00</span> El cambio</a>
+        <a href="#paradigma"><span class="n">01</span> Paradigma</a>
+        <a href="#cliente"><span class="n">02</span> Cómo lo vive el cliente</a>
+        <a href="#contexto"><span class="n">03</span> Qué sabe el bot</a>
+        <a href="#links"><span class="n">04</span> Links de reserva</a>
+        <a href="#handoff"><span class="n">05</span> Pasar a un humano</a>
+        <a href="#nunca"><span class="n">06</span> Lo que nunca hace</a>
+        <a href="#usuario"><span class="n">07</span> Cambios para el usuario</a>
+        <a href="#decisiones"><span class="n">08</span> A discutir</a>
+        <div class="side-foot">
+          WA ASESOR · v0.1<br />
+          Scope · jun 2026<br />
+          Para: Fer · Beto
+        </div>
+      </aside>
+
+      <!-- ============ MAIN ============ -->
+      <main class="main">
+
+        <!-- 00 · INTRO -->
+        <section id="intro" class="hero">
+          <span class="kicker"><span class="dot"></span> DOCUMENTO DE SCOPE · PARA DISCUTIR</span>
+          <h1>El bot de WhatsApp deja de tomar reservas.<br />Ahora <span class="hl">asesora</span>.</h1>
+          <p class="lead">
+            Hoy intentamos que el cliente reserve paso a paso dentro del chat. La propuesta es invertirlo:
+            el bot conoce el negocio de memoria, entiende qué necesita el cliente, le <b>recomienda</b> como lo haría
+            un buen recepcionista, y le pasa un <b>link listo para reservar</b> en la página. La reserva se cierra
+            en la página, no en el chat.
+          </p>
+          <div class="hero-meta">
+            <div class="m"><div class="k">Estado</div><div class="v">Propuesta · pre-spec</div></div>
+            <div class="m"><div class="k">Objetivo del doc</div><div class="v">Alinear y discutir</div></div>
+            <div class="m"><div class="k">Próximo paso</div><div class="v">Specs técnicas</div></div>
+          </div>
+        </section>
+
+        <!-- 01 · PARADIGMA -->
+        <section id="paradigma">
+          <h2>01 · El cambio de paradigma</h2>
+          <span class="sec-q">De autómata de reserva a asesor con contexto.</span>
+          <div class="ba">
+            <div class="ba-card before">
+              <span class="ba-tag">Hoy</span>
+              <h3>Bot de reserva</h3>
+              <ul>
+                <li>Quiere cerrar la reserva dentro del chat</li>
+                <li>Menús rígidos, paso a paso</li>
+                <li>Conversaciones largas y con fricción</li>
+                <li>No sabe casi nada del negocio</li>
+                <li>Si el cliente se sale del guion, se traba</li>
+              </ul>
+            </div>
+            <div class="ba-card after">
+              <span class="ba-tag">Propuesta</span>
+              <h3>Asesor con contexto</h3>
+              <ul>
+                <li>Entiende la necesidad y recomienda</li>
+                <li>Conversación natural, sin menús</li>
+                <li>Conoce servicios, precios, profesionales, reglas</li>
+                <li>Pasa un link directo a reservar en la página</li>
+                <li>Sabe cuándo llamar a una persona</li>
+              </ul>
+            </div>
+          </div>
+          <p style="margin-top:22px;">
+            <b>Por qué así:</b> no reconstruimos el motor de turnos y pagos dentro de WhatsApp — eso ya funciona
+            bárbaro en la página. El bot baja la fricción de la <i>decisión</i> (qué reservar, con quién) y manda
+            al cliente al checkout con todo precargado.
+          </p>
+        </section>
+
+        <!-- 02 · CLIENTE -->
+        <section id="cliente">
+          <h2>02 · Cómo lo vive el cliente</h2>
+          <span class="sec-q">Una conversación normal que termina en un link listo para reservar.</span>
+          <p>
+            El cliente le escribe al <b>WhatsApp del negocio</b> — su propio WhatsApp Business conectado a Ágora.
+            Para el cliente, habla con el negocio de siempre; no sabe que hay un asesor automático atrás.
+          </p>
+          <div class="chat-wrap">
+            <div class="phone">
+              <div class="phone-head">
+                <div class="av">LB</div>
+                <div>
+                  <div class="nm">Luna Beauty</div>
+                  <div class="st">en línea</div>
+                </div>
+              </div>
+              <div class="chat">
+                <div class="bub in">Hola! Tengo un casamiento el sábado y quiero hacerme las uñas 💅 <span class="t">14:02</span></div>
+                <div class="bub out">¡Qué lindo! Para un evento te recomiendo <b>Esmaltado semipermanente + nail art</b>. Dura como 1h y queda impecable para fotos. <span class="t">14:02</span></div>
+                <div class="bub out">Para nail art te conviene <b>Caro</b>, que es la que más se especializa en diseños 🎨 El sábado tiene lugar. ¿Te dejo el link para reservar?<span class="t">14:02</span></div>
+                <div class="bub in">Sí dale!<span class="t">14:03</span></div>
+                <div class="bub out">Listo, reservás acá 👇
+                  <div class="card-link">
+                    <div class="cl-t">Reservá tu turno</div>
+                    <div class="cl-s">Esmaltado semipermanente + nail art</div>
+                  </div>
+                  <span class="link">www.agora.red/lunabeauty/reservar…</span>
+                  Cuando elijas profesional, pedí a <b>Caro</b> 🙌<span class="t">14:03</span>
+                </div>
+              </div>
+            </div>
+            <div class="chat-notes">
+              <div class="step"><div class="num">1</div><div class="sx"><h4>Entiende</h4><p>Lee la necesidad real ("uñas para un evento"), no espera que el cliente elija de un menú.</p></div></div>
+              <div class="step"><div class="num">2</div><div class="sx"><h4>Recomienda</h4><p>Sugiere el servicio adecuado y la profesional indicada, con argumentos del negocio.</p></div></div>
+              <div class="step"><div class="num">3</div><div class="sx"><h4>Pasa el link</h4><p>Arma un link con el servicio <b>ya precargado</b>. El cliente elige horario y profesional en pocos toques.</p></div></div>
+              <div class="step"><div class="num">4</div><div class="sx"><h4>Reserva en la página</h4><p>El horario, la seña y el pago suceden donde ya funcionan bien — no en el chat.</p></div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 03 · CONTEXTO -->
+        <section id="contexto">
+          <h2>03 · Qué tiene que "saber" el bot</h2>
+          <span class="sec-q">El corazón de la propuesta. Le damos el contexto del negocio en 4 capas.</span>
+          <p class="lead" style="margin-bottom:24px;">
+            La diferencia entre un asesor y un FAQ es el contexto. Casi todo esto <b>ya está cargado</b> en la cuenta
+            del negocio — el trabajo es ordenarlo y dárselo al bot.
+          </p>
+          <div class="layers">
+            <div class="layer l1">
+              <div class="layer-head"><span class="layer-n">CAPA 1</span><h3>Quién es el negocio</h3></div>
+              <span class="why">Para hablar con la voz del negocio y generar confianza.</span>
+              <p class="desc">Lo que define el tono y la autoridad del asesor.</p>
+              <div class="chips">
+                <span class="chip">Nombre y rubro</span><span class="chip">Bio / especialidad</span>
+                <span class="chip">Dónde queda</span><span class="chip">Online o presencial</span>
+                <span class="chip">Reseñas de Google</span><span class="chip">Certificaciones</span>
+              </div>
+            </div>
+            <div class="layer l2">
+              <div class="layer-head"><span class="layer-n">CAPA 2</span><h3>Qué ofrece</h3></div>
+              <span class="why">Para recomendar bien, no solo responder.</span>
+              <p class="desc">
+                El catálogo completo, con todo lo que el cliente puede llegar a preguntar. Incluye las
+                <b>descripciones completas de cada servicio</b> y las <b>fotos del catálogo</b> — así el bot
+                puede explicar bien qué es cada cosa y hasta mandar la imagen del servicio.
+              </p>
+              <div class="chips">
+                <span class="chip">Servicios · precio · duración</span><span class="chip">Descripción completa de cada uno</span>
+                <span class="chip">Fotos del catálogo (puede enviarlas)</span><span class="chip">Qué incluye cada uno</span>
+                <span class="chip">Adicionales de cada servicio</span><span class="chip">Packs y combos</span>
+                <span class="chip">Qué profesional hace qué</span>
+                <span class="chip">Gift cards</span><span class="chip">Planes mensuales</span>
+                <span class="chip">Cursos y eventos</span><span class="chip">Preguntas frecuentes</span>
+              </div>
+            </div>
+            <div class="layer l3">
+              <div class="layer-head"><span class="layer-n">CAPA 3</span><h3>Las reglas del negocio</h3></div>
+              <span class="why">Para no prometer lo que el negocio no puede cumplir.</span>
+              <p class="desc">
+                Los límites y condiciones que el asesor respeta al pie de la letra — y comunica con precisión
+                cuando el cliente pregunta por cancelar, señar o pagar.
+              </p>
+              <div class="chips">
+                <span class="chip">Políticas de reserva y cancelación</span><span class="chip">Cobro de señas — monto y condiciones</span>
+                <span class="chip">Medios de pago disponibles</span><span class="chip">Descuentos por medio de pago</span>
+                <span class="chip">Horarios de atención</span><span class="chip">Hasta cuándo se puede reservar</span>
+                <span class="chip">Datos que pide al cliente</span>
+              </div>
+            </div>
+            <div class="layer l4">
+              <div class="layer-head"><span class="layer-n">CAPA 4</span><h3>El estado en vivo</h3></div>
+              <span class="why">Lo que cambia minuto a minuto. El bot lo consulta al momento, no lo memoriza.</span>
+              <p class="desc">
+                Entra en el scope de este desarrollo. Le permite al asesor hablar con datos reales — sin inventar
+                turnos ni repetir lo que el cliente ya sabe.
+              </p>
+              <div class="chips">
+                <span class="chip">Disponibilidad real de turnos</span><span class="chip">Historial del cliente</span>
+                <span class="chip">"La última vez te atendió Caro"</span><span class="chip">Sus reservas y servicios previos</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="sourcing">
+            <div class="sourcing-top"><h3>¿De dónde sale todo este contexto? · DECIDIDO</h3></div>
+            <div class="sourcing-grid">
+              <div class="src auto">
+                <span class="src-tag">Automático</span>
+                <h4>De lo que el negocio ya cargó</h4>
+                <p>Servicios, precios, duraciones, descripciones, fotos, horarios, políticas, profesionales, reseñas, disponibilidad e historial. <b>Ya vive en la cuenta</b> — el bot lo lee solo, sin que el negocio cargue nada de nuevo.</p>
+              </div>
+              <div class="src manual">
+                <span class="src-tag">Nuevo · a mano</span>
+                <h4>Una sección "Sobre el negocio" para el asesor</h4>
+                <p>Sumamos una sección donde el admin escribe <b>información adicional más exhaustiva</b> que hoy no está en ningún lado: diferenciales, cómo recomendar, respuestas a dudas comunes, qué evitar, tono. Es el <b>briefing que el negocio le da a su asesor</b>.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 04 · LINKS -->
+        <section id="links">
+          <h2>04 · Cómo arma el link de reserva</h2>
+          <span class="sec-q">El puente entre la charla y el checkout. Precarga el/los servicio(s) que recomendó.</span>
+          <p>
+            El bot no escribe la URL a mano: pide que se la armen con el/los servicio(s) que recomendó. El link cae
+            directo en el checkout con el servicio ya cargado, así el cliente solo elige horario y cierra.
+          </p>
+          <div class="url-demo">
+            <div class="lbl">Ejemplo de link</div>
+            <div class="u"><span class="base">www.agora.red/lunabeauty/reservar</span>?<span class="p-svc">service=semipermanente,nail-art</span></div>
+            <div class="note"><span class="p-svc">verde</span> = servicio(s) precargado(s)</div>
+          </div>
+          <h3 style="margin-top:30px;">El profesional se elige en la página</h3>
+          <p>
+            Por ahora <b>el link no precarga profesional</b>. Elegir profesional dentro del chat — sobre todo si hay
+            varios servicios — es un dolor de cabeza por WhatsApp, así que esa elección queda en la página, que ya
+            tiene la pantalla para eso. El bot igual puede <b>recomendarle con quién atenderse</b> en la conversación.
+          </p>
+          <p style="margin-top:18px; font-size:14px; color:var(--text-secondary);">
+            <b>Nota para Fer/Beto:</b> hoy la página ya sabe precargar el <i>servicio</i> desde el link. Lo único
+            nuevo a sumar sería soportar <i>más de un servicio</i> en el mismo link.
+          </p>
+        </section>
+
+        <!-- 05 · HANDOFF -->
+        <section id="handoff">
+          <h2>05 · Cuándo pasa a un humano</h2>
+          <span class="sec-q">Arrancamos con lo más simple posible. Sin inteligencia de más.</span>
+          <h3 style="margin-bottom:14px;">Tres situaciones que disparan el pase</h3>
+          <div class="triggers">
+            <div class="trig"><div class="ic">🙋</div><h4>Lo pide</h4><p>"Quiero hablar con alguien", "llamame". Pedido explícito de una persona.</p></div>
+            <div class="trig"><div class="ic">⚠️</div><h4>Hay un reclamo</h4><p>Queja, pedido de reembolso, una mala experiencia, algo que se puede poner tenso.</p></div>
+            <div class="trig"><div class="ic">🤔</div><h4>No sabe</h4><p>La respuesta no está en lo que conoce del negocio. Antes que inventar, pasa.</p></div>
+          </div>
+          <h3 style="margin-bottom:14px;">Qué hace cuando se dispara</h3>
+          <div class="flow">
+            <div class="fstep"><div class="fn">1 · MARCA</div><p>Pone la conversación en pausa. El bot deja de responder ese chat.</p></div>
+            <div class="fstep"><div class="fn">2 · AVISA</div><p>Le avisa al negocio que tiene que entrar, con un resumen de la charla.</p></div>
+            <div class="fstep"><div class="fn">3 · TRANQUILIZA</div><p>Al cliente: <i>"Ya le aviso a [nombre], te responde a la brevedad 🙌"</i>.</p></div>
+            <div class="fstep"><div class="fn">4 · ESPERA</div><p>Queda en manos del humano por 24h. Después el bot puede retomar.</p></div>
+          </div>
+          <p style="margin-top:20px; font-size:14px; color:var(--text-secondary);">
+            Todo lo fino (avisar según horario de atención, detectar clientes que dan vueltas, re-enganchar
+            de forma inteligente) queda para una v2. La v1 es esta lógica simple.
+          </p>
+        </section>
+
+        <!-- 06 · NUNCA -->
+        <section id="nunca">
+          <h2>06 · Lo que el bot nunca hace</h2>
+          <span class="sec-q">Los límites duros. Tan importante como lo que sí hace.</span>
+          <div class="never">
+            <h3>⊘ Reglas innegociables</h3>
+            <ul>
+              <li>No confirma reservas (eso pasa en la página)</li>
+              <li>No cobra ni pide datos de pago</li>
+              <li>No promete horarios libres que no chequeó</li>
+              <li>No inventa precios ni políticas</li>
+              <li>No da reembolsos por su cuenta</li>
+              <li>No menciona "Ágora" — habla como el negocio</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- 07 · USUARIO -->
+        <section id="usuario">
+          <h2>07 · Qué cambia de cara al usuario</h2>
+          <span class="sec-q">Lo concreto que va a notar cada lado.</span>
+          <div class="twocol">
+            <div class="ucol cliente">
+              <div class="uhead"><div class="ic">💬</div><h3>El cliente</h3></div>
+              <ul>
+                <li>Conversa natural, sin menús rígidos ni opciones numeradas</li>
+                <li>Recibe una recomendación pensada para su caso</li>
+                <li>Llega a un link con el servicio ya cargado, listo para elegir horario</li>
+                <li>Si necesita, lo atiende una persona del negocio</li>
+              </ul>
+            </div>
+            <div class="ucol vendor">
+              <div class="uhead"><div class="ic">🏪</div><h3>El negocio</h3></div>
+              <ul>
+                <li>Conecta su propio WhatsApp Business — el asesor atiende desde su número</li>
+                <li>Su bot ahora "conoce" su negocio — y afina al asesor en "Sobre el negocio"</li>
+                <li>Recibe un aviso cuando tiene que meterse en una conversación</li>
+                <li>Lo que el bot no cierra, lo toma él, sin perder el hilo</li>
+                <li>Más reservas por chat, con menos ida y vuelta manual</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- 08 · DECISIONES -->
+        <section id="decisiones">
+          <h2>08 · Lo que queda por decidir</h2>
+          <span class="sec-q">Las decisiones 01 (cada negocio conecta su WhatsApp Business) y 02 (contexto automático + sección "Sobre el negocio") ya se cerraron y están en el scope. Quedan estas dos.</span>
+          <div class="decisions">
+            <div class="dec">
+              <div class="dn">DECISIÓN 01</div>
+              <h4>¿Cómo le avisamos al negocio cuando hay que intervenir?</h4>
+              <p>
+                Push de la app, un mensaje de WhatsApp al dueño, o por Intercom. Hay que elegir uno para arrancar el piloto.
+              </p>
+            </div>
+            <div class="dec">
+              <div class="dn">DECISIÓN 02</div>
+              <h4>¿Cómo cobramos el mayor volumen de mensajes?</h4>
+              <p>
+                Un asesor conversa mucho más que un recordatorio. Cada respuesta es un mensaje de WhatsApp que cuesta.
+                ¿Cuenta dentro del plan del negocio o va como algo aparte? Es decisión de pricing, no de código.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <div class="footer-note">
+          <b>Este documento es para discutir, no para cerrar.</b> El próximo paso, una vez alineados, es escribir las
+          specs técnicas (cómo se guarda la conversación, cómo entra el mensaje, cómo se arma y valida el link).
+          Todo lo de acá está pensado para arrancar simple y crecer después.
+        </div>
+
+      </main>
+    </div>
+
+    <script>
+      // TOC scroll-spy
+      const links = [...document.querySelectorAll('.sidebar a')];
+      const secs = links.map((a) => document.querySelector(a.getAttribute('href')));
+      const spy = () => {
+        const y = window.scrollY + 120;
+        let active = secs[0];
+        for (const s of secs) { if (s && s.offsetTop <= y) active = s; }
+        links.forEach((a) => a.classList.toggle('active', a.getAttribute('href') === '#' + active.id));
+      };
+      window.addEventListener('scroll', spy, { passive: true });
+      spy();
+    </script>
+  </body>
+</html>
