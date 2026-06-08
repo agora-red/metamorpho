@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Storefront secundario · Design DNA — Ágora</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Raleway:wght@300..700&family=Playfair+Display:ital,wght@0,400..700;1,400..600&family=Poppins:wght@300;400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+/* ============================================================
+   PROTOTIPO — Vistas secundarias del storefront con Design DNA
+   Cada perfil define un ADN visual (paleta, tipografía, atmósfera,
+   duotono) y las vistas Servicios/Detalle/Reservar/Planes/Cursos/Gift
+   lo adoptan con el mismo markup. Perfiles y datos de muestra.
+   Switch Hoy↔Con DNA · Desktop↔Mobile · Contenido (estados vacíos).
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --chrome-bg:#0a0a0c; --chrome-panel:#131318; --chrome-line:rgba(255,255,255,.08); --chrome-text:#e7e7ea; --chrome-dim:#8a8a93; }
+html { background: var(--chrome-bg); -webkit-font-smoothing: antialiased; }
+body { font-family:'Raleway',sans-serif; color:var(--chrome-text); min-height:100vh; padding:26px 18px 90px; }
+.lab { max-width: 1240px; margin: 0 auto; }
+.lab__head { margin-bottom:18px; }
+.lab__title { font-family:'Space Mono',monospace; font-size:12px; letter-spacing:.22em; text-transform:uppercase; color:var(--chrome-dim); }
+.lab__title b { color:var(--chrome-text); font-weight:700; }
+.lab__sub { font-size:14px; color:var(--chrome-dim); margin-top:6px; max-width:640px; line-height:1.55; }
+
+.controls { display:flex; gap:16px; flex-wrap:wrap; align-items:flex-start; margin-bottom:18px; }
+.ctl-group { display:flex; flex-direction:column; gap:7px; }
+.ctl-label { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--chrome-dim); }
+.pills { display:flex; gap:5px; background:var(--chrome-panel); padding:5px; border-radius:12px; border:1px solid var(--chrome-line); flex-wrap:wrap; }
+.pill { appearance:none; border:0; background:transparent; cursor:pointer; color:var(--chrome-dim); font-family:'Raleway',sans-serif; font-size:13px; font-weight:600; padding:8px 13px; border-radius:8px; transition:all .22s ease; white-space:nowrap; display:flex; align-items:center; gap:8px; }
+.pill:hover { color:var(--chrome-text); }
+.pill[aria-pressed="true"] { background:#fff; color:#0a0a0c; }
+.pill .swatch { width:11px; height:11px; border-radius:50%; box-shadow:0 0 0 1px rgba(255,255,255,.15); }
+.pill .tag { font-family:'Space Mono',monospace; font-size:8px; letter-spacing:.06em; padding:2px 5px; border-radius:4px; background:rgba(255,255,255,.08); color:var(--chrome-dim); text-transform:uppercase; }
+.pill[aria-pressed="true"] .tag { background:rgba(0,0,0,.10); color:#0a0a0c; }
+.toggle { display:inline-flex; background:var(--chrome-panel); border:1px solid var(--chrome-line); border-radius:12px; padding:5px; gap:4px; }
+.toggle button { appearance:none; border:0; cursor:pointer; background:transparent; color:var(--chrome-dim); font-size:13px; font-weight:600; padding:8px 14px; border-radius:8px; font-family:'Raleway',sans-serif; transition:all .22s ease; }
+.toggle button[aria-pressed="true"] { background:#fff; color:#0a0a0c; }
+
+.stagewrap { display:flex; justify-content:center; }
+.frame { width:100%; border-radius:18px; overflow:hidden; border:1px solid var(--chrome-line); box-shadow:0 40px 120px -30px rgba(0,0,0,.8); background:var(--chrome-panel); transition:max-width .45s cubic-bezier(.2,.7,.2,1); max-width:1240px; }
+.frame[data-vp="mobile"] { max-width:430px; border-radius:46px; padding:10px; background:#1b1b22; box-shadow:0 40px 110px -28px rgba(0,0,0,.85), inset 0 0 0 2px rgba(255,255,255,.04); }
+.frame__bar { display:flex; align-items:center; gap:14px; padding:12px 16px; background:#17171d; border-bottom:1px solid var(--chrome-line); }
+.frame[data-vp="mobile"] .frame__bar { border-radius:38px 38px 0 0; padding:10px 18px 12px; position:relative; justify-content:center; }
+.frame[data-vp="mobile"] .dots { display:none; }
+.notch { display:none; }
+.frame[data-vp="mobile"] .notch { display:block; position:absolute; top:9px; left:50%; transform:translateX(-50%); width:120px; height:26px; background:#0a0a0c; border-radius:0 0 16px 16px; z-index:5; }
+.dots { display:flex; gap:7px; }
+.dots span { width:11px; height:11px; border-radius:50%; background:#2c2c33; }
+.dots span:nth-child(1){background:#ff5f57;} .dots span:nth-child(2){background:#febc2e;} .dots span:nth-child(3){background:#28c840;}
+.url { flex:1; background:#0e0e12; border:1px solid var(--chrome-line); border-radius:8px; padding:7px 14px; font-family:'Space Mono',monospace; font-size:12px; color:var(--chrome-dim); display:flex; align-items:center; gap:8px; overflow:hidden; white-space:nowrap; }
+.frame[data-vp="mobile"] .url { flex:none; max-width:78%; margin-top:6px; border-radius:999px; font-size:11px; }
+.url b { color:var(--chrome-text); font-weight:400; }
+.url .lock { opacity:.6; }
+
+/* ============================================================ TOKENS DEL DESIGN DNA */
+.stage {
+  --bg:#1a1a1a; --surface:#242424; --surface-2:#2c2c2c; --ink:#c19548; --text:#c4c4c4; --muted:#6f6f6f;
+  --accent:#a28836; --accent-soft:#a2883626; --on-accent:#1a1a1a; --hairline:#a2883645; --line:rgba(255,255,255,.10); --accent2:#d89a9a;
+  --font-display:'Bebas Neue',sans-serif; --font-body:'Raleway',sans-serif; --font-label:'Space Mono',monospace;
+  --disp-weight:400; --disp-tracking:.02em; --disp-transform:uppercase; --disp-italic:normal;
+  --radius:20px; --radius-sm:12px; --pad:1.1; --grain:.03; --duo:1; --seal:block;
+  position:relative; background:var(--bg); color:var(--text); font-family:var(--font-body);
+  min-height:760px; overflow:hidden; transition:background .5s ease,color .5s ease;
+  container-type:inline-size; container-name:stage;
+}
+.frame[data-vp="mobile"] .stage { border-radius:38px; }
+/* DNA 1 · Bravo Barbería — oscuro + oro, Bebas Neue */
+.stage[data-dna="bravo"] { --bg:#1a1a1a; --surface:#242424; --surface-2:#2c2c2c; --ink:#c19548; --text:#c4c4c4; --muted:#6f6f6f; --accent:#a28836; --accent-soft:#a2883626; --on-accent:#1a1a1a; --hairline:#a2883645; --line:rgba(255,255,255,.10); --accent2:#d89a9a; --font-display:'Bebas Neue',sans-serif; --font-body:'Raleway',sans-serif; --disp-weight:400; --disp-tracking:.02em; --disp-transform:uppercase; --disp-italic:normal; --disp-lh:.92;--radius:20px; --radius-sm:12px; --pad:1.1; --grain:.03; --duo:1; --seal:block; }
+/* DNA 2 · Lumière — EJEMPLO (fuentes reales: Playfair Display + Poppins) */
+.stage[data-dna="lumiere"] { --bg:#f4efe6; --surface:#fbf8f1; --surface-2:#efe7d8; --ink:#211b14; --text:#6b5f50; --muted:#a99b86; --accent:#9a6f3a; --accent-soft:#9a6f3a1f; --on-accent:#fbf8f1; --hairline:#9a6f3a40; --line:rgba(33,27,20,.10); --accent2:#9a6f3a; --font-display:'Playfair Display',serif; --font-body:'Poppins',sans-serif; --disp-weight:500; --disp-tracking:-.01em; --disp-transform:none; --disp-italic:italic; --disp-lh:1;--radius:14px; --radius-sm:10px; --pad:1.05; --grain:.02; --duo:1; --seal:block; }
+/* DNA 3 · Selva — EJEMPLO (fuentes reales: Fraunces + Raleway) */
+.stage[data-dna="selva"] { --bg:#eceee3; --surface:#f7f8f0; --surface-2:#e6e9da; --ink:#283026; --text:#58634f; --muted:#99a187; --accent:#6f7d49; --accent-soft:#6f7d4920; --on-accent:#f7f8f0; --hairline:#6f7d4938; --line:rgba(40,48,38,.10); --accent2:#c08552; --font-display:'Fraunces',serif; --font-body:'Raleway',sans-serif; --disp-weight:380; --disp-tracking:-.01em; --disp-transform:none; --disp-italic:italic; --disp-lh:1;--radius:24px; --radius-sm:15px; --pad:1.12; --grain:.03; --duo:1; --seal:block; }
+/* MODO "HOY" — strip del DNA */
+.stage[data-mode="generic"] {
+  --bg:#fff!important; --surface:#fff!important; --surface-2:#f6f6f6!important; --ink:#1c1c1e!important; --text:#6b7280!important; --muted:#9aa0a8!important;
+  --accent:#16181d!important; --accent-soft:#f1f2f4!important; --on-accent:#fff!important; --hairline:#e6e7e9!important; --line:#ececee!important; --accent2:#16181d!important;
+  --font-display:'Raleway',Arial,sans-serif!important; --font-body:'Raleway',Arial,sans-serif!important;
+  --disp-weight:700!important; --disp-tracking:-0.01em!important; --disp-transform:none!important; --disp-italic:normal!important; --disp-lh:1.05!important;
+  --radius:10px!important; --radius-sm:8px!important; --pad:.95!important; --grain:0!important; --duo:0!important; --seal:none!important;
+}
+
+.stage__atmos { position:absolute; inset:0; pointer-events:none; z-index:0; }
+.stage__atmos::before { content:""; position:absolute; inset:-20%; background:radial-gradient(48% 40% at 78% 6%,var(--accent-soft),transparent 70%),radial-gradient(42% 36% at 6% 94%,var(--accent-soft),transparent 72%); opacity:.9; transition:opacity .5s ease; }
+.stage[data-mode="generic"] .stage__atmos::before { opacity:0; }
+.stage__atmos::after { content:""; position:absolute; inset:0; opacity:var(--grain); background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); mix-blend-mode:overlay; }
+
+.scroll { position:relative; z-index:1; height:760px; overflow-y:auto; overflow-x:hidden; scroll-behavior:smooth; }
+.frame[data-vp="mobile"] .scroll { height:780px; }
+.scroll::-webkit-scrollbar { width:9px; } .scroll::-webkit-scrollbar-thumb { background:var(--line); border-radius:9px; }
+.wrap { max-width:1040px; margin:0 auto; padding:0 32px; }
+
+/* ÁTOMOS */
+.eyebrow { font-family:var(--font-label); font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--accent); display:inline-flex; align-items:center; gap:9px; }
+.eyebrow::before { content:""; width:22px; height:1px; background:var(--accent); opacity:.6; }
+.display { font-family:var(--font-display); font-weight:var(--disp-weight); letter-spacing:var(--disp-tracking); text-transform:var(--disp-transform); color:var(--ink); line-height:var(--disp-lh); text-wrap:balance; }
+/* títulos largos (sobre todo en Bebas, condensada): wrap parejo + interlínea por arquetipo */
+.scard__name, .ccard__t, .plan__name, .det-panel h1, .res-h, .summary h4, .cat-head h2, .empty__t { line-height:var(--disp-lh); text-wrap:balance; }
+.display .it { font-style:var(--disp-italic); }
+.chip { font-family:var(--font-label); font-size:11px; letter-spacing:.05em; text-transform:uppercase; color:var(--text); border:1px solid var(--hairline); padding:6px 11px; border-radius:999px; display:inline-flex; align-items:center; gap:6px; background:var(--surface); white-space:nowrap; }
+.btn { appearance:none; border:0; cursor:pointer; font-family:var(--font-label); font-size:12px; letter-spacing:.12em; text-transform:uppercase; font-weight:700; background:var(--accent); color:var(--on-accent); padding:14px 22px; border-radius:var(--radius-sm); display:inline-flex; align-items:center; justify-content:center; gap:10px; transition:transform .2s ease,filter .2s ease; width:max-content; }
+.btn:hover { transform:translateY(-2px); filter:brightness(1.07); }
+.btn--ghost { background:transparent; color:var(--ink); border:1px solid var(--hairline); }
+.btn--block { width:100%; }
+.price { font-family:var(--font-display); font-style:var(--disp-italic); color:var(--ink); font-weight:var(--disp-weight); letter-spacing:var(--disp-tracking); }
+
+.photo { position:relative; overflow:hidden; background:var(--surface-2); border-radius:var(--radius); }
+.photo img { width:100%; height:100%; object-fit:cover; display:block; filter:grayscale(var(--duo)) contrast(calc(1 + var(--duo)*.08)) brightness(calc(1 - var(--duo)*.06)); transition:filter .5s ease,transform .6s ease; }
+.photo::before { content:""; position:absolute; inset:0; background:var(--accent); mix-blend-mode:multiply; opacity:calc(var(--duo)*.42); transition:opacity .5s ease; z-index:1; }
+.photo::after { content:""; position:absolute; inset:0; background:var(--bg); mix-blend-mode:lighten; opacity:calc(var(--duo)*.30); transition:opacity .5s ease; z-index:1; }
+
+.seal { display:var(--seal); position:relative; width:92px; height:92px; flex:none; }
+.seal svg { width:100%; height:100%; animation:spin 26s linear infinite; }
+.seal svg text { fill:var(--accent2); font-family:var(--font-label); font-size:8.2px; letter-spacing:3px; text-transform:uppercase; }
+.seal__mid { position:absolute; inset:0; display:grid; place-items:center; font-family:var(--font-display); font-weight:var(--disp-weight); font-size:24px; color:var(--ink); letter-spacing:.04em; }
+@keyframes spin { to { transform:rotate(360deg); } }
+
+/* VIEWS */
+.view { display:none; }
+.view.is-active { display:block; animation:rise .5s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes rise { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
+
+.snav { display:flex; align-items:center; justify-content:space-between; padding:26px 0 0; }
+.snav__brand { font-family:var(--font-display); font-weight:var(--disp-weight); color:var(--ink); font-size:21px; letter-spacing:var(--disp-tracking); text-transform:var(--disp-transform); }
+.snav__links { display:flex; gap:22px; }
+.snav__links a { font-family:var(--font-label); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); text-decoration:none; transition:color .2s; }
+.snav__links a:hover, .snav__links a.on { color:var(--ink); }
+
+.page-head { padding:calc(46px*var(--pad)) 0 calc(20px*var(--pad)); display:flex; align-items:center; justify-content:space-between; gap:18px; }
+.page-head .eyebrow { font-size:12px; }
+.page-head .ph-meta { font-family:var(--font-label); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+
+/* SERVICIOS */
+.catbar { position:sticky; top:0; z-index:6; background:color-mix(in srgb,var(--bg) 86%,transparent); backdrop-filter:blur(14px); padding:16px 0; border-bottom:1px solid var(--line); display:flex; gap:9px; flex-wrap:wrap; align-items:center; margin-bottom:8px; }
+.fchip { cursor:pointer; transition:all .2s ease; }
+.fchip[aria-pressed="true"] { background:var(--accent); color:var(--on-accent); border-color:var(--accent); }
+.search { margin-left:auto; display:flex; align-items:center; gap:9px; border:1px solid var(--hairline); border-radius:999px; padding:8px 15px; background:var(--surface); color:var(--muted); font-family:var(--font-label); font-size:11px; letter-spacing:.08em; text-transform:uppercase; }
+
+.cat-group { padding-top:calc(30px*var(--pad)); }
+.cat-head { display:flex; align-items:center; gap:14px; margin-bottom:calc(18px*var(--pad)); }
+.cat-head h2 { font-family:var(--font-display); font-weight:var(--disp-weight); color:var(--ink); font-size:clamp(24px,3.2vw,34px); letter-spacing:var(--disp-tracking); text-transform:var(--disp-transform); }
+.cat-head .ln { flex:1; height:1px; background:var(--line); }
+
+.grid { display:grid; grid-template-columns:repeat(3,1fr); gap:calc(16px*var(--pad)); padding-bottom:8px; }
+.scard { position:relative; aspect-ratio:1/1; border-radius:var(--radius); overflow:hidden; border:1px solid var(--line); cursor:pointer; transition:transform .3s ease; }
+.scard:hover { transform:translateY(-4px); }
+.scard .photo { position:absolute; inset:0; border-radius:0; }
+.scard:hover .photo img { transform:scale(1.06); }
+.scard__grad { position:absolute; inset:0; z-index:2; background:linear-gradient(to top,var(--bg),transparent 58%); opacity:.92; }
+.scard__overlay { position:absolute; left:0; right:0; bottom:0; z-index:3; padding:calc(18px*var(--pad)); display:flex; flex-direction:column; gap:10px; }
+.scard__name { font-family:var(--font-display); font-weight:var(--disp-weight); letter-spacing:var(--disp-tracking); text-transform:var(--disp-transform); color:var(--ink); font-size:23px; line-height:1.04; }
+.scard__foot { display:flex; align-items:flex-end; justify-content:space-between; }
+.scard__price { font-size:22px; }
+.scard__go { width:38px; height:38px; border-radius:50%; background:var(--accent-soft); color:var(--accent); display:grid; place-items:center; transition:all .25s ease; border:1px solid var(--hairline); flex:none; backdrop-filter:blur(4px); }
+.scard:hover .scard__go { background:var(--accent); color:var(--on-accent); }
+
+/* DETALLE */
+.det-crumb { padding:24px 0 0; font-family:var(--font-label); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); display:flex; gap:9px; align-items:center; }
+.det-crumb a { color:var(--muted); text-decoration:none; cursor:pointer; }
+.det-crumb span { color:var(--ink); }
+/* layout denso: foto + panel de reserva al lado del título; desc/galería full-width abajo (solo si existen) */
+.det-main { display:grid; grid-template-columns:minmax(300px,400px) 1fr; gap:44px; padding:26px 0 0; align-items:start; }
+.det-left { display:flex; flex-direction:column; gap:22px; position:sticky; top:24px; }
+.det-photo { width:100%; aspect-ratio:1/1; border-radius:var(--radius); position:relative; }
+.det-photo .seal { position:absolute; right:-18px; bottom:-18px; z-index:5; width:84px; height:84px; }
+.det-panel { display:flex; flex-direction:column; gap:24px; min-width:0; }
+.det-panel h1 { font-size:clamp(36px,4.8vw,60px); margin:0; }
+.det-chips { display:flex; gap:8px; flex-wrap:wrap; margin-top:-8px; }
+.det-pricebox { background:var(--surface); border:1px solid var(--hairline); border-radius:var(--radius); padding:calc(24px*var(--pad)); display:flex; flex-direction:column; gap:18px; }
+.pb-top { display:flex; align-items:baseline; justify-content:space-between; gap:12px; padding-bottom:18px; border-bottom:1px solid var(--line); }
+.pb-top .k { font-family:var(--font-label); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+.pb-top .price { font-size:40px; margin-top:4px; }
+.pb-rows { display:flex; flex-direction:column; gap:13px; }
+.bc-row { display:flex; justify-content:space-between; align-items:center; font-size:14px; gap:14px; }
+.bc-row .k { font-family:var(--font-label); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); flex:none; }
+.bc-row .v { color:var(--ink); font-weight:600; text-align:right; }
+.det-avail h3 { font-family:var(--font-label); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--accent); margin-bottom:14px; }
+.wdays { display:flex; gap:8px; flex-wrap:wrap; }
+.wday { font-family:var(--font-label); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); border:1px solid var(--line); border-radius:999px; padding:7px 13px; }
+.wday.on { color:var(--on-accent); background:var(--accent); border-color:var(--accent); }
+.det-note { font-family:var(--font-label); font-size:11px; letter-spacing:.04em; color:var(--muted); margin-top:14px; }
+.pro { display:flex; align-items:center; gap:12px; padding:18px 0 0; border-top:1px solid var(--line); }
+.pro__av { width:44px; height:44px; border-radius:50%; flex:none; display:grid; place-items:center; background:var(--accent-soft); color:var(--accent); border:1px solid var(--hairline); font-family:var(--font-display); font-weight:var(--disp-weight); font-size:17px; letter-spacing:.04em; }
+.pro__n { font-family:var(--font-display); font-weight:var(--disp-weight); color:var(--ink); font-size:18px; letter-spacing:var(--disp-tracking); text-transform:var(--disp-transform); }
+.pro__r { font-family:var(--font-label); font-size:10px; letter-spacing:.08em; color:var(--muted); text-transform:uppercase; }
+.det-extra { padding:48px 0 24px; }
+.det-extra .det-sec + .det-sec { margin-top:40px; }
+.det-sec h3 { font-family:var(--font-label); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--accent); margin-bottom:16px; }
+.det-p { font-size:16px; line-height:1.7; color:var(--text); max-width:760px; }
+.gal { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+.gal .photo { aspect-ratio:1; border-radius:var(--radius-sm); }
+
+/* RESERVAR */
+.res-head { display:flex; align-items:center; justify-content:space-between; padding:22px 0; border-bottom:1px solid var(--line); }
+.res-brand { display:flex; align-items:center; gap:13px; }
+.res-brand .seal { width:46px; height:46px; }
+.res-brand .seal__mid { font-size:13px; }
+.res-brand b { font-family:var(--font-display); font-weight:var(--disp-weight); color:var(--ink); font-size:18px; text-transform:var(--disp-transform); letter-spacing:var(--disp-tracking); }
+.res-close { width:38px; height:38px; border-radius:50%; border:1px solid var(--hairline); background:var(--surface); color:var(--ink); display:grid; place-items:center; cursor:pointer; }
+.steps { display:flex; gap:8px; padding:26px 0 8px; }
+.step { flex:1; display:flex; flex-direction:column; gap:9px; }
+.step .bar { height:3px; border-radius:3px; background:var(--line); }
+.step.done .bar, .step.now .bar { background:var(--accent); }
+.step .lbl { font-family:var(--font-label); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+.step.now .lbl, .step.done .lbl { color:var(--ink); }
+.res-grid { display:grid; grid-template-columns:1.4fr 1fr; gap:34px; padding:30px 0 50px; align-items:start; }
+.res-h { font-family:var(--font-display); font-weight:var(--disp-weight); color:var(--ink); font-size:clamp(28px,4vw,40px); letter-spacing:var(--disp-tracking); text-transform:var(--disp-transform); margin-bottom:6px; }
+.res-h .it { font-style:var(--disp-italic); }
+.res-sub { font-size:14px; color:var(--text); margin-bottom:26px; }
+.days { display:flex; gap:9px; overflow-x:auto; padding-bottom:6px; }
+.day { flex:none; width:64px; text-align:center; padding:13px 0; border:1px solid var(--hairline); border-radius:var(--radius-sm); cursor:pointer; background:var(--surface); transition:all .2s ease; }
+.day .dow { font-family:var(--font-label); font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); }
+.day .num { font-family:var(--font-display); font-weight:var(--disp-weight); color:var(--ink); font-size:24px; margin-top:4px; }
+.day[aria-pressed="true"] { background:var(--accent); border-color:var(--accent); }
+.day[aria-pressed="true"] .dow, .day[aria-pressed="true"] .num { color:var(--on-accent); }
+.slots-title { font-family:var(--font-label); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin:30px 0 16px; }
+.slots { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+.slot { padding:13px 0; text-align:center; border:1px solid var(--hairline); border-radius:var(--radius-sm); cursor:pointer; background:var(--surface); color:var(--ink); font-family:var(--font-label); font-size:13px; letter-spacing:.04em; transition:all .2s ease; }
+.slot:hover { border-color:var(--accent); }
+.slot[aria-pressed="true"] { background:var(--accent); border-color:var(--accent); color:var(--on-accent); }
+.slot.off { opacity:.32; pointer-events:none; text-decoration:line-through; }
+.summary { position:sticky; top:24px; background:var(--surface); border:1px solid var(--hairline); border-radius:var(--radius); }
+.summary__b { padding:calc(24px*var(--pad)); }
+.sum-head { display:flex; gap:14px; align-items:center; margin-bottom:20px; }
+.sum-thumb { width:66px; height:66px; flex:none; aspect-ratio:1/1; border-radius:var(--radius-sm); }
+.sum-kicker { font-family:var(--font-label); font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-bottom:5px; }
+.summary h4 { font-family:var(--font-display); font-weight:var(--disp-weight); color:var(--ink); font-size:22px; letter-spacing:var(--disp-tracking); text-transform:var(--disp-transform); line-height:1.05; }
+.sum-rows { display:flex; flex-direction:column; gap:13px; padding:20px 0; margin:18px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.sum-row { display:flex; justify-content:space-between; align-items:center; }
+.sum-row .k { font-family:var(--font-label); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+.sum-row .v { color:var(--ink); font-weight:600; font-size:14px; }
+.sum-total { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:20px; }
+.sum-total .k { font-family:var(--font-label); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
+.sum-total .price { font-size:32px; }
+
+/* PLANES — grilla content-aware (sin huecos con pocos ítems) */
+.plans { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; padding:calc(8px*var(--pad)) 0 56px; justify-content:center; }
+.plans[data-count="1"] { grid-template-columns:minmax(0,640px); }
+.plans[data-count="2"] { grid-template-columns:repeat(2,minmax(0,360px)); }
+.plans[data-count="1"], .plans[data-count="2"] { min-height:480px; align-content:center; }
+.plan--wide { flex-direction:row !important; }
+.plan--wide .plan__media { width:220px; flex:none; }
+.plan { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; display:flex; flex-direction:column; transition:transform .3s ease; }
+.plan:hover { transform:translateY(-5px); }
+.plan__media { aspect-ratio:1/1; }
+.plan__b { padding:calc(22px*var(--pad)); display:flex; flex-direction:column; gap:16px; flex:1; }
+.plan__name { font-family:var(--font-display); font-weight:var(--disp-weight); color:var(--ink); font-size:24px; letter-spacing:var(--disp-tracking); text-transform:var(--disp-transform); line-height:1.05; }
+.plan ul { list-style:none; display:flex; flex-direction:column; gap:9px; flex:1; }
+.plan li { display:flex; gap:9px; font-size:14px; color:var(--text); line-height:1.4; }
+.plan li .tick { color:var(--accent); flex:none; }
+.plan li.more { color:var(--muted); font-family:var(--font-label); font-size:11px; letter-spacing:.04em; text-transform:uppercase; }
+.plan__foot { margin-top:auto; padding-top:16px; border-top:1px solid var(--line); display:flex; flex-direction:column; gap:14px; }
+.plan__price { font-size:30px; }
+.plan__price small { font-family:var(--font-label); font-size:10px; color:var(--muted); letter-spacing:.06em; margin-left:7px; text-transform:uppercase; }
+
+/* CURSOS — grilla content-aware */
+.cgrid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; padding-bottom:56px; justify-content:center; }
+.cgrid[data-count="1"] { grid-template-columns:minmax(0,360px); }
+.cgrid[data-count="2"] { grid-template-columns:repeat(2,minmax(0,380px)); }
+.cgrid[data-count="1"] { min-height:480px; align-content:center; }
+.ccard { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; display:flex; flex-direction:column; transition:transform .3s ease; cursor:pointer; }
+.ccard:hover { transform:translateY(-4px); }
+.ccard:hover .photo img { transform:scale(1.05); }
+.ccard__media { aspect-ratio:1/1; position:relative; }
+.ccard__body { padding:calc(20px*var(--pad)); display:flex; flex-direction:column; gap:11px; flex:1; }
+.ccard__meta { display:flex; gap:8px; font-family:var(--font-label); font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
+.ccard__t { font-family:var(--font-display); font-weight:var(--disp-weight); color:var(--ink); font-size:21px; line-height:1.1; letter-spacing:var(--disp-tracking); text-transform:var(--disp-transform); }
+.ccard__foot { margin-top:auto; padding-top:13px; border-top:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; }
+.ccard__price { font-size:20px; }
+
+/* GIFT */
+.gift-wrap { display:grid; grid-template-columns:1.1fr .9fr; gap:46px; padding:calc(40px*var(--pad)) 0 60px; align-items:center; }
+.giftcard { aspect-ratio:1.6/1; border-radius:var(--radius); background:linear-gradient(135deg,var(--surface-2),var(--surface)); border:1px solid var(--hairline); padding:30px; display:flex; flex-direction:column; justify-content:space-between; position:relative; overflow:hidden; box-shadow:0 30px 70px -30px rgba(0,0,0,.5); }
+.giftcard::after { content:""; position:absolute; width:260px; height:260px; border-radius:50%; background:var(--accent-soft); top:-120px; right:-90px; }
+.giftcard__top { display:flex; justify-content:space-between; align-items:flex-start; position:relative; z-index:2; }
+.giftcard__brand { font-family:var(--font-display); font-weight:var(--disp-weight); color:var(--ink); font-size:26px; text-transform:var(--disp-transform); letter-spacing:var(--disp-tracking); }
+.giftcard__chip { width:42px; height:32px; border-radius:6px; background:linear-gradient(135deg,var(--accent),var(--accent-soft)); }
+.giftcard__amt { position:relative; z-index:2; font-family:var(--font-display); font-weight:var(--disp-weight); color:var(--ink); font-size:54px; line-height:1; letter-spacing:var(--disp-tracking); }
+.giftcard__lbl { position:relative; z-index:2; font-family:var(--font-label); font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); }
+.gift-form .eyebrow { font-size:12px; }
+.gift-form p { font-size:14px; line-height:1.6; color:var(--text); margin:14px 0 24px; }
+.amt-row { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px; }
+.amt { padding:11px 16px; border:1px solid var(--hairline); border-radius:var(--radius-sm); cursor:pointer; background:var(--surface); color:var(--ink); font-family:var(--font-label); font-size:12px; letter-spacing:.04em; transition:all .2s ease; }
+.amt[aria-pressed="true"] { background:var(--accent); border-color:var(--accent); color:var(--on-accent); }
+.gift-field { display:flex; flex-direction:column; gap:7px; margin-bottom:16px; }
+.gift-field label { font-family:var(--font-label); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+.gift-field .fake { border:1px solid var(--hairline); border-radius:var(--radius-sm); padding:13px 15px; background:var(--surface); color:var(--muted); font-size:14px; }
+
+footer.legal { padding:30px 0; text-align:center; font-family:var(--font-label); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); border-top:1px solid var(--line); }
+
+/* ESTADO VACÍO (reutilizable en las 6 vistas) */
+.empty { display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:13px; min-height:480px; padding:48px 20px; }
+.empty__icon { width:76px; height:76px; border-radius:50%; border:1.5px dashed var(--hairline); display:grid; place-items:center; color:var(--accent); font-family:var(--font-display); font-weight:var(--disp-weight); font-size:26px; letter-spacing:.04em; margin-bottom:4px; background:var(--accent-soft); }
+.empty__t { font-family:var(--font-display); font-weight:var(--disp-weight); color:var(--ink); font-size:clamp(26px,3.4vw,38px); letter-spacing:var(--disp-tracking); text-transform:var(--disp-transform); max-width:560px; }
+.empty__s { font-size:15px; color:var(--text); max-width:400px; line-height:1.55; }
+.empty .btn { margin-top:8px; }
+.plans[data-count="0"], .cgrid[data-count="0"] { grid-template-columns:1fr; min-height:auto; }
+
+@container stage (max-width: 880px) {
+  .grid, .cgrid, .plans { grid-template-columns:repeat(2,1fr); }
+}
+@container stage (max-width: 600px) {
+  .wrap { padding:0 18px; }
+  .snav__links { display:none; }
+  .grid, .cgrid, .cgrid[data-count], .plans, .plans[data-count], .det-main, .res-grid, .gift-wrap { grid-template-columns:1fr; }
+  .plan--wide { flex-direction:column !important; }
+  .plan--wide .plan__media { width:100%; }
+  .gal { grid-template-columns:repeat(3,1fr); }
+  .slots { grid-template-columns:repeat(3,1fr); }
+  .summary { position:static; }
+  .det-left { position:static; flex-direction:column; gap:20px; }
+  .det-photo { max-width:340px; }
+  .det-photo .seal { right:12px; bottom:-16px; width:70px; height:70px; }
+  .catbar { gap:7px; }
+  .search { display:none; }
+  .gift-wrap { gap:28px; }
+}
+
+.note { margin-top:18px; font-size:13px; color:var(--chrome-dim); line-height:1.6; max-width:1040px; }
+.note b { color:var(--chrome-text); }
+.kbd { font-family:'Space Mono',monospace; font-size:11px; background:var(--chrome-panel); border:1px solid var(--chrome-line); border-radius:5px; padding:2px 7px; color:var(--chrome-text); }
+</style>
+</head>
+<body>
+<div class="lab">
+
+  <div class="lab__head">
+    <div class="lab__title"><b>Storefront secundario</b> · Design DNA</div>
+    <div class="lab__sub">Las páginas que viven después de la landing — <b>Servicios</b>, <b>Detalle</b>, <b>Reservar</b>, <b>Planes</b>, <b>Cursos</b> y <b>Gift card</b> — adoptando el ADN visual de cada profesional (paleta, tipografía, atmósfera, duotono). Cambiá de perfil y mirá cómo todo se re-skinea.</div>
+  </div>
+
+  <div class="controls">
+    <div class="ctl-group">
+      <span class="ctl-label">Profesional · Design DNA</span>
+      <div class="pills" id="dnaPills">
+        <button class="pill" data-dna="bravo" aria-pressed="true"><span class="swatch" style="background:#c19548"></span>Bravo Barbería</button>
+        <button class="pill" data-dna="lumiere"><span class="swatch" style="background:#9a6f3a"></span>Lumière</button>
+        <button class="pill" data-dna="selva"><span class="swatch" style="background:#6f7d49"></span>Selva</button>
+      </div>
+    </div>
+    <div class="ctl-group">
+      <span class="ctl-label">Vista</span>
+      <div class="pills" id="viewPills">
+        <button class="pill" data-view="servicios" aria-pressed="true">Servicios</button>
+        <button class="pill" data-view="detalle">Detalle</button>
+        <button class="pill" data-view="reservar">Reservar</button>
+        <button class="pill" data-view="planes">Planes</button>
+        <button class="pill" data-view="cursos">Cursos</button>
+        <button class="pill" data-view="gift">Gift card</button>
+      </div>
+    </div>
+    <div class="ctl-group">
+      <span class="ctl-label">Dispositivo</span>
+      <div class="toggle" id="vpToggle"><button data-vp="desktop" aria-pressed="true">Desktop</button><button data-vp="mobile">Mobile</button></div>
+    </div>
+    <div class="ctl-group">
+      <span class="ctl-label">Comparar</span>
+      <div class="toggle" id="modeToggle"><button data-mode="generic">Hoy</button><button data-mode="dna" aria-pressed="true">Con DNA</button></div>
+    </div>
+    <div class="ctl-group">
+      <span class="ctl-label">Contenido</span>
+      <div class="toggle" id="contentToggle"><button data-content="full" aria-pressed="true">Con datos</button><button data-content="empty">Vacío</button></div>
+    </div>
+  </div>
+
+  <div class="stagewrap">
+    <div class="frame" id="frame" data-vp="desktop">
+      <div class="frame__bar">
+        <div class="notch"></div>
+        <div class="dots"><span></span><span></span><span></span></div>
+        <div class="url"><span class="lock">🔒</span> www.agora.red/<b id="urlVendor">bravo</b><b id="urlPath">/servicios</b></div>
+      </div>
+
+      <div class="stage" id="stage" data-dna="bravo" data-mode="dna">
+        <div class="stage__atmos"></div>
+        <div class="scroll" id="scroll">
+          <div class="wrap">
+
+            <div class="snav">
+              <div class="snav__brand" id="brandName">Bravo Barbería</div>
+              <div class="snav__links"><a href="#">Inicio</a><a href="#" class="on">Servicios</a><a href="#">Nosotros</a><a href="#">Contacto</a></div>
+            </div>
+
+            <!-- SERVICIOS -->
+            <section class="view is-active" data-view="servicios">
+              <div class="page-head"><span class="eyebrow">Catálogo de servicios</span></div>
+              <div class="catbar" id="catbar"></div>
+              <div id="svcList"></div>
+            </section>
+
+            <!-- DETALLE -->
+            <section class="view" data-view="detalle">
+              <div id="detEmpty" style="display:none"></div>
+              <div id="detContent">
+              <div class="det-crumb"><a data-goto="servicios">Servicios</a> / <span id="detCrumb">—</span></div>
+              <div class="det-main">
+                <div class="det-left">
+                  <div class="det-photo photo">
+                    <img id="detImg" src="" alt="" />
+                    <div class="seal" aria-hidden="true"><svg viewBox="0 0 100 100"><defs><path id="cir" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0"/></defs><text><textPath href="#cir"> </textPath></text></svg><div class="seal__mid">CS</div></div>
+                  </div>
+                  <div class="pro"><div class="pro__av" id="proAv">CS</div><div><div class="pro__n" id="proName">—</div><div class="pro__r" id="proRole">—</div></div></div>
+                </div>
+                <div class="det-panel">
+                  <div>
+                    <h1 class="display" id="detTitle">—</h1>
+                    <div class="det-chips" id="detChips"></div>
+                  </div>
+                  <div class="det-pricebox">
+                    <div class="pb-top"><div><span class="k">Valor total</span><div class="price" id="detPrice">—</div></div><span class="chip" id="detDur">—</span></div>
+                    <div class="pb-rows">
+                      <div class="bc-row"><span class="k">Seña</span><span class="v" id="detSena">—</span></div>
+                      <div class="bc-row"><span class="k">Modalidad</span><span class="v" id="detMod">—</span></div>
+                      <div class="bc-row"><span class="k">Dirección</span><span class="v" id="detAddr">—</span></div>
+                    </div>
+                    <button class="btn btn--block" data-goto="reservar">Reservar turno →</button>
+                  </div>
+                  <div class="det-avail">
+                    <h3>Disponibilidad</h3>
+                    <div class="wdays"><span class="wday on">Lun</span><span class="wday on">Mar</span><span class="wday on">Mié</span><span class="wday on">Jue</span><span class="wday on">Vie</span><span class="wday on">Sáb</span><span class="wday">Dom</span></div>
+                    <p class="det-note">Cancelaciones hasta 24 h antes del encuentro.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="det-extra" id="detExtra">
+                <div class="det-sec" id="detDescSec"><h3>Descripción</h3><p class="det-p" id="detDesc"></p></div>
+                <div class="det-sec" id="detGalSec"><h3>Galería</h3><div class="gal" id="detGal"></div></div>
+              </div>
+              </div>
+            </section>
+
+            <!-- RESERVAR -->
+            <section class="view" data-view="reservar">
+              <div class="res-head">
+                <div class="res-brand"><div class="seal" aria-hidden="true"><svg viewBox="0 0 100 100"><text><textPath href="#cir"> </textPath></text></svg><div class="seal__mid">CS</div></div><b id="resBrand">Bravo Barbería</b></div>
+                <div class="res-close" data-goto="detalle" title="Cerrar">✕</div>
+              </div>
+              <div id="resEmpty" style="display:none"></div>
+              <div id="resContent">
+              <div class="steps">
+                <div class="step done"><div class="bar"></div><div class="lbl">01 · Servicio</div></div>
+                <div class="step done"><div class="bar"></div><div class="lbl">02 · Profesional</div></div>
+                <div class="step now"><div class="bar"></div><div class="lbl">03 · Horario</div></div>
+              </div>
+              <div class="res-grid">
+                <div>
+                  <h2 class="res-h">Elegí <span class="it">cuándo</span></h2>
+                  <p class="res-sub" id="resSub">—</p>
+                  <div class="days" id="days">
+                    <div class="day"><div class="dow">Lun</div><div class="num">09</div></div>
+                    <div class="day" aria-pressed="true"><div class="dow">Mar</div><div class="num">10</div></div>
+                    <div class="day"><div class="dow">Mié</div><div class="num">11</div></div>
+                    <div class="day"><div class="dow">Jue</div><div class="num">12</div></div>
+                    <div class="day"><div class="dow">Vie</div><div class="num">13</div></div>
+                    <div class="day"><div class="dow">Sáb</div><div class="num">14</div></div>
+                  </div>
+                  <div class="slots-title">Horarios — Martes 10</div>
+                  <div class="slots" id="slots">
+                    <div class="slot off">09:00</div><div class="slot">10:30</div><div class="slot" aria-pressed="true">12:00</div><div class="slot">13:30</div>
+                    <div class="slot off">15:00</div><div class="slot">16:30</div><div class="slot">18:00</div><div class="slot">19:30</div>
+                  </div>
+                </div>
+                <aside class="summary">
+                  <div class="summary__b">
+                    <div class="sum-head">
+                      <div class="sum-thumb photo"><img id="sumImg" src="" alt=""/></div>
+                      <div><div class="sum-kicker">Tu reserva</div><h4 id="sumTitle">—</h4></div>
+                    </div>
+                    <div class="sum-rows">
+                      <div class="sum-row"><span class="k">Profesional</span><span class="v" id="sumStaff">—</span></div>
+                      <div class="sum-row"><span class="k">Fecha</span><span class="v">Mar 10 jun · 12:00</span></div>
+                      <div class="sum-row"><span class="k">Duración</span><span class="v" id="sumDur">—</span></div>
+                      <div class="sum-row"><span class="k">Valor total</span><span class="v" id="sumPrice">—</span></div>
+                    </div>
+                    <div class="sum-total"><span class="k">Seña a abonar ahora</span><span class="price" id="sumSena">—</span></div>
+                    <button class="btn btn--block">Confirmar reserva →</button>
+                  </div>
+                </aside>
+              </div>
+              </div>
+            </section>
+
+            <!-- PLANES -->
+            <section class="view" data-view="planes">
+              <div class="page-head"><span class="eyebrow">Membresías</span></div>
+              <div class="plans" id="plansGrid"></div>
+            </section>
+
+            <!-- CURSOS -->
+            <section class="view" data-view="cursos">
+              <div class="page-head"><span class="eyebrow">Cursos</span></div>
+              <div class="cgrid" id="cursosGrid"></div>
+            </section>
+
+            <!-- GIFT CARD -->
+            <section class="view" data-view="gift">
+              <div id="giftEmpty" style="display:none"></div>
+              <div class="gift-wrap" id="giftContent">
+                <div class="giftcard">
+                  <div class="giftcard__top"><div class="giftcard__brand" id="giftBrand">Bravo Barbería</div><div class="giftcard__chip"></div></div>
+                  <div><div class="giftcard__lbl">Gift card digital</div><div class="giftcard__amt" id="giftAmt">$50.000</div></div>
+                </div>
+                <div class="gift-form">
+                  <span class="eyebrow">Gift card</span>
+                  <p>Elegí un diseño, escribí una dedicatoria y se envía por mail o WhatsApp. Se canjea en cualquier servicio.</p>
+                  <div class="amt-row" id="amtRow"></div>
+                  <div class="gift-field"><label>Para quién</label><div class="fake">Nombre de quien lo recibe</div></div>
+                  <div class="gift-field"><label>Dedicatoria</label><div class="fake">Escribí un mensaje…</div></div>
+                  <div class="gift-field"><label>Envío</label><div class="amt-row"><div class="amt" aria-pressed="true">Por mail</div><div class="amt">Por WhatsApp</div></div></div>
+                  <button class="btn btn--block">Comprar gift card →</button>
+                </div>
+              </div>
+            </section>
+
+            <footer class="legal">Hecho con Ágora · www.agora.red</footer>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <b>Cómo funciona.</b> Cada perfil define un <b>Design DNA</b> (paleta, tipografía, radios, densidad, atmósfera y duotono de fotos) y las vistas secundarias lo adoptan con el mismo markup — no sólo la landing. <span class="kbd">Hoy ↔ Con DNA</span> compara contra una versión genérica · <span class="kbd">Dispositivo</span> alterna Desktop/Mobile · <span class="kbd">Contenido</span> muestra los estados vacíos. Imágenes con crop real (servicio/curso 1:1, banner 3:1, galería original). Perfiles de muestra, datos ilustrativos.
+  </div>
+</div>
+
+<script>
+const stage = document.getElementById('stage');
+const scroll = document.getElementById('scroll');
+const frame = document.getElementById('frame');
+
+const DNA = {
+  bravo: {
+    real:false, brand:'Bravo Barbería', initials:'BB', orbit:'BRAVO BARBERÍA · CORTE & ESTILO · ', vendor:'bravo',
+    featured:{
+      titleHTML:'Corte de pelo caballero', name:'Corte de pelo caballero', price:'$17.500', sena:'$5.000', dur:'60 min',
+      modality:'En el local', desc:'', gallery:[], img:'cortes',
+      staff:'Bravo Barbería', staffRole:'Barbería', address:'Av. Corrientes 3400, CABA'
+    }
+  },
+  lumiere: {
+    real:false, brand:'Lumière', initials:'L', orbit:'ESTUDIO LUMIÈRE · DESDE 2019 · ', vendor:'lumiere',
+    featured:{
+      titleHTML:'Kapping ruso <span class="it">premium</span>', name:'Kapping ruso premium', price:'$24.000', sena:'$8.000', dur:'90 min',
+      modality:'En el local', desc:'Una técnica de cobertura rusa que cuida la uña natural y deja un acabado espejo que dura semanas. Incluye diagnóstico, diseño a medida y cierre con aceites nutritivos.',
+      gallery:['nailart','esculpidas','kapping','pedicura'], img:'manicura',
+      staff:'Camila R.', staffRole:'Nail artist', address:'Palermo, CABA'
+    }
+  },
+  selva: {
+    real:false, brand:'Selva', initials:'S', orbit:'SELVA · BIENESTAR & SPA · ', vendor:'selva',
+    featured:{
+      titleHTML:'Masaje <span class="it">descontracturante</span>', name:'Masaje descontracturante', price:'$18.000', sena:'$6.000', dur:'60 min',
+      modality:'En el local', desc:'Trabajo profundo de espalda y cervicales con aceites esenciales tibios. Libera la tensión acumulada y reactiva la circulación.',
+      gallery:['masajes','cuerpo','faciales','bienestar'], img:'masajes'
+      , staff:'Lucía P.', staffRole:'Masoterapeuta', address:'Villa Crespo, CABA'
+    }
+  }
+};
+
+const IMG_UNSPLASH = {
+  manicura:'1604654894610-df63bc536371', esculpidas:'1632345031435-8727f6897d53', kapping:'1604902396830-aca29e19b067', pedicura:'1519014816548-bf5fe059798b', nailart:'1610992015732-2449b76344bc', mirada:'1570172619644-dfd03ed5d881', depilacion:'1600334089648-b0d9d3028eb2', spa:'1591343395082-e120087004b4', combos:'1494790108377-be9c29b29330',
+  masajes:'1544161515-4ab6ce6db874', faciales:'1570172619644-dfd03ed5d881', cuerpo:'1600334089648-b0d9d3028eb2', bienestar:'1591343395082-e120087004b4', rituales:'1544161515-4ab6ce6db874',
+  cortes:'1503951914875-452162b0f3f1', barberia:'1599351431202-1e0f0137899a', color:'1605497788044-5a32c7078486', peinado:'1605497788044-5a32c7078486'
+};
+function imgUnsplash(cat){ return `https://images.unsplash.com/photo-${IMG_UNSPLASH[cat]||IMG_UNSPLASH.spa}?auto=format&fit=crop&w=700&q=80`; }
+/* resolver de imagen: CloudFront (real) → variante _500.webp ; unsplash full → tal cual ; cat id → unsplash */
+function resolveImg(key){ if(!key) return imgUnsplash('spa'); if(key.indexOf('http')===0) return key; return imgUnsplash(key); }
+
+/* ===== Catálogos de servicios ===== */
+const CATALOG = {
+  /* Bravo Barbería: catálogo de muestra. cat = etiqueta/label */
+  bravo: { grouped:false, cats:[['cortes','Cortes de pelo'],['barberia','Barbería']],
+    s:[
+      ['Corte de pelo caballero','Incluye lavado.','$17.500','60 min','cortes','cortes'],
+      ['Corte de pelo dama','Incluye lavado.','$21.500','60 min','cortes','cortes'],
+      ['Tintura con arte (femenino)','','$10.500','75 min','','color'],
+      ['Barbería completa','','$9.500','30 min','barberia','barberia'],
+      ['Peinado recogido o semirecogido','','$14.000','60 min','','peinado'],
+    ] },
+  lumiere: { grouped:true, cats:[['manicura','Manicura'],['esculpidas','Esculpidas'],['kapping','Kapping'],['pedicura','Pedicura'],['nailart','Nail art'],['mirada','Cejas & pestañas'],['depilacion','Depilación'],['spa','Spa de manos'],['combos','Combos']],
+    s:[
+      ['Manicura express','Limado, cutículas y esmaltado.','$8.000','35 min','manicura'],['Manicura semipermanente','Larga duración, brillo intacto.','$11.000','50 min','manicura'],['Manicura rusa','Precisión en cutícula con torno.','$13.000','60 min','manicura'],['Manicura spa','Exfoliación, mascarilla e hidratación.','$14.500','70 min','manicura'],['Manicura francesa','El clásico atemporal.','$12.000','55 min','manicura'],['Esmaltado tradicional','Color sobre uña natural.','$6.000','25 min','manicura'],['Cambio de esmaltado','Retiro y nuevo color.','$9.000','40 min','manicura'],['Retiro + tratamiento','Retiro seguro y baño fortalecedor.','$7.500','30 min','manicura'],
+      ['Esculpidas en gel','Extensión con molde, larga duración.','$28.000','120 min','esculpidas'],['Esculpidas en acrílico','Resistencia máxima.','$27.000','120 min','esculpidas'],['Soft gel tips','Tips naturales y livianas.','$24.000','100 min','esculpidas'],['Encapsulado','Diseño sellado en gel.','$26.000','110 min','esculpidas'],['Relleno gel','Mantenimiento en gel.','$18.000','90 min','esculpidas'],['Relleno acrílico','Mantenimiento en acrílico.','$17.000','90 min','esculpidas'],['Baby boomer','Degradé nude a blanco.','$30.000','130 min','esculpidas'],
+      ['Kapping ruso premium','Cobertura espejo, cuida la uña.','$24.000','90 min','kapping'],['Kapping en gel','Refuerzo sobre uña natural.','$16.000','75 min','kapping'],['Kapping refuerzo','Para uñas débiles.','$15.000','70 min','kapping'],['Kapping + diseño','Cobertura con arte.','$19.000','95 min','kapping'],['Reconstrucción de uña','Recupera una uña dañada.','$13.000','60 min','kapping'],
+      ['Pedicura rusa','Precisión y acabado sano.','$19.000','75 min','pedicura'],['Pedicura spa','Baño, exfoliación y masaje.','$21.000','90 min','pedicura'],['Pedicura semipermanente','Color de larga duración.','$16.000','70 min','pedicura'],['Pedicura clínica','Durezas y encarnadas.','$23.000','80 min','pedicura'],['Esmaltado de pies','Color sobre uña natural.','$8.500','35 min','pedicura'],['Parafina de pies','Baño tibio, piel suave.','$12.000','45 min','pedicura'],
+      ['Diseño minimalista','Líneas finas y detalles.','$4.000','20 min','nailart'],['Encapsulado de flores','Flores selladas en gel.','$9.000','45 min','nailart'],['Cromado espejo','Efecto metálico.','$6.500','30 min','nailart'],['Francesita de color','La francesa en cualquier tono.','$5.500','30 min','nailart'],['Pedrería Swarovski','Brillos para ocasión especial.','$11.000','50 min','nailart'],['Ojo de gato','Efecto magnético.','$5.000','25 min','nailart'],['Hand-painted art','Arte pintado a mano.','$13.000','60 min','nailart'],
+      ['Perfilado de cejas','Forma ideal para tu rostro.','$6.000','25 min','mirada'],['Laminado de cejas','Cejas peinadas y fijadas.','$14.000','50 min','mirada'],['Henna de cejas','Color y forma que dura.','$9.000','40 min','mirada'],['Lifting de pestañas','Curvatura natural.','$13.000','55 min','mirada'],['Extensión pelo a pelo','Volumen natural.','$18.000','90 min','mirada'],['Volumen ruso','Máximo impacto.','$22.000','110 min','mirada'],
+      ['Labio superior','Cera de bigote.','$3.500','15 min','depilacion'],['Cejas con cera','Limpieza y forma.','$4.500','20 min','depilacion'],['Rostro completo','Depilación facial integral.','$8.000','35 min','depilacion'],['Axilas','Depilación con cera.','$5.000','20 min','depilacion'],['Media pierna','Media pierna con cera.','$9.000','40 min','depilacion'],
+      ['Spa de manos','Exfoliación, hidratación, masaje.','$15.000','45 min','spa'],['Parafina de manos','Baño de parafina.','$11.000','40 min','spa'],['Tratamiento fortalecedor','Recuperación intensiva.','$10.000','35 min','spa'],['Masaje de manos','Relajación y descanso.','$8.000','30 min','spa'],
+      ['Mani + Pedi','Combo manos y pies.','$26.000','120 min','combos'],['Combo novia','Prueba + día del evento.','$45.000','180 min','combos'],['Combo quince','Diseño para la quinceañera.','$32.000','150 min','combos'],['Pack mensual','4 manicuras al mes.','$36.000','—','combos'],
+    ] },
+  selva: { grouped:true, cats:[['masajes','Masajes'],['faciales','Faciales'],['cuerpo','Cuerpo'],['bienestar','Bienestar'],['rituales','Rituales']],
+    s:[
+      ['Descontracturante','Trabajo profundo con aceites.','$18.000','60 min','masajes'],['Relajante','Maniobras suaves.','$16.000','60 min','masajes'],['Deep tissue','Presión profunda.','$20.000','75 min','masajes'],['Drenaje linfático','Reduce retención.','$19.000','70 min','masajes'],['Deportivo','Recuperación muscular.','$20.000','75 min','masajes'],['Cuatro manos','Dos terapeutas.','$32.000','60 min','masajes'],['Piedras calientes','Termoterapia.','$21.000','90 min','masajes'],
+      ['Facial botánico','Limpieza y arcilla.','$16.000','75 min','faciales'],['Limpieza profunda','Extracción y purificación.','$17.000','80 min','faciales'],['Hidratación','Nutrición intensa.','$15.000','60 min','faciales'],['Anti-edad','Reafirma el rostro.','$22.000','85 min','faciales'],['Vapor de hierbas','Apertura de poros.','$12.000','45 min','faciales'],['Mascarilla de arcilla','Detox y minerales.','$11.000','40 min','faciales'],
+      ['Exfoliación corporal','Piel suave y renovada.','$15.000','60 min','cuerpo'],['Envoltura de algas','Remineraliza la piel.','$19.000','75 min','cuerpo'],['Chocolaterapia','Ritual con cacao puro.','$18.000','70 min','cuerpo'],['Lodoterapia','Barros termales.','$17.000','70 min','cuerpo'],['Aromaterapia','Aceites para cuerpo y mente.','$16.000','65 min','cuerpo'],
+      ['Baño de sonido','Cuencos para soltar la mente.','$9.000','50 min','bienestar'],['Meditación guiada','Pausa para reconectar.','$7.000','45 min','bienestar'],['Yoga restaurativo','Posturas suaves.','$8.000','60 min','bienestar'],['Reiki','Equilibrio energético.','$13.000','55 min','bienestar'],['Reflexología','Puntos en pies.','$12.000','50 min','bienestar'],
+      ['Ritual de pareja','Spa para dos.','$38.000','90 min','rituales'],['Día de spa','Circuito de medio día.','$45.000','240 min','rituales'],['Ritual detox','Exfoliación + envoltura + masaje.','$34.000','150 min','rituales'],['Ritual prenatal','Cuidado para el embarazo.','$22.000','75 min','rituales'],['Ritual luna','Cierre de ciclo.','$26.000','120 min','rituales'],
+    ] },
+};
+
+/* ===== Planes (Subscription) ===== */
+const SUBS = {
+  bravo:[ {n:'Club mensual', p:'$8.000', img:'cortes', incl:['Corte de pelo caballero','Arreglo de barba'], extra:0} ],
+  lumiere:[
+    {n:'Club de manos', p:'$30.000', img:'manicura', incl:['Manicura semipermanente','Spa de manos','Retiro + tratamiento'], extra:1},
+    {n:'Mes completo', p:'$52.000', img:'kapping', incl:['Kapping ruso premium','Pedicura rusa','Spa de manos'], extra:2},
+    {n:'Pies cuidados', p:'$24.000', img:'pedicura', incl:['Pedicura semipermanente','Parafina de pies'], extra:0},
+  ],
+  selva:[
+    {n:'Pausa mensual', p:'$30.000', img:'masajes', incl:['Masaje relajante','Aromaterapia'], extra:0},
+    {n:'Bienestar total', p:'$48.000', img:'faciales', incl:['Descontracturante','Facial botánico','Baño de sonido'], extra:2},
+    {n:'Ritual continuo', p:'$64.000', img:'rituales', incl:['Día de spa','Masaje deep tissue'], extra:3},
+  ],
+};
+
+/* ===== Cursos (OnlineCourse): [nombre, clases, horas, precio, img] ===== */
+const COURSES = {
+  bravo:[
+    ['Curso de Barbería Avanzado','3 clases','1h','Gratis','barberia'],
+    ['Certificación en Estilismo','24 clases','8h','$120.000','color'],
+  ],
+  lumiere:[['Kapping ruso de cero','24 clases','8h','$120.000','manicura'],['Esculpidas en gel pro','30 clases','12h','$160.000','esculpidas'],['Nail art avanzado','16 clases','5h','$85.000','nailart'],['Lifting & laminado','12 clases','4h','$95.000','mirada'],['Negocio de uñas','10 clases','3h','$60.000','spa'],['Pedicura clínica','18 clases','6h','$110.000','pedicura']],
+  selva:[['Masaje terapéutico','28 clases','10h','$150.000','masajes'],['Aromaterapia aplicada','16 clases','6h','$80.000','cuerpo'],['Cosmética natural','22 clases','8h','$120.000','faciales'],['Meditación & sonido','12 clases','5h','$65.000','bienestar'],['Reflexología integral','20 clases','7h','$110.000','bienestar'],['Spa como negocio','12 clases','5h','$70.000','rituales']],
+};
+
+/* ===== Gift cards (GiftCardTemplate): presets reales ===== */
+const GIFTS = {
+  bravo:[ ['Tarjeta clásica','$20.000'], ['Para regalar','$50.000'] ],
+  lumiere:[ ['$15.000','$15.000'], ['$30.000','$30.000'], ['$50.000','$50.000'], ['$80.000','$80.000'] ],
+  selva:[ ['$15.000','$15.000'], ['$30.000','$30.000'], ['$50.000','$50.000'], ['$80.000','$80.000'] ],
+};
+
+let activeDNA = 'bravo';
+let activeFilter = 'all';
+let forceEmpty = false;
+
+function emptyHTML(t, s, cta){
+  return `<div class="empty"><div class="empty__icon">${DNA[activeDNA].initials}</div><div class="empty__t">${t}</div><p class="empty__s">${s}</p>${cta?`<button class="btn btn--ghost" data-goto="${cta.go}">${cta.label}</button>`:''}</div>`;
+}
+
+function cardHTML(dna, s){
+  const [n,d,p,t,cat,img] = s;
+  return `<article class="scard" data-goto="detalle" title="${d}"><div class="photo"><img src="${resolveImg(img||cat)}" alt=""/></div><div class="scard__grad"></div><div class="scard__overlay"><h3 class="scard__name">${n}</h3><div class="scard__foot"><div class="scard__price price">${p}</div><div class="scard__go">→</div></div></div></article>`;
+}
+function renderServices(){
+  const data = CATALOG[activeDNA], list = document.getElementById('svcList');
+  const empty = forceEmpty || !data.s.length;
+  document.getElementById('catbar').style.display = empty ? 'none' : '';
+  if(empty){ list.innerHTML = emptyHTML('Sin servicios todavía', 'Este negocio aún no publicó sus servicios en su página.'); return; }
+  let items = activeFilter==='all' ? data.s : data.s.filter(s=>s[4]===activeFilter);
+  if(data.grouped && activeFilter==='all'){
+    list.innerHTML = data.cats.map(([id,label])=>{
+      const g = data.s.filter(s=>s[4]===id); if(!g.length) return '';
+      return `<div class="cat-group"><div class="cat-head"><h2>${label}</h2><span class="ln"></span></div><div class="grid">${g.map(s=>cardHTML(activeDNA,s)).join('')}</div></div>`;
+    }).join('');
+  } else {
+    list.innerHTML = `<div class="cat-group"><div class="grid">${items.map(s=>cardHTML(activeDNA,s)).join('')}</div></div>`;
+  }
+}
+function renderCatbar(){
+  const data = CATALOG[activeDNA], bar = document.getElementById('catbar');
+  const chips = [['all','Todos']].concat(data.cats);
+  bar.innerHTML = chips.map(([id,label])=>`<span class="chip fchip" data-cat="${id}" aria-pressed="${id===activeFilter}">${label}</span>`).join('') + `<span class="search">⌕ Buscar</span>`;
+}
+function renderCourses(){
+  const data = COURSES[activeDNA], grid = document.getElementById('cursosGrid');
+  if(forceEmpty || !data.length){ grid.dataset.count = 0; grid.innerHTML = emptyHTML('Sin cursos', 'Todavía no hay cursos ni capacitaciones disponibles.'); return; }
+  grid.dataset.count = data.length;
+  grid.innerHTML = data.map(([t,clases,hrs,p,img])=>
+    `<article class="ccard"><div class="ccard__media photo"><img src="${resolveImg(img)}" alt=""/></div><div class="ccard__body"><div class="ccard__meta"><span>${clases}</span><span>·</span><span>${hrs}</span></div><h3 class="ccard__t">${t}</h3><div class="ccard__foot"><div class="ccard__price price">${p}</div><div class="scard__go">→</div></div></div></article>`).join('');
+}
+function renderPlans(){
+  const data = SUBS[activeDNA], grid = document.getElementById('plansGrid');
+  if(forceEmpty || !data.length){ grid.dataset.count = 0; grid.innerHTML = emptyHTML('Sin membresías', 'Este negocio todavía no ofrece planes ni abonos.'); return; }
+  grid.dataset.count = data.length;
+  const wide = data.length===1;
+  grid.innerHTML = data.map(pl=>{
+    const lis = pl.incl.map(s=>`<li><span class="tick">✓</span>${s}</li>`).join('') + (pl.extra>0?`<li class="more">+ ${pl.extra} servicio${pl.extra>1?'s':''} más incluido${pl.extra>1?'s':''}</li>`:'');
+    return `<div class="plan${wide?' plan--wide':''}"><div class="plan__media photo"><img src="${resolveImg(pl.img)}" alt=""/></div><div class="plan__b"><h3 class="plan__name">${pl.n}</h3><ul>${lis}</ul><div class="plan__foot"><div class="plan__price price">${pl.p}<small>por mes</small></div><button class="btn btn--block">Sumarme</button></div></div></div>`;
+  }).join('');
+}
+function renderGift(){
+  const g = GIFTS[activeDNA];
+  const empty = forceEmpty || !g.length;
+  document.getElementById('giftContent').style.display = empty ? 'none' : '';
+  const host = document.getElementById('giftEmpty');
+  host.style.display = empty ? '' : 'none';
+  if(empty){ host.innerHTML = emptyHTML('Sin gift cards', 'Este negocio todavía no ofrece tarjetas de regalo.'); return; }
+  document.getElementById('amtRow').innerHTML = g.map(([label,amt],i)=>`<div class="amt" data-amt="${amt}" aria-pressed="${i===0}">${label}</div>`).join('');
+  document.getElementById('giftAmt').textContent = g[0][1];
+}
+function renderDetail(){
+  const f = DNA[activeDNA].featured;
+  const empty = forceEmpty || !f;
+  document.getElementById('detContent').style.display = empty ? 'none' : '';
+  const host = document.getElementById('detEmpty'); host.style.display = empty ? '' : 'none';
+  if(empty){ host.innerHTML = emptyHTML('Servicio no disponible', 'Este servicio ya no está publicado. Mirá el resto del catálogo.', {label:'Ver servicios', go:'servicios'}); return; }
+  document.getElementById('detCrumb').textContent = f.name;
+  document.getElementById('detTitle').innerHTML = f.titleHTML;
+  document.getElementById('detChips').innerHTML = `<span class="chip">${f.modality}</span><span class="chip">${f.dur}</span>`;
+  document.getElementById('detImg').src = resolveImg(f.img);
+  document.getElementById('detPrice').textContent = f.price;
+  document.getElementById('detDur').textContent = f.dur;
+  document.getElementById('detSena').textContent = f.sena;
+  document.getElementById('detMod').textContent = f.modality;
+  document.getElementById('detAddr').textContent = f.address;
+  document.getElementById('proAv').textContent = DNA[activeDNA].initials;
+  document.getElementById('proName').textContent = f.staff;
+  document.getElementById('proRole').textContent = f.staffRole;
+  // Descripción + Galería: solo si existen de verdad; si no, se oculta todo el bloque (sin huecos)
+  const hasDesc = !!f.desc, hasGal = !!(f.gallery && f.gallery.length);
+  document.getElementById('detDescSec').style.display = hasDesc ? '' : 'none';
+  document.getElementById('detDesc').textContent = f.desc || '';
+  const galSec = document.getElementById('detGalSec');
+  galSec.style.display = hasGal ? '' : 'none';
+  if(hasGal) document.getElementById('detGal').innerHTML = f.gallery.map(c=>`<div class="photo"><img src="${resolveImg(c)}" alt=""/></div>`).join('');
+  document.getElementById('detExtra').style.display = (hasDesc || hasGal) ? '' : 'none';
+}
+function renderReservar(){
+  const f = DNA[activeDNA].featured;
+  const empty = forceEmpty || !f;
+  document.getElementById('resContent').style.display = empty ? 'none' : '';
+  const host = document.getElementById('resEmpty'); host.style.display = empty ? '' : 'none';
+  if(empty){ host.innerHTML = emptyHTML('Nada para reservar', 'Todavía no hay servicios disponibles para agendar.', {label:'Ver servicios', go:'servicios'}); return; }
+  document.getElementById('resSub').textContent = `Disponibilidad de ${f.staff} para ${f.name}.`;
+  document.getElementById('sumImg').src = resolveImg(f.img);
+  document.getElementById('sumTitle').innerHTML = f.titleHTML;
+  document.getElementById('sumStaff').textContent = 'con ' + f.staff;
+  document.getElementById('sumDur').textContent = f.dur;
+  document.getElementById('sumPrice').textContent = f.price;
+  document.getElementById('sumSena').textContent = f.sena;
+}
+
+function setDNA(dna){
+  activeDNA = dna; activeFilter = 'all';
+  stage.dataset.dna = dna;
+  const m = DNA[dna];
+  document.getElementById('brandName').innerHTML = m.brand;
+  document.getElementById('resBrand').innerHTML = m.brand;
+  document.getElementById('giftBrand').innerHTML = m.brand;
+  document.getElementById('urlVendor').textContent = m.vendor;
+  document.querySelectorAll('.seal__mid').forEach(e=>e.textContent=m.initials);
+  document.querySelectorAll('.seal textPath').forEach(e=>e.textContent=' '+m.orbit+' ');
+  renderViews();
+  document.querySelectorAll('#dnaPills .pill').forEach(p=>p.setAttribute('aria-pressed', p.dataset.dna===dna));
+}
+function renderViews(){
+  renderCatbar(); renderServices(); renderCourses(); renderPlans(); renderGift(); renderDetail(); renderReservar();
+}
+
+const PATHS = { servicios:'/servicios', detalle:'/servicios/'+'corte', reservar:'/reservar', planes:'/planes', cursos:'/cursos', gift:'/gift-cards' };
+function setView(v){
+  document.querySelectorAll('.view').forEach(s=>s.classList.toggle('is-active', s.dataset.view===v));
+  document.querySelectorAll('#viewPills .pill').forEach(p=>p.setAttribute('aria-pressed', p.dataset.view===v));
+  document.getElementById('urlPath').textContent = v==='detalle' ? '/servicios/'+slugify(DNA[activeDNA].featured.name) : PATHS[v];
+  scroll.scrollTo({top:0,behavior:'smooth'});
+}
+function slugify(s){ return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,''); }
+
+document.getElementById('dnaPills').addEventListener('click', e=>{ const b=e.target.closest('.pill'); if(b) setDNA(b.dataset.dna); });
+document.getElementById('viewPills').addEventListener('click', e=>{ const b=e.target.closest('.pill'); if(b) setView(b.dataset.view); });
+document.getElementById('vpToggle').addEventListener('click', e=>{ const b=e.target.closest('button'); if(!b) return; frame.dataset.vp=b.dataset.vp; document.querySelectorAll('#vpToggle button').forEach(x=>x.setAttribute('aria-pressed',x===b)); });
+document.getElementById('modeToggle').addEventListener('click', e=>{ const b=e.target.closest('button'); if(!b) return; stage.dataset.mode=b.dataset.mode; document.querySelectorAll('#modeToggle button').forEach(x=>x.setAttribute('aria-pressed',x===b)); });
+document.getElementById('contentToggle').addEventListener('click', e=>{ const b=e.target.closest('button'); if(!b) return; forceEmpty=b.dataset.content==='empty'; document.querySelectorAll('#contentToggle button').forEach(x=>x.setAttribute('aria-pressed',x===b)); renderViews(); });
+document.addEventListener('click', e=>{
+  const cat = e.target.closest('.fchip'); if(cat){ activeFilter=cat.dataset.cat; renderCatbar(); renderServices(); return; }
+  const g = e.target.closest('[data-goto]'); if(g){ setView(g.dataset.goto); return; }
+  const day = e.target.closest('.day'); if(day){ document.querySelectorAll('#days .day').forEach(d=>d.setAttribute('aria-pressed',d===day)); }
+  const slot = e.target.closest('.slot:not(.off)'); if(slot){ document.querySelectorAll('#slots .slot').forEach(s=>s.setAttribute('aria-pressed',s===slot)); }
+  const amt = e.target.closest('.amt'); if(amt){ const row=amt.parentElement; row.querySelectorAll('.amt').forEach(a=>a.setAttribute('aria-pressed',a===amt)); if(row.id==='amtRow') document.getElementById('giftAmt').textContent = amt.dataset.amt || amt.textContent; }
+});
+
+setDNA('bravo');
+setView('servicios');
+</script>
+</body>
+</html>

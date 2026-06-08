@@ -1,8 +1,18 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
   "version": 1,
-  "updated_at": "2026-06-06",
+  "updated_at": "2026-06-08",
   "outputs": [
+    {
+      "type": "landing",
+      "typeLabel": "Prototype",
+      "title": "Storefront secundario · Design DNA",
+      "description": "Prototipo interactivo navegable: las páginas secundarias del storefront — Servicios, Detalle, Reservar, Planes, Cursos y Gift card — adoptando el Design DNA del profesional (paleta, arquetipo, tipografía, atmósfera, duotono), igual que ya lo hace la landing. Mismo markup y datos: sólo cambian los tokens del ADN. 3 perfiles de muestra que re-skinean las 6 vistas en vivo, switch 'Hoy ↔ Con DNA' para comparar contra lo genérico actual, Desktop↔Mobile vía container queries, estados vacíos themeados end-to-end, y fidelidad a los crops reales de imagen (servicio/curso 1:1, banner 3:1, galería original). Perfiles y datos de muestra (vendor ficticio 'Bravo Barbería').",
+      "detail": "prototipo interactivo · 6 vistas × 3 ADN · desktop/mobile · estados vacíos",
+      "date": "JUN 2026",
+      "href": "./storefront-secundario-dna-2026-06/index.html",
+      "slug": "storefront-secundario-dna-2026-06"
+    },
     {
       "type": "one-pager",
       "typeLabel": "HR",
