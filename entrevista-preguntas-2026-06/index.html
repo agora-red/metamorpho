@@ -154,6 +154,28 @@
   .map-card tbody td{padding:11px 16px;border-top:1px solid var(--line);font-size:12.5px;vertical-align:middle}
   .map-card tbody tr:hover{background:#fafbff}
   .map-card .cand-name{font-weight:700;font-size:13px}
+
+  /* ── RESULTS TAB ── */
+  .cand-card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:16px;box-shadow:0 1px 4px rgba(16,24,40,.05)}
+  .cand-card-head{padding:14px 20px 12px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .cand-card-body{display:grid;grid-template-columns:1fr 1fr}
+  @media(max-width:640px){.cand-card-body{grid-template-columns:1fr}}
+  .cand-card-scores{padding:14px 20px 16px;border-right:1px solid var(--line)}
+  .cand-card-obs{padding:14px 20px 16px}
+  .cand-card-foot{background:#f6f7f9;border-top:1px solid var(--line);padding:10px 20px;font-size:12px;color:#374151;line-height:1.5}
+  .score-row{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--line);font-size:12px}
+  .score-row:last-child{border-bottom:none}
+  .score-label{color:#374151;font-weight:500}
+  .score-val{font-size:11px;font-weight:700;padding:2px 9px;border-radius:6px}
+  .s-alto{background:#dcfce7;color:#166534}
+  .s-medio{background:#fef9c3;color:#854d0e}
+  .s-bajo{background:#fee2e2;color:#991b1b}
+  .r-sub{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:8px}
+  .obs-list{list-style:none;display:flex;flex-direction:column;gap:6px;padding:0;margin:0}
+  .obs-list li{font-size:12px;color:#374151;line-height:1.4;display:flex;gap:7px}
+  .obs-pos li::before{content:'↑';color:var(--green);font-weight:700;flex-shrink:0}
+  .obs-neg li::before{content:'↓';color:var(--red);font-weight:700;flex-shrink:0}
+  .obs-warn li::before{content:'→';color:var(--amber);font-weight:700;flex-shrink:0}
 </style>
 </head>
 <body>
@@ -168,6 +190,7 @@
   <div class="tabs">
     <button class="tab active" data-panel="preguntas">Preguntas</button>
     <button class="tab" data-panel="claves">Claves del ejercicio</button>
+    <button class="tab" data-panel="resultados">Resultados</button>
   </div>
 
   <!-- ═══════════ PANEL: PREGUNTAS ═══════════ -->
@@ -201,6 +224,11 @@
           </tr>
           <tr>
             <td><span class="cand cs"><span class="ini">A</span>Agustín</span></td>
+            <td style="font-size:12.5px">¿Qué predice si un vendor recibe su primera reserva?</td>
+            <td style="font-size:12.5px">Vendor furioso que quiere darse de baja</td>
+          </tr>
+          <tr>
+            <td><span class="cand growth"><span class="ini">Ab</span>Abril</span></td>
             <td style="font-size:12.5px">¿Qué predice si un vendor recibe su primera reserva?</td>
             <td style="font-size:12.5px">Vendor furioso que quiere darse de baja</td>
           </tr>
@@ -514,7 +542,227 @@ V025,beauty,45,sí,3,sí,sí,3,activo</pre>
 
   </div>
 
-  <footer>Búsqueda Growth &amp; CS Analyst · Jun 2026 · 4 candidatos en 2da entrevista</footer>
+  <!-- ═══════════ PANEL: RESULTADOS ═══════════ -->
+  <div class="panel" id="resultados">
+
+    <div class="section-title" style="margin-top:4px">Ranking final · 5 candidatos</div>
+
+    <div class="map-card" style="margin-bottom:24px">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Candidato</th>
+            <th>Fortaleza clave</th>
+            <th>Fit de rol</th>
+            <th>Recomendación</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-size:20px;font-weight:800;color:var(--blue);width:36px">1</td>
+            <td><span class="cand growth"><span class="ini">I</span>Isabella</span></td>
+            <td style="font-size:12px">Análisis + crítica de IA en tiempo real</td>
+            <td style="font-size:12px">Growth &amp; CS Analyst</td>
+            <td><span style="background:#dcfce7;color:#166534;font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px">Avanzar</span></td>
+          </tr>
+          <tr>
+            <td style="font-size:20px;font-weight:800;color:var(--blue)">2</td>
+            <td><span class="cand growth"><span class="ini">V</span>Virginia</span></td>
+            <td style="font-size:12px">Detalle, perfeccionismo y comparación de AIs</td>
+            <td style="font-size:12px">Growth Analyst</td>
+            <td><span style="background:#dcfce7;color:#166534;font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px">Avanzar</span></td>
+          </tr>
+          <tr>
+            <td style="font-size:20px;font-weight:800;color:var(--muted)">3</td>
+            <td><span class="cand growth"><span class="ini">T</span>Trinidad</span></td>
+            <td style="font-size:12px">Comunicación y humanización del mensaje</td>
+            <td style="font-size:12px">Marketer &gt; Growth</td>
+            <td><span style="background:#fef9c3;color:#854d0e;font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px">Avanzar · ver fit</span></td>
+          </tr>
+          <tr>
+            <td style="font-size:20px;font-weight:800;color:var(--muted)">4</td>
+            <td><span class="cand cs"><span class="ini">A</span>Agustín</span></td>
+            <td style="font-size:12px">Pensamiento técnico y startup mindset</td>
+            <td style="font-size:12px">Growth / Ops</td>
+            <td><span style="background:#dcfce7;color:#166534;font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px">Avanzar</span></td>
+          </tr>
+          <tr>
+            <td style="font-size:20px;font-weight:800;color:var(--muted)">5</td>
+            <td><span class="cand growth"><span class="ini">Ab</span>Abril</span></td>
+            <td style="font-size:12px">Base de AI usage y tono empático</td>
+            <td style="font-size:12px">Perfil junior</td>
+            <td><span style="background:#f3f5f9;color:var(--muted);font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px">Más desarrollo</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-title">Análisis por candidato</div>
+
+    <!-- ISABELLA -->
+    <div class="cand-card">
+      <div class="cand-card-head">
+        <span style="font-size:20px;font-weight:800;color:var(--blue);line-height:1">1</span>
+        <span class="cand growth" style="font-size:13px"><span class="ini">I</span>Isabella Maria Picasso</span>
+        <span style="font-size:12px;color:var(--muted)">Jun 10</span>
+      </div>
+      <div class="cand-card-body">
+        <div class="cand-card-scores">
+          <div class="r-sub">Dimensiones</div>
+          <div class="score-row"><span class="score-label">Prompting</span><span class="score-val s-alto">Alto</span></div>
+          <div class="score-row"><span class="score-label">Análisis / Insights</span><span class="score-val s-alto">Alto</span></div>
+          <div class="score-row"><span class="score-label">Mensaje WA</span><span class="score-val s-alto">Alto</span></div>
+          <div class="score-row"><span class="score-label">Situacional</span><span class="score-val s-alto">Alto</span></div>
+        </div>
+        <div class="cand-card-obs">
+          <div class="r-sub" style="color:var(--green)">Highlights</div>
+          <ul class="obs-list obs-pos">
+            <li>Empezó a escribir el contexto en Claude mientras Fermín hablaba, sin que se lo pidieran</li>
+            <li>Identificó la combinación clave explícitamente: 2+ servicios + login en 48h</li>
+            <li>Detectó que Claude inventó un link y lo corrigió buscando el help center real</li>
+            <li>Propuso personalizar el WA por categoría, no mandar uno genérico a todos</li>
+            <li>Situacional: ejemplo propio concreto (chica de las uñas con link sin visibilidad en bio) + checklist técnica + promoción en redes</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cand-card-foot">Fit: <strong>Growth &amp; CS Analyst</strong> — encaja en ambos perfiles. Pensamiento analítico, criterio editorial sobre el output de IA y empatía concreta con el usuario.</div>
+    </div>
+
+    <!-- VIRGINIA -->
+    <div class="cand-card">
+      <div class="cand-card-head">
+        <span style="font-size:20px;font-weight:800;color:var(--blue);line-height:1">2</span>
+        <span class="cand growth" style="font-size:13px"><span class="ini">V</span>Virginia Muniz</span>
+        <span style="font-size:12px;color:var(--muted)">Jun 9</span>
+      </div>
+      <div class="cand-card-body">
+        <div class="cand-card-scores">
+          <div class="r-sub">Dimensiones</div>
+          <div class="score-row"><span class="score-label">Prompting</span><span class="score-val s-alto">Alto</span></div>
+          <div class="score-row"><span class="score-label">Análisis / Insights</span><span class="score-val s-medio">Medio</span></div>
+          <div class="score-row"><span class="score-label">Mensaje WA</span><span class="score-val s-alto">Alto</span></div>
+          <div class="score-row"><span class="score-label">Situacional</span><span class="score-val s-alto">Alto</span></div>
+        </div>
+        <div class="cand-card-obs">
+          <div class="r-sub" style="color:var(--green)">Highlights</div>
+          <ul class="obs-list obs-pos">
+            <li>Comparó ChatGPT y Claude en vivo — Fermín lo elogió explícitamente</li>
+            <li>Armó un documento durante la entrevista con sus análisis para compartir — perfeccionismo y nivel de detalle inusuales</li>
+            <li>WA: crítica precisa del tono robótico, propuso incluir nombre, precio y evitar emojis</li>
+            <li>Situacional: revisa la cuenta antes de responder, evalúa la calidad de la oferta del vendor</li>
+          </ul>
+          <div class="r-sub" style="color:var(--red);margin-top:10px">A tener en cuenta</div>
+          <ul class="obs-list obs-neg">
+            <li>No articuló la combinación de variables de forma explícita — identificó señales individuales pero no el combo</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cand-card-foot">Fit: <strong>Growth Analyst</strong> — perfil detallista y riguroso. El perfeccionismo que mostró (documento en plena entrevista) es exactamente lo que el rol requiere.</div>
+    </div>
+
+    <!-- TRINIDAD -->
+    <div class="cand-card">
+      <div class="cand-card-head">
+        <span style="font-size:20px;font-weight:800;color:var(--muted);line-height:1">3</span>
+        <span class="cand growth" style="font-size:13px"><span class="ini">T</span>Trinidad Tonini Martínez</span>
+        <span style="font-size:12px;color:var(--muted)">Jun 9</span>
+      </div>
+      <div class="cand-card-body">
+        <div class="cand-card-scores">
+          <div class="r-sub">Dimensiones</div>
+          <div class="score-row"><span class="score-label">Prompting</span><span class="score-val s-alto">Alto</span></div>
+          <div class="score-row"><span class="score-label">Análisis / Insights</span><span class="score-val s-medio">Medio</span></div>
+          <div class="score-row"><span class="score-label">Mensaje WA</span><span class="score-val s-alto">Alto</span></div>
+          <div class="score-row"><span class="score-label">Situacional</span><span class="score-val s-alto">Alto</span></div>
+        </div>
+        <div class="cand-card-obs">
+          <div class="r-sub" style="color:var(--green)">Highlights</div>
+          <ul class="obs-list obs-pos">
+            <li>Preguntó el tono de comunicación de Agora antes de redactar el WA</li>
+            <li>Detectó tono de IA en el mensaje y propuso humanizarlo: cargo del remitente, quitar doble signos, párrafos más cortos</li>
+            <li>Situacional: propuso reunión de 30 min + pensó en usar el feedback del vendor para mejorar el producto</li>
+            <li>Identificó la categoría art como perfil que no convierte</li>
+          </ul>
+          <div class="r-sub" style="color:var(--amber);margin-top:10px">Nota de fit</div>
+          <ul class="obs-list obs-warn">
+            <li>Perfil más orientado a marketing y contenido que a growth analítico. Encaja mejor corriendo campañas y organizando contenido propio que en análisis de datos.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cand-card-foot">Fit: <strong>Marketer &gt; Growth Analyst</strong> — candidata sólida, pero su perfil natural es comunicación y campañas. Evaluar si hay fit con ese rol antes de avanzar.</div>
+    </div>
+
+    <!-- AGUSTÍN -->
+    <div class="cand-card">
+      <div class="cand-card-head">
+        <span style="font-size:20px;font-weight:800;color:var(--muted);line-height:1">4</span>
+        <span class="cand cs" style="font-size:13px"><span class="ini">A</span>Agustín Belizan</span>
+        <span style="font-size:12px;color:var(--muted)">Jun 9</span>
+      </div>
+      <div class="cand-card-body">
+        <div class="cand-card-scores">
+          <div class="r-sub">Dimensiones</div>
+          <div class="score-row"><span class="score-label">Prompting</span><span class="score-val s-medio">Medio</span></div>
+          <div class="score-row"><span class="score-label">Análisis / Insights</span><span class="score-val s-medio">Medio</span></div>
+          <div class="score-row"><span class="score-label">Mensaje WA</span><span class="score-val s-medio">Medio</span></div>
+          <div class="score-row"><span class="score-label">Situacional</span><span class="score-val s-medio">Medio</span></div>
+        </div>
+        <div class="cand-card-obs">
+          <div class="r-sub" style="color:var(--green)">Highlights</div>
+          <ul class="obs-list obs-pos">
+            <li>Preguntó la intención del mensaje antes de armarlo (¿campaña, soporte, urgencia?) — orientado a objetivos</li>
+            <li>Propuso formato correcto de WhatsApp (*negrita*) y "sin costo" para bajar la barrera de compromiso</li>
+            <li>Mencionó que el CRM personaliza los nombres — piensa en sistemas, no solo en el mensaje puntual</li>
+            <li>Background técnico propio: sitios web + tool de transcripción de entrevistas propia</li>
+            <li>Pidió feedback directo sobre su desempeño al terminar — muy directo, hambre de startup genuina</li>
+          </ul>
+          <div class="r-sub" style="color:var(--red);margin-top:10px">A tener en cuenta</div>
+          <ul class="obs-list obs-neg">
+            <li>No articuló el insight clave como combinación — menos profundidad analítica que las candidatas anteriores</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cand-card-foot">Fit: <strong>Growth / Ops con sesgo técnico</strong> — perfil más de implementación que de análisis puro. Con potencial si el rol incluye componente técnico u operativo.</div>
+    </div>
+
+    <!-- ABRIL -->
+    <div class="cand-card">
+      <div class="cand-card-head">
+        <span style="font-size:20px;font-weight:800;color:var(--muted);line-height:1">5</span>
+        <span class="cand growth" style="font-size:13px"><span class="ini">Ab</span>Abril Gibaut</span>
+        <span style="font-size:12px;color:var(--muted)">Jun 12</span>
+      </div>
+      <div class="cand-card-body">
+        <div class="cand-card-scores">
+          <div class="r-sub">Dimensiones</div>
+          <div class="score-row"><span class="score-label">Prompting</span><span class="score-val s-medio">Medio</span></div>
+          <div class="score-row"><span class="score-label">Análisis / Insights</span><span class="score-val s-medio">Medio</span></div>
+          <div class="score-row"><span class="score-label">Mensaje WA</span><span class="score-val s-bajo">Bajo</span></div>
+          <div class="score-row"><span class="score-label">Situacional</span><span class="score-val s-medio">Medio</span></div>
+        </div>
+        <div class="cand-card-obs">
+          <div class="r-sub" style="color:var(--green)">Highlights</div>
+          <ul class="obs-list obs-pos">
+            <li>Dio contexto a Claude antes de pegar el dataset</li>
+            <li>Identificó las variables correctas (status, login 48h, servicios creados)</li>
+            <li>Tono empático en la situacional — buena sensibilidad con el cliente</li>
+            <li>Compara respuestas entre múltiples AIs</li>
+          </ul>
+          <div class="r-sub" style="color:var(--red);margin-top:10px">A tener en cuenta</div>
+          <ul class="obs-list obs-neg">
+            <li>WA: presentó múltiples variantes sin criterio editorial — no eligió una ni justificó por qué</li>
+            <li>Confundió cliente de Agora con cliente del vendor — Fermín tuvo que aclarar</li>
+            <li>No fue más allá del output de Claude — poco cuestionamiento del resultado</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cand-card-foot">Fit: <strong>Perfil junior</strong> — tiene las bases y la disposición, pero necesita más experiencia para este rol específico. A considerar para posiciones de entrada o en 6–12 meses.</div>
+    </div>
+
+  </div>
+
+  <footer>Búsqueda Growth &amp; CS Analyst · Jun 2026 · 5 candidatos en 2da entrevista</footer>
 </div>
 
 <script>
