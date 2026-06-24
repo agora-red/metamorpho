@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La baja como funnel · Propuesta Ágora</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --frost-primary:#0072FB; --frost-primary-hover:#005CD4; --frost-primary-soft:#EEF6FF; --frost-primary-wash:rgba(0,114,251,0.08);
+  --frost-accent:#FF4658; --frost-accent-soft:#FFE3E6; --frost-accent-wash:rgba(255,70,88,0.08);
+  --frost-success:#10B981; --frost-success-soft:#A9FFE7; --frost-warning:#F59E0B; --frost-warning-soft:#FFE77B;
+  --frost-ink:#0F172A; --frost-ink-soft:#3A3A3A; --frost-muted:#868686; --frost-faint:#B5B5B5;
+  --frost-surface:#FFFFFF; --frost-surface-muted:#EFF3F9; --frost-border:#E2E8F0; --frost-border-soft:#F2F2F2;
+  --r-sm:6px; --r-item:10px; --r-btn:12px; --r-card:20px; --r-shell:28px; --r-chip:999px;
+  --sh-xs:0 1px 2px rgba(15,23,42,0.04); --sh-sm:0 4px 12px -4px rgba(15,23,42,0.10);
+  --sh-md:0 10px 30px -12px rgba(15,23,42,0.15); --sh-lg:0 20px 50px -20px rgba(15,23,42,0.25);
+  --sh-glow:0 4px 18px -2px rgba(0,114,251,0.30); --sh-glow-lg:0 8px 30px -4px rgba(0,114,251,0.40);
+  --sans:'Montserrat',system-ui,-apple-system,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans); font-weight:300; color:var(--frost-ink);
+  background:var(--frost-surface-muted); font-variant-numeric:tabular-nums;
+  -webkit-font-smoothing:antialiased; line-height:1.5;
+}
+.wrap{max-width:1120px;margin:0 auto;padding:0 32px}
+.kicker{font-weight:600;font-size:11.5px;letter-spacing:0.2em;text-transform:uppercase;color:var(--frost-primary)}
+.kicker.muted{color:var(--frost-faint)}
+.kicker.accent{color:var(--frost-accent)}
+
+/* ---------- chrome ---------- */
+.chrome{position:sticky;top:0;z-index:50;background:rgba(239,243,249,0.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--frost-border)}
+.chrome-inner{display:flex;align-items:center;justify-content:space-between;height:62px}
+.wordmark{display:flex;align-items:center;gap:10px;font-weight:500;font-size:18px;color:var(--frost-ink)}
+.dot{width:9px;height:9px;border-radius:var(--r-chip);background:var(--frost-primary)}
+.chrome-tag{font-weight:600;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--frost-muted);
+  border:1px solid var(--frost-border);border-radius:var(--r-chip);padding:6px 14px;background:var(--frost-surface)}
+
+/* ---------- hero ---------- */
+.hero{padding:84px 0 64px}
+.hero .kicker{margin-bottom:22px}
+.hero h1{font-weight:200;font-size:clamp(40px,6.4vw,76px);line-height:1.02;letter-spacing:-0.02em}
+.hero h1 b{font-weight:600}
+.hero h1 .blu{color:var(--frost-primary)}
+.hero .sub{margin-top:26px;max-width:620px;font-size:17px;line-height:1.62;color:var(--frost-ink-soft)}
+.hero .sub b{font-weight:600;color:var(--frost-ink)}
+
+/* contrast device: button -> filmstrip */
+.thesis{margin-top:56px;display:grid;grid-template-columns:minmax(0,260px) 64px 1fr;align-items:center;gap:0}
+.thesis-side{display:flex;flex-direction:column;gap:14px}
+.thesis-label{font-weight:600;font-size:11px;letter-spacing:0.18em;text-transform:uppercase}
+.thesis-label.before{color:var(--frost-faint)}
+.thesis-label.after{color:var(--frost-primary)}
+.lonely-card{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-card);
+  box-shadow:var(--sh-sm);padding:30px 24px;display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center}
+.lonely-card .mini{font-size:12px;color:var(--frost-muted)}
+.btn-cancel{background:var(--frost-accent);color:#fff;font-weight:600;font-size:13.5px;border:none;border-radius:var(--r-btn);
+  padding:12px 22px;box-shadow:0 4px 14px -2px rgba(255,70,88,0.4)}
+.thesis-arrow{display:flex;align-items:center;justify-content:center;color:var(--frost-faint)}
+.thesis-arrow svg{width:38px;height:38px}
+.filmstrip{display:flex;gap:12px;overflow:hidden}
+.film{flex:0 0 auto;width:104px;height:150px;background:var(--frost-surface);border:1px solid var(--frost-border);
+  border-radius:14px;box-shadow:var(--sh-sm);padding:12px 11px;position:relative;display:flex;flex-direction:column;gap:8px}
+.film .fnum{font-weight:600;font-size:11px;color:var(--frost-primary)}
+.film .fbar{height:6px;border-radius:var(--r-chip);background:var(--frost-surface-muted)}
+.film .fbar.w70{width:70%}.film .fbar.w90{width:90%}.film .fbar.w50{width:50%}
+.film .ficon{margin-top:auto;width:26px;height:26px;border-radius:8px;background:var(--frost-primary-soft);
+  display:flex;align-items:center;justify-content:center;color:var(--frost-primary);font-size:14px}
+.film .ftag{font-size:9px;font-weight:600;letter-spacing:0.04em;color:var(--frost-muted);text-transform:uppercase;line-height:1.25}
+
+/* ---------- insight band ---------- */
+.band{background:var(--frost-ink);color:#fff;padding:60px 0;margin-top:24px}
+.band .kicker{color:#7FB6FF}
+.band-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:center;margin-top:24px}
+.band h2{font-weight:200;font-size:clamp(26px,3.4vw,38px);line-height:1.15;letter-spacing:-0.01em}
+.band h2 b{font-weight:600}
+.band p{margin-top:18px;color:#C8D2E0;font-size:15px;line-height:1.62;max-width:520px}
+.quote{border-left:2px solid var(--frost-primary);padding:6px 0 6px 20px;margin-top:26px}
+.quote .q{font-weight:500;font-size:16px;line-height:1.5;color:#EAF1FB}
+.quote .who{margin-top:10px;font-size:12px;color:#8A98AC;letter-spacing:0.04em}
+.takeaways{display:flex;flex-direction:column;gap:14px}
+.tk{display:flex;gap:14px;align-items:flex-start;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);
+  border-radius:var(--r-card);padding:18px 20px}
+.tk .tkn{font-weight:600;font-size:13px;color:var(--frost-primary);background:var(--frost-primary-wash);
+  border:1px solid rgba(0,114,251,0.4);border-radius:var(--r-chip);width:30px;height:30px;flex:0 0 30px;
+  display:flex;align-items:center;justify-content:center}
+.tk h4{font-weight:600;font-size:14px;color:#fff}
+.tk p{margin-top:4px;font-size:12.5px;color:#A9B4C4;max-width:none}
+
+/* ---------- flow section ---------- */
+.flow{padding:80px 0 40px}
+.flow-head{max-width:680px;margin-bottom:14px}
+.flow-head h2{font-weight:200;font-size:clamp(30px,4vw,46px);line-height:1.08;letter-spacing:-0.02em}
+.flow-head h2 b{font-weight:600}
+.flow-head p{margin-top:18px;font-size:16px;color:var(--frost-ink-soft);line-height:1.6}
+
+.step{display:grid;grid-template-columns:1fr minmax(320px,400px);gap:56px;align-items:center;
+  padding:48px 0;border-top:1px solid var(--frost-border)}
+.step:nth-child(even){grid-template-columns:minmax(320px,400px) 1fr}
+.step:nth-child(even) .step-copy{order:2}
+.step-num{font-weight:200;font-size:64px;line-height:1;color:var(--frost-primary);letter-spacing:-0.03em}
+.step-copy h3{font-weight:600;font-size:24px;margin-top:8px;letter-spacing:-0.01em}
+.step-copy .desc{margin-top:14px;font-size:15px;color:var(--frost-ink-soft);line-height:1.62;max-width:440px}
+.capture{margin-top:22px;display:inline-flex;align-items:center;gap:12px;background:var(--frost-primary-soft);
+  border:1px solid rgba(0,114,251,0.18);border-radius:var(--r-chip);padding:9px 16px 9px 12px}
+.capture .cdot{width:24px;height:24px;border-radius:var(--r-chip);background:var(--frost-primary);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:13px;flex:0 0 24px}
+.capture .ctxt{font-size:12.5px;line-height:1.35}
+.capture .ctxt b{font-weight:600;color:var(--frost-primary)}
+.capture .ctxt span{color:var(--frost-ink-soft)}
+.capture.accent{background:var(--frost-accent-wash);border-color:rgba(255,70,88,0.2)}
+.capture.accent .cdot{background:var(--frost-accent)}
+.capture.accent .ctxt b{color:var(--frost-accent)}
+
+/* mock screen frame */
+.screen{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-shell);
+  box-shadow:var(--sh-md);overflow:hidden}
+.screen-top{display:flex;align-items:center;gap:8px;padding:14px 18px;border-bottom:1px solid var(--frost-border-soft)}
+.screen-top .tdot{width:8px;height:8px;border-radius:var(--r-chip);background:var(--frost-border)}
+.progress{display:flex;gap:5px;margin-left:8px;flex:1}
+.progress i{height:4px;border-radius:var(--r-chip);background:var(--frost-border);flex:1}
+.progress i.on{background:var(--frost-primary)}
+.screen-body{padding:24px 22px 26px;min-height:236px;display:flex;flex-direction:column}
+.s-eyebrow{font-weight:600;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--frost-faint);margin-bottom:10px}
+.s-title{font-weight:600;font-size:19px;line-height:1.22;letter-spacing:-0.01em}
+.s-sub{margin-top:8px;font-size:12.5px;color:var(--frost-muted);line-height:1.5}
+
+/* step 1 lock */
+.lock-wrap{margin:8px 0 18px;display:flex;justify-content:center}
+.lock{width:62px;height:62px;border-radius:18px;background:linear-gradient(160deg,var(--frost-primary),#4DA0FF);
+  display:flex;align-items:center;justify-content:center;box-shadow:var(--sh-glow)}
+.lock svg{width:30px;height:30px;color:#fff}
+.s-actions{margin-top:auto;display:flex;gap:10px;justify-content:flex-end;padding-top:18px}
+.s-btn{font-weight:600;font-size:12.5px;border-radius:var(--r-btn);padding:10px 18px;border:1px solid var(--frost-border);
+  background:var(--frost-surface);color:var(--frost-ink)}
+.s-btn.primary{background:var(--frost-primary);color:#fff;border-color:var(--frost-primary);box-shadow:var(--sh-glow)}
+.s-btn.danger{background:var(--frost-accent);color:#fff;border-color:var(--frost-accent);box-shadow:0 4px 14px -2px rgba(255,70,88,0.4)}
+.date-chip{align-self:center;margin-top:6px;background:var(--frost-accent-soft);color:var(--frost-accent);
+  font-weight:600;font-size:11.5px;border-radius:var(--r-chip);padding:6px 14px}
+
+/* radio rows */
+.opt{display:flex;align-items:center;gap:11px;padding:9px 0;font-size:13px;color:var(--frost-ink-soft);border-bottom:1px solid var(--frost-border-soft)}
+.opt:last-of-type{border-bottom:none}
+.radio{width:17px;height:17px;border-radius:var(--r-chip);border:1.5px solid var(--frost-border);flex:0 0 17px}
+.opt.sel .radio{border-color:var(--frost-primary);box-shadow:inset 0 0 0 4px var(--frost-primary)}
+.opt.sel{color:var(--frost-ink);font-weight:500}
+.textarea{margin-top:10px;height:46px;border:1px solid var(--frost-border);border-radius:var(--r-btn);
+  background:var(--frost-surface-muted);font-size:11.5px;color:var(--frost-faint);padding:10px 12px}
+
+/* competitor logos list */
+.comp-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}
+.comp{display:flex;align-items:center;gap:9px;padding:8px 11px;border:1px solid var(--frost-border);border-radius:var(--r-item);font-size:12px;color:var(--frost-ink-soft)}
+.comp.sel{border-color:var(--frost-primary);background:var(--frost-primary-soft);color:var(--frost-ink);font-weight:500}
+.comp .clogo{width:18px;height:18px;border-radius:5px;background:var(--frost-surface-muted);flex:0 0 18px;
+  display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;color:var(--frost-muted)}
+.comp.sel .clogo{background:var(--frost-primary);color:#fff}
+
+/* stats grid */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+.stat{background:var(--frost-surface-muted);border-radius:var(--r-item);padding:13px 14px}
+.stat .sn{font-weight:600;font-size:22px;color:var(--frost-primary);letter-spacing:-0.02em}
+.stat .sl{margin-top:3px;font-size:10px;color:var(--frost-muted);line-height:1.3}
+.illus{margin-top:12px;font-size:9.5px;color:var(--frost-faint);text-align:center;font-style:italic}
+
+/* emotional */
+.emoji{font-size:46px;text-align:center;margin:14px 0 16px}
+.emo-line{text-align:center;font-weight:500;font-size:15px;color:var(--frost-ink);line-height:1.4;padding:0 6px}
+.emo-sub{text-align:center;margin-top:10px;font-size:12px;color:var(--frost-muted)}
+
+/* acknowledge checklist */
+.ack{display:flex;gap:10px;align-items:flex-start;padding:8px 0;font-size:12px;color:var(--frost-ink-soft);line-height:1.4}
+.ack .x{width:16px;height:16px;border-radius:5px;border:1.5px solid var(--frost-accent);flex:0 0 16px;margin-top:1px;
+  display:flex;align-items:center;justify-content:center;color:var(--frost-accent);font-size:11px;font-weight:700}
+
+/* ---------- payoff ---------- */
+.payoff{padding:76px 0 84px}
+.payoff h2{font-weight:200;font-size:clamp(28px,3.6vw,42px);line-height:1.1;letter-spacing:-0.02em;max-width:760px}
+.payoff h2 b{font-weight:600;color:var(--frost-primary)}
+.payoff .lead{margin-top:18px;max-width:600px;font-size:16px;color:var(--frost-ink-soft);line-height:1.6}
+.pcards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:42px}
+.pcard{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-card);
+  box-shadow:var(--sh-sm);padding:26px 24px}
+.pcard .pico{width:42px;height:42px;border-radius:12px;background:var(--frost-primary-soft);color:var(--frost-primary);
+  display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:18px}
+.pcard h4{font-weight:600;font-size:16px}
+.pcard p{margin-top:9px;font-size:13.5px;color:var(--frost-ink-soft);line-height:1.55}
+
+.next{margin-top:54px;background:var(--frost-ink);color:#fff;border-radius:var(--r-shell);padding:44px 48px;
+  display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap}
+.next .kicker{color:#7FB6FF;margin-bottom:12px}
+.next h3{font-weight:200;font-size:clamp(24px,3vw,32px);line-height:1.15;letter-spacing:-0.01em;max-width:560px}
+.next h3 b{font-weight:600}
+.next .who{margin-top:16px;font-size:13px;color:#8A98AC}
+.next .who b{color:#EAF1FB;font-weight:500}
+.scope{flex:0 0 auto;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:var(--r-card);
+  padding:22px 24px;min-width:210px}
+.scope .sl{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8A98AC;font-weight:600}
+.scope ul{list-style:none;margin-top:12px;display:flex;flex-direction:column;gap:9px}
+.scope li{font-size:12.5px;color:#C8D2E0;display:flex;gap:9px;align-items:center}
+.scope li::before{content:"";width:6px;height:6px;border-radius:var(--r-chip);background:var(--frost-primary);flex:0 0 6px}
+
+footer{padding:34px 0 56px;border-top:1px solid var(--frost-border);margin-top:8px}
+.foot-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+.foot-inner .fm{font-size:11.5px;color:var(--frost-muted)}
+
+@media(max-width:880px){
+  .thesis{grid-template-columns:1fr;gap:24px}
+  .thesis-arrow{transform:rotate(90deg)}
+  .band-grid{grid-template-columns:1fr;gap:32px}
+  .step,.step:nth-child(even){grid-template-columns:1fr;gap:30px}
+  .step:nth-child(even) .step-copy{order:0}
+  .step-copy .step-num{font-size:50px}
+  .pcards{grid-template-columns:1fr}
+  .next{flex-direction:column;align-items:flex-start}
+}
+@media(max-width:560px){
+  .wrap{padding:0 20px}
+  .comp-grid,.stat-grid{grid-template-columns:1fr 1fr}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<!-- chrome -->
+<div class="chrome"><div class="wrap chrome-inner">
+  <div class="wordmark"><span class="dot"></span>Ágora</div>
+  <div class="chrome-tag">Propuesta · Producto</div>
+</div></div>
+
+<!-- hero -->
+<section class="hero"><div class="wrap">
+  <div class="kicker">Retención &amp; churn intelligence</div>
+  <h1>La baja no debería<br>ser <b class="blu">un solo botón.</b></h1>
+  <p class="sub">Hoy, cuando un negocio se quiere ir de Ágora, hace clic y se va — sin que sepamos <b>por qué</b>, <b>a dónde</b>, ni con chance de retenerlo. Fresha y Agendapro esconden la baja detrás de un recorrido de varias pantallas que captura todo eso. <b>Copiemos la jugada.</b></p>
+
+  <div class="thesis">
+    <div class="thesis-side">
+      <span class="thesis-label before">Hoy en Ágora</span>
+      <div class="lonely-card">
+        <span class="mini">Configuración · Plan</span>
+        <button class="btn-cancel">Dar de baja</button>
+        <span class="mini">Cero datos. Cero fricción.<br>Cero chance de retener.</span>
+      </div>
+    </div>
+    <div class="thesis-arrow">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"/><polyline points="14 6 20 12 14 18"/></svg>
+    </div>
+    <div class="thesis-side">
+      <span class="thesis-label after">La propuesta · 6 pantallas</span>
+      <div class="filmstrip">
+        <div class="film"><span class="fnum">01</span><div class="fbar w70"></div><div class="ficon">🔒</div><span class="ftag">Intención</span></div>
+        <div class="film"><span class="fnum">02</span><div class="fbar w90"></div><div class="fbar w50"></div><div class="ficon">💬</div><span class="ftag">Razón</span></div>
+        <div class="film"><span class="fnum">03</span><div class="fbar w70"></div><div class="fbar w90"></div><div class="ficon">🔍</div><span class="ftag">Competidor</span></div>
+        <div class="film"><span class="fnum">04</span><div class="fbar w50"></div><div class="fbar w70"></div><div class="ficon">📈</div><span class="ftag">Te conviene</span></div>
+        <div class="film"><span class="fnum">05</span><div class="fbar w90"></div><div class="ficon">🥺</div><span class="ftag">Fricción</span></div>
+        <div class="film"><span class="fnum">06</span><div class="fbar w70"></div><div class="fbar w50"></div><div class="ficon">⚠️</div><span class="ftag">Qué perdés</span></div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- insight band -->
+<section class="band"><div class="wrap">
+  <div class="kicker">El insight</div>
+  <div class="band-grid">
+    <div>
+      <h2>Dar de baja en Fresha está <b>deliberadamente escondido</b> — y cada pantalla trabaja para vos.</h2>
+      <p>No es burocracia: es diseño. Cada paso del recorrido o te frena, o te saca un dato que vale oro para el equipo comercial y de producto.</p>
+      <div class="quote">
+        <div class="q">"Me sorprende lo oculto que está el dar de baja de la suscripción de Fresha / Agendapro. Me costó mucho conseguirlo… casi me doy por vencido. Deberíamos considerarlo, creo que trae bastante valor."</div>
+        <div class="who">Beto · #comercial · 24 jun 2026</div>
+      </div>
+    </div>
+    <div class="takeaways">
+      <div class="tk"><span class="tkn">A</span><div><h4>Capturás el motivo real del churn</h4><p>Razón estructurada + texto libre. Hoy esa data simplemente no existe.</p></div></div>
+      <div class="tk"><span class="tkn">B</span><div><h4>Sabés contra quién perdés</h4><p>"¿Qué software vas a usar ahora?" = inteligencia competitiva directa del que se va.</p></div></div>
+      <div class="tk"><span class="tkn">C</span><div><h4>Tenés una última chance de retener</h4><p>ROI, lo que pierden y un momento de fricción antes de soltarlos.</p></div></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- flow -->
+<section class="flow"><div class="wrap">
+  <div class="flow-head">
+    <div class="kicker">El recorrido propuesto</div>
+    <h2 style="margin-top:14px">Seis pantallas, <b>seis dividendos.</b></h2>
+    <p>Mismo flujo que ya validó Fresha, traducido al lenguaje y la marca de Ágora. Cada pantalla deja un dato o una chance de retener.</p>
+  </div>
+
+  <!-- step 1 -->
+  <div class="step">
+    <div class="step-copy">
+      <div class="step-num">01</div>
+      <h3>Confirmar la intención</h3>
+      <p class="desc">El primer freno. Le mostramos exactamente desde cuándo deja de tener acceso — la fecha real de corte, no un genérico. Suficiente para que muchos lo piensen dos veces.</p>
+      <div class="capture"><span class="cdot">✓</span><div class="ctxt"><b>Capturamos:</b> <span>intención de baja + momento exacto en que arranca el flujo (señal temprana de churn).</span></div></div>
+    </div>
+    <div class="screen">
+      <div class="screen-top"><span class="tdot"></span><div class="progress"><i class="on"></i><i></i><i></i></div></div>
+      <div class="screen-body">
+        <div class="lock-wrap"><div class="lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div></div>
+        <div class="s-title" style="text-align:center">¿Seguro que querés dar de baja tu plan?</div>
+        <div class="date-chip">Perdés el acceso el 29 jun 2026</div>
+        <div class="s-actions"><span class="s-btn">Volver</span><span class="s-btn primary">Continuar</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- step 2 -->
+  <div class="step">
+    <div class="step-copy">
+      <div class="step-num">02</div>
+      <h3>¿Por qué te vas?</h3>
+      <p class="desc">Lista de motivos accionables — precio, funciones que faltan, soporte, problemas técnicos, cierre del negocio — más un campo libre. Es la pregunta que hoy nunca hacemos.</p>
+      <div class="capture"><span class="cdot">✓</span><div class="ctxt"><b>Capturamos:</b> <span>razón de churn estructurada + comentario abierto. Materia prima para producto y soporte.</span></div></div>
+    </div>
+    <div class="screen">
+      <div class="screen-top"><span class="tdot"></span><div class="progress"><i class="on"></i><i class="on"></i><i></i></div></div>
+      <div class="screen-body">
+        <div class="s-eyebrow">Paso 2 de 6</div>
+        <div class="s-title">¿Podés contarnos por qué?</div>
+        <div style="margin-top:12px">
+          <div class="opt"><span class="radio"></span>El precio es muy alto</div>
+          <div class="opt sel"><span class="radio"></span>Faltan funciones que necesito</div>
+          <div class="opt"><span class="radio"></span>Tuve problemas técnicos</div>
+          <div class="opt"><span class="radio"></span>Necesito más ayuda / soporte</div>
+          <div class="opt"><span class="radio"></span>El negocio está cerrando</div>
+        </div>
+        <div class="textarea">Contanos un poco más…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- step 3 -->
+  <div class="step">
+    <div class="step-copy">
+      <div class="step-num">03</div>
+      <h3>¿A dónde te vas?</h3>
+      <p class="desc">La pantalla de oro. Le preguntamos qué herramienta va a usar ahora. Cada respuesta nos dice contra quién estamos perdiendo y por qué nos gana.</p>
+      <div class="capture"><span class="cdot">✓</span><div class="ctxt"><b>Capturamos:</b> <span>competidor destino. Inteligencia competitiva directa, agregable por mes y por motivo.</span></div></div>
+    </div>
+    <div class="screen">
+      <div class="screen-top"><span class="tdot"></span><div class="progress"><i class="on"></i><i class="on"></i><i class="on"></i></div></div>
+      <div class="screen-body">
+        <div class="s-eyebrow">Paso 3 de 6</div>
+        <div class="s-title">¿Qué herramienta vas a usar ahora?</div>
+        <div class="comp-grid">
+          <div class="comp"><span class="clogo">A</span>Agendapro</div>
+          <div class="comp sel"><span class="clogo">F</span>Fresha</div>
+          <div class="comp"><span class="clogo">B</span>Booksy</div>
+          <div class="comp"><span class="clogo">Ca</span>Calendly</div>
+          <div class="comp"><span class="clogo">Pl</span>Planilla / Excel</div>
+          <div class="comp"><span class="clogo">+</span>Otra</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- step 4 -->
+  <div class="step">
+    <div class="step-copy">
+      <div class="step-num">04</div>
+      <h3>Lo que estás dejando sobre la mesa</h3>
+      <p class="desc">Antes de soltarlos, les mostramos en números qué les da Ágora: más reservas, menos ausencias, más ingresos. El argumento racional de la retención.</p>
+      <div class="capture"><span class="cdot">↺</span><div class="ctxt"><b>Retenemos:</b> <span>impacto cuantificado del producto. Los números reales salen de nuestra propia data.</span></div></div>
+    </div>
+    <div class="screen">
+      <div class="screen-top"><span class="tdot"></span><div class="progress"><i class="on"></i><i class="on"></i><i class="on"></i></div></div>
+      <div class="screen-body">
+        <div class="s-eyebrow">Paso 4 de 6</div>
+        <div class="s-title">Negocios como el tuyo, con Ágora…</div>
+        <div class="stat-grid">
+          <div class="stat"><div class="sn">+34%</div><div class="sl">reservas online vs. agenda manual</div></div>
+          <div class="stat"><div class="sn">−61%</div><div class="sl">ausencias con seña + recordatorios</div></div>
+          <div class="stat"><div class="sn">+22%</div><div class="sl">clientes que vuelven</div></div>
+          <div class="stat"><div class="sn">3.4×</div><div class="sl">retorno sobre la mensualidad</div></div>
+        </div>
+        <div class="illus">Cifras ilustrativas — a reemplazar con data real de Ágora</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- step 5 -->
+  <div class="step">
+    <div class="step-copy">
+      <div class="step-num">05</div>
+      <h3>El momento humano</h3>
+      <p class="desc">Una pausa emocional, con la voz de la marca. No vende ni regaña — reconoce la decisión. Baja las pulsaciones y deja la puerta abierta a frenar.</p>
+      <div class="capture accent"><span class="cdot">↺</span><div class="ctxt"><b>Retenemos:</b> <span>fricción emocional medida. El % que abandona acá es una métrica de retención en sí misma.</span></div></div>
+    </div>
+    <div class="screen">
+      <div class="screen-top"><span class="tdot"></span><div class="progress"><i class="on"></i><i class="on"></i><i class="on"></i></div></div>
+      <div class="screen-body" style="justify-content:center">
+        <div class="emoji">🥺</div>
+        <div class="emo-line">Che, esto nos pone un poco tristes.</div>
+        <div class="emo-sub">Tomate un segundo. Si querés, lo charlamos antes de confirmar.</div>
+        <div class="s-actions" style="justify-content:center"><span class="s-btn primary">Hablar con el equipo</span><span class="s-btn">Seguir con la baja</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- step 6 -->
+  <div class="step">
+    <div class="step-copy">
+      <div class="step-num">06</div>
+      <h3>Todo lo que perdés</h3>
+      <p class="desc">El último espejo: la lista concreta de lo que se apaga al confirmar — agenda, página, reservas futuras, reseñas. El botón final recién aparece acá.</p>
+      <div class="capture accent"><span class="cdot">⚠</span><div class="ctxt"><b>Retenemos:</b> <span>último checkpoint con costo de irse explícito. La baja se confirma solo después de leerlo.</span></div></div>
+    </div>
+    <div class="screen">
+      <div class="screen-top"><span class="tdot"></span><div class="progress"><i class="on"></i><i class="on"></i><i class="on"></i></div></div>
+      <div class="screen-body">
+        <div class="s-eyebrow">Paso 6 de 6</div>
+        <div class="s-title">Tené en cuenta lo que vas a perder</div>
+        <div style="margin-top:14px">
+          <div class="ack"><span class="x">✕</span>Tu agenda y tus reservas futuras se cancelan</div>
+          <div class="ack"><span class="x">✕</span>Tu página de Ágora deja de estar online</div>
+          <div class="ack"><span class="x">✕</span>Se apagan los recordatorios automáticos a clientes</div>
+          <div class="ack"><span class="x">✕</span>Perdés el historial y las reseñas acumuladas</div>
+        </div>
+        <div class="s-actions"><span class="s-btn">Mejor me quedo</span><span class="s-btn danger">Confirmar baja</span></div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- payoff -->
+<section class="payoff"><div class="wrap">
+  <h2>Una baja deja de ser una pérdida ciega y pasa a ser <b>data + una última jugada de retención.</b></h2>
+  <p class="lead">Cada negocio que se va nos deja, hoy, las manos vacías. Con este recorrido, deja un mapa de por qué perdemos — y un porcentaje de ellos ni siquiera se va.</p>
+
+  <div class="pcards">
+    <div class="pcard"><div class="pico">📊</div><h4>Tablero de churn</h4><p>Motivos y competidores agregados por mes. Producto sabe qué construir; comercial sabe contra quién pelea.</p></div>
+    <div class="pcard"><div class="pico">🎯</div><h4>Save-offers dirigidos</h4><p>Si el motivo es "precio", ofrecé un plan. Si es "soporte", agendá una llamada. Intervención según la razón real.</p></div>
+    <div class="pcard"><div class="pico">↩️</div><h4>Retención medible</h4><p>Cada paso es un punto de abandono que se mide. Sabés exactamente cuánta gente frenamos y dónde.</p></div>
+  </div>
+
+  <div class="next">
+    <div>
+      <div class="kicker">El pedido</div>
+      <h3>¿Lo metemos en el roadmap? Arrancaría como un <b>flujo gateado</b> sobre la baja actual.</h3>
+      <div class="who">Para evaluar — <b>Fermín</b> · <b>JP</b></div>
+    </div>
+    <div class="scope">
+      <div class="sl">MVP sugerido</div>
+      <ul>
+        <li>Pasos 1, 2 y 6 primero</li>
+        <li>Persistir motivo + competidor</li>
+        <li>Tablero simple de churn</li>
+        <li>Stats y save-offers, fase 2</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap foot-inner">
+  <div class="wordmark"><span class="dot"></span>Ágora</div>
+  <div class="fm">Propuesta interna · Retención &amp; churn · Junio 2026</div>
+</div></footer>
+
+</body>
+</html>
