@@ -16,3 +16,17 @@
 6. Acknowledge — checklist de "todo lo que perdés al cancelar" + botón final destructivo.
 
 **Restricciones:** branding Ágora frost-glass, Montserrat, no inventar métricas reales (marcar ilustrativas). Publicar a Metamorpho.
+
+---
+
+## Actualización — 25/jun/2026 (versión JP, 4 pasos)
+
+JP revisó la propuesta original y pidió **recortar a 4 pasos: 1, 2a, 2b, 6** (descartando competencia, stats de retención y momento emocional):
+- **1 — Confirmar** + fecha real de corte.
+- **2a — Motivo** (categoría estructurada, radio).
+- **2b — Detalle** (campo **obligatorio**, validación que exige input real — no pasa un guión solo).
+- **6 — Qué cambia** con fechas concretas y **wording revisado** (JP marcó que "perder reseñas" puede ser falso).
+
+Esta versión reemplaza el mockup de 6 pantallas por un **prototipo interactivo fullscreen estilo Fresha**, navegable de punta a punta.
+
+**Verificación de copy (clave):** se auditó el comportamiento real de la baja en el código. Hoy la cancelación **NO** apaga la página pública, **NO** borra reseñas, **NO** cancela reservas existentes y **NO** corta los recordatorios. Lo único real que se pierde: acceso al panel, aparición en buscador/marketplace, bot de WhatsApp + add-ons, y la suscripción. El step 6 quedó escrito solo con eso — honesto, sin inventar pérdidas.

@@ -1,14 +1,14 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
   "version": 1,
-  "updated_at": "2026-06-24",
+  "updated_at": "2026-06-25",
   "outputs": [
     {
-      "type": "proposal",
-      "typeLabel": "Proposal",
+      "type": "prototype",
+      "typeLabel": "Prototype",
       "title": "La baja como funnel de retención",
-      "description": "Propuesta interna para rediseñar la baja / cancelación de suscripción de Ágora estilo Fresha: convertir un botón único en un recorrido de 6 pantallas que captura por qué se va el negocio, a dónde se va (inteligencia competitiva) y mete una última jugada de retención (ROI + fricción emocional + lo que pierde) antes de soltarlo. Basada en el flujo real de Fresha/Agendapro compartido en #comercial. Muestra la tesis (hoy un botón → mañana un funnel), los 6 pasos como mockups de pantalla con marca Ágora frost-glass, y el dato que captura cada uno. Stats con cifras ilustrativas marcadas como placeholder. Cierra con MVP sugerido para evaluación de Fermín y JP.",
-      "detail": "1-page · 6 pasos · churn intelligence",
+      "description": "Prototipo interactivo de la baja / cancelación de suscripción de Ágora rediseñada estilo Fresha: convertir el botón único en un recorrido fullscreen de 4 pasos. Versión recortada según JP sobre la propuesta original de 6 pantallas — 1) Confirmar + fecha real de corte, 2) Motivo (categoría estructurada), 3) Detalle (campo obligatorio con validación real), 4) Qué cambia con la baja. Navegable de punta a punta, con rail de recorrido a la izquierda y una pregunta por pantalla. Captura motivo estructurado + texto libre para inteligencia de churn. El step 4 usa copy honesto verificado contra el comportamiento real del sistema: solo lista lo que de verdad se pierde (acceso al panel, aparición en buscador/marketplace, bot de WhatsApp + add-ons, suscripción) — sin afirmar que se pierden reseñas, página o reservas, porque no es cierto hoy. Marca Ágora frost-glass.",
+      "detail": "prototipo interactivo · 4 pasos · fullscreen · churn intelligence",
       "date": "JUN 2026",
       "href": "./baja-funnel-retencion-2026-06/index.html",
       "slug": "baja-funnel-retencion-2026-06"
