@@ -16,6 +16,16 @@
     {
       "type": "landing",
       "typeLabel": "Prototype",
+      "title": "Sign-up beauty · Paid test",
+      "description": "Landing de adquisición (modo paid-test) para captar suscriptores beauty de Ágora, optimizada para tráfico de paid media. Hero con variantes de mensaje por URL (?v=a/b/c, message-match al aviso), form de baja fricción (Google + email con doble-ingreso anti-typo, contraseña en paso siguiente), carrusel de storefronts reales (Hall Salon, Cherna Nails, militaclub/Kosmic, Pro Beauty Studio) con reseñas por @username, mockup 3D responsivo a la altura del viewport, y sección de pricing por país (?pais=ar/uy) con precios reales (ARS/UYU) y planes Profesional/Salón. Dos secciones full-height (hero + pricing). Instrumentación: UTM + variante + país pass-through a pro.agora.red/signup y eventos de conversión (Amplitude-ready, sin cablear).",
+      "detail": "paid-test · 3 variantes hero · pricing AR/UY · 2 secciones full-height",
+      "date": "JUN 2026",
+      "href": "./paidtest-beauty-signup-2026-06/index.html",
+      "slug": "paidtest-beauty-signup-2026-06"
+    },
+    {
+      "type": "landing",
+      "typeLabel": "Prototype",
       "title": "Páginas modulares · Bloques",
       "description": "Propuesta para crear páginas-destino libres y modulares en el storefront — un tipo de página nuevo, aparte de la landing, con su propia URL (agora.red/<username>/<slug>). Evolución del actual /bio: en vez de rich-text plano y enterrado, la persona arma bloques a partir de sus links (turnos, servicios, cursos, productos, gift cards) y compone páginas propias; la landing no se toca, sólo gana un botón que lleva a la página nueva (como el 'Conoce más' de hoy). Gestor de páginas + editor de bloques (agregar/mover/ocultar/borrar, edición inline) + vista en vivo. 3 ejemplos fuertes y distintos: Promos (campaña), Masterclass (landing de evento), Conoce más (la /bio migrada). 9 tipos de bloque y 6 Estilos reales que re-skinean en vivo. Modelo propuesto: tabla vendor_pages (slug + blocks JSONB que reusa el LinkI actual), render Nightwing /[username]/[slug].",
       "detail": "prototipo interactivo · 3 ejemplos · 9 tipos de bloque · 6 estilos",
