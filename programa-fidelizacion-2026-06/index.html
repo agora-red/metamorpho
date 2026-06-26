@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Programa de fidelización — Mockup · Ágora</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=Montserrat:wght@200;300;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    /* Frost (Flash dashboard) */
+    --paper:#EFF3F9; --surface:#fff; --ink:#0F172A; --ink-soft:#3A3A3A; --muted:#868686; --faint:#B5B5B5;
+    --primary:#0072FB; --primary-hover:#005CD4; --primary-soft:#EEF6FF; --primary-wash:rgba(0,114,251,0.08);
+    --coral:#FF4658; --coral-soft:#FFE3E6; --success:#10B981; --success-soft:#A9FFE7; --warning:#F59E0B;
+    --border:#E2E8F0; --border-soft:#F2F2F2; --hairline:rgba(15,23,42,0.06);
+    --ease:cubic-bezier(0.22,1,0.36,1);
+    /* tier colors — shared across both views (same program) */
+    --t1:#9aa6b5; --t2:#5b8cb8; --t3:#0072FB; --t4:#FF4658;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body {
+    font-family:'Montserrat',system-ui,sans-serif; font-weight:500; background:#161c2b;
+    -webkit-font-smoothing:antialiased; font-variant-numeric:tabular-nums; line-height:1.5; color:var(--ink);
+  }
+
+  /* ===================== presentation chrome ===================== */
+  .mockbar {
+    position:sticky; top:0; z-index:60;
+    display:flex; align-items:center; gap:16px; flex-wrap:wrap;
+    padding:12px clamp(16px,4vw,32px);
+    background:rgba(15,20,33,0.9); backdrop-filter:blur(16px);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .mockbar .mb-title { color:#fff; font-size:12.5px; font-weight:600; letter-spacing:0.04em; display:flex; align-items:center; gap:9px; }
+  .mockbar .mb-title .dot { width:7px; height:7px; border-radius:999px; background:var(--primary); box-shadow:0 0 0 4px rgba(0,114,251,0.25); }
+  .mockbar .seg { display:inline-flex; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); border-radius:999px; padding:3px; }
+  .mockbar .seg button {
+    font-family:inherit; font-weight:600; font-size:12px; color:rgba(255,255,255,0.6);
+    border:none; background:transparent; padding:8px 16px; border-radius:999px; cursor:pointer; transition:all .18s var(--ease);
+  }
+  .mockbar .seg button[aria-pressed="true"] { background:#fff; color:var(--ink); }
+  .mockbar .mb-hint { margin-left:auto; color:rgba(255,255,255,0.4); font-size:11px; }
+  @media (max-width:640px){ .mockbar .mb-hint{ display:none; } }
+  @media (max-width:560px){
+    .mockbar { gap:10px; }
+    .mockbar .seg { width:100%; }
+    .mockbar .seg button { flex:1; padding:9px 6px; font-size:11px; line-height:1.2; }
+  }
+
+  .view { display:none; min-height:100vh; position:relative; }
+  .view.active { display:block; }
+
+  /* ===================================================================
+     VIEW 1 — EL PROFESIONAL CONFIGURA  (Flash · Frost)
+     =================================================================== */
+  .view-config { background:var(--paper); }
+  .view-config::before { content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(60% 50% at 12% -5%, rgba(0,114,251,0.10), transparent 70%),
+      radial-gradient(55% 45% at 100% 0%, rgba(0,114,251,0.06), transparent 65%),
+      radial-gradient(40% 40% at 90% 100%, rgba(255,70,88,0.05), transparent 70%); }
+
+  .view-config .appbar {
+    position:sticky; top:49px; z-index:30; display:flex; align-items:center; gap:16px;
+    padding:14px clamp(16px,4vw,40px); background:rgba(239,243,249,0.72); backdrop-filter:blur(24px) saturate(1.4);
+    border-bottom:1px solid var(--hairline);
+  }
+  .view-config .brand { display:flex; align-items:center; gap:10px; font-weight:600; letter-spacing:0.04em; font-size:15px; }
+  .view-config .brand .mark { width:26px; height:26px; border-radius:8px; background:linear-gradient(150deg,var(--primary),var(--primary-hover)); box-shadow:0 6px 16px rgba(0,114,251,0.35); position:relative; }
+  .view-config .brand .mark::after { content:""; position:absolute; inset:7px; border-radius:3px; border:2px solid rgba(255,255,255,0.92); border-right-color:transparent; border-bottom-color:transparent; }
+  .view-config .crumbs { display:flex; align-items:center; gap:8px; color:var(--faint); font-size:11.5px; }
+  .view-config .crumbs b { color:var(--ink-soft); font-weight:600; }
+  .view-config .appbar .spacer { flex:1; }
+  .view-config .av { width:32px; height:32px; border-radius:999px; background:linear-gradient(140deg,#d7e3f5,#aebfd8); display:grid; place-items:center; font-size:12px; font-weight:600; color:#3a4a66; border:1px solid rgba(255,255,255,0.7); }
+
+  .view-config .wrap { position:relative; z-index:1; max-width:1200px; margin:0 auto; padding:clamp(28px,5vw,52px) clamp(16px,4vw,40px) 140px; }
+  .view-config .kicker { font-size:10.5px; font-weight:600; text-transform:uppercase; letter-spacing:0.22em; color:var(--primary); display:flex; align-items:center; gap:10px; }
+  .view-config .kicker::before { content:""; width:22px; height:1px; background:var(--primary); opacity:0.5; }
+  .view-config .hero h1 { font-weight:200; letter-spacing:-0.02em; line-height:1.04; font-size:clamp(30px,6vw,48px); margin:16px 0 14px; }
+  .view-config .hero h1 strong { font-weight:500; } .view-config .hero h1 .d { color:var(--primary); }
+  .view-config .lede { max-width:56ch; color:var(--muted); font-size:14px; }
+
+  .view-config .flow { display:grid; gap:12px; margin-top:30px; grid-template-columns:1fr; }
+  @media (min-width:720px){ .view-config .flow{ grid-template-columns:repeat(3,1fr); gap:16px; } }
+  .view-config .fstep { position:relative; background:rgba(255,255,255,0.7); border:1px solid var(--hairline); border-radius:16px; padding:18px; }
+  .view-config .fstep .n { width:26px; height:26px; border-radius:8px; display:grid; place-items:center; background:var(--primary-soft); color:var(--primary); font-size:12px; font-weight:600; margin-bottom:12px; }
+  .view-config .fstep h3 { font-size:14px; font-weight:600; margin-bottom:6px; display:flex; align-items:center; gap:8px; }
+  .view-config .fstep .tag { font-size:9px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; padding:3px 7px; border-radius:999px; }
+  .view-config .fstep .tag.auto { background:var(--success-soft); color:#047857; }
+  .view-config .fstep .tag.spend { background:var(--coral-soft); color:var(--coral); }
+  .view-config .fstep .tag.coin { background:var(--primary-soft); color:var(--primary); }
+  .view-config .fstep p { font-size:12px; color:var(--muted); line-height:1.55; }
+  .view-config .fstep:not(:last-child)::after { content:"→"; position:absolute; right:-13px; top:50%; transform:translateY(-50%); color:var(--faint); font-size:16px; }
+  @media (max-width:719px){ .view-config .fstep::after{ display:none; } }
+
+  .view-config .layout { display:grid; grid-template-columns:1fr; gap:28px; margin-top:40px; }
+  @media (min-width:1024px){ .view-config .layout{ grid-template-columns:minmax(0,1fr) 348px; gap:36px; align-items:start; } }
+
+  .view-config .section { margin-top:38px; } .view-config .section:first-child { margin-top:0; }
+  .view-config .sec-head { display:flex; align-items:baseline; gap:14px; padding-bottom:14px; margin-bottom:16px; border-bottom:1px solid var(--hairline); }
+  .view-config .sec-num { font-size:10.5px; font-weight:600; letter-spacing:0.22em; color:var(--primary); text-transform:uppercase; }
+  .view-config .sec-head h2 { font-weight:300; font-size:clamp(19px,3vw,23px); letter-spacing:-0.01em; }
+  .view-config .sec-head .hint { margin-left:auto; color:var(--faint); font-size:11.5px; }
+  .view-config .sec-lead { font-size:12.5px; color:var(--muted); line-height:1.55; margin:-4px 0 16px; max-width:64ch; }
+  .view-config .sec-lead b { color:var(--ink-soft); font-weight:600; }
+
+  .view-config .card { background:rgba(255,255,255,0.85); backdrop-filter:blur(24px) saturate(1.4); border:1px solid rgba(255,255,255,0.9); border-radius:20px; box-shadow:0 18px 40px -28px rgba(15,23,42,0.35); }
+
+  .view-config .earn { padding:8px; display:grid; gap:4px; }
+  .view-config .erow { display:grid; grid-template-columns:42px 1fr auto auto; align-items:center; gap:14px; padding:14px 16px; border-radius:10px; transition:background .18s var(--ease); }
+  .view-config .erow:hover { background:var(--primary-wash); }
+  .view-config .erow + .erow { border-top:1px solid var(--border-soft); }
+  .view-config .ichip { width:42px; height:42px; border-radius:12px; display:grid; place-items:center; font-size:18px; background:var(--primary-soft); color:var(--primary); }
+  .view-config .erow .lm { font-size:14px; font-weight:600; }
+  .view-config .erow .ls { font-size:11.5px; color:var(--muted); margin-top:2px; }
+  .view-config .pin { display:inline-flex; align-items:center; gap:6px; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:7px 12px; }
+  .view-config .pin input { width:44px; border:none; outline:none; background:transparent; font-family:inherit; font-weight:600; font-size:14px; color:var(--ink); text-align:right; }
+  .view-config .pin .u { font-size:11px; font-weight:600; color:var(--faint); letter-spacing:0.04em; }
+  .view-config .sw { position:relative; width:42px; height:24px; flex:none; cursor:pointer; }
+  .view-config .sw input { position:absolute; opacity:0; width:100%; height:100%; margin:0; cursor:pointer; }
+  .view-config .sw .tk { position:absolute; inset:0; border-radius:999px; background:#d9e0ea; transition:background .2s var(--ease); }
+  .view-config .sw .tk::after { content:""; position:absolute; top:3px; left:3px; width:18px; height:18px; border-radius:999px; background:#fff; box-shadow:0 2px 4px rgba(15,23,42,0.25); transition:transform .2s var(--ease); }
+  .view-config .sw input:checked + .tk { background:var(--primary); }
+  .view-config .sw input:checked + .tk::after { transform:translateX(18px); }
+  .view-config .sw input:focus-visible + .tk { outline:2px solid rgba(0,114,251,0.4); outline-offset:2px; }
+
+  .view-config .ladder { position:relative; padding:24px 22px 20px; }
+  .view-config .thread { position:absolute; left:41px; top:42px; bottom:66px; width:2px; background:linear-gradient(to bottom,var(--primary),rgba(0,114,251,0.15)); border-radius:2px; }
+  .view-config .rung { position:relative; display:grid; grid-template-columns:38px 1fr; gap:18px; padding:11px 0; }
+  .view-config .node { width:38px; height:38px; border-radius:11px; display:grid; place-items:center; z-index:1; background:var(--surface); border:2px solid var(--tier,var(--primary)); color:var(--tier,var(--primary)); font-weight:600; font-size:13px; box-shadow:0 8px 20px -10px var(--tier,rgba(0,114,251,0.5)); }
+  .view-config .rcard { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:14px 16px; display:grid; gap:10px; transition:transform .18s var(--ease),box-shadow .18s var(--ease); }
+  .view-config .rcard:hover { transform:translateY(-2px); box-shadow:0 16px 30px -22px rgba(15,23,42,0.4); }
+  .view-config .rtop { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+  .view-config .tname { font-weight:600; font-size:15px; color:var(--ink); border:none; outline:none; background:transparent; font-family:inherit; border-bottom:1px dashed transparent; padding:2px 0; min-width:80px; }
+  .view-config .tname:hover,.view-config .tname:focus { border-bottom-color:var(--border); }
+  .view-config .swt { width:14px; height:14px; border-radius:999px; flex:none; background:var(--tier); border:2px solid #fff; box-shadow:0 0 0 1px var(--hairline); }
+  .view-config .thr { margin-left:auto; display:inline-flex; align-items:center; gap:6px; background:var(--primary-wash); color:var(--primary); border-radius:999px; padding:5px 11px; font-size:11.5px; font-weight:600; }
+  .view-config .perk { display:flex; align-items:center; gap:9px; font-size:12.5px; color:var(--ink-soft); }
+  .view-config .perk .auto { font-size:9px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:#047857; background:var(--success-soft); border-radius:999px; padding:2px 8px; }
+  .view-config .perk .txt b { font-weight:600; color:var(--ink); }
+  .view-config .addrow { display:inline-flex; align-items:center; gap:9px; margin:8px 0 0 56px; background:transparent; border:1px dashed var(--border); color:var(--muted); font-family:inherit; font-weight:600; font-size:12.5px; padding:10px 16px; border-radius:12px; cursor:pointer; transition:all .18s var(--ease); }
+  .view-config .addrow:hover { border-color:var(--primary); color:var(--primary); background:var(--primary-wash); }
+
+  .view-config .rewards { padding:18px; display:grid; gap:14px; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); }
+  .view-config .reward { border:1px solid var(--border); border-radius:14px; padding:16px; display:grid; gap:12px; background:var(--surface); transition:transform .18s var(--ease),box-shadow .18s var(--ease); }
+  .view-config .reward:hover { transform:translateY(-2px); box-shadow:0 16px 30px -22px rgba(15,23,42,0.4); }
+  .view-config .rtype { display:inline-flex; align-self:start; align-items:center; gap:6px; font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; padding:5px 9px; border-radius:999px; }
+  .view-config .rtype.pct { background:var(--primary-soft); color:var(--primary); }
+  .view-config .rtype.amt { background:var(--success-soft); color:#047857; }
+  .view-config .rtype.svc { background:var(--coral-soft); color:var(--coral); }
+  .view-config .rtype.prd { background:#ede9fe; color:#6d4ed8; }
+  .view-config .reward .rn { font-size:15px; font-weight:600; line-height:1.3; }
+  .view-config .reward .rc { display:flex; align-items:baseline; gap:6px; padding-top:10px; border-top:1px solid var(--border-soft); }
+  .view-config .reward .rc b { font-size:19px; font-weight:300; color:var(--coral); }
+  .view-config .reward .rc span { font-size:11px; font-weight:600; color:var(--faint); letter-spacing:0.08em; }
+  .view-config .reward .rc .uso { margin-left:auto; align-self:center; font-size:10px; color:var(--muted); letter-spacing:0; }
+  .view-config .radd { border:1px dashed var(--border); border-radius:14px; display:grid; place-items:center; gap:8px; cursor:pointer; color:var(--muted); font-weight:600; font-size:12.5px; min-height:120px; transition:all .18s var(--ease); }
+  .view-config .radd:hover { border-color:var(--primary); color:var(--primary); background:var(--primary-wash); }
+  .view-config .radd .pl { font-size:22px; font-weight:200; }
+
+  .view-config .settings { padding:8px; display:grid; gap:4px; }
+  .view-config .srow { display:flex; align-items:center; gap:16px; flex-wrap:wrap; padding:16px; }
+  .view-config .srow + .srow { border-top:1px solid var(--border-soft); }
+  .view-config .srow .sm { flex:1; min-width:180px; }
+  .view-config .srow .st { font-size:14px; font-weight:600; }
+  .view-config .srow .ss { font-size:11.5px; color:var(--muted); margin-top:2px; }
+  .view-config .segm { display:inline-flex; background:var(--paper); border:1px solid var(--border); border-radius:12px; padding:3px; }
+  .view-config .segm button { font-family:inherit; font-weight:600; font-size:12px; color:var(--muted); border:none; background:transparent; padding:7px 14px; border-radius:9px; cursor:pointer; transition:all .16s var(--ease); }
+  .view-config .segm button[aria-pressed="true"] { background:var(--surface); color:var(--primary); box-shadow:0 2px 6px -2px rgba(15,23,42,0.2); }
+
+  /* client preview (right rail) */
+  .view-config .preview { position:relative; }
+  @media (min-width:1024px){ .view-config .preview{ position:sticky; top:120px; } }
+  .view-config .pkick { font-size:10.5px; font-weight:600; letter-spacing:0.22em; text-transform:uppercase; color:var(--faint); margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+  .view-config .pkick .live { width:7px; height:7px; border-radius:999px; background:var(--success); animation:pulse 2.4s infinite; }
+  @keyframes pulse { 0%{ box-shadow:0 0 0 0 rgba(16,185,129,0.45);} 70%{ box-shadow:0 0 0 8px rgba(16,185,129,0);} 100%{ box-shadow:0 0 0 0 rgba(16,185,129,0);} }
+  .view-config .wallet { border-radius:28px; padding:22px; background:radial-gradient(120% 90% at 0% 0%,rgba(0,114,251,0.16),transparent 60%),linear-gradient(160deg,#0f1f3d,#0a1730); color:#fff; box-shadow:0 26px 50px -26px rgba(10,23,48,0.7); }
+  .view-config .whead { display:flex; align-items:center; justify-content:space-between; }
+  .view-config .whead .who { font-size:12px; color:rgba(255,255,255,0.65); }
+  .view-config .wtier { display:inline-flex; align-items:center; gap:7px; font-size:11px; font-weight:600; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.18); padding:5px 11px; border-radius:999px; }
+  .view-config .wtier .s { width:9px; height:9px; border-radius:999px; background:var(--t2); }
+  .view-config .wbal { margin:22px 0 6px; display:flex; align-items:baseline; gap:9px; }
+  .view-config .wbal b { font-size:46px; font-weight:200; letter-spacing:-0.02em; line-height:1; }
+  .view-config .wbal span { font-size:11px; font-weight:600; letter-spacing:0.12em; color:rgba(255,255,255,0.55); text-transform:uppercase; line-height:1.25; }
+  .view-config .wpl { display:flex; justify-content:space-between; font-size:11px; color:rgba(255,255,255,0.6); margin:18px 0 8px; }
+  .view-config .wpl b { color:#fff; font-weight:600; }
+  .view-config .wbar { height:7px; border-radius:999px; background:rgba(255,255,255,0.14); overflow:hidden; }
+  .view-config .wbar i { display:block; height:100%; width:82%; border-radius:999px; background:linear-gradient(90deg,#4da3ff,var(--primary)); }
+  .view-config .wperk { display:flex; align-items:center; gap:9px; margin-top:18px; font-size:11.5px; color:rgba(255,255,255,0.82); line-height:1.4; background:rgba(16,185,129,0.14); border:1px solid rgba(16,185,129,0.25); border-radius:12px; padding:11px 13px; }
+  .view-config .wperk b { color:#fff; font-weight:600; } .view-config .wperk .i { color:#34d99a; font-size:13px; flex:none; }
+  .view-config .wrew { margin-top:10px; display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12); border-radius:14px; padding:13px 15px; }
+  .view-config .wrew .g { width:34px; height:34px; border-radius:10px; flex:none; background:rgba(0,114,251,0.25); display:grid; place-items:center; font-size:16px; }
+  .view-config .wrew .m { flex:1; } .view-config .wrew .t { font-size:12.5px; font-weight:600; } .view-config .wrew .s { font-size:10.5px; color:rgba(255,255,255,0.55); margin-top:1px; }
+  .view-config .wrew .c { font-size:11px; font-weight:600; background:var(--primary); border-radius:999px; padding:6px 12px; white-space:nowrap; }
+  .view-config .pnote { margin-top:16px; font-size:11px; color:var(--muted); line-height:1.55; padding:0 4px; }
+
+  .view-config .savebar { position:fixed; left:0; right:0; bottom:0; z-index:40; display:flex; align-items:center; gap:16px; padding:14px clamp(16px,4vw,40px); background:rgba(239,243,249,0.82); backdrop-filter:blur(24px) saturate(1.4); border-top:1px solid var(--hairline); }
+  .view-config .savebar .note { font-size:11.5px; color:var(--muted); } .view-config .savebar .note b { color:var(--ink-soft); font-weight:600; }
+  .view-config .savebar .spacer { flex:1; }
+  .view-config .btn { font-family:inherit; font-weight:600; font-size:13.5px; cursor:pointer; border-radius:12px; padding:12px 20px; border:1px solid transparent; transition:all .18s var(--ease); white-space:nowrap; }
+  .view-config .btn.ghost { background:transparent; color:var(--ink-soft); border-color:var(--border); }
+  .view-config .btn.ghost:hover { border-color:var(--ink-soft); }
+  .view-config .btn.primary { background:linear-gradient(160deg,var(--primary),var(--primary-hover)); color:#fff; box-shadow:0 12px 26px -12px rgba(0,114,251,0.7); }
+  .view-config .btn.primary:hover { transform:translateY(-1px); }
+
+  /* ===================================================================
+     VIEW 2 — LO QUE VE EL CLIENTE  (Nightwing storefront · link-in-bio)
+     =================================================================== */
+  .view-store {
+    --gold:#e3c07a; --gold-deep:#caa253;
+    background:
+      radial-gradient(80% 55% at 50% -10%, rgba(227,192,122,0.18), transparent 60%),
+      linear-gradient(168deg, #2a1424 0%, #3f1d33 45%, #5a2942 100%);
+    color:#fff; font-family:'Montserrat',sans-serif;
+    padding-bottom:60px;
+  }
+  .view-store .snav {
+    position:sticky; top:49px; z-index:25; display:flex; align-items:center; gap:14px;
+    padding:13px clamp(16px,4vw,44px); background:rgba(42,20,36,0.55); backdrop-filter:blur(18px);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .view-store .handle { display:flex; align-items:center; gap:7px; font-size:13px; font-weight:500; color:rgba(255,255,255,0.85); }
+  .view-store .handle .ok { width:14px; height:14px; border-radius:999px; background:#22c55e; display:grid; place-items:center; font-size:8px; color:#06310f; font-weight:700; }
+  .view-store .pills { display:none; gap:4px; margin:0 auto; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.08); border-radius:999px; padding:3px; }
+  @media (min-width:860px){ .view-store .pills{ display:flex; } }
+  .view-store .pills a { font-size:12.5px; font-weight:500; color:rgba(255,255,255,0.7); text-decoration:none; padding:7px 15px; border-radius:999px; }
+  .view-store .pills a.on { background:rgba(255,255,255,0.16); color:#fff; }
+  .view-store .snav .act { display:flex; gap:8px; }
+  @media (max-width:859px){ .view-store .snav .act{ margin-left:auto; } }
+  .view-store .spill { font-size:12px; font-weight:500; color:#fff; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.14); border-radius:999px; padding:8px 15px; display:inline-flex; align-items:center; gap:7px; }
+
+  .view-store .shero { text-align:center; padding:clamp(34px,6vw,60px) 20px 8px; position:relative; z-index:1; }
+  .view-store .emblem { width:118px; height:118px; margin:0 auto 26px; border-radius:999px; position:relative; display:grid; place-items:center;
+    background:radial-gradient(circle at 50% 38%, rgba(255,255,255,0.22), rgba(255,255,255,0.04) 70%);
+    border:1px solid rgba(255,255,255,0.18); box-shadow:0 0 50px -10px rgba(227,192,122,0.5); }
+  .view-store .emblem .mk { font-family:'Fraunces',serif; font-weight:400; font-size:30px; line-height:0.95; text-align:center; }
+  .view-store .emblem .mk em { font-style:italic; color:var(--gold); display:block; font-size:26px; }
+  .view-store .sname { font-family:'Fraunces',serif; font-weight:300; font-size:clamp(30px,6vw,46px); letter-spacing:-0.01em; }
+  .view-store .ssub { color:rgba(255,255,255,0.6); font-size:13px; letter-spacing:0.16em; text-transform:uppercase; margin-top:10px; }
+  .view-store .socials { display:flex; justify-content:center; gap:12px; margin-top:22px; }
+  .view-store .socials a { width:42px; height:42px; border-radius:999px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.14); display:grid; place-items:center; color:#fff; text-decoration:none; font-size:16px; }
+
+  .view-store .stack { max-width:560px; margin:38px auto 0; padding:0 18px; display:grid; gap:14px; position:relative; z-index:1; }
+  .view-store .link {
+    display:flex; align-items:center; justify-content:center; gap:10px; text-align:center;
+    background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.13); border-radius:16px;
+    padding:18px; font-size:14.5px; font-weight:500; color:#fff; cursor:pointer; transition:all .18s var(--ease);
+  }
+  .view-store .link:hover { background:rgba(255,255,255,0.13); transform:translateY(-1px); }
+  .view-store .link .chev { margin-left:auto; color:rgba(255,255,255,0.5); }
+
+  /* the loyalty card — the public display, like gift cards, expanded */
+  .view-store .club {
+    background:linear-gradient(160deg, rgba(255,255,255,0.12), rgba(255,255,255,0.05));
+    border:1px solid rgba(227,192,122,0.4); border-radius:22px; padding:22px; position:relative; overflow:hidden;
+    box-shadow:0 24px 50px -30px rgba(0,0,0,0.6);
+  }
+  .view-store .club .badge { display:inline-flex; align-items:center; gap:8px; font-size:10.5px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:var(--gold); background:rgba(227,192,122,0.14); border:1px solid rgba(227,192,122,0.34); padding:6px 12px; border-radius:999px; }
+  .view-store .club h2 { font-family:'Fraunces',serif; font-weight:300; font-size:25px; line-height:1.1; margin:16px 0 8px; text-align:left; }
+  .view-store .club h2 em { font-style:italic; color:var(--gold); }
+  .view-store .club p { color:rgba(255,255,255,0.66); font-size:13px; text-align:left; }
+  .view-store .earn { display:flex; flex-wrap:wrap; gap:8px; margin-top:18px; }
+  .view-store .earn .c { font-size:11.5px; font-weight:500; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.13); padding:7px 12px; border-radius:999px; color:rgba(255,255,255,0.85); }
+  .view-store .earn .c b { color:#fff; font-weight:600; }
+  .view-store .tiers { margin-top:18px; display:grid; gap:8px; }
+  .view-store .tline { display:flex; align-items:center; gap:12px; background:rgba(0,0,0,0.16); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:10px 13px; }
+  .view-store .tline .d { width:10px; height:10px; border-radius:999px; flex:none; }
+  .view-store .tline .tn { font-weight:600; font-size:13px; display:flex; align-items:center; gap:7px; flex-wrap:wrap; }
+  .view-store .tline .pk { font-size:9px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:#34d99a; background:rgba(16,185,129,0.16); border:1px solid rgba(16,185,129,0.26); padding:2px 7px; border-radius:999px; }
+  .view-store .tline .tp { margin-left:auto; font-size:11px; font-weight:600; color:rgba(255,255,255,0.5); white-space:nowrap; }
+  .view-store .club .join { display:block; width:100%; margin-top:18px; text-align:center; background:var(--gold); color:#3a2410; font-weight:600; font-size:13.5px; border:none; border-radius:12px; padding:13px; cursor:pointer; transition:all .18s var(--ease); }
+  .view-store .club .join:hover { background:var(--gold-deep); }
+  .view-store .club .vs { margin-top:12px; font-size:10.5px; color:rgba(255,255,255,0.5); text-align:center; line-height:1.5; }
+  .view-store .club .vs b { color:rgba(255,255,255,0.78); font-weight:600; }
+
+  .view-store .sfoot { text-align:center; margin-top:50px; color:rgba(255,255,255,0.4); font-size:11.5px; }
+  .view-store .sfoot b { color:rgba(255,255,255,0.65); font-weight:600; }
+
+  /* floating loyalty widget — logged-in client, BOTTOM-LEFT */
+  .view-store .fab { position:fixed; left:clamp(14px,3vw,26px); bottom:clamp(14px,3vw,26px); z-index:50; width:min(320px,calc(100vw - 28px)); }
+  .view-store .fab .card { border-radius:20px; overflow:hidden; background:rgba(28,16,26,0.72); backdrop-filter:blur(26px) saturate(1.4); border:1px solid rgba(255,255,255,0.14); box-shadow:0 24px 50px -22px rgba(0,0,0,0.7); animation:fabIn .6s var(--ease) both; }
+  @keyframes fabIn { from{ opacity:0; transform:translateY(14px) scale(.96);} to{ opacity:1; transform:none;} }
+  .view-store .fab .fh { display:flex; align-items:center; gap:11px; padding:14px 16px; background:linear-gradient(150deg,rgba(227,192,122,0.16),rgba(227,192,122,0.02)); border-bottom:1px solid rgba(255,255,255,0.1); }
+  .view-store .fab .fh .bg { width:36px; height:36px; border-radius:11px; flex:none; background:linear-gradient(150deg,var(--gold),var(--gold-deep)); color:#3a2410; display:grid; place-items:center; font-size:16px; font-weight:700; }
+  .view-store .fab .fh .t { flex:1; } .view-store .fab .fh .t .k { font-size:9.5px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:rgba(255,255,255,0.5); }
+  .view-store .fab .fh .t .tr { font-size:14px; font-weight:600; display:flex; align-items:center; gap:7px; } .view-store .fab .fh .t .tr .s { width:9px; height:9px; border-radius:999px; background:var(--t2); }
+  .view-store .fab .fh .cv { color:rgba(255,255,255,0.5); font-size:13px; }
+  .view-store .fab .fb { padding:15px 16px 16px; }
+  .view-store .fab .bal { display:flex; align-items:baseline; gap:7px; } .view-store .fab .bal b { font-weight:600; font-size:26px; letter-spacing:-0.01em; } .view-store .fab .bal span { font-size:11px; font-weight:600; color:rgba(255,255,255,0.55); }
+  .view-store .fab .pl { display:flex; justify-content:space-between; font-size:11px; color:rgba(255,255,255,0.55); margin:14px 0 6px; } .view-store .fab .pl b { color:#fff; font-weight:600; }
+  .view-store .fab .bar { height:7px; border-radius:999px; background:rgba(255,255,255,0.12); overflow:hidden; } .view-store .fab .bar i { display:block; height:100%; width:82%; border-radius:999px; background:linear-gradient(90deg,#f0d79a,var(--gold)); }
+  .view-store .fab .perk { margin-top:13px; display:flex; align-items:center; gap:9px; font-size:11.5px; color:rgba(255,255,255,0.82); background:rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.24); border-radius:11px; padding:9px 11px; line-height:1.35; } .view-store .fab .perk b { color:#fff; font-weight:600; } .view-store .fab .perk .i { color:#34d99a; flex:none; }
+  .view-store .fab .rew { margin-top:9px; display:flex; align-items:center; gap:10px; border:1px solid rgba(255,255,255,0.12); border-radius:11px; padding:9px 11px; } .view-store .fab .rew .g { width:28px; height:28px; border-radius:8px; flex:none; background:rgba(227,192,122,0.18); display:grid; place-items:center; font-size:14px; } .view-store .fab .rew .m { flex:1; } .view-store .fab .rew .t { font-size:12px; font-weight:600; } .view-store .fab .rew .s { font-size:10.5px; color:rgba(255,255,255,0.55); } .view-store .fab .rew .c { font-size:11px; font-weight:600; color:#3a2410; background:var(--gold); border-radius:999px; padding:6px 11px; cursor:pointer; }
+  .view-store .fab .ff { padding:10px 16px; border-top:1px solid rgba(255,255,255,0.1); text-align:center; } .view-store .fab .ff a { font-size:11.5px; font-weight:600; color:var(--gold); text-decoration:none; }
+
+  .view-store .wa { position:fixed; right:clamp(14px,3vw,26px); bottom:clamp(14px,3vw,26px); z-index:50; width:54px; height:54px; border-radius:999px; background:#25d366; display:grid; place-items:center; font-size:26px; box-shadow:0 16px 30px -12px rgba(37,211,102,0.6); }
+
+  /* ===================================================================
+     VIEW 3 — CANJE, DESCUENTOS Y EMAILS  (explainer · Frost claro)
+     =================================================================== */
+  .view-flow { background:var(--paper); color:var(--ink); }
+  .view-flow::before { content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+    background:radial-gradient(60% 45% at 8% -5%, rgba(0,114,251,0.08), transparent 70%), radial-gradient(45% 40% at 100% 100%, rgba(255,70,88,0.05), transparent 70%); }
+  .view-flow .wrap { position:relative; z-index:1; max-width:1120px; margin:0 auto; padding:clamp(28px,5vw,52px) clamp(16px,4vw,40px) 90px; }
+  .view-flow .kicker { font-size:10.5px; font-weight:600; text-transform:uppercase; letter-spacing:0.22em; color:var(--primary); display:flex; align-items:center; gap:10px; }
+  .view-flow .kicker::before { content:""; width:22px; height:1px; background:var(--primary); opacity:0.5; }
+  .view-flow h1 { font-weight:200; letter-spacing:-0.02em; line-height:1.05; font-size:clamp(28px,5.5vw,44px); margin:16px 0 12px; }
+  .view-flow h1 strong { font-weight:500; } .view-flow h1 .d { color:var(--primary); }
+  .view-flow .lede { max-width:60ch; color:var(--muted); font-size:14px; }
+
+  .view-flow .sec-head { display:flex; align-items:baseline; gap:14px; margin:46px 0 18px; padding-bottom:13px; border-bottom:1px solid var(--hairline); }
+  .view-flow .sec-num { font-size:10.5px; font-weight:600; letter-spacing:0.22em; color:var(--primary); text-transform:uppercase; }
+  .view-flow .sec-head h2 { font-weight:300; font-size:clamp(19px,3vw,23px); letter-spacing:-0.01em; }
+  .view-flow .sec-head .hint { margin-left:auto; color:var(--faint); font-size:11.5px; }
+
+  /* stepper */
+  .view-flow .steps { display:grid; gap:14px; grid-template-columns:1fr; }
+  @media (min-width:760px){ .view-flow .steps{ grid-template-columns:repeat(4,1fr); gap:16px; } }
+  .view-flow .step { position:relative; background:rgba(255,255,255,0.85); backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,0.9); border-radius:18px; padding:20px 18px; box-shadow:0 14px 34px -26px rgba(15,23,42,0.4); }
+  .view-flow .step .sn { width:30px; height:30px; border-radius:9px; display:grid; place-items:center; background:var(--primary); color:#fff; font-size:13px; font-weight:600; margin-bottom:14px; box-shadow:0 8px 18px -8px rgba(0,114,251,0.6); }
+  .view-flow .step h3 { font-size:14px; font-weight:600; margin-bottom:6px; }
+  .view-flow .step p { font-size:12px; color:var(--muted); line-height:1.55; }
+  .view-flow .step:not(:last-child)::after { content:"→"; position:absolute; right:-13px; top:50%; transform:translateY(-50%); color:var(--faint); font-size:15px; z-index:2; }
+  @media (max-width:759px){ .view-flow .step::after{ content:"↓"; right:auto; left:50%; top:auto; bottom:-15px; transform:translateX(-50%); } }
+
+  .view-flow .grid2 { display:grid; gap:24px; grid-template-columns:1fr; align-items:start; }
+  @media (min-width:900px){ .view-flow .grid2{ grid-template-columns:1.05fr 0.95fr; gap:30px; } }
+
+  /* receipt */
+  .view-flow .receipt { background:#fff; border-radius:20px; border:1px solid var(--border); overflow:hidden; box-shadow:0 20px 44px -28px rgba(15,23,42,0.4); }
+  .view-flow .rc-head { padding:18px 20px; border-bottom:1px solid var(--border-soft); display:flex; align-items:center; gap:11px; }
+  .view-flow .rc-head .av { width:36px; height:36px; border-radius:10px; background:linear-gradient(150deg,#e7c8b6,#c98f72); display:grid; place-items:center; color:#fff; font-weight:600; font-size:13px; }
+  .view-flow .rc-head .t { font-size:13.5px; font-weight:600; } .view-flow .rc-head .s { font-size:11px; color:var(--muted); }
+  .view-flow .rc-head .tag { margin-left:auto; font-size:10px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); background:var(--paper); border:1px solid var(--border); padding:5px 9px; border-radius:999px; }
+  .view-flow .rc-body { padding:8px 20px 18px; }
+  .view-flow .li { display:flex; align-items:center; gap:10px; padding:11px 0; font-size:13.5px; }
+  .view-flow .li + .li { border-top:1px solid var(--border-soft); }
+  .view-flow .li .nm { font-weight:500; } .view-flow .li .nm .sub { display:block; font-size:10.5px; color:var(--faint); font-weight:500; margin-top:1px; }
+  .view-flow .li .amt { margin-left:auto; font-weight:600; font-variant-numeric:tabular-nums; }
+  .view-flow .li .pill { font-size:9px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; padding:2px 8px; border-radius:999px; }
+  .view-flow .li .pill.auto { background:var(--success-soft); color:#047857; }
+  .view-flow .li .pill.canje { background:var(--coral-soft); color:var(--coral); }
+  .view-flow .li .pill.dyn { background:#ede9fe; color:#6d4ed8; }
+  .view-flow .li.disc .amt { color:var(--success); } .view-flow .li.disc.coral .amt { color:var(--coral); } .view-flow .li.disc.violet .amt { color:#6d4ed8; }
+  .view-flow .li.sub { border-top:1px dashed var(--border); margin-top:4px; padding-top:13px; color:var(--ink-soft); }
+  .view-flow .li.tot { border-top:2px solid var(--ink); margin-top:6px; padding-top:14px; }
+  .view-flow .li.tot .nm { font-weight:600; font-size:14px; } .view-flow .li.tot .amt { font-size:20px; font-weight:300; }
+  .view-flow .rc-legend { padding:13px 20px; background:var(--paper); border-top:1px solid var(--border-soft); font-size:11px; color:var(--muted); line-height:1.55; }
+  .view-flow .rc-legend b { color:var(--ink-soft); font-weight:600; }
+
+  /* rules */
+  .view-flow .rules { background:rgba(255,255,255,0.85); backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,0.9); border-radius:20px; padding:20px; box-shadow:0 18px 40px -28px rgba(15,23,42,0.35); }
+  .view-flow .rules h4 { font-size:11px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:var(--muted); margin-bottom:14px; }
+  .view-flow .order { display:grid; gap:0; margin-bottom:22px; }
+  .view-flow .ord { display:flex; align-items:center; gap:12px; padding:9px 0; font-size:13px; }
+  .view-flow .ord + .ord { border-top:1px solid var(--border-soft); }
+  .view-flow .ord .i { width:24px; height:24px; border-radius:7px; flex:none; display:grid; place-items:center; font-size:11px; font-weight:600; background:var(--primary-soft); color:var(--primary); }
+  .view-flow .ord .x { margin-left:auto; font-size:11px; color:var(--faint); font-weight:600; }
+  .view-flow .ord.muted .i { background:var(--border-soft); color:var(--muted); }
+  .view-flow .rtoggle { display:flex; align-items:center; gap:14px; padding:12px 0; }
+  .view-flow .rtoggle + .rtoggle { border-top:1px solid var(--border-soft); }
+  .view-flow .rtoggle .rt { flex:1; font-size:12.5px; font-weight:500; } .view-flow .rtoggle .rt .s { display:block; font-size:10.5px; color:var(--muted); margin-top:1px; }
+  .view-flow .sw2 { position:relative; width:40px; height:23px; flex:none; }
+  .view-flow .sw2 input { position:absolute; opacity:0; width:100%; height:100%; margin:0; cursor:pointer; }
+  .view-flow .sw2 .tk { position:absolute; inset:0; border-radius:999px; background:#d9e0ea; transition:background .2s var(--ease); }
+  .view-flow .sw2 .tk::after { content:""; position:absolute; top:3px; left:3px; width:17px; height:17px; border-radius:999px; background:#fff; box-shadow:0 2px 4px rgba(15,23,42,0.25); transition:transform .2s; }
+  .view-flow .sw2 input:checked + .tk { background:var(--primary); } .view-flow .sw2 input:checked + .tk::after { transform:translateX(17px); }
+  .view-flow .cap { display:flex; align-items:center; gap:10px; padding:12px 0 2px; font-size:12.5px; font-weight:500; }
+  .view-flow .cap .v { margin-left:auto; font-weight:600; background:var(--primary-soft); color:var(--primary); border-radius:999px; padding:5px 12px; font-size:12px; }
+
+  /* emails */
+  .view-flow .emails { display:grid; gap:16px; grid-template-columns:1fr; }
+  @media (min-width:680px){ .view-flow .emails{ grid-template-columns:repeat(3,1fr); } }
+  .view-flow .email { background:#fff; border:1px solid var(--border); border-radius:16px; overflow:hidden; box-shadow:0 16px 36px -28px rgba(15,23,42,0.4); }
+  .view-flow .em-top { padding:13px 16px; border-bottom:1px solid var(--border-soft); display:flex; align-items:center; gap:9px; }
+  .view-flow .em-top .ag { width:24px; height:24px; border-radius:7px; background:linear-gradient(150deg,var(--primary),var(--primary-hover)); flex:none; }
+  .view-flow .em-top .from { font-size:11px; } .view-flow .em-top .from b { display:block; font-weight:600; font-size:12px; }
+  .view-flow .em-body { padding:18px 16px; }
+  .view-flow .em-ico { font-size:26px; margin-bottom:10px; }
+  .view-flow .em-subj { font-size:14.5px; font-weight:600; line-height:1.3; margin-bottom:6px; }
+  .view-flow .em-prev { font-size:12px; color:var(--muted); line-height:1.55; }
+  .view-flow .em-cta { margin-top:14px; display:inline-block; font-size:12px; font-weight:600; color:#fff; background:var(--primary); border-radius:999px; padding:8px 16px; }
+  .view-flow .em-cta.gold { background:#caa253; }
+
+  /* ===================== mobile polish ===================== */
+  @media (max-width:560px){
+    /* config savebar: drop the status note, let buttons breathe */
+    .view-config .savebar { gap:10px; padding:12px 16px; }
+    .view-config .savebar .note { display:none; }
+    .view-config .savebar .spacer { display:none; }
+    .view-config .btn { flex:1; padding:13px 10px; text-align:center; }
+    /* floating widget collapses to a tappable pill so it never collides with WhatsApp */
+    .view-store .fab { width:auto; }
+    .view-store .fab .card { border-radius:999px; }
+    .view-store .fab .fh { padding:11px 15px; }
+    .view-store .fab .fh .pts { display:inline; }
+    .view-store .fab .fb, .view-store .fab .ff { display:none; }
+    .view-store .fab .fh .cv { transform:rotate(180deg); }
+    .view-store .wa { width:50px; height:50px; font-size:23px; }
+  }
+  .view-store .fab .fh .pts { display:none; font-size:11.5px; font-weight:600; color:var(--gold); margin-left:2px; }
+
+  @media (prefers-reduced-motion:reduce){ *{ animation:none !important; transition:none !important; } }
+</style>
+</head>
+<body>
+
+  <!-- presentation chrome -->
+  <div class="mockbar">
+    <span class="mb-title"><span class="dot"></span> Programa de fidelización · Mockup</span>
+    <div class="seg" role="group" aria-label="Cambiar vista">
+      <button data-go="config" aria-pressed="true">El profesional configura</button>
+      <button data-go="store" aria-pressed="false">Lo que ve el cliente</button>
+      <button data-go="flow" aria-pressed="false">Canje y descuentos</button>
+    </div>
+    <span class="mb-hint">Tres vistas del mismo programa</span>
+  </div>
+
+  <!-- ============ VIEW 1 — CONFIG (Flash) ============ -->
+  <section class="view view-config active" data-view="config">
+    <div class="appbar">
+      <div class="brand"><span class="mark"></span>Flash</div>
+      <nav class="crumbs">Crecé <span>›</span> <b>Fidelización</b></nav>
+      <div class="spacer"></div>
+      <div class="av">EL</div>
+    </div>
+
+    <div class="wrap">
+      <div class="hero">
+        <p class="kicker">Fidelización · Programa de puntos</p>
+        <h1>Armá tu programa de <strong>fidelidad</strong><span class="d">.</span></h1>
+        <p class="lede">Definí cómo tus clientes ganan puntos, qué niveles desbloquean y con qué los premiás. Vos ponés las reglas — nosotros lo mostramos en su billetera y lo descontamos al reservar.</p>
+        <div class="flow">
+          <div class="fstep"><div class="n">1</div><h3>Puntos <span class="tag coin">Moneda</span></h3><p>Se ganan con cada compra, turno o reseña. Son el saldo que el cliente acumula.</p></div>
+          <div class="fstep"><div class="n">2</div><h3>Niveles <span class="tag auto">Automático</span></h3><p>Suben de nivel según sus puntos acumulados. Cada nivel da un beneficio <b style="color:var(--ink-soft)">siempre activo</b>, sin gastar puntos. Es estatus.</p></div>
+          <div class="fstep"><div class="n">3</div><h3>Premios <span class="tag spend">Se canjea</span></h3><p>Gastan puntos por un beneficio <b style="color:var(--ink-soft)">puntual, de un solo uso</b>. Al canjear, baja su saldo.</p></div>
+        </div>
+      </div>
+
+      <div class="layout">
+        <div class="config-col">
+
+          <section class="section">
+            <div class="sec-head"><span class="sec-num">01 · Ganar</span><h2>Cómo se ganan puntos</h2><span class="hint">Prendé las acciones que premiás</span></div>
+            <div class="card earn">
+              <div class="erow"><div class="ichip">$</div><div><div class="lm">Por cada compra</div><div class="ls">Puntos por monto gastado en servicios y productos</div></div><label class="pin"><input value="10" aria-label="pts"/><span class="u">pts / $1.000</span></label><label class="sw"><input type="checkbox" checked/><span class="tk"></span></label></div>
+              <div class="erow"><div class="ichip">✓</div><div><div class="lm">Por turno completado</div><div class="ls">Cada visita que asiste y no cancela</div></div><label class="pin"><input value="50" aria-label="pts"/><span class="u">pts</span></label><label class="sw"><input type="checkbox" checked/><span class="tk"></span></label></div>
+              <div class="erow"><div class="ichip">★</div><div><div class="lm">Por dejar una reseña</div><div class="ls">Después de un turno completado</div></div><label class="pin"><input value="100" aria-label="pts"/><span class="u">pts</span></label><label class="sw"><input type="checkbox" checked/><span class="tk"></span></label></div>
+              <div class="erow"><div class="ichip">↗</div><div><div class="lm">Por reservar online</div><div class="ls">Turnos sacados desde tu página, no por teléfono</div></div><label class="pin"><input value="20" aria-label="pts"/><span class="u">pts</span></label><label class="sw"><input type="checkbox"/><span class="tk"></span></label></div>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="sec-head"><span class="sec-num">02 · Niveles</span><h2>Beneficios por nivel</h2><span class="hint">Automático · no gasta puntos</span></div>
+            <p class="sec-lead">Cada nivel da un beneficio <b>permanente</b>: el cliente lo tiene siempre que esté en ese nivel, sin canjear nada. Sube de nivel solo, al acumular puntos. Es un estatus — <b>no es lo mismo que un premio</b>.</p>
+            <div class="card ladder">
+              <div class="thread"></div>
+              <div class="rung" style="--tier:var(--t1)"><div class="node">1</div><div class="rcard"><div class="rtop"><span class="swt"></span><input class="tname" value="Inicial" aria-label="nivel"/><span class="thr">Desde 0 pts</span></div><div class="perk"><span class="auto">Siempre</span><span class="txt">Bienvenida + acceso a recompensas</span></div></div></div>
+              <div class="rung" style="--tier:var(--t2)"><div class="node">2</div><div class="rcard"><div class="rtop"><span class="swt"></span><input class="tname" value="Plata" aria-label="nivel"/><span class="thr">Desde 500 pts</span></div><div class="perk"><span class="auto">Siempre</span><span class="txt"><b>5% off</b> en todos los servicios</span></div></div></div>
+              <div class="rung" style="--tier:var(--t3)"><div class="node">3</div><div class="rcard"><div class="rtop"><span class="swt"></span><input class="tname" value="Oro" aria-label="nivel"/><span class="thr">Desde 1.500 pts</span></div><div class="perk"><span class="auto">Siempre</span><span class="txt"><b>10% off</b> + regalo de cumpleaños</span></div></div></div>
+              <div class="rung" style="--tier:var(--t4)"><div class="node">4</div><div class="rcard"><div class="rtop"><span class="swt"></span><input class="tname" value="Diamante" aria-label="nivel"/><span class="thr">Desde 4.000 pts</span></div><div class="perk"><span class="auto">Siempre</span><span class="txt"><b>10% off</b> + un servicio sorpresa al mes</span></div></div></div>
+              <button class="addrow" type="button">＋ Agregar nivel</button>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="sec-head"><span class="sec-num">03 · Premios</span><h2>Canje de puntos</h2><span class="hint">El cliente gasta puntos · uso único</span></div>
+            <p class="sec-lead">Acá el cliente <b>gasta</b> sus puntos por un premio puntual. Al canjear, le baja el saldo y el premio se aplica una sola vez. Aparece automático al cobrar la reserva.</p>
+            <div class="card rewards">
+              <div class="reward"><span class="rtype amt">Descuento $</span><div class="rn">$2.000 de descuento</div><div class="rc"><b>−800</b><span>PTS</span><span class="uso">uso único</span></div></div>
+              <div class="reward"><span class="rtype svc">Servicio gratis</span><div class="rn">Manicura de regalo</div><div class="rc"><b>−1.200</b><span>PTS</span><span class="uso">uso único</span></div></div>
+              <div class="reward"><span class="rtype pct">Descuento %</span><div class="rn">15% en tu próxima visita</div><div class="rc"><b>−600</b><span>PTS</span><span class="uso">uso único</span></div></div>
+              <div class="reward"><span class="rtype prd">Producto gratis</span><div class="rn">Shampoo de regalo</div><div class="rc"><b>−900</b><span>PTS</span><span class="uso">uso único</span></div></div>
+              <button class="radd" type="button"><span class="pl">＋</span> Crear recompensa</button>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="sec-head"><span class="sec-num">04 · Ajustes</span><h2>Reglas del programa</h2></div>
+            <div class="card settings">
+              <div class="srow"><div class="sm"><div class="st">Vencimiento de puntos</div><div class="ss">Cuánto duran los puntos sin actividad del cliente</div></div><div class="segm" role="group"><button aria-pressed="false">12 meses</button><button aria-pressed="true">24 meses</button><button aria-pressed="false">Nunca</button></div></div>
+              <div class="srow"><div class="sm"><div class="st">Premiar referidos</div><div class="ss">Puntos para quien recomienda cuando su amigo reserva por primera vez</div></div><label class="pin"><input value="300" aria-label="pts"/><span class="u">pts</span></label><label class="sw"><input type="checkbox" checked/><span class="tk"></span></label></div>
+            </div>
+          </section>
+
+        </div>
+
+        <aside class="preview">
+          <div class="pkick"><span class="live"></span> Lo que ve tu cliente</div>
+          <div class="wallet">
+            <div class="whead"><span class="who">Billetera · Estudio Lina</span><span class="wtier"><span class="s"></span> Plata</span></div>
+            <div class="wbal"><b>1.240</b><span>puntos<br>canjeables</span></div>
+            <div class="wpl"><span>Estatus <b>Plata</b> · faltan <b>260</b> para Oro</span><span>1.240 / 1.500</span></div>
+            <div class="wbar"><i></i></div>
+            <div class="wperk"><span class="i">✦</span><span>Beneficio Plata activo: <b>5% off siempre</b> — sin gastar puntos</span></div>
+            <div class="wrew"><span class="g">🎁</span><div class="m"><div class="t">Canjeá $2.000 de descuento</div><div class="s">Te alcanza · gastás 800 pts</div></div><span class="c">Canjear</span></div>
+          </div>
+          <p class="pnote">Tus clientes ven su saldo y nivel en su página de Ágora. El descuento se aplica solo al cobrar la reserva — vos no calculás nada a mano.</p>
+        </aside>
+      </div>
+    </div>
+
+    <div class="savebar"><span class="note"><b>Borrador</b> · todavía no visible para tus clientes</span><div class="spacer"></div><button class="btn ghost">Guardar borrador</button><button class="btn primary">Activar programa</button></div>
+  </section>
+
+  <!-- ============ VIEW 2 — STOREFRONT (Nightwing) ============ -->
+  <section class="view view-store" data-view="store">
+    <nav class="snav">
+      <span class="handle">/estudiolina <span class="ok">✓</span></span>
+      <div class="pills"><a class="on">Principal</a><a>Servicios</a><a>Conocé más</a><a>Reservar</a></div>
+      <div class="act"><span class="spill">↗ Compartir</span><span class="spill">Ingresar ▾</span></div>
+    </nav>
+
+    <header class="shero">
+      <div class="emblem"><div class="mk">Estudio<em>Lina</em></div></div>
+      <h1 class="sname">Estudio Lina</h1>
+      <p class="ssub">Estética facial · Palermo</p>
+      <div class="socials">
+        <a aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+        <a aria-label="TikTok"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 3c.35 2.4 1.95 4.05 4.2 4.35v3.1c-1.55 0-3-.5-4.2-1.3v5.6a5.6 5.6 0 1 1-5.6-5.6c.32 0 .63.03.93.08v3.2a2.55 2.55 0 1 0 1.67 2.4V3h3z"/></svg></a>
+      </div>
+    </header>
+
+    <div class="stack">
+      <div class="link">✨ Reservar turno <span class="chev">›</span></div>
+
+      <!-- LOYALTY public display (like gift cards), expanded -->
+      <div class="club">
+        <span class="badge">◆ Club Estudio Lina</span>
+        <h2>Sumá puntos y <em>subí de nivel</em>.</h2>
+        <p>Ganás puntos en cada turno, reseña y compra. Mientras más venís, mejor nivel — con beneficios que tenés siempre.</p>
+        <div class="earn"><span class="c">✓ <b>10 pts</b> / $1.000</span><span class="c">✓ <b>50 pts</b> por turno</span><span class="c">✓ <b>100 pts</b> por reseña</span></div>
+        <div class="tiers">
+          <div class="tline"><span class="d" style="background:var(--t1)"></span><span class="tn">Inicial</span><span class="tp">0 pts</span></div>
+          <div class="tline"><span class="d" style="background:var(--t2)"></span><span class="tn">Plata <span class="pk">5% off siempre</span></span><span class="tp">500 pts</span></div>
+          <div class="tline"><span class="d" style="background:var(--t3)"></span><span class="tn">Oro <span class="pk">10% + regalo</span></span><span class="tp">1.500 pts</span></div>
+          <div class="tline"><span class="d" style="background:var(--t4)"></span><span class="tn">Diamante <span class="pk">sorpresa mensual</span></span><span class="tp">4.000 pts</span></div>
+        </div>
+        <button class="join">Unirme al club — es gratis</button>
+        <p class="vs"><b>Nivel ≠ premio.</b> El nivel es un beneficio automático que tenés siempre. Los premios se canjean gastando puntos.</p>
+      </div>
+
+      <div class="link">🎁 Gift cards <span class="chev">›</span></div>
+      <div class="link">📍 Ubicación en Palermo <span class="chev">▾</span></div>
+    </div>
+
+    <p class="sfoot">Creado con <b>ágora</b> · agora.red/estudiolina</p>
+
+    <!-- floating loyalty widget — logged-in client, bottom-LEFT -->
+    <aside class="fab" aria-label="Tu programa de fidelidad">
+      <div class="card">
+        <div class="fh"><span class="bg">◆</span><div class="t"><div class="k">Tu nivel</div><div class="tr"><span class="s"></span> Plata <span class="pts">· 1.240 pts</span></div></div><span class="cv">▾</span></div>
+        <div class="fb">
+          <div class="bal"><b>1.240</b><span>puntos canjeables</span></div>
+          <div class="pl"><span>Faltan <b>260</b> para Oro</span><span>1.240 / 1.500</span></div>
+          <div class="bar"><i></i></div>
+          <div class="perk"><span class="i">✦</span><span>Beneficio Plata: <b>5% off siempre</b> — automático</span></div>
+          <div class="rew"><span class="g">🎁</span><div class="m"><div class="t">$2.000 de descuento</div><div class="s">Te alcanza · gastás 800 pts</div></div><span class="c">Canjear</span></div>
+        </div>
+        <div class="ff"><a>Ver todos mis premios →</a></div>
+      </div>
+    </aside>
+
+    <div class="wa">✆</div>
+  </section>
+
+  <!-- ============ VIEW 3 — CANJE, DESCUENTOS Y EMAILS ============ -->
+  <section class="view view-flow" data-view="flow">
+    <div class="wrap">
+      <p class="kicker">Canje · Descuentos · Emails</p>
+      <h1>Cómo se canjea y cómo se <strong>aplican</strong> los descuentos<span class="d">.</span></h1>
+      <p class="lede">El momento de la verdad es el cobro. Acá se ve cómo el cliente canjea un premio, cómo aparecen los descuentos del programa y cómo conviven con otros descuentos — sin que tengas que calcular nada a mano.</p>
+
+      <!-- 1 · canje paso a paso -->
+      <div class="sec-head"><span class="sec-num">01 · El canje</span><h2>Canjear un premio, paso a paso</h2><span class="hint">Desde la billetera del cliente</span></div>
+      <div class="steps">
+        <div class="step"><div class="sn">1</div><h3>Elige el premio</h3><p>Desde su billetera toca "Canjear" en un premio que le alcanza con sus puntos.</p></div>
+        <div class="step"><div class="sn">2</div><h3>Se reserva el cupón</h3><p>Le descontamos los puntos (−800) y le queda un cupón listo para su próxima reserva.</p></div>
+        <div class="step"><div class="sn">3</div><h3>Se aplica al cobrar</h3><p>En el checkout o en la caja, el premio se descuenta solo del total. Vos no hacés nada.</p></div>
+        <div class="step"><div class="sn">4</div><h3>Email de confirmación</h3><p>El cliente recibe el detalle: qué canjeó, cuánto ahorró y cuántos puntos le quedan.</p></div>
+      </div>
+
+      <!-- 2 + 3 · descuentos al cobrar + reglas -->
+      <div class="sec-head"><span class="sec-num">02 · Al cobrar</span><h2>Cómo se ven los descuentos y cómo se combinan</h2></div>
+      <div class="grid2">
+
+        <div class="receipt">
+          <div class="rc-head"><div class="av">SF</div><div><div class="t">Sofía · Limpieza profunda</div><div class="s">Resumen de la reserva · Estudio Lina</div></div><span class="tag">Resumen</span></div>
+          <div class="rc-body">
+            <div class="li"><span class="nm">Limpieza profunda</span><span class="amt">$18.000</span></div>
+            <div class="li disc violet"><span class="nm">Descuento por precio dinámico <span class="sub">franja de baja demanda</span></span><span class="pill dyn">−10%</span><span class="amt">−$1.800</span></div>
+            <div class="li disc"><span class="nm">Descuento por nivel <span class="sub">Plata · automático, siempre activo</span></span><span class="pill auto">Automático −5%</span><span class="amt">−$810</span></div>
+            <div class="li disc coral"><span class="nm">Premio canjeado <span class="sub">$2.000 de descuento</span></span><span class="pill canje">Canje −800 pts</span><span class="amt">−$2.000</span></div>
+            <div class="li sub"><span class="nm">Subtotal</span><span class="amt">$13.390</span></div>
+            <div class="li"><span class="nm">Seña pagada online</span><span class="amt" style="color:var(--muted)">−$5.000</span></div>
+            <div class="li tot"><span class="nm">Saldo pendiente</span><span class="amt">$8.390</span></div>
+          </div>
+          <div class="rc-legend"><b>Verde</b> = descuento por nivel (automático, no gasta puntos) · <b>Coral</b> = premio canjeado (gasta puntos) · <b>Violeta</b> = descuento por precio dinámico. Cada descuento se marca por su tipo.</div>
+        </div>
+
+        <div class="rules">
+          <h4>Orden en que se aplican</h4>
+          <div class="order">
+            <div class="ord"><span class="i">1</span> Precio del servicio <span class="x">$18.000</span></div>
+            <div class="ord"><span class="i">2</span> Descuento por precio dinámico <span class="x">−10%</span></div>
+            <div class="ord"><span class="i">3</span> Descuento por nivel (automático) <span class="x">−5%</span></div>
+            <div class="ord"><span class="i">4</span> Premio canjeado (gasta puntos) <span class="x">−$2.000</span></div>
+            <div class="ord muted"><span class="i">5</span> Seña ya pagada <span class="x">se resta del total</span></div>
+          </div>
+          <h4>Reglas de combinación</h4>
+          <div class="rtoggle"><div class="rt">Sumar el descuento por nivel a otros descuentos<span class="s">El % del nivel se aplica aunque ya haya un descuento por precio dinámico</span></div><label class="sw2"><input type="checkbox" checked/><span class="tk"></span></label></div>
+          <div class="rtoggle"><div class="rt">Canjear premios sobre servicios con descuento<span class="s">Si está apagado, no se puede usar un premio sobre algo ya rebajado</span></div><label class="sw2"><input type="checkbox"/><span class="tk"></span></label></div>
+          <div class="cap">Tope de descuento total <span class="v">40%</span></div>
+        </div>
+      </div>
+
+      <!-- 4 · emails -->
+      <div class="sec-head"><span class="sec-num">03 · Emails</span><h2>Los avisos automáticos</h2><span class="hint">Los manda Ágora, con tu marca</span></div>
+      <div class="emails">
+        <div class="email">
+          <div class="em-top"><span class="ag"></span><div class="from">para Sofía<b>Estudio Lina</b></div></div>
+          <div class="em-body"><div class="em-ico">🎉</div><div class="em-subj">¡Subiste a nivel Plata!</div><p class="em-prev">Desde hoy tenés <b>5% off siempre</b> en todos tus turnos en Estudio Lina. Sin canjear nada, es tuyo por tu nivel.</p><span class="em-cta gold">Ver mi nivel</span></div>
+        </div>
+        <div class="email">
+          <div class="em-top"><span class="ag"></span><div class="from">para Sofía<b>Estudio Lina</b></div></div>
+          <div class="em-body"><div class="em-ico">🎁</div><div class="em-subj">Tenés un premio para canjear</div><p class="em-prev">Ya te alcanzan los puntos para <b>$2.000 de descuento</b> en tu próxima visita. Te quedan 1.240 puntos.</p><span class="em-cta">Canjear ahora</span></div>
+        </div>
+        <div class="email">
+          <div class="em-top"><span class="ag"></span><div class="from">para Sofía<b>Estudio Lina</b></div></div>
+          <div class="em-body"><div class="em-ico">✅</div><div class="em-subj">Canjeaste $2.000 de descuento</div><p class="em-prev">Usaste <b>800 puntos</b> en tu turno de hoy. Te quedan <b>440 puntos</b> para tu próximo premio.</p><span class="em-cta">Ver mi billetera</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const views = document.querySelectorAll('.view');
+    const btns = document.querySelectorAll('.mockbar .seg button');
+    btns.forEach(b => b.addEventListener('click', () => {
+      const go = b.dataset.go;
+      btns.forEach(x => x.setAttribute('aria-pressed', x === b ? 'true' : 'false'));
+      views.forEach(v => v.classList.toggle('active', v.dataset.view === go));
+      window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+    }));
+  </script>
+
+</body>
+</html>
