@@ -184,7 +184,7 @@
   .view-config .wbal { margin:22px 0 6px; display:flex; align-items:baseline; gap:9px; }
   .view-config .wbal b { font-size:46px; font-weight:200; letter-spacing:-0.02em; line-height:1; }
   .view-config .wbal span { font-size:11px; font-weight:600; letter-spacing:0.12em; color:rgba(255,255,255,0.55); text-transform:uppercase; line-height:1.25; }
-  .view-config .wpl { display:flex; justify-content:space-between; font-size:11px; color:rgba(255,255,255,0.6); margin:18px 0 8px; }
+  .view-config .wpl { display:flex; justify-content:space-between; font-size:11px; color:rgba(255,255,255,0.6); margin:18px 0 8px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.12); }
   .view-config .wpl b { color:#fff; font-weight:600; }
   .view-config .wbar { height:7px; border-radius:999px; background:rgba(255,255,255,0.14); overflow:hidden; }
   .view-config .wbar i { display:block; height:100%; width:82%; border-radius:999px; background:linear-gradient(90deg,#4da3ff,var(--primary)); }
@@ -194,6 +194,8 @@
   .view-config .wrew .g { width:34px; height:34px; border-radius:10px; flex:none; background:rgba(0,114,251,0.25); display:grid; place-items:center; font-size:16px; }
   .view-config .wrew .m { flex:1; } .view-config .wrew .t { font-size:12.5px; font-weight:600; } .view-config .wrew .s { font-size:10.5px; color:rgba(255,255,255,0.55); margin-top:1px; }
   .view-config .wrew .c { font-size:11px; font-weight:600; background:var(--primary); border-radius:999px; padding:6px 12px; white-space:nowrap; }
+  .view-config .wrule { margin-top:12px; font-size:11px; font-weight:600; color:#34d99a; text-align:center; letter-spacing:0.01em; }
+  .view-config .wrule b { color:#fff; }
   .view-config .pnote { margin-top:16px; font-size:11px; color:var(--muted); line-height:1.55; padding:0 4px; }
 
   .view-config .savebar { position:fixed; left:0; right:0; bottom:0; z-index:40; display:flex; align-items:center; gap:16px; padding:14px clamp(16px,4vw,40px); background:rgba(239,243,249,0.82); backdrop-filter:blur(24px) saturate(1.4); border-top:1px solid var(--hairline); }
@@ -433,9 +435,9 @@
         <h1>Armá tu programa de <strong>fidelidad</strong><span class="d">.</span></h1>
         <p class="lede">Definí cómo tus clientes ganan puntos, qué niveles desbloquean y con qué los premiás. Vos ponés las reglas — nosotros lo mostramos en su billetera y lo descontamos al reservar.</p>
         <div class="flow">
-          <div class="fstep"><div class="n">1</div><h3>Puntos <span class="tag coin">Moneda</span></h3><p>Se ganan con cada compra, turno o reseña. Son el saldo que el cliente acumula.</p></div>
-          <div class="fstep"><div class="n">2</div><h3>Niveles <span class="tag auto">Automático</span></h3><p>Suben de nivel según sus puntos acumulados. Cada nivel da un beneficio <b style="color:var(--ink-soft)">siempre activo</b>, sin gastar puntos. Es estatus.</p></div>
-          <div class="fstep"><div class="n">3</div><h3>Premios <span class="tag spend">Se canjea</span></h3><p>Gastan puntos por un beneficio <b style="color:var(--ink-soft)">puntual, de un solo uso</b>. Al canjear, baja su saldo.</p></div>
+          <div class="fstep"><div class="n">1</div><h3>Puntos <span class="tag coin">Billetera</span></h3><p>Se ganan con cada compra, turno o reseña. Son el <b style="color:var(--ink-soft)">saldo que el cliente gasta</b> en premios.</p></div>
+          <div class="fstep"><div class="n">2</div><h3>Niveles <span class="tag auto">Automático</span></h3><p>Suben según el <b style="color:var(--ink-soft)">total de puntos ganados</b> — eso solo sube, canjear no lo baja. Cada nivel da un beneficio siempre activo. Es estatus.</p></div>
+          <div class="fstep"><div class="n">3</div><h3>Premios <span class="tag spend">Se canjea</span></h3><p>Gastan puntos de la billetera por un beneficio <b style="color:var(--ink-soft)">puntual, de un solo uso</b>. Canjear baja el saldo, <b style="color:var(--ink-soft)">nunca el nivel</b>.</p></div>
         </div>
       </div>
 
@@ -453,21 +455,21 @@
           </section>
 
           <section class="section">
-            <div class="sec-head"><span class="sec-num">02 · Niveles</span><h2>Beneficios por nivel</h2><span class="hint">Automático · no gasta puntos</span></div>
-            <p class="sec-lead">Cada nivel da un beneficio <b>permanente</b>: el cliente lo tiene siempre que esté en ese nivel, sin canjear nada. Sube de nivel solo, al acumular puntos. Es un estatus — <b>no es lo mismo que un premio</b>.</p>
+            <div class="sec-head"><span class="sec-num">02 · Niveles</span><h2>Beneficios por nivel</h2><span class="hint">Por total ganado · no baja al canjear</span></div>
+            <p class="sec-lead">El nivel se calcula por el <b>total de puntos que el cliente ganó desde siempre</b> — un contador que solo sube. Gastar puntos en premios <b>nunca lo baja de nivel</b>. Cada nivel da un beneficio <b>permanente</b> mientras lo tenga. Es estatus — <b>no es lo mismo que un premio</b>.</p>
             <div class="card ladder">
               <div class="thread"></div>
-              <div class="rung" style="--tier:var(--t1)"><div class="node">1</div><div class="rcard"><div class="rtop"><span class="swt"></span><input class="tname" value="Inicial" aria-label="nivel"/><span class="thr">Desde 0 pts</span></div><div class="perk"><span class="auto">Siempre</span><span class="txt">Bienvenida + acceso a recompensas</span></div></div></div>
-              <div class="rung" style="--tier:var(--t2)"><div class="node">2</div><div class="rcard"><div class="rtop"><span class="swt"></span><input class="tname" value="Plata" aria-label="nivel"/><span class="thr">Desde 500 pts</span></div><div class="perk"><span class="auto">Siempre</span><span class="txt"><b>5% off</b> en todos los servicios</span></div></div></div>
-              <div class="rung" style="--tier:var(--t3)"><div class="node">3</div><div class="rcard"><div class="rtop"><span class="swt"></span><input class="tname" value="Oro" aria-label="nivel"/><span class="thr">Desde 1.500 pts</span></div><div class="perk"><span class="auto">Siempre</span><span class="txt"><b>10% off</b> + regalo de cumpleaños</span></div></div></div>
-              <div class="rung" style="--tier:var(--t4)"><div class="node">4</div><div class="rcard"><div class="rtop"><span class="swt"></span><input class="tname" value="Diamante" aria-label="nivel"/><span class="thr">Desde 4.000 pts</span></div><div class="perk"><span class="auto">Siempre</span><span class="txt"><b>10% off</b> + un servicio sorpresa al mes</span></div></div></div>
+              <div class="rung" style="--tier:var(--t1)"><div class="node">1</div><div class="rcard"><div class="rtop"><span class="swt"></span><input class="tname" value="Inicial" aria-label="nivel"/><span class="thr">0 pts ganados</span></div><div class="perk"><span class="auto">Siempre</span><span class="txt">Bienvenida + acceso a recompensas</span></div></div></div>
+              <div class="rung" style="--tier:var(--t2)"><div class="node">2</div><div class="rcard"><div class="rtop"><span class="swt"></span><input class="tname" value="Plata" aria-label="nivel"/><span class="thr">500 pts ganados</span></div><div class="perk"><span class="auto">Siempre</span><span class="txt"><b>5% off</b> en todos los servicios</span></div></div></div>
+              <div class="rung" style="--tier:var(--t3)"><div class="node">3</div><div class="rcard"><div class="rtop"><span class="swt"></span><input class="tname" value="Oro" aria-label="nivel"/><span class="thr">1.500 pts ganados</span></div><div class="perk"><span class="auto">Siempre</span><span class="txt"><b>10% off</b> + regalo de cumpleaños</span></div></div></div>
+              <div class="rung" style="--tier:var(--t4)"><div class="node">4</div><div class="rcard"><div class="rtop"><span class="swt"></span><input class="tname" value="Diamante" aria-label="nivel"/><span class="thr">4.000 pts ganados</span></div><div class="perk"><span class="auto">Siempre</span><span class="txt"><b>10% off</b> + un servicio sorpresa al mes</span></div></div></div>
               <button class="addrow" type="button">＋ Agregar nivel</button>
             </div>
           </section>
 
           <section class="section">
             <div class="sec-head"><span class="sec-num">03 · Premios</span><h2>Canje de puntos</h2><span class="hint">El cliente gasta puntos · uso único</span></div>
-            <p class="sec-lead">Acá el cliente <b>gasta</b> sus puntos por un premio puntual. Al canjear, le baja el saldo y el premio se aplica una sola vez. Aparece automático al cobrar la reserva.</p>
+            <p class="sec-lead">Acá el cliente <b>gasta</b> puntos de su billetera por un premio puntual. Le baja el <b>saldo canjeable</b> —no el nivel— y el premio se aplica una sola vez. Aparece automático al cobrar la reserva.</p>
             <div class="card rewards">
               <div class="reward"><span class="rtype amt">Descuento $</span><div class="rn">$2.000 de descuento</div><div class="rc"><b>−800</b><span>PTS</span><span class="uso">uso único</span></div></div>
               <div class="reward"><span class="rtype svc">Servicio gratis</span><div class="rn">Manicura de regalo</div><div class="rc"><b>−1.200</b><span>PTS</span><span class="uso">uso único</span></div></div>
@@ -480,7 +482,7 @@
           <section class="section">
             <div class="sec-head"><span class="sec-num">04 · Ajustes</span><h2>Reglas del programa</h2></div>
             <div class="card settings">
-              <div class="srow"><div class="sm"><div class="st">Vencimiento de puntos</div><div class="ss">Cuánto duran los puntos sin actividad del cliente</div></div><div class="segm" role="group"><button aria-pressed="false">12 meses</button><button aria-pressed="true">24 meses</button><button aria-pressed="false">Nunca</button></div></div>
+              <div class="srow"><div class="sm"><div class="st">Vencimiento del saldo</div><div class="ss">Cuánto dura el saldo para gastar sin actividad. El nivel no vence.</div></div><div class="segm" role="group"><button aria-pressed="false">12 meses</button><button aria-pressed="true">24 meses</button><button aria-pressed="false">Nunca</button></div></div>
               <div class="srow"><div class="sm"><div class="st">Premiar referidos</div><div class="ss">Puntos para quien recomienda cuando su amigo reserva por primera vez</div></div><label class="pin"><input value="300" aria-label="pts"/><span class="u">pts</span></label><label class="sw"><input type="checkbox" checked/><span class="tk"></span></label></div>
             </div>
           </section>
@@ -491,13 +493,14 @@
           <div class="pkick"><span class="live"></span> Lo que ve tu cliente</div>
           <div class="wallet">
             <div class="whead"><span class="who">Billetera · Estudio Lina</span><span class="wtier"><span class="s"></span> Plata</span></div>
-            <div class="wbal"><b>1.240</b><span>puntos<br>canjeables</span></div>
-            <div class="wpl"><span>Estatus <b>Plata</b> · faltan <b>260</b> para Oro</span><span>1.240 / 1.500</span></div>
+            <div class="wbal"><b>900</b><span>puntos<br>para gastar</span></div>
+            <div class="wpl"><span>Nivel <b>Plata</b> · faltan <b>260</b> para Oro</span><span>1.240 / 1.500 ganados</span></div>
             <div class="wbar"><i></i></div>
             <div class="wperk"><span class="i">✦</span><span>Beneficio Plata activo: <b>5% off siempre</b> — sin gastar puntos</span></div>
-            <div class="wrew"><span class="g">🎁</span><div class="m"><div class="t">Canjeá $2.000 de descuento</div><div class="s">Te alcanza · gastás 800 pts</div></div><span class="c">Canjear</span></div>
+            <div class="wrew"><span class="g">🎁</span><div class="m"><div class="t">Canjeá $2.000 de descuento</div><div class="s">Te alcanza · gastás 800 pts de tu saldo</div></div><span class="c">Canjear</span></div>
+            <div class="wrule">✓ Canjear premios baja tu saldo, <b>nunca tu nivel</b>.</div>
           </div>
-          <p class="pnote">Tus clientes ven su saldo y nivel en su página de Ágora. El descuento se aplica solo al cobrar la reserva — vos no calculás nada a mano.</p>
+          <p class="pnote">El cliente ve dos cosas separadas: su <b>saldo para gastar</b> y su <b>nivel</b> (por total ganado, que solo sube). El descuento se aplica solo al cobrar la reserva — vos no calculás nada a mano.</p>
         </aside>
       </div>
     </div>
@@ -530,7 +533,7 @@
       <div class="club">
         <span class="badge">◆ Club Estudio Lina</span>
         <h2>Sumá puntos y <em>subí de nivel</em>.</h2>
-        <p>Ganás puntos en cada turno, reseña y compra. Mientras más venís, mejor nivel — con beneficios que tenés siempre.</p>
+        <p>Ganás puntos en cada turno, reseña y compra. Tu nivel sube por el total que juntás — y canjear premios nunca te lo baja.</p>
         <div class="earn"><span class="c">✓ <b>10 pts</b> / $1.000</span><span class="c">✓ <b>50 pts</b> por turno</span><span class="c">✓ <b>100 pts</b> por reseña</span></div>
         <div class="tiers">
           <div class="tline"><span class="d" style="background:var(--t1)"></span><span class="tn">Inicial</span><span class="tp">0 pts</span></div>
@@ -551,13 +554,13 @@
     <!-- floating loyalty widget — logged-in client, bottom-LEFT -->
     <aside class="fab" aria-label="Tu programa de fidelidad">
       <div class="card">
-        <div class="fh"><span class="bg">◆</span><div class="t"><div class="k">Tu nivel</div><div class="tr"><span class="s"></span> Plata <span class="pts">· 1.240 pts</span></div></div><span class="cv">▾</span></div>
+        <div class="fh"><span class="bg">◆</span><div class="t"><div class="k">Tu nivel</div><div class="tr"><span class="s"></span> Plata</div></div><span class="cv">▾</span></div>
         <div class="fb">
-          <div class="bal"><b>1.240</b><span>puntos canjeables</span></div>
-          <div class="pl"><span>Faltan <b>260</b> para Oro</span><span>1.240 / 1.500</span></div>
+          <div class="bal"><b>900</b><span>puntos para gastar</span></div>
+          <div class="pl"><span>Nivel Plata · faltan <b>260</b> para Oro</span><span>1.240 / 1.500 ganados</span></div>
           <div class="bar"><i></i></div>
           <div class="perk"><span class="i">✦</span><span>Beneficio Plata: <b>5% off siempre</b> — automático</span></div>
-          <div class="rew"><span class="g">🎁</span><div class="m"><div class="t">$2.000 de descuento</div><div class="s">Te alcanza · gastás 800 pts</div></div><span class="c">Canjear</span></div>
+          <div class="rew"><span class="g">🎁</span><div class="m"><div class="t">$2.000 de descuento</div><div class="s">Te alcanza · gastás 800 pts de tu saldo</div></div><span class="c">Canjear</span></div>
         </div>
         <div class="ff"><a>Ver todos mis premios →</a></div>
       </div>
@@ -625,11 +628,11 @@
         </div>
         <div class="email">
           <div class="em-top"><span class="ag"></span><div class="from">para Sofía<b>Estudio Lina</b></div></div>
-          <div class="em-body"><div class="em-ico">🎁</div><div class="em-subj">Tenés un premio para canjear</div><p class="em-prev">Ya te alcanzan los puntos para <b>$2.000 de descuento</b> en tu próxima visita. Te quedan 1.240 puntos.</p><span class="em-cta">Canjear ahora</span></div>
+          <div class="em-body"><div class="em-ico">🎁</div><div class="em-subj">Tenés un premio para canjear</div><p class="em-prev">Ya te alcanzan los puntos para <b>$2.000 de descuento</b> en tu próxima visita. Tenés 900 puntos para gastar.</p><span class="em-cta">Canjear ahora</span></div>
         </div>
         <div class="email">
           <div class="em-top"><span class="ag"></span><div class="from">para Sofía<b>Estudio Lina</b></div></div>
-          <div class="em-body"><div class="em-ico">✅</div><div class="em-subj">Canjeaste $2.000 de descuento</div><p class="em-prev">Usaste <b>800 puntos</b> en tu turno de hoy. Te quedan <b>440 puntos</b> para tu próximo premio.</p><span class="em-cta">Ver mi billetera</span></div>
+          <div class="em-body"><div class="em-ico">✅</div><div class="em-subj">Canjeaste $2.000 de descuento</div><p class="em-prev">Usaste <b>800 puntos</b> de tu saldo en tu turno de hoy. Te quedan <b>100 puntos</b> — y seguís en nivel <b>Plata</b>.</p><span class="em-cta">Ver mi billetera</span></div>
         </div>
       </div>
     </div>
