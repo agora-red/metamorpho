@@ -304,8 +304,8 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
   <div class="wrap">
     <span class="kicker blue">Atribución de canal</span>
     <h1>¿De dónde llegan<br><strong>tus clientes?</strong></h1>
-    <p class="lede">La infraestructura ya está viva: cada reserva se clasifica en un canal canónico y cada cliente tiene su canal de adquisición. Esta propuesta es la capa que falta — <strong style="font-weight:600">mostrárselo al profesional</strong> y convertir el dato en retención.</p>
-    <div class="status"><span class="pulse"></span> Backend shipeado y backfilleado · 6 de julio 2026</div>
+    <p class="lede">Desde julio, cada reserva guarda por qué canal llegó (Instagram, WhatsApp, Google…) y cada cliente, cómo conoció al negocio. Esta propuesta es la capa que falta: <strong style="font-weight:600">mostrárselo al profesional</strong> y convertir ese dato en retención.</p>
+    <div class="status"><span class="pulse"></span> Midiendo en producción desde el 6 de julio 2026</div>
   </div>
 </div>
 
@@ -314,12 +314,12 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
   <div class="wrap">
     <span class="kicker blue">01 · Lo que ya tenemos</span>
     <h2 class="sec-title">El dato existe, está limpio y es <strong>retroactivo</strong></h2>
-    <p class="sec-sub">Nightwing captura UTMs, referrer, click IDs y first-touch (30 días). Cyclone lo normaliza a una taxonomía cerrada de canales al crear cada reserva, y lo corrimos hacia atrás sobre todo el histórico.</p>
+    <p class="sec-sub">Cuando alguien entra a la página de un negocio, guardamos por dónde llegó. Al reservar, ese origen queda grabado en la reserva — y ya lo aplicamos hacia atrás, a todo el histórico.</p>
     <div class="tiles">
-      <div class="tile"><div class="num">~99.8<span>%</span></div><div class="lbl">de las reservas con origen trackeado (desde abril)</div></div>
+      <div class="tile"><div class="num">~99.8<span>%</span></div><div class="lbl">de las reservas ya tienen su origen guardado (desde abril)</div></div>
       <div class="tile"><div class="num">+580<span>k</span></div><div class="lbl">reservas históricas clasificadas por canal</div></div>
       <div class="tile"><div class="num">+116<span>k</span></div><div class="lbl">clientes con canal de adquisición asignado</div></div>
-      <div class="tile"><div class="num">17</div><div class="lbl">canales canónicos (Instagram, WhatsApp, Google, Ágora…)</div></div>
+      <div class="tile"><div class="num">17</div><div class="lbl">canales que reconocemos (Instagram, WhatsApp, Google, Ágora…)</div></div>
     </div>
   </div>
 </section>
@@ -339,15 +339,15 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
       <div class="bar-row"><span class="name">Resto</span><div class="track"><div class="fill dimmer" style="width:2.5%"></div></div><span class="val">~0.9%</span></div>
       <div class="bar-row"><span class="name">Google + RWG</span><div class="track"><div class="fill dimmer" style="width:2%"></div></div><span class="val">~0.6%</span></div>
     </div>
-    <p class="chart-note"><strong>El insight escondido:</strong> un tercio del "tráfico externo" era en realidad Instagram in-app (sin UTM) y links de WhatsApp. La clasificación por referrer los recuperó. Además, desde hoy los links propios de Ágora (recordatorios, rebooking, emails) van etiquetados — el canal <strong>Ágora</strong> empieza a acumular desde el 6/jul.</p>
+    <p class="chart-note"><strong>El hallazgo escondido:</strong> un tercio del tráfico "externo" era en realidad gente llegando desde Instagram y WhatsApp — lo recuperamos mirando desde qué app entró cada visita. Y desde el 6/7, los recordatorios y emails que manda Ágora dejan su propia marca: el canal <strong>Ágora</strong> empieza a contar sus reservas.</p>
   </div>
 </section>
 
 <!-- FASE 1 -->
 <section class="alt" id="fase-1">
   <div class="wrap">
-    <div class="fase-head"><span class="fase-num">Fase 1</span><span class="fase-effort">Esfuerzo: bajo · solo UI sobre columnas existentes</span></div>
-    <h2 class="sec-title">Hacer el origen <strong>omnipresente</strong></h2>
+    <div class="fase-head"><span class="fase-num">Fase 1</span><span class="fase-effort">Esfuerzo: bajo — es solo mostrar datos que ya están guardados</span></div>
+    <h2 class="sec-title">Que el origen <strong>se vea en todos lados</strong></h2>
     <p class="sec-sub">Chips de canal en las dos superficies de mayor frecuencia: la agenda (cada turno) y la ficha del cliente (la relación). El profesional internaliza el dato sin aprender nada nuevo.</p>
     <div class="grid-2">
       <div class="mock-stage">
@@ -382,15 +382,15 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
         <ul>
           <li>La agenda es la pantalla más usada de Flash — el dato se aprende solo, sin onboarding.</li>
           <li>El header de la ficha responde la pregunta del negocio ("¿de dónde salió esta persona?") en el momento en que se la hacen.</li>
-          <li>Cero backend nuevo: lee <code style="font-family:inherit;font-weight:600">channel</code> y <code style="font-family:inherit;font-weight:600">acquisition_channel</code> que ya están en la DB.</li>
+          <li>Los datos ya están guardados — es solo mostrarlos.</li>
         </ul>
       </div>
       <div class="rationale">
         <h3>Alcance</h3>
         <ul>
-          <li>Chip en la card del turno (agenda día/semana) + detalle del turno.</li>
-          <li>Línea de adquisición en el header de la ficha + chip por reserva en el historial.</li>
-          <li>Filtro por canal en la lista de clientes (segmentación → campañas).</li>
+          <li>Etiqueta de canal en cada turno de la agenda y al abrir el detalle.</li>
+          <li>"Llegó por…" en la ficha del cliente + etiqueta por reserva en su historial.</li>
+          <li>Filtro por canal en la lista de clientes, para armar campañas.</li>
         </ul>
       </div>
     </div>
@@ -400,7 +400,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
 <!-- FASE 2 -->
 <section id="fase-2">
   <div class="wrap">
-    <div class="fase-head"><span class="fase-num">Fase 2</span><span class="fase-effort">Esfuerzo: medio · 1 endpoint agregado + 1 card</span></div>
+    <div class="fase-head"><span class="fase-num">Fase 2</span><span class="fase-effort">Esfuerzo: medio — una consulta nueva + una card</span></div>
     <h2 class="sec-title">"Ágora te trajo N reservas" — <strong>la card de retención</strong></h2>
     <p class="sec-sub">Los recordatorios, el rebooking, el marketplace y Reserve with Google ya están atribuidos. Por primera vez podemos mostrar en números lo que la plataforma genera sola — el argumento anti-churn más directo que tenemos.</p>
     <div class="grid-2">
@@ -425,11 +425,11 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
       </div>
       <div class="rationale">
         <h3>Por qué importa</h3>
-        <p>El profesional que ve que Ágora le trajo 23 reservas no está comparando "agendas" cuando piensa en el plan — está comparando ingresos. La card convierte una feature invisible (los crons de recordatorios) en valor tangible todos los meses.</p>
+        <p>El profesional que ve que Ágora le trajo 23 reservas no está comparando "agendas" cuando piensa en el plan — está comparando ingresos. La card convierte algo invisible (los recordatorios automáticos que trabajan solos) en valor que se ve todos los meses.</p>
         <ul>
           <li>Donut general por canal al lado: "tu mix de canales" con tendencia vs mes anterior.</li>
-          <li>El mismo número alimenta el email de resumen mensual y el flow de baja (retention screen).</li>
-          <li>Query directa sobre <code style="font-family:inherit;font-weight:600">bookings.channel</code> — sin instrumentación nueva.</li>
+          <li>El mismo número aparece en el resumen mensual por email y en la pantalla de baja, antes de confirmar.</li>
+          <li>El número sale directo de lo que ya guardamos — no hay que medir nada nuevo.</li>
         </ul>
       </div>
     </div>
@@ -440,11 +440,11 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
 <section class="alt" id="fase-3">
   <div class="wrap">
     <div class="fase-head"><span class="fase-num">Fase 3</span><span class="fase-effort">Esfuerzo: medio · requiere fases 1–2 educando primero</span></div>
-    <h2 class="sec-title">Side menu vivo + <strong>nudges que activan features</strong></h2>
+    <h2 class="sec-title">Avisos en el menú + <strong>sugerencias inteligentes</strong></h2>
     <p class="sec-sub">Cuando el profesional ya entiende qué es un "canal", el dato empieza a disparar comportamiento: novedades en el menú y sugerencias según el perfil de canales de cada negocio.</p>
     <div class="grid-2">
       <div class="mock-stage">
-        <span class="mock-label">Mockup · Side menu con badge de novedad</span>
+        <span class="mock-label">Mockup · Menú con aviso de novedad</span>
         <div class="side">
           <div class="item">Dashboard</div>
           <div class="item active">Clientes <span class="bdg">3</span></div>
@@ -454,7 +454,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
         </div>
       </div>
       <div class="mock-stage">
-        <span class="mock-label">Mockup · Nudge por perfil de canal</span>
+        <span class="mock-label">Mockup · Sugerencia según tu negocio</span>
         <div class="mock-card nudge">
           <div class="ico">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0072FB" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
@@ -478,11 +478,11 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
       </div>
     </div>
     <div class="rationale" style="margin-top:22px; max-width:640px">
-      <h3>Otros disparadores del mismo motor</h3>
+      <h3>Otras ideas con el mismo dato</h3>
       <ul>
         <li>Celebrar la primera reserva de un canal nuevo ("🎉 Tu primera reserva desde Google").</li>
         <li>Si domina lo manual → sugerir compartir el link en el bio de Instagram o las placas de redes.</li>
-        <li>Cada gap de canal tiene un CTA a una feature que ya existe — RWG, marketplace, placas, gift cards.</li>
+        <li>Cada canal flojo tiene su botón: Reserve with Google, el marketplace, las placas para redes, las gift cards.</li>
       </ul>
     </div>
   </div>
@@ -491,103 +491,93 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
 <!-- MAPA EXACTO -->
 <section id="mapa">
   <div class="wrap">
-    <span class="kicker blue">03 · El mapa exacto</span>
-    <h2 class="sec-title">Superficie por superficie, <strong>de punta a punta</strong></h2>
-    <p class="sec-sub">Relevamiento sobre el código real de Flash: cada punto de inserción con su componente, y si el dato ya viaja en la respuesta o requiere un agregado chico de API. Verde = solo frontend.</p>
+    <span class="kicker blue">03 · Dónde aparece</span>
+    <h2 class="sec-title">Pantalla por pantalla, <strong>de punta a punta</strong></h2>
+    <p class="sec-sub">Recorrimos toda la app para marcar cada lugar exacto donde se muestra el origen. Verde = se puede hacer ya con lo que está guardado; amarillo = pide primero un ajuste chico del lado del servidor.</p>
 
     <div class="spec-card">
-      <div class="spec-head"><span class="fase-num">Fase 1</span><h3>Agenda · ficha · lista de clientes — 9 puntos de inserción</h3></div>
+      <div class="spec-head"><span class="fase-num">Fase 1</span><h3>Agenda · ficha del cliente · lista de clientes — 8 lugares</h3></div>
       <div class="spec-row">
-        <div class="where">Card del turno (día / semana / lista)<span>Agenda</span></div>
-        <div class="how">Cluster de indicadores de la línea 1 — junto al ❤️ de profesional elegido, 💬 notas, 🔁 recurrencia y el chip de pago. En <code>CustomEvent</code> y <code>CustomEventDensity</code> (las dos variantes activas por flag de densidad). Regla: solo ícono en cards cortas, ícono + label en cards full.</div>
-        <div class="state"><span class="pill-state ok">dato ya viaja</span></div>
+        <div class="where">Cada turno del calendario<span>Agenda · vista día y semana</span></div>
+        <div class="how">Una etiqueta chiquita al lado de los iconitos que ya tiene cada turno (el corazón de "eligió profesional", las notas, la repetición y el pago). En turnos cortos se ve solo el ícono; en los grandes, ícono + nombre del canal.</div>
+        <div class="state"><span class="pill-state ok">se hace ya</span></div>
       </div>
       <div class="spec-row">
         <div class="where">Vista mes<span>Agenda</span></div>
-        <div class="how">El chip compacto de mes no tiene lugar para un label — ahí el canal se expresa solo como <code>dot de color</code> junto al horario.</div>
-        <div class="state"><span class="pill-state ok">dato ya viaja</span></div>
+        <div class="how">En el mes los turnos son mini y no entra texto — ahí el canal se muestra como un puntito de color junto al horario.</div>
+        <div class="state"><span class="pill-state ok">se hace ya</span></div>
       </div>
       <div class="spec-row">
-        <div class="where">Hover del turno (desktop)<span>Agenda</span></div>
-        <div class="how">Línea "Origen" en el resumen del <code>TurnoHoverCard</code>, que ya muestra pago y profesional elegido.</div>
-        <div class="state"><span class="pill-state ok">dato ya viaja</span></div>
+        <div class="where">Al pasar el mouse por un turno<span>Agenda · solo desktop</span></div>
+        <div class="how">La tarjetita de resumen que aparece al pasar el mouse suma una línea "Origen".</div>
+        <div class="state"><span class="pill-state ok">se hace ya</span></div>
       </div>
       <div class="spec-row">
-        <div class="where">Detalle del turno<span>Agenda + Actividades</span></div>
-        <div class="how">Nueva fila con ícono "Origen" en la card <strong style="font-weight:600">Reserva</strong> del diálogo (<code>ActionDialogEI</code>), debajo de fecha → servicio → profesional. Incluye la variante multi-servicio.</div>
-        <div class="state"><span class="pill-state ok">dato ya viaja</span></div>
+        <div class="where">El detalle del turno<span>Al tocar un turno</span></div>
+        <div class="how">Una fila nueva "Origen" debajo de fecha, servicio y profesional. También en las reservas de varios servicios juntos.</div>
+        <div class="state"><span class="pill-state ok">se hace ya</span></div>
       </div>
       <div class="spec-row">
-        <div class="where">Ficha del cliente — datos<span>Clientes (2 variantes por flag)</span></div>
-        <div class="how">Fila <strong style="font-weight:600">"Llegó por"</strong> junto a "Cliente desde" en la lista de datos (<code>ClientFullView</code> operator) y línea equivalente en la card de contacto de la ficha legacy (<code>Client.tsx</code>). Ambas variantes conviven hoy detrás de <code>OPERATOR_PREVIEW</code>.</div>
-        <div class="state"><span class="pill-state api">exponer en API cliente</span></div>
+        <div class="where">La ficha del cliente<span>Clientes · datos del cliente</span></div>
+        <div class="how">Una línea <strong style="font-weight:600">"Llegó por Instagram"</strong> al lado de "Cliente desde marzo". La ficha hoy tiene dos versiones conviviendo (la nueva y la anterior) — va en las dos.</div>
+        <div class="state"><span class="pill-state api">ajuste chico primero</span></div>
       </div>
       <div class="spec-row">
-        <div class="where">Historial de la ficha<span>Clientes</span></div>
-        <div class="how">Chip <code>BadgeMini</code> en la fila de badges del timeline (<code>ActivityTimeline</code>), donde ya conviven "Ingresada", "E-mail" y "WhatsApp" de notificaciones — un badge por reserva con su canal.</div>
-        <div class="state"><span class="pill-state api">meta en timeline</span></div>
+        <div class="where">El historial del cliente<span>Dentro de la ficha</span></div>
+        <div class="how">Cada reserva del historial lleva su etiqueta de canal, junto a las etiquetas que ya existen ("Ingresada", "E-mail", "WhatsApp").</div>
+        <div class="state"><span class="pill-state api">ajuste chico primero</span></div>
       </div>
       <div class="spec-row">
-        <div class="where">Lista de clientes — celda<span>Clientes</span></div>
-        <div class="how">Chip bajo el nombre en <code>ClientRow</code> (celda Cliente), no una columna nueva — la grilla de 6 columnas no tiene aire. En mobile, dot de color en la segunda línea.</div>
-        <div class="state"><span class="pill-state api">exponer en paginated</span></div>
+        <div class="where">La lista de clientes<span>Clientes</span></div>
+        <div class="how">Una etiqueta abajo del nombre de cada cliente (la tabla no tiene aire para una columna más; en el celular, un puntito de color).</div>
+        <div class="state"><span class="pill-state api">ajuste chico primero</span></div>
       </div>
       <div class="spec-row">
-        <div class="where">Lista de clientes — filtro<span>Clientes</span></div>
-        <div class="how">Categoría <strong style="font-weight:600">"Origen"</strong> en el <code>FilterBar</code> (preset group). Al reusar el mismo picker del editor de segmentos, un filtro por canal se vuelve automáticamente <strong style="font-weight:600">segmento guardable</strong> ("Los que llegaron por Instagram").</div>
-        <div class="state"><span class="pill-state api">param de filtro</span></div>
-      </div>
-      <div class="spec-row">
-        <div class="where">Helper compartido<span>Infra frontend</span></div>
-        <div class="how">Hoy el mapa canal → label existe solo inline en el selector de reserva manual. Un helper único <code>channelLabel() / channelIcon()</code> alimenta todos los chips de esta página.</div>
-        <div class="state"><span class="pill-state ok">solo frontend</span></div>
+        <div class="where">Filtro "Origen"<span>Lista de clientes</span></div>
+        <div class="how">"Mostrame los que llegaron por Instagram" — y ese filtro se puede guardar como segmento para después mandarles una campaña.</div>
+        <div class="state"><span class="pill-state api">ajuste chico primero</span></div>
       </div>
     </div>
 
     <div class="spec-card">
-      <div class="spec-head"><span class="fase-num">Fase 2</span><h3>Dashboard — 1 widget nuevo en el registry</h3></div>
+      <div class="spec-head"><span class="fase-num">Fase 2</span><h3>Dashboard — 1 card nueva</h3></div>
       <div class="spec-row">
-        <div class="where">Card "Ágora te trajo N"<span>Dashboard</span></div>
-        <div class="how">Widget nuevo registrado en el <code>widgetRegistry</code> (categoría stats), espejo de <code>BusinessExpressCard</code> + <code>MetricCard</code>: header con dot, selector "Mes actual / anterior", tiles con delta vs período previo y skeleton propio. Al registrarse aparece solo en el panel "Agregar widget" y es arrastrable como el resto.</div>
-        <div class="state"><span class="pill-state api">1 dataKey batched</span></div>
+        <div class="where">Card "Ágora te trajo N reservas"<span>Dashboard</span></div>
+        <div class="how">Una card nueva con el mismo estilo de las métricas del dashboard: número grande, desglose por canal y comparación con el mes anterior. Se agrega, se mueve y se saca como cualquier otro widget. El número sale directo de lo que ya guardamos.</div>
+        <div class="state"><span class="pill-state api">una consulta nueva</span></div>
       </div>
       <div class="spec-row">
-        <div class="where">Data del widget<span>Cyclone</span></div>
-        <div class="how">Un <code>dataKey</code> en el endpoint batched de widgets (<code>me/vendor/dashboard/widgets</code>) con el conteo por canal del período — query directa sobre <code>bookings.channel</code>, sin instrumentación nueva.</div>
-        <div class="state"><span class="pill-state api">agregado chico</span></div>
-      </div>
-      <div class="spec-row">
-        <div class="where">Reuso del número<span>Email + baja</span></div>
-        <div class="how">El mismo agregado alimenta el resumen mensual por email y la pantalla de retención del flujo de baja ("este mes Ágora te trajo N reservas — ¿seguro?").</div>
-        <div class="state"><span class="pill-state api">reusa el mismo endpoint</span></div>
+        <div class="where">El mismo número, en otros dos lugares<span>Email + baja</span></div>
+        <div class="how">El resumen mensual por email lo incluye, y la pantalla de baja lo muestra antes de confirmar: "este mes Ágora te trajo 23 reservas — ¿seguro que te vas?".</div>
+        <div class="state"><span class="pill-state api">reusa la misma consulta</span></div>
       </div>
     </div>
 
     <div class="spec-card">
-      <div class="spec-head"><span class="fase-num">Fase 3</span><h3>Side menu · nudges · celebraciones — sobre patrones existentes</h3></div>
+      <div class="spec-head"><span class="fase-num">Fase 3</span><h3>Menú · sugerencias · celebraciones</h3></div>
       <div class="spec-row">
-        <div class="where">Badge en side menu<span>Navegación</span></div>
-        <div class="how">Badge condicional en el item Clientes de <code>useNavbarItems</code> — mismo patrón que "Resúmenes" usa hoy (badge "Nuevo" cuando hay no-leídos). Renderiza en rail desktop y drawer mobile sin trabajo extra.</div>
+        <div class="where">Badge en el menú<span>Item "Clientes"</span></div>
+        <div class="how">Un aviso en el menú cuando hay novedades — "3 clientes nuevos por Instagram esta semana" — igual al "Nuevo" que ya usan otros items. Tocás y te lleva a la lista filtrada.</div>
         <div class="state"><span class="pill-state api">conteo semanal</span></div>
       </div>
       <div class="spec-row">
-        <div class="where">Nudge en dashboard<span>Dashboard</span></div>
-        <div class="how">Espejo exacto de <code>ConnectMercadoPagoNudge</code>: el backend decide <code>{show, reason}</code> según el perfil de canales del negocio (ej. 90% IG y sin RWG), dismiss pegajoso en localStorage, CTA a la feature correspondiente.</div>
-        <div class="state"><span class="pill-state api">endpoint show/reason</span></div>
+        <div class="where">Sugerencias según tu negocio<span>Dashboard</span></div>
+        <div class="how">Si el 90% de tus reservas viene de Instagram y no tenés Google activado, te lo sugerimos con un botón para activarlo. Se puede descartar y no vuelve a aparecer.</div>
+        <div class="state"><span class="pill-state api">reglas simples</span></div>
       </div>
       <div class="spec-row">
-        <div class="where">Primera reserva de un canal<span>Notificaciones</span></div>
-        <div class="how">Notificación persistente vía el feed existente <code>app-notifications</code> (campanita + inbox) y confetti reusando <code>CelebrateConfetti</code> del onboarding.</div>
-        <div class="state"><span class="pill-state api">tipo de notificación</span></div>
+        <div class="where">Primera reserva de un canal nuevo<span>Campanita de notificaciones</span></div>
+        <div class="how">"🎉 Tu primera reserva desde Google" — aviso en la campanita y una celebración la primera vez que un canal nuevo trae una reserva.</div>
+        <div class="state"><span class="pill-state api">aviso nuevo</span></div>
       </div>
       <div class="spec-row">
-        <div class="where">Rollout<span>Infra</span></div>
-        <div class="how">Todo detrás de un flag nuevo en <code>useFeatureFlags</code> (allowlist beta + god-mode), como cada beta de Flash.</div>
-        <div class="state"><span class="pill-state ok">solo frontend</span></div>
+        <div class="where">Salida gradual<span>Toda la fase</span></div>
+        <div class="how">Todo sale primero en beta para algunas cuentas, como cada lanzamiento de Flash, y después se abre a todos.</div>
+        <div class="state"><span class="pill-state ok">se hace ya</span></div>
       </div>
     </div>
 
-    <p class="spec-note"><strong>Los "amarillos" son un solo PR de cyclone:</strong> tipar y exponer <code style="font-family:inherit;font-weight:600">channel</code> en la reserva (la columna ya existe y el bundle de agenda ya serializa la entidad), sumar <code style="font-family:inherit;font-weight:600">acquisition_channel</code> a los endpoints de clientes (detalle, paginated y filtro), canal en la meta del timeline, y el dataKey del widget. Nada de eso toca el hot path de reservas.</p>
+    <p class="spec-note"><strong>Los amarillos son un solo cambio chico del servidor</strong> — hacer visibles datos que ya están guardados. Nada de esto toca el flujo de reservas de los clientes.</p>
   </div>
 </section>
 
@@ -596,25 +586,25 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
   <div class="wrap">
     <span class="kicker blue">Recomendación</span>
     <h2 class="sec-title">Priorización <strong>propuesta</strong></h2>
-    <p class="sec-sub">Fase 1 educa, Fase 2 retiene, Fase 3 activa. Cada una se apoya en la anterior — y el backend de las tres ya está en producción.</p>
+    <p class="sec-sub">Fase 1 educa, Fase 2 retiene, Fase 3 activa. Cada una se apoya en la anterior — y los datos de las tres ya se están guardando en producción.</p>
     <div class="road">
       <div class="step hot">
         <span class="tag">Ahora · Fase 1</span>
         <h3>Chips en agenda + ficha</h3>
-        <p>9 puntos de inserción mapeados sobre el código (sección 03). La agenda es 100% frontend; la ficha solo pide exponer campos que ya están en la DB.</p>
-        <div class="eff">ESFUERZO S · BACKEND MÍNIMO (EXPONER CAMPOS)</div>
+        <p>8 lugares mapeados pantalla por pantalla (sección 03). La agenda sale ya; la ficha y la lista piden un ajuste chico primero.</p>
+        <div class="eff">ESFUERZO CHICO · SEMANAS, NO MESES</div>
       </div>
       <div class="step">
         <span class="tag">Después · Fase 2</span>
         <h3>Card "Ágora te trajo N"</h3>
-        <p>La pieza de retención. Ideal shipearlo con 3–4 semanas de datos del canal Ágora acumulados (los links se etiquetan desde el 6/jul).</p>
-        <div class="eff">ESFUERZO M · 1 ENDPOINT</div>
+        <p>La pieza de retención. Ideal lanzarla con 3–4 semanas de datos del canal Ágora acumulados (se empezó a medir el 6/7).</p>
+        <div class="eff">ESFUERZO MEDIO · UNA CONSULTA NUEVA</div>
       </div>
       <div class="step">
         <span class="tag">Luego · Fase 3</span>
-        <h3>Badges + nudges</h3>
-        <p>Con el usuario ya educado, el dato dispara comportamiento: diversificación de canales y adopción de features existentes.</p>
-        <div class="eff">ESFUERZO M · MOTOR DE REGLAS SIMPLE</div>
+        <h3>Avisos + sugerencias</h3>
+        <p>Con el usuario ya educado, el dato empieza a mover comportamiento: diversificar canales y activar funciones que ya existen.</p>
+        <div class="eff">ESFUERZO MEDIO · REGLAS SIMPLES</div>
       </div>
     </div>
   </div>
@@ -623,7 +613,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
 <footer>
   <div class="wrap">
     <div>
-      <div class="big">El tracking ya está. <strong>Falta contarlo.</strong></div>
+      <div class="big">Los datos ya están. <strong>Falta mostrarlos.</strong></div>
       <div class="fine">Propuesta interna · Ágora · julio 2026 · datos de producción al 6/jul</div>
     </div>
     <svg width="120" height="28" viewBox="0 0 153 36" xmlns="http://www.w3.org/2000/svg" aria-label="Ágora">
