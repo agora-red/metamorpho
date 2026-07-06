@@ -4,6 +4,16 @@
   "updated_at": "2026-07-06",
   "outputs": [
     {
+      "type": "one-pager",
+      "typeLabel": "One-pager",
+      "title": "De la grabación al fix en un día",
+      "description": "Resumen del sprint de activación del 6/jul/2026: auditar el Pulso de Activación + las grabaciones del fin de semana derivó en una cadena de 5 fixes shipeados a prod (flash + nightwing). (1) Callback de login resiliente — recovery silencioso ante 'state does not match', que dejaba al usuario autenticado pero escupido en /login; ya rescató usuarios reales. (2) Scrub de credenciales en las URLs capturadas por analytics. (3) Alta /comenzar que detecta cuenta existente antes de pedir contraseña, con banner + CTA a iniciar sesión (antes: 'email o contraseña incorrectos' en un form de alta). (4) Setup 2 con navegación por historial — el gesto 'atrás' vuelve a la lista y no eyecta al vendor a Setup 1 — más guards anti-loop y CTAs con jerarquía correcta. (5) El progreso del setup sobrevive un re-login del mismo usuario. Cerró con dos pasadas de code review multi-agente (16 findings aplicados, 3 hubieran sido incidentes) y un audit horario vigilando la salud. Team-safe, alto nivel.",
+      "detail": "one-pager · cadena de 5 fixes · antes/ahora · proceso de review + audit",
+      "date": "JUL 2026",
+      "href": "./sprint-activacion-fixes-2026-07/index.html",
+      "slug": "sprint-activacion-fixes-2026-07"
+    },
+    {
       "type": "proposal",
       "typeLabel": "Proposal",
       "title": "¿De dónde llegan tus clientes?",

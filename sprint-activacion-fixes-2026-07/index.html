@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sprint de activación · De la grabación al fix en un día</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --frost-primary:#0072FB; --frost-primary-hover:#005CD4; --frost-primary-soft:#EEF6FF; --frost-primary-wash:rgba(0,114,251,0.08);
+  --frost-accent:#FF4658; --frost-accent-soft:#FFE3E6; --frost-accent-wash:rgba(255,70,88,0.08);
+  --frost-success:#10B981; --frost-success-soft:#A9FFE7; --frost-warning:#F59E0B; --frost-warning-soft:#FFE77B;
+  --frost-ink:#0F172A; --frost-ink-soft:#3A3A3A; --frost-muted:#868686; --frost-faint:#B5B5B5;
+  --frost-surface:#FFFFFF; --frost-surface-muted:#EFF3F9; --frost-border:#E2E8F0; --frost-border-soft:#F2F2F2;
+  --r-sm:6px; --r-item:10px; --r-btn:12px; --r-card:20px; --r-shell:28px; --r-chip:999px;
+  --sh-xs:0 1px 2px rgba(15,23,42,0.04); --sh-sm:0 4px 12px -4px rgba(15,23,42,0.10);
+  --sh-md:0 10px 30px -12px rgba(15,23,42,0.15); --sh-lg:0 20px 50px -20px rgba(15,23,42,0.25);
+  --sh-glow:0 4px 18px -2px rgba(0,114,251,0.30);
+  --sans:'Montserrat',system-ui,-apple-system,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);font-variant-numeric:tabular-nums;color:var(--frost-ink);background:var(--frost-surface-muted);-webkit-font-smoothing:antialiased;line-height:1.5}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+.kicker{font-weight:600;font-size:11.5px;letter-spacing:0.2em;text-transform:uppercase;color:var(--frost-primary)}
+.kicker.faint{color:var(--frost-faint)}
+
+/* chrome */
+.chrome{display:flex;align-items:center;justify-content:space-between;padding:22px 0 0}
+.wordmark{display:flex;align-items:center;gap:9px;font-weight:500;font-size:20px;letter-spacing:-0.01em}
+.wordmark .dot{width:9px;height:9px;border-radius:var(--r-chip);background:var(--frost-primary);box-shadow:0 0 0 4px var(--frost-primary-wash)}
+.chrome .meta{font-size:11.5px;color:var(--frost-muted);font-weight:500;letter-spacing:0.04em}
+
+/* hero */
+.hero{padding:56px 0 40px;text-align:center}
+.hero .tag{display:inline-flex;align-items:center;gap:8px;background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-chip);padding:7px 15px;box-shadow:var(--sh-xs);margin-bottom:26px}
+.hero .tag .pulse{width:7px;height:7px;border-radius:var(--r-chip);background:var(--frost-success);box-shadow:0 0 0 0 rgba(16,185,129,.5);animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(16,185,129,.5)}70%{box-shadow:0 0 0 7px rgba(16,185,129,0)}100%{box-shadow:0 0 0 0 rgba(16,185,129,0)}}
+.hero .tag span{font-size:11.5px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--frost-ink-soft)}
+.hero h1{font-weight:200;font-size:clamp(34px,6vw,60px);line-height:1.04;letter-spacing:-0.02em;margin:8px 0 0}
+.hero h1 b{font-weight:600}
+.hero h1 .accent{color:var(--frost-primary)}
+.hero .sub{max-width:640px;margin:22px auto 0;font-size:16px;color:var(--frost-ink-soft);font-weight:300}
+
+/* flow strip */
+.flow{display:flex;align-items:stretch;gap:12px;margin:36px 0 8px;flex-wrap:wrap;justify-content:center}
+.flow .node{flex:1;min-width:150px;background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-card);padding:16px 18px;box-shadow:var(--sh-sm);position:relative}
+.flow .node .n{font-size:10.5px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--frost-faint)}
+.flow .node .t{font-weight:600;font-size:14px;margin-top:6px;color:var(--frost-ink)}
+.flow .node .d{font-size:12px;color:var(--frost-muted);margin-top:4px;font-weight:300}
+.flow .arrow{align-self:center;color:var(--frost-faint);font-size:18px;font-weight:300}
+
+/* metrics band */
+.band{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:44px 0}
+.stat{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-card);padding:22px 20px;box-shadow:var(--sh-sm)}
+.stat .v{font-size:38px;font-weight:600;letter-spacing:-0.02em;line-height:1;color:var(--frost-ink)}
+.stat .v.blue{color:var(--frost-primary)}
+.stat .v.green{color:var(--frost-success)}
+.stat .l{font-size:12px;color:var(--frost-muted);margin-top:8px;font-weight:500;line-height:1.35}
+
+/* section header */
+.sec{margin:8px 0 22px;display:flex;align-items:baseline;gap:14px}
+.sec h2{font-weight:300;font-size:26px;letter-spacing:-0.01em}
+.sec h2 b{font-weight:600}
+.sec .rule{flex:1;height:1px;background:var(--frost-border)}
+
+/* fix cards */
+.fixes{display:flex;flex-direction:column;gap:14px}
+.fix{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-card);box-shadow:var(--sh-sm);overflow:hidden;display:grid;grid-template-columns:64px 1fr;align-items:stretch}
+.fix .idx{background:var(--frost-primary-wash);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:22px;color:var(--frost-primary);border-right:1px solid var(--frost-border-soft)}
+.fix .body{padding:20px 24px}
+.fix .head{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.fix h3{font-weight:600;font-size:17px;letter-spacing:-0.01em}
+.fix .chip{font-size:10.5px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:4px 10px;border-radius:var(--r-chip)}
+.chip.live{background:var(--frost-success-soft);color:#046d54}
+.fix .rows{margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fix .row .rk{font-size:10.5px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--frost-faint);margin-bottom:5px}
+.fix .row.before .rk{color:var(--frost-accent)}
+.fix .row.after .rk{color:var(--frost-success)}
+.fix .row .rt{font-size:13.5px;color:var(--frost-ink-soft);font-weight:300;line-height:1.45}
+.fix .row .rt b{font-weight:500;color:var(--frost-ink)}
+@media(max-width:720px){.fix .rows{grid-template-columns:1fr}.band{grid-template-columns:repeat(2,1fr)}}
+
+/* process */
+.proc{background:var(--frost-ink);border-radius:var(--r-shell);padding:40px 40px;margin:50px 0 20px;color:#fff;position:relative;overflow:hidden}
+.proc::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 140% at 100% 0%,rgba(0,114,251,.28),transparent 55%);pointer-events:none}
+.proc .kicker{color:#7db4ff;position:relative}
+.proc h2{font-weight:200;font-size:30px;letter-spacing:-0.01em;margin:12px 0 6px;position:relative}
+.proc h2 b{font-weight:600}
+.proc .psub{color:#aab6cc;font-size:14.5px;font-weight:300;max-width:560px;position:relative}
+.proc .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px;position:relative}
+.proc .step{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10);border-radius:var(--r-card);padding:18px 20px}
+.proc .step .sv{font-size:30px;font-weight:600;letter-spacing:-0.02em;color:#fff}
+.proc .step .sl{font-size:12.5px;color:#aab6cc;margin-top:6px;font-weight:300;line-height:1.4}
+.proc .step .sl b{color:#e6edf7;font-weight:500}
+
+/* footer */
+.foot{padding:34px 0 60px;text-align:center}
+.foot .line{height:1px;background:var(--frost-border);margin-bottom:26px}
+.foot .t{font-size:14px;color:var(--frost-ink-soft);font-weight:300}
+.foot .t b{font-weight:600;color:var(--frost-ink)}
+.foot .s{font-size:11.5px;color:var(--frost-faint);margin-top:10px;letter-spacing:0.04em}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="chrome">
+    <div class="wordmark"><span class="dot"></span>Ágora</div>
+    <div class="meta">Sprint interno · 6 jul 2026 · #brainstorming</div>
+  </div>
+
+  <header class="hero">
+    <div class="tag"><span class="pulse"></span><span>5 fixes en prod · audit horario activo</span></div>
+    <h1>De la <span class="accent">grabación</span><br>al fix en <b>un día</b>.</h1>
+    <p class="sub">Auditamos el Pulso de Activación y miramos las grabaciones del fin de semana. Lo que empezó como "revisemos el finde" terminó en una cadena de 5 fixes shipeados a producción — auth, analytics, alta y setup — cada uno con causa raíz probada y verificado en prod.</p>
+  </header>
+
+  <div class="flow">
+    <div class="node"><div class="n">01 · Observar</div><div class="t">Pulso + grabaciones</div><div class="d">El finde nos mostró dónde muere la gente</div></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="n">02 · Diagnosticar</div><div class="t">Causa raíz probada</div><div class="d">Datos + código, no hipótesis</div></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="n">03 · Shipear</div><div class="t">5 fixes a prod</div><div class="d">Review multi-agente antes de main</div></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="n">04 · Vigilar</div><div class="t">Audit horario</div><div class="d">Serie de salud, no una foto</div></div>
+  </div>
+
+  <div class="band">
+    <div class="stat"><div class="v green">4</div><div class="l">usuarios reales rescatados en la primera hora del fix de auth</div></div>
+    <div class="stat"><div class="v blue">5</div><div class="l">fixes shipeados a prod<br>(flash + nightwing)</div></div>
+    <div class="stat"><div class="v">16</div><div class="l">findings de code review aplicados antes de mergear</div></div>
+    <div class="stat"><div class="v" style="color:var(--frost-accent)">3</div><div class="l">de esos hubieran sido incidentes en prod</div></div>
+  </div>
+
+  <div class="sec"><span class="kicker">La cadena</span><span class="rule"></span></div>
+
+  <div class="fixes">
+
+    <div class="fix">
+      <div class="idx">1</div>
+      <div class="body">
+        <div class="head"><h3>Callback de login resiliente</h3><span class="chip live">En prod</span></div>
+        <div class="rows">
+          <div class="row before"><div class="rk">Antes</div><div class="rt">El <b>100%</b> de los fallos eran "state does not match": el usuario <b>sí se autenticaba</b>, pero terminaba escupido en <b>/login</b> con un toast de error.</div></div>
+          <div class="row after"><div class="rk">Ahora</div><div class="rt">Un <b>recovery silencioso</b> lo rescata sin que se entere. Ya rescató usuarios reales — el primero, a los 15 minutos del deploy.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fix">
+      <div class="idx">2</div>
+      <div class="body">
+        <div class="head"><h3>Analytics sin credenciales en las URLs</h3><span class="chip live">En prod</span></div>
+        <div class="rows">
+          <div class="row before"><div class="rk">Antes</div><div class="rt">Las URLs que capturaba analytics arrastraban el fragment del callback con material sensible dentro.</div></div>
+          <div class="row after"><div class="rk">Ahora</div><div class="rt">Se <b>corta el fragment</b> de toda URL capturada — en flash y en nightwing. Verificado: 0 eventos con material sensible post-deploy.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fix">
+      <div class="idx">3</div>
+      <div class="body">
+        <div class="head"><h3>Alta: "ya tenés cuenta" antes de la contraseña</h3><span class="chip live">En prod</span></div>
+        <div class="rows">
+          <div class="row before"><div class="rk">Antes</div><div class="rt">Con un email ya registrado, el alta mostraba <b>"email o contraseña incorrectos"</b> — un mensaje de <b>login en un form de alta</b> — y la gente reintentaba a ciegas hasta rendirse.</div></div>
+          <div class="row after"><div class="rk">Ahora</div><div class="rt">Detecta la cuenta existente <b>antes</b> de pedir contraseña: banner claro + botón directo a <b>iniciar sesión</b> con el email precargado.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fix">
+      <div class="idx">4</div>
+      <div class="body">
+        <div class="head"><h3>Setup 2 con navegación que respeta el "atrás"</h3><span class="chip live">En prod</span></div>
+        <div class="rows">
+          <div class="row before"><div class="rk">Antes</div><div class="rt">El gesto <b>"atrás"</b> del celular eyectaba al vendor de vuelta a Setup 1 y le reseteaba todo — el famoso "botón muerto" de personalizar.</div></div>
+          <div class="row after"><div class="rk">Ahora</div><div class="rt">Cada sub-vista vive en la URL: "atrás" vuelve a la <b>lista</b>. Más guards anti-loop y CTAs con la jerarquía correcta ("Continuar" primario).</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fix">
+      <div class="idx">5</div>
+      <div class="body">
+        <div class="head"><h3>El progreso del setup sobrevive un re-login</h3><span class="chip live">En prod</span></div>
+        <div class="rows">
+          <div class="row before"><div class="rk">Antes</div><div class="rt">Si la sesión se cortaba a mitad del setup, un re-login <b>borraba todo</b> y el vendor arrancaba de cero (o se registraba de nuevo por las dudas).</div></div>
+          <div class="row after"><div class="rk">Ahora</div><div class="rt">El progreso <b>sobrevive</b> el re-login del mismo usuario — y jamás se filtra a otra cuenta en el mismo dispositivo.</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="proc">
+    <span class="kicker">Cómo se shipeó</span>
+    <h2>Rápido, pero <b>no a los ponchazos</b>.</h2>
+    <p class="psub">Cada causa raíz se probó con datos y código antes de tocar una línea. El diff pasó por dos pasadas de code review multi-agente antes de mergear a main.</p>
+    <div class="steps">
+      <div class="step"><div class="sv">2×</div><div class="sl">pasadas de <b>code review multi-agente</b> sobre el diff, antes de main</div></div>
+      <div class="step"><div class="sv">3</div><div class="sl">findings que <b>hubieran sido incidentes</b> (loop infinito, pérdida de progreso) — atajados a tiempo</div></div>
+      <div class="step"><div class="sv">1/h</div><div class="sl">audit <b>corriendo de fondo</b>: chequea la salud de los 5 fixes cada hora con queries congeladas</div></div>
+    </div>
+  </div>
+
+  <footer class="foot">
+    <div class="line"></div>
+    <p class="t"><b>El patrón que queremos repetir:</b> la observación (Pulso + grabaciones) no termina en un informe — termina en fixes en prod el mismo día, verificados y vigilados.</p>
+    <p class="s">Ágora · Sprint de activación · 6 de julio de 2026 · uso interno</p>
+  </footer>
+
+</div>
+</body>
+</html>
