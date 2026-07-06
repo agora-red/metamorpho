@@ -213,6 +213,45 @@ p.sec-sub { font-size:15px; font-weight:300; color:var(--frost-muted); max-width
   font-size:12px; font-weight:600; border-radius:var(--r-btn); padding:7px 14px; box-shadow:var(--sh-glow);
 }
 
+/* ---------- spec map ---------- */
+.spec-card {
+  background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card);
+  box-shadow:var(--sh-sm); overflow:hidden; margin-top:22px;
+}
+.spec-card .spec-head {
+  display:flex; align-items:center; gap:12px; padding:16px 22px;
+  border-bottom:1px solid var(--frost-border-soft); background:var(--frost-primary-wash);
+}
+.spec-card .spec-head h3 { font-size:14px; font-weight:600; }
+.spec-card .spec-head .fase-num { font-size:10px; padding:4px 10px; }
+.spec-row {
+  display:grid; grid-template-columns:190px 1fr 132px; gap:16px; align-items:start;
+  padding:14px 22px; border-bottom:1px solid var(--frost-border-soft);
+}
+.spec-row:last-child { border-bottom:none; }
+.spec-row .where { font-size:12.5px; font-weight:600; line-height:1.4; }
+.spec-row .where span { display:block; font-size:10.5px; font-weight:500; color:var(--frost-faint); margin-top:2px; }
+.spec-row .how { font-size:12.5px; font-weight:300; color:var(--frost-ink-soft); line-height:1.5; }
+.spec-row .how code {
+  font-family:inherit; font-weight:600; font-size:11.5px; color:var(--frost-ink);
+  background:var(--frost-surface-muted); border-radius:var(--r-sm); padding:1px 6px; white-space:nowrap;
+}
+.spec-row .state { justify-self:end; }
+.pill-state {
+  display:inline-flex; align-items:center; gap:6px; font-size:10.5px; font-weight:600;
+  border-radius:var(--r-chip); padding:4px 10px; white-space:nowrap;
+}
+.pill-state.ok { background:rgba(16,185,129,0.12); color:#0B7A56; }
+.pill-state.ok::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--frost-success); }
+.pill-state.api { background:rgba(245,158,11,0.14); color:#8A5A06; }
+.pill-state.api::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--frost-warning); }
+.spec-note { font-size:12px; font-weight:300; color:var(--frost-muted); margin-top:16px; max-width:760px; }
+.spec-note strong { font-weight:600; color:var(--frost-ink-soft); }
+@media (max-width:820px) {
+  .spec-row { grid-template-columns:1fr; gap:6px; }
+  .spec-row .state { justify-self:start; }
+}
+
 /* ---------- roadmap ---------- */
 .road { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:36px; }
 .road .step { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); padding:22px 20px; box-shadow:var(--sh-sm); position:relative; }
@@ -449,8 +488,111 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
   </div>
 </section>
 
+<!-- MAPA EXACTO -->
+<section id="mapa">
+  <div class="wrap">
+    <span class="kicker blue">03 · El mapa exacto</span>
+    <h2 class="sec-title">Superficie por superficie, <strong>de punta a punta</strong></h2>
+    <p class="sec-sub">Relevamiento sobre el código real de Flash: cada punto de inserción con su componente, y si el dato ya viaja en la respuesta o requiere un agregado chico de API. Verde = solo frontend.</p>
+
+    <div class="spec-card">
+      <div class="spec-head"><span class="fase-num">Fase 1</span><h3>Agenda · ficha · lista de clientes — 9 puntos de inserción</h3></div>
+      <div class="spec-row">
+        <div class="where">Card del turno (día / semana / lista)<span>Agenda</span></div>
+        <div class="how">Cluster de indicadores de la línea 1 — junto al ❤️ de profesional elegido, 💬 notas, 🔁 recurrencia y el chip de pago. En <code>CustomEvent</code> y <code>CustomEventDensity</code> (las dos variantes activas por flag de densidad). Regla: solo ícono en cards cortas, ícono + label en cards full.</div>
+        <div class="state"><span class="pill-state ok">dato ya viaja</span></div>
+      </div>
+      <div class="spec-row">
+        <div class="where">Vista mes<span>Agenda</span></div>
+        <div class="how">El chip compacto de mes no tiene lugar para un label — ahí el canal se expresa solo como <code>dot de color</code> junto al horario.</div>
+        <div class="state"><span class="pill-state ok">dato ya viaja</span></div>
+      </div>
+      <div class="spec-row">
+        <div class="where">Hover del turno (desktop)<span>Agenda</span></div>
+        <div class="how">Línea "Origen" en el resumen del <code>TurnoHoverCard</code>, que ya muestra pago y profesional elegido.</div>
+        <div class="state"><span class="pill-state ok">dato ya viaja</span></div>
+      </div>
+      <div class="spec-row">
+        <div class="where">Detalle del turno<span>Agenda + Actividades</span></div>
+        <div class="how">Nueva fila con ícono "Origen" en la card <strong style="font-weight:600">Reserva</strong> del diálogo (<code>ActionDialogEI</code>), debajo de fecha → servicio → profesional. Incluye la variante multi-servicio.</div>
+        <div class="state"><span class="pill-state ok">dato ya viaja</span></div>
+      </div>
+      <div class="spec-row">
+        <div class="where">Ficha del cliente — datos<span>Clientes (2 variantes por flag)</span></div>
+        <div class="how">Fila <strong style="font-weight:600">"Llegó por"</strong> junto a "Cliente desde" en la lista de datos (<code>ClientFullView</code> operator) y línea equivalente en la card de contacto de la ficha legacy (<code>Client.tsx</code>). Ambas variantes conviven hoy detrás de <code>OPERATOR_PREVIEW</code>.</div>
+        <div class="state"><span class="pill-state api">exponer en API cliente</span></div>
+      </div>
+      <div class="spec-row">
+        <div class="where">Historial de la ficha<span>Clientes</span></div>
+        <div class="how">Chip <code>BadgeMini</code> en la fila de badges del timeline (<code>ActivityTimeline</code>), donde ya conviven "Ingresada", "E-mail" y "WhatsApp" de notificaciones — un badge por reserva con su canal.</div>
+        <div class="state"><span class="pill-state api">meta en timeline</span></div>
+      </div>
+      <div class="spec-row">
+        <div class="where">Lista de clientes — celda<span>Clientes</span></div>
+        <div class="how">Chip bajo el nombre en <code>ClientRow</code> (celda Cliente), no una columna nueva — la grilla de 6 columnas no tiene aire. En mobile, dot de color en la segunda línea.</div>
+        <div class="state"><span class="pill-state api">exponer en paginated</span></div>
+      </div>
+      <div class="spec-row">
+        <div class="where">Lista de clientes — filtro<span>Clientes</span></div>
+        <div class="how">Categoría <strong style="font-weight:600">"Origen"</strong> en el <code>FilterBar</code> (preset group). Al reusar el mismo picker del editor de segmentos, un filtro por canal se vuelve automáticamente <strong style="font-weight:600">segmento guardable</strong> ("Los que llegaron por Instagram").</div>
+        <div class="state"><span class="pill-state api">param de filtro</span></div>
+      </div>
+      <div class="spec-row">
+        <div class="where">Helper compartido<span>Infra frontend</span></div>
+        <div class="how">Hoy el mapa canal → label existe solo inline en el selector de reserva manual. Un helper único <code>channelLabel() / channelIcon()</code> alimenta todos los chips de esta página.</div>
+        <div class="state"><span class="pill-state ok">solo frontend</span></div>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-head"><span class="fase-num">Fase 2</span><h3>Dashboard — 1 widget nuevo en el registry</h3></div>
+      <div class="spec-row">
+        <div class="where">Card "Ágora te trajo N"<span>Dashboard</span></div>
+        <div class="how">Widget nuevo registrado en el <code>widgetRegistry</code> (categoría stats), espejo de <code>BusinessExpressCard</code> + <code>MetricCard</code>: header con dot, selector "Mes actual / anterior", tiles con delta vs período previo y skeleton propio. Al registrarse aparece solo en el panel "Agregar widget" y es arrastrable como el resto.</div>
+        <div class="state"><span class="pill-state api">1 dataKey batched</span></div>
+      </div>
+      <div class="spec-row">
+        <div class="where">Data del widget<span>Cyclone</span></div>
+        <div class="how">Un <code>dataKey</code> en el endpoint batched de widgets (<code>me/vendor/dashboard/widgets</code>) con el conteo por canal del período — query directa sobre <code>bookings.channel</code>, sin instrumentación nueva.</div>
+        <div class="state"><span class="pill-state api">agregado chico</span></div>
+      </div>
+      <div class="spec-row">
+        <div class="where">Reuso del número<span>Email + baja</span></div>
+        <div class="how">El mismo agregado alimenta el resumen mensual por email y la pantalla de retención del flujo de baja ("este mes Ágora te trajo N reservas — ¿seguro?").</div>
+        <div class="state"><span class="pill-state api">reusa el mismo endpoint</span></div>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-head"><span class="fase-num">Fase 3</span><h3>Side menu · nudges · celebraciones — sobre patrones existentes</h3></div>
+      <div class="spec-row">
+        <div class="where">Badge en side menu<span>Navegación</span></div>
+        <div class="how">Badge condicional en el item Clientes de <code>useNavbarItems</code> — mismo patrón que "Resúmenes" usa hoy (badge "Nuevo" cuando hay no-leídos). Renderiza en rail desktop y drawer mobile sin trabajo extra.</div>
+        <div class="state"><span class="pill-state api">conteo semanal</span></div>
+      </div>
+      <div class="spec-row">
+        <div class="where">Nudge en dashboard<span>Dashboard</span></div>
+        <div class="how">Espejo exacto de <code>ConnectMercadoPagoNudge</code>: el backend decide <code>{show, reason}</code> según el perfil de canales del negocio (ej. 90% IG y sin RWG), dismiss pegajoso en localStorage, CTA a la feature correspondiente.</div>
+        <div class="state"><span class="pill-state api">endpoint show/reason</span></div>
+      </div>
+      <div class="spec-row">
+        <div class="where">Primera reserva de un canal<span>Notificaciones</span></div>
+        <div class="how">Notificación persistente vía el feed existente <code>app-notifications</code> (campanita + inbox) y confetti reusando <code>CelebrateConfetti</code> del onboarding.</div>
+        <div class="state"><span class="pill-state api">tipo de notificación</span></div>
+      </div>
+      <div class="spec-row">
+        <div class="where">Rollout<span>Infra</span></div>
+        <div class="how">Todo detrás de un flag nuevo en <code>useFeatureFlags</code> (allowlist beta + god-mode), como cada beta de Flash.</div>
+        <div class="state"><span class="pill-state ok">solo frontend</span></div>
+      </div>
+    </div>
+
+    <p class="spec-note"><strong>Los "amarillos" son un solo PR de cyclone:</strong> tipar y exponer <code style="font-family:inherit;font-weight:600">channel</code> en la reserva (la columna ya existe y el bundle de agenda ya serializa la entidad), sumar <code style="font-family:inherit;font-weight:600">acquisition_channel</code> a los endpoints de clientes (detalle, paginated y filtro), canal en la meta del timeline, y el dataKey del widget. Nada de eso toca el hot path de reservas.</p>
+  </div>
+</section>
+
 <!-- ROADMAP -->
-<section id="roadmap">
+<section class="alt" id="roadmap">
   <div class="wrap">
     <span class="kicker blue">Recomendación</span>
     <h2 class="sec-title">Priorización <strong>propuesta</strong></h2>
@@ -459,8 +601,8 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
       <div class="step hot">
         <span class="tag">Ahora · Fase 1</span>
         <h3>Chips en agenda + ficha</h3>
-        <p>Solo frontend. El dato se vuelve visible en las pantallas de todos los días y el team valida cómo reacciona la gente.</p>
-        <div class="eff">ESFUERZO S · SIN BACKEND NUEVO</div>
+        <p>9 puntos de inserción mapeados sobre el código (sección 03). La agenda es 100% frontend; la ficha solo pide exponer campos que ya están en la DB.</p>
+        <div class="eff">ESFUERZO S · BACKEND MÍNIMO (EXPONER CAMPOS)</div>
       </div>
       <div class="step">
         <span class="tag">Después · Fase 2</span>

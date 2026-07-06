@@ -7,8 +7,8 @@
       "type": "proposal",
       "typeLabel": "Proposal",
       "title": "¿De dónde llegan tus clientes?",
-      "description": "Propuesta interna para exponer la atribución de canal (shipeada 6/jul: bookings.channel + acquisition_channel, backfill de +580k reservas) en Flash. Contexto con la distribución real de canales (Instagram ~38%, directo ~28%, manual ~24%), y 3 fases con mockups Frost: chips de canal en agenda + ficha de cliente, card de retención \"Ágora te trajo N reservas\" en el dashboard, y badges en side menu + nudges por perfil de canal. Cierra con priorización recomendada (educar → retener → activar).",
-      "detail": "one-pager · 3 fases · mockups de agenda, ficha, dashboard y side menu",
+      "description": "Propuesta interna para exponer la atribución de canal (shipeada 6/jul: bookings.channel + acquisition_channel, backfill de +580k reservas) en Flash. Contexto con la distribución real de canales (Instagram ~38%, directo ~28%, manual ~24%), y 3 fases con mockups Frost: chips de canal en agenda + ficha de cliente, card de retención \"Ágora te trajo N reservas\" en el dashboard, y badges en side menu + nudges por perfil de canal. Incluye \"El mapa exacto\": relevamiento superficie por superficie sobre el código real de Flash — 16 puntos de inserción (cards de agenda CustomEvent/Density, hover, detalle ActionDialogEI, ficha en sus 2 variantes, timeline, lista + filtro segmentable, widget registry del dashboard, navbar badge, nudges y notificaciones) con estado dato-listo vs agregado-de-API. Cierra con priorización recomendada (educar → retener → activar).",
+      "detail": "one-pager · 3 fases · mapa exacto de 16 superficies con file-level specs",
       "date": "JUL 2026",
       "href": "./propuesta-atribucion-canales-2026-07/index.html",
       "slug": "propuesta-atribucion-canales-2026-07"
