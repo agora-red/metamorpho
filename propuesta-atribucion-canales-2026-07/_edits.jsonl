@@ -1,0 +1,2 @@
+{"ts": "2026-07-06T15:05:00Z", "instruction": "self-review: barras en orden descendente", "diff_summary": "reordenar Import>WhatsApp>Resto>Google en el chart", "source": "self-review"}
+{"ts": "2026-07-06T15:05:30Z", "instruction": "self-review: 23 duplicado en donut + numero grande", "diff_summary": "donut::after content '' (centro vacio)", "source": "self-review"}

@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¿De dónde llegan tus clientes? · Propuesta Ágora</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Brand */
+  --frost-primary:        #0072FB;
+  --frost-primary-hover:  #005CD4;
+  --frost-primary-soft:   #EEF6FF;
+  --frost-primary-wash:   rgba(0,114,251,0.08);
+  /* Severity */
+  --frost-accent:         #FF4658;
+  --frost-accent-soft:    #FFE3E6;
+  --frost-success:        #10B981;
+  --frost-success-soft:   #A9FFE7;
+  --frost-warning:        #F59E0B;
+  /* Ink */
+  --frost-ink:       #0F172A;
+  --frost-ink-soft:  #3A3A3A;
+  --frost-muted:     #868686;
+  --frost-faint:     #B5B5B5;
+  /* Surface */
+  --frost-surface:        #FFFFFF;
+  --frost-surface-muted:  #EFF3F9;
+  --frost-border:         #E2E8F0;
+  --frost-border-soft:    #F2F2F2;
+  /* Radius */
+  --r-sm: 6px; --r-item: 10px; --r-btn: 12px; --r-card: 20px; --r-shell: 28px; --r-chip: 999px;
+  /* Shadows */
+  --sh-xs: 0 1px 2px rgba(15,23,42,0.04);
+  --sh-sm: 0 4px 12px -4px rgba(15,23,42,0.10);
+  --sh-md: 0 10px 30px -12px rgba(15,23,42,0.15);
+  --sh-glow: 0 4px 18px -2px rgba(0,114,251,0.30);
+  --sans: 'Montserrat', system-ui, -apple-system, sans-serif;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:var(--sans); color:var(--frost-ink); background:var(--frost-surface-muted);
+  font-variant-numeric: tabular-nums; -webkit-font-smoothing:antialiased; line-height:1.55;
+}
+.wrap { max-width:1040px; margin:0 auto; padding:0 28px; }
+
+/* ---------- chrome ---------- */
+header.chrome {
+  position:sticky; top:0; z-index:50; background:rgba(255,255,255,0.85); backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--frost-border);
+}
+header.chrome .wrap { display:flex; align-items:center; justify-content:space-between; height:60px; }
+.kicker {
+  font-size:10.5px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:var(--frost-muted);
+}
+.kicker.blue { color:var(--frost-primary); }
+
+/* ---------- hero ---------- */
+.hero { padding:88px 0 56px; }
+.hero h1 { font-size:clamp(34px,5vw,54px); font-weight:200; letter-spacing:-0.02em; line-height:1.1; margin:18px 0 20px; }
+.hero h1 strong { font-weight:600; }
+.hero p.lede { font-size:17px; font-weight:300; color:var(--frost-ink-soft); max-width:640px; }
+.hero .status {
+  display:inline-flex; align-items:center; gap:8px; margin-top:26px;
+  background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-chip);
+  padding:8px 16px; font-size:12.5px; font-weight:500; color:var(--frost-ink-soft); box-shadow:var(--sh-xs);
+}
+.status .pulse { width:8px; height:8px; border-radius:50%; background:var(--frost-success); box-shadow:0 0 0 4px rgba(16,185,129,0.15); }
+
+/* ---------- sections ---------- */
+section { padding:56px 0; }
+section.alt { background:var(--frost-surface); border-top:1px solid var(--frost-border); border-bottom:1px solid var(--frost-border); }
+h2.sec-title { font-size:clamp(24px,3vw,32px); font-weight:300; letter-spacing:-0.01em; margin:12px 0 8px; }
+h2.sec-title strong { font-weight:600; }
+p.sec-sub { font-size:15px; font-weight:300; color:var(--frost-muted); max-width:620px; margin-bottom:36px; }
+
+/* ---------- stat tiles ---------- */
+.tiles { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:36px; }
+.tile {
+  background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card);
+  padding:22px 20px; box-shadow:var(--sh-sm);
+}
+.tile .num { font-size:30px; font-weight:600; letter-spacing:-0.02em; }
+.tile .num span { font-size:16px; font-weight:500; color:var(--frost-muted); }
+.tile .lbl { font-size:12px; font-weight:500; color:var(--frost-muted); margin-top:4px; }
+
+/* ---------- bar chart ---------- */
+.chart { margin-top:8px; display:flex; flex-direction:column; gap:14px; }
+.bar-row { display:grid; grid-template-columns:120px 1fr 64px; align-items:center; gap:14px; }
+.bar-row .name { font-size:13px; font-weight:500; color:var(--frost-ink-soft); text-align:right; }
+.bar-row .track { height:26px; background:var(--frost-surface-muted); border-radius:var(--r-sm); overflow:hidden; }
+.bar-row .fill { height:100%; border-radius:var(--r-sm); background:var(--frost-primary); min-width:3px; }
+.bar-row .fill.dim { background:#9CC5FD; }
+.bar-row .fill.dimmer { background:#CFE3FE; }
+.bar-row .val { font-size:13px; font-weight:600; }
+.chart-note { font-size:12px; color:var(--frost-muted); margin-top:18px; font-weight:300; }
+.chart-note strong { font-weight:600; color:var(--frost-ink-soft); }
+
+/* ---------- fases ---------- */
+.fase-head { display:flex; align-items:baseline; gap:14px; margin-bottom:6px; }
+.fase-num {
+  font-size:11px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase;
+  background:var(--frost-primary-soft); color:var(--frost-primary); border-radius:var(--r-chip); padding:5px 12px;
+}
+.fase-effort { font-size:11.5px; font-weight:500; color:var(--frost-muted); }
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:28px; align-items:start; margin-top:28px; }
+.rationale h3 { font-size:16px; font-weight:600; margin-bottom:10px; }
+.rationale p { font-size:14px; font-weight:300; color:var(--frost-ink-soft); margin-bottom:14px; }
+.rationale ul { list-style:none; display:flex; flex-direction:column; gap:10px; }
+.rationale li { font-size:13.5px; font-weight:300; color:var(--frost-ink-soft); padding-left:22px; position:relative; }
+.rationale li::before { content:''; position:absolute; left:2px; top:8px; width:7px; height:7px; border-radius:50%; background:var(--frost-primary); }
+
+/* ---------- mockups ---------- */
+.mock-stage {
+  background:linear-gradient(160deg,#F6F9FE 0%, #EDF2FA 100%);
+  border:1px solid var(--frost-border); border-radius:var(--r-shell);
+  padding:30px; display:flex; flex-direction:column; gap:18px; align-items:stretch;
+}
+.mock-label { font-size:10.5px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--frost-faint); }
+.mock-card {
+  background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card);
+  box-shadow:var(--sh-md); padding:18px; text-align:left;
+}
+.chip {
+  display:inline-flex; align-items:center; gap:6px; border-radius:var(--r-chip);
+  font-size:11px; font-weight:600; padding:3px 10px; white-space:nowrap;
+}
+.chip .dot { width:7px; height:7px; border-radius:50%; }
+.chip.ig  { background:#FCEFF6; color:#B0247A; } .chip.ig .dot { background:#D63384; }
+.chip.wa  { background:#E8F8EF; color:#0F7B4C; } .chip.wa .dot { background:#25D366; }
+.chip.gg  { background:var(--frost-primary-soft); color:var(--frost-primary-hover); } .chip.gg .dot { background:var(--frost-primary); }
+.chip.ag  { background:var(--frost-ink); color:#fff; } .chip.ag .dot { background:var(--frost-success); }
+.chip.dir { background:var(--frost-surface-muted); color:var(--frost-ink-soft); } .chip.dir .dot { background:var(--frost-faint); }
+
+/* agenda mockup */
+.evt { display:flex; gap:12px; align-items:stretch; }
+.evt + .evt { margin-top:10px; }
+.evt .hour { font-size:11.5px; font-weight:500; color:var(--frost-muted); width:44px; padding-top:10px; }
+.evt .body {
+  flex:1; background:var(--frost-surface); border:1px solid var(--frost-border);
+  border-left:3px solid var(--frost-primary); border-radius:var(--r-item);
+  padding:10px 12px; box-shadow:var(--sh-xs); display:flex; justify-content:space-between; align-items:center; gap:8px;
+}
+.evt .who { font-size:13px; font-weight:600; }
+.evt .svc { font-size:11.5px; font-weight:300; color:var(--frost-muted); margin-top:1px; }
+
+/* ficha cliente mockup */
+.client-head { display:flex; gap:14px; align-items:center; }
+.avatar {
+  width:52px; height:52px; border-radius:50%; background:var(--frost-primary-soft);
+  display:flex; align-items:center; justify-content:center; font-weight:600; color:var(--frost-primary); font-size:17px;
+}
+.client-head .name { font-size:16px; font-weight:600; }
+.client-head .meta { font-size:12px; font-weight:300; color:var(--frost-muted); margin-top:2px; }
+.client-head .meta .chip { margin-left:6px; transform:translateY(2px); }
+.timeline { margin-top:16px; border-top:1px solid var(--frost-border-soft); padding-top:12px; display:flex; flex-direction:column; gap:10px; }
+.tl-row { display:flex; justify-content:space-between; align-items:center; font-size:12.5px; }
+.tl-row .l { font-weight:500; color:var(--frost-ink-soft); }
+.tl-row .l span { display:block; font-size:11px; font-weight:300; color:var(--frost-faint); }
+
+/* dashboard card mockup */
+.dash-num { font-size:38px; font-weight:600; letter-spacing:-0.02em; line-height:1; }
+.dash-num span { font-size:15px; font-weight:500; color:var(--frost-muted); }
+.dash-sub { font-size:12.5px; font-weight:300; color:var(--frost-muted); margin-top:6px; }
+.dash-split { margin-top:16px; display:flex; flex-direction:column; gap:9px; }
+.split-row { display:grid; grid-template-columns:1fr auto; gap:10px; font-size:12.5px; align-items:center; }
+.split-row .k { display:flex; align-items:center; gap:8px; font-weight:500; color:var(--frost-ink-soft); }
+.split-row .k i { width:8px; height:8px; border-radius:3px; background:var(--frost-primary); display:inline-block; }
+.split-row:nth-child(2) .k i { background:#5AA3FC; }
+.split-row:nth-child(3) .k i { background:#9CC5FD; }
+.split-row:nth-child(4) .k i { background:#CFE3FE; }
+.split-row .v { font-weight:600; }
+.donut {
+  width:110px; height:110px; border-radius:50%;
+  background:conic-gradient(var(--frost-primary) 0 52%, #5AA3FC 52% 78%, #9CC5FD 78% 91%, #CFE3FE 91% 100%);
+  position:relative; flex:none;
+}
+.donut::after {
+  content:''; position:absolute; inset:18px; background:var(--frost-surface); border-radius:50%;
+}
+.dash-flex { display:flex; gap:22px; align-items:center; }
+
+/* sidemenu mockup */
+.side { width:230px; background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); box-shadow:var(--sh-md); padding:14px 10px; margin:0 auto; }
+.side .item {
+  display:flex; align-items:center; justify-content:space-between; border-radius:var(--r-item);
+  padding:9px 12px; font-size:13px; font-weight:500; color:var(--frost-ink-soft);
+}
+.side .item.active { background:var(--frost-primary-wash); color:var(--frost-primary); font-weight:600; }
+.side .item .bdg {
+  background:var(--frost-accent); color:#fff; font-size:10px; font-weight:600;
+  border-radius:var(--r-chip); padding:1px 7px;
+}
+.side .tip {
+  margin:10px 8px 2px; background:var(--frost-ink); color:#fff; border-radius:var(--r-item);
+  font-size:11.5px; font-weight:300; padding:9px 12px; line-height:1.45;
+}
+.side .tip strong { font-weight:600; }
+
+/* nudge mockup */
+.nudge { display:flex; gap:12px; align-items:flex-start; }
+.nudge .ico {
+  width:38px; height:38px; border-radius:var(--r-item); background:var(--frost-primary-soft);
+  display:flex; align-items:center; justify-content:center; flex:none;
+}
+.nudge h4 { font-size:13.5px; font-weight:600; }
+.nudge p { font-size:12.5px; font-weight:300; color:var(--frost-ink-soft); margin-top:3px; }
+.nudge .cta {
+  display:inline-block; margin-top:10px; background:var(--frost-primary); color:#fff;
+  font-size:12px; font-weight:600; border-radius:var(--r-btn); padding:7px 14px; box-shadow:var(--sh-glow);
+}
+
+/* ---------- roadmap ---------- */
+.road { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:36px; }
+.road .step { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); padding:22px 20px; box-shadow:var(--sh-sm); position:relative; }
+.road .step.hot { border-color:var(--frost-primary); box-shadow:var(--sh-glow); }
+.road .step .tag { font-size:10.5px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--frost-primary); }
+.road .step h3 { font-size:16px; font-weight:600; margin:8px 0 6px; }
+.road .step p { font-size:12.5px; font-weight:300; color:var(--frost-ink-soft); }
+.road .step .eff { margin-top:14px; font-size:11px; font-weight:600; color:var(--frost-muted); }
+
+/* ---------- footer ---------- */
+footer { background:var(--frost-ink); color:#fff; padding:52px 0; margin-top:64px; }
+footer .wrap { display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; }
+footer .big { font-size:22px; font-weight:300; }
+footer .big strong { font-weight:600; }
+footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; margin-top:6px; }
+
+@media (max-width:820px) {
+  .tiles { grid-template-columns:repeat(2,1fr); }
+  .grid-2 { grid-template-columns:1fr; }
+  .road { grid-template-columns:1fr; }
+  .bar-row { grid-template-columns:88px 1fr 54px; }
+}
+</style>
+</head>
+<body>
+
+<header class="chrome">
+  <div class="wrap">
+    <svg width="110" height="26" viewBox="0 0 153 36" xmlns="http://www.w3.org/2000/svg" aria-label="Ágora">
+      <path d="M41.3822 30.3938L38.187 35.7712L3.11719 35.8491L17.5348 10.9106L20.6466 16.2974L15.7314 24.9347L12.625 30.3938H41.3822Z" fill="#E2E8F0"/>
+      <path d="M17.5351 10.9106L20.6469 16.2974L16.7342 23.0921L12.1689 20.1848L17.5351 10.9106Z" fill="url(#p0)" fill-opacity="0.7"/>
+      <path d="M20.6467 16.2973L17.5349 10.9106L3.11731 35.8491L0 30.3938L17.5349 0L31.8745 24.9385H25.6399L20.6467 16.2973Z" fill="#0072FF"/>
+      <path d="M31.8543 24.9244L25.6302 24.9316L21.7061 18.1387L26.5114 15.6305L31.8543 24.9244Z" fill="url(#p1)" fill-opacity="0.7"/>
+      <path d="M23.8473 0L41.3822 30.3938H12.625L15.7314 24.9346L15.7384 24.9385H25.6398H31.8744L17.5348 0H23.8473Z" fill="#FF4658"/>
+      <path d="M12.625 30.3937L15.7289 24.9387L23.7202 24.9194L23.4706 30.3746L12.625 30.3937Z" fill="url(#p2)" fill-opacity="0.7"/>
+      <path d="M76.7893 7.41158V4.76367H69.5647V7.41158H76.7893ZM72.2126 26.6334C74.4029 26.6334 76.3316 25.7835 77.6065 24.2797V26.3065H81.2351V10.1249H77.6065V12.1844C76.3316 10.6806 74.4029 9.79797 72.2126 9.79797C67.7668 9.79797 64.7266 13.5573 64.7266 18.232C64.7266 22.8741 67.7668 26.6334 72.2126 26.6334ZM73.1279 23.1356C70.382 23.1356 68.4206 21.0761 68.4206 18.232C68.4206 15.388 70.382 13.2958 73.1279 13.2958C75.7105 13.2958 77.6065 15.388 77.6065 18.232C77.6065 21.1088 75.6778 23.1356 73.1279 23.1356ZM92.2844 31.112C96.9264 31.112 100.718 28.2679 100.718 22.6125V10.1249H97.2533V12.5439C96.4034 10.9421 94.2131 9.79797 91.7614 9.79797C87.2828 9.79797 84.3407 13.2958 84.3407 17.6436C84.3407 21.9914 87.2828 25.4566 91.7614 25.4566C94.7035 25.4566 96.4361 23.9855 97.0899 22.6779V22.8087C97.0899 26.1104 95.39 28.3333 91.9248 28.3333C90.2576 28.3333 88.3616 27.7776 87.0867 26.6661L85.681 28.9544C87.1847 30.2947 89.5058 31.112 92.2844 31.112ZM92.5459 22.2856C89.9961 22.2856 88.0347 20.3242 88.0347 17.6436C88.0347 14.963 89.9961 12.9689 92.5459 12.9689C95.0958 12.9689 97.0899 14.9303 97.0899 17.5129C97.0899 20.3242 95.1612 22.2856 92.5459 22.2856ZM112.422 26.6334C117.194 26.6334 121.019 22.9067 121.019 18.232C121.019 13.5247 117.194 9.79797 112.422 9.79797C107.649 9.79797 103.824 13.5247 103.824 18.232C103.824 22.9067 107.649 26.6334 112.422 26.6334ZM112.422 23.1356C109.643 23.1356 107.518 21.0434 107.518 18.232C107.518 15.388 109.643 13.2958 112.422 13.2958C115.2 13.2958 117.325 15.388 117.325 18.232C117.325 21.0434 115.2 23.1356 112.422 23.1356ZM127.753 26.3065V19.7031C127.753 15.4534 130.042 13.7535 133.605 13.7535V9.79797C130.14 9.79797 128.374 11.694 127.753 13.3285V10.1249H124.125V26.3065H127.753ZM143.118 26.6334C145.308 26.6334 147.237 25.7835 148.512 24.2797V26.3065H152.14V10.1249H148.512V12.1844C147.237 10.6806 145.308 9.79797 143.118 9.79797C138.672 9.79797 135.632 13.5573 135.632 18.232C135.632 22.8741 138.672 26.6334 143.118 26.6334ZM144.033 23.1356C141.287 23.1356 139.326 21.0761 139.326 18.232C139.326 15.388 141.287 13.2958 144.033 13.2958C146.616 13.2958 148.512 15.388 148.512 18.232C148.512 21.1088 146.583 23.1356 144.033 23.1356Z" fill="#0F172A"/>
+      <rect x="52.7876" y="3.5874" width="0.683334" height="28.5292" fill="#E2E8F0"/>
+      <defs>
+        <linearGradient id="p0" x1="18.8455" y1="15.9076" x2="12.5252" y2="18.5424" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
+        <linearGradient id="p1" x1="26.8652" y1="23.5719" x2="27.7524" y2="16.7522" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
+        <linearGradient id="p2" x1="16.3401" y1="26.6997" x2="21.8393" y2="30.8946" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
+      </defs>
+    </svg>
+    <span class="kicker">Propuesta de producto · Julio 2026</span>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap">
+    <span class="kicker blue">Atribución de canal</span>
+    <h1>¿De dónde llegan<br><strong>tus clientes?</strong></h1>
+    <p class="lede">La infraestructura ya está viva: cada reserva se clasifica en un canal canónico y cada cliente tiene su canal de adquisición. Esta propuesta es la capa que falta — <strong style="font-weight:600">mostrárselo al profesional</strong> y convertir el dato en retención.</p>
+    <div class="status"><span class="pulse"></span> Backend shipeado y backfilleado · 6 de julio 2026</div>
+  </div>
+</div>
+
+<!-- CONTEXTO -->
+<section class="alt" id="contexto">
+  <div class="wrap">
+    <span class="kicker blue">01 · Lo que ya tenemos</span>
+    <h2 class="sec-title">El dato existe, está limpio y es <strong>retroactivo</strong></h2>
+    <p class="sec-sub">Nightwing captura UTMs, referrer, click IDs y first-touch (30 días). Cyclone lo normaliza a una taxonomía cerrada de canales al crear cada reserva, y lo corrimos hacia atrás sobre todo el histórico.</p>
+    <div class="tiles">
+      <div class="tile"><div class="num">~99.8<span>%</span></div><div class="lbl">de las reservas con origen trackeado (desde abril)</div></div>
+      <div class="tile"><div class="num">+580<span>k</span></div><div class="lbl">reservas históricas clasificadas por canal</div></div>
+      <div class="tile"><div class="num">+116<span>k</span></div><div class="lbl">clientes con canal de adquisición asignado</div></div>
+      <div class="tile"><div class="num">17</div><div class="lbl">canales canónicos (Instagram, WhatsApp, Google, Ágora…)</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- DISTRIBUCION -->
+<section id="distribucion">
+  <div class="wrap">
+    <span class="kicker blue">02 · La foto real</span>
+    <h2 class="sec-title">Instagram domina — y hasta hoy <strong>nadie lo veía</strong></h2>
+    <p class="sec-sub">Distribución de las reservas clasificadas (histórico completo). El referrer crudo nos dejó recuperar canales que estaban escondidos en "tráfico externo".</p>
+    <div class="chart" role="img" aria-label="Distribución de reservas por canal">
+      <div class="bar-row"><span class="name">Instagram</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">~38%</span></div>
+      <div class="bar-row"><span class="name">Directo</span><div class="track"><div class="fill dim" style="width:74%"></div></div><span class="val">~28%</span></div>
+      <div class="bar-row"><span class="name">Manual (agenda)</span><div class="track"><div class="fill dim" style="width:64%"></div></div><span class="val">~24%</span></div>
+      <div class="bar-row"><span class="name">Import</span><div class="track"><div class="fill dimmer" style="width:12%"></div></div><span class="val">~5%</span></div>
+      <div class="bar-row"><span class="name">WhatsApp</span><div class="track"><div class="fill dimmer" style="width:9%"></div></div><span class="val">~3.5%</span></div>
+      <div class="bar-row"><span class="name">Resto</span><div class="track"><div class="fill dimmer" style="width:2.5%"></div></div><span class="val">~0.9%</span></div>
+      <div class="bar-row"><span class="name">Google + RWG</span><div class="track"><div class="fill dimmer" style="width:2%"></div></div><span class="val">~0.6%</span></div>
+    </div>
+    <p class="chart-note"><strong>El insight escondido:</strong> un tercio del "tráfico externo" era en realidad Instagram in-app (sin UTM) y links de WhatsApp. La clasificación por referrer los recuperó. Además, desde hoy los links propios de Ágora (recordatorios, rebooking, emails) van etiquetados — el canal <strong>Ágora</strong> empieza a acumular desde el 6/jul.</p>
+  </div>
+</section>
+
+<!-- FASE 1 -->
+<section class="alt" id="fase-1">
+  <div class="wrap">
+    <div class="fase-head"><span class="fase-num">Fase 1</span><span class="fase-effort">Esfuerzo: bajo · solo UI sobre columnas existentes</span></div>
+    <h2 class="sec-title">Hacer el origen <strong>omnipresente</strong></h2>
+    <p class="sec-sub">Chips de canal en las dos superficies de mayor frecuencia: la agenda (cada turno) y la ficha del cliente (la relación). El profesional internaliza el dato sin aprender nada nuevo.</p>
+    <div class="grid-2">
+      <div class="mock-stage">
+        <span class="mock-label">Mockup · Agenda — chip por turno</span>
+        <div>
+          <div class="evt"><span class="hour">14:00</span><div class="body"><div><div class="who">Carla Méndez</div><div class="svc">Color y corte · 90 min</div></div><span class="chip ig"><span class="dot"></span>Instagram</span></div></div>
+          <div class="evt"><span class="hour">15:30</span><div class="body"><div><div class="who">Romina Suárez</div><div class="svc">Brushing · 45 min</div></div><span class="chip ag"><span class="dot"></span>Ágora</span></div></div>
+          <div class="evt"><span class="hour">16:30</span><div class="body"><div><div class="who">Luz Pereyra</div><div class="svc">Nutrición capilar · 60 min</div></div><span class="chip wa"><span class="dot"></span>WhatsApp</span></div></div>
+        </div>
+      </div>
+      <div class="mock-stage">
+        <span class="mock-label">Mockup · Ficha del cliente</span>
+        <div class="mock-card">
+          <div class="client-head">
+            <div class="avatar">CM</div>
+            <div>
+              <div class="name">Carla Méndez</div>
+              <div class="meta">Cliente desde marzo 2026 · Llegó por <span class="chip ig"><span class="dot"></span>Instagram</span></div>
+            </div>
+          </div>
+          <div class="timeline">
+            <div class="tl-row"><span class="l">Color y corte <span>6 jul · 14:00</span></span><span class="chip ig"><span class="dot"></span>Instagram</span></div>
+            <div class="tl-row"><span class="l">Brushing <span>19 jun · 16:00</span></span><span class="chip ag"><span class="dot"></span>Ágora</span></div>
+            <div class="tl-row"><span class="l">Color y corte <span>12 mar · 15:00</span></span><span class="chip ig"><span class="dot"></span>Instagram</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid-2" style="margin-top:22px">
+      <div class="rationale">
+        <h3>Por qué arranca acá</h3>
+        <ul>
+          <li>La agenda es la pantalla más usada de Flash — el dato se aprende solo, sin onboarding.</li>
+          <li>El header de la ficha responde la pregunta del negocio ("¿de dónde salió esta persona?") en el momento en que se la hacen.</li>
+          <li>Cero backend nuevo: lee <code style="font-family:inherit;font-weight:600">channel</code> y <code style="font-family:inherit;font-weight:600">acquisition_channel</code> que ya están en la DB.</li>
+        </ul>
+      </div>
+      <div class="rationale">
+        <h3>Alcance</h3>
+        <ul>
+          <li>Chip en la card del turno (agenda día/semana) + detalle del turno.</li>
+          <li>Línea de adquisición en el header de la ficha + chip por reserva en el historial.</li>
+          <li>Filtro por canal en la lista de clientes (segmentación → campañas).</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FASE 2 -->
+<section id="fase-2">
+  <div class="wrap">
+    <div class="fase-head"><span class="fase-num">Fase 2</span><span class="fase-effort">Esfuerzo: medio · 1 endpoint agregado + 1 card</span></div>
+    <h2 class="sec-title">"Ágora te trajo N reservas" — <strong>la card de retención</strong></h2>
+    <p class="sec-sub">Los recordatorios, el rebooking, el marketplace y Reserve with Google ya están atribuidos. Por primera vez podemos mostrar en números lo que la plataforma genera sola — el argumento anti-churn más directo que tenemos.</p>
+    <div class="grid-2">
+      <div class="mock-stage">
+        <span class="mock-label">Mockup · Card en el dashboard</span>
+        <div class="mock-card">
+          <span class="kicker" style="color:var(--frost-primary)">Ágora trabajando para vos</span>
+          <div class="dash-flex" style="margin-top:12px">
+            <div class="donut" aria-hidden="true"></div>
+            <div style="flex:1">
+              <div class="dash-num">23 <span>reservas este mes</span></div>
+              <div class="dash-sub">llegaron por canales que Ágora genera por vos</div>
+              <div class="dash-split">
+                <div class="split-row"><span class="k"><i></i>Recordatorios y rebooking</span><span class="v">12</span></div>
+                <div class="split-row"><span class="k"><i></i>Reserve with Google</span><span class="v">6</span></div>
+                <div class="split-row"><span class="k"><i></i>Marketplace</span><span class="v">3</span></div>
+                <div class="split-row"><span class="k"><i></i>Gift cards</span><span class="v">2</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="rationale">
+        <h3>Por qué importa</h3>
+        <p>El profesional que ve que Ágora le trajo 23 reservas no está comparando "agendas" cuando piensa en el plan — está comparando ingresos. La card convierte una feature invisible (los crons de recordatorios) en valor tangible todos los meses.</p>
+        <ul>
+          <li>Donut general por canal al lado: "tu mix de canales" con tendencia vs mes anterior.</li>
+          <li>El mismo número alimenta el email de resumen mensual y el flow de baja (retention screen).</li>
+          <li>Query directa sobre <code style="font-family:inherit;font-weight:600">bookings.channel</code> — sin instrumentación nueva.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FASE 3 -->
+<section class="alt" id="fase-3">
+  <div class="wrap">
+    <div class="fase-head"><span class="fase-num">Fase 3</span><span class="fase-effort">Esfuerzo: medio · requiere fases 1–2 educando primero</span></div>
+    <h2 class="sec-title">Side menu vivo + <strong>nudges que activan features</strong></h2>
+    <p class="sec-sub">Cuando el profesional ya entiende qué es un "canal", el dato empieza a disparar comportamiento: novedades en el menú y sugerencias según el perfil de canales de cada negocio.</p>
+    <div class="grid-2">
+      <div class="mock-stage">
+        <span class="mock-label">Mockup · Side menu con badge de novedad</span>
+        <div class="side">
+          <div class="item">Dashboard</div>
+          <div class="item active">Clientes <span class="bdg">3</span></div>
+          <div class="item">Agenda</div>
+          <div class="item">Caja</div>
+          <div class="tip"><strong>3 clientes nuevos por Instagram</strong> esta semana. Tocá para verlos.</div>
+        </div>
+      </div>
+      <div class="mock-stage">
+        <span class="mock-label">Mockup · Nudge por perfil de canal</span>
+        <div class="mock-card nudge">
+          <div class="ico">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0072FB" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          </div>
+          <div>
+            <h4>El 92% de tus reservas llega por Instagram</h4>
+            <p>Diversificá: activá <strong style="font-weight:600">Reserve with Google</strong> y aparecé cuando te buscan en Maps. Se configura en 2 minutos.</p>
+            <span class="cta">Activar ahora</span>
+          </div>
+        </div>
+        <div class="mock-card nudge">
+          <div class="ico">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0072FB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="M7 11l5 5 5-5"/><path d="M5 21h14"/></svg>
+          </div>
+          <div>
+            <h4>El 40% de tus turnos manuales no tiene origen</h4>
+            <p>Etiquetá cómo llegó el cliente al cargar el turno y completá tu mapa de canales.</p>
+            <span class="cta">Ver cómo</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="rationale" style="margin-top:22px; max-width:640px">
+      <h3>Otros disparadores del mismo motor</h3>
+      <ul>
+        <li>Celebrar la primera reserva de un canal nuevo ("🎉 Tu primera reserva desde Google").</li>
+        <li>Si domina lo manual → sugerir compartir el link en el bio de Instagram o las placas de redes.</li>
+        <li>Cada gap de canal tiene un CTA a una feature que ya existe — RWG, marketplace, placas, gift cards.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="wrap">
+    <span class="kicker blue">Recomendación</span>
+    <h2 class="sec-title">Priorización <strong>propuesta</strong></h2>
+    <p class="sec-sub">Fase 1 educa, Fase 2 retiene, Fase 3 activa. Cada una se apoya en la anterior — y el backend de las tres ya está en producción.</p>
+    <div class="road">
+      <div class="step hot">
+        <span class="tag">Ahora · Fase 1</span>
+        <h3>Chips en agenda + ficha</h3>
+        <p>Solo frontend. El dato se vuelve visible en las pantallas de todos los días y el team valida cómo reacciona la gente.</p>
+        <div class="eff">ESFUERZO S · SIN BACKEND NUEVO</div>
+      </div>
+      <div class="step">
+        <span class="tag">Después · Fase 2</span>
+        <h3>Card "Ágora te trajo N"</h3>
+        <p>La pieza de retención. Ideal shipearlo con 3–4 semanas de datos del canal Ágora acumulados (los links se etiquetan desde el 6/jul).</p>
+        <div class="eff">ESFUERZO M · 1 ENDPOINT</div>
+      </div>
+      <div class="step">
+        <span class="tag">Luego · Fase 3</span>
+        <h3>Badges + nudges</h3>
+        <p>Con el usuario ya educado, el dato dispara comportamiento: diversificación de canales y adopción de features existentes.</p>
+        <div class="eff">ESFUERZO M · MOTOR DE REGLAS SIMPLE</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <div class="big">El tracking ya está. <strong>Falta contarlo.</strong></div>
+      <div class="fine">Propuesta interna · Ágora · julio 2026 · datos de producción al 6/jul</div>
+    </div>
+    <svg width="120" height="28" viewBox="0 0 153 36" xmlns="http://www.w3.org/2000/svg" aria-label="Ágora">
+      <path d="M41.3822 30.3938L38.187 35.7712L3.11719 35.8491L17.5348 10.9106L20.6466 16.2974L15.7314 24.9347L12.625 30.3938H41.3822Z" fill="rgba(255,255,255,0.25)"/>
+      <path d="M20.6467 16.2973L17.5349 10.9106L3.11731 35.8491L0 30.3938L17.5349 0L31.8745 24.9385H25.6399L20.6467 16.2973Z" fill="#0072FF"/>
+      <path d="M23.8473 0L41.3822 30.3938H12.625L15.7314 24.9346L15.7384 24.9385H25.6398H31.8744L17.5348 0H23.8473Z" fill="#FF4658"/>
+      <path d="M76.7893 7.41158V4.76367H69.5647V7.41158H76.7893ZM72.2126 26.6334C74.4029 26.6334 76.3316 25.7835 77.6065 24.2797V26.3065H81.2351V10.1249H77.6065V12.1844C76.3316 10.6806 74.4029 9.79797 72.2126 9.79797C67.7668 9.79797 64.7266 13.5573 64.7266 18.232C64.7266 22.8741 67.7668 26.6334 72.2126 26.6334ZM73.1279 23.1356C70.382 23.1356 68.4206 21.0761 68.4206 18.232C68.4206 15.388 70.382 13.2958 73.1279 13.2958C75.7105 13.2958 77.6065 15.388 77.6065 18.232C77.6065 21.1088 75.6778 23.1356 73.1279 23.1356ZM92.2844 31.112C96.9264 31.112 100.718 28.2679 100.718 22.6125V10.1249H97.2533V12.5439C96.4034 10.9421 94.2131 9.79797 91.7614 9.79797C87.2828 9.79797 84.3407 13.2958 84.3407 17.6436C84.3407 21.9914 87.2828 25.4566 91.7614 25.4566C94.7035 25.4566 96.4361 23.9855 97.0899 22.6779V22.8087C97.0899 26.1104 95.39 28.3333 91.9248 28.3333C90.2576 28.3333 88.3616 27.7776 87.0867 26.6661L85.681 28.9544C87.1847 30.2947 89.5058 31.112 92.2844 31.112ZM92.5459 22.2856C89.9961 22.2856 88.0347 20.3242 88.0347 17.6436C88.0347 14.963 89.9961 12.9689 92.5459 12.9689C95.0958 12.9689 97.0899 14.9303 97.0899 17.5129C97.0899 20.3242 95.1612 22.2856 92.5459 22.2856ZM112.422 26.6334C117.194 26.6334 121.019 22.9067 121.019 18.232C121.019 13.5247 117.194 9.79797 112.422 9.79797C107.649 9.79797 103.824 13.5247 103.824 18.232C103.824 22.9067 107.649 26.6334 112.422 26.6334ZM112.422 23.1356C109.643 23.1356 107.518 21.0434 107.518 18.232C107.518 15.388 109.643 13.2958 112.422 13.2958C115.2 13.2958 117.325 15.388 117.325 18.232C117.325 21.0434 115.2 23.1356 112.422 23.1356ZM127.753 26.3065V19.7031C127.753 15.4534 130.042 13.7535 133.605 13.7535V9.79797C130.14 9.79797 128.374 11.694 127.753 13.3285V10.1249H124.125V26.3065H127.753ZM143.118 26.6334C145.308 26.6334 147.237 25.7835 148.512 24.2797V26.3065H152.14V10.1249H148.512V12.1844C147.237 10.6806 145.308 9.79797 143.118 9.79797C138.672 9.79797 135.632 13.5573 135.632 18.232C135.632 22.8741 138.672 26.6334 143.118 26.6334ZM144.033 23.1356C141.287 23.1356 139.326 21.0761 139.326 18.232C139.326 15.388 141.287 13.2958 144.033 13.2958C146.616 13.2958 148.512 15.388 148.512 18.232C148.512 21.1088 146.583 23.1356 144.033 23.1356Z" fill="#FFFFFF"/>
+      <rect x="52.7876" y="3.5874" width="0.683334" height="28.5292" fill="rgba(255,255,255,0.25)"/>
+    </svg>
+  </div>
+</footer>
+
+</body>
+</html>
