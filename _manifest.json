@@ -4,6 +4,16 @@
   "updated_at": "2026-07-22",
   "outputs": [
     {
+      "type": "deck",
+      "typeLabel": "Deck",
+      "title": "Claude tiene manos",
+      "description": "Deck del IA Lab del 23/jul: Claude ahora puede manejar un navegador — entrar, clickear, sacar capturas y contar lo que vio, no lo que leyó. Orientación para el equipo no-técnico: demo en vivo (AgendaPro), qué pedirle según tu rol y qué te devuelve, por qué es seguro (navegador propio y aislado, pide permiso), y cómo activarlo hoy — el navegador integrado de la app de Claude (Cmd+Shift+B, salió hace 10 días) o una frase en la terminal. Cierra con hands-on: tu primer pedido ahora mismo.",
+      "detail": "7 slides · demo en vivo · hands-on de cierre",
+      "date": "JUL 2026",
+      "href": "./claude-manos-ia-lab-2026-07/index.html",
+      "slug": "claude-manos-ia-lab-2026-07"
+    },
+    {
       "type": "proposal",
       "typeLabel": "Proposal",
       "title": "Subí tu archivo, nosotros lo hosteamos",
