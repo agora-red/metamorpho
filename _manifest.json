@@ -1,8 +1,18 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
   "version": 1,
-  "updated_at": "2026-07-06",
+  "updated_at": "2026-07-22",
   "outputs": [
+    {
+      "type": "proposal",
+      "typeLabel": "Proposal",
+      "title": "Subí tu archivo, nosotros lo hosteamos",
+      "description": "Propuesta para que Ágora hostee el contenido de los Descargables (hoy: el vendor pega un link de Drive a mano). Reusa el stack de Cursos online (~80% ya construido: presigned R2, multipart, import de Google Drive, player HLS) y agrega lo único nuevo de verdad: archivos privados + descarga firmada de 24 h. Mockups Frost realistas del editor en Flash (dropzone multi-archivo), la tab Descargables de /actividades, la página pública con bloque \"Qué incluye\" y el splash post-checkout con descarga inmediata. Mapa de reuso de Cyclone + roadmap en 3 fases shippeables.",
+      "detail": "proposal · Flash + Nightwing · mapa de reuso Cyclone · 3 fases",
+      "date": "JUL 2026",
+      "href": "./contenido-digital-hosteado-2026-07/index.html",
+      "slug": "contenido-digital-hosteado-2026-07"
+    },
     {
       "type": "one-pager",
       "typeLabel": "One-pager",

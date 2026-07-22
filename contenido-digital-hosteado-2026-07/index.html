@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Subí tu archivo, nosotros lo hosteamos · Propuesta Ágora</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Brand */
+  --frost-primary:        #0072FB;
+  --frost-primary-hover:  #005CD4;
+  --frost-primary-soft:   #EEF6FF;
+  --frost-primary-wash:   rgba(0,114,251,0.08);
+  /* Severity */
+  --frost-accent:         #FF4658;
+  --frost-accent-soft:    #FFE3E6;
+  --frost-success:        #10B981;
+  --frost-success-soft:   #A9FFE7;
+  --frost-warning:        #F59E0B;
+  /* Ink */
+  --frost-ink:       #0F172A;
+  --frost-ink-soft:  #3A3A3A;
+  --frost-muted:     #868686;
+  --frost-faint:     #B5B5B5;
+  /* Surface */
+  --frost-surface:        #FFFFFF;
+  --frost-surface-muted:  #EFF3F9;
+  --frost-border:         #E2E8F0;
+  --frost-border-soft:    #F2F2F2;
+  /* File-type accents (decorative, derivados de la paleta) */
+  --ft-pdf:   #D62B3C;  --ft-pdf-soft:   #FFE3E6;
+  --ft-audio: #B45309;  --ft-audio-soft: #FEF3C7;
+  --ft-video: #005CD4;  --ft-video-soft: #EEF6FF;
+  --ft-zip:   #3A3A3A;  --ft-zip-soft:   #F2F2F2;
+  --ft-epub:  #6D28D9;  --ft-epub-soft:  #EDE9FE;
+  /* Radius */
+  --r-sm: 6px; --r-item: 10px; --r-btn: 12px; --r-card: 20px; --r-shell: 28px; --r-chip: 999px;
+  /* Shadows */
+  --sh-xs: 0 1px 2px rgba(15,23,42,0.04);
+  --sh-sm: 0 4px 12px -4px rgba(15,23,42,0.10);
+  --sh-md: 0 10px 30px -12px rgba(15,23,42,0.15);
+  --sh-lg: 0 20px 50px -20px rgba(15,23,42,0.25);
+  --sh-glow: 0 4px 18px -2px rgba(0,114,251,0.30);
+  --sans: 'Montserrat', system-ui, -apple-system, sans-serif;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:var(--sans); color:var(--frost-ink); background:var(--frost-surface-muted);
+  font-variant-numeric: tabular-nums; -webkit-font-smoothing:antialiased; line-height:1.55;
+}
+.wrap { max-width:1040px; margin:0 auto; padding:0 28px; }
+svg { display:block; }
+
+/* ---------- chrome ---------- */
+header.chrome {
+  position:sticky; top:0; z-index:50; background:rgba(255,255,255,0.85); backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--frost-border);
+}
+header.chrome .wrap { display:flex; align-items:center; justify-content:space-between; height:60px; }
+.kicker { font-size:10.5px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:var(--frost-muted); }
+.kicker.blue { color:var(--frost-primary); }
+
+/* ---------- hero ---------- */
+.hero { padding:88px 0 56px; }
+.hero h1 { font-size:clamp(34px,5vw,54px); font-weight:200; letter-spacing:-0.02em; line-height:1.12; margin:18px 0 20px; }
+.hero h1 strong { font-weight:600; }
+.hero h1 s { color:var(--frost-faint); text-decoration-thickness:3px; text-decoration-color:var(--frost-accent); }
+.hero p.lede { font-size:17px; font-weight:300; color:var(--frost-ink-soft); max-width:660px; }
+.hero p.lede strong { font-weight:600; }
+.hero .status {
+  display:inline-flex; align-items:center; gap:8px; margin-top:26px; margin-right:10px;
+  background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-chip);
+  padding:8px 16px; font-size:12.5px; font-weight:500; color:var(--frost-ink-soft); box-shadow:var(--sh-xs);
+}
+.status .pulse { width:8px; height:8px; border-radius:50%; background:var(--frost-success); box-shadow:0 0 0 4px rgba(16,185,129,0.15); }
+.status .pulse.blue { background:var(--frost-primary); box-shadow:0 0 0 4px rgba(0,114,251,0.15); }
+
+/* ---------- sections ---------- */
+section { padding:56px 0; }
+section.alt { background:var(--frost-surface); border-top:1px solid var(--frost-border); border-bottom:1px solid var(--frost-border); }
+h2.sec-title { font-size:clamp(24px,3vw,32px); font-weight:300; letter-spacing:-0.01em; margin:12px 0 8px; }
+h2.sec-title strong { font-weight:600; }
+p.sec-sub { font-size:15px; font-weight:300; color:var(--frost-muted); max-width:640px; margin-bottom:36px; }
+p.sec-sub strong { font-weight:600; color:var(--frost-ink-soft); }
+
+.fase-head { display:flex; align-items:baseline; gap:14px; margin-bottom:6px; flex-wrap:wrap; }
+.fase-num {
+  font-size:11px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase;
+  background:var(--frost-primary-soft); color:var(--frost-primary); border-radius:var(--r-chip); padding:5px 12px;
+}
+.fase-effort { font-size:11.5px; font-weight:500; color:var(--frost-muted); }
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:28px; align-items:start; margin-top:28px; }
+.rationale h3 { font-size:16px; font-weight:600; margin-bottom:10px; }
+.rationale p { font-size:14px; font-weight:300; color:var(--frost-ink-soft); margin-bottom:14px; }
+.rationale p strong { font-weight:600; }
+.rationale ul { list-style:none; display:flex; flex-direction:column; gap:10px; }
+.rationale li { font-size:13.5px; font-weight:300; color:var(--frost-ink-soft); padding-left:22px; position:relative; }
+.rationale li strong { font-weight:600; }
+.rationale li::before { content:''; position:absolute; left:2px; top:8px; width:7px; height:7px; border-radius:50%; background:var(--frost-primary); }
+.rationale li.risk::before { background:var(--frost-accent); }
+code {
+  font-family:inherit; font-weight:600; font-size:0.88em; color:var(--frost-ink);
+  background:var(--frost-surface-muted); border-radius:var(--r-sm); padding:1px 6px; white-space:nowrap;
+}
+section.alt code { background:var(--frost-primary-wash); }
+
+/* ---------- mock stage ---------- */
+.mock-stage {
+  background:linear-gradient(160deg,#F6F9FE 0%, #EDF2FA 100%);
+  border:1px solid var(--frost-border); border-radius:var(--r-shell);
+  padding:26px; display:flex; flex-direction:column; gap:16px; align-items:stretch;
+}
+.mock-stage.ghost { background:repeating-linear-gradient(-45deg, #F4F6FA 0 14px, #EFF2F8 14px 28px); }
+.mock-label { font-size:10.5px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--frost-faint); }
+.mock-label b { color:var(--frost-primary); font-weight:600; }
+
+/* ---------- browser frame ---------- */
+.browser { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:16px; box-shadow:var(--sh-md); overflow:hidden; }
+.browser .bar { display:flex; align-items:center; gap:12px; padding:10px 14px; border-bottom:1px solid var(--frost-border-soft); background:#FAFBFD; }
+.browser .dots { display:flex; gap:5px; }
+.browser .dots i { width:9px; height:9px; border-radius:50%; background:var(--frost-border); }
+.browser .url {
+  flex:1; display:flex; align-items:center; gap:7px; background:var(--frost-surface-muted); border-radius:var(--r-chip);
+  padding:5px 14px; font-size:11px; font-weight:500; color:var(--frost-muted); max-width:340px;
+}
+.browser .url svg { flex:none; }
+.browser .body { padding:20px 22px 22px; }
+
+/* Flash editor mockup */
+.ed-head { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:14px; }
+.ed-head .t { font-size:15px; font-weight:600; }
+.ed-head .t span { display:block; font-size:11px; font-weight:500; color:var(--frost-faint); margin-top:1px; }
+.ed-save { background:var(--frost-ink); color:#fff; font-size:11.5px; font-weight:600; border-radius:var(--r-chip); padding:7px 16px; }
+.ed-tabs { display:flex; gap:4px; border-bottom:1px solid var(--frost-border-soft); margin-bottom:18px; }
+.ed-tab { font-size:12.5px; font-weight:500; color:var(--frost-muted); padding:8px 14px; position:relative; }
+.ed-tab.on { color:var(--frost-primary); font-weight:600; }
+.ed-tab.on::after { content:''; position:absolute; left:10px; right:10px; bottom:-1px; height:2px; border-radius:2px; background:var(--frost-primary); }
+.flabel { font-size:12px; font-weight:600; color:var(--frost-ink-soft); margin:0 0 6px; display:flex; justify-content:space-between; align-items:baseline; }
+.flabel span { font-weight:500; font-size:10.5px; color:var(--frost-faint); }
+.finput {
+  display:flex; align-items:center; gap:8px; border:1px solid var(--frost-border); border-radius:var(--r-btn);
+  padding:10px 14px; font-size:13px; font-weight:300; color:var(--frost-faint); background:var(--frost-surface);
+}
+.finput.filled { color:var(--frost-ink); font-weight:500; }
+.fhint { font-size:11px; font-weight:300; color:var(--frost-faint); margin-top:6px; }
+.frow { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.fgap { height:16px; }
+
+/* dropzone */
+.drop {
+  border:1.5px dashed rgba(0,114,251,0.45); border-radius:14px; background:var(--frost-primary-wash);
+  padding:24px 18px; text-align:center;
+}
+.drop .ico {
+  width:42px; height:42px; border-radius:var(--r-btn); background:var(--frost-surface); margin:0 auto 10px;
+  display:flex; align-items:center; justify-content:center; box-shadow:var(--sh-glow);
+}
+.drop b { font-size:13.5px; font-weight:600; display:block; color:var(--frost-ink); }
+.drop b u { color:var(--frost-primary); }
+.drop span { font-size:11.5px; font-weight:300; color:var(--frost-muted); display:block; margin-top:4px; }
+.drop-alt { display:flex; align-items:center; justify-content:center; gap:8px; margin-top:12px; flex-wrap:wrap; }
+.chip-btn {
+  display:inline-flex; align-items:center; gap:7px; font-size:11.5px; font-weight:600; color:var(--frost-ink-soft);
+  background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-chip); padding:7px 13px; box-shadow:var(--sh-xs);
+}
+.chip-btn svg { flex:none; }
+
+/* file rows */
+.files { display:flex; flex-direction:column; gap:8px; margin-top:14px; }
+.file {
+  display:flex; align-items:center; gap:12px; border:1px solid var(--frost-border); border-radius:var(--r-btn);
+  padding:10px 12px; background:var(--frost-surface); box-shadow:var(--sh-xs);
+}
+.fico {
+  width:36px; height:36px; border-radius:var(--r-item); display:flex; align-items:center; justify-content:center;
+  font-size:9px; font-weight:700; letter-spacing:0.06em; flex:none;
+}
+.fico.pdf   { background:var(--ft-pdf-soft);   color:var(--ft-pdf); }
+.fico.audio { background:var(--ft-audio-soft); color:var(--ft-audio); }
+.fico.video { background:var(--ft-video-soft); color:var(--ft-video); }
+.fico.zip   { background:var(--ft-zip-soft);   color:var(--ft-zip); }
+.fico.epub  { background:var(--ft-epub-soft);  color:var(--ft-epub); }
+.file .fmeta { flex:1; min-width:0; }
+.file .fmeta b { font-size:12.5px; font-weight:600; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.file .fmeta span { font-size:11px; font-weight:300; color:var(--frost-muted); }
+.file .fmeta span.ok { color:#0B7A56; font-weight:500; }
+.file .fact { display:flex; gap:2px; color:var(--frost-faint); }
+.file .fact i {
+  font-style:normal; width:26px; height:26px; display:flex; align-items:center; justify-content:center;
+  border-radius:var(--r-sm); font-size:12px;
+}
+.fbar { height:4px; border-radius:var(--r-chip); background:var(--frost-surface-muted); overflow:hidden; margin-top:6px; }
+.fbar i { display:block; height:100%; width:64%; background:var(--frost-primary); border-radius:var(--r-chip); }
+.ext-link { margin-top:14px; border-top:1px dashed var(--frost-border); padding-top:12px; font-size:12px; font-weight:300; color:var(--frost-muted); }
+.ext-link a { color:var(--frost-primary); font-weight:600; text-decoration:none; }
+
+/* ---------- phone frame ---------- */
+.phone {
+  width:300px; margin:0 auto; background:var(--frost-ink); border-radius:38px; padding:9px; box-shadow:var(--sh-lg);
+}
+.phone .screen { background:var(--frost-surface-muted); border-radius:30px; overflow:hidden; }
+.phone .notch { height:26px; display:flex; align-items:center; justify-content:center; background:var(--frost-surface); }
+.phone .notch i { width:74px; height:16px; border-radius:var(--r-chip); background:var(--frost-ink); display:block; }
+.p-head { background:var(--frost-surface); padding:12px 16px 10px; border-bottom:1px solid var(--frost-border-soft); }
+.p-head .t { font-size:15px; font-weight:600; }
+.p-tabs { display:flex; gap:6px; padding:10px 12px; overflow:hidden; }
+.p-tab {
+  font-size:10.5px; font-weight:600; color:var(--frost-muted); background:var(--frost-surface);
+  border:1px solid var(--frost-border); border-radius:var(--r-chip); padding:5px 11px; white-space:nowrap;
+}
+.p-tab.on { background:var(--frost-ink); color:#fff; border-color:var(--frost-ink); }
+.p-body { padding:4px 12px 16px; }
+
+/* nightwing card */
+.nw-card { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); box-shadow:var(--sh-sm); overflow:hidden; }
+.nw-cover { height:74px; background:linear-gradient(120deg, var(--frost-primary) 0%, var(--frost-primary-hover) 55%, #003E8F 100%); position:relative; }
+.nw-cover .ph { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.9); }
+.nw-cover .life {
+  position:absolute; right:10px; top:10px; background:rgba(255,255,255,0.92); color:#0B7A56;
+  font-size:9.5px; font-weight:600; border-radius:var(--r-chip); padding:3px 9px;
+}
+.nw-main { padding:12px 14px 6px; }
+.nw-main .t { font-size:13.5px; font-weight:600; line-height:1.3; }
+.nw-main .v { font-size:11px; font-weight:300; color:var(--frost-muted); margin-top:2px; }
+.nw-files { padding:4px 14px 12px; }
+.nw-file { display:flex; align-items:center; gap:9px; padding:9px 0; border-bottom:1px solid var(--frost-border-soft); }
+.nw-file:last-child { border-bottom:none; }
+.nw-file .fico { width:30px; height:30px; font-size:8px; border-radius:8px; }
+.nw-file .m { flex:1; min-width:0; }
+.nw-file .m b { font-size:11.5px; font-weight:600; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.nw-file .m span { font-size:10px; font-weight:300; color:var(--frost-muted); }
+.btn-dl {
+  display:inline-flex; align-items:center; gap:5px; background:var(--frost-primary); color:#fff;
+  font-size:10px; font-weight:600; border-radius:var(--r-chip); padding:6px 11px; box-shadow:var(--sh-glow); white-space:nowrap;
+}
+.btn-dl.dark { background:var(--frost-ink); box-shadow:var(--sh-sm); }
+.nw-foot {
+  padding:8px 14px; background:var(--frost-surface-muted); font-size:9.5px; font-weight:500;
+  color:var(--frost-muted); display:flex; align-items:center; gap:6px;
+}
+
+/* legacy row */
+.nw-legacy { display:flex; align-items:center; gap:10px; padding:11px 14px; }
+.nw-legacy .m { flex:1; }
+.nw-legacy .m b { font-size:12px; font-weight:600; display:block; }
+.nw-legacy .m span { font-size:10px; font-weight:300; color:var(--frost-muted); }
+
+/* storefront público (phone) */
+.sf-cover { height:96px; background:linear-gradient(120deg,#FF8A5C 0%, var(--frost-accent) 70%); position:relative; }
+.sf-cover .badge { position:absolute; left:10px; bottom:10px; background:rgba(15,23,42,0.75); color:#fff; font-size:9px; font-weight:600; border-radius:var(--r-chip); padding:3px 9px; }
+.sf-main { background:var(--frost-surface); padding:12px 14px; }
+.sf-main .t { font-size:14px; font-weight:600; line-height:1.25; }
+.sf-main .by { font-size:10.5px; font-weight:300; color:var(--frost-muted); margin-top:2px; }
+.sf-price { font-size:17px; font-weight:600; margin-top:8px; }
+.sf-price span { font-size:10.5px; font-weight:500; color:var(--frost-muted); }
+.inc { background:var(--frost-surface); margin-top:8px; padding:12px 14px; border-top:1px solid var(--frost-border-soft); }
+.inc h4 { font-size:11px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:var(--frost-muted); margin-bottom:8px; }
+.inc-row { display:flex; align-items:center; gap:9px; padding:6px 0; }
+.inc-row .fico { width:28px; height:28px; font-size:7.5px; border-radius:8px; }
+.inc-row .m b { font-size:11px; font-weight:600; display:block; line-height:1.3; }
+.inc-row .m span { font-size:9.5px; font-weight:300; color:var(--frost-muted); }
+.inc-total { display:flex; gap:10px; flex-wrap:wrap; margin-top:8px; padding-top:8px; border-top:1px solid var(--frost-border-soft); font-size:9.5px; font-weight:500; color:var(--frost-muted); }
+.inc-total b { color:var(--frost-ink); font-weight:600; }
+.sf-cta { margin:10px 14px 14px; background:var(--frost-primary); color:#fff; text-align:center; font-size:12px; font-weight:600; border-radius:var(--r-btn); padding:11px; box-shadow:var(--sh-glow); }
+
+/* splash */
+.splash { background:var(--frost-surface); border-radius:var(--r-card); box-shadow:var(--sh-sm); padding:18px 16px; text-align:center; }
+.splash .ok-ico {
+  width:44px; height:44px; border-radius:50%; background:rgba(16,185,129,0.14); margin:0 auto 10px;
+  display:flex; align-items:center; justify-content:center;
+}
+.splash h4 { font-size:14px; font-weight:600; }
+.splash p { font-size:10.5px; font-weight:300; color:var(--frost-muted); margin-top:3px; }
+.splash .btn-dl { margin-top:12px; font-size:11px; padding:8px 16px; }
+.splash .sub { display:block; margin-top:8px; font-size:9.5px; font-weight:500; color:var(--frost-muted); }
+
+/* ---------- friction chain (problema) ---------- */
+.chain { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:32px; }
+.chain .step {
+  background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card);
+  padding:18px 16px; box-shadow:var(--sh-xs); position:relative;
+}
+.chain .step .n {
+  width:24px; height:24px; border-radius:50%; background:var(--frost-accent-soft); color:var(--ft-pdf);
+  font-size:11px; font-weight:600; display:flex; align-items:center; justify-content:center; margin-bottom:10px;
+}
+.chain .step h4 { font-size:13px; font-weight:600; line-height:1.35; }
+.chain .step p { font-size:11.5px; font-weight:300; color:var(--frost-muted); margin-top:5px; }
+.consequence {
+  margin-top:22px; background:var(--frost-surface); border:1px solid var(--frost-border);
+  border-left:3px solid var(--frost-accent); border-radius:var(--r-item);
+  padding:14px 18px; font-size:13.5px; font-weight:300; color:var(--frost-ink-soft); max-width:760px;
+}
+.consequence strong { font-weight:600; }
+
+/* ---------- spec map ---------- */
+.spec-card {
+  background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card);
+  box-shadow:var(--sh-sm); overflow:hidden; margin-top:22px;
+}
+.spec-card .spec-head {
+  display:flex; align-items:center; gap:12px; padding:16px 22px;
+  border-bottom:1px solid var(--frost-border-soft); background:var(--frost-primary-wash);
+}
+.spec-card .spec-head h3 { font-size:14px; font-weight:600; }
+.spec-row {
+  display:grid; grid-template-columns:210px 1fr 122px; gap:16px; align-items:start;
+  padding:14px 22px; border-bottom:1px solid var(--frost-border-soft);
+}
+.spec-row:last-child { border-bottom:none; }
+.spec-row .where { font-size:12.5px; font-weight:600; line-height:1.4; }
+.spec-row .where span { display:block; font-size:10.5px; font-weight:500; color:var(--frost-faint); margin-top:2px; }
+.spec-row .how { font-size:12.5px; font-weight:300; color:var(--frost-ink-soft); line-height:1.55; }
+.spec-row .how code { background:var(--frost-surface-muted); }
+.spec-row .state { justify-self:end; }
+.pill-state {
+  display:inline-flex; align-items:center; gap:6px; font-size:10.5px; font-weight:600;
+  border-radius:var(--r-chip); padding:4px 10px; white-space:nowrap;
+}
+.pill-state.ok { background:rgba(16,185,129,0.12); color:#0B7A56; }
+.pill-state.ok::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--frost-success); }
+.pill-state.new { background:var(--frost-primary-soft); color:var(--frost-primary-hover); }
+.pill-state.new::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--frost-primary); }
+.spec-note { font-size:12px; font-weight:300; color:var(--frost-muted); margin-top:16px; max-width:780px; }
+.spec-note strong { font-weight:600; color:var(--frost-ink-soft); }
+
+/* ---------- roadmap ---------- */
+.road { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:36px; }
+.road .step { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); padding:22px 20px; box-shadow:var(--sh-sm); display:flex; flex-direction:column; }
+.road .step.hot { border-color:var(--frost-primary); box-shadow:var(--sh-glow); }
+.road .step .tag { font-size:10.5px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--frost-primary); }
+.road .step h3 { font-size:16px; font-weight:600; margin:8px 0 6px; }
+.road .step ul { list-style:none; display:flex; flex-direction:column; gap:7px; margin-top:2px; }
+.road .step li { font-size:12.5px; font-weight:300; color:var(--frost-ink-soft); padding-left:18px; position:relative; }
+.road .step li::before { content:''; position:absolute; left:2px; top:7px; width:6px; height:6px; border-radius:50%; background:var(--frost-primary); opacity:0.55; }
+.road .step .pitch { margin-top:auto; padding-top:16px; font-size:12px; font-weight:600; color:#0B7A56; }
+.road .step .eff { margin-top:8px; font-size:11px; font-weight:600; color:var(--frost-muted); }
+
+/* ---------- footer ---------- */
+footer { background:var(--frost-ink); color:#fff; padding:52px 0; margin-top:64px; }
+footer .wrap { display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; }
+footer .big { font-size:22px; font-weight:300; }
+footer .big strong { font-weight:600; }
+footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; margin-top:6px; }
+
+@media (max-width:860px) {
+  .grid-2 { grid-template-columns:1fr; }
+  .chain { grid-template-columns:repeat(2,1fr); }
+  .road { grid-template-columns:1fr; }
+  .spec-row { grid-template-columns:1fr; gap:6px; }
+  .spec-row .state { justify-self:start; }
+  .frow { grid-template-columns:1fr; }
+}
+@media (max-width:520px) {
+  .chain { grid-template-columns:1fr; }
+  .phone { width:100%; max-width:300px; }
+}
+</style>
+</head>
+<body>
+
+<header class="chrome">
+  <div class="wrap">
+    <svg width="110" height="26" viewBox="0 0 153 36" xmlns="http://www.w3.org/2000/svg" aria-label="Ágora">
+      <path d="M41.3822 30.3938L38.187 35.7712L3.11719 35.8491L17.5348 10.9106L20.6466 16.2974L15.7314 24.9347L12.625 30.3938H41.3822Z" fill="#E2E8F0"/>
+      <path d="M17.5351 10.9106L20.6469 16.2974L16.7342 23.0921L12.1689 20.1848L17.5351 10.9106Z" fill="url(#p0)" fill-opacity="0.7"/>
+      <path d="M20.6467 16.2973L17.5349 10.9106L3.11731 35.8491L0 30.3938L17.5349 0L31.8745 24.9385H25.6399L20.6467 16.2973Z" fill="#0072FF"/>
+      <path d="M31.8543 24.9244L25.6302 24.9316L21.7061 18.1387L26.5114 15.6305L31.8543 24.9244Z" fill="url(#p1)" fill-opacity="0.7"/>
+      <path d="M23.8473 0L41.3822 30.3938H12.625L15.7314 24.9346L15.7384 24.9385H25.6398H31.8744L17.5348 0H23.8473Z" fill="#FF4658"/>
+      <path d="M12.625 30.3937L15.7289 24.9387L23.7202 24.9194L23.4706 30.3746L12.625 30.3937Z" fill="url(#p2)" fill-opacity="0.7"/>
+      <path d="M76.7893 7.41158V4.76367H69.5647V7.41158H76.7893ZM72.2126 26.6334C74.4029 26.6334 76.3316 25.7835 77.6065 24.2797V26.3065H81.2351V10.1249H77.6065V12.1844C76.3316 10.6806 74.4029 9.79797 72.2126 9.79797C67.7668 9.79797 64.7266 13.5573 64.7266 18.232C64.7266 22.8741 67.7668 26.6334 72.2126 26.6334ZM73.1279 23.1356C70.382 23.1356 68.4206 21.0761 68.4206 18.232C68.4206 15.388 70.382 13.2958 73.1279 13.2958C75.7105 13.2958 77.6065 15.388 77.6065 18.232C77.6065 21.1088 75.6778 23.1356 73.1279 23.1356ZM92.2844 31.112C96.9264 31.112 100.718 28.2679 100.718 22.6125V10.1249H97.2533V12.5439C96.4034 10.9421 94.2131 9.79797 91.7614 9.79797C87.2828 9.79797 84.3407 13.2958 84.3407 17.6436C84.3407 21.9914 87.2828 25.4566 91.7614 25.4566C94.7035 25.4566 96.4361 23.9855 97.0899 22.6779V22.8087C97.0899 26.1104 95.39 28.3333 91.9248 28.3333C90.2576 28.3333 88.3616 27.7776 87.0867 26.6661L85.681 28.9544C87.1847 30.2947 89.5058 31.112 92.2844 31.112ZM92.5459 22.2856C89.9961 22.2856 88.0347 20.3242 88.0347 17.6436C88.0347 14.963 89.9961 12.9689 92.5459 12.9689C95.0958 12.9689 97.0899 14.9303 97.0899 17.5129C97.0899 20.3242 95.1612 22.2856 92.5459 22.2856ZM112.422 26.6334C117.194 26.6334 121.019 22.9067 121.019 18.232C121.019 13.5247 117.194 9.79797 112.422 9.79797C107.649 9.79797 103.824 13.5247 103.824 18.232C103.824 22.9067 107.649 26.6334 112.422 26.6334ZM112.422 23.1356C109.643 23.1356 107.518 21.0434 107.518 18.232C107.518 15.388 109.643 13.2958 112.422 13.2958C115.2 13.2958 117.325 15.388 117.325 18.232C117.325 21.0434 115.2 23.1356 112.422 23.1356ZM127.753 26.3065V19.7031C127.753 15.4534 130.042 13.7535 133.605 13.7535V9.79797C130.14 9.79797 128.374 11.694 127.753 13.3285V10.1249H124.125V26.3065H127.753ZM143.118 26.6334C145.308 26.6334 147.237 25.7835 148.512 24.2797V26.3065H152.14V10.1249H148.512V12.1844C147.237 10.6806 145.308 9.79797 143.118 9.79797C138.672 9.79797 135.632 13.5573 135.632 18.232C135.632 22.8741 138.672 26.6334 143.118 26.6334ZM144.033 23.1356C141.287 23.1356 139.326 21.0761 139.326 18.232C139.326 15.388 141.287 13.2958 144.033 13.2958C146.616 13.2958 148.512 15.388 148.512 18.232C148.512 21.1088 146.583 23.1356 144.033 23.1356Z" fill="#0F172A"/>
+      <rect x="52.7876" y="3.5874" width="0.683334" height="28.5292" fill="#E2E8F0"/>
+      <defs>
+        <linearGradient id="p0" x1="18.8455" y1="15.9076" x2="12.5252" y2="18.5424" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
+        <linearGradient id="p1" x1="26.8652" y1="23.5719" x2="27.7524" y2="16.7522" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
+        <linearGradient id="p2" x1="16.3401" y1="26.6997" x2="21.8393" y2="30.8946" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
+      </defs>
+    </svg>
+    <span class="kicker">Propuesta de producto · Julio 2026</span>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap">
+    <span class="kicker blue">Descargables · Contenido digital</span>
+    <h1>Subí tu archivo.<br><strong>Nosotros lo hosteamos.</strong></h1>
+    <p class="lede">Hoy, para vender un ebook en Ágora, el profesional tiene que hostearlo en Google Drive, pelearse con los permisos y pegar un link. La propuesta: que el contenido viva en Ágora — <strong>se sube desde Flash, se entrega con links firmados que expiran</strong>, y la página de venta puede decir exactamente qué incluye. Ebooks, recetarios, plantillas, packs de audio y video.</p>
+    <div class="status"><span class="pulse"></span> ~80% de la infra ya existe — es el stack de Cursos online</div>
+    <div class="status"><span class="pulse blue"></span> Compatible: el link externo sigue funcionando</div>
+  </div>
+</div>
+
+<!-- 01 PROBLEMA -->
+<section class="alt" id="problema">
+  <div class="wrap">
+    <span class="kicker blue">01 · El problema</span>
+    <h2 class="sec-title">Vender un descargable hoy exige <strong>saber de Drive</strong></h2>
+    <p class="sec-sub">El campo "Link de acceso al descargable" es un texto libre. Ágora nunca ve el archivo: solo guarda el link que el profesional consiguió por su cuenta. Toda la cadena depende de un tercero.</p>
+    <div class="chain">
+      <div class="step">
+        <div class="n">1</div>
+        <h4>Hostear afuera</h4>
+        <p>El profesional tiene que subir su PDF a Drive o Dropbox por fuera de Ágora.</p>
+      </div>
+      <div class="step">
+        <div class="n">2</div>
+        <h4>Configurar permisos</h4>
+        <p>"Cualquiera con el link puede ver" — un paso técnico donde muchos se traban o lo dejan mal.</p>
+      </div>
+      <div class="step">
+        <div class="n">3</div>
+        <h4>Pegar el link y rezar</h4>
+        <p>Si después mueve o borra el archivo, el comprador queda sin acceso — y nadie se entera.</p>
+      </div>
+      <div class="step">
+        <div class="n">4</div>
+        <h4>Link público eterno</h4>
+        <p>El comprador recibe una URL re-compartible sin control. El contenido pago circula gratis.</p>
+      </div>
+    </div>
+    <div class="consequence">Consecuencia de producto: <strong>no sabemos qué se vende</strong> (¿PDF? ¿video? ¿cuánto pesa?), no podemos mostrar "qué incluye" en la página de venta, ni ofrecer descarga inmediata post-compra, ni proteger el contenido. El descargable es hoy el activo con menos amor de los cuatro tipos.</div>
+  </div>
+</section>
+
+<!-- 02 FLASH -->
+<section id="flash">
+  <div class="wrap">
+    <div class="fase-head"><span class="fase-num">Flash · pro.agora.red</span><span class="fase-effort">El editor de descargables gana una pestaña "Contenido"</span></div>
+    <h2 class="sec-title">De un input de texto a un <strong>uploader real</strong></h2>
+    <p class="sec-sub">Drag &amp; drop, importar desde Google Drive o pegar un link externo (fallback). Un descargable puede incluir <strong>varios archivos</strong>: el ebook, el bonus en audio, la clase grabada — un solo producto, un solo precio.</p>
+
+    <div class="mock-stage">
+      <span class="mock-label">Mockup · <b>Editar descargable → pestaña Contenido</b></span>
+      <div class="browser">
+        <div class="bar">
+          <div class="dots"><i></i><i></i><i></i></div>
+          <div class="url">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M2 5V3.5C2 1.84 3.34 0.5 5 0.5C6.66 0.5 8 1.84 8 3.5V5" stroke="#10B981" stroke-width="1.4"/><rect x="0.7" y="5" width="8.6" height="6.3" rx="1.6" fill="#10B981"/></svg>
+            pro.agora.red/descargables/editar
+          </div>
+        </div>
+        <div class="body">
+          <div class="ed-head">
+            <div class="t">Ebook · 30 recetas veganas <span>Descargable · Publicado</span></div>
+            <span class="ed-save">Guardar cambios</span>
+          </div>
+          <div class="ed-tabs">
+            <span class="ed-tab">Principal</span>
+            <span class="ed-tab on">Contenido</span>
+            <span class="ed-tab">Descripción</span>
+            <span class="ed-tab">Opciones</span>
+          </div>
+
+          <div class="drop">
+            <div class="ico">
+              <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M10 13V4M10 4L6.5 7.5M10 4L13.5 7.5" stroke="#0072FB" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 13.5V15A2 2 0 0 0 5 17H15A2 2 0 0 0 17 15V13.5" stroke="#0072FB" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </div>
+            <b>Arrastrá tus archivos o <u>buscalos en tu compu</u></b>
+            <span>PDF · EPUB · ZIP · MP3 · MP4 — hasta 2 GB por archivo</span>
+          </div>
+          <div class="drop-alt">
+            <span class="chip-btn">
+              <svg width="13" height="12" viewBox="0 0 14 12" fill="none"><path d="M4.9 0.5H9.1L14 8.6L11.9 12H2.1L0 8.6L4.9 0.5Z" fill="none"/><path d="M4.9 0.5L0 8.6L2.1 12L7 3.9L4.9 0.5Z" fill="#0072FB"/><path d="M9.1 0.5H4.9L9.8 8.6H14L9.1 0.5Z" fill="#F59E0B"/><path d="M14 8.6H9.8L7.7 12H11.9L14 8.6Z" fill="#10B981"/></svg>
+              Importar desde Google Drive
+            </span>
+            <span class="chip-btn">
+              <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M5.5 8.5L8.5 5.5M6.2 3.8L7.5 2.5A2.47 2.47 0 0 1 11 6L9.7 7.3M7.8 10.2L6.5 11.5A2.47 2.47 0 0 1 3 8L4.3 6.7" stroke="#3A3A3A" stroke-width="1.4" stroke-linecap="round"/></svg>
+              Usar un link externo
+            </span>
+          </div>
+
+          <div class="files">
+            <div class="file">
+              <div class="fico pdf">PDF</div>
+              <div class="fmeta"><b>30-recetas-veganas.pdf</b><span class="ok">✓ Listo · 2,4 MB</span></div>
+              <div class="fact"><i>⠿</i><i>✕</i></div>
+            </div>
+            <div class="file">
+              <div class="fico audio">MP3</div>
+              <div class="fmeta"><b>bonus-meditacion-guiada.mp3</b><span class="ok">✓ Listo · 18 MB</span></div>
+              <div class="fact"><i>⠿</i><i>✕</i></div>
+            </div>
+            <div class="file">
+              <div class="fico video">MP4</div>
+              <div class="fmeta"><b>clase-tecnicas-basicas.mp4</b><span>Subiendo… 64% · 412 MB</span>
+                <div class="fbar"><i></i></div>
+              </div>
+              <div class="fact"><i>✕</i></div>
+            </div>
+          </div>
+          <div class="ext-link">¿Ya tenés el contenido hosteado en otro lado? <a href="#">Pegá el link externo</a> — sigue funcionando como hasta ahora.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="rationale">
+        <h3>Casi todo ya está construido</h3>
+        <p>El <code>FileUploadModal</code> de Cursos online hace exactamente esto: drag &amp; drop → URL presignada → subida directa del navegador a R2, multipart para archivos grandes, picker de Google Drive y links embed. <strong>Solo hay que desacoplarlo del <code>courseId</code></strong> para poder usarlo en descargables.</p>
+        <ul>
+          <li><strong>Subida directa browser → storage</strong> — el archivo nunca pasa por nuestro servidor.</li>
+          <li><strong>Google Drive integrado</strong> — el profesional que ya tiene su ebook en Drive lo importa en dos taps, sin bajarlo.</li>
+          <li><strong>Multipart</strong> para videos pesados, con progreso y cancelación.</li>
+        </ul>
+      </div>
+      <div class="rationale">
+        <h3>Nada se rompe</h3>
+        <p>El link externo pasa a ser una opción secundaria, no desaparece. Los descargables existentes siguen funcionando igual.</p>
+        <ul>
+          <li>Cada archivo guarda <strong>nombre, tipo y peso</strong> — el patrón <code>content_url + filename + size</code> que ya usa <code>CourseClass</code>.</li>
+          <li>Orden manual de archivos (el ebook primero, los bonus después).</li>
+          <li class="risk">Decisión pendiente: <strong>tope de storage por plan</strong> (ej. 5 GB) — R2 cuesta ~USD 0,015/GB·mes sin costo de egreso, el margen aguanta un tope generoso.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 NIGHTWING ENTREGA -->
+<section class="alt" id="entrega">
+  <div class="wrap">
+    <div class="fase-head"><span class="fase-num">Nightwing · agora.red</span><span class="fase-effort">La tab Descargables de /actividades se vuelve una biblioteca</span></div>
+    <h2 class="sec-title">Entrega con <strong>links firmados que expiran</strong></h2>
+    <p class="sec-sub">Hoy el comprador abre el <code>content_url</code> crudo: una URL pública y eterna. Con contenido hosteado, cada botón "Descargar" pide un link firmado personal (24 h) que valida su compra. El mail de confirmación no cambia: ya apunta a /actividades.</p>
+
+    <div class="grid-2">
+      <div class="mock-stage">
+        <span class="mock-label">Mockup · <b>/actividades → tab Descargables</b></span>
+        <div class="phone">
+          <div class="screen">
+            <div class="notch"><i></i></div>
+            <div class="p-head"><div class="t">Actividad</div></div>
+            <div class="p-tabs">
+              <span class="p-tab">Reservas</span>
+              <span class="p-tab">Entradas</span>
+              <span class="p-tab on">Descargables</span>
+              <span class="p-tab">Mis cursos</span>
+            </div>
+            <div class="p-body">
+              <div class="nw-card">
+                <div class="nw-cover">
+                  <div class="ph">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="white" stroke-width="1.6" stroke-linecap="round"/><path d="M6.5 2H20V22H6.5A2.5 2.5 0 0 1 4 19.5V4.5A2.5 2.5 0 0 1 6.5 2Z" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                  <span class="life">✓ Acceso de por vida</span>
+                </div>
+                <div class="nw-main">
+                  <div class="t">Ebook · 30 recetas veganas</div>
+                  <div class="v">Cocina de Flor · Comprado el 18 jul 2026</div>
+                </div>
+                <div class="nw-files">
+                  <div class="nw-file">
+                    <div class="fico pdf">PDF</div>
+                    <div class="m"><b>30 recetas veganas</b><span>PDF · 2,4 MB</span></div>
+                    <span class="btn-dl">
+                      <svg width="9" height="10" viewBox="0 0 10 11" fill="none"><path d="M5 1V7M5 7L2.5 4.5M5 7L7.5 4.5M1.5 9.5H8.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      Descargar
+                    </span>
+                  </div>
+                  <div class="nw-file">
+                    <div class="fico audio">MP3</div>
+                    <div class="m"><b>Bonus: meditación guiada</b><span>Audio · 12 min</span></div>
+                    <span class="btn-dl">
+                      <svg width="9" height="10" viewBox="0 0 10 11" fill="none"><path d="M5 1V7M5 7L2.5 4.5M5 7L7.5 4.5M1.5 9.5H8.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      Descargar
+                    </span>
+                  </div>
+                  <div class="nw-file">
+                    <div class="fico video">MP4</div>
+                    <div class="m"><b>Clase: técnicas básicas</b><span>Video · 24 min</span></div>
+                    <span class="btn-dl dark">
+                      <svg width="8" height="10" viewBox="0 0 8 10" fill="none"><path d="M1 1.3V8.7C1 9.1 1.45 9.35 1.8 9.14L7.5 5.44C7.82 5.24 7.82 4.76 7.5 4.56L1.8 0.86C1.45 0.65 1 0.9 1 1.3Z" fill="white"/></svg>
+                      Ver online
+                    </span>
+                  </div>
+                </div>
+                <div class="nw-foot">
+                  <svg width="10" height="11" viewBox="0 0 10 12" fill="none"><path d="M2 5V3.5C2 1.84 3.34 0.5 5 0.5C6.66 0.5 8 1.84 8 3.5V5" stroke="#868686" stroke-width="1.3"/><rect x="0.7" y="5" width="8.6" height="6.3" rx="1.6" fill="#868686"/></svg>
+                  Links personales que se renuevan solos — no hace falta guardarlos.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rationale">
+        <h3>Cómo funciona la descarga firmada</h3>
+        <p>Los archivos se suben <strong>privados</strong> (hoy todo va con ACL pública — una URL adivinable). Al tocar "Descargar", Nightwing pide a Cyclone un link firmado: se valida que el booking pertenezca al comprador y se emite una URL con vencimiento de 24 h que fuerza la descarga con el nombre original del archivo.</p>
+        <ul>
+          <li><strong>El video no se descarga: se mira.</strong> "Ver online" reproduce con el mismo player HLS de los cursos — nadie baja 400 MB en el bondi, y el archivo queda protegido.</li>
+          <li><strong>El PDF puede verse inline</strong> además de descargarse (fase 3).</li>
+          <li>Si el profesional actualiza el archivo (v2 del ebook), <strong>todos los compradores reciben la versión nueva</strong> — imposible con un link de Drive.</li>
+          <li>Los descargables legacy con link externo muestran su botón "Acceder al contenido" como siempre.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 PAGINA PUBLICA -->
+<section id="venta">
+  <div class="wrap">
+    <div class="fase-head"><span class="fase-num">Nightwing · página de venta</span><span class="fase-effort">Solo posible si el contenido vive en Ágora</span></div>
+    <h2 class="sec-title">"Qué incluye": el comprador ve <strong>exactamente qué está pagando</strong></h2>
+    <p class="sec-sub">Con un link de Drive no sabemos qué hay adentro. Con contenido hosteado, la página pública lista los archivos con tipo y peso — señal de confianza pre-compra — y el post-checkout ofrece la descarga al instante, sin esperar el mail.</p>
+
+    <div class="grid-2">
+      <div class="mock-stage">
+        <span class="mock-label">Mockup · <b>Página pública del descargable</b></span>
+        <div class="phone">
+          <div class="screen">
+            <div class="notch"><i></i></div>
+            <div class="sf-cover"><span class="badge">Descargable</span></div>
+            <div class="sf-main">
+              <div class="t">Ebook · 30 recetas veganas</div>
+              <div class="by">Cocina de Flor · @cocinadeflor</div>
+              <div class="sf-price">$ 8.500 <span>pago único · acceso de por vida</span></div>
+            </div>
+            <div class="inc">
+              <h4>Qué incluye</h4>
+              <div class="inc-row">
+                <div class="fico pdf">PDF</div>
+                <div class="m"><b>Ebook "30 recetas veganas"</b><span>PDF · 68 páginas · 2,4 MB</span></div>
+              </div>
+              <div class="inc-row">
+                <div class="fico audio">MP3</div>
+                <div class="m"><b>Bonus: meditación guiada</b><span>Audio · 12 min</span></div>
+              </div>
+              <div class="inc-row">
+                <div class="fico video">MP4</div>
+                <div class="m"><b>Clase: técnicas básicas</b><span>Video · 24 min · streaming</span></div>
+              </div>
+              <div class="inc-total"><span><b>3</b> archivos</span><span>⚡ <b>Acceso inmediato</b></span><span><b>∞</b> De por vida</span></div>
+            </div>
+            <div style="background:var(--frost-surface)"><div class="sf-cta">Comprar ahora</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mock-stage ghost">
+        <span class="mock-label">Mockup · <b>Splash post-checkout</b></span>
+        <div class="phone">
+          <div class="screen">
+            <div class="notch"><i></i></div>
+            <div style="padding:26px 14px 22px">
+              <div class="splash">
+                <div class="ok-ico">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 5.5" stroke="#10B981" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <h4>¡Compra confirmada!</h4>
+                <p>Tu descargable ya está disponible.<br>Te enviamos la confirmación por email.</p>
+                <span class="btn-dl">
+                  <svg width="9" height="10" viewBox="0 0 10 11" fill="none"><path d="M5 1V7M5 7L2.5 4.5M5 7L7.5 4.5M1.5 9.5H8.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Descargar ahora
+                </span>
+                <span class="sub">o encontralo siempre en tu Actividad</span>
+              </div>
+              <div class="nw-card" style="margin-top:14px">
+                <div class="nw-legacy">
+                  <div class="fico pdf">PDF</div>
+                  <div class="m"><b>30 recetas veganas</b><span>Descargando… 2,4 MB</span></div>
+                  <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#E2E8F0" stroke-width="2.6"/><path d="M10 2A8 8 0 0 1 17.5 7.3" stroke="#0072FB" stroke-width="2.6" stroke-linecap="round"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 SPEC MAP -->
+<section class="alt" id="spec">
+  <div class="wrap">
+    <span class="kicker blue">05 · Qué hay que construir</span>
+    <h2 class="sec-title">Reusamos el stack de cursos; <strong>lo nuevo es poco y acotado</strong></h2>
+    <p class="sec-sub">El trabajo pesado (subidas presignadas, multipart, Drive, R2, HLS) ya está en producción sirviendo Cursos online. El único cambio de fondo es de seguridad: archivos privados + descarga firmada.</p>
+
+    <div class="spec-card">
+      <div class="spec-head"><h3>Mapa de reuso — Cyclone</h3></div>
+      <div class="spec-row">
+        <div class="where">Subida presignada<span>PDF · audio · ZIP</span></div>
+        <div class="how"><code>generatePresignedFileUploadUrl</code> ya existe para cursos — se generaliza el parámetro <code>courseId</code> a <code>assetType + assetId</code>.</div>
+        <div class="state"><span class="pill-state ok">Ya existe</span></div>
+      </div>
+      <div class="spec-row">
+        <div class="where">Video + multipart<span>archivos &gt; 5 GB</span></div>
+        <div class="how"><code>generatePresignedVideoUploadUrl</code> + los endpoints multipart de <code>online_courses.route.ts</code>, tal cual están.</div>
+        <div class="state"><span class="pill-state ok">Ya existe</span></div>
+      </div>
+      <div class="spec-row">
+        <div class="where">Import Google Drive<span>Flash</span></div>
+        <div class="how"><code>useGoogleDrive</code> + <code>driveUpload.ts</code> — OAuth, picker y re-subida a R2 ya resueltos.</div>
+        <div class="state"><span class="pill-state ok">Ya existe</span></div>
+      </div>
+      <div class="spec-row">
+        <div class="where">Storage barato<span>egreso gratis</span></div>
+        <div class="how">R2 vía <code>usesR2Storage</code> — se agrega el tipo <code>DIGITAL_CONTENT_FILES</code> con prefijo <code>digital_contents/:id/files/</code>.</div>
+        <div class="state"><span class="pill-state ok">Ya existe</span></div>
+      </div>
+      <div class="spec-row">
+        <div class="where">Streaming de video<span>fase 3</span></div>
+        <div class="how">Pipeline HLS de cursos + <code>ModernVideoPlayer</code> en Nightwing, sin cambios.</div>
+        <div class="state"><span class="pill-state ok">Ya existe</span></div>
+      </div>
+      <div class="spec-row">
+        <div class="where">Tabla <code>digital_content_files</code><span>N archivos por descargable</span></div>
+        <div class="how"><code>id · digital_content_id · content_url · filename · size · content_type · position · source (upload | external)</code> — el patrón de 3 columnas de <code>CourseClass</code>.</div>
+        <div class="state"><span class="pill-state new">Nuevo</span></div>
+      </div>
+      <div class="spec-row">
+        <div class="where">Descarga firmada<span>el corazón del cambio</span></div>
+        <div class="how"><code>GET /v1/me/digital-contents/:bookingId/files/:fileId/download-url</code> — valida el booking del comprador y emite un presigned GET de 24 h con descarga forzada. <code>getSignedUrl</code> ya está importado; hoy solo se usa para subir.</div>
+        <div class="state"><span class="pill-state new">Nuevo</span></div>
+      </div>
+      <div class="spec-row">
+        <div class="where">Archivos privados<span>seguridad</span></div>
+        <div class="how">Sin ACL pública para contenido pago — el patrón ya existe en <code>uploadFeedbackAudio</code>. El <code>content_url</code> externo legacy queda intacto.</div>
+        <div class="state"><span class="pill-state new">Nuevo</span></div>
+      </div>
+    </div>
+    <p class="spec-note"><strong>Entrega por email: cero cambios.</strong> El template de confirmación ya apunta a <code>/actividades?booking_id=…</code> y nunca expuso el link crudo — la cadena de entrega actual queda como está.</p>
+  </div>
+</section>
+
+<!-- 06 ROADMAP -->
+<section id="roadmap">
+  <div class="wrap">
+    <span class="kicker blue">06 · Plan de entrega</span>
+    <h2 class="sec-title">Tres fases, <strong>cada una shippeable sola</strong></h2>
+    <p class="sec-sub">La fase 1 ya cambia el pitch comercial — "subí tu PDF y vendelo" — sin tocar el flujo de compra existente.</p>
+    <div class="road">
+      <div class="step hot">
+        <span class="tag">Fase 1 · MVP</span>
+        <h3>Subir un archivo + descarga firmada</h3>
+        <ul>
+          <li>Tabla <code>digital_content_files</code> + endpoint presignado generalizado</li>
+          <li>Flash: dropzone en el editor (link externo como opción secundaria)</li>
+          <li>Nightwing: "Descargar" con link firmado de 24 h en /actividades</li>
+          <li>Archivos privados en R2</li>
+        </ul>
+        <span class="pitch">→ "Vendé tu ebook sin saber de Drive"</span>
+        <span class="eff">Esfuerzo: medio — casi todo es reuso</span>
+      </div>
+      <div class="step">
+        <span class="tag">Fase 2 · Packs</span>
+        <h3>Multi-archivo + "Qué incluye"</h3>
+        <ul>
+          <li>Varios archivos por descargable, con orden manual</li>
+          <li>Importar desde Google Drive en el uploader</li>
+          <li>Bloque "Qué incluye" en la página pública</li>
+          <li>"Descargar ahora" en el splash post-checkout</li>
+        </ul>
+        <span class="pitch">→ "Ebook + bonus + audio en un solo producto"</span>
+        <span class="eff">Esfuerzo: bajo — UI sobre la base de F1</span>
+      </div>
+      <div class="step">
+        <span class="tag">Fase 3 · Media</span>
+        <h3>Streaming + biblioteca</h3>
+        <ul>
+          <li>Videos por el pipeline HLS: "Ver online" sin descarga</li>
+          <li>Viewer de PDF inline en /actividades</li>
+          <li>"Mi contenido" en Flash: reusar archivos entre productos</li>
+        </ul>
+        <span class="pitch">→ "Masterclass grabada como descargable premium"</span>
+        <span class="eff">Esfuerzo: medio — el player ya existe</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <div class="big">De "pegá un link" a <strong>vender contenido de verdad.</strong></div>
+      <div class="fine">Propuesta interna · Basada en la exploración de cyclone / flash / nightwing_v2 · Julio 2026</div>
+    </div>
+    <span class="kicker" style="color:rgba(255,255,255,0.5)">www.agora.red</span>
+  </div>
+</footer>
+
+</body>
+</html>
