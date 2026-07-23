@@ -117,6 +117,27 @@ h2 b{font-weight:600}
 .big-ask .t{font-size:clamp(17px,1.9vw,24px);font-weight:300;line-height:1.45;color:rgba(255,255,255,.92)}
 .big-ask .t b{font-weight:600;color:#fff}
 
+/* caso real */
+.case{display:grid;grid-template-columns:1.05fr 1fr;gap:2.6vw;margin-top:30px;align-items:center;max-width:1120px}
+.case .left{display:flex;flex-direction:column;gap:18px}
+.case .promptmini{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-card);box-shadow:var(--sh-md);overflow:hidden}
+.case .promptmini .bar{display:flex;align-items:center;gap:7px;padding:10px 18px;border-bottom:1px solid var(--frost-border-soft)}
+.case .promptmini .bar i{width:9px;height:9px;border-radius:50%;display:block}
+.case .promptmini .bar .lbl{margin-left:8px;font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--frost-faint)}
+.case .promptmini .q{padding:20px 22px;font-size:clamp(15px,1.55vw,19px);font-weight:300;line-height:1.42;color:var(--frost-ink)}
+.case .promptmini .q b{font-weight:600}
+.case .steps{display:flex;flex-direction:column;gap:9px}
+.case .step{display:flex;gap:12px;align-items:flex-start;font-size:14px;font-weight:300;color:var(--frost-ink-soft);line-height:1.4}
+.case .step .n{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--frost-ink);color:#fff;font-size:11.5px;font-weight:600;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.case .step b{font-weight:600;color:var(--frost-ink)}
+.case .right{display:flex;flex-direction:column;gap:14px;align-items:center}
+.deckgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%}
+.deckgrid figure{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:14px;box-shadow:var(--sh-md);overflow:hidden;display:flex;flex-direction:column}
+.deckgrid img{width:100%;height:118px;object-fit:cover;object-position:top;display:block}
+.deckgrid figcaption{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--frost-muted);padding:8px 12px;border-top:1px solid var(--frost-border-soft)}
+.deckgrid .tag-pri{color:var(--frost-primary)}
+.case .meta{font-size:13px;font-weight:500;color:var(--frost-muted);text-align:center}
+.case .meta b{color:var(--frost-ink);font-weight:600}
 .hint{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--frost-faint);z-index:10;animation:fade 2.4s ease-in-out infinite}
 @keyframes fade{0%,100%{opacity:.3}50%{opacity:.9}}
 @media(max-width:760px){.grid2,.cols,.paths{grid-template-columns:1fr}.ba{grid-template-columns:1fr}.ba .mid{transform:rotate(90deg);padding:8px 0}}
@@ -206,9 +227,39 @@ h2 b{font-weight:600}
   <p class="tiny">Sin comandos, sin código — el pedido es la frase.</p>
 </section>
 
-<!-- 5 · ES SEGURO -->
+<!-- 5 · CASO REAL -->
 <section class="slide">
-  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">05 / 07</span></div>
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">05 / 08</span></div>
+  <div class="kicker">Caso real · no es teoría</div>
+  <h2>Le pedimos esto. Salió <b>este deck</b>.</h2>
+  <div class="case">
+    <div class="left">
+      <div class="promptmini">
+        <div class="bar"><i style="background:var(--frost-accent)"></i><i style="background:var(--frost-warning)"></i><i style="background:var(--frost-success)"></i><span class="lbl">El pedido, tal cual</span></div>
+        <div class="q">“Armá una presentación de <b>Fidelización</b> con capturas desktop y mobile: cómo lo ve el profesional, cómo lo ve el cliente, el checkout y el mail.”</div>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="n">1</span><span>Se <b>logueó</b> en el panel del profesional y en el negocio como cliente</span></div>
+        <div class="step"><span class="n">2</span><span>Recorrió los <b>dos lados</b> y sacó <b>14 capturas reales</b> — desktop y mobile</span></div>
+        <div class="step"><span class="n">3</span><span>Canjeó un premio <b>de verdad</b> para mostrar la billetera funcionando</span></div>
+        <div class="step"><span class="n">4</span><span>Renderizó el <b>email</b> de recompensa y <b>armó el deck</b> con marca Ágora</span></div>
+      </div>
+    </div>
+    <div class="right">
+      <div class="deckgrid">
+        <figure><img src="assets/ex-pro.png" alt="Panel del profesional"><figcaption class="tag-pri">El profesional</figcaption></figure>
+        <figure><img src="assets/ex-banner.png" alt="El Club en el storefront"><figcaption class="tag-pri">El cliente</figcaption></figure>
+        <figure><img src="assets/ex-wallet.png" alt="Billetera del cliente"><figcaption class="tag-pri">La billetera</figcaption></figure>
+        <figure><img src="assets/ex-mail.png" alt="Email de recompensa"><figcaption class="tag-pri">El mail</figcaption></figure>
+      </div>
+      <p class="meta">Un deck de <b>8 slides</b> · <b>14 capturas reales</b> de producción · armado solo</p>
+    </div>
+  </div>
+</section>
+
+<!-- 6 · ES SEGURO -->
+<section class="slide">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">06 / 08</span></div>
   <div class="kicker">La pregunta obvia</div>
   <h2>“¿Y esto puede entrar a <b>mis cuentas</b>?” — No. <b>Por diseño.</b></h2>
   <div class="cols">
@@ -233,9 +284,9 @@ h2 b{font-weight:600}
   </div>
 </section>
 
-<!-- 6 · ACTIVALO HOY -->
+<!-- 7 · ACTIVALO HOY -->
 <section class="slide">
-  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">06 / 07</span></div>
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">07 / 08</span></div>
   <div class="kicker">Activalo hoy · salió hace 10 días</div>
   <h2>Ya lo tenés <b>instalado</b>.</h2>
   <div class="paths">
@@ -259,9 +310,9 @@ h2 b{font-weight:600}
   <span class="note-pill">Dato: la misma semana que Claude sumó su navegador, <b>OpenAI dio de baja el suyo</b>. Esta capacidad se está consolidando justo donde ya trabajamos.</span>
 </section>
 
-<!-- 7 · CIERRE -->
+<!-- 8 · CIERRE -->
 <section class="slide ink">
-  <div class="chrome"><span class="wordmark" style="color:#fff"><span class="dot"></span>Ágora</span><span class="num">07 / 07</span></div>
+  <div class="chrome"><span class="wordmark" style="color:#fff"><span class="dot"></span>Ágora</span><span class="num">08 / 08</span></div>
   <div class="kicker">Ahora ustedes</div>
   <h2>Tu primer pedido, <b style="color:#fff">ahora mismo</b>.</h2>
   <div class="big-ask">
