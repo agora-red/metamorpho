@@ -1,1 +1,2 @@
 {"ts": "2026-07-22T00:00:00Z", "instruction": "self-review: balancear cols slide 5 (3 vs 4 items)", "diff_summary": "agregado 4to item col derecha: todo pasa a la vista", "source": "self-review"}
+{"ts": "2026-07-23T00:00:00Z", "instruction": "borrar card Lautaro (ya no esta en el equipo); reemplazar por ejemplo de nuestro lado", "diff_summary": "card 4: Lautaro·Growth -> Nosotros·Agora, reserva de turno como cliente e2e"}
