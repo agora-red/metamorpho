@@ -1,0 +1,2 @@
+{"ts": "2026-08-18T15:05:00Z", "instruction": "self-review", "diff_summary": "chip PANEL/TU PÁGINA se clasificaba por eyebrow y marcaba mal el paso 01 (pro.agora.red matcheaba 'agora.red') → clasificación por número de paso", "source": "self-review"}
+{"ts": "2026-08-18T15:12:00Z", "instruction": "self-review", "diff_summary": "loading=lazy dejaba las figuras sin cargar en el render de revisión (y de paso en lectores rápidos) → imágenes eager", "source": "self-review"}

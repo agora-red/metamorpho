@@ -1,8 +1,18 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
   "version": 1,
-  "updated_at": "2026-07-22",
+  "updated_at": "2026-08-18",
   "outputs": [
+    {
+      "type": "wiki",
+      "typeLabel": "Wiki",
+      "title": "Comunidad · De cero a comunidad viva",
+      "description": "El recorrido completo de Comunidad en producción: activar el add-on, crearla, el primer contenido, la puerta y la vida adentro — hasta la baja.",
+      "detail": "37 pasos · 40 capturas · panel + miembro con el corredor",
+      "date": "AGO 2026",
+      "href": "./recorrido-comunidad-2026-08/index.html",
+      "slug": "recorrido-comunidad-2026-08"
+    },
     {
       "type": "deck",
       "typeLabel": "Deck",

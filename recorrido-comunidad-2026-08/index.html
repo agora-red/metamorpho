@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comunidad · De cero a comunidad viva — Recorrido completo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --frost-primary: #0072FB; --frost-primary-hover: #005CD4; --frost-primary-soft: #EEF6FF;
+  --frost-primary-wash: rgba(0,114,251,0.08);
+  --frost-accent: #FF4658; --frost-success: #10B981; --frost-warning: #F59E0B;
+  --frost-ink: #0F172A; --frost-ink-soft: #3A3A3A; --frost-muted: #868686; --frost-faint: #B5B5B5;
+  --frost-surface: #FFFFFF; --frost-surface-muted: #EFF3F9; --frost-border: #E2E8F0; --frost-border-soft: #F2F2F2;
+  --r-sm: 6px; --r-item: 10px; --r-btn: 12px; --r-card: 20px; --r-shell: 28px; --r-chip: 999px;
+  --sh-xs: 0 1px 2px rgba(15,23,42,0.04); --sh-sm: 0 4px 12px -4px rgba(15,23,42,0.10);
+  --sh-md: 0 10px 30px -12px rgba(15,23,42,0.15);
+  --sans: 'Montserrat', system-ui, -apple-system, sans-serif;
+  --store: #8A5A2E;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--frost-surface-muted); color: var(--frost-ink);
+  font-family: var(--sans); font-size: 15.5px; line-height: 1.7; font-weight: 300;
+  font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+strong { font-weight: 600; color: var(--frost-ink); }
+em { font-style: normal; font-weight: 500; }
+
+header.chrome {
+  position: sticky; top: 0; z-index: 40; background: rgba(239,243,249,0.85);
+  backdrop-filter: blur(10px); border-bottom: 1px solid var(--frost-border);
+}
+header.chrome .row { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
+header.chrome .tag {
+  font-size: 10.5px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--frost-muted);
+}
+
+.hero { padding: clamp(56px, 9vw, 104px) 0 clamp(28px, 4vw, 44px); }
+.hero .kicker { color: var(--frost-primary); }
+.hero h1 {
+  margin: 14px 0 0; font-size: clamp(34px, 5.6vw, 56px); line-height: 1.04;
+  font-weight: 200; letter-spacing: -0.02em;
+}
+.hero h1 strong { font-weight: 500; }
+.hero .lede { margin-top: 20px; max-width: 62ch; font-size: clamp(15.5px, 1.9vw, 17.5px); color: var(--frost-ink-soft); }
+.stamp { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+.stamp span {
+  font-size: 11px; font-weight: 500; border: 1px solid var(--frost-border);
+  background: var(--frost-surface); padding: 6px 12px; border-radius: var(--r-chip); color: var(--frost-muted);
+}
+.stamp span.hot { color: var(--frost-primary); border-color: rgba(0,114,251,0.35); background: var(--frost-primary-soft); }
+
+.kicker {
+  margin: 0; font-size: 10.5px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.2em; color: var(--frost-muted);
+}
+.lado { display: inline-block; margin-right: 8px; padding: 2px 7px; border-radius: var(--r-sm); font-size: 9.5px; letter-spacing: 0.14em; }
+.lado.panel { color: var(--frost-primary); background: var(--frost-primary-wash); }
+.lado.store { color: var(--store); background: rgba(138,90,46,0.10); }
+
+section.chapter { padding: clamp(48px, 7vw, 76px) 0 8px; }
+section.chapter h2 {
+  margin: 10px 0 0; font-size: clamp(24px, 3.6vw, 34px); line-height: 1.12;
+  font-weight: 300; letter-spacing: -0.015em;
+}
+section.chapter h2 strong { font-weight: 500; }
+section.chapter p:not(.kicker) { margin: 14px 0 0; max-width: 62ch; color: var(--frost-ink-soft); }
+
+section.step { padding: clamp(30px, 4.5vw, 46px) 0; border-bottom: 1px solid var(--frost-border-soft); }
+section.step:last-of-type { border-bottom: 0; }
+.stephead { display: flex; align-items: flex-start; gap: 18px; }
+.num {
+  font-size: clamp(26px, 3vw, 34px); font-weight: 200; color: var(--frost-faint);
+  line-height: 1; padding-top: 2px; min-width: 52px;
+}
+section.step h3 {
+  margin: 4px 0 0; font-size: clamp(19px, 2.4vw, 24px); font-weight: 500; letter-spacing: -0.01em; line-height: 1.25;
+}
+section.step .body { margin: 14px 0 0 70px; max-width: 64ch; color: var(--frost-ink-soft); }
+section.step .body p + p { margin-top: 10px; }
+@media (max-width: 720px) {
+  .stephead { gap: 12px; } .num { min-width: 38px; }
+  section.step .body { margin-left: 0; }
+}
+
+figure { margin: 22px 0 0; }
+figure img {
+  display: block; width: 100%; height: auto; border-radius: var(--r-card);
+  border: 1px solid var(--frost-border); background: var(--frost-surface); box-shadow: var(--sh-sm);
+}
+figcaption, .loosecap { margin-top: 10px; font-size: 12.5px; font-weight: 500; color: var(--frost-muted); max-width: 64ch; }
+figure.duo { display: grid; grid-template-columns: 1fr; gap: 18px; }
+@media (min-width: 840px) { figure.duo { grid-template-columns: 1fr 1fr; } figure.duo figcaption { grid-column: 1 / -1; } }
+figure.phone img, figure.phones img { max-width: 340px; }
+figure.phones { display: grid; grid-template-columns: 1fr; gap: 18px; }
+@media (min-width: 760px) { figure.phones { grid-template-columns: repeat(2, minmax(0, 340px)); } figure.phones figcaption { grid-column: 1 / -1; } }
+
+.close { border-top: 1px solid var(--frost-border); margin-top: 40px; padding: clamp(40px, 6vw, 60px) 0 20px; }
+.close ul { margin: 20px 0 0; padding: 0; list-style: none; display: grid; gap: 12px; }
+.close li { position: relative; padding-left: 22px; color: var(--frost-ink-soft); max-width: 66ch; }
+.close li::before { content: ""; position: absolute; left: 0; top: 0.66em; width: 10px; height: 2px; background: var(--frost-primary); border-radius: 1px; }
+
+footer { padding: 30px 0 80px; color: var(--frost-muted); font-size: 12.5px; font-weight: 500; max-width: 74ch; }
+:focus-visible { outline: 2px solid var(--frost-primary); outline-offset: 3px; border-radius: 4px; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<header class="chrome"><div class="wrap row">
+  <svg width="132" height="31" viewBox="0 0 153 36" xmlns="http://www.w3.org/2000/svg" aria-label="Ágora">
+  <path d="M41.3822 30.3938L38.187 35.7712L3.11719 35.8491L17.5348 10.9106L20.6466 16.2974L15.7314 24.9347L12.625 30.3938H41.3822Z" fill="#E2E8F0"/>
+  <path d="M17.5351 10.9106L20.6469 16.2974L16.7342 23.0921L12.1689 20.1848L17.5351 10.9106Z" fill="url(#p0)" fill-opacity="0.7"/>
+  <path d="M20.6467 16.2973L17.5349 10.9106L3.11731 35.8491L0 30.3938L17.5349 0L31.8745 24.9385H25.6399L20.6467 16.2973Z" fill="#0072FF"/>
+  <path d="M31.8543 24.9244L25.6302 24.9316L21.7061 18.1387L26.5114 15.6305L31.8543 24.9244Z" fill="url(#p1)" fill-opacity="0.7"/>
+  <path d="M23.8473 0L41.3822 30.3938H12.625L15.7314 24.9346L15.7384 24.9385H25.6398H31.8744L17.5348 0H23.8473Z" fill="#FF4658"/>
+  <path d="M12.625 30.3937L15.7289 24.9387L23.7202 24.9194L23.4706 30.3746L12.625 30.3937Z" fill="url(#p2)" fill-opacity="0.7"/>
+  <path d="M76.7893 7.41158V4.76367H69.5647V7.41158H76.7893ZM72.2126 26.6334C74.4029 26.6334 76.3316 25.7835 77.6065 24.2797V26.3065H81.2351V10.1249H77.6065V12.1844C76.3316 10.6806 74.4029 9.79797 72.2126 9.79797C67.7668 9.79797 64.7266 13.5573 64.7266 18.232C64.7266 22.8741 67.7668 26.6334 72.2126 26.6334ZM73.1279 23.1356C70.382 23.1356 68.4206 21.0761 68.4206 18.232C68.4206 15.388 70.382 13.2958 73.1279 13.2958C75.7105 13.2958 77.6065 15.388 77.6065 18.232C77.6065 21.1088 75.6778 23.1356 73.1279 23.1356ZM92.2844 31.112C96.9264 31.112 100.718 28.2679 100.718 22.6125V10.1249H97.2533V12.5439C96.4034 10.9421 94.2131 9.79797 91.7614 9.79797C87.2828 9.79797 84.3407 13.2958 84.3407 17.6436C84.3407 21.9914 87.2828 25.4566 91.7614 25.4566C94.7035 25.4566 96.4361 23.9855 97.0899 22.6779V22.8087C97.0899 26.1104 95.39 28.3333 91.9248 28.3333C90.2576 28.3333 88.3616 27.7776 87.0867 26.6661L85.681 28.9544C87.1847 30.2947 89.5058 31.112 92.2844 31.112ZM92.5459 22.2856C89.9961 22.2856 88.0347 20.3242 88.0347 17.6436C88.0347 14.963 89.9961 12.9689 92.5459 12.9689C95.0958 12.9689 97.0899 14.9303 97.0899 17.5129C97.0899 20.3242 95.1612 22.2856 92.5459 22.2856ZM112.422 26.6334C117.194 26.6334 121.019 22.9067 121.019 18.232C121.019 13.5247 117.194 9.79797 112.422 9.79797C107.649 9.79797 103.824 13.5247 103.824 18.232C103.824 22.9067 107.649 26.6334 112.422 26.6334ZM112.422 23.1356C109.643 23.1356 107.518 21.0434 107.518 18.232C107.518 15.388 109.643 13.2958 112.422 13.2958C115.2 13.2958 117.325 15.388 117.325 18.232C117.325 21.0434 115.2 23.1356 112.422 23.1356ZM127.753 26.3065V19.7031C127.753 15.4534 130.042 13.7535 133.605 13.7535V9.79797C130.14 9.79797 128.374 11.694 127.753 13.3285V10.1249H124.125V26.3065H127.753ZM143.118 26.6334C145.308 26.6334 147.237 25.7835 148.512 24.2797V26.3065H152.14V10.1249H148.512V12.1844C147.237 10.6806 145.308 9.79797 143.118 9.79797C138.672 9.79797 135.632 13.5573 135.632 18.232C135.632 22.8741 138.672 26.6334 143.118 26.6334ZM144.033 23.1356C141.287 23.1356 139.326 21.0761 139.326 18.232C139.326 15.388 141.287 13.2958 144.033 13.2958C146.616 13.2958 148.512 15.388 148.512 18.232C148.512 21.1088 146.583 23.1356 144.033 23.1356Z" fill="#0F172A"/>
+  <rect x="52.7876" y="3.5874" width="0.683334" height="28.5292" fill="#E2E8F0"/>
+  <defs>
+    <linearGradient id="p0" x1="18.8455" y1="15.9076" x2="12.5252" y2="18.5424" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
+    <linearGradient id="p1" x1="26.8652" y1="23.5719" x2="27.7524" y2="16.7522" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
+    <linearGradient id="p2" x1="16.3401" y1="26.6997" x2="21.8393" y2="30.8946" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
+  </defs>
+</svg>
+  <span class="tag">Comunidad · Recorrido</span>
+</div></header>
+
+<div class="wrap">
+  <section class="hero">
+    <p class="kicker" style="color: var(--frost-primary)">Comunidad · el recorrido completo, paso a paso</p>
+    <h1>De cero a <strong>comunidad viva</strong>.</h1>
+    <p class="lede">Reseteamos la comunidad del negocio de prueba y recorrimos el camino real en producción, sin saltear una sola pantalla: activar el add-on, crearla, publicarla, el primer contenido, la puerta pública y la vida adentro — con una alumna real entrando, escribiendo, recibiendo respuesta y saliendo.</p>
+    <div class="stamp">
+      <span>37 pasos secuenciales</span>
+      <span>páginas completas, sin recortes</span>
+      <span>centrodepelo · demo en prod</span>
+      <span>14 · 08 → 18 · 08 · 2026</span>
+      <span class="hot">miembro con el corredor · 18 · 08</span>
+    </div>
+  </section>
+
+<section class="chapter"><p class="kicker">Capítulo 1 · En el panel</p><h2>Activar el add-on</h2><p>Comunidad es un add-on del plan. El camino arranca en Tu plan, con una activación guiada que primero te muestra qué estás prendiendo.</p></section>
+
+<section class="step" id="paso-01"><div class="stephead"><span class="num">01</span><div><p class="kicker"><span class="lado panel">PANEL</span> pro.agora.red · Tu plan</p><h3>Todo empieza en Tu plan</h3></div></div><div class="body"><p>Entre los add-ons del plan aparece <strong>Comunidad · no activa</strong>, con una promesa concreta: publicaciones, encuentros y recursos en un espacio privado.</p>
+<p>Detalle a propósito: <strong>Comunidad todavía no existe en el menú lateral</strong>. Aparece recién cuando el add-on está activo.</p></div><figure><img src="assets/paso-01.jpg" alt=""><figcaption>La página Tu plan completa: el add-on de Comunidad espera abajo, junto a los demás complementos.</figcaption></figure></section>
+
+<section class="step" id="paso-02"><div class="stephead"><span class="num">02</span><div><p class="kicker"><span class="lado panel">PANEL</span> Activación guiada · 1 de 5</p><h3>Qué estás prendiendo: publicaciones</h3></div></div><div class="body"><p>El botón no activa nada todavía: abre un recorrido de cinco pantallas que explica el modelo antes de cobrar un peso.</p>
+<p>Primera: <strong>un solo feed</strong> — publicaciones, anuncios destacados, imágenes y PDF.</p></div><figure><img src="assets/paso-02.jpg" alt=""><figcaption>El launcher a pantalla completa, con el índice de los cinco temas a la izquierda.</figcaption></figure></section>
+
+<section class="step" id="paso-03"><div class="stephead"><span class="num">03</span><div><p class="kicker"><span class="lado panel">PANEL</span> Activación guiada · 2 de 5</p><h3>Accesos: quién entra y cómo</h3></div></div><div class="body"><p>Gratis o pago mensual, secciones por grupo, y acceso directo para personas puntuales. La decisión de negocio queda presentada antes de tocar configuración.</p></div><figure><img src="assets/paso-03.jpg" alt=""><figcaption>Paso 2: los accesos, con las tres ideas clave en tarjetas.</figcaption></figure></section>
+
+<section class="step" id="paso-04"><div class="stephead"><span class="num">04</span><div><p class="kicker"><span class="lado panel">PANEL</span> Activación guiada · 3 de 5</p><h3>Encuentros con fecha fija</h3></div></div><div class="body"><p>Online o presenciales, visibles según el acceso de cada grupo. Lo que después va a ser la serie semanal de consultas ya está contado acá.</p></div><figure><img src="assets/paso-04.jpg" alt=""><figcaption>Paso 3: encuentros.</figcaption></figure></section>
+
+<section class="step" id="paso-05"><div class="stephead"><span class="num">05</span><div><p class="kicker"><span class="lado panel">PANEL</span> Activación guiada · 4 de 5</p><h3>Cursos y capacitaciones, conectados</h3></div></div><div class="body"><p>Quien compra un curso puede entrar automático; un acceso puede incluir un curso; o el curso puede conseguirse <strong>solo</strong> siendo miembro. Las tres variantes, explicadas de una.</p></div><figure><img src="assets/paso-05.jpg" alt=""><figcaption>Paso 4: la conexión con el catálogo existente.</figcaption></figure></section>
+
+<section class="step" id="paso-06"><div class="stephead"><span class="num">06</span><div><p class="kicker"><span class="lado panel">PANEL</span> Activación guiada · 5 de 5</p><h3>El precio, recién al final</h3></div></div><div class="body"><p>Última pantalla: conversaciones con contexto — y abajo del botón, lo único que importa firmar: <strong>$ 5.000 por mes, sumado a tu plan, desactivable cuando quieras</strong>.</p>
+<p>Recién acá aparece <strong>Activar Comunidad</strong>.</p></div><figure><img src="assets/paso-06.jpg" alt=""><figcaption>Paso 5 con el precio y el CTA definitivo. Activar marca el add-on en el plan y te lleva al centro.</figcaption></figure></section>
+
+<section class="chapter"><p class="kicker">Capítulo 2 · En el panel</p><h2>Crear y abrir</h2><p>Activado el add-on, crear la comunidad son tres decisiones en fila — nombre, acceso, publicar — y ninguna requiere entender el modelo entero de antemano.</p></section>
+
+<section class="step" id="paso-07"><div class="stephead"><span class="num">07</span><div><p class="kicker"><span class="lado panel">PANEL</span> Configuración inicial · 1 de 3</p><h3>Elegí el nombre</h3></div></div><div class="body"><p>Aterrizás en Comunidad con el chip <strong>add-on activado</strong> y un wizard de tres pasos. El nombre ya viene propuesto con el del negocio; se puede cambiar cuando quieras.</p></div><figure><img src="assets/paso-07.jpg" alt=""><figcaption>Paso Nombre: input precargado con «Comunidad de Centro de Pelo» y un solo botón.</figcaption></figure></section>
+
+<section class="step" id="paso-08"><div class="stephead"><span class="num">08</span><div><p class="kicker"><span class="lado panel">PANEL</span> Configuración inicial · 2 de 3</p><h3>Prepará el primer acceso</h3></div></div><div class="body"><p>Tres decisiones simples en un modal: <strong>cómo se llama el grupo</strong> (Alumnos), <strong>cómo entran</strong> (gratis o mensual) y <strong>qué ven</strong> (Novedades, la puerta de entrada).</p>
+<p>Todo se puede cambiar más adelante; nada de esto bloquea el arranque.</p></div><figure><img src="assets/paso-08.jpg" alt=""><figcaption>El modal del primer acceso sobre el paso 2, con el toast «Nombre guardado» abajo.</figcaption></figure></section>
+
+<section class="step" id="paso-09"><div class="stephead"><span class="num">09</span><div><p class="kicker"><span class="lado panel">PANEL</span> Configuración inicial · 3 de 3</p><h3>Ya podés abrir tu comunidad</h3></div></div><div class="body"><p>Nombre ✓, acceso ✓. El tercer paso es un solo botón: <strong>Publicar comunidad</strong>. Al publicarla obtenés el enlace para compartir.</p></div><figure><img src="assets/paso-09.jpg" alt=""><figcaption>La pantalla final del wizard con el toast «Acceso listo».</figcaption></figure></section>
+
+<section class="step" id="paso-10"><div class="stephead"><span class="num">10</span><div><p class="kicker"><span class="lado panel">PANEL</span> Comunidad publicada</p><h3>En vivo, con el link listo</h3></div></div><div class="body"><p>Publicada: la barra <strong>EN VIVO</strong> queda en una sola línea con el link real (agora.red/centrodepelo/comunidad) y las acciones — <strong>Copiar, WhatsApp, Ver como miembro</strong>. El Inicio estrena su forma definitiva: el feed a la izquierda, y a la derecha el rail con el próximo encuentro, la semana en números, los <strong>Primeros pasos</strong> que se tachan solos y <strong>Tu puerta</strong>. Y Comunidad ya aparece en el menú lateral.</p></div><figure><img src="assets/paso-10.jpg" alt=""><figcaption>El centro publicado: el feed esperando la primera novedad y la guía tachando sola lo que ya pasó.</figcaption></figure></section>
+
+<section class="chapter"><p class="kicker">Capítulo 3 · En el panel</p><h2>El primer contenido</h2><p>El checklist guía las dos primeras piezas: una novedad de bienvenida con foto y una serie semanal de encuentros — con su primera excepción incluida.</p></section>
+
+<section class="step" id="paso-11"><div class="stephead"><span class="num">11</span><div><p class="kicker"><span class="lado panel">PANEL</span> Nueva publicación</p><h3>El composer, vacío</h3></div></div><div class="body"><p>«Escribir la primera» abre el composer a pantalla completa: <strong>Publicación o Anuncio</strong>, a quién le llega (toda tu comunidad o una sección), editor con formato, y adjuntos — hasta 4 imágenes y PDF.</p></div><figure><img src="assets/paso-11.jpg" alt=""><figcaption>Nueva publicación en cero: 0/5000 caracteres, 0/4 adjuntos, Publicar deshabilitado.</figcaption></figure></section>
+
+<section class="step" id="paso-12"><div class="stephead"><span class="num">12</span><div><p class="kicker"><span class="lado panel">PANEL</span> Nueva publicación</p><h3>La bienvenida, escrita y con foto</h3></div></div><div class="body"><p>Texto de bienvenida y una placa con la fórmula del día adjunta. El contador marca 282/5000, el adjunto 1/4, y <strong>Publicar se habilita</strong>.</p></div><figure><img src="assets/paso-12.jpg" alt=""><figcaption>El mismo composer, lleno: así se ve un post listo para salir.</figcaption></figure></section>
+
+<section class="step" id="paso-13"><div class="stephead"><span class="num">13</span><div><p class="kicker"><span class="lado panel">PANEL</span> Inicio</p><h3>Primera novedad publicada</h3></div></div><div class="body"><p>El post queda arriba con su placa — y el sistema toma nota: la métrica pasa a <strong>1 publicación</strong> y, con las primeras piezas hechas, la guía de primeros pasos se retira sola. Sobre la imagen aparece el marcador para guardarla en <strong>Recursos</strong>, y arriba del feed ya vive la tira del composer para la próxima novedad.</p></div><figure><img src="assets/paso-13.jpg" alt=""><figcaption>El Inicio después de publicar: la bienvenida con su fórmula, y el composer a un click.</figcaption></figure></section>
+
+<section class="step" id="paso-14"><div class="stephead"><span class="num">14</span><div><p class="kicker"><span class="lado panel">PANEL</span> Encuentros · Nuevo encuentro</p><h3>La serie semanal, en un form</h3></div></div><div class="body"><p>«Agendá el primer encuentro» abre el form: título, quién puede verlo, qué día, de 19:00 a 20:00, online con link de Meet y — la clave — <strong>se repite todas las semanas</strong>. Cupo opcional; hasta cuándo se repite, también.</p></div><figure><img src="assets/paso-14.jpg" alt=""><figcaption>Nuevo encuentro completo: «Consultas en vivo», jueves, semanal, con el link cargado.</figcaption></figure></section>
+
+<section class="step" id="paso-15"><div class="stephead"><span class="num">15</span><div><p class="kicker"><span class="lado panel">PANEL</span> Encuentros</p><h3>Una serie viva, no una lista de fechas</h3></div></div><div class="body"><p>Queda una sola tarjeta con el próximo (JUE 20 AGO), 19:00–20:00 hs, Online · Abrir link · Todas las semanas, y quién lo ve (Alumnos) — con las tres acciones separadas a propósito en el menú ⋮: <strong>Editar, Cancelar esta fecha, Cancelar la serie</strong> — porque cancelar una fecha y matar la serie son decisiones distintas. Al lado, el calendario del mes marca con un punto cada fecha real.</p></div><figure><img src="assets/paso-15.jpg" alt=""><figcaption>La serie recién creada: lista y calendario conviven — en desktop el toggle ya no hace falta.</figcaption></figure></section>
+
+<section class="step" id="paso-16"><div class="stephead"><span class="num">16</span><div><p class="kicker"><span class="lado panel">PANEL</span> Encuentros · Cancelar esta fecha</p><h3>Cancelar una fecha sin tocar la serie</h3></div></div><div class="body"><p>«Cancelar esta fecha» pregunta clarito: solo esa fecha, la serie sigue como siempre. Confirmado: el próximo salta al 27, abajo queda el registro — <strong>Fechas canceladas: 20 ago, tachado</strong> — y el punto del 20 desaparece del calendario. Los miembros no van a recibir recordatorio de esa fecha.</p></div><figure><img src="assets/paso-16.jpg" alt=""><figcaption>La serie siguió: próximo JUE 27, la excepción documentada y el mes al día.</figcaption></figure></section>
+
+<section class="step" id="paso-17"><div class="stephead"><span class="num">17</span><div><p class="kicker"><span class="lado panel">PANEL</span> Encuentros · en el teléfono</p><h3>El calendario, cuando la pantalla achica</h3></div></div><div class="body"><p>En desktop el calendario ya no es una vista aparte: acompaña siempre a la lista. Donde sí vuelve el conmutador <strong>Lista / Calendario</strong> es en el teléfono — en pantalla chica conviven mal, así que elegís una por vez.</p></div><figure class="phone"><img src="assets/paso-17.jpg" alt=""><figcaption>La vista Calendario en mobile, con sus puntos por fecha.</figcaption></figure></section>
+
+<section class="step" id="paso-18"><div class="stephead"><span class="num">18</span><div><p class="kicker"><span class="lado panel">PANEL</span> Recursos</p><h3>La biblioteca que se arma sola</h3></div></div><div class="body"><p>La placa de la fórmula, guardada desde el post con un click en el marcador, aparece en <strong>Recursos</strong>: una grilla de miniaturas — los PDF e imágenes que decidiste que tu gente encuentre <strong>sin buscar entre publicaciones</strong> — con una celda punteada que invita a guardar la próxima.</p></div><figure><img src="assets/paso-18.jpg" alt=""><figcaption>Recursos con su primer archivo: la fórmula a mano para quien tenga acceso al espacio.</figcaption></figure></section>
+
+<section class="chapter"><p class="kicker">Capítulo 4 · En el panel</p><h2>La puerta y las secciones</h2><p>Antes de invitar gente: una sección donde los miembros puedan escribir, y la puerta pública con portada, presentación y reglas.</p></section>
+
+<section class="step" id="paso-19"><div class="stephead"><span class="num">19</span><div><p class="kicker"><span class="lado panel">PANEL</span> Ajustes · Secciones</p><h3>Una sección donde escriben ellos</h3></div></div><div class="body"><p>El form de sección pide tres cosas: nombre (Consultas), quién puede verla (Alumnos) y qué ve quien no tiene acceso — con <strong>candado</strong> (ve que existe y qué necesita) u <strong>oculta</strong> (no sabe que existe). Creada, aparece en el panel de Secciones con su estado y su visibilidad, al lado de Novedades.</p></div><figure><img src="assets/paso-19.jpg" alt=""><figcaption>Secciones después de crear Consultas: cada espacio dice quién lo ve y cómo se muestra.</figcaption></figure></section>
+
+<section class="step" id="paso-20"><div class="stephead"><span class="num">20</span><div><p class="kicker"><span class="lado panel">PANEL</span> Ajustes · Tu puerta y Reglas</p><h3>La puerta y las reglas, cada una en su panel</h3></div></div><div class="body"><p>Ajustes navega por secciones — <strong>Accesos, Secciones, Tu puerta, Reglas y Visibilidad y baja</strong> — con un panel por vez. <strong>Tu puerta</strong> concentra portada, nombre y presentación, con el «Ver cómo se ve» que abre la página pública tal cual la ve un visitante; las <strong>Reglas</strong> de convivencia vienen propuestas por defecto y se editan ahí mismo.</p></div><figure class="duo"><img src="assets/paso-20-a.jpg" alt=""><img src="assets/paso-20-b.jpg" alt=""></figure>
+<p class="loosecap">Izquierda: Tu puerta. Derecha: las reglas que el miembro acepta al entrar.</p></section>
+
+<section class="chapter"><p class="kicker">Capítulo 5 · En tu página</p><h2>Entrar como tu gente</h2><p>El mismo recorrido, ahora del otro lado: la puerta pública, el alta gratis, las reglas y la vida adentro — con Julieta, una alumna real de prueba.</p></section>
+
+<section class="step" id="paso-21"><div class="stephead"><span class="num">21</span><div><p class="kicker"><span class="lado store">TU PÁGINA</span> agora.red/centrodepelo/comunidad</p><h3>La puerta, de visitante</h3></div></div><div class="body"><p>La portada corona la página — y todo respira la paleta del negocio: el <strong>ambiente lo pone la marca de cada profesional</strong>. Abajo: <strong>comunidad privada</strong>, la presentación escrita en Ajustes, señales de actividad reales — <em>1 publicación en el último mes · Encuentros programados</em> — y la oferta: <strong>Alumnos, gratis</strong>, con lo que incluye adentro (Novedades y Consultas). En el navbar del negocio ya vive el chip Comunidad.</p></div><figure><img src="assets/paso-21.jpg" alt=""><figcaption>Lo primero que ve alguien sin cuenta: crear cuenta y unirse, o iniciar sesión.</figcaption></figure></section>
+
+<section class="step" id="paso-22"><div class="stephead"><span class="num">22</span><div><p class="kicker"><span class="lado store">TU PÁGINA</span> La puerta · logueada</p><h3>Con sesión, un solo botón</h3></div></div><div class="body"><p>Julieta inicia sesión y la puerta cambia a lo esencial: <strong>Unirme gratis</strong>. Sin checkout, sin fricción — el acceso es gratuito y el sistema lo dice así.</p></div><figure><img src="assets/paso-22.jpg" alt=""><figcaption>La misma puerta con la sesión de Julieta y el CTA directo.</figcaption></figure></section>
+
+<section class="step" id="paso-23"><div class="stephead"><span class="num">23</span><div><p class="kicker"><span class="lado store">TU PÁGINA</span> Primera entrada</p><h3>Las reglas, antes de pasar</h3></div></div><div class="body"><p>Al unirse, una sola pantalla: <strong>las reglas de la casa</strong>. Aceptar y entrar, o «primero quiero leer un poco» — se puede mirar sin aceptar, pero <strong>para publicar o responder hace falta aceptarlas</strong>. Solo la primera vez. Y al moderar, el profesional puede señalar la regla en vez de discutir.</p></div><figure><img src="assets/paso-23.jpg" alt=""><figcaption>El gate de reglas de Julieta, con el corredor y la comunidad ya visibles detrás.</figcaption></figure></section>
+
+<section class="step" id="paso-24"><div class="stephead"><span class="num">24</span><div><p class="kicker"><span class="lado store">TU PÁGINA</span> Adentro</p><h3>La home del miembro</h3></div></div><div class="body"><p>A la izquierda, <strong>el corredor</strong>: Al día (Novedades), Tus salas (Consultas), La comunidad (Encuentros y Recursos) y tu perfil al final. Al centro, la bienvenida con su foto. A la derecha, el riel: <strong>próximo encuentro</strong> (jue 27, 19:00, «Entrar al encuentro»), <strong>recursos</strong>, la presentación y las reglas — todo teñido con el ambiente del negocio.</p></div><figure><img src="assets/paso-24.jpg" alt=""><figcaption>La primera pantalla de Julieta adentro: el corredor a la izquierda y todo lo importante a un click.</figcaption></figure></section>
+
+<section class="step" id="paso-25"><div class="stephead"><span class="num">25</span><div><p class="kicker"><span class="lado store">TU PÁGINA</span> Sección Consultas</p><h3>El composer del miembro</h3></div></div><div class="body"><p>En Consultas los miembros publican. El composer dice quién lo va a ver — <strong>«lo ven los miembros de este espacio»</strong> — y acepta <strong>+Foto y +PDF</strong>. Julieta escribe su consulta real y adjunta la paleta de referencia de una clienta.</p></div><figure><img src="assets/paso-25.jpg" alt=""><figcaption>El composer de Julieta, lleno y con la foto lista para salir.</figcaption></figure></section>
+
+<section class="step" id="paso-26"><div class="stephead"><span class="num">26</span><div><p class="kicker"><span class="lado store">TU PÁGINA</span> Sección Consultas</p><h3>Publicado: la consulta quedó en su lugar</h3></div></div><div class="body"><p>El post de Julieta queda en Consultas, con su imagen y su pregunta técnica — <strong>en el espacio del tema, no perdido en un chat</strong>.</p></div><figure><img src="assets/paso-26.jpg" alt=""><figcaption>La consulta publicada, visible para los miembros del espacio.</figcaption></figure></section>
+
+<section class="step" id="paso-27"><div class="stephead"><span class="num">27</span><div><p class="kicker"><span class="lado store">TU PÁGINA</span> Novedades · el hilo</p><h3>También puede preguntar en tus posts</h3></div></div><div class="body"><p>Sobre la bienvenida, Julieta deja una segunda pregunta como comentario. <strong>La conversación queda pegada al contenido que la inició.</strong></p></div><figure><img src="assets/paso-27.jpg" alt=""><figcaption>El hilo de la bienvenida con la pregunta de Julieta abajo.</figcaption></figure></section>
+
+<section class="chapter"><p class="kicker">Capítulo 6 · Panel ↔ miembro</p><h2>El ida y vuelta</h2><p>Lo que la miembro escribió no queda flotando: el panel lo convierte en un pendiente concreto, y la respuesta vuelve fijada.</p></section>
+
+<section class="step" id="paso-28"><div class="stephead"><span class="num">28</span><div><p class="kicker"><span class="lado panel">PANEL</span> Inicio</p><h3>«1 pregunta sin responder»</h3></div></div><div class="body"><p>El Inicio del profesional cambia solo: la tarjeta <strong>Hoy</strong> del rail avisa «1 pregunta sin responder» con su botón Responder, las métricas ya están en movimiento — 2 activos, 2 publicaciones — y el filtro <strong>Sin responder</strong> va directo a lo que falta.</p></div><figure><img src="assets/paso-28.jpg" alt=""><figcaption>El panel avisando que hay una consulta sin responder — desde el rail, sin taparte el feed.</figcaption></figure></section>
+
+<section class="step" id="paso-29"><div class="stephead"><span class="num">29</span><div><p class="kicker"><span class="lado panel">PANEL</span> El hilo · responder y fijar</p><h3>La respuesta que queda arriba</h3></div></div><div class="body"><p>En el hilo, el profesional escribe la respuesta y marca <strong>«dejar fijada como respuesta»</strong>. Queda destacada arriba del hilo con la etiqueta <strong>respuesta fijada</strong> — la próxima persona con la misma duda la encuentra sin preguntar de nuevo.</p></div><figure><img src="assets/paso-29.jpg" alt=""><figcaption>El post de Julieta con la respuesta fijada del Centro, y el composer listo para seguir la conversación.</figcaption></figure></section>
+
+<section class="step" id="paso-30"><div class="stephead"><span class="num">30</span><div><p class="kicker"><span class="lado store">TU PÁGINA</span> Del lado de Julieta</p><h3>La respuesta llegó, y quedó fijada</h3></div></div><div class="body"><p>Julieta abre su consulta y ve la respuesta destacada con su 📌. Además le suena la <strong>campanita</strong>: los avisos del espacio le avisaron sin que tenga que revisar.</p></div><figure><img src="assets/paso-30.jpg" alt=""><figcaption>El mismo hilo, del lado de la miembro.</figcaption></figure></section>
+
+<section class="chapter"><p class="kicker">Capítulo 7 · El día a día</p><h2>Personas y salida</h2><p>Quién está adentro, de dónde vino su acceso — y una salida sin trampas para el miembro, con confirmación en dos pasos.</p></section>
+
+<section class="step" id="paso-31"><div class="stephead"><span class="num">31</span><div><p class="kicker"><span class="lado panel">PANEL</span> Personas</p><h3>Quién está adentro</h3></div></div><div class="body"><p>La lista completa, ahora tabla: <strong>persona, accesos y de dónde vino, última visita y estado</strong> — con las acciones (suspender, quitar un acceso manual) en el ⋮ de cada fila. Filtro por acceso, buscador por nombre o email, y Exportar CSV/Reportes recogidos en un menú.</p></div><figure><img src="assets/paso-31.jpg" alt=""><figcaption>Personas: quién está adentro, de dónde vino su acceso y cuándo pasó por última vez.</figcaption></figure></section>
+
+<section class="step" id="paso-32"><div class="stephead"><span class="num">32</span><div><p class="kicker"><span class="lado store">TU PÁGINA</span> Tu perfil y avisos</p><h3>La membresía, en manos del miembro</h3></div></div><div class="body"><p>Desde el corredor, <strong>Tu perfil y avisos</strong> es una sección con nombre propio: Julieta ve su membresía (<strong>Alumnos · acceso gratis</strong>), controla los <strong>avisos por espacio</strong> — todos, solo lo mío, o silenciado — y la salida está a la vista, sin tickets de soporte: <strong>Dejar la comunidad</strong>.</p></div><figure><img src="assets/paso-32.jpg" alt=""><figcaption>La sección de perfil, abierta desde el corredor.</figcaption></figure></section>
+
+<section class="step" id="paso-33"><div class="stephead"><span class="num">33</span><div><p class="kicker"><span class="lado store">TU PÁGINA</span> Dejar la comunidad</p><h3>La baja, en dos pasos y sin letra chica</h3></div></div><div class="body"><p>Un click no alcanza: el sistema explica — salís ahora mismo y perdés el acceso que te da esta membresía — y pide <strong>Confirmar baja</strong> o <strong>Mantener</strong>. Julieta confirma y vuelve a la puerta, que otra vez le ofrece unirse. <strong>El círculo cierra completo.</strong></p></div><figure><img src="assets/paso-33.jpg" alt=""><figcaption>El confirm de baja dentro de la tarjeta de membresía.</figcaption></figure></section>
+
+<section class="chapter"><p class="kicker">Los rincones</p><h2>Lo que solo aparece cuando pasa algo</h2><p>Cuatro estados que el recorrido feliz no muestra: la moderación cuando alguien reporta, la comunidad oculta con su camino de vuelta, y el panel entero en el teléfono.</p></section>
+
+<section class="step" id="paso-34"><div class="stephead"><span class="num">34</span><div><p class="kicker"><span class="lado panel">PANEL</span> Reportes · moderación</p><h3>Un reporte, y el sistema ya tomó partido</h3></div></div><div class="body"><p>La pestaña Reportes aparece solo cuando hay algo que revisar — con su contador. Adentro, el reporte completo: quién reportó y por qué, la publicación señalada, y la marca <strong>«oculto preventivo»</strong> — mientras el profesional decide, los miembros no lo ven. Tres salidas: <strong>Mantener, Eliminar, o Eliminar y suspender</strong> — con la letra chica honesta: la suspensión impide publicar y comentar, jamás toca lo que la persona compró.</p></div><figure><img src="assets/paso-34.jpg" alt=""><figcaption>El reporte sembrado para este documento: razón textual, publicación citada y las tres decisiones posibles.</figcaption></figure></section>
+
+<section class="step" id="paso-35"><div class="stephead"><span class="num">35</span><div><p class="kicker"><span class="lado panel">PANEL</span> Visibilidad · oculta</p><h3>Oculta, pero nunca fuera de tu alcance</h3></div></div><div class="body"><p>Al ocultarla, la puerta pública desaparece — y el panel se queda: una <strong>barra ámbar</strong> reemplaza al EN VIVO («Tu página no la muestra y nadie puede entrar — el contenido sigue guardado») con el <strong>Volver a mostrarla</strong> a un click, desde la barra o desde Visibilidad y baja.</p>
+<p>Mapear este rincón destapó un bug real: ocultar la comunidad te tiraba al wizard de la primera vez, como si nunca la hubieras publicado. Se arregló en el momento y este es el después.</p></div><figure><img src="assets/paso-35.jpg" alt=""><figcaption>La comunidad oculta: el panel entero sigue ahí, con el camino de vuelta a la vista.</figcaption></figure></section>
+
+<section class="step" id="paso-36"><div class="stephead"><span class="num">36</span><div><p class="kicker"><span class="lado panel">PANEL</span> Mobile · 390 px</p><h3>El panel en el bolsillo</h3></div></div><div class="body"><p>El rediseño baja a mobile con decisiones propias, no con la versión desktop apretada: en el Inicio, <strong>lo accionable del rail sube arriba del feed</strong> — pendientes de hoy y próximo encuentro primero —; en Encuentros vuelve el <strong>conmutador Lista / Calendario</strong> (en pantalla chica conviven mal); y Personas cambia la tabla por la lista.</p></div><figure class="phone"><img src="assets/paso-36-a.jpg" alt=""><figcaption>Inicio: los pendientes de hoy y el próximo encuentro, antes del feed.</figcaption></figure>
+<figure class="phone"><img src="assets/paso-36-b.jpg" alt=""><figcaption>Encuentros: el conmutador que en desktop ya no hace falta.</figcaption></figure></section>
+
+<section class="step" id="paso-37"><div class="stephead"><span class="num">37</span><div><p class="kicker"><span class="lado panel">PANEL</span> Mobile · 390 px</p><h3>El calendario y la gente, en chico</h3></div></div><div class="body"><p>El calendario mensual ocupa el ancho completo con sus puntos por fecha, y <strong>Personas</strong> vuelve al formato lista — misma información que la tabla, apilada para el pulgar.</p></div><figure class="phone"><img src="assets/paso-37-a.jpg" alt=""><figcaption>La vista Calendario del conmutador.</figcaption></figure>
+<figure class="phone"><img src="assets/paso-37-b.jpg" alt=""><figcaption>Personas: acceso, última visita y estado, en lista.</figcaption></figure></section>
+
+  <section class="close">
+    <p class="kicker">Al cierre</p>
+    <h2 style="margin:10px 0 0; font-weight:300; font-size: clamp(24px,3.6vw,34px)">Qué quedó demostrado</h2>
+    <ul>
+      <li><strong>El arranque es guiado de verdad:</strong> cinco pantallas explican el modelo antes del precio, y tres decisiones (nombre, acceso, publicar) dejan la comunidad en vivo.</li>
+      <li><strong>El sistema empuja el primer contenido:</strong> la guía tacha solo lo que realmente pasó — novedad, encuentro, gente — sin flags que se desincronicen.</li>
+      <li><strong>Las series de encuentros se administran como series:</strong> editar, cancelar una fecha o toda la serie son acciones distintas, y las excepciones quedan documentadas.</li>
+      <li><strong>La puerta vende sola:</strong> portada, presentación, señales de actividad reales y el acceso con su precio — y el miembro entra con reglas aceptadas antes de escribir.</li>
+      <li><strong>La conversación tiene dueño:</strong> lo sin responder es un pendiente visible, la respuesta se fija, y el miembro se entera por sus avisos.</li>
+      <li><strong>El espacio del miembro navega con el corredor:</strong> Al día, Tus salas, La comunidad y su perfil — en desktop; los chips siguen en el teléfono.</li>
+      <li><strong>Entrar y salir es simétrico:</strong> unirse gratis es un click; irse son dos, con las consecuencias explicadas.</li>
+    </ul>
+  </section>
+
+  <footer>
+    Recorrido capturado en producción con capturas de páginas completas: la primera pasada el 14 de agosto de 2026, rehecho el 18 con el panel rediseñado — y esa misma tarde, re-capturado el lado del miembro con <strong>el corredor</strong> ya en vivo (pasos 23–33). Los pasos 1–9, 11 y 12 conservan la primera captura: esas pantallas no cambiaron. El contenido demo (posts, encuentros, sección Consultas, portada y la membresía de Julieta) se sembró para este documento y se limpió al terminar; Julieta salió por su propia baja del paso 33, y la comunidad quedó publicada y en su estado original.
+  </footer>
+</div>
+</body>
+</html>
