@@ -4,6 +4,26 @@
   "updated_at": "2026-08-18",
   "outputs": [
     {
+      "type": "proposal",
+      "typeLabel": "Proposal",
+      "title": "Captura mágica de turnos",
+      "description": "Propuesta para brainstorming: el negocio carga 48.423 reservas/mes a mano — pegás el mensaje del cliente (o lo dictás) y la Agenda arma el borrador: cliente, servicio, día y hora validados contra disponibilidad real. La IA solo interpreta el lenguaje; entidades y horarios los resuelve Cyclone, y el borrador cae en la pantalla de Ingresar reserva que ya soporta prefill. 3 fases: texto → voz → compartir desde WhatsApp (share_target PWA). Parte 1 de «La agenda que trabaja con vos».",
+      "detail": "proposal · Agenda de Flash · mockups Frost · 3 fases · parte 1 de 2",
+      "date": "AGO 2026",
+      "href": "./captura-magica-turnos-2026-08/index.html",
+      "slug": "captura-magica-turnos-2026-08"
+    },
+    {
+      "type": "proposal",
+      "typeLabel": "Proposal",
+      "title": "Ficha viva del cliente",
+      "description": "Propuesta para brainstorming: antes de cada turno, la Agenda resume quién viene — visitas, ritmo, última vez, gasto y tus notas — con diseño anti-alucinación (los números los calcula SQL, la IA solo escribe). Al cerrar el turno pide asistencia + nota por voz (Whisper), arrancando el flywheel que sube la asistencia marcada (hoy 19,8%) y construye el dataset del No-Show Predictor. 3 momentos: detalle del turno · «Tu día» matinal pre-generado · post-turno. Parte 2 de «La agenda que trabaja con vos».",
+      "detail": "proposal · Agenda + Clientes de Flash · mockups Frost · 3 fases · parte 2 de 2",
+      "date": "AGO 2026",
+      "href": "./ficha-viva-cliente-2026-08/index.html",
+      "slug": "ficha-viva-cliente-2026-08"
+    },
+    {
       "type": "wiki",
       "typeLabel": "Wiki",
       "title": "Comunidad · De cero a comunidad viva",
