@@ -10,7 +10,7 @@
 <style>
 :root {
   --frost-primary: #0072FB; --frost-primary-hover: #005CD4; --frost-primary-soft: #EEF6FF; --frost-primary-wash: rgba(0,114,251,0.08);
-  --frost-accent: #FF4658; --frost-accent-soft: #FFE3E6; --frost-success: #10B981; --frost-success-soft: #A9FFE7; --frost-warning: #F59E0B;
+  --frost-accent: #FF4658; --frost-success: #10B981; --frost-warning: #F59E0B;
   --frost-ink: #0F172A; --frost-ink-soft: #3A3A3A; --frost-muted: #868686; --frost-faint: #B5B5B5;
   --frost-surface: #FFFFFF; --frost-surface-muted: #EFF3F9; --frost-border: #E2E8F0; --frost-border-soft: #F2F2F2;
   --r-sm: 6px; --r-item: 10px; --r-btn: 12px; --r-card: 20px; --r-shell: 28px; --r-chip: 999px;
@@ -19,195 +19,115 @@
   --sans: 'Montserrat', system-ui, -apple-system, sans-serif;
 }
 * { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
 body { font-family:var(--sans); color:var(--frost-ink); background:var(--frost-surface-muted); font-variant-numeric:tabular-nums; -webkit-font-smoothing:antialiased; line-height:1.55; }
-.wrap { max-width:1040px; margin:0 auto; padding:0 28px; }
+.wrap { max-width:1000px; margin:0 auto; padding:0 28px; }
 
 header.chrome { position:sticky; top:0; z-index:50; background:rgba(255,255,255,0.85); backdrop-filter:blur(12px); border-bottom:1px solid var(--frost-border); }
 header.chrome .wrap { display:flex; align-items:center; justify-content:space-between; height:60px; }
 .kicker { font-size:10.5px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:var(--frost-muted); }
 .kicker.blue { color:var(--frost-primary); }
 
-.hero { padding:88px 0 56px; }
-.hero h1 { font-size:clamp(34px,5vw,54px); font-weight:200; letter-spacing:-0.02em; line-height:1.1; margin:18px 0 20px; }
+.hero { padding:76px 0 48px; }
+.hero h1 { font-size:clamp(34px,5vw,52px); font-weight:200; letter-spacing:-0.02em; line-height:1.1; margin:16px 0 18px; }
 .hero h1 strong { font-weight:600; }
-.hero p.lede { font-size:17px; font-weight:300; color:var(--frost-ink-soft); max-width:660px; }
-.hero .status { display:inline-flex; align-items:center; gap:8px; margin-top:26px; background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-chip); padding:8px 16px; font-size:12.5px; font-weight:500; color:var(--frost-ink-soft); box-shadow:var(--sh-xs); }
-.status .pulse { width:8px; height:8px; border-radius:50%; background:var(--frost-warning); box-shadow:0 0 0 4px rgba(245,158,11,0.15); }
+.hero p.lede { font-size:17px; font-weight:300; color:var(--frost-ink-soft); max-width:640px; }
+.hero p.lede strong { font-weight:600; }
+.statline { display:flex; gap:10px; flex-wrap:wrap; margin-top:24px; }
+.statpill { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-chip); padding:8px 16px; font-size:12.5px; font-weight:500; color:var(--frost-ink-soft); box-shadow:var(--sh-xs); }
+.statpill strong { font-weight:600; }
 
-section { padding:56px 0; }
+section { padding:48px 0; }
 section.alt { background:var(--frost-surface); border-top:1px solid var(--frost-border); border-bottom:1px solid var(--frost-border); }
-h2.sec-title { font-size:clamp(24px,3vw,32px); font-weight:300; letter-spacing:-0.01em; margin:12px 0 8px; }
+h2.sec-title { font-size:clamp(22px,3vw,30px); font-weight:300; letter-spacing:-0.01em; margin:10px 0 6px; }
 h2.sec-title strong { font-weight:600; }
-p.sec-sub { font-size:15px; font-weight:300; color:var(--frost-muted); max-width:640px; margin-bottom:36px; }
+p.sec-sub { font-size:14.5px; font-weight:300; color:var(--frost-muted); max-width:620px; margin-bottom:30px; }
 p.sec-sub strong { font-weight:600; color:var(--frost-ink-soft); }
 
-.tiles { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:36px; }
-.tile { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); padding:22px 20px; box-shadow:var(--sh-sm); }
-.tile .num { font-size:30px; font-weight:600; letter-spacing:-0.02em; }
-.tile .num span { font-size:15px; font-weight:500; color:var(--frost-muted); }
-.tile .lbl { font-size:12px; font-weight:500; color:var(--frost-muted); margin-top:4px; line-height:1.45; }
-
-.chart { margin-top:34px; display:flex; flex-direction:column; gap:12px; max-width:640px; }
-.chart-title { font-size:12px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:var(--frost-faint); margin-bottom:2px; }
-.bar-row { display:grid; grid-template-columns:130px 1fr 70px; align-items:center; gap:14px; }
-.bar-row .name { font-size:13px; font-weight:500; color:var(--frost-ink-soft); text-align:right; }
-.bar-row .track { height:24px; background:var(--frost-surface); border:1px solid var(--frost-border-soft); border-radius:var(--r-sm); overflow:hidden; }
-.bar-row .fill { height:100%; border-radius:var(--r-sm); background:var(--frost-primary); min-width:3px; }
-.bar-row .fill.dim { background:#5AA3FC; } .bar-row .fill.dimmer { background:#9CC5FD; } .bar-row .fill.dimmest { background:#CFE3FE; }
-.bar-row .val { font-size:13px; font-weight:600; }
-.chart-note { font-size:12px; color:var(--frost-muted); margin-top:14px; font-weight:300; max-width:640px; }
-.chart-note strong { font-weight:600; color:var(--frost-ink-soft); }
-
-/* flow steps */
-.step-head { display:flex; align-items:baseline; gap:14px; margin:44px 0 16px; }
-.step-num { font-size:11px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; background:var(--frost-primary-soft); color:var(--frost-primary); border-radius:var(--r-chip); padding:5px 12px; white-space:nowrap; }
-.step-head h3 { font-size:17px; font-weight:600; }
-.step-head .sub { font-size:12.5px; font-weight:300; color:var(--frost-muted); }
-.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:28px; align-items:start; }
-.rationale p { font-size:14px; font-weight:300; color:var(--frost-ink-soft); margin-bottom:14px; }
-.rationale p strong { font-weight:600; }
-.rationale ul { list-style:none; display:flex; flex-direction:column; gap:10px; }
-.rationale li { font-size:13.5px; font-weight:300; color:var(--frost-ink-soft); padding-left:22px; position:relative; }
-.rationale li strong { font-weight:600; }
-.rationale li::before { content:''; position:absolute; left:2px; top:8px; width:7px; height:7px; border-radius:50%; background:var(--frost-primary); }
-
-.mock-stage { background:linear-gradient(160deg,#F6F9FE 0%, #EDF2FA 100%); border:1px solid var(--frost-border); border-radius:var(--r-shell); padding:28px; display:flex; flex-direction:column; gap:16px; }
+/* flujo */
+.flow { display:grid; grid-template-columns:1fr auto 1.15fr; gap:14px; align-items:center; }
+.flow .arr { font-size:24px; color:var(--frost-faint); font-weight:300; }
+.mock-stage { background:linear-gradient(160deg,#F6F9FE 0%, #EDF2FA 100%); border:1px solid var(--frost-border); border-radius:var(--r-shell); padding:22px; display:flex; flex-direction:column; gap:13px; }
 .mock-label { font-size:10.5px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--frost-faint); }
-.mock-card { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); box-shadow:var(--sh-md); padding:18px; }
+.mock-card { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); box-shadow:var(--sh-md); padding:16px; }
 
-/* capture input mockup */
-.cap-input { display:flex; align-items:center; gap:10px; background:var(--frost-surface); border:1.5px solid var(--frost-primary); border-radius:var(--r-chip); padding:11px 18px; box-shadow:var(--sh-glow); }
-.cap-input .spark { flex:none; font-size:15px; }
-.cap-input .ph { font-size:13.5px; font-weight:300; color:var(--frost-muted); }
-.mic-btn { margin-left:auto; flex:none; width:34px; height:34px; border-radius:50%; background:var(--frost-primary); color:#fff; display:flex; align-items:center; justify-content:center; font-size:14px; box-shadow:var(--sh-glow); }
-.pasted { border-left:3px solid var(--frost-success); background:#F2FBF6; border-radius:0 var(--r-item) var(--r-item) 0; padding:12px 14px; }
-.pasted .src { font-size:10.5px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:#0F7B4C; margin-bottom:5px; display:flex; align-items:center; gap:6px; }
-.pasted .src .dot { width:7px; height:7px; border-radius:50%; background:#25D366; }
-.pasted .msg { font-size:13.5px; font-weight:300; color:var(--frost-ink-soft); font-style:italic; }
-.entry-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-.pasted.voice { border-left-color:var(--frost-primary); background:var(--frost-primary-wash); }
-.pasted.voice .src { color:var(--frost-primary-hover); }
-.pasted.voice .src .dot { background:var(--frost-primary); }
+.cap-input { display:flex; align-items:center; gap:10px; background:var(--frost-surface); border:1.5px solid var(--frost-primary); border-radius:var(--r-chip); padding:10px 16px; box-shadow:var(--sh-glow); }
+.cap-input .ph { font-size:12.5px; font-weight:300; color:var(--frost-muted); }
+.mic-btn { margin-left:auto; flex:none; width:30px; height:30px; border-radius:50%; background:var(--frost-primary); color:#fff; display:flex; align-items:center; justify-content:center; font-size:13px; box-shadow:var(--sh-glow); }
+.pasted { border-left:3px solid var(--frost-success); background:#F2FBF6; border-radius:0 var(--r-item) var(--r-item) 0; padding:11px 13px; }
+.pasted .src { font-size:10px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:#0F7B4C; margin-bottom:4px; display:flex; align-items:center; gap:6px; }
+.pasted .src .dot { width:6px; height:6px; border-radius:50%; background:#25D366; }
+.pasted .msg { font-size:12.5px; font-weight:300; color:var(--frost-ink-soft); font-style:italic; }
 
-/* draft card */
-.draft-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
-.draft-head .t { font-size:14px; font-weight:600; }
-.draft-head .badge { font-size:10.5px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--frost-primary); background:var(--frost-primary-soft); border-radius:var(--r-chip); padding:4px 11px; }
-.draft-row { display:grid; grid-template-columns:96px 1fr auto auto; gap:12px; align-items:center; padding:10px 0; border-bottom:1px solid var(--frost-border-soft); }
+.draft-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; gap:8px; }
+.draft-head .t { font-size:13.5px; font-weight:600; }
+.draft-head .badge { font-size:9.5px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--frost-primary); background:var(--frost-primary-soft); border-radius:var(--r-chip); padding:4px 10px; white-space:nowrap; }
+.draft-row { display:grid; grid-template-columns:82px 1fr auto; gap:10px; align-items:center; padding:8px 0; border-bottom:1px solid var(--frost-border-soft); }
 .draft-row:last-of-type { border-bottom:none; }
-.draft-row .edit { color:var(--frost-faint); font-size:13px; }
-.draft-row .k { font-size:11px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--frost-faint); }
-.draft-row .v { font-size:13.5px; font-weight:500; }
-.draft-row .v span { font-weight:300; color:var(--frost-muted); font-size:12.5px; white-space:nowrap; }
-.check { font-size:11px; font-weight:600; color:#0B7A56; background:rgba(16,185,129,0.12); border-radius:var(--r-chip); padding:3px 10px; white-space:nowrap; }
-.draft-ctas { display:flex; gap:10px; margin-top:16px; align-items:center; flex-wrap:wrap; }
-.btn-primary { background:var(--frost-primary); color:#fff; font-size:13px; font-weight:600; border-radius:var(--r-btn); padding:10px 20px; box-shadow:var(--sh-glow); }
-.btn-ghost { background:var(--frost-surface); color:var(--frost-ink-soft); font-size:13px; font-weight:500; border:1px solid var(--frost-border); border-radius:var(--r-btn); padding:10px 16px; }
-.draft-note { font-size:11.5px; font-weight:500; color:var(--frost-muted); margin-top:12px; }
+.draft-row .k { font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--frost-faint); }
+.draft-row .v { font-size:12.5px; font-weight:500; }
+.draft-row .v span { font-weight:300; color:var(--frost-muted); font-size:11.5px; white-space:nowrap; }
+.draft-row .edit { color:var(--frost-faint); font-size:12px; }
+.draft-ctas { display:flex; gap:8px; margin-top:12px; align-items:center; flex-wrap:wrap; }
+.btn-primary { background:var(--frost-primary); color:#fff; font-size:12px; font-weight:600; border-radius:var(--r-btn); padding:9px 16px; box-shadow:var(--sh-glow); }
+.btn-ghost { background:var(--frost-surface); color:var(--frost-ink-soft); font-size:12px; font-weight:500; border:1px solid var(--frost-border); border-radius:var(--r-btn); padding:9px 13px; }
+.flow-note { font-size:12.5px; font-weight:500; color:var(--frost-muted); margin-top:18px; text-align:center; }
+.flow-note strong { font-weight:600; color:var(--frost-ink-soft); }
 
-/* ambiguity chips */
-.amb-q { font-size:13px; font-weight:600; margin-bottom:10px; }
-.amb-flag { display:inline-block; font-size:12px; font-weight:600; color:#8A5A06; background:rgba(245,158,11,0.14); border-radius:var(--r-item); padding:7px 12px; margin-bottom:12px; }
+/* variantes */
+.vars { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:32px; }
+.var { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); padding:20px 22px; box-shadow:var(--sh-sm); position:relative; }
+.var .head { display:flex; align-items:center; gap:12px; margin-bottom:10px; }
+.var .ico { flex:none; width:38px; height:38px; border-radius:var(--r-item); background:var(--frost-primary-soft); display:flex; align-items:center; justify-content:center; font-size:16px; }
+.var h3 { font-size:15px; font-weight:600; }
+.var .fase { position:absolute; top:18px; right:18px; font-size:9.5px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; border-radius:var(--r-chip); padding:4px 10px; }
+.var .fase.mvp { color:#0B7A56; background:rgba(16,185,129,0.12); }
+.var .fase.f2 { color:var(--frost-primary); background:var(--frost-primary-soft); }
+.var p { font-size:12.5px; font-weight:300; color:var(--frost-ink-soft); }
+.var .ej { margin-top:10px; background:var(--frost-surface-muted); border-radius:var(--r-item); padding:9px 12px; font-size:12px; font-weight:300; font-style:italic; color:var(--frost-ink-soft); }
+
+/* dudas */
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:start; margin-top:32px; }
+.amb-flag { display:inline-block; font-size:11.5px; font-weight:600; color:#8A5A06; background:rgba(245,158,11,0.14); border-radius:var(--r-item); padding:6px 11px; margin-bottom:10px; }
+.amb-q { font-size:12.5px; font-weight:600; margin-bottom:8px; }
 .amb-list { display:flex; flex-direction:column; border:1px solid var(--frost-border); border-radius:var(--r-item); overflow:hidden; }
-.amb-row { display:flex; flex-direction:column; gap:1px; padding:10px 13px; border-bottom:1px solid var(--frost-border-soft); }
+.amb-row { padding:8px 12px; border-bottom:1px solid var(--frost-border-soft); }
 .amb-row:last-child { border-bottom:none; }
-.amb-row .an { font-size:13px; font-weight:600; }
-.amb-row .ad { font-size:11.5px; font-weight:300; color:var(--frost-muted); }
-.amb-search { margin-top:10px; border:1px dashed var(--frost-border); border-radius:var(--r-item); padding:9px 13px; font-size:12px; font-weight:500; color:var(--frost-muted); }
-.amb-note { margin-top:12px; font-size:11.5px; font-weight:500; color:var(--frost-muted); }
+.amb-row .an { font-size:12.5px; font-weight:600; }
+.amb-row .ad { font-size:11px; font-weight:300; color:var(--frost-muted); }
+.amb-search { margin-top:8px; border:1px dashed var(--frost-border); border-radius:var(--r-item); padding:8px 12px; font-size:11.5px; font-weight:500; color:var(--frost-muted); }
+.amb-note { margin-top:10px; font-size:11px; font-weight:500; color:var(--frost-muted); }
 .amb-note strong { font-weight:600; color:var(--frost-ink-soft); }
-.amb-chips { display:flex; gap:10px; flex-wrap:wrap; }
-.amb-chip { border:1.5px solid var(--frost-border); border-radius:var(--r-btn); padding:9px 14px; font-size:12.5px; font-weight:500; background:var(--frost-surface); }
-.amb-chip span { display:block; font-size:11px; font-weight:300; color:var(--frost-muted); margin-top:1px; }
-.amb-chip.sel { border-color:var(--frost-primary); background:var(--frost-primary-wash); }
-.slot-pills { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
-.slot { border:1px solid var(--frost-border); background:var(--frost-surface); border-radius:var(--r-chip); font-size:12px; font-weight:600; padding:6px 14px; }
-.slot.sel { background:var(--frost-primary); color:#fff; border-color:var(--frost-primary); box-shadow:var(--sh-glow); }
-.conflict { font-size:12.5px; font-weight:500; color:#8A5A06; background:rgba(245,158,11,0.12); border-radius:var(--r-item); padding:8px 12px; margin-bottom:4px; display:inline-block; }
+.conflict { font-size:12px; font-weight:500; color:#8A5A06; background:rgba(245,158,11,0.12); border-radius:var(--r-item); padding:7px 11px; margin-bottom:8px; display:inline-block; }
+.slot-pills { display:flex; gap:8px; flex-wrap:wrap; margin-top:6px; }
+.slot { border:1px solid var(--frost-border); background:var(--frost-surface); border-radius:var(--r-chip); font-size:11.5px; font-weight:600; padding:6px 13px; }
 
-/* phones */
-.phones { display:flex; gap:26px; justify-content:center; align-items:stretch; flex-wrap:wrap; margin-top:8px; }
-.phone { width:230px; background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:30px; box-shadow:var(--sh-md); padding:16px 14px 18px; position:relative; }
-.phone::before { content:''; display:block; width:56px; height:5px; border-radius:var(--r-chip); background:var(--frost-border); margin:0 auto 14px; }
-.phone .app { font-size:10px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:var(--frost-faint); text-align:center; margin-bottom:12px; }
-.bubble { background:#F2FBF6; border:1px solid #D6F0E1; border-radius:14px 14px 14px 4px; padding:10px 12px; font-size:12px; font-weight:300; color:var(--frost-ink-soft); }
-.share-row { display:flex; align-items:center; gap:10px; background:var(--frost-surface-muted); border-radius:var(--r-item); padding:9px 11px; margin-top:12px; font-size:12px; font-weight:500; }
-.share-row.hl { background:var(--frost-primary-wash); color:var(--frost-primary); font-weight:600; }
-.phone-arrow { align-self:center; font-size:22px; color:var(--frost-faint); font-weight:300; }
-.mini-draft { border:1px solid var(--frost-border); border-radius:var(--r-item); padding:10px 12px; margin-top:12px; }
-.mini-draft .r { display:flex; justify-content:space-between; font-size:11.5px; padding:4px 0; }
-.mini-draft .r .k { font-weight:300; color:var(--frost-muted); }
-.mini-draft .r .v { font-weight:600; }
-.mini-cta { background:var(--frost-primary); color:#fff; font-size:11.5px; font-weight:600; border-radius:var(--r-item); padding:8px 0; text-align:center; margin-top:10px; box-shadow:var(--sh-glow); }
+/* reglas */
+.rules { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:32px; }
+.rule { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); padding:20px; box-shadow:var(--sh-sm); }
+.rule .n { font-size:22px; font-weight:600; color:var(--frost-primary); }
+.rule h3 { font-size:14px; font-weight:600; margin:6px 0 5px; }
+.rule p { font-size:12px; font-weight:300; color:var(--frost-ink-soft); }
+.rule p strong { font-weight:600; }
 
-/* pipeline */
-.pipe { display:grid; grid-template-columns:1fr auto 1fr auto 1fr auto 1fr; gap:10px; align-items:stretch; margin-top:36px; }
-.pipe .node { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); padding:18px 16px; box-shadow:var(--sh-sm); }
-.pipe .node.llm { border-color:var(--frost-primary); box-shadow:var(--sh-glow); }
-.pipe .node .tag { font-size:10px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:var(--frost-primary); margin-bottom:7px; }
-.pipe .node h4 { font-size:13.5px; font-weight:600; margin-bottom:5px; }
-.pipe .node p { font-size:11.5px; font-weight:300; color:var(--frost-muted); line-height:1.5; }
-.pipe .arr { display:flex; align-items:center; font-size:18px; color:var(--frost-faint); font-weight:300; }
-.pipe-note { margin-top:22px; background:var(--frost-ink); color:#fff; border-radius:var(--r-card); padding:18px 24px; font-size:13.5px; font-weight:300; max-width:720px; }
-.pipe-note strong { font-weight:600; }
+/* abiertas */
+.qs { display:flex; flex-direction:column; gap:10px; margin-top:28px; max-width:720px; }
+.q { display:flex; gap:12px; align-items:baseline; background:var(--frost-surface); border:1px solid var(--frost-border); border-left:3px solid var(--frost-primary); border-radius:var(--r-item); padding:12px 16px; box-shadow:var(--sh-xs); font-size:13px; }
+.q .n { font-size:10px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:var(--frost-primary); white-space:nowrap; }
+.q p { font-weight:300; color:var(--frost-ink-soft); }
+.q p strong { font-weight:600; color:var(--frost-ink); }
 
-.exists { margin-top:34px; display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-.exists .col { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); box-shadow:var(--sh-sm); padding:22px; }
-.exists h3 { font-size:13px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; margin-bottom:14px; }
-.exists h3.ya { color:#0B7A56; } .exists h3.nuevo { color:var(--frost-primary); }
-.exists ul { list-style:none; display:flex; flex-direction:column; gap:9px; }
-.exists li { font-size:13px; font-weight:300; color:var(--frost-ink-soft); padding-left:24px; position:relative; }
-.exists li strong { font-weight:600; }
-.exists li code { font-family:inherit; font-weight:600; font-size:11.5px; color:var(--frost-ink); background:var(--frost-surface-muted); border-radius:var(--r-sm); padding:1px 6px; }
-.exists .col.ya li::before { content:'✓'; position:absolute; left:0; top:0; font-weight:600; color:var(--frost-success); }
-.exists .col.nu li::before { content:'+'; position:absolute; left:2px; top:0; font-weight:600; color:var(--frost-primary); }
-
-.road { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:36px; }
-.road .step { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); padding:22px 20px; box-shadow:var(--sh-sm); }
-.road .step.hot { border-color:var(--frost-primary); box-shadow:var(--sh-glow); }
-.road .step .tag { font-size:10.5px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--frost-primary); }
-.road .step h3 { font-size:16px; font-weight:600; margin:8px 0 6px; }
-.road .step p { font-size:12.5px; font-weight:300; color:var(--frost-ink-soft); }
-.road .step p strong { font-weight:600; }
-.road .step .eff { margin-top:14px; font-size:11px; font-weight:600; color:var(--frost-muted); }
-
-.metrics { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:36px; }
-.metric { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); padding:20px 22px; box-shadow:var(--sh-sm); display:flex; gap:14px; align-items:flex-start; }
-.metric .ico { flex:none; width:38px; height:38px; border-radius:var(--r-item); display:flex; align-items:center; justify-content:center; font-size:16px; }
-.metric .ico.north { background:var(--frost-primary-soft); }
-.metric .ico.guard { background:rgba(245,158,11,0.14); }
-.metric h4 { font-size:13.5px; font-weight:600; }
-.metric h4 span { font-size:10.5px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--frost-faint); display:block; margin-bottom:3px; }
-.metric p { font-size:12.5px; font-weight:300; color:var(--frost-ink-soft); margin-top:4px; }
-.metric p strong { font-weight:600; }
-
-.qs { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:36px; }
-.q { background:var(--frost-surface); border:1px solid var(--frost-border); border-left:3px solid var(--frost-primary); border-radius:var(--r-card); padding:20px 22px; box-shadow:var(--sh-sm); }
-.q .n { font-size:10.5px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:var(--frost-primary); }
-.q h4 { font-size:14.5px; font-weight:600; margin:6px 0 6px; }
-.q p { font-size:12.5px; font-weight:300; color:var(--frost-ink-soft); }
-.q p strong { font-weight:600; }
-
-.risk { margin-top:30px; background:var(--frost-accent-soft); border:1px solid rgba(255,70,88,0.25); border-radius:var(--r-card); padding:20px 24px; max-width:760px; }
-.risk h4 { font-size:13px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:#B3202F; margin-bottom:8px; }
-.risk p { font-size:13.5px; font-weight:300; color:var(--frost-ink-soft); }
-.risk p strong { font-weight:600; }
-
-footer { background:var(--frost-ink); color:#fff; padding:52px 0; margin-top:64px; }
+footer { background:var(--frost-ink); color:#fff; padding:44px 0; margin-top:56px; }
 footer .wrap { display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; }
-footer .big { font-size:22px; font-weight:300; }
+footer .big { font-size:20px; font-weight:300; }
 footer .big strong { font-weight:600; }
-footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; margin-top:6px; }
+footer .fine { font-size:11px; color:rgba(255,255,255,0.55); font-weight:300; margin-top:5px; }
 footer a { color:#7EB6FF; text-decoration:none; font-weight:500; font-size:13px; }
 
 @media (max-width:860px) {
-  .tiles { grid-template-columns:repeat(2,1fr); }
-  .grid-2, .exists, .metrics, .qs, .entry-grid { grid-template-columns:1fr; }
-  .road { grid-template-columns:1fr; }
-  .pipe { grid-template-columns:1fr; }
-  .pipe .arr { justify-content:center; transform:rotate(90deg); }
-  .bar-row { grid-template-columns:92px 1fr 58px; }
+  .flow { grid-template-columns:1fr; }
+  .flow .arr { text-align:center; transform:rotate(90deg); }
+  .vars, .grid-2 { grid-template-columns:1fr; }
+  .rules { grid-template-columns:1fr; }
 }
 </style>
 </head>
@@ -237,100 +157,95 @@ footer a { color:#7EB6FF; text-decoration:none; font-weight:500; font-size:13px;
 <div class="hero">
   <div class="wrap">
     <span class="kicker blue">La agenda que trabaja con vos · Parte 1 de 2</span>
-    <h1>El turno se anota <strong>como te lo dijeron</strong></h1>
-    <p class="lede">Tu clienta te escribe por WhatsApp. Vos pegás el mensaje, lo escribís como lo tenés en la cabeza o lo dictás con la voz — y la Agenda arma el borrador: cliente, servicio, día y hora, validados contra tu disponibilidad real. Todo editable, y si hay dudas te pregunta. Vos confirmás.</p>
-    <span class="status"><span class="pulse"></span>Propuesta para brainstorming — nada de esto está construido todavía</span>
+    <h1>Captura mágica <strong>de turnos</strong></h1>
+    <p class="lede">Le pasás a la Agenda el turno <strong>como te lo dijeron</strong> — pegado, escrito, dictado o compartido desde WhatsApp — y ella arma el borrador. Vos lo revisás y confirmás.</p>
+    <div class="statline">
+      <span class="statpill"><strong>48.423</strong> reservas/mes se cargan a mano hoy</span>
+      <span class="statpill">la Agenda concentra el <strong>57%</strong> del uso de Flash</span>
+      <span class="statpill">🟡 propuesta — no está construido</span>
+    </div>
   </div>
 </div>
 
+<section class="alt">
+  <div class="wrap">
+    <span class="kicker blue">El feature en una imagen</span>
+    <h2 class="sec-title">Del mensaje al turno, <strong>en un tap</strong></h2>
+    <div class="flow">
+      <div class="mock-stage">
+        <span class="mock-label">1 · Le pasás el mensaje</span>
+        <div class="cap-input"><span>✨</span><span class="ph">Anotá el turno como te lo dijeron…</span><span class="mic-btn">🎙</span></div>
+        <div class="mock-card">
+          <div class="pasted">
+            <div class="src"><span class="dot"></span>Pegado de WhatsApp</div>
+            <div class="msg">«Hola Sofi! ¿me guardás turno para balayage el jueves a la tarde? Soy Ana 🙌»</div>
+          </div>
+        </div>
+      </div>
+      <div class="arr">→</div>
+      <div class="mock-stage">
+        <span class="mock-label">2 · Te propone el borrador — todo editable</span>
+        <div class="mock-card">
+          <div class="draft-head"><span class="t">Borrador de turno</span><span class="badge">✨ Generado — revisalo</span></div>
+          <div class="draft-row"><span class="k">Cliente</span><span class="v">Ana Pérez <span>· 3ª visita</span></span><span class="edit">✎</span></div>
+          <div class="draft-row"><span class="k">Servicio</span><span class="v">Balayage <span>· 1 h 30 · $45.000</span></span><span class="edit">✎</span></div>
+          <div class="draft-row"><span class="k">Cuándo</span><span class="v">Jueves 20 ago · 15:00 <span>· disponible</span></span><span class="edit">✎</span></div>
+          <div class="draft-row"><span class="k">Con quién</span><span class="v">Caro <span>· la atendió 2 veces</span></span><span class="edit">✎</span></div>
+          <div class="draft-ctas"><span class="btn-primary">Confirmar turno</span><span class="btn-ghost">Abrir completo</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="flow-note">Todo lo del borrador sale de <strong>tu propia base</strong> — clientes, catálogo, disponibilidad real. La IA solo interpreta el mensaje; <strong>no inventa nada y nunca confirma sola.</strong></p>
+  </div>
+</section>
+
 <section>
   <div class="wrap">
-    <span class="kicker blue">El problema</span>
-    <h2 class="sec-title">El profesional es el <strong>data-entry</strong> de su propia agenda</h2>
-    <p class="sec-sub">La conversación con el cliente pasa por WhatsApp o Instagram. Cerrado el acuerdo, alguien tiene que transcribirlo a Ágora: abrir la agenda, buscar el hueco, buscar el cliente, elegir el servicio, confirmar. Campo por campo, decenas de veces por día.</p>
-    <div class="tiles">
-      <div class="tile"><div class="num">48.423</div><div class="lbl">reservas por mes cargadas a mano por el negocio</div></div>
-      <div class="tile"><div class="num">1.440</div><div class="lbl">negocios lo hacen todos los días</div></div>
-      <div class="tile"><div class="num">57<span>%</span></div><div class="lbl">de todo el uso de Flash es la Agenda</div></div>
-      <div class="tile"><div class="num">~40<span> seg</span></div><div class="lbl">por turno transcripto — unas 500 horas al mes entre todos</div></div>
+    <span class="kicker blue">Las variantes</span>
+    <h2 class="sec-title">Cuatro formas de pasarle el turno, <strong>un mismo borrador</strong></h2>
+    <div class="vars">
+      <div class="var"><span class="fase mvp">MVP</span>
+        <div class="head"><span class="ico">📋</span><h3>Lo pegás</h3></div>
+        <p>Copiás el mensaje de la clienta tal cual llegó y lo soltás en el input.</p>
+        <div class="ej">«Hola Sofi! ¿me guardás turno para balayage el jueves a la tarde? Soy Ana»</div>
+      </div>
+      <div class="var"><span class="fase mvp">MVP</span>
+        <div class="head"><span class="ico">⌨️</span><h3>Lo escribís</h3></div>
+        <p>Como lo tenés en la cabeza, sin formularios.</p>
+        <div class="ej">«Ana corte mañana 15hs»</div>
+      </div>
+      <div class="var"><span class="fase mvp">MVP</span>
+        <div class="head"><span class="ico">🎙</span><h3>Lo dictás</h3></div>
+        <p>Apretás el mic y lo decís. Ideal con las manos ocupadas — la transcripción (Whisper) ya corre en producción.</p>
+        <div class="ej">«Turno para Ana, balayage, el jueves a las tres de la tarde con Caro»</div>
+      </div>
+      <div class="var"><span class="fase f2">Fase 2</span>
+        <div class="head"><span class="ico">↗</span><h3>Lo compartís desde WhatsApp</h3></div>
+        <p>Ágora aparece en el menú «Compartir» del teléfono: el mensaje — o el audio — de la clienta viaja directo al borrador, sin copiar nada. Flash ya es PWA; falta una línea en el manifest.</p>
+        <div class="ej">Chat de Ana → Compartir → Ágora → borrador listo</div>
+      </div>
     </div>
-    <div class="chart">
-      <div class="chart-title">De dónde viene lo que el negocio tipea (por mes)</div>
-      <div class="bar-row"><span class="name">Sin canal marcado</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">44.653</span></div>
-      <div class="bar-row"><span class="name">WhatsApp</span><div class="track"><div class="fill dim" style="width:34%"></div></div><span class="val">2.036</span></div>
-      <div class="bar-row"><span class="name">Walk-in</span><div class="track"><div class="fill dimmer" style="width:18%"></div></div><span class="val">982</span></div>
-      <div class="bar-row"><span class="name">Instagram</span><div class="track"><div class="fill dimmest" style="width:14%"></div></div><span class="val">752</span></div>
-    </div>
-    <p class="chart-note">La mayoría ni siquiera marca el canal — pero cuando lo marcan, gana WhatsApp. Y en el buscador de Flash ya apareció alguien tipeando <strong>«reservar corte manana»</strong>: los vendors ya intentan hablarle a la app.</p>
   </div>
 </section>
 
 <section class="alt">
   <div class="wrap">
-    <span class="kicker blue">La propuesta</span>
-    <h2 class="sec-title">Pegás, confirmás, <strong>listo</strong></h2>
-    <p class="sec-sub">Un solo punto de entrada en la Agenda, desktop y mobile. La IA interpreta el lenguaje; los datos — clientes, servicios, disponibilidad — los resuelve el servidor contra tu negocio real. <strong>Nunca se crea un turno solo, y cuando hay más de una lectura posible pregunta — no adivina. El último tap es siempre tuyo.</strong></p>
-
-    <div class="step-head"><span class="step-num">Paso 1</span><h3>Anotá el turno como te lo dijeron</h3><span class="sub">pegar · escribir · dictar</span></div>
-    <div class="mock-stage">
-      <span class="mock-label">Agenda · barra superior</span>
-      <div class="cap-input"><span class="spark">✨</span><span class="ph">Anotá el turno como te lo dijeron… &nbsp;(pegá el mensaje, escribí libre o dictalo)</span><span class="mic-btn">🎙</span></div>
-      <div class="entry-grid">
-        <div class="mock-card">
-          <div class="pasted">
-            <div class="src"><span class="dot"></span>Mensaje pegado</div>
-            <div class="msg">«Hola Sofi! ¿me guardás turno para balayage el jueves a la tarde? Soy Ana 🙌»</div>
-          </div>
-        </div>
-        <div class="mock-card">
-          <div class="pasted voice">
-            <div class="src"><span class="dot"></span>Dictado por voz · transcripto</div>
-            <div class="msg">«Turno para Ana, balayage, el jueves a las tres de la tarde con Caro»</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="step-head"><span class="step-num">Paso 2</span><h3>La Agenda arma el borrador</h3><span class="sub">todo editable, nada automático</span></div>
-    <div class="grid-2">
-      <div class="mock-stage">
-        <span class="mock-label">Borrador propuesto</span>
-        <div class="mock-card">
-          <div class="draft-head"><span class="t">Borrador de turno</span><span class="badge">✨ Generado — revisalo</span></div>
-          <div class="draft-row"><span class="k">Cliente</span><span class="v">Ana Pérez <span>· 3ª visita</span></span><span class="check">En tus clientes</span><span class="edit">✎</span></div>
-          <div class="draft-row"><span class="k">Servicio</span><span class="v">Balayage <span>· 1 h 30 · $45.000</span></span><span class="check">Catálogo</span><span class="edit">✎</span></div>
-          <div class="draft-row"><span class="k">Cuándo</span><span class="v">Jueves 20 ago · 15:00</span><span class="check">Disponible</span><span class="edit">✎</span></div>
-          <div class="draft-row"><span class="k">Con quién</span><span class="v">Caro <span>· la atendió 2 veces</span></span><span class="check">Sugerido</span><span class="edit">✎</span></div>
-          <div class="draft-ctas"><span class="btn-primary">Confirmar turno</span><span class="btn-ghost">Abrir en Ingresar reserva</span></div>
-          <div class="draft-note">«El jueves a la tarde» se resolvió al primer hueco libre de la tarde. Cada campo se toca y se corrige: la interpretación es un borrador, no una decisión.</div>
-        </div>
-      </div>
-      <div class="rationale">
-        <p><strong>El borrador cae en la pantalla que ya existe.</strong> «Ingresar reserva» ya acepta prefill (es lo que pasa cuando dibujás un rango arrastrando en la agenda) — la captura solo lo alimenta con más campos. Seña, addons, multi-servicio y staff siguen funcionando igual que siempre.</p>
-        <p>Eso cambia el riesgo del feature: si la IA interpreta mal, no estás en un callejón raro — estás en la pantalla de siempre, con los campos cargados y editables.</p>
-        <ul>
-          <li><strong>Cliente nuevo:</strong> si «Ana» no existe, un solo tap crea la clienta y el turno juntos (982 walk-ins por mes entran así).</li>
-          <li><strong>Disponibilidad real:</strong> el borrador nunca propone un horario que no podés cumplir.</li>
-          <li><strong>Profesional sugerido</strong> por historial — nunca asignado en silencio si hay dudas.</li>
-          <li><strong>Nada se resuelve en silencio:</strong> cliente, staff u horario con más de una lectura posible → la app lo dice y elegís vos.</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="step-head"><span class="step-num">Paso 3</span><h3>La ambigüedad es explícita — y elegís vos</h3><span class="sub">la IA nunca decide por el profesional</span></div>
+    <span class="kicker blue">Cuando hay dudas</span>
+    <h2 class="sec-title">La ambigüedad es explícita — <strong>y elige el profesional</strong></h2>
+    <p class="sec-sub">¿Tenés 20 clientas llamadas Ana? La app no adivina: te muestra las candidatas y <strong>«Confirmar» queda deshabilitado hasta que elijas</strong>. Lo mismo con horarios tomados o staff sin definir.</p>
     <div class="grid-2">
       <div class="mock-stage">
         <span class="mock-label">El mensaje dice «Ana» — y tenés 20 Anas</span>
         <div class="mock-card">
-          <span class="amb-flag">El mensaje dice «Ana» y tenés 20 clientas con ese nombre</span>
+          <span class="amb-flag">Tenés 20 clientas con ese nombre</span>
           <div class="amb-q">Decinos cuál — no vamos a adivinar:</div>
           <div class="amb-list">
-            <div class="amb-row"><span class="an">Ana Pérez</span><span class="ad">vino hace 5 semanas · balayage · cel …4821</span></div>
-            <div class="amb-row"><span class="an">Ana García</span><span class="ad">vino hace 3 meses · corte · cel …0977</span></div>
-            <div class="amb-row"><span class="an">Ana Ruiz</span><span class="ad">clienta nueva · sin visitas</span></div>
+            <div class="amb-row"><div class="an">Ana Pérez</div><div class="ad">vino hace 5 semanas · balayage · cel …4821</div></div>
+            <div class="amb-row"><div class="an">Ana García</div><div class="ad">vino hace 3 meses · corte · cel …0977</div></div>
+            <div class="amb-row"><div class="an">Ana Ruiz</div><div class="ad">clienta nueva · sin visitas</div></div>
           </div>
           <div class="amb-search">🔍 &nbsp;Buscar entre las otras 17 Anas…</div>
-          <div class="amb-note">Ordenadas por probabilidad (el balayage ayuda), pero <strong>«Confirmar turno» queda deshabilitado hasta que elijas</strong> — o crees una clienta nueva.</div>
+          <div class="amb-note">Ordenadas por probabilidad, pero <strong>la elección es tuya</strong> — o creás una clienta nueva.</div>
         </div>
       </div>
       <div class="mock-stage">
@@ -339,7 +254,13 @@ footer a { color:#7EB6FF; text-decoration:none; font-weight:500; font-size:13px;
           <span class="conflict">Jueves 15:00 ya está ocupado</span>
           <div class="amb-q">Elegí una alternativa:</div>
           <div class="slot-pills"><span class="slot">Jue 15:30</span><span class="slot">Jue 16:00</span><span class="slot">Vie 15:00</span></div>
-          <div class="amb-note">Ninguna viene marcada: la elección es siempre del profesional.</div>
+          <div class="amb-note">Ninguna viene premarcada — la elección es siempre del profesional.</div>
+        </div>
+        <span class="mock-label" style="margin-top:6px">El mensaje no dice con quién</span>
+        <div class="mock-card">
+          <div class="amb-q">¿Quién la atiende?</div>
+          <div class="slot-pills"><span class="slot">Caro · la atendió 2 veces</span><span class="slot">Euge</span><span class="slot">Sofi</span></div>
+          <div class="amb-note">Sugerimos por historial, pero nunca asignamos staff en silencio.</div>
         </div>
       </div>
     </div>
@@ -348,106 +269,24 @@ footer a { color:#7EB6FF; text-decoration:none; font-weight:500; font-size:13px;
 
 <section>
   <div class="wrap">
-    <span class="kicker blue">El gesto killer en el celular · Fase 2</span>
-    <h2 class="sec-title">Del chat de WhatsApp <strong>a la agenda, sin copiar nada</strong></h2>
-    <p class="sec-sub">Flash ya es una PWA instalable. Sumando <strong>share_target</strong> al manifest, Ágora aparece en el menú «Compartir» del teléfono: desde el mensaje — o el audio — de la clienta al borrador prellenado, en dos taps. Ningún competidor tiene este gesto.</p>
-    <div class="phones">
-      <div class="phone">
-        <div class="app">WhatsApp · chat con Ana</div>
-        <div class="bubble">«Hola Sofi! ¿me guardás turno para balayage el jueves a la tarde? Soy Ana 🙌»</div>
-        <div class="share-row">Responder</div>
-        <div class="share-row hl">↗ &nbsp;Compartir → Ágora</div>
-      </div>
-      <div class="phone-arrow">→</div>
-      <div class="phone">
-        <div class="app">Ágora · borrador listo</div>
-        <div class="mini-draft">
-          <div class="r"><span class="k">Cliente</span><span class="v">Ana Pérez</span></div>
-          <div class="r"><span class="k">Servicio</span><span class="v">Balayage</span></div>
-          <div class="r"><span class="k">Cuándo</span><span class="v">Jue 20 · 15:00</span></div>
-          <div class="r"><span class="k">Con</span><span class="v">Caro</span></div>
-        </div>
-        <div class="mini-cta">Confirmar turno</div>
-      </div>
+    <span class="kicker blue">Las reglas</span>
+    <h2 class="sec-title">Tres reglas <strong>no negociables</strong></h2>
+    <div class="rules">
+      <div class="rule"><div class="n">1</div><h3>Nunca confirma sola</h3><p>La IA propone, el profesional dispone. El último tap es siempre humano.</p></div>
+      <div class="rule"><div class="n">2</div><h3>No inventa nada</h3><p>Clientes, servicios, precios y horarios salen de <strong>tu base</strong>, validados por el servidor — la IA solo interpreta el lenguaje.</p></div>
+      <div class="rule"><div class="n">3</div><h3>Todo se edita</h3><p>Cada campo del borrador se toca y se corrige. Y cae en la pantalla de reserva <strong>de siempre</strong>, no en una UI nueva.</p></div>
     </div>
   </div>
 </section>
 
 <section class="alt">
   <div class="wrap">
-    <span class="kicker blue">Cómo funciona por dentro</span>
-    <h2 class="sec-title">La IA interpreta el lenguaje. <strong>Los datos los resuelve el servidor.</strong></h2>
-    <p class="sec-sub">Una sola llamada de extracción estructurada — sin chat, sin agente. Barato, rápido y testeable.</p>
-    <div class="pipe">
-      <div class="node"><div class="tag">Entrada</div><h4>Texto o audio</h4><p>Mensaje pegado, texto libre o dictado. La transcripción (Whisper) ya corre en producción.</p></div>
-      <div class="arr">→</div>
-      <div class="node llm"><div class="tag">IA · rol classify</div><h4>Extracción estructurada</h4><p>Del lenguaje salen tres cosas: quién, qué y cuándo — como texto. Nada más.</p></div>
-      <div class="arr">→</div>
-      <div class="node"><div class="tag">Cyclone</div><h4>Resolución de entidades</h4><p>Fuzzy match de cliente y servicio contra tu negocio, fechas en hora argentina, disponibilidad real.</p></div>
-      <div class="arr">→</div>
-      <div class="node"><div class="tag">Flash</div><h4>Prefill de la pantalla existente</h4><p>El borrador entra por el prefill que «Ingresar reserva» ya soporta, extendido con el cliente.</p></div>
-    </div>
-    <div class="pipe-note"><strong>Por diseño, la IA no puede inventar un cliente, un precio ni un horario:</strong> solo interpreta el texto. Todo lo que ves en el borrador salió de tu propia base, validado por el servidor.</div>
-    <div class="exists">
-      <div class="col ya">
-        <h3 class="ya">Ya está construido</h3>
-        <ul>
-          <li><strong>Pantalla de reserva con prefill</strong> — <code>preInfoType</code> ya existe, solo se extiende con el cliente</li>
-          <li><strong>Transcripción de audio</strong> (Whisper) en producción desde mayo</li>
-          <li><strong>Búsqueda difusa con embeddings</strong> (pgvector) en producción</li>
-          <li><strong>Rate limit + costo por negocio</strong> — cada llamada queda medida en <code>ai_usage_events</code></li>
-        </ul>
-      </div>
-      <div class="col nu">
-        <h3 class="nuevo">Lo único nuevo</h3>
-        <ul>
-          <li>Endpoint de extracción + resolución en Cyclone</li>
-          <li>El input de captura y la tarjeta de borrador en la Agenda</li>
-          <li>(Fase 2) <code>share_target</code> en el manifest PWA + ruta receptora</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <span class="kicker blue">Fases</span>
-    <h2 class="sec-title">Tres fases, <strong>la primera ya es el producto completo</strong></h2>
-    <div class="road">
-      <div class="step hot"><div class="tag">Fase 1 · MVP</div><h3>Texto + voz</h3><p>El input en la Agenda, desktop y mobile: pegar, escribir libre o <strong>dictar</strong> (Whisper ya está en producción) → borrador → confirmar. Con esto solo, ya ataca las 48 mil reservas.</p><div class="eff">Backend + frontend · un sprint</div></div>
-      <div class="step"><div class="tag">Fase 2</div><h3>Compartir desde WhatsApp</h3><p>share_target en la PWA: el mensaje — o el audio de la clienta — viaja del chat al borrador sin copiar nada. El gesto que nadie más tiene.</p><div class="eff">Manifest + ruta receptora</div></div>
-      <div class="step"><div class="tag">Fase 3</div><h3>Multi-turno</h3><p>«Caro y la hija el sábado» son dos turnos: borradores encadenados. Hasta entonces, el caso compuesto abre la pantalla completa prellenada.</p><div class="eff">Sobre la base de F1</div></div>
-    </div>
-  </div>
-</section>
-
-<section class="alt">
-  <div class="wrap">
-    <span class="kicker blue">Cómo sabemos si funciona</span>
-    <h2 class="sec-title">Una métrica norte, <strong>tres guardrails</strong></h2>
-    <div class="metrics">
-      <div class="metric"><div class="ico north">🎯</div><div><h4><span>Norte</span>% de reservas manuales que entran por captura</h4><p>Baseline 0. Aspiración: <strong>15–20% a los 90 días</strong> del lanzamiento.</p></div></div>
-      <div class="metric"><div class="ico guard">🛡</div><div><h4><span>Guardrail 1</span>Tasa de edición del borrador</h4><p>Si editan casi todos los campos, el parsing no sirve — se mide desde el día uno, por campo.</p></div></div>
-      <div class="metric"><div class="ico guard">🛡</div><div><h4><span>Guardrail 2</span>Tiempo de creación vs flujo clásico</h4><p>La captura tiene que ser objetivamente más rápida que tipear — si no lo es, no se empuja.</p></div></div>
-      <div class="metric"><div class="ico guard">🛡</div><div><h4><span>Guardrail 3</span>Negocios que la usan por semana</h4><p>Adopción orgánica semanal — la vara que las features de IA «destino» nunca pasaron.</p></div></div>
-    </div>
-    <div class="risk">
-      <h4>El riesgo real</h4>
-      <p><strong>La confianza se rompe con dos borradores equivocados.</strong> Por eso: confirmación siempre explícita, disponibilidad validada por el servidor, y el guardrail de tasa de edición instrumentado desde el primer día. Si la calidad del parsing no acompaña, el input degrada con gracia: abre «Ingresar reserva» vacío, como hoy.</p>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <span class="kicker blue">Para discutir en el brainstorming</span>
-    <h2 class="sec-title">Cuatro decisiones <strong>abiertas</strong></h2>
+    <span class="kicker blue">Para el brainstorming</span>
+    <h2 class="sec-title">Tres preguntas <strong>abiertas</strong></h2>
     <div class="qs">
-      <div class="q"><div class="n">Abierta 01</div><h4>¿Dónde vive el input?</h4><p>¿Barra superior de la Agenda, botón flotante en mobile, dentro del Ctrl+K — o las tres? La propuesta arranca por la Agenda porque ahí está el 57% del uso.</p></div>
-      <div class="q"><div class="n">Abierta 02</div><h4>¿Multi-turno recién en la Fase 3?</h4><p>«Caro y la hija el sábado» son dos turnos. La propuesta lo deja para el final — mientras tanto, el caso compuesto abre la pantalla completa prellenada. ¿Lo adelantamos?</p></div>
-      <div class="q"><div class="n">Abierta 03</div><h4>¿Qué hace con confianza baja?</h4><p>«Después del feriado» no se adivina. ¿Mostramos el calendario con la semana sugerida, o preguntamos en texto? Propuesta: calendario, siempre visual.</p></div>
-      <div class="q"><div class="n">Abierta 04</div><h4>¿Staff ambiguo?</h4><p>En negocios con equipo, si el mensaje no dice con quién: ¿chip de staff obligatorio, sugerencia por historial, o el dueño como default? Nunca en silencio.</p></div>
+      <div class="q"><span class="n">01</span><p><strong>¿Dónde vive el input?</strong> ¿Barra de la Agenda, botón flotante en mobile, Ctrl+K — o las tres?</p></div>
+      <div class="q"><span class="n">02</span><p><strong>¿Multi-turno cuándo?</strong> «Caro y la hija el sábado» son dos turnos — la propuesta lo deja para una fase 3.</p></div>
+      <div class="q"><span class="n">03</span><p><strong>¿Confianza baja?</strong> «Después del feriado» no se adivina — ¿calendario sugerido o repreguntar?</p></div>
     </div>
   </div>
 </section>
@@ -456,7 +295,7 @@ footer a { color:#7EB6FF; text-decoration:none; font-weight:500; font-size:13px;
   <div class="wrap">
     <div>
       <div class="big">La agenda que <strong>trabaja con vos</strong> · Parte 1 de 2</div>
-      <div class="fine">Documento de trabajo para brainstorming · Ágora · Agosto 2026 · Evidencia: DB prod + PostHog, corrida product-research 18/08</div>
+      <div class="fine">Documento de trabajo para brainstorming · Ágora · Agosto 2026</div>
     </div>
     <a href="../ficha-viva-cliente-2026-08/index.html">Parte 2: Ficha viva del cliente →</a>
   </div>

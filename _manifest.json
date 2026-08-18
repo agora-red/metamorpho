@@ -7,8 +7,8 @@
       "type": "proposal",
       "typeLabel": "Proposal",
       "title": "Captura mágica de turnos",
-      "description": "Propuesta para brainstorming: el negocio carga 48.423 reservas/mes a mano — pegás el mensaje del cliente, lo escribís o lo dictás con la voz, y la Agenda arma el borrador: cliente, servicio, día y hora validados contra disponibilidad real. Todo editable campo por campo, y la ambigüedad es explícita: ¿20 clientas llamadas Ana? La app lista candidatas y el profesional elige — Confirmar queda deshabilitado hasta entonces. La IA solo interpreta el lenguaje; entidades y horarios los resuelve Cyclone, y el borrador cae en la pantalla de Ingresar reserva que ya soporta prefill. 3 fases: texto + voz → compartir desde WhatsApp (share_target) → multi-turno. Parte 1 de «La agenda que trabaja con vos».",
-      "detail": "proposal · Agenda de Flash · voz + edición + ambigüedad explícita · 3 fases · parte 1 de 2",
+      "description": "Propuesta corta para brainstorming: le pasás a la Agenda el turno como te lo dijeron — pegado, escrito, dictado o compartido desde WhatsApp — y arma un borrador editable con datos de tu propia base, validados contra disponibilidad real. La ambigüedad es explícita (¿20 clientas llamadas Ana? ¿horario tomado? ¿staff sin definir?): la app lista opciones y elige el profesional; Confirmar queda deshabilitado hasta entonces. Tres reglas: nunca confirma sola, no inventa nada, todo se edita. Hoy se cargan 48.423 reservas/mes a mano. Parte 1 de «La agenda que trabaja con vos».",
+      "detail": "proposal corta · 4 variantes de captura · ambigüedad explícita · 3 reglas · parte 1 de 2",
       "date": "AGO 2026",
       "href": "./captura-magica-turnos-2026-08/index.html",
       "slug": "captura-magica-turnos-2026-08"
