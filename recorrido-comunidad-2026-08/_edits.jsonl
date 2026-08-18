@@ -1,2 +1,4 @@
 {"ts": "2026-08-18T15:05:00Z", "instruction": "self-review", "diff_summary": "chip PANEL/TU PÁGINA se clasificaba por eyebrow y marcaba mal el paso 01 (pro.agora.red matcheaba 'agora.red') → clasificación por número de paso", "source": "self-review"}
 {"ts": "2026-08-18T15:12:00Z", "instruction": "self-review", "diff_summary": "loading=lazy dejaba las figuras sin cargar en el render de revisión (y de paso en lectores rápidos) → imágenes eager", "source": "self-review"}
+{"date":"2026-08-18","fix":"chips TU PÁGINA de pasos 45-46 usaban clase inexistente 'lado pagina' — corregidos a 'lado store' (la clase real del doc)"}
+{"date":"2026-08-18","fix":"los 6 renders de emails cargaban ~25-40% de aire muerto abajo (viewport fijo 1600px del helper) — recortados al contenido con PIL antes de convertir a jpg"}
