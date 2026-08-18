@@ -7,7 +7,7 @@
       "type": "proposal",
       "typeLabel": "Proposal",
       "title": "Captura mágica de turnos",
-      "description": "Propuesta corta para brainstorming: le pasás a la Agenda el turno como te lo dijeron — pegado, escrito, dictado o compartido desde WhatsApp — y arma un borrador editable con datos de tu propia base, validados contra disponibilidad real. La ambigüedad es explícita (¿20 clientas llamadas Ana? ¿horario tomado? ¿staff sin definir?): la app lista opciones y elige el profesional; Confirmar queda deshabilitado hasta entonces. Tres reglas: nunca confirma sola, no inventa nada, todo se edita. Hoy se cargan 48.423 reservas/mes a mano. Parte 1 de «La agenda que trabaja con vos».",
+      "description": "Propuesta corta para brainstorming: le pasás a la Agenda el turno como te lo dijeron — pegado, escrito, dictado o compartido desde WhatsApp (texto o audio de voz de la clienta — se transcribe y se interpreta igual) — y arma un borrador editable con datos de tu propia base, validados contra disponibilidad real. La ambigüedad es explícita (¿20 clientas llamadas Ana? ¿horario tomado? ¿staff sin definir?): la app lista opciones y elige el profesional; Confirmar queda deshabilitado hasta entonces. Tres reglas: nunca confirma sola, no inventa nada, todo se edita. Hoy se cargan 48.423 reservas/mes a mano. Parte 1 de «La agenda que trabaja con vos».",
       "detail": "proposal corta · 4 variantes de captura · ambigüedad explícita · 3 reglas · parte 1 de 2",
       "date": "AGO 2026",
       "href": "./captura-magica-turnos-2026-08/index.html",
