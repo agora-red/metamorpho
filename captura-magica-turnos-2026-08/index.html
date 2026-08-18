@@ -80,17 +80,23 @@ p.sec-sub strong { font-weight:600; color:var(--frost-ink-soft); }
 .cap-input { display:flex; align-items:center; gap:10px; background:var(--frost-surface); border:1.5px solid var(--frost-primary); border-radius:var(--r-chip); padding:11px 18px; box-shadow:var(--sh-glow); }
 .cap-input .spark { flex:none; font-size:15px; }
 .cap-input .ph { font-size:13.5px; font-weight:300; color:var(--frost-muted); }
+.mic-btn { margin-left:auto; flex:none; width:34px; height:34px; border-radius:50%; background:var(--frost-primary); color:#fff; display:flex; align-items:center; justify-content:center; font-size:14px; box-shadow:var(--sh-glow); }
 .pasted { border-left:3px solid var(--frost-success); background:#F2FBF6; border-radius:0 var(--r-item) var(--r-item) 0; padding:12px 14px; }
 .pasted .src { font-size:10.5px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:#0F7B4C; margin-bottom:5px; display:flex; align-items:center; gap:6px; }
 .pasted .src .dot { width:7px; height:7px; border-radius:50%; background:#25D366; }
 .pasted .msg { font-size:13.5px; font-weight:300; color:var(--frost-ink-soft); font-style:italic; }
+.entry-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.pasted.voice { border-left-color:var(--frost-primary); background:var(--frost-primary-wash); }
+.pasted.voice .src { color:var(--frost-primary-hover); }
+.pasted.voice .src .dot { background:var(--frost-primary); }
 
 /* draft card */
 .draft-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
 .draft-head .t { font-size:14px; font-weight:600; }
 .draft-head .badge { font-size:10.5px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--frost-primary); background:var(--frost-primary-soft); border-radius:var(--r-chip); padding:4px 11px; }
-.draft-row { display:grid; grid-template-columns:96px 1fr auto; gap:12px; align-items:center; padding:10px 0; border-bottom:1px solid var(--frost-border-soft); }
+.draft-row { display:grid; grid-template-columns:96px 1fr auto auto; gap:12px; align-items:center; padding:10px 0; border-bottom:1px solid var(--frost-border-soft); }
 .draft-row:last-of-type { border-bottom:none; }
+.draft-row .edit { color:var(--frost-faint); font-size:13px; }
 .draft-row .k { font-size:11px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--frost-faint); }
 .draft-row .v { font-size:13.5px; font-weight:500; }
 .draft-row .v span { font-weight:300; color:var(--frost-muted); font-size:12.5px; white-space:nowrap; }
@@ -102,6 +108,15 @@ p.sec-sub strong { font-weight:600; color:var(--frost-ink-soft); }
 
 /* ambiguity chips */
 .amb-q { font-size:13px; font-weight:600; margin-bottom:10px; }
+.amb-flag { display:inline-block; font-size:12px; font-weight:600; color:#8A5A06; background:rgba(245,158,11,0.14); border-radius:var(--r-item); padding:7px 12px; margin-bottom:12px; }
+.amb-list { display:flex; flex-direction:column; border:1px solid var(--frost-border); border-radius:var(--r-item); overflow:hidden; }
+.amb-row { display:flex; flex-direction:column; gap:1px; padding:10px 13px; border-bottom:1px solid var(--frost-border-soft); }
+.amb-row:last-child { border-bottom:none; }
+.amb-row .an { font-size:13px; font-weight:600; }
+.amb-row .ad { font-size:11.5px; font-weight:300; color:var(--frost-muted); }
+.amb-search { margin-top:10px; border:1px dashed var(--frost-border); border-radius:var(--r-item); padding:9px 13px; font-size:12px; font-weight:500; color:var(--frost-muted); }
+.amb-note { margin-top:12px; font-size:11.5px; font-weight:500; color:var(--frost-muted); }
+.amb-note strong { font-weight:600; color:var(--frost-ink-soft); }
 .amb-chips { display:flex; gap:10px; flex-wrap:wrap; }
 .amb-chip { border:1.5px solid var(--frost-border); border-radius:var(--r-btn); padding:9px 14px; font-size:12.5px; font-weight:500; background:var(--frost-surface); }
 .amb-chip span { display:block; font-size:11px; font-weight:300; color:var(--frost-muted); margin-top:1px; }
@@ -188,7 +203,7 @@ footer a { color:#7EB6FF; text-decoration:none; font-weight:500; font-size:13px;
 
 @media (max-width:860px) {
   .tiles { grid-template-columns:repeat(2,1fr); }
-  .grid-2, .exists, .metrics, .qs { grid-template-columns:1fr; }
+  .grid-2, .exists, .metrics, .qs, .entry-grid { grid-template-columns:1fr; }
   .road { grid-template-columns:1fr; }
   .pipe { grid-template-columns:1fr; }
   .pipe .arr { justify-content:center; transform:rotate(90deg); }
@@ -223,7 +238,7 @@ footer a { color:#7EB6FF; text-decoration:none; font-weight:500; font-size:13px;
   <div class="wrap">
     <span class="kicker blue">La agenda que trabaja con vos · Parte 1 de 2</span>
     <h1>El turno se anota <strong>como te lo dijeron</strong></h1>
-    <p class="lede">Tu clienta te escribe por WhatsApp. Vos pegás el mensaje — o lo escribís como lo tenés en la cabeza — y la Agenda arma el borrador: cliente, servicio, día y hora, validados contra tu disponibilidad real. Vos solo confirmás.</p>
+    <p class="lede">Tu clienta te escribe por WhatsApp. Vos pegás el mensaje, lo escribís como lo tenés en la cabeza o lo dictás con la voz — y la Agenda arma el borrador: cliente, servicio, día y hora, validados contra tu disponibilidad real. Todo editable, y si hay dudas te pregunta. Vos confirmás.</p>
     <span class="status"><span class="pulse"></span>Propuesta para brainstorming — nada de esto está construido todavía</span>
   </div>
 </div>
@@ -254,16 +269,24 @@ footer a { color:#7EB6FF; text-decoration:none; font-weight:500; font-size:13px;
   <div class="wrap">
     <span class="kicker blue">La propuesta</span>
     <h2 class="sec-title">Pegás, confirmás, <strong>listo</strong></h2>
-    <p class="sec-sub">Un solo punto de entrada en la Agenda, desktop y mobile. La IA interpreta el lenguaje; los datos — clientes, servicios, disponibilidad — los resuelve el servidor contra tu negocio real. <strong>Nunca se crea un turno solo: el último tap es siempre tuyo.</strong></p>
+    <p class="sec-sub">Un solo punto de entrada en la Agenda, desktop y mobile. La IA interpreta el lenguaje; los datos — clientes, servicios, disponibilidad — los resuelve el servidor contra tu negocio real. <strong>Nunca se crea un turno solo, y cuando hay más de una lectura posible pregunta — no adivina. El último tap es siempre tuyo.</strong></p>
 
-    <div class="step-head"><span class="step-num">Paso 1</span><h3>Anotá el turno como te lo dijeron</h3><span class="sub">input nuevo en la Agenda</span></div>
+    <div class="step-head"><span class="step-num">Paso 1</span><h3>Anotá el turno como te lo dijeron</h3><span class="sub">pegar · escribir · dictar</span></div>
     <div class="mock-stage">
       <span class="mock-label">Agenda · barra superior</span>
-      <div class="cap-input"><span class="spark">✨</span><span class="ph">Anotá el turno como te lo dijeron… &nbsp;(pegá el mensaje, escribí libre o dictalo)</span></div>
-      <div class="mock-card">
-        <div class="pasted">
-          <div class="src"><span class="dot"></span>Mensaje pegado</div>
-          <div class="msg">«Hola Sofi! ¿me guardás turno para balayage el jueves a la tarde? Soy Ana 🙌»</div>
+      <div class="cap-input"><span class="spark">✨</span><span class="ph">Anotá el turno como te lo dijeron… &nbsp;(pegá el mensaje, escribí libre o dictalo)</span><span class="mic-btn">🎙</span></div>
+      <div class="entry-grid">
+        <div class="mock-card">
+          <div class="pasted">
+            <div class="src"><span class="dot"></span>Mensaje pegado</div>
+            <div class="msg">«Hola Sofi! ¿me guardás turno para balayage el jueves a la tarde? Soy Ana 🙌»</div>
+          </div>
+        </div>
+        <div class="mock-card">
+          <div class="pasted voice">
+            <div class="src"><span class="dot"></span>Dictado por voz · transcripto</div>
+            <div class="msg">«Turno para Ana, balayage, el jueves a las tres de la tarde con Caro»</div>
+          </div>
         </div>
       </div>
     </div>
@@ -274,12 +297,12 @@ footer a { color:#7EB6FF; text-decoration:none; font-weight:500; font-size:13px;
         <span class="mock-label">Borrador propuesto</span>
         <div class="mock-card">
           <div class="draft-head"><span class="t">Borrador de turno</span><span class="badge">✨ Generado — revisalo</span></div>
-          <div class="draft-row"><span class="k">Cliente</span><span class="v">Ana Pérez <span>· 3ª visita</span></span><span class="check">En tus clientes</span></div>
-          <div class="draft-row"><span class="k">Servicio</span><span class="v">Balayage <span>· 1 h 30 · $45.000</span></span><span class="check">Catálogo</span></div>
-          <div class="draft-row"><span class="k">Cuándo</span><span class="v">Jueves 20 ago · 15:00</span><span class="check">Disponible</span></div>
-          <div class="draft-row"><span class="k">Con quién</span><span class="v">Caro <span>· la atendió 2 veces</span></span><span class="check">Sugerido</span></div>
+          <div class="draft-row"><span class="k">Cliente</span><span class="v">Ana Pérez <span>· 3ª visita</span></span><span class="check">En tus clientes</span><span class="edit">✎</span></div>
+          <div class="draft-row"><span class="k">Servicio</span><span class="v">Balayage <span>· 1 h 30 · $45.000</span></span><span class="check">Catálogo</span><span class="edit">✎</span></div>
+          <div class="draft-row"><span class="k">Cuándo</span><span class="v">Jueves 20 ago · 15:00</span><span class="check">Disponible</span><span class="edit">✎</span></div>
+          <div class="draft-row"><span class="k">Con quién</span><span class="v">Caro <span>· la atendió 2 veces</span></span><span class="check">Sugerido</span><span class="edit">✎</span></div>
           <div class="draft-ctas"><span class="btn-primary">Confirmar turno</span><span class="btn-ghost">Abrir en Ingresar reserva</span></div>
-          <div class="draft-note">«El jueves a la tarde» se resolvió al primer hueco libre de la tarde. Tocá cualquier campo para cambiarlo.</div>
+          <div class="draft-note">«El jueves a la tarde» se resolvió al primer hueco libre de la tarde. Cada campo se toca y se corrige: la interpretación es un borrador, no una decisión.</div>
         </div>
       </div>
       <div class="rationale">
@@ -289,28 +312,34 @@ footer a { color:#7EB6FF; text-decoration:none; font-weight:500; font-size:13px;
           <li><strong>Cliente nuevo:</strong> si «Ana» no existe, un solo tap crea la clienta y el turno juntos (982 walk-ins por mes entran así).</li>
           <li><strong>Disponibilidad real:</strong> el borrador nunca propone un horario que no podés cumplir.</li>
           <li><strong>Profesional sugerido</strong> por historial — nunca asignado en silencio si hay dudas.</li>
+          <li><strong>Nada se resuelve en silencio:</strong> cliente, staff u horario con más de una lectura posible → la app lo dice y elegís vos.</li>
         </ul>
       </div>
     </div>
 
-    <div class="step-head"><span class="step-num">Paso 3</span><h3>Cuando hay dudas, pregunta — no adivina</h3><span class="sub">ambigüedad y conflictos</span></div>
+    <div class="step-head"><span class="step-num">Paso 3</span><h3>La ambigüedad es explícita — y elegís vos</h3><span class="sub">la IA nunca decide por el profesional</span></div>
     <div class="grid-2">
       <div class="mock-stage">
-        <span class="mock-label">Dos clientas se llaman Ana</span>
+        <span class="mock-label">El mensaje dice «Ana» — y tenés 20 Anas</span>
         <div class="mock-card">
-          <div class="amb-q">¿Cuál Ana?</div>
-          <div class="amb-chips">
-            <div class="amb-chip sel">Ana Pérez<span>vino hace 5 semanas · balayage</span></div>
-            <div class="amb-chip">Ana García<span>clienta nueva · sin visitas</span></div>
+          <span class="amb-flag">El mensaje dice «Ana» y tenés 20 clientas con ese nombre</span>
+          <div class="amb-q">Decinos cuál — no vamos a adivinar:</div>
+          <div class="amb-list">
+            <div class="amb-row"><span class="an">Ana Pérez</span><span class="ad">vino hace 5 semanas · balayage · cel …4821</span></div>
+            <div class="amb-row"><span class="an">Ana García</span><span class="ad">vino hace 3 meses · corte · cel …0977</span></div>
+            <div class="amb-row"><span class="an">Ana Ruiz</span><span class="ad">clienta nueva · sin visitas</span></div>
           </div>
+          <div class="amb-search">🔍 &nbsp;Buscar entre las otras 17 Anas…</div>
+          <div class="amb-note">Ordenadas por probabilidad (el balayage ayuda), pero <strong>«Confirmar turno» queda deshabilitado hasta que elijas</strong> — o crees una clienta nueva.</div>
         </div>
       </div>
       <div class="mock-stage">
         <span class="mock-label">El horario pedido está tomado</span>
         <div class="mock-card">
           <span class="conflict">Jueves 15:00 ya está ocupado</span>
-          <div class="amb-q">Te propongo lo más cercano:</div>
-          <div class="slot-pills"><span class="slot sel">Jue 15:30</span><span class="slot">Jue 16:00</span><span class="slot">Vie 15:00</span></div>
+          <div class="amb-q">Elegí una alternativa:</div>
+          <div class="slot-pills"><span class="slot">Jue 15:30</span><span class="slot">Jue 16:00</span><span class="slot">Vie 15:00</span></div>
+          <div class="amb-note">Ninguna viene marcada: la elección es siempre del profesional.</div>
         </div>
       </div>
     </div>
@@ -319,9 +348,9 @@ footer a { color:#7EB6FF; text-decoration:none; font-weight:500; font-size:13px;
 
 <section>
   <div class="wrap">
-    <span class="kicker blue">El gesto killer en el celular · Fase 3</span>
+    <span class="kicker blue">El gesto killer en el celular · Fase 2</span>
     <h2 class="sec-title">Del chat de WhatsApp <strong>a la agenda, sin copiar nada</strong></h2>
-    <p class="sec-sub">Flash ya es una PWA instalable. Sumando <strong>share_target</strong> al manifest, Ágora aparece en el menú «Compartir» del teléfono: desde el mensaje del cliente al borrador prellenado, en dos taps. Ningún competidor tiene este gesto.</p>
+    <p class="sec-sub">Flash ya es una PWA instalable. Sumando <strong>share_target</strong> al manifest, Ágora aparece en el menú «Compartir» del teléfono: desde el mensaje — o el audio — de la clienta al borrador prellenado, en dos taps. Ningún competidor tiene este gesto.</p>
     <div class="phones">
       <div class="phone">
         <div class="app">WhatsApp · chat con Ana</div>
@@ -374,7 +403,7 @@ footer a { color:#7EB6FF; text-decoration:none; font-weight:500; font-size:13px;
         <ul>
           <li>Endpoint de extracción + resolución en Cyclone</li>
           <li>El input de captura y la tarjeta de borrador en la Agenda</li>
-          <li>(Fase 3) <code>share_target</code> en el manifest PWA + ruta receptora</li>
+          <li>(Fase 2) <code>share_target</code> en el manifest PWA + ruta receptora</li>
         </ul>
       </div>
     </div>
@@ -386,9 +415,9 @@ footer a { color:#7EB6FF; text-decoration:none; font-weight:500; font-size:13px;
     <span class="kicker blue">Fases</span>
     <h2 class="sec-title">Tres fases, <strong>la primera ya es el producto completo</strong></h2>
     <div class="road">
-      <div class="step hot"><div class="tag">Fase 1 · MVP</div><h3>Texto</h3><p>El input en la Agenda, desktop y mobile: pegar o escribir libre → borrador → confirmar. <strong>Con esto solo, ya ataca las 48 mil reservas.</strong></p><div class="eff">Backend + frontend · un sprint</div></div>
-      <div class="step"><div class="tag">Fase 2</div><h3>Voz</h3><p>Apretás el micrófono y lo decís — o reenviás el audio que te mandó la clienta. Whisper ya está en producción.</p><div class="eff">Incremental sobre F1</div></div>
-      <div class="step"><div class="tag">Fase 3</div><h3>Compartir desde WhatsApp</h3><p>share_target en la PWA: el mensaje viaja del chat al borrador sin copiar nada. El gesto que nadie más tiene.</p><div class="eff">Manifest + ruta receptora</div></div>
+      <div class="step hot"><div class="tag">Fase 1 · MVP</div><h3>Texto + voz</h3><p>El input en la Agenda, desktop y mobile: pegar, escribir libre o <strong>dictar</strong> (Whisper ya está en producción) → borrador → confirmar. Con esto solo, ya ataca las 48 mil reservas.</p><div class="eff">Backend + frontend · un sprint</div></div>
+      <div class="step"><div class="tag">Fase 2</div><h3>Compartir desde WhatsApp</h3><p>share_target en la PWA: el mensaje — o el audio de la clienta — viaja del chat al borrador sin copiar nada. El gesto que nadie más tiene.</p><div class="eff">Manifest + ruta receptora</div></div>
+      <div class="step"><div class="tag">Fase 3</div><h3>Multi-turno</h3><p>«Caro y la hija el sábado» son dos turnos: borradores encadenados. Hasta entonces, el caso compuesto abre la pantalla completa prellenada.</p><div class="eff">Sobre la base de F1</div></div>
     </div>
   </div>
 </section>
@@ -416,7 +445,7 @@ footer a { color:#7EB6FF; text-decoration:none; font-weight:500; font-size:13px;
     <h2 class="sec-title">Cuatro decisiones <strong>abiertas</strong></h2>
     <div class="qs">
       <div class="q"><div class="n">Abierta 01</div><h4>¿Dónde vive el input?</h4><p>¿Barra superior de la Agenda, botón flotante en mobile, dentro del Ctrl+K — o las tres? La propuesta arranca por la Agenda porque ahí está el 57% del uso.</p></div>
-      <div class="q"><div class="n">Abierta 02</div><h4>¿Multi-cliente en la Fase 1?</h4><p>«Caro y la hija el sábado» son dos turnos. ¿El MVP resuelve solo el caso simple y el resto abre la pantalla completa, o encaramos multi de entrada?</p></div>
+      <div class="q"><div class="n">Abierta 02</div><h4>¿Multi-turno recién en la Fase 3?</h4><p>«Caro y la hija el sábado» son dos turnos. La propuesta lo deja para el final — mientras tanto, el caso compuesto abre la pantalla completa prellenada. ¿Lo adelantamos?</p></div>
       <div class="q"><div class="n">Abierta 03</div><h4>¿Qué hace con confianza baja?</h4><p>«Después del feriado» no se adivina. ¿Mostramos el calendario con la semana sugerida, o preguntamos en texto? Propuesta: calendario, siempre visual.</p></div>
       <div class="q"><div class="n">Abierta 04</div><h4>¿Staff ambiguo?</h4><p>En negocios con equipo, si el mensaje no dice con quién: ¿chip de staff obligatorio, sugerencia por historial, o el dueño como default? Nunca en silencio.</p></div>
     </div>
