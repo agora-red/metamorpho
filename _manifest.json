@@ -1,8 +1,18 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
   "version": 1,
-  "updated_at": "2026-08-20",
+  "updated_at": "2026-08-21",
   "outputs": [
+    {
+      "type": "deck",
+      "typeLabel": "Deck",
+      "title": "Cursos online · Tu técnica puede llegar más lejos",
+      "description": "Presentación pública para barberos, estilistas y educadores del oficio: cómo Ágora conecta creación del temario con IA, página de venta, reproducción, formatos de clase, progreso, alumnos y analítica. Distingue la base ya construida, las activaciones graduales y las próximas apuestas a validar. Cierra con una selección interactiva de las dos funciones que el profesional usaría 100%.",
+      "detail": "12 slides · deck público · PDF descargable · feedback interactivo",
+      "date": "AGO 2026",
+      "href": "./cursos-online-profesionales-2026-08/index.html",
+      "slug": "cursos-online-profesionales-2026-08"
+    },
     {
       "type": "proposal",
       "typeLabel": "Proposal",
