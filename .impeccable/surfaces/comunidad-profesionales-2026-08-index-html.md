@@ -17,12 +17,12 @@ Presentar Comunidad a barberos, estilistas y profesionales, mostrando valor come
 
 ## Story
 
-Oportunidad → recorrido → creación → operación → experiencia de miembro → preguntas → membresías → conexión → comparación → disponible/próximo → feedback.
+Oportunidad → recorrido → creación → operación → espacios con propósito → experiencia de miembro → preguntas → membresías → modelos de ingreso → conexión curso/comunidad → Espacios + Fidelización → comparación → disponible/próximo → feedback.
 
 ## Interaction
 
-Scroll-snap de 12 escenas, teclado, flechas, progreso, compartir, descargar PDF y selector de hasta dos prioridades con texto libre y copia al portapapeles.
+Scroll-snap de 15 escenas, teclado, flechas, progreso, compartir, descargar PDF y selector de hasta dos prioridades con texto libre y copia al portapapeles.
 
 ## Integrity
 
-Lo disponible y lo propuesto se separan explícitamente. La comisión de 5% se formula para nuevas membresías. Las capturas son de entorno demo y cada raster tiene procedencia en _edits.jsonl.
+Lo disponible y lo propuesto se separan explícitamente. La comisión de 5% se formula para nuevas membresías. El aprendizaje de una entrevista privada se sintetiza sin publicar teléfono ni citas. Las capturas son de entorno demo y cada raster tiene procedencia en _edits.jsonl.

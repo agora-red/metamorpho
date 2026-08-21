@@ -57,6 +57,17 @@
       outline: 3px solid var(--blue);
       outline-offset: 3px;
     }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
 
     .topbar {
       position: fixed;
@@ -122,7 +133,7 @@
       width: 100%;
       height: 100%;
       background: var(--blue);
-      transform: scaleX(.08333);
+      transform: scaleX(.06667);
       transform-origin: left center;
       transition: transform .55s var(--ease-out);
     }
@@ -157,6 +168,8 @@
       transition: transform .3s var(--ease-out), background .3s;
     }
     .dot[aria-current="true"]::before { background: var(--blue); transform: scaleY(3.5); }
+    .on-blue-slide .dot::before { background: #fff; }
+    .on-blue-slide .dot:focus-visible { outline-color: #fff; }
     .deck-nav {
       position: fixed;
       right: clamp(18px, 3vw, 44px);
@@ -171,7 +184,7 @@
       position: relative;
       min-height: 100svh;
       scroll-snap-align: start;
-      scroll-snap-stop: always;
+      scroll-snap-stop: normal;
       overflow: hidden;
       display: flex;
       align-items: center;
@@ -514,7 +527,7 @@
       border-radius: 16px;
       color: #fff;
       background: var(--blue);
-      box-shadow: 0 18px 34px -18px rgba(0, 95, 213, .62);
+      box-shadow: var(--shadow-small);
       font-weight: 800;
       text-align: center;
     }
@@ -557,6 +570,53 @@
       color: #B4233C;
       background: var(--coral-soft);
       font-weight: 750;
+    }
+
+    .offer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin-top: 42px;
+      border-top: 1px solid var(--line);
+    }
+    .offer-grid article {
+      padding: 26px clamp(14px, 2.2vw, 28px) 12px;
+      border-right: 1px solid var(--line);
+    }
+    .offer-grid article:first-child { padding-left: 0; }
+    .offer-grid article:last-child {
+      margin-top: -22px;
+      padding: 36px 30px;
+      border: 0;
+      border-radius: 22px;
+      color: #fff;
+      background: var(--blue);
+      box-shadow: 0 24px 52px -24px rgba(0, 95, 213, .6);
+    }
+    .offer-grid h3 {
+      color: var(--blue);
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: .03em;
+    }
+    .offer-grid article:nth-child(2) h3 { color: var(--coral); }
+    .offer-grid article:nth-child(3) h3 { color: var(--green); }
+    .offer-grid article:last-child h3 { color: #fff; }
+    .offer-grid ul {
+      display: grid;
+      gap: 14px;
+      margin: 20px 0 0;
+      padding: 0;
+      list-style: none;
+      color: var(--copy);
+    }
+    .offer-grid article:last-child ul { color: #fff; font-weight: 700; }
+    .offer-grid .outcome-copy {
+      margin: 18px 0 0;
+      color: #fff;
+      font-size: clamp(1.15rem, 1.7vw, 1.42rem);
+      font-weight: 750;
+      line-height: 1.35;
     }
 
     .comparison {
@@ -651,7 +711,19 @@
     }
     .blue-slide { color: #fff; background: var(--blue) !important; }
     .blue-slide h2 { color: #fff; max-width: 19ch; }
-    .blue-slide .lead { color: #D7E9FF; }
+    .blue-slide .lead { color: #fff; }
+    .blue-slide .now-next > div > h3 { color: #fff; }
+    .progression-slide { padding-top: 88px; padding-bottom: 40px; }
+    .progression-slide h2 {
+      margin-bottom: 22px;
+      font-size: clamp(2.65rem, 4.7vw, 5.7rem);
+    }
+    .progression-slide .lead { margin-bottom: 0; }
+    .progression-slide .now-next { gap: clamp(34px, 5vw, 72px); margin-top: 28px; }
+    .progression-slide .available-list { gap: 14px; }
+    .progression-slide .available-list li { font-size: clamp(1rem, 1.45vw, 1.18rem); }
+    .progression-slide .next-panel { padding: clamp(22px, 2.7vw, 34px); }
+    .progression-slide .next-list li { padding: 13px 0; font-size: clamp(.98rem, 1.45vw, 1.18rem); }
 
     .feedback-layout {
       display: grid;
@@ -667,6 +739,7 @@
       background: #fff;
       box-shadow: var(--shadow);
     }
+    .choice-fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
     .choice-grid { display: grid; gap: 8px; }
     .choice {
       position: relative;
@@ -798,9 +871,11 @@
       .capabilities { grid-template-columns: repeat(3, 1fr); gap: 18px; }
       .capability, .capability:first-child { border-top: 1px solid var(--line); }
       .member-visual { grid-template-columns: minmax(0, 1fr) 160px; }
-      .comparison { grid-template-columns: repeat(2, 1fr); }
+      .comparison, .offer-grid { grid-template-columns: repeat(2, 1fr); }
       .comparison article:nth-child(2) { border-right: 0; }
       .comparison article:last-child { margin: 22px 0 0; }
+      .offer-grid article:nth-child(2) { border-right: 0; }
+      .offer-grid article:last-child { margin: 22px 0 0; }
       .now-next { grid-template-columns: 1fr; }
     }
 
@@ -814,7 +889,9 @@
       .icon-button { min-width: 44px; height: 44px; }
       .deck-nav { right: 14px; bottom: 14px; }
       .nav-button { width: 44px; height: 44px; background: rgba(255,255,255,.96); }
+      .deck-nav { flex-direction: column; }
       .slide { min-height: auto; padding: 100px 20px 96px; overflow: visible; }
+      .slide:not(.hero) { padding-right: 76px; }
       .hero {
         grid-template-rows: 65% 35%;
         min-height: 100svh;
@@ -849,9 +926,11 @@
         transform: translateX(-50%) rotate(135deg);
       }
       .fee { position: static; max-width: none; margin-top: 12px; }
-      .comparison { grid-template-columns: 1fr; }
+      .comparison, .offer-grid { grid-template-columns: 1fr; }
       .comparison article, .comparison article:first-child { padding: 22px 0; border-right: 0; border-bottom: 1px solid var(--line); }
       .comparison article:last-child { padding: 30px; border-bottom: 0; }
+      .offer-grid article, .offer-grid article:first-child { padding: 22px 0; border-right: 0; border-bottom: 1px solid var(--line); }
+      .offer-grid article:last-child { padding: 30px; border-bottom: 0; }
       .now-next { margin-top: 24px; }
       .available-list { gap: 16px; }
       .next-panel { border-radius: 18px; }
@@ -871,16 +950,16 @@
   <!--
   THESIS: Comunidad sostiene la relación entre una visita y la próxima desde el negocio que el profesional ya maneja.
   OWN-WORLD: Ágora Frost editorial: blanco, azul nítido, coral humano, tipografía Manrope y capturas reales como evidencia.
-  STORY: oportunidad → recorrido → operación → experiencia del miembro → pagos → conexión → decisión.
+  STORY: oportunidad → recorrido → operación → espacios → experiencia → pagos → modelos → conexión → fidelización → decisión.
   FIRST VIEWPORT: promesa corta a la izquierda y profesionales colaborando en un estudio real a la derecha.
-  FORM: deck público de 12 escenas; seed key community-proof-2026-08; scroll, teclado, flechas, descarga y feedback interactivo.
+  FORM: deck público de 15 escenas; seed key community-proof-2026-08; scroll, teclado, flechas, descarga y feedback interactivo.
   FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
   -->
   <header class="topbar">
     <a class="brand" href="#inicio" aria-label="Ir al inicio">
       <img src="assets/agora-horizontal.png" alt="Ágora">
     </a>
-    <span class="progress-copy" id="progressCopy">1 / 12</span>
+    <span class="progress-copy" id="progressCopy">1 / 15</span>
     <div class="actions">
       <a class="icon-button" href="assets/Comunidad-Agora.pdf" download aria-label="Descargar PDF" title="Descargar PDF">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 20h14"/></svg>
@@ -984,6 +1063,31 @@
       </div>
     </section>
 
+    <section class="slide" data-title="Espacios">
+      <div class="frame">
+        <h2 class="reveal">Cada conversación tiene un lugar y una intención</h2>
+        <p class="lead reveal delay">Ordená la participación con espacios concretos. Las victorias no se pierden entre dudas y los recursos siguen siendo fáciles de encontrar.</p>
+        <div class="offer-grid reveal">
+          <article>
+            <h3>Victorias</h3>
+            <ul><li>Resultados y avances</li><li>Fotos o evidencia</li><li>Motivación entre pares</li></ul>
+          </article>
+          <article>
+            <h3>Consultas</h3>
+            <ul><li>Dudas de técnica</li><li>Seguimiento del alumno</li><li>Respuestas que quedan</li></ul>
+          </article>
+          <article>
+            <h3>Recursos</h3>
+            <ul><li>Guías y archivos</li><li>Encuentros</li><li>Material de apoyo</li></ul>
+          </article>
+          <article>
+            <h3>Disponible hoy</h3>
+            <p class="outcome-copy">Creás una sala “Victorias” y tu gente publica ahí.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <section class="slide" data-title="La experiencia">
       <div class="frame split reverse">
         <div class="copy">
@@ -1032,18 +1136,70 @@
       </div>
     </section>
 
+    <section class="slide" data-title="Modelos de ingreso">
+      <div class="frame">
+        <h2 class="reveal">Un curso puede venderse de varias formas</h2>
+        <p class="lead reveal delay">Elegí el modelo según la promesa y la relación que querés construir. La comunidad no te obliga a cobrar de una sola manera.</p>
+        <div class="offer-grid reveal">
+          <article>
+            <h3>Venta individual</h3>
+            <ul><li>Curso o capacitación</li><li>Pago único</li><li>Acceso definido</li></ul>
+          </article>
+          <article>
+            <h3>Membresía</h3>
+            <ul><li>Curso incluido</li><li>Comunidad y encuentros</li><li>Mensual o prepaga</li></ul>
+          </article>
+          <article>
+            <h3>Puerta gratuita</h3>
+            <ul><li>Contenido abierto</li><li>Confianza primero</li><li>Venta posterior</li></ul>
+          </article>
+          <article>
+            <h3>Vos elegís</h3>
+            <p class="outcome-copy">Curso solo o dentro de una membresía.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <section class="slide" data-title="Todo conectado">
       <div class="frame">
-        <h2 class="reveal">Lo que ya vendés alimenta la conversación</h2>
-        <p class="lead reveal delay">Cursos y capacitaciones pueden dar acceso a la comunidad o venir incluidos en una membresía. Cuando publicás algo conectado, la novedad aparece sola en el feed.</p>
+        <h2 class="reveal">Vendé el curso solo o dentro de una membresía</h2>
+        <p class="lead reveal delay">La membresía puede incluir el curso. O la compra del curso puede abrir la comunidad. Después, cada novedad conectada también aparece en el feed.</p>
         <div class="catalog-layout reveal">
           <figure class="shot"><img src="assets/catalogo-01.jpg" loading="lazy" decoding="async" alt="Una capacitación publicada automáticamente en el feed de Comunidad"></figure>
           <div class="handoff">
-            <strong>Se publica</strong>
+            <strong>Curso individual</strong>
             <span class="arrow" aria-hidden="true"></span>
-            <strong>La comunidad lo cuenta</strong>
-            <span class="muted">sin escribir en tu nombre</span>
-            <div class="handoff-note">“Sumale unas palabras tuyas →”</div>
+            <strong>Membresía + curso</strong>
+            <span class="muted">o curso + comunidad</span>
+            <div class="handoff-note">Elegís qué incluye cada venta</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide blue-slide progression-slide" data-title="Espacios + Fidelización">
+      <div class="frame">
+        <h2 class="reveal">Las piezas ya existen; falta conectarlas</h2>
+        <p class="lead reveal delay">El próximo salto es convertir actividad real en progreso visible, sin esconder qué ya está disponible y qué todavía debemos validar.</p>
+        <div class="now-next reveal delay">
+          <div>
+            <h3>Hoy, por separado</h3>
+            <ul class="available-list">
+              <li>Sala “Victorias”</li>
+              <li>Posts con foto o evidencia</li>
+              <li>Cursos, recursos y encuentros</li>
+              <li>Puntos, niveles, recompensas y beneficios en Fidelización</li>
+            </ul>
+          </div>
+          <div class="next-panel">
+            <h3>Próximo a conectar</h3>
+            <ol class="next-list">
+              <li>Acciones configurables por el creador</li>
+              <li>Checkpoints con evidencia</li>
+              <li>Niveles que desbloquean espacios</li>
+              <li>Desafíos y garantías condicionales</li>
+            </ol>
           </div>
         </div>
       </div>
@@ -1087,16 +1243,16 @@
           <ul class="available-list">
             <li>Creación guiada y puerta pública</li>
             <li>Feed, salas, encuentros y recursos</li>
-            <li>Accesos gratis y pagos</li>
-            <li>Personas, actividad y moderación</li>
-            <li>Cursos y capacitaciones conectados</li>
+            <li>Membresías gratis, mensuales y prepagas</li>
+            <li>Venta individual de cursos</li>
+            <li>Cursos incluidos en membresías</li>
           </ul>
           <div class="next-panel">
             <h3>Próximo a validar</h3>
             <ol class="next-list">
-              <li>Puntos y niveles conectados con Fidelización</li>
-              <li>Salas o beneficios exclusivos por nivel</li>
-              <li>Desafíos para activar la participación</li>
+              <li>Conectar puntos y niveles con Comunidad</li>
+              <li>Checkpoints y evidencia de avance</li>
+              <li>Desbloqueos por nivel</li>
               <li>Automatizaciones y métricas de retención</li>
             </ol>
           </div>
@@ -1108,7 +1264,7 @@
       <div class="frame feedback-layout">
         <div>
           <h2 class="reveal">¿Qué dos cosas usarías 100%?</h2>
-          <p class="lead reveal delay">Elegí hasta dos. Esa respuesta vale más que una lista interminable de funciones que nadie termina usando.</p>
+          <p class="lead reveal delay">Elegí hasta dos. Queremos priorizar lo que realmente usarías, no sumar funciones por sumar.</p>
           <a class="download-link" href="assets/Comunidad-Agora.pdf" download>
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 20h14"/></svg>
             Descargar la presentación en PDF
@@ -1116,16 +1272,19 @@
           <p class="sources">Producto: <a href="../recorrido-comunidad-2026-08/" target="_blank" rel="noopener">recorrido público completo de Comunidad</a>.</p>
         </div>
         <form class="feedback-form reveal" id="feedbackForm">
-          <div class="choice-grid">
-            <label class="choice"><input type="checkbox" name="priority" value="Puntos y niveles por participación"><span>Puntos y niveles por participación</span></label>
-            <label class="choice"><input type="checkbox" name="priority" value="Salas exclusivas para miembros o niveles"><span>Salas exclusivas para miembros o niveles</span></label>
-            <label class="choice"><input type="checkbox" name="priority" value="Desafíos de 7, 14 o 30 días"><span>Desafíos de 7, 14 o 30 días</span></label>
-            <label class="choice"><input type="checkbox" name="priority" value="Bienvenida y reactivación automáticas"><span>Bienvenida y reactivación automáticas</span></label>
-            <label class="choice"><input type="checkbox" name="priority" value="Métricas de actividad y retención"><span>Métricas de actividad y retención</span></label>
-          </div>
-          <p class="selection-status" id="selectionStatus">Podés elegir hasta 2 opciones.</p>
+          <fieldset class="choice-fieldset" aria-describedby="selectionStatus">
+            <legend class="sr-only">Elegí hasta dos prioridades</legend>
+            <div class="choice-grid">
+              <label class="choice"><input type="checkbox" name="priority" value="Espacio Victorias para compartir resultados"><span>Espacio “Victorias” para compartir resultados</span></label>
+              <label class="choice"><input type="checkbox" name="priority" value="Checkpoints configurables con foto o evidencia"><span>Checkpoints configurables con foto o evidencia</span></label>
+              <label class="choice"><input type="checkbox" name="priority" value="Puntos, niveles y desbloqueos"><span>Puntos, niveles y desbloqueos</span></label>
+              <label class="choice"><input type="checkbox" name="priority" value="Desafíos con garantía condicional"><span>Desafíos con garantía condicional</span></label>
+              <label class="choice"><input type="checkbox" name="priority" value="Curso por venta individual o membresía"><span>Curso por venta individual o membresía</span></label>
+            </div>
+            <p class="selection-status" id="selectionStatus" role="status" aria-live="polite" aria-atomic="true">Podés elegir hasta 2 opciones.</p>
+          </fieldset>
           <label for="missingNeed"><strong>¿Qué necesidad falta?</strong></label>
-          <textarea id="missingNeed" placeholder="Ej.: poder separar una sala para mi equipo…"></textarea>
+          <textarea id="missingNeed" placeholder="Ej.: que 20 prácticas con foto desbloqueen el próximo nivel…"></textarea>
           <div class="form-actions">
             <button class="copy-feedback" id="copyFeedback" type="submit" disabled>Copiar mi respuesta</button>
             <button class="whatsapp-feedback" id="whatsappFeedback" type="button" disabled>Compartir por WhatsApp</button>
@@ -1165,14 +1324,16 @@
         dots.forEach(function (dot, dotIndex) {
           dot.setAttribute("aria-current", dotIndex === activeIndex ? "true" : "false");
         });
+        document.body.classList.toggle("on-blue-slide", slides[activeIndex].classList.contains("blue-slide"));
         previousButton.disabled = activeIndex === 0;
         nextButton.disabled = activeIndex === slides.length - 1;
       }
 
       function goTo(index) {
         var safeIndex = Math.max(0, Math.min(slides.length - 1, index));
+        var shouldJump = Math.abs(safeIndex - activeIndex) > 1;
         update(safeIndex);
-        slides[safeIndex].scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+        slides[safeIndex].scrollIntoView({ behavior: reduceMotion || shouldJump ? "auto" : "smooth", block: "start" });
       }
 
       var revealObserver = new IntersectionObserver(function (entries) {
