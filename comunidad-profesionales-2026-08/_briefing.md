@@ -10,25 +10,22 @@ Profesionales y dueños de negocios que ya sostienen una relación con clientes 
 
 ## Narrativa
 
-1. La relación no termina con el turno.
-2. Entrar, participar y gestionar ocurre dentro del ecosistema Ágora.
-3. La creación empieza por la promesa y el acceso.
-4. Publicar, encontrarse y guardar recursos debe ser sostenible.
-5. Los espacios pueden tener un propósito concreto: Victorias, Consultas o Recursos.
-6. La experiencia del miembro conserva la identidad del negocio.
-7. Las dudas quedan donde pueden servir a más personas.
-8. Los accesos pueden ser gratis, mensuales, prepagos o de pago único.
-9. Un curso puede cobrarse como venta individual o incluirse en una membresía, y potenciarse con Comunidad, Espacios, encuentros y recursos.
-10. Cursos, membresías y Comunidad pueden otorgarse acceso entre sí.
-11. Curso, Espacios y Fidelización se potencian: Consultas destraba dudas, Victorias visibiliza resultados y una conexión propuesta permitiría sumar puntos, validar evidencia y desbloquear niveles o salas.
-12. Ágora aprende de Skool, Circle y Kajabi sin sumar otra plataforma desconectada.
-13. El cierre separa lo disponible de lo próximo a validar y resume el progreso conectado.
+1. Cursos y capacitaciones, Comunidad y Fidelización forman una sola relación.
+2. Para el miembro, el valor principal es acceder directamente a contenido y recursos exclusivos.
+3. Los espacios organizan Victorias, Consultas, Práctica, Recursos, Novedades y acceso avanzado.
+4. El profesional puede enseñar con cursos grabados, capacitaciones en vivo o experiencias híbridas.
+5. La oferta puede venderse de forma individual, por membresía o con bloques prepagos.
+6. Una membresía puede incluir contenido y un curso o capacitación puede habilitar Comunidad.
+7. Fidelización conecta puntos, niveles, premios y la próxima compra.
+8. Un ejemplo concreto muestra cómo ganar, subir, canjear y conectar práctica educativa.
+9. Los casos de barbería, estilista, academia y salón se resumen en una sola comparación.
+10. El cierre separa lo disponible hoy de las integraciones propuestas.
 
 ## Estado del producto
 
-Disponible: alta guiada, promesa, puerta pública, feed, salas con publicaciones de miembros, encuentros, recursos, accesos gratis y pagos, gestión de personas/actividad, moderación, cursos vendidos individualmente, cursos incluidos en membresías y membresías o compras que otorgan acceso a Comunidad. Fidelización ya ofrece puntos, niveles, recompensas y beneficios como módulo separado.
+Disponible: alta guiada, promesa, página pública de acceso, feed, espacios con publicaciones de miembros, encuentros, recursos, accesos gratis y pagos, gestión de personas/actividad, moderación, cursos vendidos individualmente, cursos o capacitaciones incluidos en membresías y compras que otorgan acceso a Comunidad. Fidelización ya ofrece puntos, niveles, recompensas y beneficios como módulo separado.
 
-Próximo a validar: acciones configurables que sumen puntos, checkpoints con foto o evidencia, espacios o beneficios desbloqueados por nivel, desafíos y garantías condicionales, automatizaciones y métricas de retención.
+Próximo a validar: un hub unificado para ver cursos y capacitaciones desde Comunidad, acciones configurables que sumen puntos, checkpoints con evidencia, espacios desbloqueados por nivel, desafíos y garantías condicionales.
 
 ## Fuentes
 
@@ -45,4 +42,3 @@ Próximo a validar: acciones configurables que sumen puntos, checkpoints con fot
 - Flechas anterior/siguiente.
 - Progreso y posición actual.
 - Descarga del PDF.
-- Compartir.
