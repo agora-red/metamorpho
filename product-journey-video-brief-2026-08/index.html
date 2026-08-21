@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>product-journey-video — brief interno · Ágora</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --frost-primary:        #0072FB;
+  --frost-primary-soft:   #EEF6FF;
+  --frost-primary-wash:   rgba(0,114,251,0.08);
+  --frost-accent:         #FF4658;
+  --frost-accent-soft:    #FFE3E6;
+  --frost-success:        #10B981;
+  --frost-success-soft:   #A9FFE7;
+  --frost-warning:        #F59E0B;
+  --frost-warning-soft:   #FFE77B;
+  --frost-ink:            #0F172A;
+  --frost-ink-soft:       #33415A;
+  --frost-muted:          #64748B;
+  --frost-faint:          #94A3B8;
+  --frost-surface:        #FFFFFF;
+  --frost-surface-muted:  #EFF3F9;
+  --frost-border:         #E2E8F0;
+  --r-item:  10px;
+  --r-chip:  999px;
+  --r-card:  20px;
+  --r-btn:   12px;
+  --sh-sm:   0 4px 12px -4px rgba(15,23,42,0.10);
+  --sh-glow: 0 4px 18px -2px rgba(0,114,251,0.30);
+  --sans:    'Montserrat', system-ui, -apple-system, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--sans);
+  background: var(--frost-surface-muted);
+  color: var(--frost-ink);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  font-variant-numeric: tabular-nums;
+}
+.main { max-width: 760px; margin: 0 auto; padding: 44px 28px 90px; }
+
+.chrome { display: flex; align-items: center; gap: 9px; margin-bottom: 34px; }
+.chrome .dot { width: 9px; height: 9px; border-radius: var(--r-chip); background: var(--frost-primary); }
+.chrome .word { font-size: 14px; font-weight: 600; letter-spacing: 0.02em; color: var(--frost-ink); }
+.chrome .sep { color: var(--frost-border); font-size: 14px; }
+.chrome .path { font-size: 13px; font-weight: 500; color: var(--frost-faint); }
+
+.badge { display: inline-flex; align-items: center; gap: 7px; padding: 5px 13px; border-radius: var(--r-chip); font-size: 13.5px; font-weight: 600; background: var(--frost-success-soft); color: #065f46; margin-bottom: 22px; }
+.badge .bdot { width: 7px; height: 7px; border-radius: var(--r-chip); background: var(--frost-success); }
+
+.kicker { font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--frost-muted); margin-bottom: 12px; }
+h1 { font-size: 36px; font-weight: 300; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 16px; }
+h1 b { font-weight: 600; }
+.lede { font-size: 18px; font-weight: 300; color: var(--frost-ink-soft); line-height: 1.6; margin-bottom: 14px; }
+.lede-case { font-size: 14.5px; font-weight: 500; color: var(--frost-primary); background: var(--frost-primary-wash); display: inline-block; padding: 7px 14px; border-radius: var(--r-btn); margin-bottom: 40px; }
+
+h2 { font-size: 21px; font-weight: 600; margin-bottom: 12px; letter-spacing: -0.01em; }
+h3 { font-size: 15px; font-weight: 600; color: var(--frost-ink); }
+section { margin-bottom: 42px; }
+p { font-size: 15.5px; font-weight: 300; color: var(--frost-ink-soft); line-height: 1.7; }
+p + p { margin-top: 10px; }
+strong { font-weight: 600; color: var(--frost-ink); }
+code { font-family: var(--sans); font-weight: 500; background: var(--frost-surface-muted); padding: 2px 6px; border-radius: 5px; font-size: 0.92em; color: var(--frost-ink); }
+
+.card { background: var(--frost-surface); border-radius: var(--r-card); padding: 22px 24px; box-shadow: var(--sh-sm); margin-top: 12px; }
+
+/* tool cards */
+.tools { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 14px; }
+@media (max-width: 560px) { .tools { grid-template-columns: 1fr; } }
+.tool { background: var(--frost-surface); border-radius: var(--r-card); padding: 20px 22px; box-shadow: var(--sh-sm); }
+.tool .role { display: inline-block; font-size: 10.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--frost-primary); background: var(--frost-primary-soft); padding: 3px 9px; border-radius: var(--r-chip); margin-bottom: 10px; }
+.tool h3 { margin-bottom: 6px; }
+.tool p { font-size: 14px; }
+
+/* methodology steps */
+.steps { display: flex; flex-direction: column; margin-top: 16px; }
+.step { display: flex; gap: 16px; padding: 16px 0; border-top: 1px solid var(--frost-border); }
+.step:first-child { border-top: none; padding-top: 0; }
+.step .num { flex-shrink: 0; width: 30px; height: 30px; border-radius: var(--r-chip); background: var(--frost-ink); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; }
+.step .body h3 { margin-bottom: 4px; }
+.step .body p { font-size: 14.5px; }
+.step.crit .num { background: var(--frost-accent); }
+
+/* stats */
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(148px, 1fr)); gap: 12px; margin-top: 14px; }
+.stat { background: var(--frost-surface); border-radius: var(--r-card); padding: 20px 16px; box-shadow: var(--sh-sm); text-align: center; }
+.stat .n { font-size: 24px; font-weight: 300; color: var(--frost-primary); letter-spacing: -0.01em; }
+.stat .n.mono { font-size: 20px; }
+.stat .l { font-size: 12.5px; font-weight: 500; color: var(--frost-muted); margin-top: 5px; line-height: 1.35; }
+
+/* origin bug->fix */
+.fixrow { display: flex; gap: 12px; align-items: flex-start; background: var(--frost-surface); border-radius: var(--r-item); padding: 14px 16px; box-shadow: var(--sh-sm); margin-top: 9px; }
+.fixrow .bug { flex: 1; font-size: 14px; font-weight: 400; color: var(--frost-ink-soft); }
+.fixrow .bug b { display: block; font-size: 10.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--frost-accent); margin-bottom: 4px; }
+.fixrow .arrow { flex-shrink: 0; color: var(--frost-faint); font-size: 15px; padding-top: 2px; }
+.fixrow .fix { flex: 1; font-size: 14px; font-weight: 400; color: var(--frost-ink-soft); }
+.fixrow .fix b { display: block; font-size: 10.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--frost-success); margin-bottom: 4px; }
+
+.foot { margin-top: 50px; padding-top: 20px; border-top: 1px solid var(--frost-border); font-size: 13.5px; color: var(--frost-muted); }
+.foot code { font-size: 12.5px; }
+</style>
+</head>
+<body>
+
+<div class="main">
+
+  <div class="chrome">
+    <span class="dot"></span><span class="word">Ágora</span>
+    <span class="sep">·</span>
+    <span class="path">design-studio / brief interno</span>
+  </div>
+
+  <span class="badge"><span class="bdot"></span> Skill lista para usar · Claude Code</span>
+
+  <p class="kicker">Brief interno</p>
+  <h1><b>product-journey-video</b> — el tutorial narrado se arma solo</h1>
+  <p class="lede">
+    Una skill de Claude Code que convierte un flujo real de Ágora (Flash o Nightwing) en un video tutorial
+    narrado, navegando la app de verdad, escribiendo el guion, sintetizando la voz y superponiendo recuadros
+    de highlight sincronizados palabra por palabra con lo que se dice.
+  </p>
+  <span class="lede-case">Caso real: video de alta de catálogo de productos — 13 escenas · 73 segundos · $0 de costo</span>
+
+  <section>
+    <h2>Qué hace, en una frase</h2>
+    <p>
+      Recibe un flujo a documentar (ej. "alta de catálogo de productos"), <strong>navega la app real</strong> para
+      sacar las capturas, escribe un <strong>guion corto en español rioplatense neutro</strong>, lo narra con
+      <strong>TTS</strong>, y arma un <strong>MP4 1920×1080</strong> donde un recuadro ámbar resalta el elemento
+      exacto que la narración está mencionando, en el momento exacto en que lo menciona — sin zoom ni paneo,
+      capturas completas y estáticas.
+    </p>
+  </section>
+
+  <section>
+    <h2>Herramientas</h2>
+    <div class="tools">
+      <div class="tool">
+        <span class="role">Orquestador</span>
+        <h3>Claude Code</h3>
+        <p>Dirige todo el pipeline — navega, escribe el guion, valida highlights, arma el video y hace el QA final. Bash + Node como motor de ejecución, sin infraestructura propia.</p>
+      </div>
+      <div class="tool">
+        <span class="role">Navegación</span>
+        <h3>agent-browser</h3>
+        <p>CLI de Vercel Labs sobre Chrome DevTools Protocol. Conectado por <code>--cdp</code> a un Chrome abierto a mano — el lanzamiento propio de agent-browser crasheaba en el login real.</p>
+      </div>
+      <div class="tool">
+        <span class="role">Narración</span>
+        <h3>Google Gemini API</h3>
+        <p><code>gemini-2.5-flash-preview-tts</code>, voz "Sulafat". Sin voces nativas por país — el acento rioplatense se logra dirigiendo el modelo con instrucciones en lenguaje natural.</p>
+      </div>
+      <div class="tool">
+        <span class="role">Ensamblado</span>
+        <h3>ffmpeg</h3>
+        <p><code>drawbox</code> para los recuadros animados, <code>scale</code>+<code>pad</code> para el letterbox sin recortes, <code>concat</code> para unir las escenas en el MP4 final.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Metodología — 8 fases</h2>
+    <div class="steps">
+      <div class="step">
+        <span class="num">1</span>
+        <div class="body"><h3>Setup</h3><p>Carpeta de salida persistente dentro del repo. Si el flujo necesita un estado inicial particular, se resetea por API en bloque — nunca clickeando de a uno en la UI.</p></div>
+      </div>
+      <div class="step">
+        <span class="num">2</span>
+        <div class="body"><h3>Captura</h3><p>agent-browser vía CDP, patrón snapshot → ref → click. La bounding box del elemento se captura en el mismo paso que el screenshot — nunca se reconstruye después mirando el PNG.</p></div>
+      </div>
+      <div class="step">
+        <span class="num">3</span>
+        <div class="body"><h3>Guion</h3><p>Español rioplatense neutro, voseo normal, sin modismos. Blocklist activa contra "che", "al toque", "re", "boludo/a" y similares.</p></div>
+      </div>
+      <div class="step crit">
+        <span class="num">4</span>
+        <div class="body"><h3>Validación highlight ↔ texto</h3><p>Assert duro: la frase que dispara el highlight tiene que existir literalmente en el texto narrado de esa escena. Si no está, el build falla ahí — no compila un video desincronizado.</p></div>
+      </div>
+      <div class="step">
+        <span class="num">5</span>
+        <div class="body"><h3>Storyboard preview</h3><p>Galería HTML de baja resolución para aprobar guion y posición de highlights <strong>antes</strong> de gastar cuota de TTS.</p></div>
+      </div>
+      <div class="step crit">
+        <span class="num">6</span>
+        <div class="body"><h3>Narración TTS</h3><p>Tope duro de 10 llamados por día (límite free tier de Google). Frases consecutivas se agrupan en un solo llamado cuando hace falta, cortando el audio en fronteras de oración exactas.</p></div>
+      </div>
+      <div class="step crit">
+        <span class="num">7</span>
+        <div class="body"><h3>Timing del highlight</h3><p>Se calcula por posición del carácter de la palabra clave dentro del audio (fracción × duración) — nunca un delay fijo. El recuadro aparece exactamente cuando se dice la palabra.</p></div>
+      </div>
+      <div class="step">
+        <span class="num">8</span>
+        <div class="body"><h3>Assembly + QA</h3><p>Contact sheet final: todos los frames de highlight tileados en una sola imagen, para verificar de un vistazo que cada recuadro cae donde y cuando corresponde.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>El guion y la voz — cómo se arma</h2>
+    <p>
+      Cada escena tiene <strong>una sola frase corta</strong> (8 a 15 palabras), en español rioplatense neutro
+      con voseo normal (<em>tenés, elegís, sumás</em>) — nunca modismos ni jerga regional. La frase tiene que
+      describir literalmente lo que se ve en esa captura, y si la escena lleva highlight, la palabra que lo
+      dispara tiene que estar escrita ahí (fase 4) — no se redacta la frase después de elegir el highlight,
+      se piensan juntas.
+    </p>
+    <div class="card">
+      <p><strong>Instrucción de estilo que se antepone a cada línea</strong> antes de sintetizarla — nunca se lee
+      en voz alta, se confirmó comparando la duración del audio contra el texto real:</p>
+      <p style="margin-top:10px; font-style:italic; color:var(--frost-ink-soft);">
+        "Hablá con acento rioplatense de Buenos Aires (español argentino/uruguayo, con voseo natural), tono
+        cálido, cercano y conversacional, como explicándole algo a un amigo, sin sonar robótico, y sin usar
+        modismos ni jerga informal (nada de "che", "re", "al toque", "boludo/a" y similares): <strong>[línea
+        del guion]</strong>"
+      </p>
+    </div>
+    <p>
+      Gemini TTS <strong>no tiene voces nativas por país</strong> — el acento se logra dirigiendo el modelo con
+      esa instrucción, no eligiendo una voz "argentina" de un catálogo. La voz base es <strong>Sulafat</strong>
+      (una de las 30 voces del modelo), y es la misma en los 13 clips del video, sin excepción — verificado
+      grepeando los tres scripts generadores.
+    </p>
+    <div class="card">
+      <p><strong>Falla real encontrada en esta sesión:</strong> el TTS a veces repite una frase corta dos veces
+      seguidas dentro del mismo audio — un loop conocido en modelos generativos. Se detecta comparando la
+      duración esperada (palabras del guion al ritmo del resto de las escenas) contra la duración real del
+      audio generado. La solución no es reintentar el mismo texto — vuelve a fallar — sino reescribir la
+      frase para romper el patrón.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Detalles técnicos</h2>
+    <div class="stats">
+      <div class="stat"><p class="n">~90s</p><p class="l">duración objetivo (blanda)</p></div>
+      <div class="stat"><p class="n">73s</p><p class="l">caso real · 13 escenas</p></div>
+      <div class="stat"><p class="n mono">1920×1080</p><p class="l">sin zoom, letterboxed</p></div>
+      <div class="stat"><p class="n">≤10</p><p class="l">llamados TTS por día</p></div>
+      <div class="stat"><p class="n mono">#FFC400</p><p class="l">highlight · 5px · pop 0.3s</p></div>
+      <div class="stat"><p class="n">$0</p><p class="l">costo — todo en tier gratis</p></div>
+    </div>
+    <div class="card">
+      <p>
+        El tope de <strong>10 llamados/día</strong> a Gemini TTS es un límite real del free tier, no algo que se
+        libera esperando — se validó empíricamente con esperas de hasta 5 minutos sin resultado. Por eso la
+        skill agrupa el guion en vez de hacer un llamado por frase.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Por qué existe</h2>
+    <p>
+      Nació de armar a mano el video de alta de catálogo de productos. En esa sesión aparecieron tres bugs
+      reales — la skill se armó específicamente para que ninguno se repita.
+    </p>
+    <div class="fixrow">
+      <div class="bug"><b>Bug</b>El highlight de "Agregar producto" apareció en una escena cuya narración nunca menciona esas palabras.</div>
+      <div class="arrow">→</div>
+      <div class="fix"><b>Ahora</b>Assert duro en fase 4: el build falla si la frase objetivo no está en el texto narrado de esa escena.</div>
+    </div>
+    <div class="fixrow">
+      <div class="bug"><b>Bug</b>Un delay fijo de 0.25s para todos los recuadros, sin importar dónde caía la palabra en la frase.</div>
+      <div class="arrow">→</div>
+      <div class="fix"><b>Ahora</b>Timing calculado por posición real del carácter dentro del audio (fase 7).</div>
+    </div>
+    <div class="fixrow">
+      <div class="bug"><b>Bug</b>Se agotó la cuota gratis de Gemini TTS por hacer un llamado suelto por cada frase del guion.</div>
+      <div class="arrow">→</div>
+      <div class="fix"><b>Ahora</b>Tope duro de 10 llamados/día con agrupamiento automático de frases (fase 6).</div>
+    </div>
+  </section>
+
+  <p class="foot">Documento interno de Ágora · basado en <code>cyclone/.claude/skills/product-journey-video/SKILL.md</code> · agosto 2026.</p>
+
+</div>
+
+</body>
+</html>

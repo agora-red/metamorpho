@@ -4,6 +4,16 @@
   "updated_at": "2026-08-21",
   "outputs": [
     {
+      "type": "one-pager",
+      "typeLabel": "One-pager",
+      "title": "product-journey-video",
+      "description": "Brief interno de la skill de Claude Code que arma videos tutoriales narrados de flujos de producto propios a partir de capturas reales: navega la app con agent-browser, escribe el guion en español rioplatense neutro sin modismos, narra con Gemini TTS (voz \"Sulafat\", acento dirigido por prompt) y superpone recuadros de highlight sincronizados palabra-por-palabra con la narración. Cubre las 8 fases del pipeline, cómo se arma y valida el guion, el tope duro de 10 llamados TTS/día (límite free tier de Google) y los 3 bugs reales que motivaron la skill, usando como caso real el video de alta de catálogo de productos (13 escenas, 73s, $0 de costo).",
+      "detail": "8 fases · caso real 13 escenas · $0 costo",
+      "date": "AGO 2026",
+      "href": "./product-journey-video-brief-2026-08/index.html",
+      "slug": "product-journey-video-brief-2026-08"
+    },
+    {
       "type": "deck",
       "typeLabel": "Deck",
       "title": "Comunidad · Tu comunidad, dentro de tu negocio",
