@@ -4,6 +4,16 @@
   "updated_at": "2026-08-21",
   "outputs": [
     {
+      "type": "deck",
+      "typeLabel": "Deck",
+      "title": "Comunidad · Tu comunidad, dentro de tu negocio",
+      "description": "Presentación pública de Comunidad para barberos, estilistas y profesionales: una relación continua entre visitas con feed, salas, encuentros, recursos y membresías, administrada desde el mismo Ágora. Recorre la puerta pública, la experiencia del miembro, accesos gratis/mensuales/prepagos/pago único, el 5% por nueva membresía y la conexión con cursos y capacitaciones. Separa claramente lo que ya funciona de lo próximo a validar y cierra con feedback interactivo de máximo dos prioridades.",
+      "detail": "12 escenas · producto real · PDF · feedback interactivo",
+      "date": "AGO 2026",
+      "href": "./comunidad-profesionales-2026-08/index.html",
+      "slug": "comunidad-profesionales-2026-08"
+    },
+    {
       "type": "proposal",
       "typeLabel": "Proposal",
       "title": "Captura mágica de turnos",

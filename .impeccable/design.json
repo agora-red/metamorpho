@@ -1,0 +1,463 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-21T13:20:02Z",
+  "title": "Design System: Metamorpho · Ágora",
+  "extensions": {
+    "colorMeta": {
+      "primary-blue": {
+        "role": "primary",
+        "displayName": "Azul Ágora",
+        "tonalRamp": [
+          "oklch(15% 0.07 255)",
+          "oklch(27% 0.12 255)",
+          "oklch(39% 0.17 255)",
+          "oklch(51% 0.21 255)",
+          "oklch(63% 0.18 255)",
+          "oklch(75% 0.12 255)",
+          "oklch(86% 0.07 255)",
+          "oklch(95% 0.025 255)"
+        ]
+      },
+      "primary-blue-deep": {
+        "role": "primary",
+        "displayName": "Azul Profundo",
+        "tonalRamp": [
+          "oklch(15% 0.07 255)",
+          "oklch(27% 0.12 255)",
+          "oklch(39% 0.17 255)",
+          "oklch(51% 0.21 255)",
+          "oklch(63% 0.18 255)",
+          "oklch(75% 0.12 255)",
+          "oklch(86% 0.07 255)",
+          "oklch(95% 0.025 255)"
+        ]
+      },
+      "primary-blue-soft": {
+        "role": "primary",
+        "displayName": "Azul Hielo",
+        "tonalRamp": [
+          "oklch(15% 0.07 255)",
+          "oklch(27% 0.12 255)",
+          "oklch(39% 0.17 255)",
+          "oklch(51% 0.21 255)",
+          "oklch(63% 0.18 255)",
+          "oklch(75% 0.12 255)",
+          "oklch(86% 0.07 255)",
+          "oklch(95% 0.025 255)"
+        ]
+      },
+      "human-coral": {
+        "role": "secondary",
+        "displayName": "Coral Humano",
+        "tonalRamp": [
+          "oklch(15% 0.05 18)",
+          "oklch(27% 0.10 18)",
+          "oklch(39% 0.16 18)",
+          "oklch(51% 0.20 18)",
+          "oklch(63% 0.17 18)",
+          "oklch(75% 0.11 18)",
+          "oklch(86% 0.06 18)",
+          "oklch(95% 0.02 18)"
+        ]
+      },
+      "human-coral-deep": {
+        "role": "secondary",
+        "displayName": "Coral Profundo",
+        "tonalRamp": [
+          "oklch(15% 0.05 18)",
+          "oklch(27% 0.10 18)",
+          "oklch(39% 0.16 18)",
+          "oklch(51% 0.20 18)",
+          "oklch(63% 0.17 18)",
+          "oklch(75% 0.11 18)",
+          "oklch(86% 0.06 18)",
+          "oklch(95% 0.02 18)"
+        ]
+      },
+      "human-coral-soft": {
+        "role": "secondary",
+        "displayName": "Coral Niebla",
+        "tonalRamp": [
+          "oklch(15% 0.05 18)",
+          "oklch(27% 0.10 18)",
+          "oklch(39% 0.16 18)",
+          "oklch(51% 0.20 18)",
+          "oklch(63% 0.17 18)",
+          "oklch(75% 0.11 18)",
+          "oklch(86% 0.06 18)",
+          "oklch(95% 0.02 18)"
+        ]
+      },
+      "confirmation-green": {
+        "role": "tertiary",
+        "displayName": "Verde Confirmación",
+        "tonalRamp": [
+          "oklch(15% 0.045 155)",
+          "oklch(27% 0.08 155)",
+          "oklch(39% 0.12 155)",
+          "oklch(51% 0.15 155)",
+          "oklch(63% 0.13 155)",
+          "oklch(75% 0.09 155)",
+          "oklch(86% 0.05 155)",
+          "oklch(95% 0.018 155)"
+        ]
+      },
+      "confirmation-green-deep": {
+        "role": "tertiary",
+        "displayName": "Verde Profundo",
+        "tonalRamp": [
+          "oklch(15% 0.045 155)",
+          "oklch(27% 0.08 155)",
+          "oklch(39% 0.12 155)",
+          "oklch(51% 0.15 155)",
+          "oklch(63% 0.13 155)",
+          "oklch(75% 0.09 155)",
+          "oklch(86% 0.05 155)",
+          "oklch(95% 0.018 155)"
+        ]
+      },
+      "confirmation-green-soft": {
+        "role": "tertiary",
+        "displayName": "Verde Niebla",
+        "tonalRamp": [
+          "oklch(15% 0.045 155)",
+          "oklch(27% 0.08 155)",
+          "oklch(39% 0.12 155)",
+          "oklch(51% 0.15 155)",
+          "oklch(63% 0.13 155)",
+          "oklch(75% 0.09 155)",
+          "oklch(86% 0.05 155)",
+          "oklch(95% 0.018 155)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Tinta Frost",
+        "tonalRamp": [
+          "oklch(15% 0.025 255)",
+          "oklch(27% 0.024 255)",
+          "oklch(39% 0.022 255)",
+          "oklch(51% 0.02 255)",
+          "oklch(63% 0.018 255)",
+          "oklch(75% 0.015 255)",
+          "oklch(86% 0.01 255)",
+          "oklch(95% 0.006 255)"
+        ]
+      },
+      "copy": {
+        "role": "neutral",
+        "displayName": "Texto Editorial",
+        "tonalRamp": [
+          "oklch(15% 0.025 255)",
+          "oklch(27% 0.024 255)",
+          "oklch(39% 0.022 255)",
+          "oklch(51% 0.02 255)",
+          "oklch(63% 0.018 255)",
+          "oklch(75% 0.015 255)",
+          "oklch(86% 0.01 255)",
+          "oklch(95% 0.006 255)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Texto Calmo",
+        "tonalRamp": [
+          "oklch(15% 0.025 255)",
+          "oklch(27% 0.024 255)",
+          "oklch(39% 0.022 255)",
+          "oklch(51% 0.02 255)",
+          "oklch(63% 0.018 255)",
+          "oklch(75% 0.015 255)",
+          "oklch(86% 0.01 255)",
+          "oklch(95% 0.006 255)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Línea Fría",
+        "tonalRamp": [
+          "oklch(15% 0.025 255)",
+          "oklch(27% 0.024 255)",
+          "oklch(39% 0.022 255)",
+          "oklch(51% 0.02 255)",
+          "oklch(63% 0.018 255)",
+          "oklch(75% 0.015 255)",
+          "oklch(86% 0.01 255)",
+          "oklch(95% 0.006 255)"
+        ]
+      },
+      "control-border": {
+        "role": "neutral",
+        "displayName": "Borde de Control",
+        "tonalRamp": [
+          "oklch(15% 0.04 255)",
+          "oklch(27% 0.038 255)",
+          "oklch(39% 0.035 255)",
+          "oklch(51% 0.03 255)",
+          "oklch(63% 0.025 255)",
+          "oklch(75% 0.02 255)",
+          "oklch(86% 0.012 255)",
+          "oklch(95% 0.006 255)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Superficie Nítida",
+        "tonalRamp": [
+          "oklch(15% 0.015 255)",
+          "oklch(27% 0.014 255)",
+          "oklch(39% 0.013 255)",
+          "oklch(51% 0.012 255)",
+          "oklch(63% 0.01 255)",
+          "oklch(75% 0.008 255)",
+          "oklch(86% 0.005 255)",
+          "oklch(95% 0.002 255)"
+        ]
+      },
+      "field-surface": {
+        "role": "neutral",
+        "displayName": "Superficie de Campo",
+        "tonalRamp": [
+          "oklch(15% 0.015 255)",
+          "oklch(27% 0.014 255)",
+          "oklch(39% 0.013 255)",
+          "oklch(51% 0.012 255)",
+          "oklch(63% 0.01 255)",
+          "oklch(75% 0.008 255)",
+          "oklch(86% 0.005 255)",
+          "oklch(95% 0.002 255)"
+        ]
+      },
+      "canvas": {
+        "role": "neutral",
+        "displayName": "Canvas Frost",
+        "tonalRamp": [
+          "oklch(15% 0.025 255)",
+          "oklch(27% 0.024 255)",
+          "oklch(39% 0.022 255)",
+          "oklch(51% 0.02 255)",
+          "oklch(63% 0.018 255)",
+          "oklch(75% 0.014 255)",
+          "oklch(86% 0.009 255)",
+          "oklch(95% 0.004 255)"
+        ]
+      },
+      "disabled-surface": {
+        "role": "neutral",
+        "displayName": "Superficie Deshabilitada",
+        "tonalRamp": [
+          "oklch(15% 0.02 255)",
+          "oklch(27% 0.019 255)",
+          "oklch(39% 0.017 255)",
+          "oklch(51% 0.015 255)",
+          "oklch(63% 0.013 255)",
+          "oklch(75% 0.01 255)",
+          "oklch(86% 0.007 255)",
+          "oklch(95% 0.003 255)"
+        ]
+      },
+      "disabled-text": {
+        "role": "neutral",
+        "displayName": "Texto Deshabilitado",
+        "tonalRamp": [
+          "oklch(15% 0.025 255)",
+          "oklch(27% 0.024 255)",
+          "oklch(39% 0.022 255)",
+          "oklch(51% 0.02 255)",
+          "oklch(63% 0.018 255)",
+          "oklch(75% 0.015 255)",
+          "oklch(86% 0.01 255)",
+          "oklch(95% 0.006 255)"
+        ]
+      },
+      "frosted-chrome": {
+        "role": "neutral",
+        "displayName": "Cromo Frost",
+        "tonalRamp": [
+          "oklch(15% 0.025 255)",
+          "oklch(27% 0.024 255)",
+          "oklch(39% 0.022 255)",
+          "oklch(51% 0.02 255)",
+          "oklch(63% 0.018 255)",
+          "oklch(75% 0.014 255)",
+          "oklch(86% 0.009 255)",
+          "oklch(95% 0.004 255)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Una promesa o idea dominante con lectura inmediata."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Encabezados de módulos y argumentos de segundo nivel."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Nombres de capacidades, tarjetas y bloques de evidencia."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "Contexto introductorio con ancho de lectura controlado."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Contenido corriente, explicaciones y controles."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Metadatos, categorías y microcopy breve."
+      }
+    },
+    "shadows": [
+      {
+        "name": "ambient-panel",
+        "value": "0 22px 60px -28px rgba(16, 24, 40, .32)",
+        "purpose": "Paneles principales, tarjetas elevadas y capturas de producto."
+      },
+      {
+        "name": "ambient-control",
+        "value": "0 10px 28px -16px rgba(16, 24, 40, .24)",
+        "purpose": "Acciones compactas, indicadores flotantes y feedback transitorio."
+      },
+      {
+        "name": "blue-action-lift",
+        "value": "0 14px 28px -16px rgba(0, 95, 213, .72)",
+        "purpose": "Elevación moderada de la acción primaria; se elimina en disabled."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-frost",
+        "value": "cubic-bezier(.16, 1, .3, 1)",
+        "purpose": "Curva espacial para desplazamientos cortos y cambios de jerarquía."
+      },
+      {
+        "name": "state-fast",
+        "value": "200ms",
+        "purpose": "Cambios de fondo, color y borde en controles."
+      },
+      {
+        "name": "state-spatial",
+        "value": "250ms cubic-bezier(.16, 1, .3, 1)",
+        "purpose": "Elevación o desplazamiento breve de acciones."
+      },
+      {
+        "name": "reduced-motion",
+        "value": ".001ms",
+        "purpose": "Duración prácticamente instantánea cuando el usuario prefiere movimiento reducido."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "stack",
+        "value": "980px"
+      },
+      {
+        "name": "mobile",
+        "value": "700px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Acción principal de alto contraste con estados hover, focus, active y disabled visibles.",
+      "html": "<button class='ds-btn-primary' type='button'>Continuar</button>",
+      "css": ".ds-btn-primary { min-height: 44px; padding: 12px 18px; border: 0; border-radius: 14px; color: #fff; background: #0067E0; box-shadow: 0 14px 28px -16px rgba(0,95,213,.72); font: 800 .78rem/1.2 Manrope, sans-serif; letter-spacing: .04em; cursor: pointer; transition: transform 250ms cubic-bezier(.16,1,.3,1), background 200ms; } .ds-btn-primary:hover { transform: translateY(-2px); background: #004EA8; } .ds-btn-primary:focus-visible { outline: 3px solid #0067E0; outline-offset: 3px; } .ds-btn-primary:active { transform: translateY(0); } .ds-btn-primary:disabled { color: #98A2B3; background: #EAECF0; box-shadow: none; cursor: not-allowed; transform: none; }"
+    },
+    {
+      "name": "Icon Action",
+      "kind": "button",
+      "refersTo": "icon-action",
+      "description": "Acción compacta de 44px con nombre accesible y borde frío.",
+      "html": "<button class='ds-icon-action' type='button' aria-label='Compartir'><svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='18' cy='5' r='2.5'/><circle cx='6' cy='12' r='2.5'/><circle cx='18' cy='19' r='2.5'/><path d='m8.2 10.8 7.6-4.4M8.2 13.2l7.6 4.4'/></svg></button>",
+      "css": ".ds-icon-action { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; border: 1px solid #DCE5F0; border-radius: 13px; color: #101828; background: rgba(255,255,255,.88); box-shadow: 0 10px 28px -16px rgba(16,24,40,.24); cursor: pointer; transition: transform 250ms cubic-bezier(.16,1,.3,1), border-color 250ms, background 250ms; } .ds-icon-action svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.8; } .ds-icon-action:hover { transform: translateY(-2px); border-color: #BFD6F2; background: #fff; } .ds-icon-action:focus-visible { outline: 3px solid #0067E0; outline-offset: 3px; } .ds-icon-action:active { transform: translateY(0); } .ds-icon-action:disabled { opacity: .38; box-shadow: none; cursor: not-allowed; transform: none; }"
+    },
+    {
+      "name": "Frosted Navigation",
+      "kind": "nav",
+      "refersTo": "frosted-navigation",
+      "description": "Cromo persistente translúcido que conserva marca, contexto y acciones esenciales.",
+      "html": "<nav class='ds-frosted-nav' aria-label='Navegación principal'><strong class='ds-frosted-nav-brand'>Ágora</strong><span class='ds-frosted-nav-context'>Pieza pública</span><button class='ds-frosted-nav-action' type='button'>Compartir</button></nav>",
+      "css": ".ds-frosted-nav { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 20px; min-height: 72px; padding: 0 clamp(20px,4vw,64px); border-bottom: 1px solid rgba(220,229,240,.9); color: #101828; background: rgba(244,247,251,.88); backdrop-filter: blur(18px) saturate(140%); font-family: Manrope, sans-serif; } .ds-frosted-nav-brand { font-size: 1.1rem; font-weight: 800; letter-spacing: -.03em; } .ds-frosted-nav-context { color: #667085; font-size: .78rem; font-weight: 700; letter-spacing: .04em; } .ds-frosted-nav-action { justify-self: end; min-height: 44px; padding: 0 16px; border: 1px solid #DCE5F0; border-radius: 13px; color: #101828; background: rgba(255,255,255,.88); font: 700 .78rem/1.2 Manrope, sans-serif; cursor: pointer; } .ds-frosted-nav-action:hover { background: #fff; border-color: #BFD6F2; } .ds-frosted-nav-action:focus-visible { outline: 3px solid #0067E0; outline-offset: 3px; } @media (max-width: 700px) { .ds-frosted-nav { grid-template-columns: 1fr auto; min-height: 64px; padding: 0 14px; } .ds-frosted-nav-context { display: none; } }"
+    },
+    {
+      "name": "Evidence Frame",
+      "kind": "custom",
+      "refersTo": "evidence-frame",
+      "description": "Marco para capturas reales saneadas, con procedencia visible y sin ocultar contenido.",
+      "html": "<figure class='ds-evidence-frame'><div class='ds-evidence-preview' role='img' aria-label='Vista previa de una captura de producto saneada'><span class='ds-evidence-line ds-evidence-line-wide'></span><span class='ds-evidence-line'></span><span class='ds-evidence-card'></span></div><figcaption class='ds-evidence-label'>Interfaz actual · entorno demo</figcaption></figure>",
+      "css": ".ds-evidence-frame { position: relative; width: 100%; min-height: 220px; margin: 0; overflow: hidden; border: 1px solid #DCE5F0; border-radius: 20px; background: #fff; box-shadow: 0 22px 60px -28px rgba(16,24,40,.32); } .ds-evidence-preview { display: grid; gap: 14px; min-height: 220px; padding: 32px; background: linear-gradient(145deg,#F4F7FB,#EAF3FF); } .ds-evidence-line { display: block; width: 52%; height: 12px; border-radius: 999px; background: #DCE5F0; } .ds-evidence-line-wide { width: 76%; height: 18px; background: #0067E0; } .ds-evidence-card { display: block; min-height: 110px; border: 1px solid #DCE5F0; border-radius: 14px; background: #fff; } .ds-evidence-label { position: absolute; right: 10px; bottom: 10px; padding: 6px 9px; border: 1px solid rgba(255,255,255,.64); border-radius: 9px; color: #fff; background: rgba(16,24,40,.66); font: 750 .64rem/1 Manrope, sans-serif; backdrop-filter: blur(8px); }"
+    },
+    {
+      "name": "Surface Card",
+      "kind": "card",
+      "refersTo": "surface-card",
+      "description": "Panel blanco de gran escala para agrupar una decisión o conjunto de contenido relacionado.",
+      "html": "<article class='ds-surface-card'><span class='ds-surface-card-label'>Disponible</span><h3 class='ds-surface-card-title'>Una idea con jerarquía clara</h3><p class='ds-surface-card-copy'>La superficie agrupa contenido relacionado sin reemplazar la estructura editorial.</p></article>",
+      "css": ".ds-surface-card { padding: clamp(28px,4vw,48px); border: 1px solid #DCE5F0; border-radius: 24px; color: #101828; background: #fff; box-shadow: 0 22px 60px -28px rgba(16,24,40,.32); font-family: Manrope, sans-serif; } .ds-surface-card-label { display: block; margin-bottom: 10px; color: #067647; font-size: .78rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; } .ds-surface-card-title { margin: 0 0 12px; font-size: clamp(1.3rem,2vw,2rem); line-height: 1.15; letter-spacing: -.025em; } .ds-surface-card-copy { max-width: 68ch; margin: 0; color: #344054; font-size: 1rem; line-height: 1.5; }"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "text-field",
+      "description": "Campo multilineal claro con borde perceptible, caret azul y foco exterior.",
+      "html": "<label class='ds-field-label' for='ds-field'>Contexto adicional</label><textarea class='ds-field' id='ds-field' placeholder='Escribí una aclaración…'></textarea>",
+      "css": ".ds-field-label { display: block; margin-bottom: 8px; color: #101828; font: 700 .9rem/1.3 Manrope, sans-serif; } .ds-field { width: 100%; min-height: 96px; resize: vertical; padding: 14px 16px; border: 1px solid #7588A3; border-radius: 14px; color: #101828; background: #FBFCFE; caret-color: #0067E0; font: 400 1rem/1.5 Manrope, sans-serif; } .ds-field::placeholder { color: #667085; opacity: 1; } .ds-field:hover { border-color: #617896; } .ds-field:focus-visible { outline: 3px solid #0067E0; outline-offset: 3px; } .ds-field:disabled { color: #98A2B3; border-color: #DCE5F0; background: #EAECF0; cursor: not-allowed; }"
+    },
+    {
+      "name": "Status Proof",
+      "kind": "chip",
+      "description": "Indicador textual de disponibilidad o confirmación con punto y halo semánticos.",
+      "html": "<span class='ds-status-proof'>Disponible · evidencia verificada</span>",
+      "css": ".ds-status-proof { display: inline-flex; align-items: center; gap: 9px; width: fit-content; color: #344054; font: 650 .83rem/1.35 Manrope, sans-serif; } .ds-status-proof::before { content: ''; flex: 0 0 auto; width: 9px; height: 9px; border-radius: 50%; background: #067647; box-shadow: 0 0 0 5px #E7F8F1; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "El Estudio Editorial Frost",
+    "overview": "Metamorpho convierte cada output de Ágora en una sala editorial luminosa: un canvas frío y silencioso, superficies blancas y una jerarquía tipográfica que permite entender la propuesta antes de detenerse en el detalle. El sistema debe sentirse profesional sin volverse corporativo, y cercano sin apoyarse en ornamento infantil.\n\nLa evidencia manda. Las capturas reales y ya saneadas del producto son el material principal; el diseño les da contexto, procedencia y aire en lugar de competir con ellas. Azul, coral y verde forman una gramática funcional: acción y orientación, humanidad y énfasis, confirmación y disponibilidad.",
+    "keyCharacteristics": [
+      "Canvas frío claro con superficies blancas nítidas.",
+      "Manrope de alto contraste jerárquico y lectura directa en español.",
+      "Capturas reales tratadas como evidencia, con procedencia visible.",
+      "Acentos semánticos escasos, accesibles y deliberados.",
+      "Controles táctiles con estados de teclado, hover y disabled inequívocos."
+    ],
+    "rules": [
+      {
+        "name": "The One Lead Accent Rule",
+        "body": "Cada región tiene un acento dominante; azul, coral y verde no compiten con el mismo peso visual.",
+        "section": "colors"
+      },
+      {
+        "name": "The Editorial Compression Rule",
+        "body": "Los títulos son grandes, cortos y apretados; el cuerpo recupera aire y nunca imita esa densidad.",
+        "section": "typography"
+      },
+      {
+        "name": "The Frost Surface Rule",
+        "body": "Primero separar con tono y borde; sumar sombra sólo cuando la capa o el estado necesita una lectura espacial inequívoca.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do mostrar producto real y saneado como evidencia antes de sumar explicación extensa.",
+      "Do usar Azul Ágora para acción y orientación, Coral Humano para énfasis humano y Verde Confirmación para estados confirmados.",
+      "Do conservar objetivos táctiles de al menos 44px, foco visible y orden de lectura correcto con teclado.",
+      "Do mantener el canvas frío, las superficies blancas y una jerarquía tipográfica inequívoca en desktop y mobile.",
+      "Do respetar `prefers-reduced-motion` y convertir animaciones en cambios prácticamente instantáneos."
+    ],
+    "donts": [
+      "Don't inventar testimonios, cifras, estados de producto o evidencia que no estén aprobados para publicación.",
+      "Don't usar capturas como decoración: deben ser legibles, pertinentes y llevar contexto de procedencia cuando corresponda.",
+      "Don't repartir azul, coral y verde con la misma intensidad dentro de una región.",
+      "Don't llenar la experiencia de tarjetas, píldoras o sombras cuando tipografía, espacio y borde ya resuelven la jerarquía.",
+      "Don't ocultar foco, depender sólo del color para comunicar un estado ni reducir objetivos interactivos por debajo de 44px."
+    ]
+  }
+}

@@ -1,0 +1,1307 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#F4F7FB">
+  <meta name="description" content="Comunidad de Ágora: un espacio propio para acompañar, enseñar, conversar y vender membresías desde el mismo negocio.">
+  <meta property="og:title" content="Comunidad · Tu comunidad, dentro de tu negocio">
+  <meta property="og:description" content="Una presentación de Ágora para barberos, estilistas y profesionales que quieren sostener la relación entre una visita y la próxima.">
+  <meta property="og:image" content="assets/hero-community.webp">
+  <title>Comunidad · Tu comunidad, dentro de tu negocio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue: #0067E0;
+      --blue-deep: #004EA8;
+      --blue-soft: #EAF3FF;
+      --coral: #D92D47;
+      --coral-soft: #FFECEF;
+      --green: #067647;
+      --green-soft: #E7F8F1;
+      --ink: #101828;
+      --copy: #344054;
+      --muted: #667085;
+      --line: #DCE5F0;
+      --surface: #FFFFFF;
+      --canvas: #F4F7FB;
+      --shadow: 0 22px 60px -28px rgba(16, 24, 40, .32);
+      --shadow-small: 0 10px 28px -16px rgba(16, 24, 40, .24);
+      --ease-out: cubic-bezier(.16, 1, .3, 1);
+    }
+
+    * { box-sizing: border-box; }
+    html {
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+      scrollbar-color: var(--blue) #E5ECF5;
+      scrollbar-width: thin;
+    }
+    body {
+      margin: 0;
+      background: var(--canvas);
+      color: var(--ink);
+      font-family: "Manrope", sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      font-variant-numeric: tabular-nums;
+      -webkit-font-smoothing: antialiased;
+    }
+    ::selection { color: #fff; background: var(--blue); }
+    a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: .22em; }
+    button, input, textarea { font: inherit; }
+    button { color: inherit; }
+    button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible {
+      outline: 3px solid var(--blue);
+      outline-offset: 3px;
+    }
+
+    .topbar {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 50;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 20px;
+      height: 72px;
+      padding: 0 clamp(20px, 4vw, 64px);
+      background: rgba(244, 247, 251, .88);
+      border-bottom: 1px solid rgba(220, 229, 240, .9);
+      backdrop-filter: blur(18px) saturate(140%);
+    }
+    .brand { display: inline-flex; align-items: center; width: fit-content; }
+    .brand img { width: 116px; height: auto; display: block; }
+    .progress-copy {
+      color: var(--muted);
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+    }
+    .actions { display: flex; justify-content: flex-end; gap: 8px; }
+    .icon-button, .nav-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 44px;
+      height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: rgba(255, 255, 255, .88);
+      box-shadow: var(--shadow-small);
+      cursor: pointer;
+      transition: transform .25s var(--ease-out), border-color .25s, background .25s;
+    }
+    .icon-button:hover, .nav-button:hover {
+      transform: translateY(-2px);
+      border-color: #BFD6F2;
+      background: #fff;
+    }
+    .icon-button:disabled, .nav-button:disabled {
+      opacity: .38;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    .icon-button:disabled:hover, .nav-button:disabled:hover {
+      transform: none;
+      border-color: var(--line);
+      background: rgba(255, 255, 255, .88);
+    }
+    .icon-button svg, .nav-button svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+    .progress {
+      position: fixed;
+      inset: 71px 0 auto;
+      z-index: 55;
+      height: 3px;
+      background: rgba(8, 120, 249, .10);
+    }
+    .progress span {
+      display: block;
+      width: 100%;
+      height: 100%;
+      background: var(--blue);
+      transform: scaleX(.08333);
+      transform-origin: left center;
+      transition: transform .55s var(--ease-out);
+    }
+
+    .side-nav {
+      position: fixed;
+      right: 2px;
+      top: 50%;
+      z-index: 45;
+      display: grid;
+      gap: 0;
+      transform: translateY(-50%);
+    }
+    .dot {
+      position: relative;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+    }
+    .dot::before {
+      content: "";
+      position: absolute;
+      left: 18px;
+      top: 18px;
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #667B94;
+      transition: transform .3s var(--ease-out), background .3s;
+    }
+    .dot[aria-current="true"]::before { background: var(--blue); transform: scaleY(3.5); }
+    .deck-nav {
+      position: fixed;
+      right: clamp(18px, 3vw, 44px);
+      bottom: 26px;
+      z-index: 45;
+      display: flex;
+      gap: 8px;
+    }
+
+    main { width: 100%; }
+    .slide {
+      position: relative;
+      min-height: 100svh;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      padding: 104px clamp(24px, 7vw, 112px) 72px;
+      background: var(--canvas);
+    }
+    .slide:nth-child(even) { background: #fff; }
+    .frame { width: min(1380px, 100%); margin: 0 auto; }
+    .frame.narrow { width: min(1120px, 100%); }
+    h1, h2, h3, p { margin-top: 0; }
+    h1, h2 {
+      max-width: 17ch;
+      margin-bottom: clamp(22px, 3vw, 38px);
+      font-size: clamp(2.65rem, 5.8vw, 5.7rem);
+      line-height: .98;
+      letter-spacing: -.04em;
+      text-wrap: balance;
+    }
+    h1 { font-weight: 800; }
+    h2 { font-weight: 750; }
+    h3 {
+      margin-bottom: 12px;
+      font-size: clamp(1.3rem, 2vw, 2rem);
+      line-height: 1.15;
+      letter-spacing: -.025em;
+    }
+    .lead {
+      max-width: 68ch;
+      margin-bottom: clamp(30px, 5vw, 66px);
+      color: var(--copy);
+      font-size: clamp(1.03rem, 1.65vw, 1.42rem);
+      line-height: 1.48;
+    }
+    .muted { color: var(--muted); }
+    .blue { color: var(--blue); }
+    .coral { color: var(--coral); }
+    .green { color: var(--green); }
+    .small { font-size: .84rem; color: var(--muted); }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
+      min-height: 100svh;
+      padding: 72px 0 0;
+      background: #F4F7FB;
+    }
+    .hero-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(32px, 7vw, 112px);
+      padding-right: clamp(32px, 5vw, 80px);
+    }
+    .hero h1 { max-width: 10ch; }
+    .hero .lead { max-width: 34ch; margin-bottom: 30px; }
+    .hero-image {
+      position: relative;
+      min-height: calc(100svh - 72px);
+      overflow: hidden;
+      background: #D9E4EF;
+    }
+    .hero-image img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+    .hero-proof {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      width: fit-content;
+      color: var(--copy);
+      font-size: .83rem;
+      font-weight: 650;
+    }
+    .hero-proof::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 5px var(--green-soft);
+    }
+    .hero-stroke {
+      width: 94px;
+      height: 5px;
+      margin-bottom: 34px;
+      border-radius: 99px;
+      background: var(--coral);
+    }
+    .hero-image::after {
+      content: "Comunidad";
+      position: absolute;
+      right: 28px;
+      bottom: 22px;
+      padding: 9px 13px;
+      border: 1px solid rgba(255, 255, 255, .58);
+      border-radius: 12px;
+      color: #fff;
+      background: rgba(16, 24, 40, .28);
+      backdrop-filter: blur(12px);
+      font-size: .78rem;
+      font-weight: 700;
+    }
+
+    .relationship {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 80px;
+    }
+    .relationship::before {
+      content: "";
+      position: absolute;
+      left: 5%;
+      right: 5%;
+      top: 17px;
+      height: 2px;
+      background: #BEDAFF;
+    }
+    .relationship div { position: relative; padding-top: 62px; text-align: center; }
+    .relationship div::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 34px;
+      height: 34px;
+      border: 8px solid #fff;
+      border-radius: 50%;
+      background: var(--blue);
+      transform: translateX(-50%);
+    }
+    .relationship div:nth-child(even)::before { background: var(--coral); }
+    .relationship strong { display: block; font-size: clamp(1rem, 1.5vw, 1.35rem); }
+    .relationship-result {
+      margin: 64px auto 0;
+      max-width: 30ch;
+      color: var(--blue);
+      font-size: clamp(1.55rem, 3vw, 2.7rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -.035em;
+      text-align: center;
+    }
+
+    .journey {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(18px, 3vw, 42px);
+      align-items: end;
+    }
+    .journey figure, .shot, .phone-shot { margin: 0; }
+    .shot { position: relative; }
+    .shot::after {
+      content: "Interfaz actual · entorno demo";
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      padding: 6px 9px;
+      border: 1px solid rgba(255,255,255,.64);
+      border-radius: 9px;
+      color: #fff;
+      background: rgba(16,24,40,.66);
+      font-size: .64rem;
+      font-weight: 750;
+      line-height: 1;
+      backdrop-filter: blur(8px);
+    }
+    .journey img, .shot img, .phone-shot img {
+      display: block;
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+    .journey figure:nth-child(1) { transform: rotate(-1.6deg); }
+    .journey figure:nth-child(2) { transform: translateY(18px) rotate(1.2deg); }
+    .journey figure:nth-child(3) { transform: rotate(-.6deg); }
+    .journey figcaption {
+      margin-top: 22px;
+      color: var(--blue);
+      font-size: .86rem;
+      font-weight: 800;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: .035em;
+    }
+    .journey figure:nth-child(2) figcaption { color: var(--coral); }
+
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(320px, .95fr);
+      gap: clamp(34px, 7vw, 108px);
+      align-items: center;
+    }
+    .split.reverse { grid-template-columns: minmax(320px, .84fr) minmax(0, 1.16fr); }
+    .split.reverse .copy { order: 2; }
+    .split.reverse .visual { order: 1; }
+    .copy h2 { max-width: 13ch; }
+    .copy .lead { margin-bottom: 28px; }
+    .sequence {
+      display: grid;
+      gap: 14px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .sequence li {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 14px 0;
+      border-top: 1px solid var(--line);
+    }
+    .sequence li:last-child { border-bottom: 1px solid var(--line); }
+    .sequence b {
+      color: var(--blue);
+      font-size: .82rem;
+      line-height: 1.75;
+    }
+    .sequence span { color: var(--copy); font-weight: 600; }
+    .stacked-shots {
+      display: grid;
+      gap: 18px;
+      align-content: center;
+      min-height: 0;
+    }
+    .stacked-shots .shot { position: relative; width: 92%; }
+    .stacked-shots .shot:first-child { justify-self: start; }
+    .stacked-shots .shot:last-child { justify-self: end; }
+    .stacked-shots .shot::after { right: auto; left: 10px; }
+    .step-pin {
+      position: absolute;
+      z-index: 4;
+      display: grid;
+      place-items: center;
+      width: 46px;
+      height: 46px;
+      border: 7px solid #fff;
+      border-radius: 50%;
+      color: #fff;
+      background: var(--blue);
+      font-weight: 800;
+      box-shadow: var(--shadow-small);
+    }
+    .step-pin.first { left: -16px; top: -16px; }
+    .step-pin.second { right: -16px; top: -16px; background: var(--coral); }
+
+    .publish-visual {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(240px, .55fr);
+      gap: 32px;
+      align-items: center;
+    }
+    .capabilities {
+      display: grid;
+      gap: 0;
+    }
+    .capability {
+      padding: 22px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .capability:first-child { border-top: 1px solid var(--line); }
+    .capability span {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--blue);
+      font-size: .78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+    .capability:nth-child(2) span { color: var(--coral); }
+    .capability:nth-child(3) span { color: var(--green); }
+    .capability strong { font-size: clamp(1.2rem, 2vw, 1.8rem); line-height: 1.18; }
+
+    .member-visual {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 216px;
+      gap: 26px;
+      align-items: end;
+    }
+    .member-visual .phone-shot img { max-height: 560px; object-fit: cover; object-position: top; }
+
+    .question-flow {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      align-items: center;
+    }
+    .question-flow figure { position: relative; margin: 0; }
+    .question-flow figure:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      right: -23px;
+      top: 48%;
+      width: 18px;
+      height: 18px;
+      border-top: 2px solid var(--coral);
+      border-right: 2px solid var(--coral);
+      transform: rotate(45deg);
+    }
+    .question-flow figcaption {
+      margin-top: 18px;
+      color: var(--blue);
+      font-size: .82rem;
+      font-weight: 800;
+      text-align: center;
+      text-transform: uppercase;
+    }
+    .question-flow figure:nth-child(2) figcaption { color: var(--coral); }
+    .question-flow figure:nth-child(3) figcaption { color: var(--green); }
+
+    .payment-layout {
+      display: grid;
+      grid-template-columns: .72fr 1.28fr;
+      gap: clamp(32px, 6vw, 92px);
+      align-items: center;
+    }
+    .payment-options { display: grid; gap: 26px; }
+    .payment-option { padding-bottom: 24px; border-bottom: 1px solid var(--line); }
+    .payment-option:last-child { border-bottom: 0; }
+    .payment-option span {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--green);
+      font-size: .8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    .payment-option:nth-child(2) span { color: var(--blue); }
+    .payment-option:nth-child(3) span { color: var(--coral); }
+    .payment-option strong { display: block; font-size: clamp(1.25rem, 2.3vw, 2rem); line-height: 1.2; }
+    .fee {
+      position: absolute;
+      right: 26px;
+      bottom: 24px;
+      max-width: 320px;
+      padding: 17px 22px;
+      border-radius: 16px;
+      color: #fff;
+      background: var(--blue);
+      box-shadow: 0 18px 34px -18px rgba(0, 95, 213, .62);
+      font-weight: 800;
+      text-align: center;
+    }
+    .payment-shot { position: relative; }
+
+    .catalog-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(280px, .7fr);
+      gap: clamp(36px, 6vw, 88px);
+      align-items: center;
+    }
+    .handoff {
+      display: grid;
+      justify-items: center;
+      gap: 20px;
+      text-align: center;
+    }
+    .handoff strong { font-size: clamp(1.65rem, 3.3vw, 3.1rem); line-height: 1; letter-spacing: -.035em; }
+    .handoff .arrow {
+      width: 2px;
+      height: 58px;
+      background: var(--coral);
+      position: relative;
+    }
+    .handoff .arrow::after {
+      content: "";
+      position: absolute;
+      left: -5px;
+      bottom: 0;
+      width: 10px;
+      height: 10px;
+      border-right: 2px solid var(--coral);
+      border-bottom: 2px solid var(--coral);
+      transform: rotate(45deg);
+    }
+    .handoff-note {
+      margin-top: 10px;
+      padding: 14px 20px;
+      border-radius: 14px;
+      color: #B4233C;
+      background: var(--coral-soft);
+      font-weight: 750;
+    }
+
+    .comparison {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin-top: 42px;
+      border-top: 1px solid var(--line);
+    }
+    .comparison article { padding: 26px clamp(14px, 2.2vw, 28px) 10px; border-right: 1px solid var(--line); }
+    .comparison article:first-child { padding-left: 0; }
+    .comparison article:last-child {
+      margin-top: -22px;
+      padding: 36px 30px;
+      border: 0;
+      border-radius: 22px;
+      color: #fff;
+      background: var(--blue);
+      box-shadow: 0 24px 52px -24px rgba(0, 95, 213, .6);
+    }
+    .comparison h3 { color: var(--blue); font-size: 1rem; text-transform: uppercase; letter-spacing: .03em; }
+    .comparison article:nth-child(2) h3 { color: var(--coral); }
+    .comparison article:last-child h3 { color: #fff; }
+    .comparison ul { display: grid; gap: 16px; margin: 20px 0 0; padding: 0; list-style: none; color: var(--copy); }
+    .comparison article:last-child ul { color: #fff; font-weight: 700; }
+    .sources { margin-top: 36px; color: var(--muted); font-size: .78rem; }
+    .sources a { margin-right: 18px; }
+
+    .now-next {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: clamp(36px, 8vw, 110px);
+      align-items: start;
+      margin-top: 44px;
+    }
+    .available-list, .next-list { margin: 0; padding: 0; list-style: none; }
+    .available-list { display: grid; gap: 20px; }
+    .available-list li {
+      position: relative;
+      padding-left: 42px;
+      color: #fff;
+      font-size: clamp(1.05rem, 1.7vw, 1.35rem);
+      font-weight: 600;
+    }
+    .available-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: .05em;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #fff;
+    }
+    .available-list li::after {
+      content: "";
+      position: absolute;
+      left: 7px;
+      top: .36em;
+      width: 8px;
+      height: 4px;
+      border-left: 2px solid var(--blue);
+      border-bottom: 2px solid var(--blue);
+      transform: rotate(-45deg);
+    }
+    .next-panel {
+      padding: clamp(28px, 4vw, 48px);
+      border-radius: 24px;
+      color: var(--ink);
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+    .next-panel h3 { color: var(--coral); font-size: 1rem; text-transform: uppercase; letter-spacing: .03em; }
+    .next-list { counter-reset: next; }
+    .next-list li {
+      counter-increment: next;
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 12px;
+      padding: 17px 0;
+      border-bottom: 1px solid var(--line);
+      font-size: clamp(1rem, 1.6vw, 1.3rem);
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    .next-list li:last-child { border-bottom: 0; }
+    .next-list li::before {
+      content: "0" counter(next);
+      color: var(--coral);
+      font-size: .78rem;
+      line-height: 1.8;
+    }
+    .blue-slide { color: #fff; background: var(--blue) !important; }
+    .blue-slide h2 { color: #fff; max-width: 19ch; }
+    .blue-slide .lead { color: #D7E9FF; }
+
+    .feedback-layout {
+      display: grid;
+      grid-template-columns: minmax(0, .92fr) minmax(420px, 1.08fr);
+      gap: clamp(42px, 8vw, 120px);
+      align-items: start;
+    }
+    .feedback-layout h2 { max-width: 10ch; }
+    .feedback-form {
+      padding: clamp(22px, 3vw, 32px);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+    .choice-grid { display: grid; gap: 8px; }
+    .choice {
+      position: relative;
+      display: grid;
+      grid-template-columns: 26px 1fr;
+      gap: 14px;
+      align-items: center;
+      min-height: 48px;
+      padding: 8px 12px;
+      border: 1px solid transparent;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: background .2s, border-color .2s, transform .25s var(--ease-out);
+    }
+    .choice:hover { transform: translateX(3px); background: #F8FAFC; }
+    .choice:has(input:checked) { border-color: #9BC8FF; background: var(--blue-soft); }
+    .choice:has(input:disabled) { opacity: .48; cursor: not-allowed; }
+    .choice input {
+      appearance: none;
+      width: 22px;
+      height: 22px;
+      margin: 0;
+      border: 1.5px solid #617896;
+      border-radius: 50%;
+      background: #fff;
+      cursor: inherit;
+    }
+    .choice input:checked { border: 6px solid var(--blue); }
+    .choice span { color: var(--copy); font-weight: 650; }
+    .selection-status { min-height: 22px; margin: 10px 4px 14px; color: var(--muted); font-size: .82rem; }
+    .selection-status.limit { color: #B4233C; }
+    textarea {
+      width: 100%;
+      min-height: 72px;
+      resize: vertical;
+      padding: 14px 16px;
+      border: 1px solid #7588A3;
+      border-radius: 14px;
+      color: var(--ink);
+      background: #FBFCFE;
+      caret-color: var(--blue);
+    }
+    textarea::placeholder { color: #667085; opacity: 1; }
+    .copy-feedback {
+      width: 100%;
+      margin-top: 10px;
+      padding: 12px 18px;
+      border: 0;
+      border-radius: 14px;
+      color: #fff;
+      background: var(--blue);
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 14px 28px -16px rgba(0, 95, 213, .72);
+      transition: transform .25s var(--ease-out), background .2s;
+    }
+    .copy-feedback:hover { transform: translateY(-2px); background: var(--blue-deep); }
+    .copy-feedback:disabled { color: #98A2B3; background: #EAECF0; box-shadow: none; cursor: not-allowed; transform: none; }
+    .form-message { min-height: 22px; margin: 10px 3px 0; color: var(--green); font-size: .82rem; font-weight: 650; }
+    .form-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .whatsapp-feedback {
+      margin-top: 10px;
+      padding: 12px 18px;
+      border: 0;
+      border-radius: 14px;
+      color: #fff;
+      background: var(--green);
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 14px 28px -16px rgba(6,118,71,.68);
+      transition: transform .25s var(--ease-out), background .2s;
+    }
+    .whatsapp-feedback:hover { transform: translateY(-2px); background: #055D39; }
+    .whatsapp-feedback:disabled { color: #667085; background: #EAECF0; box-shadow: none; cursor: not-allowed; transform: none; }
+    .copy-fallback {
+      min-height: 110px;
+      margin-top: 12px;
+      background: #FFF7F8;
+      border-color: #B5475D;
+    }
+    .toast {
+      position: fixed;
+      z-index: 80;
+      top: 84px;
+      left: 50%;
+      max-width: min(90vw, 420px);
+      margin: 0;
+      padding: 10px 14px;
+      border-radius: 12px;
+      color: #fff;
+      background: var(--ink);
+      box-shadow: var(--shadow-small);
+      font-size: .8rem;
+      font-weight: 700;
+      transform: translateX(-50%);
+    }
+    .toast:empty { display: none; }
+    .download-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 28px;
+      color: var(--blue);
+      font-weight: 750;
+    }
+    .slide:last-child { padding-top: 88px; padding-bottom: 40px; }
+    .download-link svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+
+    .in-view .reveal {
+      animation: authored-in .9s var(--ease-out) both;
+    }
+    .in-view .reveal.delay { animation-delay: .12s; }
+    @keyframes authored-in {
+      from { opacity: .62; transform: translateY(28px); filter: blur(5px); clip-path: inset(0 0 12% 0 round 18px); }
+      to { opacity: 1; transform: translateY(0); filter: blur(0); clip-path: inset(0 0 0 0 round 0); }
+    }
+
+    @media (max-width: 980px) {
+      .side-nav { display: none; }
+      .slide { align-items: flex-start; min-height: 100svh; padding: 108px 24px 88px; }
+      .frame { align-self: center; }
+      .hero { grid-template-columns: 1fr; padding-top: 72px; }
+      .hero-copy { min-height: 58svh; padding: 54px 28px 44px; }
+      .hero-image { min-height: 42svh; }
+      .split, .split.reverse, .payment-layout, .catalog-layout, .feedback-layout { grid-template-columns: 1fr; }
+      .split.reverse .copy, .split.reverse .visual { order: initial; }
+      .stacked-shots { min-height: 0; }
+      .publish-visual { grid-template-columns: 1fr; }
+      .capabilities { grid-template-columns: repeat(3, 1fr); gap: 18px; }
+      .capability, .capability:first-child { border-top: 1px solid var(--line); }
+      .member-visual { grid-template-columns: minmax(0, 1fr) 160px; }
+      .comparison { grid-template-columns: repeat(2, 1fr); }
+      .comparison article:nth-child(2) { border-right: 0; }
+      .comparison article:last-child { margin: 22px 0 0; }
+      .now-next { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 700px) {
+      html { scroll-snap-type: y proximity; }
+      .topbar { grid-template-columns: 1fr auto auto; gap: 10px; height: 64px; padding: 0 14px; }
+      .brand img { width: 96px; }
+      .progress-copy { display: block; font-size: .68rem; letter-spacing: 0; }
+      .progress { top: 63px; }
+      .actions .share-label { display: none; }
+      .icon-button { min-width: 44px; height: 44px; }
+      .deck-nav { right: 14px; bottom: 14px; }
+      .nav-button { width: 44px; height: 44px; background: rgba(255,255,255,.96); }
+      .slide { min-height: auto; padding: 100px 20px 96px; overflow: visible; }
+      .hero {
+        grid-template-rows: 65% 35%;
+        min-height: 100svh;
+        height: 100svh;
+        padding-top: 64px;
+      }
+      .hero-copy { min-height: 0; height: 100%; padding: 26px 20px 18px; }
+      .hero-image { min-height: 0; height: 100%; }
+      .hero-image img { object-position: 58% center; }
+      .hero-stroke { margin-bottom: 18px; }
+      .hero h1 { margin-bottom: 16px; font-size: clamp(2.35rem, 10.5vw, 2.7rem); }
+      .hero .lead { margin-bottom: 14px; font-size: .94rem; line-height: 1.42; }
+      .hero-proof { font-size: .72rem; line-height: 1.35; }
+      h1, h2 { font-size: clamp(2.45rem, 12vw, 4rem); }
+      .lead { margin-bottom: 34px; }
+      .relationship { grid-template-columns: repeat(2, 1fr); gap: 30px 14px; margin-top: 36px; }
+      .relationship::before { display: none; }
+      .relationship div { padding-top: 50px; }
+      .relationship-result { margin-top: 42px; }
+      .journey { grid-template-columns: 1fr; gap: 30px; }
+      .journey figure, .journey figure:nth-child(2) { transform: none; }
+      .stacked-shots { min-height: 0; }
+      .step-pin { width: 40px; height: 40px; }
+      .capabilities { grid-template-columns: 1fr; }
+      .member-visual { grid-template-columns: 1fr 108px; gap: 14px; }
+      .question-flow { grid-template-columns: 1fr; }
+      .question-flow figure:not(:last-child)::after {
+        right: auto;
+        left: 50%;
+        top: auto;
+        bottom: -24px;
+        transform: translateX(-50%) rotate(135deg);
+      }
+      .fee { position: static; max-width: none; margin-top: 12px; }
+      .comparison { grid-template-columns: 1fr; }
+      .comparison article, .comparison article:first-child { padding: 22px 0; border-right: 0; border-bottom: 1px solid var(--line); }
+      .comparison article:last-child { padding: 30px; border-bottom: 0; }
+      .now-next { margin-top: 24px; }
+      .available-list { gap: 16px; }
+      .next-panel { border-radius: 18px; }
+      .feedback-layout { gap: 28px; }
+      .feedback-form { padding: 18px; border-radius: 18px; }
+      .form-actions { grid-template-columns: 1fr; gap: 0; }
+      .choice { grid-template-columns: 24px 1fr; padding: 11px 8px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <!--
+  THESIS: Comunidad sostiene la relación entre una visita y la próxima desde el negocio que el profesional ya maneja.
+  OWN-WORLD: Ágora Frost editorial: blanco, azul nítido, coral humano, tipografía Manrope y capturas reales como evidencia.
+  STORY: oportunidad → recorrido → operación → experiencia del miembro → pagos → conexión → decisión.
+  FIRST VIEWPORT: promesa corta a la izquierda y profesionales colaborando en un estudio real a la derecha.
+  FORM: deck público de 12 escenas; seed key community-proof-2026-08; scroll, teclado, flechas, descarga y feedback interactivo.
+  FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+  -->
+  <header class="topbar">
+    <a class="brand" href="#inicio" aria-label="Ir al inicio">
+      <img src="assets/agora-horizontal.png" alt="Ágora">
+    </a>
+    <span class="progress-copy" id="progressCopy">1 / 12</span>
+    <div class="actions">
+      <a class="icon-button" href="assets/Comunidad-Agora.pdf" download aria-label="Descargar PDF" title="Descargar PDF">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 20h14"/></svg>
+      </a>
+      <button class="icon-button" id="shareButton" type="button" aria-label="Compartir presentación" title="Compartir">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="m8.2 10.8 7.6-4.4M8.2 13.2l7.6 4.4"/></svg>
+      </button>
+    </div>
+  </header>
+  <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+  <p class="toast" id="shareStatus" role="status" aria-live="polite"></p>
+
+  <nav class="side-nav" aria-label="Diapositivas" id="sideNav"></nav>
+  <div class="deck-nav" aria-label="Navegación">
+    <button class="nav-button" id="previousButton" type="button" aria-label="Diapositiva anterior">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+    </button>
+    <button class="nav-button" id="nextButton" type="button" aria-label="Siguiente diapositiva">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+    </button>
+  </div>
+
+  <main>
+    <section class="hero slide in-view" id="inicio" data-title="Tu comunidad">
+      <div class="hero-copy">
+        <div class="hero-stroke" aria-hidden="true"></div>
+        <h1 class="reveal">Tu comunidad, dentro de tu negocio</h1>
+        <p class="lead reveal delay">Un espacio propio para acompañar, enseñar, conversar y vender membresías sin sumar otra plataforma desconectada.</p>
+        <span class="hero-proof">Comunidad ya disponible · interfaz demo a continuación</span>
+      </div>
+      <div class="hero-image">
+        <img src="assets/hero-community.webp" alt="Profesionales de belleza compartiendo una demostración en un estudio">
+      </div>
+    </section>
+
+    <section class="slide" data-title="La oportunidad">
+      <div class="frame narrow">
+        <h2 class="reveal">Lo valioso no termina cuando termina el turno</h2>
+        <p class="lead reveal delay">La relación sigue entre una visita y la próxima. Indicaciones de cuidado, fórmulas, dudas, vivos, archivos y cobros dejan de quedar repartidos.</p>
+        <div class="relationship reveal">
+          <div><strong>Turnos y clases</strong></div>
+          <div><strong>Preguntas</strong></div>
+          <div><strong>Encuentros y recursos</strong></div>
+          <div><strong>Membresías</strong></div>
+        </div>
+        <p class="relationship-result reveal delay">Una relación continua, ordenada alrededor de tu marca.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-title="El recorrido">
+      <div class="frame">
+        <h2 class="reveal">Todo el recorrido vive en un solo lugar</h2>
+        <p class="lead reveal delay">Tu gente descubre la propuesta, entra, participa y vuelve. Vos administrás desde el mismo panel donde ya manejás el negocio.</p>
+        <div class="journey reveal">
+          <figure>
+            <img src="assets/paso-21.jpg" loading="lazy" decoding="async" alt="Puerta pública de una comunidad de demostración">
+            <figcaption>Entrar</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/paso-24.jpg" loading="lazy" decoding="async" alt="Experiencia interna del miembro">
+            <figcaption>Participar</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/paso-10.jpg" loading="lazy" decoding="async" alt="Panel del profesional para gestionar la comunidad">
+            <figcaption>Gestionar</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Crear">
+      <div class="frame split">
+        <div class="copy">
+          <h2 class="reveal">Crear empieza por la promesa y el acceso</h2>
+          <p class="lead reveal delay">El alta guía lo esencial y deja el resto para después. Crear la comunidad también la activa: no hay un add-on previo que configurar.</p>
+          <ol class="sequence reveal">
+            <li><b>01</b><span>Nombrá la comunidad y decí qué se lleva quien entra.</span></li>
+            <li><b>02</b><span>Elegí si el primer acceso es gratis, mensual o de pago único.</span></li>
+            <li><b>03</b><span>Publicá y empezá a invitar desde una puerta propia.</span></li>
+          </ol>
+        </div>
+        <div class="visual stacked-shots reveal">
+          <figure class="shot"><span class="step-pin first">1</span><img src="assets/alta-01.jpg" loading="lazy" decoding="async" alt="Primer paso de creación de una comunidad"></figure>
+          <figure class="shot"><span class="step-pin second">2</span><img src="assets/alta-02.jpg" loading="lazy" decoding="async" alt="Segundo paso de creación: acceso y precio"></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Publicar">
+      <div class="frame">
+        <h2 class="reveal">Publicar no debería sentirse como arrancar de cero</h2>
+        <p class="lead reveal delay">Un consejo de cuidado posterior, una técnica, un encuentro recurrente o una guía pueden salir con estructura sin convertir la comunidad en otro trabajo de tiempo completo.</p>
+        <div class="publish-visual reveal">
+          <figure class="shot"><img src="assets/paso-13.jpg" loading="lazy" decoding="async" alt="Feed administrado por el profesional con una publicación y una guía de primeros pasos"></figure>
+          <div class="capabilities">
+            <div class="capability"><span>Publicar</span><strong>Texto, fotos y PDF</strong></div>
+            <div class="capability"><span>Encontrarse</span><strong>Online o presencial, también recurrente</strong></div>
+            <div class="capability"><span>Guardar</span><strong>Recursos que no se pierden en el feed</strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="La experiencia">
+      <div class="frame split reverse">
+        <div class="copy">
+          <h2 class="reveal">La experiencia se siente propia, no prestada</h2>
+          <p class="lead reveal delay">La puerta y el espacio respetan la identidad del negocio. El miembro encuentra novedades, salas, encuentros, recursos y sus avisos sin aprender otra lógica.</p>
+          <ul class="sequence reveal">
+            <li><b>✓</b><span>Tu nombre, tus reglas y la estética de tu negocio.</span></li>
+            <li><b>✓</b><span>Una puerta clara antes de registrarse o pagar.</span></li>
+            <li><b>✓</b><span>Desktop y teléfono, con la misma jerarquía.</span></li>
+          </ul>
+        </div>
+        <div class="visual member-visual reveal">
+          <figure class="shot"><img src="assets/paso-24.jpg" loading="lazy" decoding="async" alt="Inicio de una comunidad desde una computadora"></figure>
+          <figure class="phone-shot"><img src="assets/puerta-mobile.jpg" loading="lazy" decoding="async" alt="Puerta de una comunidad desde un teléfono"></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Acompañar">
+      <div class="frame">
+        <h2 class="reveal">Las preguntas quedan donde después sirven</h2>
+        <p class="lead reveal delay">Una duda sobre mantenimiento de color, cuidado post corte o técnica nace en su sala, aparece como pendiente y la respuesta puede quedar fijada para la próxima persona.</p>
+        <div class="question-flow reveal">
+          <figure class="shot"><img src="assets/paso-25.jpg" loading="lazy" decoding="async" alt="Miembro escribiendo una pregunta en una sala"><figcaption>Pregunta</figcaption></figure>
+          <figure class="shot"><img src="assets/paso-28.jpg" loading="lazy" decoding="async" alt="Pregunta pendiente en el panel del profesional"><figcaption>Pendiente</figcaption></figure>
+          <figure class="shot"><img src="assets/paso-29.jpg" loading="lazy" decoding="async" alt="Respuesta del profesional visible en la comunidad"><figcaption>Respuesta útil</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Membresías">
+      <div class="frame">
+        <h2 class="reveal">Gratis, mensual o para siempre</h2>
+        <p class="lead reveal delay">Podés abrir una puerta gratuita, cobrar mes a mes, ofrecer bloques adelantados o vender acceso de por vida. La propuesta y el precio quedan claros antes del checkout.</p>
+        <div class="payment-layout reveal">
+          <div class="payment-options">
+            <div class="payment-option"><span>Gratis</span><strong>Para clientes y alumnos de siempre</strong></div>
+            <div class="payment-option"><span>Mensual</span><strong>Mes a mes o 3 / 6 / 12 meses</strong></div>
+            <div class="payment-option"><span>Pago único</span><strong>Una vez, acceso de por vida</strong></div>
+          </div>
+          <div class="payment-shot">
+            <figure class="shot"><img src="assets/pago-puerta-1.jpg" loading="lazy" decoding="async" alt="Puerta pública con accesos gratis, mensuales, prepagos y de pago único"></figure>
+            <div class="fee">Ágora retiene 5% de cada nueva membresía</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Todo conectado">
+      <div class="frame">
+        <h2 class="reveal">Lo que ya vendés alimenta la conversación</h2>
+        <p class="lead reveal delay">Cursos y capacitaciones pueden dar acceso a la comunidad o venir incluidos en una membresía. Cuando publicás algo conectado, la novedad aparece sola en el feed.</p>
+        <div class="catalog-layout reveal">
+          <figure class="shot"><img src="assets/catalogo-01.jpg" loading="lazy" decoding="async" alt="Una capacitación publicada automáticamente en el feed de Comunidad"></figure>
+          <div class="handoff">
+            <strong>Se publica</strong>
+            <span class="arrow" aria-hidden="true"></span>
+            <strong>La comunidad lo cuenta</strong>
+            <span class="muted">sin escribir en tu nombre</span>
+            <div class="handoff-note">“Sumale unas palabras tuyas →”</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Qué aprendimos">
+      <div class="frame">
+        <h2 class="reveal">Tomamos lo simple, sin sumar otra plataforma</h2>
+        <p class="lead reveal delay">Skool, Circle y Kajabi muestran tres caminos distintos. Ágora toma lo útil y lo conecta con el negocio que ya manejás todos los días.</p>
+        <div class="comparison reveal">
+          <article>
+            <h3>Skool</h3>
+            <ul><li>Inicio directo</li><li>Comunidad + calendario</li><li>Ranking visible</li></ul>
+          </article>
+          <article>
+            <h3>Circle</h3>
+            <ul><li>Espacios flexibles</li><li>Eventos y pagos</li><li>Experiencia cuidada</li></ul>
+          </article>
+          <article>
+            <h3>Kajabi</h3>
+            <ul><li>Productos + ofertas</li><li>Marketing integrado</li><li>Suite completa</li></ul>
+          </article>
+          <article>
+            <h3>Ágora</h3>
+            <ul><li>Comunidad + turnos</li><li>Cursos + capacitaciones</li><li>Pagos y una sola relación con tu cliente</li></ul>
+          </article>
+        </div>
+        <p class="sources">
+          Fuentes oficiales:
+          <a href="https://www.skool.com/" target="_blank" rel="noopener">Skool</a>
+          <a href="https://circle.so/platform" target="_blank" rel="noopener">Circle</a>
+          <a href="https://www.kajabi.com/product/communities" target="_blank" rel="noopener">Kajabi</a>
+        </p>
+      </div>
+    </section>
+
+    <section class="slide blue-slide" data-title="Hoy y después">
+      <div class="frame">
+        <h2 class="reveal">Hoy ya funciona. Lo próximo lo elegís vos.</h2>
+        <div class="now-next reveal delay">
+          <ul class="available-list">
+            <li>Creación guiada y puerta pública</li>
+            <li>Feed, salas, encuentros y recursos</li>
+            <li>Accesos gratis y pagos</li>
+            <li>Personas, actividad y moderación</li>
+            <li>Cursos y capacitaciones conectados</li>
+          </ul>
+          <div class="next-panel">
+            <h3>Próximo a validar</h3>
+            <ol class="next-list">
+              <li>Puntos y niveles conectados con Fidelización</li>
+              <li>Salas o beneficios exclusivos por nivel</li>
+              <li>Desafíos para activar la participación</li>
+              <li>Automatizaciones y métricas de retención</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Tu feedback">
+      <div class="frame feedback-layout">
+        <div>
+          <h2 class="reveal">¿Qué dos cosas usarías 100%?</h2>
+          <p class="lead reveal delay">Elegí hasta dos. Esa respuesta vale más que una lista interminable de funciones que nadie termina usando.</p>
+          <a class="download-link" href="assets/Comunidad-Agora.pdf" download>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 20h14"/></svg>
+            Descargar la presentación en PDF
+          </a>
+          <p class="sources">Producto: <a href="../recorrido-comunidad-2026-08/" target="_blank" rel="noopener">recorrido público completo de Comunidad</a>.</p>
+        </div>
+        <form class="feedback-form reveal" id="feedbackForm">
+          <div class="choice-grid">
+            <label class="choice"><input type="checkbox" name="priority" value="Puntos y niveles por participación"><span>Puntos y niveles por participación</span></label>
+            <label class="choice"><input type="checkbox" name="priority" value="Salas exclusivas para miembros o niveles"><span>Salas exclusivas para miembros o niveles</span></label>
+            <label class="choice"><input type="checkbox" name="priority" value="Desafíos de 7, 14 o 30 días"><span>Desafíos de 7, 14 o 30 días</span></label>
+            <label class="choice"><input type="checkbox" name="priority" value="Bienvenida y reactivación automáticas"><span>Bienvenida y reactivación automáticas</span></label>
+            <label class="choice"><input type="checkbox" name="priority" value="Métricas de actividad y retención"><span>Métricas de actividad y retención</span></label>
+          </div>
+          <p class="selection-status" id="selectionStatus">Podés elegir hasta 2 opciones.</p>
+          <label for="missingNeed"><strong>¿Qué necesidad falta?</strong></label>
+          <textarea id="missingNeed" placeholder="Ej.: poder separar una sala para mi equipo…"></textarea>
+          <div class="form-actions">
+            <button class="copy-feedback" id="copyFeedback" type="submit" disabled>Copiar mi respuesta</button>
+            <button class="whatsapp-feedback" id="whatsappFeedback" type="button" disabled>Compartir por WhatsApp</button>
+          </div>
+          <textarea class="copy-fallback" id="copyFallback" aria-label="Respuesta lista para copiar" readonly hidden></textarea>
+          <p class="form-message" id="formMessage" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      var slides = Array.from(document.querySelectorAll(".slide"));
+      var progressBar = document.getElementById("progressBar");
+      var progressCopy = document.getElementById("progressCopy");
+      var sideNav = document.getElementById("sideNav");
+      var previousButton = document.getElementById("previousButton");
+      var nextButton = document.getElementById("nextButton");
+      var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var activeIndex = 0;
+
+      slides.forEach(function (slide, index) {
+        var button = document.createElement("button");
+        button.className = "dot";
+        button.type = "button";
+        button.setAttribute("aria-label", "Ir a " + slide.dataset.title);
+        button.addEventListener("click", function () { goTo(index); });
+        sideNav.appendChild(button);
+      });
+      var dots = Array.from(sideNav.children);
+
+      function update(index) {
+        activeIndex = Math.max(0, Math.min(slides.length - 1, index));
+        progressBar.style.transform = "scaleX(" + ((activeIndex + 1) / slides.length) + ")";
+        progressCopy.textContent = (activeIndex + 1) + " / " + slides.length;
+        dots.forEach(function (dot, dotIndex) {
+          dot.setAttribute("aria-current", dotIndex === activeIndex ? "true" : "false");
+        });
+        previousButton.disabled = activeIndex === 0;
+        nextButton.disabled = activeIndex === slides.length - 1;
+      }
+
+      function goTo(index) {
+        var safeIndex = Math.max(0, Math.min(slides.length - 1, index));
+        update(safeIndex);
+        slides[safeIndex].scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+      }
+
+      var revealObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in-view");
+          }
+        });
+      }, { threshold: .12 });
+      slides.forEach(function (slide) { revealObserver.observe(slide); });
+
+      var scrollTicking = false;
+      function syncFromScroll() {
+        scrollTicking = false;
+        var marker = window.scrollY + (window.innerHeight * .46);
+        var current = 0;
+        slides.forEach(function (slide, index) {
+          if (slide.offsetTop <= marker) current = index;
+        });
+        update(current);
+      }
+      window.addEventListener("scroll", function () {
+        if (!scrollTicking) {
+          scrollTicking = true;
+          window.requestAnimationFrame(syncFromScroll);
+        }
+      }, { passive: true });
+      window.addEventListener("resize", syncFromScroll);
+      syncFromScroll();
+
+      previousButton.addEventListener("click", function () { goTo(activeIndex - 1); });
+      nextButton.addEventListener("click", function () { goTo(activeIndex + 1); });
+      document.addEventListener("keydown", function (event) {
+        var tag = document.activeElement && document.activeElement.tagName;
+        if (tag === "INPUT" || tag === "TEXTAREA") return;
+        if (event.key === "ArrowRight" || event.key === "ArrowDown" || event.key === "PageDown") {
+          event.preventDefault();
+          goTo(activeIndex + 1);
+        }
+        if (event.key === "ArrowLeft" || event.key === "ArrowUp" || event.key === "PageUp") {
+          event.preventDefault();
+          goTo(activeIndex - 1);
+        }
+        if (event.key === "Home") { event.preventDefault(); goTo(0); }
+        if (event.key === "End") { event.preventDefault(); goTo(slides.length - 1); }
+      });
+
+      var shareButton = document.getElementById("shareButton");
+      var shareStatus = document.getElementById("shareStatus");
+      var shareStatusTimer;
+      function announceShare(message) {
+        window.clearTimeout(shareStatusTimer);
+        shareStatus.textContent = message;
+        shareStatusTimer = window.setTimeout(function () { shareStatus.textContent = ""; }, 2600);
+      }
+      shareButton.addEventListener("click", async function () {
+        var payload = { title: document.title, text: "Conocé Comunidad de Ágora", url: window.location.href };
+        try {
+          if (navigator.share) {
+            await navigator.share(payload);
+            announceShare("Presentación compartida.");
+          } else {
+            await navigator.clipboard.writeText(window.location.href);
+            shareButton.setAttribute("title", "Enlace copiado");
+            announceShare("Enlace copiado.");
+            setTimeout(function () { shareButton.setAttribute("title", "Compartir"); }, 1800);
+          }
+        } catch (error) {
+          if (error && error.name !== "AbortError") {
+            shareButton.setAttribute("title", "No se pudo compartir");
+            announceShare("No se pudo compartir. Copiá la dirección del navegador.");
+          }
+        }
+      });
+
+      var feedbackForm = document.getElementById("feedbackForm");
+      var options = Array.from(feedbackForm.querySelectorAll('input[name="priority"]'));
+      var status = document.getElementById("selectionStatus");
+      var copyFeedback = document.getElementById("copyFeedback");
+      var whatsappFeedback = document.getElementById("whatsappFeedback");
+      var missingNeed = document.getElementById("missingNeed");
+      var copyFallback = document.getElementById("copyFallback");
+      var formMessage = document.getElementById("formMessage");
+
+      function buildResponse() {
+        var selected = options.filter(function (option) { return option.checked; }).map(function (option) { return "• " + option.value; });
+        var note = missingNeed.value.trim();
+        return "Feedback sobre Comunidad de Ágora\n\nPrioridades:\n" + (selected.length ? selected.join("\n") : "• Sin prioridad seleccionada") + (note ? "\n\nNecesidad que falta:\n" + note : "");
+      }
+
+      function syncChoices() {
+        var selected = options.filter(function (option) { return option.checked; });
+        var atLimit = selected.length >= 2;
+        var hasResponse = selected.length > 0 || Boolean(missingNeed.value.trim());
+        options.forEach(function (option) { option.disabled = atLimit && !option.checked; });
+        status.textContent = selected.length === 0 ? "Podés elegir hasta 2 opciones." : selected.length + " de 2 elegidas.";
+        status.classList.toggle("limit", atLimit);
+        copyFeedback.disabled = !hasResponse;
+        whatsappFeedback.disabled = !hasResponse;
+        copyFallback.hidden = true;
+        formMessage.textContent = "";
+      }
+      options.forEach(function (option) { option.addEventListener("change", syncChoices); });
+      missingNeed.addEventListener("input", syncChoices);
+
+      feedbackForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        var response = buildResponse();
+        try {
+          await navigator.clipboard.writeText(response);
+          copyFallback.hidden = true;
+          formMessage.textContent = "Listo: tu respuesta quedó copiada para enviarla.";
+          copyFeedback.textContent = "Respuesta copiada";
+          setTimeout(function () { copyFeedback.textContent = "Copiar mi respuesta"; }, 2200);
+        } catch (error) {
+          copyFallback.hidden = false;
+          copyFallback.value = response;
+          copyFallback.focus();
+          copyFallback.select();
+          formMessage.textContent = "El texto quedó visible acá abajo para que puedas copiarlo manualmente.";
+        }
+      });
+
+      whatsappFeedback.addEventListener("click", function () {
+        var shareUrl = "https://wa.me/?text=" + encodeURIComponent(buildResponse());
+        window.open(shareUrl, "_blank", "noopener");
+        formMessage.textContent = "Abrimos WhatsApp con tu respuesta. Vos elegís a quién enviarla.";
+      });
+    })();
+  </script>
+</body>
+</html>
