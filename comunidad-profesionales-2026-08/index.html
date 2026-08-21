@@ -133,7 +133,7 @@
       width: 100%;
       height: 100%;
       background: var(--blue);
-      transform: scaleX(.06667);
+      transform: scaleX(.07143);
       transform-origin: left center;
       transition: transform .55s var(--ease-out);
     }
@@ -725,101 +725,6 @@
     .progression-slide .next-panel { padding: clamp(22px, 2.7vw, 34px); }
     .progression-slide .next-list li { padding: 13px 0; font-size: clamp(.98rem, 1.45vw, 1.18rem); }
 
-    .feedback-layout {
-      display: grid;
-      grid-template-columns: minmax(0, .92fr) minmax(420px, 1.08fr);
-      gap: clamp(42px, 8vw, 120px);
-      align-items: start;
-    }
-    .feedback-layout h2 { max-width: 10ch; }
-    .feedback-form {
-      padding: clamp(22px, 3vw, 32px);
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      background: #fff;
-      box-shadow: var(--shadow);
-    }
-    .choice-fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
-    .choice-grid { display: grid; gap: 8px; }
-    .choice {
-      position: relative;
-      display: grid;
-      grid-template-columns: 26px 1fr;
-      gap: 14px;
-      align-items: center;
-      min-height: 48px;
-      padding: 8px 12px;
-      border: 1px solid transparent;
-      border-radius: 14px;
-      cursor: pointer;
-      transition: background .2s, border-color .2s, transform .25s var(--ease-out);
-    }
-    .choice:hover { transform: translateX(3px); background: #F8FAFC; }
-    .choice:has(input:checked) { border-color: #9BC8FF; background: var(--blue-soft); }
-    .choice:has(input:disabled) { opacity: .48; cursor: not-allowed; }
-    .choice input {
-      appearance: none;
-      width: 22px;
-      height: 22px;
-      margin: 0;
-      border: 1.5px solid #617896;
-      border-radius: 50%;
-      background: #fff;
-      cursor: inherit;
-    }
-    .choice input:checked { border: 6px solid var(--blue); }
-    .choice span { color: var(--copy); font-weight: 650; }
-    .selection-status { min-height: 22px; margin: 10px 4px 14px; color: var(--muted); font-size: .82rem; }
-    .selection-status.limit { color: #B4233C; }
-    textarea {
-      width: 100%;
-      min-height: 72px;
-      resize: vertical;
-      padding: 14px 16px;
-      border: 1px solid #7588A3;
-      border-radius: 14px;
-      color: var(--ink);
-      background: #FBFCFE;
-      caret-color: var(--blue);
-    }
-    textarea::placeholder { color: #667085; opacity: 1; }
-    .copy-feedback {
-      width: 100%;
-      margin-top: 10px;
-      padding: 12px 18px;
-      border: 0;
-      border-radius: 14px;
-      color: #fff;
-      background: var(--blue);
-      font-weight: 800;
-      cursor: pointer;
-      box-shadow: 0 14px 28px -16px rgba(0, 95, 213, .72);
-      transition: transform .25s var(--ease-out), background .2s;
-    }
-    .copy-feedback:hover { transform: translateY(-2px); background: var(--blue-deep); }
-    .copy-feedback:disabled { color: #98A2B3; background: #EAECF0; box-shadow: none; cursor: not-allowed; transform: none; }
-    .form-message { min-height: 22px; margin: 10px 3px 0; color: var(--green); font-size: .82rem; font-weight: 650; }
-    .form-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .whatsapp-feedback {
-      margin-top: 10px;
-      padding: 12px 18px;
-      border: 0;
-      border-radius: 14px;
-      color: #fff;
-      background: var(--green);
-      font-weight: 800;
-      cursor: pointer;
-      box-shadow: 0 14px 28px -16px rgba(6,118,71,.68);
-      transition: transform .25s var(--ease-out), background .2s;
-    }
-    .whatsapp-feedback:hover { transform: translateY(-2px); background: #055D39; }
-    .whatsapp-feedback:disabled { color: #667085; background: #EAECF0; box-shadow: none; cursor: not-allowed; transform: none; }
-    .copy-fallback {
-      min-height: 110px;
-      margin-top: 12px;
-      background: #FFF7F8;
-      border-color: #B5475D;
-    }
     .toast {
       position: fixed;
       z-index: 80;
@@ -837,16 +742,7 @@
       transform: translateX(-50%);
     }
     .toast:empty { display: none; }
-    .download-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: 28px;
-      color: var(--blue);
-      font-weight: 750;
-    }
     .slide:last-child { padding-top: 88px; padding-bottom: 40px; }
-    .download-link svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; }
 
     .in-view .reveal {
       animation: authored-in .9s var(--ease-out) both;
@@ -864,7 +760,7 @@
       .hero { grid-template-columns: 1fr; padding-top: 72px; }
       .hero-copy { min-height: 58svh; padding: 54px 28px 44px; }
       .hero-image { min-height: 42svh; }
-      .split, .split.reverse, .payment-layout, .catalog-layout, .feedback-layout { grid-template-columns: 1fr; }
+      .split, .split.reverse, .payment-layout, .catalog-layout { grid-template-columns: 1fr; }
       .split.reverse .copy, .split.reverse .visual { order: initial; }
       .stacked-shots { min-height: 0; }
       .publish-visual { grid-template-columns: 1fr; }
@@ -934,10 +830,6 @@
       .now-next { margin-top: 24px; }
       .available-list { gap: 16px; }
       .next-panel { border-radius: 18px; }
-      .feedback-layout { gap: 28px; }
-      .feedback-form { padding: 18px; border-radius: 18px; }
-      .form-actions { grid-template-columns: 1fr; gap: 0; }
-      .choice { grid-template-columns: 24px 1fr; padding: 11px 8px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -950,16 +842,16 @@
   <!--
   THESIS: Comunidad sostiene la relación entre una visita y la próxima desde el negocio que el profesional ya maneja.
   OWN-WORLD: Ágora Frost editorial: blanco, azul nítido, coral humano, tipografía Manrope y capturas reales como evidencia.
-  STORY: oportunidad → recorrido → operación → espacios → experiencia → pagos → modelos → conexión → fidelización → decisión.
+  STORY: oportunidad → recorrido → operación → espacios → experiencia → pagos → modelos → conexión → fidelización → cierre.
   FIRST VIEWPORT: promesa corta a la izquierda y profesionales colaborando en un estudio real a la derecha.
-  FORM: deck público de 15 escenas; seed key community-proof-2026-08; scroll, teclado, flechas, descarga y feedback interactivo.
+  FORM: deck público de 14 escenas; seed key community-proof-2026-08; scroll, teclado, flechas, descarga y compartir.
   FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
   -->
   <header class="topbar">
     <a class="brand" href="#inicio" aria-label="Ir al inicio">
       <img src="assets/agora-horizontal.png" alt="Ágora">
     </a>
-    <span class="progress-copy" id="progressCopy">1 / 15</span>
+    <span class="progress-copy" id="progressCopy">1 / 14</span>
     <div class="actions">
       <a class="icon-button" href="assets/Comunidad-Agora.pdf" download aria-label="Descargar PDF" title="Descargar PDF">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 20h14"/></svg>
@@ -1066,11 +958,11 @@
     <section class="slide" data-title="Espacios">
       <div class="frame">
         <h2 class="reveal">Cada conversación tiene un lugar y una intención</h2>
-        <p class="lead reveal delay">Ordená la participación con espacios concretos. Las victorias no se pierden entre dudas y los recursos siguen siendo fáciles de encontrar.</p>
+        <p class="lead reveal delay">Separá la conversación por intención: resultados en Victorias, dudas en Consultas y material útil en Recursos.</p>
         <div class="offer-grid reveal">
           <article>
             <h3>Victorias</h3>
-            <ul><li>Resultados y avances</li><li>Fotos o evidencia</li><li>Motivación entre pares</li></ul>
+            <ul><li>Corte logrado</li><li>Antes y después</li><li>Agenda más ocupada</li></ul>
           </article>
           <article>
             <h3>Consultas</h3>
@@ -1082,7 +974,7 @@
           </article>
           <article>
             <h3>Disponible hoy</h3>
-            <p class="outcome-copy">Creás una sala “Victorias” y tu gente publica ahí.</p>
+            <p class="outcome-copy">Creás una sala “Victorias” para compartir avances.</p>
           </article>
         </div>
       </div>
@@ -1138,8 +1030,8 @@
 
     <section class="slide" data-title="Modelos de ingreso">
       <div class="frame">
-        <h2 class="reveal">Un curso puede venderse de varias formas</h2>
-        <p class="lead reveal delay">Elegí el modelo según la promesa y la relación que querés construir. La comunidad no te obliga a cobrar de una sola manera.</p>
+        <h2 class="reveal">Dos formas de cobrar un curso</h2>
+        <p class="lead reveal delay">Vendelo como compra individual o incluilo en una membresía. Después sumá Comunidad, Espacios y Fidelización para acompañar resultados.</p>
         <div class="offer-grid reveal">
           <article>
             <h3>Venta individual</h3>
@@ -1150,12 +1042,12 @@
             <ul><li>Curso incluido</li><li>Comunidad y encuentros</li><li>Mensual o prepaga</li></ul>
           </article>
           <article>
-            <h3>Puerta gratuita</h3>
-            <ul><li>Contenido abierto</li><li>Confianza primero</li><li>Venta posterior</li></ul>
+            <h3>Potenciarlo</h3>
+            <ul><li>Curso + Comunidad</li><li>Espacio de Victorias</li><li>Encuentros y recursos</li></ul>
           </article>
           <article>
-            <h3>Vos elegís</h3>
-            <p class="outcome-copy">Curso solo o dentro de una membresía.</p>
+            <h3>Ágora</h3>
+            <p class="outcome-copy">Cobrás una vez o mes a mes. Vos elegís el modelo.</p>
           </article>
         </div>
       </div>
@@ -1178,27 +1070,28 @@
       </div>
     </section>
 
-    <section class="slide blue-slide progression-slide" data-title="Espacios + Fidelización">
+    <section class="slide blue-slide progression-slide" data-title="Curso + Espacios + Fidelización">
       <div class="frame">
-        <h2 class="reveal">Las piezas ya existen; falta conectarlas</h2>
-        <p class="lead reveal delay">El próximo salto es convertir actividad real en progreso visible, sin esconder qué ya está disponible y qué todavía debemos validar.</p>
+        <h2 class="reveal">El curso se potencia con progreso visible</h2>
+        <p class="lead reveal delay">Curso, Espacios y Fidelización se refuerzan: aprender, resolver dudas, mostrar resultados y reconocer avances dentro de una misma experiencia.</p>
         <div class="now-next reveal delay">
           <div>
-            <h3>Hoy, por separado</h3>
+            <h3>Cómo se potencian</h3>
             <ul class="available-list">
-              <li>Sala “Victorias”</li>
-              <li>Posts con foto o evidencia</li>
-              <li>Cursos, recursos y encuentros</li>
-              <li>Puntos, niveles, recompensas y beneficios en Fidelización</li>
+              <li>Curso: enseña la técnica</li>
+              <li>Consultas: destraban dudas</li>
+              <li>Victorias: muestran resultados</li>
+              <li>Fidelización: suma puntos</li>
+              <li>Niveles: reconocen avances</li>
             </ul>
           </div>
           <div class="next-panel">
-            <h3>Próximo a conectar</h3>
+            <h3>Ejemplos a configurar</h3>
             <ol class="next-list">
-              <li>Acciones configurables por el creador</li>
-              <li>Checkpoints con evidencia</li>
-              <li>Niveles que desbloquean espacios</li>
-              <li>Desafíos y garantías condicionales</li>
+              <li>Ver 5 clases → suma puntos</li>
+              <li>Subir 3 cortes → llega a nivel 2</li>
+              <li>Nivel 2 → abre una sala avanzada</li>
+              <li>Completar el reto → desbloquea un beneficio</li>
             </ol>
           </div>
         </div>
@@ -1238,7 +1131,7 @@
 
     <section class="slide blue-slide" data-title="Hoy y después">
       <div class="frame">
-        <h2 class="reveal">Hoy ya funciona. Lo próximo lo elegís vos.</h2>
+        <h2 class="reveal">Hoy ya funciona. Lo próximo: progreso conectado.</h2>
         <div class="now-next reveal delay">
           <ul class="available-list">
             <li>Creación guiada y puerta pública</li>
@@ -1250,50 +1143,16 @@
           <div class="next-panel">
             <h3>Próximo a validar</h3>
             <ol class="next-list">
-              <li>Conectar puntos y niveles con Comunidad</li>
-              <li>Checkpoints y evidencia de avance</li>
-              <li>Desbloqueos por nivel</li>
-              <li>Automatizaciones y métricas de retención</li>
+              <li>Reglas del curso que suman puntos</li>
+              <li>Checkpoints con foto o evidencia</li>
+              <li>Niveles que desbloquean espacios</li>
+              <li>Recompensas y métricas de retención</li>
             </ol>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="slide" data-title="Tu feedback">
-      <div class="frame feedback-layout">
-        <div>
-          <h2 class="reveal">¿Qué dos cosas usarías 100%?</h2>
-          <p class="lead reveal delay">Elegí hasta dos. Queremos priorizar lo que realmente usarías, no sumar funciones por sumar.</p>
-          <a class="download-link" href="assets/Comunidad-Agora.pdf" download>
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 20h14"/></svg>
-            Descargar la presentación en PDF
-          </a>
-          <p class="sources">Producto: <a href="../recorrido-comunidad-2026-08/" target="_blank" rel="noopener">recorrido público completo de Comunidad</a>.</p>
-        </div>
-        <form class="feedback-form reveal" id="feedbackForm">
-          <fieldset class="choice-fieldset" aria-describedby="selectionStatus">
-            <legend class="sr-only">Elegí hasta dos prioridades</legend>
-            <div class="choice-grid">
-              <label class="choice"><input type="checkbox" name="priority" value="Espacio Victorias para compartir resultados"><span>Espacio “Victorias” para compartir resultados</span></label>
-              <label class="choice"><input type="checkbox" name="priority" value="Checkpoints configurables con foto o evidencia"><span>Checkpoints configurables con foto o evidencia</span></label>
-              <label class="choice"><input type="checkbox" name="priority" value="Puntos, niveles y desbloqueos"><span>Puntos, niveles y desbloqueos</span></label>
-              <label class="choice"><input type="checkbox" name="priority" value="Desafíos con garantía condicional"><span>Desafíos con garantía condicional</span></label>
-              <label class="choice"><input type="checkbox" name="priority" value="Curso por venta individual o membresía"><span>Curso por venta individual o membresía</span></label>
-            </div>
-            <p class="selection-status" id="selectionStatus" role="status" aria-live="polite" aria-atomic="true">Podés elegir hasta 2 opciones.</p>
-          </fieldset>
-          <label for="missingNeed"><strong>¿Qué necesidad falta?</strong></label>
-          <textarea id="missingNeed" placeholder="Ej.: que 20 prácticas con foto desbloqueen el próximo nivel…"></textarea>
-          <div class="form-actions">
-            <button class="copy-feedback" id="copyFeedback" type="submit" disabled>Copiar mi respuesta</button>
-            <button class="whatsapp-feedback" id="whatsappFeedback" type="button" disabled>Compartir por WhatsApp</button>
-          </div>
-          <textarea class="copy-fallback" id="copyFallback" aria-label="Respuesta lista para copiar" readonly hidden></textarea>
-          <p class="form-message" id="formMessage" role="status" aria-live="polite"></p>
-        </form>
-      </div>
-    </section>
   </main>
 
   <script>
@@ -1409,59 +1268,6 @@
         }
       });
 
-      var feedbackForm = document.getElementById("feedbackForm");
-      var options = Array.from(feedbackForm.querySelectorAll('input[name="priority"]'));
-      var status = document.getElementById("selectionStatus");
-      var copyFeedback = document.getElementById("copyFeedback");
-      var whatsappFeedback = document.getElementById("whatsappFeedback");
-      var missingNeed = document.getElementById("missingNeed");
-      var copyFallback = document.getElementById("copyFallback");
-      var formMessage = document.getElementById("formMessage");
-
-      function buildResponse() {
-        var selected = options.filter(function (option) { return option.checked; }).map(function (option) { return "• " + option.value; });
-        var note = missingNeed.value.trim();
-        return "Feedback sobre Comunidad de Ágora\n\nPrioridades:\n" + (selected.length ? selected.join("\n") : "• Sin prioridad seleccionada") + (note ? "\n\nNecesidad que falta:\n" + note : "");
-      }
-
-      function syncChoices() {
-        var selected = options.filter(function (option) { return option.checked; });
-        var atLimit = selected.length >= 2;
-        var hasResponse = selected.length > 0 || Boolean(missingNeed.value.trim());
-        options.forEach(function (option) { option.disabled = atLimit && !option.checked; });
-        status.textContent = selected.length === 0 ? "Podés elegir hasta 2 opciones." : selected.length + " de 2 elegidas.";
-        status.classList.toggle("limit", atLimit);
-        copyFeedback.disabled = !hasResponse;
-        whatsappFeedback.disabled = !hasResponse;
-        copyFallback.hidden = true;
-        formMessage.textContent = "";
-      }
-      options.forEach(function (option) { option.addEventListener("change", syncChoices); });
-      missingNeed.addEventListener("input", syncChoices);
-
-      feedbackForm.addEventListener("submit", async function (event) {
-        event.preventDefault();
-        var response = buildResponse();
-        try {
-          await navigator.clipboard.writeText(response);
-          copyFallback.hidden = true;
-          formMessage.textContent = "Listo: tu respuesta quedó copiada para enviarla.";
-          copyFeedback.textContent = "Respuesta copiada";
-          setTimeout(function () { copyFeedback.textContent = "Copiar mi respuesta"; }, 2200);
-        } catch (error) {
-          copyFallback.hidden = false;
-          copyFallback.value = response;
-          copyFallback.focus();
-          copyFallback.select();
-          formMessage.textContent = "El texto quedó visible acá abajo para que puedas copiarlo manualmente.";
-        }
-      });
-
-      whatsappFeedback.addEventListener("click", function () {
-        var shareUrl = "https://wa.me/?text=" + encodeURIComponent(buildResponse());
-        window.open(shareUrl, "_blank", "noopener");
-        formMessage.textContent = "Abrimos WhatsApp con tu respuesta. Vos elegís a quién enviarla.";
-      });
     })();
   </script>
 </body>

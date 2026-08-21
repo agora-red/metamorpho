@@ -18,11 +18,11 @@ Profesionales y dueños de negocios que ya sostienen una relación con clientes 
 6. La experiencia del miembro conserva la identidad del negocio.
 7. Las dudas quedan donde pueden servir a más personas.
 8. Los accesos pueden ser gratis, mensuales, prepagos o de pago único.
-9. Un curso puede venderse individualmente, incluirse en una membresía o abrir una comunidad.
+9. Un curso puede cobrarse como venta individual o incluirse en una membresía, y potenciarse con Comunidad, Espacios, encuentros y recursos.
 10. Cursos, membresías y Comunidad pueden otorgarse acceso entre sí.
-11. Espacios y Fidelización ya existen; la conexión entre actividad, checkpoints, niveles y desbloqueos es el próximo paso a validar.
+11. Curso, Espacios y Fidelización se potencian: Consultas destraba dudas, Victorias visibiliza resultados y una conexión propuesta permitiría sumar puntos, validar evidencia y desbloquear niveles o salas.
 12. Ágora aprende de Skool, Circle y Kajabi sin sumar otra plataforma desconectada.
-13. El cierre separa lo disponible de lo próximo a validar y pide dos prioridades reales.
+13. El cierre separa lo disponible de lo próximo a validar y resume el progreso conectado.
 
 ## Estado del producto
 
@@ -46,4 +46,3 @@ Próximo a validar: acciones configurables que sumen puntos, checkpoints con fot
 - Progreso y posición actual.
 - Descarga del PDF.
 - Compartir.
-- Feedback interactivo: máximo dos opciones, necesidad libre y copia al portapapeles.

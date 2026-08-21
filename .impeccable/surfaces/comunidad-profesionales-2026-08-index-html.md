@@ -17,11 +17,11 @@ Presentar Comunidad a barberos, estilistas y profesionales, mostrando valor come
 
 ## Story
 
-Oportunidad → recorrido → creación → operación → espacios con propósito → experiencia de miembro → preguntas → membresías → modelos de ingreso → conexión curso/comunidad → Espacios + Fidelización → comparación → disponible/próximo → feedback.
+Oportunidad → recorrido → creación → operación → espacios con propósito y Victorias → experiencia de miembro → preguntas → membresías → dos modelos de cobro → conexión curso/comunidad → Curso + Espacios + Fidelización → comparación → disponible/próximo → cierre.
 
 ## Interaction
 
-Scroll-snap de 15 escenas, teclado, flechas, progreso, compartir, descargar PDF y selector de hasta dos prioridades con texto libre y copia al portapapeles.
+Scroll-snap de 14 escenas, teclado, flechas, progreso, compartir y descargar PDF.
 
 ## Integrity
 
