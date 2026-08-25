@@ -19,7 +19,6 @@
   --sans: 'Montserrat', system-ui, -apple-system, sans-serif;
 }
 * { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
 body { font-family:var(--sans); color:var(--frost-ink); background:var(--frost-surface-muted); font-variant-numeric:tabular-nums; -webkit-font-smoothing:antialiased; line-height:1.55; }
 .wrap { max-width:1060px; margin:0 auto; padding:0 28px; }
 
@@ -287,6 +286,120 @@ section.alt .mock-stage { background:linear-gradient(160deg,#F2F6FC 0%, #E9EFF8 
 .src p { font-size:11.5px; font-weight:300; color:var(--frost-ink-soft); line-height:1.5; margin-bottom:9px; }
 .src code { font-family:inherit; font-size:10px; font-weight:600; color:var(--frost-primary-hover); background:var(--frost-primary-soft); border-radius:var(--r-sm); padding:2px 8px; word-break:break-all; }
 
+/* ===== Prototipo funcional — réplica fiel de Frost/Pulse (valores de flash/src/styles/_tailwind.css) ===== */
+.proto-stage { display:grid; grid-template-columns:minmax(340px,470px) 1fr; gap:32px; margin-top:36px; align-items:start; }
+.pv-phone { background:linear-gradient(170deg,#EFF3F9 0%, #E8EEF7 100%); border:1px solid var(--frost-border); border-radius:var(--r-shell); padding:18px 14px 10px; box-shadow:var(--sh-md); position:relative; overflow:hidden; }
+.pv-appbar { display:flex; align-items:baseline; justify-content:space-between; padding:2px 8px 12px; }
+.pv-apptitle { font-size:15px; font-weight:600; }
+.pv-appdate { font-size:10.5px; font-weight:500; color:var(--frost-muted); }
+.pv-reset { display:block; margin:12px auto 4px; background:none; border:none; font-family:var(--sans); font-size:11px; font-weight:600; color:var(--frost-muted); cursor:pointer; }
+.pv-reset:hover { color:var(--frost-primary); }
+.pv-toast { position:absolute; left:50%; bottom:46px; transform:translateX(-50%) translateY(8px); background:var(--frost-ink); color:#fff; font-size:11.5px; font-weight:500; padding:8px 14px; border-radius:var(--r-chip); opacity:0; pointer-events:none; transition:all .25s ease; white-space:nowrap; max-width:94%; overflow:hidden; text-overflow:ellipsis; z-index:5; }
+.pv-toast.on { opacity:1; transform:translateX(-50%) translateY(0); }
+
+.fz-card { position:relative; background:rgba(255,255,255,0.97); border:1px solid rgba(15,23,42,0.10); border-radius:18px; box-shadow:0 1px 0 rgba(255,255,255,0.78) inset, 0 5px 18px -16px rgba(15,23,42,0.32), 0 1px 2px rgba(15,23,42,0.04); padding:16px 15px; }
+.fz-lamina { border-radius:16px; padding:12px 14px; border:1px solid rgba(15,23,42,0.06); }
+.fz-lamina + .fz-lamina { margin-top:10px; }
+.fz-tint-blue { background:linear-gradient(160deg, rgba(0,114,251,0.055) 0%, #FFFFFF 64%); }
+.fz-tint-lav  { background:linear-gradient(160deg, rgba(0,114,251,0.07) 0%, #FFFFFF 64%); }
+.fz-tint-mint { background:linear-gradient(160deg, rgba(16,185,129,0.065) 0%, #FFFFFF 64%); }
+.fz-tint-sun  { background:linear-gradient(160deg, rgba(245,158,11,0.06) 0%, #FFFFFF 64%); }
+.fz-kicker { font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.16em; color:#94A3B8; font-variant-numeric:tabular-nums; }
+.fz-dot { width:6px; height:6px; border-radius:50%; background:var(--frost-primary); display:inline-block; animation:fz-pulse 1.8s ease-in-out infinite; }
+@keyframes fz-pulse { 0%,100% { box-shadow:0 0 0 0 rgba(0,114,251,0.4); } 50% { box-shadow:0 0 0 6px rgba(0,114,251,0); } }
+.fz-delta { font-size:10.5px; font-weight:700; padding:2px 6px; border-radius:5px; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.fz-delta.pos { background:rgba(16,185,129,0.10); color:#047857; }
+.fz-delta.flat { background:#F1F5F9; color:rgba(15,23,42,0.6); }
+.fz-cta { display:inline-flex; align-items:center; justify-content:center; gap:6px; padding:9px 14px; border-radius:10px; border:none; cursor:pointer; font-family:var(--sans); color:#fff; font-size:12.5px; font-weight:600; background:var(--frost-primary); box-shadow:0 1px 2px rgba(0,0,0,0.06), 0 4px 10px -2px rgba(0,114,251,0.35), inset 0 1px 0 rgba(255,255,255,0.18); transition:all .15s ease; }
+.fz-cta:hover { background:var(--frost-primary-hover); transform:translateY(-1px); }
+.fz-cta:disabled { opacity:.45; cursor:not-allowed; transform:none; }
+.fz-ghost { display:inline-flex; align-items:center; justify-content:center; padding:9px 14px; border-radius:10px; border:1.5px solid var(--frost-border); background:#fff; cursor:pointer; font-family:var(--sans); font-size:12.5px; font-weight:600; color:var(--frost-ink-soft); }
+
+.pv-head { display:flex; align-items:flex-start; justify-content:space-between; }
+.pv-kickrow { display:flex; align-items:center; gap:7px; margin-bottom:5px; }
+.pv-title { font-size:13.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.14em; }
+.pv-title i { font-style:normal; color:var(--frost-primary); }
+.pv-chev { color:rgba(15,23,42,0.35); font-size:12px; }
+.pv-sig { position:relative; height:16px; margin:11px 0; }
+.pv-sig .rule { position:absolute; left:0; right:0; top:50%; height:1px; transform:translateY(-50%); background:linear-gradient(90deg, rgba(0,114,251,0.25), rgba(15,23,42,0.10), transparent); }
+.pv-sig svg { position:absolute; top:0; height:16px; width:96px; }
+.pv-sig path { stroke:var(--frost-primary); stroke-width:1.5; fill:none; opacity:0.28; stroke-linecap:round; stroke-linejoin:round; }
+.pv-stat { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:7px 0; }
+.pv-stat + .pv-stat { border-top:1px solid rgba(15,23,42,0.10); }
+.pv-stat .lb { font-size:9.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; color:rgba(15,23,42,0.55); }
+.pv-stat .vals { display:flex; align-items:baseline; gap:8px; }
+.pv-stat .num { font-weight:200; font-size:21px; letter-spacing:-0.025em; line-height:0.95; font-variant-numeric:tabular-nums; }
+.pv-stat .num small { font-size:12px; font-weight:300; color:rgba(15,23,42,0.4); margin-right:1px; }
+.pv-krow { display:flex; align-items:center; gap:7px; margin-bottom:7px; }
+.pv-kico { width:20px; height:20px; border-radius:6px; display:inline-flex; align-items:center; justify-content:center; font-size:10px; background:rgba(0,114,251,0.08); flex:none; }
+.pv-kico.sun { background:rgba(245,158,11,0.14); }
+.pv-quote { position:relative; padding-left:12px; font-size:12px; font-weight:500; line-height:1.55; color:var(--frost-ink); }
+.pv-quote::before { content:''; position:absolute; left:0; top:2px; bottom:2px; width:2.5px; border-radius:999px; background:linear-gradient(180deg, var(--frost-primary) 0%, rgba(0,114,251,0.35) 100%); }
+.pv-newpill { font-size:8px; font-weight:700; letter-spacing:0.14em; background:var(--frost-primary); color:#fff; border-radius:999px; padding:2px 7px; }
+.pv-opp { display:flex; align-items:center; gap:9px; padding:9px 0; }
+.pv-opp + .pv-opp { border-top:1px solid rgba(15,23,42,0.07); }
+.pv-opp .ic { width:31px; height:31px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:13px; background:#fff; border:1px solid rgba(15,23,42,0.08); flex:none; }
+.pv-opp .ic.done { background:rgba(16,185,129,0.12); border-color:rgba(16,185,129,0.25); }
+.pv-opp .tx { min-width:0; flex:1; }
+.pv-opp .tx b { display:block; font-size:11.5px; font-weight:600; line-height:1.3; }
+.pv-opp .tx span { display:block; font-size:10px; font-weight:400; color:var(--frost-muted); margin-top:1px; line-height:1.4; }
+.pv-opp .go { font-size:10px; font-weight:700; color:var(--frost-primary); background:#fff; border:1px solid rgba(0,114,251,0.25); border-radius:999px; padding:5px 11px; cursor:pointer; font-family:var(--sans); white-space:nowrap; flex:none; }
+.pv-opp .go:hover { background:var(--frost-primary-soft); }
+.pv-opp .st-done { font-size:9px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#047857; background:rgba(16,185,129,0.10); border-radius:999px; padding:4px 9px; white-space:nowrap; flex:none; }
+.pv-seeall { display:block; width:100%; text-align:center; margin-top:8px; padding:8px 0 2px; border:none; border-top:1px solid rgba(15,23,42,0.07); background:none; font-family:var(--sans); font-size:10.5px; font-weight:600; color:var(--frost-primary); cursor:pointer; }
+
+.pv-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:9px; padding:0 4px; }
+.pv-back { background:none; border:none; font-family:var(--sans); font-size:11.5px; font-weight:600; color:var(--frost-muted); cursor:pointer; padding:4px 0; }
+.pv-back:hover { color:var(--frost-ink); }
+.pv-state { display:inline-flex; align-items:center; gap:6px; font-size:9px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; border-radius:999px; padding:4px 10px; }
+.pv-state.rev, .pv-state.run { background:var(--frost-primary-soft); color:var(--frost-primary-hover); }
+.pv-state.run i { width:6px; height:6px; border-radius:50%; background:var(--frost-primary); font-style:normal; animation:fz-pulse 1.4s ease-in-out infinite; }
+.pv-state.ok { background:rgba(16,185,129,0.12); color:#047857; }
+.pv-dhead { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.pv-dhead .t { font-size:13.5px; font-weight:600; }
+.pv-dhead .when { font-size:10.5px; font-weight:600; color:var(--frost-primary); background:var(--frost-primary-soft); border-radius:999px; padding:4px 10px; white-space:nowrap; flex:none; }
+.pv-dsub { font-size:10.5px; font-weight:400; color:var(--frost-muted); margin-top:2px; }
+.pv-cands { margin-top:6px; }
+.pv-cand { display:flex; align-items:center; gap:9px; padding:8px 0; }
+.pv-cand + .pv-cand { border-top:1px solid rgba(15,23,42,0.07); }
+.pv-cand .av { width:29px; height:29px; border-radius:50%; background:var(--frost-primary-soft); color:var(--frost-primary); font-size:10px; font-weight:600; display:flex; align-items:center; justify-content:center; flex:none; }
+.pv-cand .who { flex:1; min-width:0; }
+.pv-cand .who b { display:block; font-size:11.5px; font-weight:600; }
+.pv-cand .chips { display:flex; flex-wrap:wrap; gap:3px; margin-top:3px; }
+.pv-cand .chips span { font-size:8.5px; font-weight:600; background:#F1F5F9; color:var(--frost-ink-soft); border-radius:999px; padding:2px 7px; }
+.pv-cand .chips span.hot { background:var(--frost-primary-soft); color:var(--frost-primary-hover); }
+.pv-cand .rm { background:none; border:none; color:#B5B5B5; font-size:12px; cursor:pointer; padding:4px 6px; font-family:var(--sans); flex:none; }
+.pv-cand .rm:hover { color:var(--frost-accent); }
+.pv-more { font-size:9.5px; font-weight:500; color:var(--frost-muted); padding-top:7px; border-top:1px solid rgba(15,23,42,0.07); }
+.pv-wa { margin-top:10px; background:#E7F9EF; border-radius:12px 12px 12px 3px; padding:10px 12px; font-size:11px; line-height:1.5; color:#173B2E; }
+.pv-wa b { display:block; font-size:8px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#128C7E; margin-bottom:3px; }
+.pv-wa .lk { color:#128C7E; font-weight:600; }
+.pv-tanda { margin-top:9px; font-size:9.5px; font-weight:500; color:var(--frost-muted); background:#F1F5F9; border-radius:10px; padding:8px 11px; line-height:1.45; }
+.pv-actions { display:flex; gap:8px; margin-top:12px; }
+.pv-actions > * { flex:1; }
+.pv-empty { margin-top:10px; font-size:11px; color:var(--frost-muted); background:#F8FAFC; border:1px dashed var(--frost-border); border-radius:10px; padding:14px; text-align:center; line-height:1.6; }
+.pv-empty button { background:none; border:none; color:var(--frost-primary); font-weight:700; font-family:var(--sans); font-size:11px; cursor:pointer; }
+
+.pv-run-step { display:flex; gap:9px; padding:8px 0; opacity:0; transform:translateY(8px); transition:all .45s cubic-bezier(0.22,1,0.36,1); }
+.pv-run-step.on { opacity:1; transform:none; }
+.pv-run-step + .pv-run-step { border-top:1px solid rgba(15,23,42,0.06); }
+.pv-run-step .ic { flex:none; width:26px; height:26px; border-radius:50%; background:#F1F5F9; display:flex; align-items:center; justify-content:center; font-size:11px; }
+.pv-run-step .ic.ok { background:rgba(16,185,129,0.12); }
+.pv-run-step .tx { font-size:11px; line-height:1.5; color:var(--frost-ink-soft); padding-top:3px; min-width:0; flex:1; }
+.pv-run-step .tx b { font-weight:600; color:var(--frost-ink); }
+.pv-inwa { margin-top:4px; background:#fff; border:1px solid rgba(15,23,42,0.08); border-radius:12px 12px 3px 12px; padding:7px 10px; font-size:10.5px; color:var(--frost-ink); display:inline-block; }
+.pv-success b { font-size:11.5px; color:var(--frost-ink); }
+.pv-success .fz-cta { width:100%; margin-top:10px; }
+
+.pv-notes { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); box-shadow:var(--sh-sm); padding:22px; }
+.pv-notes h3 { font-size:13px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:14px; }
+.pv-notes ul { list-style:none; display:flex; flex-direction:column; gap:12px; }
+.pv-notes li { font-size:13px; font-weight:300; color:var(--frost-ink-soft); padding-left:22px; position:relative; }
+.pv-notes li::before { content:''; position:absolute; left:2px; top:7px; width:7px; height:7px; border-radius:50%; background:var(--frost-primary); }
+.pv-notes li strong { font-weight:600; }
+.pv-notes-foot { margin-top:16px; border-top:1px solid var(--frost-border-soft); padding-top:14px; font-size:12px; font-weight:300; color:var(--frost-muted); line-height:1.6; }
+.pv-notes-foot strong { font-weight:600; color:var(--frost-ink-soft); }
+
 footer { background:var(--frost-ink); color:#fff; padding:52px 0; margin-top:64px; }
 footer .wrap { display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; }
 footer .big { font-size:22px; font-weight:300; }
@@ -294,6 +407,8 @@ footer .big strong { font-weight:600; }
 footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; margin-top:6px; }
 
 @media (max-width:900px) {
+  .proto-stage { grid-template-columns:1fr; }
+  .pv-phone { max-width:440px; width:100%; margin:0 auto; }
   .loop { grid-template-columns:repeat(2,1fr); }
   .p0-grid { grid-template-columns:repeat(2,1fr); }
   .p1-row { grid-template-columns:1fr; gap:2px; }
@@ -467,76 +582,43 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
 
 <section>
   <div class="wrap">
-    <span class="kicker blue">La experiencia en Flash</span>
-    <h2 class="sec-title">Máximo tres acciones por día, <strong>cada una con su porqué</strong></h2>
-    <p class="sec-sub">Impulso vive cerca del comienzo del dashboard con hasta tres prioridades. El resto espera en <strong>/impulso</strong>. Pulse sigue siendo el resumen semanal — sus recomendaciones enlazan a oportunidades concretas.</p>
+    <span class="kicker blue">El prototipo · funcional</span>
+    <h2 class="sec-title">Es tu Pulse de siempre — <strong>ahora también actúa</strong></h2>
+    <p class="sec-sub">Mismo nombre, misma card, misma estética. Pulse hoy te cuenta la semana; expandido, suma el bloque <strong>«Para hoy»</strong> con hasta tres oportunidades listas para aprobar. Probalo acá abajo: sacá una candidata, aprobá el envío y mirá el circuito correr. <strong>Es un prototipo con datos de ejemplo — corre entero en esta página.</strong></p>
 
-    <div class="step-head"><span class="step-num">Superficie 1</span><h3>El dashboard, cada mañana</h3><span class="sub">hasta 3 prioridades, nunca una lista infinita</span></div>
-    <div class="grid-2">
-      <div class="mock-stage">
-        <span class="mock-label">Dashboard · superficie diaria de Impulso</span>
-        <div class="mock-card">
-          <div class="imp-head">
-            <div class="bolt">⚡</div>
-            <div class="t">Tres oportunidades para hoy<span>Impulso encontró dónde ganar tiempo y plata</span></div>
-            <a class="all" href="#">Ver todas →</a>
-          </div>
-          <div class="opp-row"><div class="ic">📅</div><div class="tx"><b>Un turno para recuperar</b><span>Mañana 15:00 · Balayage · 8 clientes compatibles</span></div><span class="cta">Revisar</span></div>
-          <div class="opp-row"><div class="ic warn">👋</div><div class="tx"><b>Seis clientas cerca de su fecha de regreso</b><span>Reactivación lista para revisar y aprobar</span></div><span class="cta">Revisar</span></div>
-          <div class="opp-row"><div class="ic rosa">🔔</div><div class="tx"><b>Cuatro turnos de la semana sin confirmar</b><span>Pedir confirmación o seña a los de mayor riesgo</span></div><span class="cta">Revisar</span></div>
-        </div>
+    <div class="proto-stage">
+      <div class="pv-phone">
+        <div class="pv-appbar"><span class="pv-apptitle">Inicio</span><span class="pv-appdate">Martes 25 de agosto</span></div>
+        <div id="pv-screen"></div>
+        <button class="pv-reset" data-act="reset">↺ Reiniciar el prototipo</button>
+        <div class="pv-toast" id="pv-toast"></div>
       </div>
-      <div class="rationale">
-        <p><strong>La bandeja completa vive en /impulso</strong>, organizada en cuatro secciones:</p>
+      <aside class="pv-notes">
+        <h3>Qué estás viendo</h3>
         <ul>
-          <li><strong>Ahora</strong> — requieren tu atención.</li>
-          <li><strong>Programadas</strong> — aprobadas, se ejecutan después.</li>
-          <li><strong>Automáticas</strong> — reglas que vos habilitaste.</li>
-          <li><strong>Historial</strong> — completadas, descartadas, vencidas y fallidas.</li>
+          <li><strong>La card de Pulse que ya existe.</strong> Misma estética, mismos bloques: tu semana y la recomendación siguen igual.</li>
+          <li><strong>El bloque nuevo: «Para hoy».</strong> Hasta tres oportunidades accionables por día — el resto vive en la bandeja completa.</li>
+          <li><strong>Tocá «Revisar» en la primera.</strong> Cada clienta muestra por qué está; podés sacar a cualquiera con la ✕. Nada sale sin tu aprobación.</li>
+          <li><strong>Aprobá y mirá el circuito.</strong> Tanda chica, respuesta, reserva validada, turno ocupado — y el freno automático de las tandas pendientes.</li>
         </ul>
-        <p style="margin-top:16px;">Y entradas contextuales donde ya trabajás: en la <strong>Agenda</strong> («se liberó este horario — Impulso puede buscar quién lo ocupe»), en <strong>Clientes</strong> («preparar reactivación para este segmento») y en <strong>Analítica</strong> (reservas e ingresos atribuidos).</p>
-      </div>
+        <div class="pv-notes-foot">La bandeja completa organiza todo en <strong>Ahora · Programadas · Automáticas · Historial</strong>, con entradas desde la Agenda («se liberó este horario»), Clientes («reactivar este segmento») y Analítica (reservas e ingresos atribuidos). En mobile, la aprobación usa el SaveBar de Frost.</div>
+      </aside>
     </div>
 
-    <div class="step-head"><span class="step-num">Superficie 2</span><h3>El detalle de una oportunidad</h3><span class="sub">todo lo que necesitás para decidir en una pantalla</span></div>
-    <div class="grid-2 wide-mock">
-      <div class="mock-stage">
-        <span class="mock-label">/impulso · detalle · turno liberado</span>
-        <div class="mock-card">
-          <div class="det-head"><div class="t">Se liberó un turno<span>Balayage · 1 h 30 · con Caro · cancelado hace 12 min</span></div><span class="when">Mañana · 15:00</span></div>
-          <div class="det-why"><b>✨ Por qué importa</b>Encontramos 8 clientes compatibles. Las primeras 3 están cerca de su fecha habitual de regreso — es el mejor momento para invitarlas.</div>
-          <div class="cand"><div class="avatar">AP</div><div class="who"><b>Ana Pérez</b><div class="chips"><span class="hot">cadencia vencida</span><span>siempre con Caro</span><span>5 visitas</span></div></div><span class="rm">✕</span></div>
-          <div class="cand"><div class="avatar">VR</div><div class="who"><b>Valentina R.</b><div class="chips"><span class="hot">mismo servicio</span><span>suele venir martes</span></div></div><span class="rm">✕</span></div>
-          <div class="cand"><div class="avatar">SM</div><div class="who"><b>Sofía M.</b><div class="chips"><span class="hot">en riesgo</span><span>última visita hace 9 semanas</span></div></div><span class="rm">✕</span></div>
-          <div class="cand-more">+ 5 candidatas más con puntaje menor · se suman sólo si el turno sigue libre</div>
-          <div class="wa-preview"><b>Vista previa · WhatsApp</b>¡Hola Ana! Se nos liberó un lugar mañana a las 15:00 para tu balayage con Caro. ¿Te lo guardamos? Reservá directo acá → <span class="link">agora.red/r/…</span></div>
-          <div class="det-tanda">⏱ &nbsp;Sale de a 3 · si nadie reserva en el período configurado, sigue la próxima tanda · se frena solo cuando el turno se ocupa</div>
-          <div class="det-actions"><span class="btn ghost">Descartar</span><span class="btn primary">Aprobar envío</span></div>
-        </div>
-      </div>
-      <div class="rationale">
-        <p>Cada oportunidad muestra <strong>qué ocurrió, por qué fue seleccionada, el valor potencial calculable</strong> (sin promesas inventadas), los clientes incluidos con el motivo de cada uno, la vista previa del mensaje, canal y momento del envío, el nivel de autonomía, qué pasa después de aprobar, y el historial de ejecución.</p>
-        <ul>
-          <li>Podés <strong>quitar destinatarios</strong> uno por uno antes de aprobar.</li>
-          <li>Aprobar <strong>congela</strong> destinatarios y contenido: lo que viste es lo que sale.</li>
-          <li>En mobile, la aprobación usa el <strong>SaveBar de Frost</strong> — nunca depende de una tabla horizontal.</li>
-        </ul>
-        <p style="margin-top:16px;"><strong>Los estados operativos, completos desde el día uno:</strong></p>
-        <div class="states">
-          <span><i class="st-b"></i>Analizando</span>
-          <span><i class="st-b"></i>Lista para revisar</span>
-          <span><i class="st-n"></i>Sin candidatos suficientes</span>
-          <span><i class="st-b"></i>Aprobada / programada</span>
-          <span><i class="st-b"></i>Ejecutándose</span>
-          <span><i class="st-y"></i>Parcialmente enviada</span>
-          <span><i class="st-g"></i>Horario ocupado</span>
-          <span><i class="st-g"></i>Completada</span>
-          <span><i class="st-n"></i>Vencida</span>
-          <span><i class="st-n"></i>Descartada</span>
-          <span><i class="st-r"></i>Fallida y reintentable</span>
-          <span><i class="st-y"></i>Pausada por permisos o límites</span>
-        </div>
-      </div>
+    <p class="split-lbl" style="margin-top:36px;">Los estados operativos, completos desde el día uno</p>
+    <div class="states">
+      <span><i class="st-b"></i>Analizando</span>
+      <span><i class="st-b"></i>Lista para revisar</span>
+      <span><i class="st-n"></i>Sin candidatos suficientes</span>
+      <span><i class="st-b"></i>Aprobada / programada</span>
+      <span><i class="st-b"></i>Ejecutándose</span>
+      <span><i class="st-y"></i>Parcialmente enviada</span>
+      <span><i class="st-g"></i>Horario ocupado</span>
+      <span><i class="st-g"></i>Completada</span>
+      <span><i class="st-n"></i>Vencida</span>
+      <span><i class="st-n"></i>Descartada</span>
+      <span><i class="st-r"></i>Fallida y reintentable</span>
+      <span><i class="st-y"></i>Pausada por permisos o límites</span>
     </div>
   </div>
 </section>
@@ -597,59 +679,6 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
 
 <section>
   <div class="wrap">
-    <span class="kicker blue">Modelo de datos y API</span>
-    <h2 class="sec-title">Cuatro tablas, nueve endpoints, <strong>cero magia</strong></h2>
-    <p class="sec-sub">Todo lo que Impulso decide, prepara o ejecuta queda persistido y auditable. El contrato de aprobación es la pieza más delicada — por eso está escrito primero.</p>
-    <div class="tables">
-      <div class="tbl">
-        <h4>vendor_opportunities</h4>
-        <div class="use">La oportunidad: qué se detectó, con qué evidencia, qué se recomienda, cuánto vale y en qué estado está.</div>
-        <ul><li>type</li><li>status</li><li>priority_score</li><li>dedupe_key</li><li>source</li><li class="j">evidence JSONB</li><li class="j">recommended_action JSONB</li><li>potential_value</li><li>expires_at</li><li>approved_at</li><li>dismissed_at + reason</li></ul>
-      </div>
-      <div class="tbl">
-        <h4>vendor_opportunity_recipients</h4>
-        <div class="use">Cada cliente incluido: su puntaje, sus razones, su tanda y todo el recorrido del contacto.</div>
-        <ul><li>rank_score</li><li>reason_codes</li><li>wave_number</li><li>status</li><li>contacted_at</li><li>delivered_at</li><li>responded_at</li><li>clicked_at</li><li>booking_id</li><li>excluded_reason</li></ul>
-      </div>
-      <div class="tbl">
-        <h4>vendor_action_runs</h4>
-        <div class="use">Cada ejecución externa: quién la pidió, con qué input, qué devolvió. La clave de idempotencia vive acá.</div>
-        <ul><li>action_type</li><li>idempotency_key</li><li>requested_by_user_id</li><li>execution_mode</li><li class="j">input_snapshot</li><li class="j">output</li><li>status</li><li>error_code</li></ul>
-      </div>
-      <div class="tbl">
-        <h4>vendor_impulse_policies</h4>
-        <div class="use">Qué puede hacer Impulso solo, por tipo de oportunidad — el dial de autonomía del negocio.</div>
-        <ul><li>modo: recomendar / preparar / ejecutar</li><li>canal habilitado</li><li>horarios silenciosos</li><li>máx. contactos diarios</li><li>tamaño y demora de tandas</li><li>roles autorizados</li><li>aprobación obligatoria</li><li>fecha de pausa</li></ul>
-      </div>
-    </div>
-    <div class="api-grid">
-      <div class="api-list">
-        <div class="api-row"><span class="m get">GET</span><span class="p">/v1/me/vendor/impulse/<b>opportunities</b></span></div>
-        <div class="api-row"><span class="m get">GET</span><span class="p">/v1/me/vendor/impulse/opportunities/<b>:id</b></span></div>
-        <div class="api-row"><span class="m post">POST</span><span class="p">/v1/me/vendor/impulse/opportunities/:id/<b>prepare</b></span></div>
-        <div class="api-row"><span class="m patch">PATCH</span><span class="p">/v1/me/vendor/impulse/opportunities/:id/<b>recipients</b></span></div>
-        <div class="api-row"><span class="m post">POST</span><span class="p">/v1/me/vendor/impulse/opportunities/:id/<b>approve</b></span></div>
-        <div class="api-row"><span class="m post">POST</span><span class="p">/v1/me/vendor/impulse/opportunities/:id/<b>dismiss</b></span></div>
-        <div class="api-row"><span class="m post">POST</span><span class="p">/v1/me/vendor/impulse/opportunities/:id/<b>retry</b></span></div>
-        <div class="api-row"><span class="m get">GET</span><span class="p">/v1/me/vendor/impulse/<b>policies</b></span></div>
-        <div class="api-row"><span class="m patch">PATCH</span><span class="p">/v1/me/vendor/impulse/policies/<b>:type</b></span></div>
-      </div>
-      <div class="approve-box">
-        <h4>El contrato de <code>approve</code></h4>
-        <ul>
-          <li><strong>Revalida</strong> disponibilidad, permisos y versión de la oportunidad — el mundo pudo cambiar desde que se mostró.</li>
-          <li>Crea un action run con <strong>clave de idempotencia</strong>: aprobar dos veces no duplica nada.</li>
-          <li><strong>Congela</strong> destinatarios y contenido aprobado.</li>
-          <li>Programa la primera tanda.</li>
-          <li>Devuelve <strong>el estado persistido</strong>, no un éxito optimista.</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="alt">
-  <div class="wrap">
     <span class="kicker blue">El papel de la IA</span>
     <h2 class="sec-title">La IA explica y redacta. <strong>Cyclone decide y ejecuta.</strong></h2>
     <p class="sec-sub">Salidas estructuradas con schema, siempre. Sin embeddings ni RAG en el MVP: los datos relevantes ya son estructurados.</p>
@@ -683,7 +712,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
   </div>
 </section>
 
-<section>
+<section class="alt">
   <div class="wrap">
     <span class="kicker blue">WhatsApp · prerrequisito crítico</span>
     <h2 class="sec-title">El contacto proactivo <strong>necesita plantillas de Meta</strong></h2>
@@ -712,7 +741,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
   </div>
 </section>
 
-<section class="alt">
+<section>
   <div class="wrap">
     <span class="kicker blue">Fases</span>
     <h2 class="sec-title">Primero en las sombras, <strong>después con las manos</strong></h2>
@@ -747,7 +776,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
   </div>
 </section>
 
-<section>
+<section class="alt">
   <div class="wrap">
     <span class="kicker blue">Métricas</span>
     <h2 class="sec-title">Una métrica norte, un embudo completo, <strong>ocho guardrails</strong></h2>
@@ -777,7 +806,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
   </div>
 </section>
 
-<section class="alt">
+<section>
   <div class="wrap">
     <span class="kicker blue">Criterios de aceptación del MVP</span>
     <h2 class="sec-title">Dieciséis condiciones, <strong>ninguna negociable</strong></h2>
@@ -802,7 +831,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
   </div>
 </section>
 
-<section>
+<section class="alt">
   <div class="wrap">
     <span class="kicker blue">Lo que ya existe</span>
     <h2 class="sec-title">Impulso no duplica: <strong>orquesta lo que ya construimos</strong></h2>
@@ -811,7 +840,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
       <div class="src"><b>Pulse ya detecta señales</b><p>Clientes ausentes, en riesgo, cumpleaños y días lentos ya salen del selector de Pulse.</p><code>cyclone · services/pulse/select.ts</code></div>
       <div class="src"><b>La segmentación ya calcula cadencia</b><p>Frecuencia personal, riesgo y ausencia por cliente ya existen como señales calculadas.</p><code>cyclone · services/client-segmentation.ts</code></div>
       <div class="src"><b>Las plantillas ya tienen sistema</b><p>Auto-mensajes de WhatsApp con feature flags por negocio: la base para las plantillas de Impulso.</p><code>cyclone · services/whatsapp/auto-messages.ts</code></div>
-      <div class="src"><b>Flash ya tiene superficie editorial</b><p>La card de Pulse en el dashboard es el precedente directo de la superficie diaria de Impulso.</p><code>flash · widgets/PulseCardView.tsx</code></div>
+      <div class="src"><b>Pulse ya tiene su card en el dashboard</b><p>La superficie que se expande es exactamente esta — misma estética, mismo nombre, un bloque nuevo.</p><code>flash · widgets/PulseCardView.tsx</code></div>
       <div class="src"><b>Nightwing ya interpreta fecha y hora</b><p>El flujo del servicio ya preselecciona fecha y horario — la base del deep link con atribución.</p><code>nightwing · Service/RightSection/Options.tsx</code></div>
     </div>
     <div class="pipe-note" style="margin-top:28px;"><strong>Regla de implementación:</strong> no duplicar Pulse, segmentación ni disponibilidad. La selección y las exclusiones son determinísticas; la IA sólo explica y redacta con salidas estructuradas; y no hay envíos proactivos automáticos hasta resolver las plantillas aprobadas de Meta.</div>
@@ -827,5 +856,120 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
   </div>
 </footer>
 
+<script>
+(function(){
+  var CANDS = [
+    { av:'AP', n:'Ana Pérez', chips:[['cadencia vencida',1],['siempre con Caro',0],['5 visitas',0]] },
+    { av:'VR', n:'Valentina R.', chips:[['mismo servicio',1],['suele venir martes',0]] },
+    { av:'SM', n:'Sofía M.', chips:[['en riesgo',1],['última visita hace 9 semanas',0]] }
+  ];
+  var S = { screen:'home', removed:[], done:false, hero:'Ana', timers:[] };
+  var root = document.getElementById('pv-screen');
+  var toastEl = document.getElementById('pv-toast');
+  var toastT = null;
+  function toast(msg){ toastEl.textContent = msg; toastEl.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(function(){ toastEl.classList.remove('on'); }, 2800); }
+  function clearTimers(){ S.timers.forEach(clearTimeout); S.timers = []; }
+  function remaining(){ return CANDS.filter(function(_, i){ return S.removed.indexOf(i) === -1; }); }
+  function chips(c){ return c.chips.map(function(ch){ return '<span class="'+(ch[1]?'hot':'')+'">'+ch[0]+'</span>'; }).join(''); }
+
+  function homeHTML(){
+    var opp1 = S.done
+      ? '<div class="pv-opp"><span class="ic done">✓</span><div class="tx"><b>Turno ocupado — reservó '+S.hero+'</b><span>Balayage con Caro · mañana 15:00 · $32.000 recuperados</span></div><span class="st-done">Completada</span></div>'
+      : '<div class="pv-opp"><span class="ic">📅</span><div class="tx"><b>Un turno para recuperar</b><span>Mañana 15:00 · Balayage con Caro · 8 clientas compatibles</span></div><button class="go" data-act="open">Revisar</button></div>';
+    return '' +
+    '<div class="fz-card">' +
+      '<div class="pv-head"><div><div class="pv-kickrow"><span class="fz-dot"></span><span class="fz-kicker">Pulse · semana del 17–23 ago</span></div><div class="pv-title">Tu semana<i>.</i></div></div><span class="pv-chev">⌃</span></div>' +
+      '<div class="pv-sig"><span class="rule"></span><svg viewBox="0 0 96 16" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M0 8 H30 l3 -5.5 l4 11 l4 -9 l3 3.5 H96"/></svg></div>' +
+      '<div class="fz-lamina fz-tint-blue">' +
+        '<div class="pv-stat"><span class="lb">Reservas</span><span class="vals"><span class="num">31</span><span class="fz-delta pos">↑ 12%</span></span></div>' +
+        '<div class="pv-stat"><span class="lb">Ingresos</span><span class="vals"><span class="num"><small>$</small>486.000</span><span class="fz-delta pos">↑ 8%</span></span></div>' +
+        '<div class="pv-stat"><span class="lb">Clientas nuevas</span><span class="vals"><span class="num">6</span><span class="fz-delta flat">= 0%</span></span></div>' +
+      '</div>' +
+      '<div class="fz-lamina fz-tint-lav"><div class="pv-krow"><span class="pv-kico">✨</span><span class="fz-kicker">Una recomendación</span></div><div class="pv-quote">Tus martes a la tarde quedaron flojos tres semanas seguidas. Una promo puntual para ese día puede moverlos.</div></div>' +
+      '<div class="fz-lamina fz-tint-sun"><div class="pv-krow"><span class="pv-kico sun">⚡</span><span class="fz-kicker">Para hoy</span><span class="pv-newpill">NUEVO</span></div>' +
+        opp1 +
+        '<div class="pv-opp"><span class="ic">👋</span><div class="tx"><b>Seis clientas cerca de su fecha de regreso</b><span>Reactivación lista para revisar y aprobar</span></div><button class="go" data-act="soon">Revisar</button></div>' +
+        '<div class="pv-opp"><span class="ic">🔔</span><div class="tx"><b>Cuatro turnos sin confirmar esta semana</b><span>Pedir confirmación o seña a los de mayor riesgo</span></div><button class="go" data-act="soon">Revisar</button></div>' +
+        '<button class="pv-seeall" data-act="soon">Ver todas las oportunidades →</button>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function detailHTML(){
+    var rem = remaining();
+    var empty = rem.length === 0;
+    var first = empty ? '' : rem[0].n.split(' ')[0];
+    var candsHtml = CANDS.map(function(c, i){
+      if (S.removed.indexOf(i) !== -1) return '';
+      return '<div class="pv-cand"><span class="av">'+c.av+'</span><div class="who"><b>'+c.n+'</b><div class="chips">'+chips(c)+'</div></div><button class="rm" data-act="rm" data-i="'+i+'" aria-label="Quitar a '+c.n+'">✕</button></div>';
+    }).join('');
+    return '' +
+    '<div class="pv-top"><button class="pv-back" data-act="back">← Pulse</button><span class="pv-state rev">Lista para revisar</span></div>' +
+    '<div class="fz-card">' +
+      '<div class="pv-dhead"><span class="t">Se liberó un turno</span><span class="when">Mañana · 15:00</span></div>' +
+      '<div class="pv-dsub">Balayage · 1 h 30 · con Caro · cancelado hace 12 min</div>' +
+      '<div class="fz-lamina fz-tint-lav" style="margin-top:10px;"><div class="pv-krow"><span class="pv-kico">✨</span><span class="fz-kicker">Por qué importa</span></div><div class="pv-quote">Encontramos 8 clientas compatibles. Las primeras 3 están cerca de su fecha habitual de regreso.</div></div>' +
+      (empty
+        ? '<div class="pv-empty">Sacaste a todas las candidatas.<br><button data-act="restore">Restaurar la lista</button></div>'
+        : '<div class="pv-cands">'+candsHtml+'<div class="pv-more">+ 5 candidatas más con puntaje menor · entran sólo si el turno sigue libre</div></div>' +
+          '<div class="pv-wa"><b>Vista previa · WhatsApp</b>¡Hola '+first+'! Se nos liberó un lugar mañana a las 15:00 para tu balayage con Caro. ¿Te lo guardamos? Reservá directo acá → <span class="lk">agora.red/r/…</span></div>' +
+          '<div class="pv-tanda">⏱ Sale de a tandas: primero '+Math.min(rem.length,3)+' — sigue sólo si el turno queda libre, y se frena solo cuando alguien reserva.</div>'
+      ) +
+      '<div class="pv-actions"><button class="fz-ghost" data-act="dismiss">Descartar</button><button class="fz-cta" data-act="approve"'+(empty?' disabled':'')+'>Aprobar envío</button></div>' +
+    '</div>';
+  }
+
+  function runHTML(){
+    var rem = remaining();
+    var names = rem.map(function(c){ return c.n.split(' ')[0]; });
+    var t1 = names.slice(0, 2).join(' y ');
+    var waitT2 = names.length > 2 ? ' — ' + names[2] + ' espera la tanda 2' : '';
+    return '' +
+    '<div class="pv-top"><button class="pv-back" data-act="back">← Pulse</button><span class="pv-state run" id="pv-runstate"><i></i>Ejecutándose</span></div>' +
+    '<div class="fz-card">' +
+      '<div class="pv-dhead"><span class="t">Se liberó un turno</span><span class="when">Mañana · 15:00</span></div>' +
+      '<div class="pv-dsub">Aprobaste recién — esto pasa solo, y podés pausarlo cuando quieras:</div>' +
+      '<div style="margin-top:4px;">' +
+        '<div class="pv-run-step" data-step="0"><span class="ic ok">✓</span><span class="tx"><b>Aprobado.</b> Destinatarias y mensaje quedaron congelados: lo que viste es lo que sale.</span></div>' +
+        '<div class="pv-run-step" data-step="1"><span class="ic">📲</span><span class="tx"><b>Tanda 1 enviada</b> a '+t1+waitT2+'.</span></div>' +
+        '<div class="pv-run-step" data-step="2"><span class="ic">💬</span><span class="tx"><b>Respondió '+S.hero+'</b><br><span class="pv-inwa">¡Sí! Mañana a las 15 me viene perfecto 🙌</span></span></div>' +
+        '<div class="pv-run-step" data-step="3"><span class="ic">🗓</span><span class="tx"><b>'+S.hero+' reservó desde el enlace.</b> Antes de confirmar, se validó que el horario siguiera libre.</span></div>' +
+        '<div class="pv-run-step" data-step="4"><span class="ic ok">🏁</span><span class="tx"><div class="fz-lamina fz-tint-mint pv-success"><b>Turno ocupado — $32.000 recuperados.</b><div style="font-size:10.5px; color:var(--frost-ink-soft); margin-top:3px;">Las tandas pendientes se frenaron solas: nadie más recibió el mensaje.</div><button class="fz-cta" data-act="finish">Volver al Pulse</button></div></span></div>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function render(){
+    root.innerHTML = S.screen === 'home' ? homeHTML() : S.screen === 'detail' ? detailHTML() : runHTML();
+    if (S.screen === 'run') {
+      var delays = [200, 1400, 2900, 4400, 5700];
+      delays.forEach(function(ms, step){
+        S.timers.push(setTimeout(function(){
+          var el = root.querySelector('[data-step="'+step+'"]');
+          if (el) el.classList.add('on');
+          if (step === 4) { var st = document.getElementById('pv-runstate'); if (st) { st.className = 'pv-state ok'; st.textContent = '✓ Completada'; } }
+        }, ms));
+      });
+    }
+  }
+
+  document.querySelector('.pv-phone').addEventListener('click', function(e){
+    var b = e.target.closest('[data-act]');
+    if (!b || b.disabled) return;
+    var act = b.getAttribute('data-act');
+    if (act === 'open') { clearTimers(); S.screen = 'detail'; render(); }
+    else if (act === 'soon') { toast('En este prototipo, probá la primera oportunidad 😉'); }
+    else if (act === 'back') { clearTimers(); S.screen = 'home'; render(); }
+    else if (act === 'rm') { S.removed.push(parseInt(b.getAttribute('data-i'), 10)); render(); toast('La sacaste — no recibe ningún mensaje'); }
+    else if (act === 'restore') { S.removed = []; render(); }
+    else if (act === 'dismiss') { clearTimers(); S.screen = 'home'; render(); toast('Descartada — en el producto te pregunta por qué'); }
+    else if (act === 'approve') { clearTimers(); S.hero = remaining()[0].n.split(' ')[0]; S.screen = 'run'; render(); }
+    else if (act === 'finish') { clearTimers(); S.done = true; S.screen = 'home'; render(); toast('El turno quedó atribuido a Pulse en tu Analítica'); }
+    else if (act === 'reset') { clearTimers(); S.screen = 'home'; S.removed = []; S.done = false; S.hero = 'Ana'; render(); toast('Prototipo reiniciado'); }
+  });
+
+  render();
+})();
+</script>
 </body>
 </html>
