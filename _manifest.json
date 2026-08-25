@@ -4,6 +4,16 @@
   "updated_at": "2026-08-25",
   "outputs": [
     {
+      "type": "prototype",
+      "typeLabel": "Prototype",
+      "title": "Finanzas · prototipo funcional",
+      "description": "El módulo de Finanzas de punta a punta: ventas, cobranzas, caja, gastos, comisiones y resultado, sobre un solo ledger para que ningún total contradiga a otro.",
+      "detail": "8 secciones · prototipo navegable",
+      "date": "AGO 2026",
+      "href": "./finanzas-suite-2026-08/index.html",
+      "slug": "finanzas-suite-2026-08"
+    },
+    {
       "type": "proposal",
       "typeLabel": "Proposal",
       "title": "Reseñas verificadas",
