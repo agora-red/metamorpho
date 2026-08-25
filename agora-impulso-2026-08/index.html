@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ágora Impulso · Propuesta de producto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --frost-primary: #0072FB; --frost-primary-hover: #005CD4; --frost-primary-soft: #EEF6FF; --frost-primary-wash: rgba(0,114,251,0.08);
+  --frost-accent: #FF4658; --frost-accent-soft: #FFE3E6; --frost-success: #10B981; --frost-success-soft: #A9FFE7; --frost-warning: #F59E0B;
+  --frost-ink: #0F172A; --frost-ink-soft: #3A3A3A; --frost-muted: #868686; --frost-faint: #B5B5B5;
+  --frost-surface: #FFFFFF; --frost-surface-muted: #EFF3F9; --frost-border: #E2E8F0; --frost-border-soft: #F2F2F2;
+  --r-sm: 6px; --r-item: 10px; --r-btn: 12px; --r-card: 20px; --r-shell: 28px; --r-chip: 999px;
+  --sh-xs: 0 1px 2px rgba(15,23,42,0.04); --sh-sm: 0 4px 12px -4px rgba(15,23,42,0.10);
+  --sh-md: 0 10px 30px -12px rgba(15,23,42,0.15); --sh-glow: 0 4px 18px -2px rgba(0,114,251,0.30);
+  --sans: 'Montserrat', system-ui, -apple-system, sans-serif;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:var(--sans); color:var(--frost-ink); background:var(--frost-surface-muted); font-variant-numeric:tabular-nums; -webkit-font-smoothing:antialiased; line-height:1.55; }
+.wrap { max-width:1060px; margin:0 auto; padding:0 28px; }
+
+header.chrome { position:sticky; top:0; z-index:50; background:rgba(255,255,255,0.85); backdrop-filter:blur(12px); border-bottom:1px solid var(--frost-border); }
+header.chrome .wrap { display:flex; align-items:center; justify-content:space-between; height:60px; }
+.kicker { font-size:10.5px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:var(--frost-muted); }
+.kicker.blue { color:var(--frost-primary); }
+
+.hero { padding:88px 0 56px; }
+.hero h1 { font-size:clamp(34px,5vw,54px); font-weight:200; letter-spacing:-0.02em; line-height:1.12; margin:18px 0 20px; max-width:860px; }
+.hero h1 strong { font-weight:600; }
+.hero p.lede { font-size:17px; font-weight:300; color:var(--frost-ink-soft); max-width:700px; }
+.hero p.lede strong { font-weight:600; }
+.hero .status { display:inline-flex; align-items:center; gap:8px; margin-top:26px; background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-chip); padding:8px 16px; font-size:12.5px; font-weight:500; color:var(--frost-ink-soft); box-shadow:var(--sh-xs); }
+.status .pulse { width:8px; height:8px; border-radius:50%; background:var(--frost-warning); box-shadow:0 0 0 4px rgba(245,158,11,0.15); }
+
+section { padding:56px 0; }
+section.alt { background:var(--frost-surface); border-top:1px solid var(--frost-border); border-bottom:1px solid var(--frost-border); }
+h2.sec-title { font-size:clamp(24px,3vw,32px); font-weight:300; letter-spacing:-0.01em; margin:12px 0 8px; }
+h2.sec-title strong { font-weight:600; }
+p.sec-sub { font-size:15px; font-weight:300; color:var(--frost-muted); max-width:680px; margin-bottom:36px; }
+p.sec-sub strong { font-weight:600; color:var(--frost-ink-soft); }
+
+/* loop de 6 verbos */
+.loop { display:grid; grid-template-columns:repeat(6,1fr); gap:10px; margin-top:36px; }
+.loop .node { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); padding:16px 14px; box-shadow:var(--sh-sm); position:relative; }
+.loop .node .n { font-size:10px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:var(--frost-primary); margin-bottom:6px; }
+.loop .node h4 { font-size:13.5px; font-weight:600; margin-bottom:4px; }
+.loop .node p { font-size:11px; font-weight:300; color:var(--frost-muted); line-height:1.45; }
+.loop .node.you { border-color:var(--frost-primary); box-shadow:var(--sh-glow); }
+.loop .node.you .n { color:var(--frost-primary-hover); }
+.loop-back { text-align:center; margin-top:14px; font-size:12px; font-weight:500; color:var(--frost-muted); }
+.frame { margin-top:28px; background:var(--frost-ink); color:#fff; border-radius:var(--r-card); padding:20px 26px; font-size:14px; font-weight:300; max-width:820px; }
+.frame strong { font-weight:600; }
+
+/* circuito timeline */
+.circuit { margin-top:36px; display:flex; flex-direction:column; gap:0; }
+.c-step { display:grid; grid-template-columns:52px 1fr; gap:0 18px; position:relative; padding-bottom:26px; }
+.c-step:last-child { padding-bottom:0; }
+.c-step::before { content:''; position:absolute; left:25px; top:38px; bottom:0; width:2px; background:var(--frost-border); }
+.c-step:last-child::before { display:none; }
+.c-dot { width:52px; height:38px; display:flex; align-items:center; justify-content:center; }
+.c-dot span { width:34px; height:34px; border-radius:50%; background:var(--frost-surface); border:1.5px solid var(--frost-border); box-shadow:var(--sh-xs); display:flex; align-items:center; justify-content:center; font-size:14px; }
+.c-body { padding-top:5px; }
+.c-body .who { display:inline-flex; font-size:9.5px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; border-radius:var(--r-chip); padding:3px 10px; margin-bottom:6px; margin-right:6px; }
+.who.cyclone { background:var(--frost-primary-soft); color:var(--frost-primary-hover); }
+.who.flash { background:rgba(16,185,129,0.12); color:#0B7A56; }
+.who.wa { background:#E7F9EF; color:#128C7E; }
+.who.nw { background:#F3EEFF; color:#6D4AE0; }
+.c-body h4 { font-size:15px; font-weight:600; }
+.c-body p { font-size:13px; font-weight:300; color:var(--frost-ink-soft); margin-top:3px; max-width:640px; }
+.c-body p strong { font-weight:600; }
+.tanda-note { margin-top:30px; background:var(--frost-primary-wash); border:1px solid #D5E8FE; border-radius:var(--r-card); padding:20px 24px; max-width:820px; }
+.tanda-note h4 { font-size:13px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--frost-primary-hover); margin-bottom:8px; }
+.tanda-note p { font-size:13.5px; font-weight:300; color:var(--frost-ink-soft); }
+.tanda-note p strong { font-weight:600; }
+
+/* casos de uso */
+.p0-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin-top:36px; }
+.p0 { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); padding:18px 16px; box-shadow:var(--sh-sm); display:flex; flex-direction:column; gap:9px; }
+.p0 h4 { font-size:13.5px; font-weight:600; line-height:1.3; }
+.p0 .row { font-size:11px; font-weight:300; color:var(--frost-ink-soft); line-height:1.45; }
+.p0 .row b { display:block; font-weight:600; font-size:9.5px; letter-spacing:0.12em; text-transform:uppercase; color:var(--frost-faint); margin-bottom:1px; }
+.p1-list { margin-top:20px; background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); box-shadow:var(--sh-sm); overflow:hidden; }
+.p1-row { display:grid; grid-template-columns:200px 1fr 1fr; gap:16px; padding:12px 20px; border-bottom:1px solid var(--frost-border-soft); align-items:baseline; }
+.p1-row:last-child { border-bottom:none; }
+.p1-row .t { font-size:13px; font-weight:600; }
+.p1-row .d { font-size:12px; font-weight:300; color:var(--frost-ink-soft); }
+.p2-chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:20px; max-width:860px; }
+.p2-chips span { font-size:12px; font-weight:500; color:var(--frost-ink-soft); background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-chip); padding:7px 14px; box-shadow:var(--sh-xs); }
+.tier-head { display:flex; align-items:baseline; gap:12px; margin-top:40px; }
+.tier-head:first-of-type { margin-top:36px; }
+.tier-tag { font-size:11px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; background:var(--frost-primary-soft); color:var(--frost-primary); border-radius:var(--r-chip); padding:5px 12px; white-space:nowrap; }
+.tier-tag.p1t { background:var(--frost-surface); color:var(--frost-muted); border:1px solid var(--frost-border); }
+.tier-head h3 { font-size:16px; font-weight:600; }
+.tier-head .sub { font-size:12.5px; font-weight:300; color:var(--frost-muted); }
+.never { margin-top:28px; background:var(--frost-accent-soft); border:1px solid rgba(255,70,88,0.25); border-radius:var(--r-card); padding:18px 24px; max-width:820px; }
+.never h4 { font-size:13px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:#B3202F; margin-bottom:6px; }
+.never p { font-size:13.5px; font-weight:300; color:var(--frost-ink-soft); }
+.never p strong { font-weight:600; }
+
+/* split dos columnas */
+.split { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:36px; }
+.split .col { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); box-shadow:var(--sh-sm); padding:22px; }
+.split h3 { font-size:13px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; margin-bottom:6px; }
+.split h3.ok { color:#0B7A56; } .split h3.no { color:#B3202F; } .split h3.ia { color:var(--frost-primary); }
+.split .sub { font-size:12px; font-weight:300; color:var(--frost-muted); margin-bottom:14px; }
+.split ul { list-style:none; display:flex; flex-direction:column; gap:8px; }
+.split li { font-size:13px; font-weight:300; color:var(--frost-ink-soft); padding-left:24px; position:relative; }
+.split li strong { font-weight:600; }
+.split li code { font-family:inherit; font-weight:600; font-size:11.5px; color:var(--frost-ink); background:var(--frost-surface-muted); border-radius:var(--r-sm); padding:1px 6px; }
+.split .col.pos li::before { content:'+'; position:absolute; left:4px; top:-1px; font-weight:600; color:var(--frost-success); }
+.split .col.neg li::before { content:'—'; position:absolute; left:0; top:0; font-weight:600; color:var(--frost-accent); font-size:11px; }
+.split .col.si li::before { content:'✓'; position:absolute; left:2px; top:0; font-weight:600; color:var(--frost-success); font-size:12px; }
+.split .col.nunca li::before { content:'✕'; position:absolute; left:2px; top:0; font-weight:600; color:var(--frost-accent); font-size:12px; }
+.pipe-note { margin-top:22px; background:var(--frost-ink); color:#fff; border-radius:var(--r-card); padding:18px 24px; font-size:13.5px; font-weight:300; max-width:820px; }
+.pipe-note strong { font-weight:600; }
+
+/* mocks */
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:28px; align-items:start; }
+.grid-2.wide-mock { grid-template-columns:1.15fr 0.85fr; }
+.mock-stage { background:linear-gradient(160deg,#F6F9FE 0%, #EDF2FA 100%); border:1px solid var(--frost-border); border-radius:var(--r-shell); padding:26px; display:flex; flex-direction:column; gap:14px; }
+section.alt .mock-stage { background:linear-gradient(160deg,#F2F6FC 0%, #E9EFF8 100%); }
+.mock-label { font-size:10.5px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--frost-faint); }
+.mock-card { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); box-shadow:var(--sh-md); padding:18px; }
+.rationale p { font-size:14px; font-weight:300; color:var(--frost-ink-soft); margin-bottom:14px; }
+.rationale p strong { font-weight:600; }
+.rationale ul { list-style:none; display:flex; flex-direction:column; gap:10px; }
+.rationale li { font-size:13.5px; font-weight:300; color:var(--frost-ink-soft); padding-left:22px; position:relative; }
+.rationale li strong { font-weight:600; }
+.rationale li::before { content:''; position:absolute; left:2px; top:8px; width:7px; height:7px; border-radius:50%; background:var(--frost-primary); }
+.step-head { display:flex; align-items:baseline; gap:14px; margin:44px 0 16px; }
+.step-num { font-size:11px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; background:var(--frost-primary-soft); color:var(--frost-primary); border-radius:var(--r-chip); padding:5px 12px; white-space:nowrap; }
+.step-head h3 { font-size:17px; font-weight:600; }
+.step-head .sub { font-size:12.5px; font-weight:300; color:var(--frost-muted); }
+
+/* mock dashboard impulso */
+.imp-head { display:flex; align-items:center; gap:10px; border-bottom:1px solid var(--frost-border-soft); padding-bottom:12px; margin-bottom:4px; }
+.imp-head .bolt { width:30px; height:30px; border-radius:var(--r-item); background:var(--frost-primary); color:#fff; display:flex; align-items:center; justify-content:center; font-size:14px; box-shadow:var(--sh-glow); flex:none; }
+.imp-head .t { font-size:14px; font-weight:600; }
+.imp-head .t span { display:block; font-size:11px; font-weight:300; color:var(--frost-muted); margin-top:1px; }
+.imp-head a.all { margin-left:auto; font-size:11.5px; font-weight:600; color:var(--frost-primary); text-decoration:none; white-space:nowrap; }
+.opp-row { display:flex; align-items:center; gap:12px; padding:12px 0; border-bottom:1px solid var(--frost-border-soft); }
+.opp-row:last-child { border-bottom:none; }
+.opp-row .ic { width:34px; height:34px; border-radius:var(--r-item); display:flex; align-items:center; justify-content:center; font-size:15px; flex:none; background:var(--frost-primary-soft); }
+.opp-row .ic.warn { background:rgba(245,158,11,0.14); }
+.opp-row .ic.rosa { background:var(--frost-accent-soft); }
+.opp-row .tx { min-width:0; }
+.opp-row .tx b { display:block; font-size:12.5px; font-weight:600; }
+.opp-row .tx span { font-size:11px; font-weight:300; color:var(--frost-muted); }
+.opp-row .cta { margin-left:auto; font-size:11px; font-weight:600; color:var(--frost-primary); background:var(--frost-primary-soft); border-radius:var(--r-chip); padding:6px 13px; white-space:nowrap; }
+
+/* mock detalle oportunidad */
+.det-head { display:flex; align-items:center; gap:10px; }
+.det-head .t { font-size:14.5px; font-weight:600; }
+.det-head .t span { display:block; font-size:11px; font-weight:300; color:var(--frost-muted); margin-top:1px; }
+.det-head .when { margin-left:auto; font-size:12px; font-weight:600; color:var(--frost-primary); background:var(--frost-primary-soft); border-radius:var(--r-chip); padding:5px 12px; white-space:nowrap; }
+.det-why { margin-top:12px; background:linear-gradient(135deg, var(--frost-primary-soft) 0%, #F6FAFF 100%); border:1px solid #D5E8FE; border-radius:var(--r-item); padding:12px 14px; font-size:12.5px; font-weight:300; color:var(--frost-ink-soft); }
+.det-why b { font-weight:600; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--frost-primary); display:block; margin-bottom:4px; }
+.cand { display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid var(--frost-border-soft); }
+.cand .avatar { width:34px; height:34px; border-radius:50%; background:var(--frost-primary-soft); display:flex; align-items:center; justify-content:center; font-weight:600; color:var(--frost-primary); font-size:12px; flex:none; }
+.cand .who { min-width:0; }
+.cand .who b { display:block; font-size:12.5px; font-weight:600; }
+.cand .chips { display:flex; flex-wrap:wrap; gap:4px; margin-top:3px; }
+.cand .chips span { font-size:9.5px; font-weight:600; color:var(--frost-ink-soft); background:var(--frost-surface-muted); border-radius:var(--r-chip); padding:2px 8px; }
+.cand .chips span.hot { background:var(--frost-primary-soft); color:var(--frost-primary-hover); }
+.cand .rm { margin-left:auto; color:var(--frost-faint); font-size:13px; flex:none; }
+.cand-more { padding:9px 0 0; font-size:11px; font-weight:500; color:var(--frost-muted); }
+.wa-preview { margin-top:12px; background:#E7F9EF; border-radius:var(--r-item) var(--r-item) var(--r-item) 2px; padding:11px 14px; font-size:12px; font-weight:300; color:#173B2E; line-height:1.5; position:relative; }
+.wa-preview b { font-weight:600; font-size:9.5px; letter-spacing:0.12em; text-transform:uppercase; color:#128C7E; display:block; margin-bottom:4px; }
+.wa-preview .link { color:#128C7E; font-weight:600; }
+.det-tanda { margin-top:12px; display:flex; align-items:center; gap:8px; font-size:11px; font-weight:500; color:var(--frost-muted); background:var(--frost-surface-muted); border-radius:var(--r-item); padding:9px 12px; }
+.det-actions { display:flex; gap:10px; margin-top:14px; }
+.btn { flex:1; text-align:center; border-radius:var(--r-btn); padding:11px 0; font-size:13px; font-weight:600; }
+.btn.ghost { border:1.5px solid var(--frost-border); color:var(--frost-ink-soft); background:var(--frost-surface); }
+.btn.primary { background:var(--frost-primary); color:#fff; box-shadow:var(--sh-glow); }
+
+/* bandeja + estados */
+.tray-tabs { display:flex; flex-wrap:wrap; gap:8px; margin-top:36px; }
+.tray-tabs span { font-size:12.5px; font-weight:600; border-radius:var(--r-chip); padding:8px 18px; background:var(--frost-surface); border:1px solid var(--frost-border); color:var(--frost-ink-soft); box-shadow:var(--sh-xs); }
+.tray-tabs span.on { background:var(--frost-ink); color:#fff; border-color:var(--frost-ink); }
+.tray-desc { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:16px; }
+.tray-desc div { font-size:12px; font-weight:300; color:var(--frost-ink-soft); background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-item); padding:12px 14px; }
+.tray-desc div b { display:block; font-weight:600; font-size:12.5px; margin-bottom:2px; }
+.states { display:flex; flex-wrap:wrap; gap:7px; margin-top:20px; max-width:900px; }
+.states span { display:inline-flex; align-items:center; gap:7px; font-size:11.5px; font-weight:500; color:var(--frost-ink-soft); background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-chip); padding:6px 13px; box-shadow:var(--sh-xs); }
+.states i { width:7px; height:7px; border-radius:50%; font-style:normal; flex:none; }
+.st-b { background:var(--frost-primary); } .st-g { background:var(--frost-success); } .st-y { background:var(--frost-warning); } .st-r { background:var(--frost-accent); } .st-n { background:var(--frost-faint); }
+.ctx-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:20px; }
+.ctx { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); padding:16px; box-shadow:var(--sh-sm); }
+.ctx b { display:block; font-size:12.5px; font-weight:600; margin-bottom:4px; }
+.ctx p { font-size:11.5px; font-weight:300; color:var(--frost-muted); line-height:1.5; }
+
+/* arquitectura */
+.arch { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-top:36px; }
+.arch .a-node { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-item); padding:9px 14px; box-shadow:var(--sh-xs); font-size:12px; font-weight:600; color:var(--frost-ink); }
+.arch .a-node small { display:block; font-size:9.5px; font-weight:500; color:var(--frost-muted); margin-top:1px; }
+.arch .a-node.hot { border-color:var(--frost-primary); background:var(--frost-primary-soft); color:var(--frost-primary-hover); }
+.arch .a-arr { color:var(--frost-faint); font-size:14px; font-weight:300; }
+.arch-loop { margin-top:10px; font-size:11.5px; font-weight:500; color:var(--frost-muted); }
+.owners { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:32px; }
+.owner { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); box-shadow:var(--sh-sm); padding:20px; }
+.owner h3 { font-size:13px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+.owner h3 i { width:9px; height:9px; border-radius:50%; font-style:normal; }
+.owner ul { list-style:none; display:flex; flex-direction:column; gap:7px; }
+.owner li { font-size:12.5px; font-weight:300; color:var(--frost-ink-soft); padding-left:16px; position:relative; }
+.owner li::before { content:''; position:absolute; left:0; top:8px; width:6px; height:6px; border-radius:50%; background:var(--frost-border); }
+.owner li strong { font-weight:600; }
+
+/* modelo de datos + api */
+.tables { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:36px; }
+.tbl { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); box-shadow:var(--sh-sm); padding:16px; }
+.tbl h4 { font-size:12px; font-weight:600; color:var(--frost-primary-hover); margin-bottom:3px; word-break:break-word; }
+.tbl .use { font-size:10.5px; font-weight:300; color:var(--frost-muted); margin-bottom:10px; line-height:1.45; }
+.tbl ul { list-style:none; display:flex; flex-wrap:wrap; gap:4px; }
+.tbl li { font-size:9.5px; font-weight:600; color:var(--frost-ink-soft); background:var(--frost-surface-muted); border-radius:var(--r-sm); padding:2px 7px; }
+.tbl li.j { background:var(--frost-primary-soft); color:var(--frost-primary-hover); }
+.api-grid { display:grid; grid-template-columns:1.1fr 0.9fr; gap:28px; margin-top:36px; align-items:start; }
+.api-list { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); box-shadow:var(--sh-sm); overflow:hidden; }
+.api-row { display:flex; align-items:center; gap:12px; padding:10px 18px; border-bottom:1px solid var(--frost-border-soft); }
+.api-row:last-child { border-bottom:none; }
+.api-row .m { font-size:9.5px; font-weight:700; letter-spacing:0.08em; border-radius:var(--r-sm); padding:3px 8px; width:52px; text-align:center; flex:none; }
+.m.get { background:var(--frost-primary-soft); color:var(--frost-primary-hover); }
+.m.post { background:rgba(16,185,129,0.12); color:#0B7A56; }
+.m.patch { background:rgba(245,158,11,0.14); color:#9A6604; }
+.api-row .p { font-size:11.5px; font-weight:500; color:var(--frost-ink-soft); word-break:break-all; }
+.api-row .p b { font-weight:600; color:var(--frost-ink); }
+.approve-box { background:var(--frost-surface); border:1px solid var(--frost-border); border-left:3px solid var(--frost-primary); border-radius:var(--r-card); box-shadow:var(--sh-sm); padding:20px 22px; }
+.approve-box h4 { font-size:13px; font-weight:600; margin-bottom:10px; }
+.approve-box h4 code { font-family:inherit; font-size:11.5px; background:var(--frost-primary-soft); color:var(--frost-primary-hover); border-radius:var(--r-sm); padding:2px 8px; }
+.approve-box ul { list-style:none; display:flex; flex-direction:column; gap:8px; }
+.approve-box li { font-size:12.5px; font-weight:300; color:var(--frost-ink-soft); padding-left:22px; position:relative; }
+.approve-box li strong { font-weight:600; }
+.approve-box li::before { content:'✓'; position:absolute; left:2px; top:0; color:var(--frost-success); font-weight:600; font-size:12px; }
+
+/* whatsapp */
+.wa-stages { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:36px; }
+.wa-st { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); box-shadow:var(--sh-sm); padding:22px; }
+.wa-st.hot { border-color:var(--frost-primary); box-shadow:var(--sh-glow); }
+.wa-st .tag { font-size:10.5px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--frost-primary); }
+.wa-st h3 { font-size:16px; font-weight:600; margin:8px 0 6px; }
+.wa-st p { font-size:12.5px; font-weight:300; color:var(--frost-ink-soft); margin-bottom:12px; }
+.wa-st p strong { font-weight:600; }
+.wa-st ul { list-style:none; display:flex; flex-direction:column; gap:7px; }
+.wa-st li { font-size:12.5px; font-weight:300; color:var(--frost-ink-soft); padding-left:18px; position:relative; }
+.wa-st li::before { content:''; position:absolute; left:2px; top:8px; width:6px; height:6px; border-radius:50%; background:var(--frost-primary); }
+.wa-st li strong { font-weight:600; }
+
+/* fases */
+.road { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin-top:36px; }
+.road .step { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); padding:18px 16px; box-shadow:var(--sh-sm); display:flex; flex-direction:column; }
+.road .step.hot { border-color:var(--frost-primary); box-shadow:var(--sh-glow); }
+.road .step .tag { font-size:10px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:var(--frost-primary); }
+.road .step h3 { font-size:14px; font-weight:600; margin:7px 0 5px; line-height:1.3; }
+.road .step p { font-size:11.5px; font-weight:300; color:var(--frost-ink-soft); line-height:1.5; }
+.road .step p strong { font-weight:600; }
+.road .step .out { margin-top:auto; padding-top:12px; font-size:10px; font-weight:600; color:var(--frost-muted); line-height:1.45; }
+.road .step .out b { color:var(--frost-primary-hover); font-weight:600; letter-spacing:0.1em; text-transform:uppercase; font-size:9px; display:block; margin-bottom:2px; }
+
+/* métricas */
+.north { margin-top:36px; background:var(--frost-ink); color:#fff; border-radius:var(--r-card); padding:24px 28px; display:flex; gap:20px; align-items:flex-start; max-width:860px; }
+.north .ico { flex:none; width:44px; height:44px; border-radius:var(--r-item); background:rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; font-size:19px; }
+.north h4 { font-size:15px; font-weight:600; }
+.north h4 span { display:block; font-size:10px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:rgba(255,255,255,0.5); margin-bottom:4px; }
+.north p { font-size:13px; font-weight:300; color:rgba(255,255,255,0.8); margin-top:6px; }
+.north p strong { font-weight:600; color:#fff; }
+.funnel { display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin-top:24px; max-width:960px; }
+.funnel span { font-size:11px; font-weight:500; color:var(--frost-ink-soft); background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-chip); padding:5px 12px; box-shadow:var(--sh-xs); }
+.funnel i { color:var(--frost-faint); font-style:normal; font-size:11px; }
+.guard-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:24px; }
+.guard { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-item); padding:12px 14px; font-size:11.5px; font-weight:300; color:var(--frost-ink-soft); line-height:1.45; }
+.guard b { font-weight:600; display:block; margin-bottom:1px; }
+.split-lbl { margin-top:28px; font-size:11px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:var(--frost-muted); }
+
+/* criterios */
+.crit { display:grid; grid-template-columns:1fr 1fr; gap:8px 20px; margin-top:36px; }
+.crit div { font-size:13px; font-weight:300; color:var(--frost-ink-soft); background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-item); padding:11px 15px 11px 38px; position:relative; box-shadow:var(--sh-xs); }
+.crit div strong { font-weight:600; }
+.crit div::before { content:'✓'; position:absolute; left:15px; top:10px; color:var(--frost-success); font-weight:600; font-size:13px; }
+
+/* fuentes existentes */
+.src-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:36px; }
+.src { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); padding:18px; box-shadow:var(--sh-sm); }
+.src b { display:block; font-size:13px; font-weight:600; margin-bottom:4px; }
+.src p { font-size:11.5px; font-weight:300; color:var(--frost-ink-soft); line-height:1.5; margin-bottom:9px; }
+.src code { font-family:inherit; font-size:10px; font-weight:600; color:var(--frost-primary-hover); background:var(--frost-primary-soft); border-radius:var(--r-sm); padding:2px 8px; word-break:break-all; }
+
+footer { background:var(--frost-ink); color:#fff; padding:52px 0; margin-top:64px; }
+footer .wrap { display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; }
+footer .big { font-size:22px; font-weight:300; }
+footer .big strong { font-weight:600; }
+footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; margin-top:6px; }
+
+@media (max-width:900px) {
+  .loop { grid-template-columns:repeat(2,1fr); }
+  .p0-grid { grid-template-columns:repeat(2,1fr); }
+  .p1-row { grid-template-columns:1fr; gap:2px; }
+  .grid-2, .grid-2.wide-mock, .split, .wa-stages, .api-grid, .crit { grid-template-columns:1fr; }
+  .tray-desc, .ctx-grid, .guard-grid { grid-template-columns:repeat(2,1fr); }
+  .tables { grid-template-columns:repeat(2,1fr); }
+  .owners, .src-grid { grid-template-columns:1fr; }
+  .road { grid-template-columns:repeat(2,1fr); }
+}
+@media (max-width:520px) {
+  .p0-grid, .tray-desc, .ctx-grid, .guard-grid, .tables, .road { grid-template-columns:1fr; }
+  header.chrome .kicker { display:none; }
+}
+</style>
+</head>
+<body>
+
+<header class="chrome">
+  <div class="wrap">
+    <svg width="110" height="26" viewBox="0 0 153 36" xmlns="http://www.w3.org/2000/svg" aria-label="Ágora">
+      <path d="M41.3822 30.3938L38.187 35.7712L3.11719 35.8491L17.5348 10.9106L20.6466 16.2974L15.7314 24.9347L12.625 30.3938H41.3822Z" fill="#E2E8F0"/>
+      <path d="M17.5351 10.9106L20.6469 16.2974L16.7342 23.0921L12.1689 20.1848L17.5351 10.9106Z" fill="url(#p0)" fill-opacity="0.7"/>
+      <path d="M20.6467 16.2973L17.5349 10.9106L3.11731 35.8491L0 30.3938L17.5349 0L31.8745 24.9385H25.6399L20.6467 16.2973Z" fill="#0072FF"/>
+      <path d="M31.8543 24.9244L25.6302 24.9316L21.7061 18.1387L26.5114 15.6305L31.8543 24.9244Z" fill="url(#p1)" fill-opacity="0.7"/>
+      <path d="M23.8473 0L41.3822 30.3938H12.625L15.7314 24.9346L15.7384 24.9385H25.6398H31.8744L17.5348 0H23.8473Z" fill="#FF4658"/>
+      <path d="M12.625 30.3937L15.7289 24.9387L23.7202 24.9194L23.4706 30.3746L12.625 30.3937Z" fill="url(#p2)" fill-opacity="0.7"/>
+      <path d="M76.7893 7.41158V4.76367H69.5647V7.41158H76.7893ZM72.2126 26.6334C74.4029 26.6334 76.3316 25.7835 77.6065 24.2797V26.3065H81.2351V10.1249H77.6065V12.1844C76.3316 10.6806 74.4029 9.79797 72.2126 9.79797C67.7668 9.79797 64.7266 13.5573 64.7266 18.232C64.7266 22.8741 67.7668 26.6334 72.2126 26.6334ZM73.1279 23.1356C70.382 23.1356 68.4206 21.0761 68.4206 18.232C68.4206 15.388 70.382 13.2958 73.1279 13.2958C75.7105 13.2958 77.6065 15.388 77.6065 18.232C77.6065 21.1088 75.6778 23.1356 73.1279 23.1356ZM92.2844 31.112C96.9264 31.112 100.718 28.2679 100.718 22.6125V10.1249H97.2533V12.5439C96.4034 10.9421 94.2131 9.79797 91.7614 9.79797C87.2828 9.79797 84.3407 13.2958 84.3407 17.6436C84.3407 21.9914 87.2828 25.4566 91.7614 25.4566C94.7035 25.4566 96.4361 23.9855 97.0899 22.6779V22.8087C97.0899 26.1104 95.39 28.3333 91.9248 28.3333C90.2576 28.3333 88.3616 27.7776 87.0867 26.6661L85.681 28.9544C87.1847 30.2947 89.5058 31.112 92.2844 31.112ZM92.5459 22.2856C89.9961 22.2856 88.0347 20.3242 88.0347 17.6436C88.0347 14.963 89.9961 12.9689 92.5459 12.9689C95.0958 12.9689 97.0899 14.9303 97.0899 17.5129C97.0899 20.3242 95.1612 22.2856 92.5459 22.2856ZM112.422 26.6334C117.194 26.6334 121.019 22.9067 121.019 18.232C121.019 13.5247 117.194 9.79797 112.422 9.79797C107.649 9.79797 103.824 13.5247 103.824 18.232C103.824 22.9067 107.649 26.6334 112.422 26.6334ZM112.422 23.1356C109.643 23.1356 107.518 21.0434 107.518 18.232C107.518 15.388 109.643 13.2958 112.422 13.2958C115.2 13.2958 117.325 15.388 117.325 18.232C117.325 21.0434 115.2 23.1356 112.422 23.1356ZM127.753 26.3065V19.7031C127.753 15.4534 130.042 13.7535 133.605 13.7535V9.79797C130.14 9.79797 128.374 11.694 127.753 13.3285V10.1249H124.125V26.3065H127.753ZM143.118 26.6334C145.308 26.6334 147.237 25.7835 148.512 24.2797V26.3065H152.14V10.1249H148.512V12.1844C147.237 10.6806 145.308 9.79797 143.118 9.79797C138.672 9.79797 135.632 13.5573 135.632 18.232C135.632 22.8741 138.672 26.6334 143.118 26.6334ZM144.033 23.1356C141.287 23.1356 139.326 21.0761 139.326 18.232C139.326 15.388 141.287 13.2958 144.033 13.2958C146.616 13.2958 148.512 15.388 148.512 18.232C148.512 21.1088 146.583 23.1356 144.033 23.1356Z" fill="#0F172A"/>
+      <rect x="52.7876" y="3.5874" width="0.683334" height="28.5292" fill="#E2E8F0"/>
+      <defs>
+        <linearGradient id="p0" x1="18.8455" y1="15.9076" x2="12.5252" y2="18.5424" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
+        <linearGradient id="p1" x1="26.8652" y1="23.5719" x2="27.7524" y2="16.7522" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
+        <linearGradient id="p2" x1="16.3401" y1="26.6997" x2="21.8393" y2="30.8946" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
+      </defs>
+    </svg>
+    <span class="kicker">Propuesta de producto · Agosto 2026</span>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <span class="kicker blue">Ágora Impulso</span>
+    <h1>Se te canceló un turno. <strong>Impulso ya sabe a quién avisarle.</strong></h1>
+    <p class="lede">Un agente operativo dentro de Ágora que detecta oportunidades con tus datos reales, explica por qué importan, prepara la acción y <strong>te pide aprobación antes de tocar a un cliente</strong>. No es un chatbot: es una bandeja de oportunidades accionables, integrada en Flash.</p>
+    <span class="status"><span class="pulse"></span>Plan de producto para revisión — nada de esto está construido todavía</span>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <span class="kicker blue">La decisión de producto</span>
+    <h2 class="sec-title">Un empleado que propone, <strong>no un chat que espera</strong></h2>
+    <p class="sec-sub">Impulso trabaja en un ciclo cerrado: cada oportunidad nace de un dato real, se convierte en una acción concreta, y el resultado alimenta la siguiente decisión. El profesional siempre está en el medio.</p>
+    <div class="loop">
+      <div class="node"><div class="n">1</div><h4>Detecta</h4><p>Una oportunidad, con datos reales del negocio.</p></div>
+      <div class="node"><div class="n">2</div><h4>Explica</h4><p>Por qué importa, en lenguaje simple.</p></div>
+      <div class="node"><div class="n">3</div><h4>Prepara</h4><p>Una acción concreta: destinatarios, mensaje, momento.</p></div>
+      <div class="node you"><div class="n">4 · Vos</div><h4>Aprobás</h4><p>Según el nivel de riesgo de la acción.</p></div>
+      <div class="node"><div class="n">5</div><h4>Ejecuta</h4><p>Por tandas, con límites y frenos.</p></div>
+      <div class="node"><div class="n">6</div><h4>Mide</h4><p>El resultado, y aprende de tu decisión.</p></div>
+    </div>
+    <div class="loop-back">↺ &nbsp;y cada resultado mejora la próxima oportunidad</div>
+    <div class="frame">La primera versión resuelve <strong>un único circuito completo</strong>: se libera un turno → Impulso encuentra clientes compatibles → prepara el contacto → el profesional aprueba → WhatsApp gestiona la respuesta → Nightwing recibe la reserva → Ágora atribuye el resultado. Todo lo demás llega después, sobre esa base probada.</div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <span class="kicker blue">El circuito del MVP</span>
+    <h2 class="sec-title">De la cancelación a la reserva, <strong>paso a paso</strong></h2>
+    <p class="sec-sub">El caso testigo: se cancela una reserva para mañana a las 15:00. Esto es lo que pasa, quién lo hace, y dónde está el freno humano.</p>
+    <div class="circuit">
+      <div class="c-step"><div class="c-dot"><span>📅</span></div><div class="c-body"><span class="who cyclone">Cyclone</span><h4>Nace la oportunidad</h4><p>La cancelación crea una oportunidad con <strong>clave de deduplicación ligada al horario</strong>: una cancelación, una sola oportunidad activa. El motor verifica que el horario siga disponible antes de mostrar nada.</p></div></div>
+      <div class="c-step"><div class="c-dot"><span>🔍</span></div><div class="c-body"><span class="who cyclone">Cyclone</span><h4>Busca clientes compatibles</h4><p>Ya consumieron ese servicio o uno compatible, están cerca de su frecuencia habitual de regreso, los atendió ese profesional, tienen teléfono válido, no tienen otra reserva equivalente, no fueron contactados hace poco y no rechazaron comunicaciones. Cada candidato recibe un <strong>puntaje determinístico</strong>.</p></div></div>
+      <div class="c-step"><div class="c-dot"><span>💬</span></div><div class="c-body"><span class="who flash">Flash</span><h4>Te lo cuenta en tu idioma</h4><p>«Se liberó mañana a las 15:00. Encontramos 8 clientes compatibles. Los primeros 3 están cerca de su fecha habitual de regreso.» La IA redacta la explicación; los datos ya vienen calculados.</p></div></div>
+      <div class="c-step"><div class="c-dot"><span>✅</span></div><div class="c-body"><span class="who flash">Flash</span><h4>Revisás y aprobás</h4><p>Destinatarios, mensaje y horario, todos editables. Podés quitar a quien quieras. <strong>Nada sale sin tu aprobación.</strong></p></div></div>
+      <div class="c-step"><div class="c-dot"><span>📲</span></div><div class="c-body"><span class="who wa">WhatsApp</span><h4>Sale la primera tanda</h4><p>Impulso contacta una tanda chica. WaBot atiende las respuestas y ofrece el enlace de reserva correspondiente.</p></div></div>
+      <div class="c-step"><div class="c-dot"><span>🗓</span></div><div class="c-body"><span class="who nw">Nightwing</span><h4>El cliente reserva en dos taps</h4><p>El enlace abre el servicio con <strong>fecha y hora preseleccionadas</strong>. Nightwing valida la disponibilidad una vez más antes de confirmar. Si el horario ya se ocupó, muestra alternativas — nunca un checkout inválido.</p></div></div>
+      <div class="c-step"><div class="c-dot"><span>🏁</span></div><div class="c-body"><span class="who cyclone">Cyclone</span><h4>Se cierra el circuito</h4><p>La primera reserva válida ocupa el horario, <strong>los contactos pendientes dejan de enviarse</strong>, y la oportunidad queda completada con el ingreso recuperado atribuido a Impulso.</p></div></div>
+    </div>
+    <div class="tanda-note">
+      <h4>Por qué por tandas</h4>
+      <p>Primero <strong>2–3 clientes</strong>, esperar un período configurable, y ampliar sólo si el turno sigue libre. Menos molestia para tu base, y nunca convocás a diez personas para un único lugar.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kicker blue">Casos de uso</span>
+    <h2 class="sec-title">Empieza en la agenda, <strong>crece hacia el negocio</strong></h2>
+    <p class="sec-sub">Cinco casos forman el MVP — todos sobre el mismo motor. Después vienen crecimiento y retención, y recién al final el rol de asesor.</p>
+
+    <div class="tier-head"><span class="tier-tag">P0 · MVP</span><h3>El circuito que hay que ganar primero</h3></div>
+    <div class="p0-grid">
+      <div class="p0"><h4>Recuperar una cancelación</h4><div class="row"><b>Dispara</b>Se cancela un turno próximo</div><div class="row"><b>Prepara</b>Clientes compatibles + invitación</div><div class="row"><b>Logra</b>Ocupar el horario liberado</div></div>
+      <div class="p0"><h4>Llenar un hueco próximo</h4><div class="row"><b>Dispara</b>Disponibilidad en 24–72 h con demanda histórica</div><div class="row"><b>Prepara</b>Campaña secuencial chica</div><div class="row"><b>Logra</b>Más ocupación</div></div>
+      <div class="p0"><h4>Reactivar clientes ausentes</h4><div class="row"><b>Dispara</b>Cliente pasado de su frecuencia esperada</div><div class="row"><b>Prepara</b>Mensaje + enlace de reserva</div><div class="row"><b>Logra</b>Recuperar clientes</div></div>
+      <div class="p0"><h4>Próxima reserva</h4><div class="row"><b>Dispara</b>Termina un servicio recurrente</div><div class="row"><b>Prepara</b>Nueva fecha según su cadencia</div><div class="row"><b>Logra</b>Más repetición</div></div>
+      <div class="p0"><h4>Confirmación inteligente</h4><div class="row"><b>Dispara</b>Turno próximo con señales de riesgo</div><div class="row"><b>Prepara</b>Pedido de confirmación o seña</div><div class="row"><b>Logra</b>Menos ausencias</div></div>
+    </div>
+
+    <div class="tier-head"><span class="tier-tag p1t">P1 · Crecimiento y retención</span></div>
+    <div class="p1-list">
+      <div class="p1-row"><span class="t">Día históricamente lento</span><span class="d">Un día rinde menos que su promedio</span><span class="d">Campaña específica para ese día</span></div>
+      <div class="p1-row"><span class="t">Cumpleaños</span><span class="d">Cliente entra en la ventana configurada</span><span class="d">Saludo y beneficio opcional</span></div>
+      <div class="p1-row"><span class="t">Cliente nuevo</span><span class="d">Primera atención completada</span><span class="d">Bienvenida y propuesta de próxima reserva</span></div>
+      <div class="p1-row"><span class="t">Servicio complementario</span><span class="d">Historial compatible con otro servicio</span><span class="d">Recomendación personalizada</span></div>
+      <div class="p1-row"><span class="t">Agenda desbalanceada</span><span class="d">Un profesional saturado, otro con huecos</span><span class="d">Redistribución o promoción</span></div>
+      <div class="p1-row"><span class="t">Conversaciones abandonadas</span><span class="d">Consulta por WhatsApp sin reserva</span><span class="d">Retomar con contexto y enlace</span></div>
+      <div class="p1-row"><span class="t">Cobros pendientes</span><span class="d">Reserva con deuda vigente</span><span class="d">Recordatorio con aprobación manual</span></div>
+    </div>
+
+    <div class="tier-head"><span class="tier-tag p1t">P2 · Asesor de negocio</span></div>
+    <div class="p2-chips">
+      <span>Servicios con baja conversión</span>
+      <span>Ajustes de duración o disponibilidad</span>
+      <span>Franjas con demanda no atendida</span>
+      <span>Promociones con vencimiento y público concreto</span>
+      <span>Contenido social basado en disponibilidad real</span>
+      <span>Mejoras del storefront</span>
+      <span>Oportunidades de planes, paquetes o membresías</span>
+      <span>Causas de cancelación y abandono</span>
+    </div>
+
+    <div class="never">
+      <h4>Línea roja</h4>
+      <p><strong>Cambios de precios, devoluciones, cancelaciones y cobros nunca se ejecutan automáticamente</strong> en las primeras versiones. Impulso los puede sugerir; los ejecuta una persona.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <span class="kicker blue">Selección de candidatos</span>
+    <h2 class="sec-title">Explicable por diseño: <strong>cada cliente sabe por qué está</strong></h2>
+    <p class="sec-sub">El ranking inicial es determinístico — señales que se pueden mostrar, auditar y discutir. Nada de un modelo opaco decidiendo a quién molestar.</p>
+    <div class="split">
+      <div class="col pos">
+        <h3 class="ok">Suma puntaje</h3>
+        <div class="sub">Señales positivas, todas verificables en los datos</div>
+        <ul>
+          <li><strong>Mismo servicio</strong> reservado anteriormente</li>
+          <li><strong>Cadencia personal</strong> próxima o vencida</li>
+          <li>Cliente marcado <strong>en riesgo</strong> o <strong>ausente</strong></li>
+          <li>Preferencia histórica por <strong>el mismo profesional</strong></li>
+          <li>Reservas anteriores en <strong>ese día u horario</strong></li>
+          <li>Varias <strong>visitas completadas</strong></li>
+          <li><strong>Interacción reciente</strong> con el negocio</li>
+          <li>Cumple condiciones de <strong>sede y modalidad</strong></li>
+        </ul>
+      </div>
+      <div class="col neg">
+        <h3 class="no">Queda afuera</h3>
+        <div class="sub">Exclusiones duras — las controla siempre Cyclone</div>
+        <ul>
+          <li>Ya tiene una <strong>reserva futura equivalente</strong></li>
+          <li>Fue <strong>contactado hace poco</strong> por la misma oportunidad</li>
+          <li>No tiene <strong>teléfono válido</strong></li>
+          <li>Está marcado como <strong>no contactar</strong></li>
+          <li>Falló permanentemente una <strong>entrega anterior</strong></li>
+          <li>Hay un <strong>reclamo</strong> o conversación derivada a una persona</li>
+          <li>El servicio, sede o profesional <strong>ya no están activos</strong></li>
+          <li>El horario <strong>expiró</strong> o dejó de estar disponible</li>
+          <li>El rol que aprueba <strong>no tiene permiso</strong> para contactar clientes</li>
+        </ul>
+      </div>
+    </div>
+    <div class="pipe-note"><strong>La IA puede ordenar candidatos con puntajes similares — nunca puede saltarse una exclusión.</strong> El filtro duro vive en Cyclone, en código, testeado. Lo generativo opera sólo dentro del espacio que lo determinístico ya validó.</div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kicker blue">La experiencia en Flash</span>
+    <h2 class="sec-title">Máximo tres acciones por día, <strong>cada una con su porqué</strong></h2>
+    <p class="sec-sub">Impulso vive cerca del comienzo del dashboard con hasta tres prioridades. El resto espera en <strong>/impulso</strong>. Pulse sigue siendo el resumen semanal — sus recomendaciones enlazan a oportunidades concretas.</p>
+
+    <div class="step-head"><span class="step-num">Superficie 1</span><h3>El dashboard, cada mañana</h3><span class="sub">hasta 3 prioridades, nunca una lista infinita</span></div>
+    <div class="grid-2">
+      <div class="mock-stage">
+        <span class="mock-label">Dashboard · superficie diaria de Impulso</span>
+        <div class="mock-card">
+          <div class="imp-head">
+            <div class="bolt">⚡</div>
+            <div class="t">Tres oportunidades para hoy<span>Impulso encontró dónde ganar tiempo y plata</span></div>
+            <a class="all" href="#">Ver todas →</a>
+          </div>
+          <div class="opp-row"><div class="ic">📅</div><div class="tx"><b>Un turno para recuperar</b><span>Mañana 15:00 · Balayage · 8 clientes compatibles</span></div><span class="cta">Revisar</span></div>
+          <div class="opp-row"><div class="ic warn">👋</div><div class="tx"><b>Seis clientas cerca de su fecha de regreso</b><span>Reactivación lista para revisar y aprobar</span></div><span class="cta">Revisar</span></div>
+          <div class="opp-row"><div class="ic rosa">🔔</div><div class="tx"><b>Cuatro turnos de la semana sin confirmar</b><span>Pedir confirmación o seña a los de mayor riesgo</span></div><span class="cta">Revisar</span></div>
+        </div>
+      </div>
+      <div class="rationale">
+        <p><strong>La bandeja completa vive en /impulso</strong>, organizada en cuatro secciones:</p>
+        <ul>
+          <li><strong>Ahora</strong> — requieren tu atención.</li>
+          <li><strong>Programadas</strong> — aprobadas, se ejecutan después.</li>
+          <li><strong>Automáticas</strong> — reglas que vos habilitaste.</li>
+          <li><strong>Historial</strong> — completadas, descartadas, vencidas y fallidas.</li>
+        </ul>
+        <p style="margin-top:16px;">Y entradas contextuales donde ya trabajás: en la <strong>Agenda</strong> («se liberó este horario — Impulso puede buscar quién lo ocupe»), en <strong>Clientes</strong> («preparar reactivación para este segmento»), en <strong>WaBot</strong> (conversaciones originadas por Impulso, identificadas) y en <strong>Analítica</strong> (reservas e ingresos atribuidos).</p>
+      </div>
+    </div>
+
+    <div class="step-head"><span class="step-num">Superficie 2</span><h3>El detalle de una oportunidad</h3><span class="sub">todo lo que necesitás para decidir en una pantalla</span></div>
+    <div class="grid-2 wide-mock">
+      <div class="mock-stage">
+        <span class="mock-label">/impulso · detalle · turno liberado</span>
+        <div class="mock-card">
+          <div class="det-head"><div class="t">Se liberó un turno<span>Balayage · 1 h 30 · con Caro · cancelado hace 12 min</span></div><span class="when">Mañana · 15:00</span></div>
+          <div class="det-why"><b>✨ Por qué importa</b>Encontramos 8 clientes compatibles. Las primeras 3 están cerca de su fecha habitual de regreso — es el mejor momento para invitarlas.</div>
+          <div class="cand"><div class="avatar">AP</div><div class="who"><b>Ana Pérez</b><div class="chips"><span class="hot">cadencia vencida</span><span>siempre con Caro</span><span>5 visitas</span></div></div><span class="rm">✕</span></div>
+          <div class="cand"><div class="avatar">VR</div><div class="who"><b>Valentina R.</b><div class="chips"><span class="hot">mismo servicio</span><span>suele venir martes</span></div></div><span class="rm">✕</span></div>
+          <div class="cand"><div class="avatar">SM</div><div class="who"><b>Sofía M.</b><div class="chips"><span class="hot">en riesgo</span><span>última visita hace 9 semanas</span></div></div><span class="rm">✕</span></div>
+          <div class="cand-more">+ 5 candidatas más con puntaje menor · se suman sólo si el turno sigue libre</div>
+          <div class="wa-preview"><b>Vista previa · WhatsApp</b>¡Hola Ana! Se nos liberó un lugar mañana a las 15:00 para tu balayage con Caro. ¿Te lo guardamos? Reservá directo acá → <span class="link">agora.red/r/…</span></div>
+          <div class="det-tanda">⏱ &nbsp;Sale de a 3 · si nadie reserva en el período configurado, sigue la próxima tanda · se frena solo cuando el turno se ocupa</div>
+          <div class="det-actions"><span class="btn ghost">Descartar</span><span class="btn primary">Aprobar envío</span></div>
+        </div>
+      </div>
+      <div class="rationale">
+        <p>Cada oportunidad muestra <strong>qué ocurrió, por qué fue seleccionada, el valor potencial calculable</strong> (sin promesas inventadas), los clientes incluidos con el motivo de cada uno, la vista previa del mensaje, canal y momento del envío, el nivel de autonomía, qué pasa después de aprobar, y el historial de ejecución.</p>
+        <ul>
+          <li>Podés <strong>quitar destinatarios</strong> uno por uno antes de aprobar.</li>
+          <li>Aprobar <strong>congela</strong> destinatarios y contenido: lo que viste es lo que sale.</li>
+          <li>En mobile, la aprobación usa el <strong>SaveBar de Frost</strong> — nunca depende de una tabla horizontal.</li>
+        </ul>
+        <p style="margin-top:16px;"><strong>Los estados operativos, completos desde el día uno:</strong></p>
+        <div class="states">
+          <span><i class="st-b"></i>Analizando</span>
+          <span><i class="st-b"></i>Lista para revisar</span>
+          <span><i class="st-n"></i>Sin candidatos suficientes</span>
+          <span><i class="st-b"></i>Aprobada / programada</span>
+          <span><i class="st-b"></i>Ejecutándose</span>
+          <span><i class="st-y"></i>Parcialmente enviada</span>
+          <span><i class="st-g"></i>Horario ocupado</span>
+          <span><i class="st-g"></i>Completada</span>
+          <span><i class="st-n"></i>Vencida</span>
+          <span><i class="st-n"></i>Descartada</span>
+          <span><i class="st-r"></i>Fallida y reintentable</span>
+          <span><i class="st-y"></i>Pausada por permisos o límites</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <span class="kicker blue">Arquitectura</span>
+    <h2 class="sec-title">Un motor, tres casas, <strong>responsabilidades claras</strong></h2>
+    <p class="sec-sub">El dato fluye de la agenda a la atribución y vuelve al motor. Cada repo hace lo que ya sabe hacer.</p>
+    <div class="arch">
+      <span class="a-node">Agenda, clientes y reservas<small>los datos de siempre</small></span><span class="a-arr">→</span>
+      <span class="a-node hot">Motor de oportunidades<small>Cyclone</small></span><span class="a-arr">→</span>
+      <span class="a-node">Reglas y ranking<small>determinístico</small></span><span class="a-arr">→</span>
+      <span class="a-node">Políticas de riesgo<small>por tipo de acción</small></span><span class="a-arr">→</span>
+      <span class="a-node">Bandeja de Impulso<small>persistida</small></span><span class="a-arr">→</span>
+      <span class="a-node hot">Revisión en Flash<small>el freno humano</small></span><span class="a-arr">→</span>
+      <span class="a-node">Ejecutor idempotente<small>action runs</small></span><span class="a-arr">→</span>
+      <span class="a-node">WhatsApp + WaBot<small>conversación</small></span><span class="a-arr">→</span>
+      <span class="a-node hot">Reserva en Nightwing<small>validación final</small></span><span class="a-arr">→</span>
+      <span class="a-node">Atribución y métricas<small>auditoría</small></span>
+    </div>
+    <div class="arch-loop">↺ &nbsp;la atribución alimenta de vuelta al motor: qué funcionó, qué se descartó, qué molestó</div>
+    <div class="owners">
+      <div class="owner">
+        <h3><i style="background:var(--frost-primary)"></i>Cyclone</h3>
+        <ul>
+          <li><strong>Detectores y ranking</strong> determinísticos</li>
+          <li>Persistencia de oportunidades</li>
+          <li>Políticas de autonomía por caso</li>
+          <li><strong>Ejecución idempotente</strong> con action runs</li>
+          <li>Integración con WhatsApp</li>
+          <li>Atribución de reservas</li>
+          <li>Auditoría y límites</li>
+        </ul>
+      </div>
+      <div class="owner">
+        <h3><i style="background:var(--frost-success)"></i>Flash</h3>
+        <ul>
+          <li>Bandeja y detalle de oportunidades</li>
+          <li><strong>Revisión de destinatarios</strong></li>
+          <li>Configuración de automatizaciones</li>
+          <li>Estados de ejecución y errores</li>
+          <li>Eventos de interacción en PostHog</li>
+        </ul>
+      </div>
+      <div class="owner">
+        <h3><i style="background:#6D4AE0"></i>Nightwing</h3>
+        <ul>
+          <li>Enlace profundo a <strong>servicio + fecha + hora</strong></li>
+          <li><strong>Validación final</strong> de disponibilidad</li>
+          <li>Captura del token de atribución</li>
+          <li>Alternativas si el horario ya fue ocupado</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kicker blue">Modelo de datos y API</span>
+    <h2 class="sec-title">Cuatro tablas, nueve endpoints, <strong>cero magia</strong></h2>
+    <p class="sec-sub">Todo lo que Impulso decide, prepara o ejecuta queda persistido y auditable. El contrato de aprobación es la pieza más delicada — por eso está escrito primero.</p>
+    <div class="tables">
+      <div class="tbl">
+        <h4>vendor_opportunities</h4>
+        <div class="use">La oportunidad: qué se detectó, con qué evidencia, qué se recomienda, cuánto vale y en qué estado está.</div>
+        <ul><li>type</li><li>status</li><li>priority_score</li><li>dedupe_key</li><li>source</li><li class="j">evidence JSONB</li><li class="j">recommended_action JSONB</li><li>potential_value</li><li>expires_at</li><li>approved_at</li><li>dismissed_at + reason</li></ul>
+      </div>
+      <div class="tbl">
+        <h4>vendor_opportunity_recipients</h4>
+        <div class="use">Cada cliente incluido: su puntaje, sus razones, su tanda y todo el recorrido del contacto.</div>
+        <ul><li>rank_score</li><li>reason_codes</li><li>wave_number</li><li>status</li><li>contacted_at</li><li>delivered_at</li><li>responded_at</li><li>clicked_at</li><li>booking_id</li><li>excluded_reason</li></ul>
+      </div>
+      <div class="tbl">
+        <h4>vendor_action_runs</h4>
+        <div class="use">Cada ejecución externa: quién la pidió, con qué input, qué devolvió. La clave de idempotencia vive acá.</div>
+        <ul><li>action_type</li><li>idempotency_key</li><li>requested_by_user_id</li><li>execution_mode</li><li class="j">input_snapshot</li><li class="j">output</li><li>status</li><li>error_code</li></ul>
+      </div>
+      <div class="tbl">
+        <h4>vendor_impulse_policies</h4>
+        <div class="use">Qué puede hacer Impulso solo, por tipo de oportunidad — el dial de autonomía del negocio.</div>
+        <ul><li>modo: recomendar / preparar / ejecutar</li><li>canal habilitado</li><li>horarios silenciosos</li><li>máx. contactos diarios</li><li>tamaño y demora de tandas</li><li>roles autorizados</li><li>aprobación obligatoria</li><li>fecha de pausa</li></ul>
+      </div>
+    </div>
+    <div class="api-grid">
+      <div class="api-list">
+        <div class="api-row"><span class="m get">GET</span><span class="p">/v1/me/vendor/impulse/<b>opportunities</b></span></div>
+        <div class="api-row"><span class="m get">GET</span><span class="p">/v1/me/vendor/impulse/opportunities/<b>:id</b></span></div>
+        <div class="api-row"><span class="m post">POST</span><span class="p">/v1/me/vendor/impulse/opportunities/:id/<b>prepare</b></span></div>
+        <div class="api-row"><span class="m patch">PATCH</span><span class="p">/v1/me/vendor/impulse/opportunities/:id/<b>recipients</b></span></div>
+        <div class="api-row"><span class="m post">POST</span><span class="p">/v1/me/vendor/impulse/opportunities/:id/<b>approve</b></span></div>
+        <div class="api-row"><span class="m post">POST</span><span class="p">/v1/me/vendor/impulse/opportunities/:id/<b>dismiss</b></span></div>
+        <div class="api-row"><span class="m post">POST</span><span class="p">/v1/me/vendor/impulse/opportunities/:id/<b>retry</b></span></div>
+        <div class="api-row"><span class="m get">GET</span><span class="p">/v1/me/vendor/impulse/<b>policies</b></span></div>
+        <div class="api-row"><span class="m patch">PATCH</span><span class="p">/v1/me/vendor/impulse/policies/<b>:type</b></span></div>
+      </div>
+      <div class="approve-box">
+        <h4>El contrato de <code>approve</code></h4>
+        <ul>
+          <li><strong>Revalida</strong> disponibilidad, permisos y versión de la oportunidad — el mundo pudo cambiar desde que se mostró.</li>
+          <li>Crea un action run con <strong>clave de idempotencia</strong>: aprobar dos veces no duplica nada.</li>
+          <li><strong>Congela</strong> destinatarios y contenido aprobado.</li>
+          <li>Programa la primera tanda.</li>
+          <li>Devuelve <strong>el estado persistido</strong>, no un éxito optimista.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <span class="kicker blue">El papel de la IA</span>
+    <h2 class="sec-title">La IA explica y redacta. <strong>Cyclone decide y ejecuta.</strong></h2>
+    <p class="sec-sub">Salidas estructuradas con schema, siempre. Sin embeddings ni RAG en el MVP: los datos relevantes ya son estructurados.</p>
+    <div class="split">
+      <div class="col si">
+        <h3 class="ia">La IA sí</h3>
+        <div class="sub">Donde el lenguaje agrega valor</div>
+        <ul>
+          <li><strong>Explica una oportunidad</strong> en lenguaje simple</li>
+          <li>Redacta <strong>alternativas de tono</strong></li>
+          <li>Resume por qué ciertos clientes son compatibles</li>
+          <li><strong>Clasifica respuestas</strong> de WhatsApp</li>
+          <li>Elige la siguiente herramienta conversacional</li>
+          <li>Adapta la conversación dentro de límites</li>
+          <li>Convierte «sólo clientes frecuentes» en <strong>filtros estructurados</strong></li>
+        </ul>
+      </div>
+      <div class="col nunca">
+        <h3 class="no">La IA no</h3>
+        <div class="sub">Lo que queda del lado determinístico, siempre</div>
+        <ul>
+          <li>Calcular <strong>disponibilidad</strong></li>
+          <li>Crear <strong>precios o descuentos</strong> no autorizados</li>
+          <li>Decidir <strong>permisos</strong></li>
+          <li><strong>Enviar mensajes</strong> directamente</li>
+          <li>Inventar <strong>ingresos potenciales</strong></li>
+          <li>Reservar sin <strong>validación transaccional</strong></li>
+          <li>Modificar datos fuera de <strong>herramientas tipadas</strong></li>
+          <li>Acceder a <strong>teléfonos o datos personales</strong> innecesarios para redactar</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kicker blue">WhatsApp · prerrequisito crítico</span>
+    <h2 class="sec-title">El contacto proactivo <strong>necesita plantillas de Meta</strong></h2>
+    <p class="sec-sub">Con la implementación actual de Cyclone, los mensajes libres sólo salen dentro de la ventana de conversación habilitada. Para iniciar contacto hacen falta plantillas aprobadas — por eso la entrega se divide en dos, y la primera <strong>no depende de Meta</strong>.</p>
+    <div class="wa-stages">
+      <div class="wa-st hot">
+        <span class="tag">Primero · validación sin Meta</span>
+        <h3>El profesional envía, Ágora mide</h3>
+        <p>Flash prepara candidatos y mensaje; el profesional lo <strong>copia o abre WhatsApp manualmente</strong>. El enlace lleva atribución igual.</p>
+        <ul>
+          <li>Se mide <strong>selección → envío manual → clic → reserva</strong></li>
+          <li>Valida el corazón del producto (¿la recomendación sirve?) sin esperar aprobaciones externas</li>
+          <li>Riesgo de plataforma: cero</li>
+        </ul>
+      </div>
+      <div class="wa-st">
+        <span class="tag">Después · automatización completa</span>
+        <h3>Plantillas aprobadas, envío desde Cyclone</h3>
+        <p>Crear y aprobar plantillas: <strong>horario disponible, recordatorio de nueva reserva, reactivación, confirmación de turno</strong>.</p>
+        <ul>
+          <li>La IA elige entre <strong>variantes aprobadas</strong> y completa variables permitidas — nunca texto libre disfrazado de plantilla</li>
+          <li>Respeta límites del plan, números inválidos, opt-out, deduplicación y <strong>costos de WhatsApp</strong></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <span class="kicker blue">Fases</span>
+    <h2 class="sec-title">Primero en las sombras, <strong>después con las manos</strong></h2>
+    <p class="sec-sub">Cada fase tiene una salida verificable antes de pasar a la siguiente. Ningún cliente recibe un mensaje hasta la Fase 1 — y ahí lo manda el profesional.</p>
+    <div class="road">
+      <div class="step hot">
+        <div class="tag">Fase 0</div><h3>Shadow mode</h3>
+        <p>Modelos, estados y el detector de cancelación/hueco. Genera oportunidades <strong>sin mostrarlas ni contactar a nadie</strong>; se evalúa a mano la calidad de candidatos y se registra por qué cada uno fue incluido.</p>
+        <div class="out"><b>Salida</b>Oportunidades confiables sin acciones externas</div>
+      </div>
+      <div class="step hot">
+        <div class="tag">Fase 1</div><h3>MVP asistido</h3>
+        <p>Bandeja en Flash, detalle y edición de candidatos, mensaje preparado para <strong>copiar o abrir WhatsApp</strong>, deep link de Nightwing con token opaco, atribución, historial y descarte con motivo.</p>
+        <div class="out"><b>Salida</b>Los profesionales usan la recomendación y recuperan turnos</div>
+      </div>
+      <div class="step">
+        <div class="tag">Fase 2</div><h3>Ejecución integrada</h3>
+        <p>Plantillas de Meta aprobadas, envío desde Cyclone, tandas secuenciales, límites, quiet hours, reintentos, freno al ocuparse el horario y contexto para WaBot.</p>
+        <div class="out"><b>Salida</b>Circuito completamente ejecutable desde Ágora</div>
+      </div>
+      <div class="step">
+        <div class="tag">Fase 3</div><h3>Retención</h3>
+        <p>Reactivación de en riesgo y ausentes, próxima reserva según cadencia, cumpleaños, bienvenida, conversaciones sin conversión y confirmaciones inteligentes.</p>
+        <div class="out"><b>Salida</b>Los casos P1 corriendo sobre el mismo motor</div>
+      </div>
+      <div class="step">
+        <div class="tag">Fase 4</div><h3>Piloto automático</h3>
+        <p>Políticas por caso, simulación «esto habría hecho Impulso», activación explícita, límites diarios, botón global de pausa y resumen semanal. <strong>Autonomía sólo para acciones de bajo riesgo.</strong></p>
+        <div class="out"><b>Salida</b>Automatización que el negocio entiende y controla</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kicker blue">Métricas</span>
+    <h2 class="sec-title">Una métrica norte, un embudo completo, <strong>ocho guardrails</strong></h2>
+    <p class="sec-sub">Cyclone guarda la auditoría operacional; PostHog registra las interacciones desde Flash, respetando la política actual de eventos-only.</p>
+    <div class="north">
+      <div class="ico">🎯</div>
+      <div>
+        <h4><span>Métrica norte</span>Valor atribuido a oportunidades de Impulso</h4>
+        <p>Separado con honestidad: <strong>ingresos recuperados</strong> (el turno cancelado que se volvió a ocupar) e <strong>ingresos incrementales estimados mediante experimento</strong> — más reservas recuperadas y clientes reactivados. Nunca un número inflado que mezcle lo que igual iba a pasar.</p>
+      </div>
+    </div>
+    <div class="split-lbl">El embudo, evento por evento</div>
+    <div class="funnel">
+      <span>Creada</span><i>→</i><span>Mostrada</span><i>→</i><span>Detalle abierto</span><i>→</i><span>Preparada</span><i>→</i><span>Aprobada</span><i>→</i><span>Enviada</span><i>→</i><span>Entregada</span><i>→</i><span>Respondida</span><i>→</i><span>Enlace abierto</span><i>→</i><span>Reserva iniciada</span><i>→</i><span>Reserva completada</span>
+    </div>
+    <div class="split-lbl">Guardrails — lo que avisa si Impulso molesta más de lo que ayuda</div>
+    <div class="guard-grid">
+      <div class="guard"><b>Bloqueos y opt-out</b>La señal más importante de que fuimos invasivos</div>
+      <div class="guard"><b>Mensajes fallidos</b>Números inválidos, entregas rotas</div>
+      <div class="guard"><b>Destinatarios quitados a mano</b>El ranking propuso mal</div>
+      <div class="guard"><b>Automatizaciones pausadas</b>El negocio perdió confianza</div>
+      <div class="guard"><b>Atribuciones incorrectas</b>Reservas colgadas a Impulso que no le corresponden</div>
+      <div class="guard"><b>Descartes por irrelevante</b>El detector dispara de más</div>
+      <div class="guard"><b>Contactos duplicados</b>La deduplicación falló</div>
+      <div class="guard"><b>Costo por reserva</b>IA + WhatsApp por reserva conseguida</div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <span class="kicker blue">Criterios de aceptación del MVP</span>
+    <h2 class="sec-title">Dieciséis condiciones, <strong>ninguna negociable</strong></h2>
+    <div class="crit">
+      <div>Una cancelación genera <strong>como máximo una</strong> oportunidad activa</div>
+      <div>La oportunidad aparece sólo si el horario <strong>sigue disponible</strong></div>
+      <div>Ningún destinatario <strong>incumple las exclusiones</strong></div>
+      <div>Cada destinatario tiene <strong>razones visibles y verificables</strong></div>
+      <div>El profesional puede <strong>quitar destinatarios</strong></div>
+      <div>Toda mutación valida <strong>permisos y estado actual</strong></div>
+      <div>Aprobar dos veces <strong>no duplica acciones</strong></div>
+      <div>Ocupar el horario <strong>cancela las tandas pendientes</strong></div>
+      <div>Un enlace vencido muestra <strong>alternativas</strong>, no un checkout inválido</div>
+      <div>La reserva <strong>conserva la atribución</strong> hasta completarse</div>
+      <div>El profesional puede <strong>descartar y explicar por qué</strong></div>
+      <div>Todos los resultados externos quedan <strong>auditados</strong></div>
+      <div>Funciona a <strong>390 px y 1280 px</strong></div>
+      <div>Tiene estados de <strong>carga, vacío, error, expiración y éxito</strong></div>
+      <div>Soporta <strong>teclado, foco visible y lectores de pantalla</strong></div>
+      <div>Nada se informa como completado <strong>antes de que Cyclone lo persista</strong></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kicker blue">Lo que ya existe</span>
+    <h2 class="sec-title">Impulso no duplica: <strong>orquesta lo que ya construimos</strong></h2>
+    <p class="sec-sub">Las piezas más difíciles del circuito ya están en producción. El motor nuevo las conecta — no las reescribe.</p>
+    <div class="src-grid">
+      <div class="src"><b>Pulse ya detecta señales</b><p>Clientes ausentes, en riesgo, cumpleaños y días lentos ya salen del selector de Pulse.</p><code>cyclone · services/pulse/select.ts</code></div>
+      <div class="src"><b>La segmentación ya calcula cadencia</b><p>Frecuencia personal, riesgo y ausencia por cliente ya existen como señales calculadas.</p><code>cyclone · services/client-segmentation.ts</code></div>
+      <div class="src"><b>WaBot ya conversa y enlaza</b><p>Obtiene historial del cliente y construye enlaces de reserva desde las herramientas del asesor.</p><code>cyclone · whatsapp-bot/advisor/tools.ts</code></div>
+      <div class="src"><b>Las plantillas ya tienen sistema</b><p>Auto-mensajes de WhatsApp con feature flags por negocio: la base para las plantillas de Impulso.</p><code>cyclone · services/whatsapp/auto-messages.ts</code></div>
+      <div class="src"><b>Flash ya tiene superficie editorial</b><p>La card de Pulse en el dashboard es el precedente directo de la superficie diaria de Impulso.</p><code>flash · widgets/PulseCardView.tsx</code></div>
+      <div class="src"><b>Nightwing ya interpreta fecha y hora</b><p>El flujo del servicio ya preselecciona fecha y horario — la base del deep link con atribución.</p><code>nightwing · Service/RightSection/Options.tsx</code></div>
+    </div>
+    <div class="pipe-note" style="margin-top:28px;"><strong>Regla de implementación:</strong> no duplicar Pulse, segmentación, disponibilidad ni WaBot. La selección y las exclusiones son determinísticas; la IA sólo explica y redacta con salidas estructuradas; y no hay envíos proactivos automáticos hasta resolver las plantillas aprobadas de Meta.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <div class="big">Impulso: <strong>del dato a la acción</strong>, con tu aprobación en el medio</div>
+      <div class="fine">Plan de producto para revisión · Ágora · Agosto 2026 · Nada de esto está construido todavía</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
