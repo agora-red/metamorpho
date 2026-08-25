@@ -400,6 +400,97 @@ section.alt .mock-stage { background:linear-gradient(160deg,#F2F6FC 0%, #E9EFF8 
 .pv-notes-foot { margin-top:16px; border-top:1px solid var(--frost-border-soft); padding-top:14px; font-size:12px; font-weight:300; color:var(--frost-muted); line-height:1.6; }
 .pv-notes-foot strong { font-weight:600; color:var(--frost-ink-soft); }
 
+/* ===== Storyboard del circuito ===== */
+.story { display:grid; grid-template-columns:repeat(3,1fr); gap:30px 20px; margin-top:36px; }
+.frame-cap { display:flex; align-items:flex-start; gap:10px; margin-bottom:10px; }
+.fnum { flex:none; width:24px; height:24px; border-radius:50%; background:var(--frost-ink); color:#fff; font-size:11.5px; font-weight:600; display:flex; align-items:center; justify-content:center; font-variant-numeric:tabular-nums; }
+.cap-t { flex:1; min-width:0; }
+.cap-t b { display:block; font-size:13.5px; font-weight:600; line-height:1.25; }
+.cap-t span { display:block; font-size:10.5px; font-weight:300; color:var(--frost-muted); margin-top:2px; line-height:1.4; }
+.fwho { flex:none; font-size:8.5px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; border-radius:var(--r-chip); padding:4px 9px; margin-top:2px; }
+.fwho.agora { background:var(--frost-primary-soft); color:var(--frost-primary-hover); }
+.fwho.vos { background:var(--frost-ink); color:#fff; }
+.fwho.cli { background:#E7F9EF; color:#128C7E; }
+.shot { background:linear-gradient(165deg,#F2F6FC 0%, #E9EFF8 100%); border:1px solid var(--frost-border); border-radius:var(--r-card); padding:16px; min-height:196px; display:flex; flex-direction:column; justify-content:center; }
+.mini { background:#fff; border:1px solid rgba(15,23,42,0.10); border-radius:14px; box-shadow:var(--sh-sm); padding:12px 13px; }
+.mini-head { display:flex; align-items:baseline; justify-content:space-between; gap:8px; border-bottom:1px solid var(--frost-border-soft); padding-bottom:8px; margin-bottom:4px; }
+.mini-head b { font-size:12.5px; font-weight:600; }
+.mini-head span { font-size:9.5px; font-weight:500; color:var(--frost-muted); text-align:right; }
+.ag-row { display:flex; gap:9px; padding:5px 0; align-items:stretch; }
+.ag-row > span { font-size:9.5px; font-weight:600; color:var(--frost-muted); width:34px; flex:none; padding-top:7px; font-variant-numeric:tabular-nums; }
+.ag-evt { flex:1; background:var(--frost-primary-soft); border-left:3px solid var(--frost-primary); border-radius:8px; padding:6px 9px; font-size:10.5px; font-weight:500; color:var(--frost-ink-soft); }
+.ag-evt.off { background:var(--frost-accent-soft); border-left-color:var(--frost-accent); }
+.ag-evt.off b { display:block; font-size:8.5px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#B3202F; margin-top:2px; }
+.wa-mock { background:#fff; border:1px solid rgba(15,23,42,0.10); border-radius:14px; box-shadow:var(--sh-sm); overflow:hidden; }
+.wa-bar { display:flex; align-items:center; gap:8px; background:#075E54; color:#fff; padding:8px 11px; }
+.wa-av { width:24px; height:24px; border-radius:50%; background:rgba(255,255,255,0.25); font-size:9px; font-weight:700; display:flex; align-items:center; justify-content:center; flex:none; }
+.wa-bar b { display:block; font-size:11px; font-weight:600; line-height:1.2; }
+.wa-bar span { display:block; font-size:8.5px; opacity:0.75; }
+.wa-chat { background:#E9E4DB; padding:10px; display:flex; flex-direction:column; gap:7px; }
+.wa-in { align-self:flex-start; max-width:90%; background:#fff; border-radius:10px 10px 10px 2px; padding:7px 10px; font-size:10.5px; line-height:1.45; color:#111; box-shadow:0 1px 1px rgba(0,0,0,0.08); }
+.wa-in b { font-weight:600; }
+.wa-in u { color:#128C7E; font-weight:600; text-decoration-color:rgba(18,140,126,0.4); }
+.wa-out { align-self:flex-end; max-width:82%; background:#D9FDD3; border-radius:10px 10px 2px 10px; padding:7px 10px; font-size:10.5px; line-height:1.45; color:#111; box-shadow:0 1px 1px rgba(0,0,0,0.08); }
+.nw-lbl { font-size:9px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--frost-muted); margin:9px 0 6px; }
+.nw-times { display:flex; gap:6px; }
+.nw-times span { flex:1; text-align:center; font-size:11px; font-weight:600; padding:7px 0; border-radius:9px; border:1px solid var(--frost-border); color:var(--frost-ink-soft); background:#fff; font-variant-numeric:tabular-nums; }
+.nw-times .sel { background:var(--frost-primary); border-color:var(--frost-primary); color:#fff; box-shadow:0 4px 10px -2px rgba(0,114,251,0.35); }
+.attr-line { display:flex; align-items:baseline; justify-content:space-between; gap:8px; border-top:1px dashed var(--frost-border); margin-top:6px; padding-top:8px; font-size:10px; font-weight:500; color:var(--frost-muted); }
+.attr-line b { font-size:13px; font-weight:600; color:#047857; font-variant-numeric:tabular-nums; white-space:nowrap; }
+
+/* ===== Casos P0 como oportunidades reales ===== */
+.case-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:36px; }
+.case { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); box-shadow:var(--sh-sm); padding:16px; display:flex; flex-direction:column; }
+.case-name { font-size:10.5px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--frost-primary-hover); margin-bottom:10px; }
+.case-mock { background:linear-gradient(165deg,#F6F9FE 0%, #EEF3FA 100%); border:1px solid var(--frost-border-soft); border-radius:14px; padding:4px 12px; flex:1; display:flex; align-items:center; }
+.case-mock .pv-opp { width:100%; }
+.case-out { margin-top:10px; font-size:11.5px; font-weight:500; color:var(--frost-ink-soft); }
+
+/* ===== Ranking visual de candidatas ===== */
+.rank-stage { display:grid; grid-template-columns:1.05fr 0.95fr; gap:28px; margin-top:36px; align-items:start; }
+.rank-card { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); box-shadow:var(--sh-md); padding:20px; }
+.rank-head { margin-bottom:6px; }
+.rank-head b { display:block; font-size:14px; font-weight:600; }
+.rank-head span { font-size:11.5px; font-weight:300; color:var(--frost-muted); }
+.rk { display:flex; align-items:center; gap:10px; padding:9px 0; }
+.rk + .rk { border-top:1px solid var(--frost-border-soft); }
+.rk .av { width:30px; height:30px; border-radius:50%; background:var(--frost-primary-soft); color:var(--frost-primary); font-size:10.5px; font-weight:600; display:flex; align-items:center; justify-content:center; flex:none; }
+.rk .who { flex:1; min-width:0; }
+.rk .who b { display:block; font-size:12.5px; font-weight:600; }
+.rk .chips { display:flex; flex-wrap:wrap; gap:3px; margin-top:3px; }
+.rk .chips span { font-size:8.5px; font-weight:600; background:#F1F5F9; color:var(--frost-ink-soft); border-radius:var(--r-chip); padding:2px 7px; }
+.rk .chips span.hot { background:var(--frost-primary-soft); color:var(--frost-primary-hover); }
+.score { flex:none; width:92px; display:flex; align-items:center; gap:7px; }
+.score .track { flex:1; height:5px; background:#EDF1F7; border-radius:var(--r-chip); overflow:hidden; }
+.score .track i { display:block; height:100%; background:linear-gradient(90deg, var(--frost-primary), #5EA5FD); }
+.score b { font-size:11px; font-weight:600; color:var(--frost-ink-soft); font-variant-numeric:tabular-nums; }
+.rank-div { margin-top:12px; padding:9px 0 3px; border-top:1px solid var(--frost-border-soft); font-size:9.5px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#B3202F; }
+.rk.out { opacity:0.8; }
+.rk.out .av { background:#F1F5F9; color:var(--frost-faint); }
+.rk.out .who b { color:var(--frost-muted); font-weight:500; }
+.rk .why { flex:none; font-size:9.5px; font-weight:600; color:#B3202F; background:var(--frost-accent-soft); border-radius:var(--r-chip); padding:4px 10px; }
+.chipcloud { margin-bottom:18px; }
+.chipcloud h4 { font-size:11px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:9px; }
+.chipcloud h4.ok-t { color:#047857; }
+.chipcloud h4.no-t { color:#B3202F; }
+.chipcloud > div { display:flex; flex-wrap:wrap; gap:6px; }
+.chipcloud > div span { font-size:11px; font-weight:500; background:rgba(16,185,129,0.08); color:#065F46; border:1px solid rgba(16,185,129,0.18); border-radius:var(--r-chip); padding:5px 11px; }
+.chipcloud > div.neg span { background:rgba(255,70,88,0.07); color:#9F1D2B; border-color:rgba(255,70,88,0.2); }
+
+/* ===== Mini mocks WhatsApp (dos etapas) ===== */
+.wa-mini { margin:12px 0; }
+.wm-msg { background:var(--frost-surface-muted); border:1px solid var(--frost-border-soft); border-radius:10px; padding:9px 11px; font-size:11px; line-height:1.5; color:var(--frost-ink-soft); }
+.wm-btns { display:flex; gap:8px; margin-top:8px; }
+.wm-b { flex:1; padding:8px 10px !important; font-size:11.5px !important; }
+
+@media (max-width:1000px) {
+  .story, .case-grid { grid-template-columns:repeat(2,1fr); }
+  .rank-stage { grid-template-columns:1fr; }
+}
+@media (max-width:640px) {
+  .story, .case-grid { grid-template-columns:1fr; }
+}
+
 footer { background:var(--frost-ink); color:#fff; padding:52px 0; margin-top:64px; }
 footer .wrap { display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; }
 footer .big { font-size:22px; font-weight:300; }
@@ -456,135 +547,11 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
   </div>
 </div>
 
-<section>
-  <div class="wrap">
-    <span class="kicker blue">La decisión de producto</span>
-    <h2 class="sec-title">Un empleado que propone, <strong>no un chat que espera</strong></h2>
-    <p class="sec-sub">Impulso trabaja en un ciclo cerrado: cada oportunidad nace de un dato real, se convierte en una acción concreta, y el resultado alimenta la siguiente decisión. El profesional siempre está en el medio.</p>
-    <div class="loop">
-      <div class="node"><div class="n">1</div><h4>Detecta</h4><p>Una oportunidad, con datos reales del negocio.</p></div>
-      <div class="node"><div class="n">2</div><h4>Explica</h4><p>Por qué importa, en lenguaje simple.</p></div>
-      <div class="node"><div class="n">3</div><h4>Prepara</h4><p>Una acción concreta: destinatarios, mensaje, momento.</p></div>
-      <div class="node you"><div class="n">4 · Vos</div><h4>Aprobás</h4><p>Según el nivel de riesgo de la acción.</p></div>
-      <div class="node"><div class="n">5</div><h4>Ejecuta</h4><p>Por tandas, con límites y frenos.</p></div>
-      <div class="node"><div class="n">6</div><h4>Mide</h4><p>El resultado, y aprende de tu decisión.</p></div>
-    </div>
-    <div class="loop-back">↺ &nbsp;y cada resultado mejora la próxima oportunidad</div>
-    <div class="frame">La primera versión resuelve <strong>un único circuito completo</strong>: se libera un turno → Impulso encuentra clientes compatibles → prepara el contacto → el profesional aprueba → el mensaje sale por WhatsApp con el enlace de reserva → Nightwing recibe la reserva → Ágora atribuye el resultado. Todo lo demás llega después, sobre esa base probada.</div>
-  </div>
-</section>
-
 <section class="alt">
   <div class="wrap">
-    <span class="kicker blue">El circuito del MVP</span>
-    <h2 class="sec-title">De la cancelación a la reserva, <strong>paso a paso</strong></h2>
-    <p class="sec-sub">El caso testigo: se cancela una reserva para mañana a las 15:00. Esto es lo que pasa, quién lo hace, y dónde está el freno humano.</p>
-    <div class="circuit">
-      <div class="c-step"><div class="c-dot"><span>📅</span></div><div class="c-body"><span class="who cyclone">Cyclone</span><h4>Nace la oportunidad</h4><p>La cancelación crea una oportunidad con <strong>clave de deduplicación ligada al horario</strong>: una cancelación, una sola oportunidad activa. El motor verifica que el horario siga disponible antes de mostrar nada.</p></div></div>
-      <div class="c-step"><div class="c-dot"><span>🔍</span></div><div class="c-body"><span class="who cyclone">Cyclone</span><h4>Busca clientes compatibles</h4><p>Ya consumieron ese servicio o uno compatible, están cerca de su frecuencia habitual de regreso, los atendió ese profesional, tienen teléfono válido, no tienen otra reserva equivalente, no fueron contactados hace poco y no rechazaron comunicaciones. Cada candidato recibe un <strong>puntaje determinístico</strong>.</p></div></div>
-      <div class="c-step"><div class="c-dot"><span>💬</span></div><div class="c-body"><span class="who flash">Flash</span><h4>Te lo cuenta en tu idioma</h4><p>«Se liberó mañana a las 15:00. Encontramos 8 clientes compatibles. Los primeros 3 están cerca de su fecha habitual de regreso.» La IA redacta la explicación; los datos ya vienen calculados.</p></div></div>
-      <div class="c-step"><div class="c-dot"><span>✅</span></div><div class="c-body"><span class="who flash">Flash</span><h4>Revisás y aprobás</h4><p>Destinatarios, mensaje y horario, todos editables. Podés quitar a quien quieras. <strong>Nada sale sin tu aprobación.</strong></p></div></div>
-      <div class="c-step"><div class="c-dot"><span>📲</span></div><div class="c-body"><span class="who wa">WhatsApp</span><h4>El mensaje sale por WhatsApp</h4><p>Al principio <strong>lo enviás vos</strong>: Flash te deja el texto listo y un toque abre WhatsApp con el mensaje y el enlace de reserva ya cargados. Cuando estén las plantillas aprobadas de Meta, Impulso lo manda solo — por tandas chicas y con límites. Las respuestas llegan a tu WhatsApp de siempre.</p></div></div>
-      <div class="c-step"><div class="c-dot"><span>🗓</span></div><div class="c-body"><span class="who nw">Nightwing</span><h4>El cliente reserva en dos taps</h4><p>El enlace abre el servicio con <strong>fecha y hora preseleccionadas</strong>. Nightwing valida la disponibilidad una vez más antes de confirmar. Si el horario ya se ocupó, muestra alternativas — nunca un checkout inválido.</p></div></div>
-      <div class="c-step"><div class="c-dot"><span>🏁</span></div><div class="c-body"><span class="who cyclone">Cyclone</span><h4>Se cierra el circuito</h4><p>La primera reserva válida ocupa el horario, <strong>los contactos pendientes dejan de enviarse</strong>, y la oportunidad queda completada con el ingreso recuperado atribuido a Impulso.</p></div></div>
-    </div>
-    <div class="tanda-note">
-      <h4>Por qué por tandas</h4>
-      <p>Primero <strong>2–3 clientes</strong>, esperar un período configurable, y ampliar sólo si el turno sigue libre. Menos molestia para tu base, y nunca convocás a diez personas para un único lugar.</p>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <span class="kicker blue">Casos de uso</span>
-    <h2 class="sec-title">Empieza en la agenda, <strong>crece hacia el negocio</strong></h2>
-    <p class="sec-sub">Cinco casos forman el MVP — todos sobre el mismo motor. Después vienen crecimiento y retención, y recién al final el rol de asesor.</p>
-
-    <div class="tier-head"><span class="tier-tag">P0 · MVP</span><h3>El circuito que hay que ganar primero</h3></div>
-    <div class="p0-grid">
-      <div class="p0"><h4>Recuperar una cancelación</h4><div class="row"><b>Dispara</b>Se cancela un turno próximo</div><div class="row"><b>Prepara</b>Clientes compatibles + invitación</div><div class="row"><b>Logra</b>Ocupar el horario liberado</div></div>
-      <div class="p0"><h4>Llenar un hueco próximo</h4><div class="row"><b>Dispara</b>Disponibilidad en 24–72 h con demanda histórica</div><div class="row"><b>Prepara</b>Campaña secuencial chica</div><div class="row"><b>Logra</b>Más ocupación</div></div>
-      <div class="p0"><h4>Reactivar clientes ausentes</h4><div class="row"><b>Dispara</b>Cliente pasado de su frecuencia esperada</div><div class="row"><b>Prepara</b>Mensaje + enlace de reserva</div><div class="row"><b>Logra</b>Recuperar clientes</div></div>
-      <div class="p0"><h4>Próxima reserva</h4><div class="row"><b>Dispara</b>Termina un servicio recurrente</div><div class="row"><b>Prepara</b>Nueva fecha según su cadencia</div><div class="row"><b>Logra</b>Más repetición</div></div>
-      <div class="p0"><h4>Confirmación inteligente</h4><div class="row"><b>Dispara</b>Turno próximo con señales de riesgo</div><div class="row"><b>Prepara</b>Pedido de confirmación o seña</div><div class="row"><b>Logra</b>Menos ausencias</div></div>
-    </div>
-
-    <div class="tier-head"><span class="tier-tag p1t">P1 · Crecimiento y retención</span></div>
-    <div class="p1-list">
-      <div class="p1-row"><span class="t">Día históricamente lento</span><span class="d">Un día rinde menos que su promedio</span><span class="d">Campaña específica para ese día</span></div>
-      <div class="p1-row"><span class="t">Cumpleaños</span><span class="d">Cliente entra en la ventana configurada</span><span class="d">Saludo y beneficio opcional</span></div>
-      <div class="p1-row"><span class="t">Cliente nuevo</span><span class="d">Primera atención completada</span><span class="d">Bienvenida y propuesta de próxima reserva</span></div>
-      <div class="p1-row"><span class="t">Servicio complementario</span><span class="d">Historial compatible con otro servicio</span><span class="d">Recomendación personalizada</span></div>
-      <div class="p1-row"><span class="t">Agenda desbalanceada</span><span class="d">Un profesional saturado, otro con huecos</span><span class="d">Redistribución o promoción</span></div>
-      <div class="p1-row"><span class="t">Conversaciones abandonadas</span><span class="d">Consulta por WhatsApp sin reserva</span><span class="d">Retomar con contexto y enlace</span></div>
-      <div class="p1-row"><span class="t">Cobros pendientes</span><span class="d">Reserva con deuda vigente</span><span class="d">Recordatorio con aprobación manual</span></div>
-    </div>
-
-    <div class="tier-head"><span class="tier-tag p1t">P2 · Asesor de negocio</span></div>
-    <div class="p2-chips">
-      <span>Servicios con baja conversión</span>
-      <span>Ajustes de duración o disponibilidad</span>
-      <span>Franjas con demanda no atendida</span>
-      <span>Promociones con vencimiento y público concreto</span>
-      <span>Contenido social basado en disponibilidad real</span>
-      <span>Mejoras del storefront</span>
-      <span>Oportunidades de planes, paquetes o membresías</span>
-      <span>Causas de cancelación y abandono</span>
-    </div>
-
-    <div class="never">
-      <h4>Línea roja</h4>
-      <p><strong>Cambios de precios, devoluciones, cancelaciones y cobros nunca se ejecutan automáticamente</strong> en las primeras versiones. Impulso los puede sugerir; los ejecuta una persona.</p>
-    </div>
-  </div>
-</section>
-
-<section class="alt">
-  <div class="wrap">
-    <span class="kicker blue">Selección de candidatos</span>
-    <h2 class="sec-title">Explicable por diseño: <strong>cada cliente sabe por qué está</strong></h2>
-    <p class="sec-sub">El ranking inicial es determinístico — señales que se pueden mostrar, auditar y discutir. Nada de un modelo opaco decidiendo a quién molestar.</p>
-    <div class="split">
-      <div class="col pos">
-        <h3 class="ok">Suma puntaje</h3>
-        <div class="sub">Señales positivas, todas verificables en los datos</div>
-        <ul>
-          <li><strong>Mismo servicio</strong> reservado anteriormente</li>
-          <li><strong>Cadencia personal</strong> próxima o vencida</li>
-          <li>Cliente marcado <strong>en riesgo</strong> o <strong>ausente</strong></li>
-          <li>Preferencia histórica por <strong>el mismo profesional</strong></li>
-          <li>Reservas anteriores en <strong>ese día u horario</strong></li>
-          <li>Varias <strong>visitas completadas</strong></li>
-          <li><strong>Interacción reciente</strong> con el negocio</li>
-          <li>Cumple condiciones de <strong>sede y modalidad</strong></li>
-        </ul>
-      </div>
-      <div class="col neg">
-        <h3 class="no">Queda afuera</h3>
-        <div class="sub">Exclusiones duras — las controla siempre Cyclone</div>
-        <ul>
-          <li>Ya tiene una <strong>reserva futura equivalente</strong></li>
-          <li>Fue <strong>contactado hace poco</strong> por la misma oportunidad</li>
-          <li>No tiene <strong>teléfono válido</strong></li>
-          <li>Está marcado como <strong>no contactar</strong></li>
-          <li>Falló permanentemente una <strong>entrega anterior</strong></li>
-          <li>Hay un <strong>reclamo</strong> o conversación derivada a una persona</li>
-          <li>El servicio, sede o profesional <strong>ya no están activos</strong></li>
-          <li>El horario <strong>expiró</strong> o dejó de estar disponible</li>
-          <li>El rol que aprueba <strong>no tiene permiso</strong> para contactar clientes</li>
-        </ul>
-      </div>
-    </div>
-    <div class="pipe-note"><strong>La IA puede ordenar candidatos con puntajes similares — nunca puede saltarse una exclusión.</strong> El filtro duro vive en Cyclone, en código, testeado. Lo generativo opera sólo dentro del espacio que lo determinístico ya validó.</div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <span class="kicker blue">El prototipo · funcional</span>
+    <span class="kicker blue">El prototipo · probalo ahora</span>
     <h2 class="sec-title">Es tu Pulse de siempre — <strong>ahora también actúa</strong></h2>
-    <p class="sec-sub">Mismo nombre, misma card, misma estética. Pulse hoy te cuenta la semana; expandido, suma el bloque <strong>«Para hoy»</strong> con hasta tres oportunidades listas para aprobar. Probalo acá abajo: sacá una candidata, aprobá el envío y mirá el circuito correr. <strong>Es un prototipo con datos de ejemplo — corre entero en esta página.</strong></p>
+    <p class="sec-sub">Mismo nombre, misma card, misma estética. Pulse hoy te cuenta la semana; expandido, suma el bloque <strong>«Para hoy»</strong> con hasta tres oportunidades listas para aprobar. <strong>Este prototipo es funcional</strong>: sacá una candidata, aprobá el envío y mirá el circuito correr — datos de ejemplo, corre entero en esta página.</p>
 
     <div class="proto-stage">
       <div class="pv-phone">
@@ -623,7 +590,179 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
   </div>
 </section>
 
+<section>
+  <div class="wrap">
+    <span class="kicker blue">La decisión de producto</span>
+    <h2 class="sec-title">Un empleado que propone, <strong>no un chat que espera</strong></h2>
+    <p class="sec-sub">Impulso trabaja en un ciclo cerrado: cada oportunidad nace de un dato real, se convierte en una acción concreta, y el resultado alimenta la siguiente decisión. El profesional siempre está en el medio.</p>
+    <div class="loop">
+      <div class="node"><div class="n">1</div><h4>Detecta</h4><p>Una oportunidad, con datos reales del negocio.</p></div>
+      <div class="node"><div class="n">2</div><h4>Explica</h4><p>Por qué importa, en lenguaje simple.</p></div>
+      <div class="node"><div class="n">3</div><h4>Prepara</h4><p>Una acción concreta: destinatarios, mensaje, momento.</p></div>
+      <div class="node you"><div class="n">4 · Vos</div><h4>Aprobás</h4><p>Según el nivel de riesgo de la acción.</p></div>
+      <div class="node"><div class="n">5</div><h4>Ejecuta</h4><p>Por tandas, con límites y frenos.</p></div>
+      <div class="node"><div class="n">6</div><h4>Mide</h4><p>El resultado, y aprende de tu decisión.</p></div>
+    </div>
+    <div class="loop-back">↺ &nbsp;y cada resultado mejora la próxima oportunidad</div>
+    <div class="frame">La primera versión resuelve <strong>un único circuito completo</strong>: se libera un turno → Impulso encuentra clientes compatibles → prepara el contacto → el profesional aprueba → el mensaje sale por WhatsApp con el enlace de reserva → Nightwing recibe la reserva → Ágora atribuye el resultado. Todo lo demás llega después, sobre esa base probada.</div>
+  </div>
+</section>
+
 <section class="alt">
+  <div class="wrap">
+    <span class="kicker blue">El circuito, en pantallas</span>
+    <h2 class="sec-title">De la cancelación a la reserva, <strong>tal como se ve</strong></h2>
+    <p class="sec-sub">Seis pantallas, tres protagonistas: <strong>Ágora</strong> detecta y prepara, <strong>vos</strong> aprobás, <strong>tu clienta</strong> reserva.</p>
+
+    <div class="story">
+
+      <div class="sframe">
+        <div class="frame-cap"><span class="fnum">1</span><div class="cap-t"><b>Se cancela un turno</b><span>pasa solo, en tu Agenda</span></div><span class="fwho agora">Ágora</span></div>
+        <div class="shot">
+          <div class="mini">
+            <div class="mini-head"><b>Agenda</b><span>Mañana · miércoles 26</span></div>
+            <div class="ag-row"><span>14:00</span><div class="ag-evt">Corte y brushing · Caro</div></div>
+            <div class="ag-row"><span>15:00</span><div class="ag-evt off">Balayage · Caro<b>Cancelado · hace 12 min</b></div></div>
+            <div class="ag-row"><span>16:30</span><div class="ag-evt">Color raíz · Caro</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sframe">
+        <div class="frame-cap"><span class="fnum">2</span><div class="cap-t"><b>Pulse lo vuelve oportunidad</b><span>una sola por cancelación, sólo si el horario sigue libre</span></div><span class="fwho agora">Ágora</span></div>
+        <div class="shot">
+          <div class="mini">
+            <div class="pv-krow"><span class="pv-kico sun">⚡</span><span class="fz-kicker">Para hoy</span><span class="pv-newpill">NUEVO</span></div>
+            <div class="pv-opp"><span class="ic">📅</span><div class="tx"><b>Un turno para recuperar</b><span>Mañana 15:00 · Balayage con Caro · 8 clientas compatibles</span></div><span class="go">Revisar</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sframe">
+        <div class="frame-cap"><span class="fnum">3</span><div class="cap-t"><b>Revisás y aprobás</b><span>cada clienta con su porqué; nada sale sin vos</span></div><span class="fwho vos">Vos</span></div>
+        <div class="shot">
+          <div class="mini">
+            <div class="pv-cand"><span class="av">AP</span><div class="who"><b>Ana Pérez</b><div class="chips"><span class="hot">cadencia vencida</span><span>siempre con Caro</span></div></div><span class="rm">✕</span></div>
+            <div class="pv-cand"><span class="av">VR</span><div class="who"><b>Valentina R.</b><div class="chips"><span class="hot">mismo servicio</span><span>suele venir martes</span></div></div><span class="rm">✕</span></div>
+            <span class="fz-cta" style="width:100%; margin-top:10px;">Aprobar envío</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sframe">
+        <div class="frame-cap"><span class="fnum">4</span><div class="cap-t"><b>Le llega por WhatsApp</b><span>primero lo mandás vos; con plantillas de Meta, sale solo</span></div><span class="fwho cli">Tu clienta</span></div>
+        <div class="shot">
+          <div class="wa-mock">
+            <div class="wa-bar"><span class="wa-av">EC</span><div><b>Estudio Caro</b><span>en línea</span></div></div>
+            <div class="wa-chat">
+              <div class="wa-in">¡Hola Ana! Se nos liberó un lugar mañana a las 15:00 para tu balayage con Caro. ¿Te lo guardamos? Reservá acá → <u>agora.red/r/…</u></div>
+              <div class="wa-out">¡Sí! Mañana a las 15 me viene perfecto 🙌</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sframe">
+        <div class="frame-cap"><span class="fnum">5</span><div class="cap-t"><b>Reserva en dos taps</b><span>fecha y hora ya elegidas, disponibilidad revalidada</span></div><span class="fwho cli">Tu clienta</span></div>
+        <div class="shot">
+          <div class="mini">
+            <div class="mini-head"><b>Balayage</b><span>Estudio Caro · 1 h 30 · con Caro</span></div>
+            <div class="nw-lbl">Mañana · miércoles 26</div>
+            <div class="nw-times"><span>11:00</span><span class="sel">15:00</span><span>17:30</span></div>
+            <span class="fz-cta" style="width:100%; margin-top:10px;">Confirmar reserva</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sframe">
+        <div class="frame-cap"><span class="fnum">6</span><div class="cap-t"><b>Turno ocupado, circuito cerrado</b><span>las tandas pendientes se frenan solas</span></div><span class="fwho agora">Ágora</span></div>
+        <div class="shot">
+          <div class="mini">
+            <div class="pv-opp" style="padding-top:2px;"><span class="ic done">✓</span><div class="tx"><b>Turno ocupado — reservó Ana</b><span>Balayage con Caro · mañana 15:00</span></div><span class="st-done">Completada</span></div>
+            <div class="attr-line"><span>Analítica · recuperado por Pulse</span><b>+ $32.000</b></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="tanda-note">
+      <h4>Por qué por tandas</h4>
+      <p>Primero <strong>2–3 clientas</strong>, esperar un rato configurable, y ampliar sólo si el turno sigue libre. Menos molestia para tu base — y nunca convocás a diez personas para un único lugar.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kicker blue">Casos de uso</span>
+    <h2 class="sec-title">Empieza en la agenda, <strong>crece hacia el negocio</strong></h2>
+    <p class="sec-sub">Cinco casos forman el MVP — y todos se ven igual en tu Pulse: <strong>una oportunidad concreta, lista para aprobar.</strong> Así aparecería cada una:</p>
+
+    <div class="tier-head"><span class="tier-tag">P0 · MVP</span><h3>El circuito que hay que ganar primero</h3></div>
+    <div class="case-grid">
+      <div class="case"><div class="case-name">Recuperar una cancelación</div><div class="case-mock"><div class="pv-opp"><span class="ic">📅</span><div class="tx"><b>Un turno para recuperar</b><span>Mañana 15:00 · Balayage con Caro · 8 clientas compatibles</span></div><span class="go">Revisar</span></div></div><div class="case-out">→ el horario liberado se vuelve a ocupar</div></div>
+      <div class="case"><div class="case-name">Llenar un hueco próximo</div><div class="case-mock"><div class="pv-opp"><span class="ic">🕐</span><div class="tx"><b>El jueves a la tarde está flojo</b><span>3 huecos entre las 14 y las 18 · campaña chica lista</span></div><span class="go">Revisar</span></div></div><div class="case-out">→ más ocupación en las próximas 24–72 h</div></div>
+      <div class="case"><div class="case-name">Reactivar clientas ausentes</div><div class="case-mock"><div class="pv-opp"><span class="ic">👋</span><div class="tx"><b>Sofía hace 9 semanas que no viene</b><span>El doble de su ritmo habitual · mensaje y enlace listos</span></div><span class="go">Revisar</span></div></div><div class="case-out">→ clientas que se estaban perdiendo, de vuelta</div></div>
+      <div class="case"><div class="case-name">Próxima reserva</div><div class="case-mock"><div class="pv-opp"><span class="ic">🔁</span><div class="tx"><b>Valentina terminó su color</b><span>Su próxima fecha ideal según su ritmo: 22 de septiembre</span></div><span class="go">Revisar</span></div></div><div class="case-out">→ la visita siguiente queda agendada hoy</div></div>
+      <div class="case"><div class="case-name">Confirmación inteligente</div><div class="case-mock"><div class="pv-opp"><span class="ic">🔔</span><div class="tx"><b>El turno de mañana tiene riesgo de ausencia</b><span>Pedir confirmación o seña ahora</span></div><span class="go">Revisar</span></div></div><div class="case-out">→ menos sillas vacías sin aviso</div></div>
+    </div>
+
+    <div class="tier-head"><span class="tier-tag p1t">P1 · Crecimiento y retención</span></div>
+    <div class="p1-list">
+      <div class="p1-row"><span class="t">Día históricamente lento</span><span class="d">Un día rinde menos que su promedio</span><span class="d">Campaña específica para ese día</span></div>
+      <div class="p1-row"><span class="t">Cumpleaños</span><span class="d">Cliente entra en la ventana configurada</span><span class="d">Saludo y beneficio opcional</span></div>
+      <div class="p1-row"><span class="t">Cliente nuevo</span><span class="d">Primera atención completada</span><span class="d">Bienvenida y propuesta de próxima reserva</span></div>
+      <div class="p1-row"><span class="t">Servicio complementario</span><span class="d">Historial compatible con otro servicio</span><span class="d">Recomendación personalizada</span></div>
+      <div class="p1-row"><span class="t">Agenda desbalanceada</span><span class="d">Un profesional saturado, otro con huecos</span><span class="d">Redistribución o promoción</span></div>
+      <div class="p1-row"><span class="t">Conversaciones abandonadas</span><span class="d">Consulta por WhatsApp sin reserva</span><span class="d">Retomar con contexto y enlace</span></div>
+      <div class="p1-row"><span class="t">Cobros pendientes</span><span class="d">Reserva con deuda vigente</span><span class="d">Recordatorio con aprobación manual</span></div>
+    </div>
+
+    <div class="tier-head"><span class="tier-tag p1t">P2 · Asesor de negocio</span></div>
+    <div class="p2-chips">
+      <span>Servicios con baja conversión</span>
+      <span>Ajustes de duración o disponibilidad</span>
+      <span>Franjas con demanda no atendida</span>
+      <span>Promociones con vencimiento y público concreto</span>
+      <span>Contenido social basado en disponibilidad real</span>
+      <span>Mejoras del storefront</span>
+      <span>Oportunidades de planes, paquetes o membresías</span>
+      <span>Causas de cancelación y abandono</span>
+    </div>
+
+    <div class="never">
+      <h4>Línea roja</h4>
+      <p><strong>Cambios de precios, devoluciones, cancelaciones y cobros nunca se ejecutan automáticamente</strong> en las primeras versiones. Impulso los puede sugerir; los ejecuta una persona.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <span class="kicker blue">Selección de candidatos</span>
+    <h2 class="sec-title">Explicable por diseño: <strong>cada cliente sabe por qué está</strong></h2>
+    <p class="sec-sub">El ranking inicial es determinístico — señales que se pueden mostrar, auditar y discutir. Nada de un modelo opaco decidiendo a quién molestar.</p>
+    <div class="rank-stage">
+      <div class="rank-card">
+        <div class="rank-head"><b>Turno liberado · mañana 15:00</b><span>a quién invita primero — y a quién no</span></div>
+        <div class="rk in"><span class="av">AP</span><div class="who"><b>Ana Pérez</b><div class="chips"><span class="hot">cadencia vencida</span><span>siempre con Caro</span><span>5 visitas</span></div></div><div class="score"><span class="track"><i style="width:92%"></i></span><b>92</b></div></div>
+        <div class="rk in"><span class="av">VR</span><div class="who"><b>Valentina R.</b><div class="chips"><span class="hot">mismo servicio</span><span>suele venir martes</span></div></div><div class="score"><span class="track"><i style="width:87%"></i></span><b>87</b></div></div>
+        <div class="rk in"><span class="av">SM</span><div class="who"><b>Sofía M.</b><div class="chips"><span class="hot">en riesgo</span><span>hace 9 semanas</span></div></div><div class="score"><span class="track"><i style="width:81%"></i></span><b>81</b></div></div>
+        <div class="rank-div">No entran — y siempre se ve por qué</div>
+        <div class="rk out"><span class="av">CD</span><div class="who"><b>Carla D.</b></div><span class="why">ya tiene reserva el jueves</span></div>
+        <div class="rk out"><span class="av">BF</span><div class="who"><b>Belén F.</b></div><span class="why">sin teléfono válido</span></div>
+        <div class="rk out"><span class="av">MT</span><div class="who"><b>Mora T.</b></div><span class="why">pidió no recibir mensajes</span></div>
+      </div>
+      <div class="rank-side">
+        <div class="chipcloud"><h4 class="ok-t">Suma puntaje</h4><div><span>mismo servicio</span><span>cadencia próxima o vencida</span><span>en riesgo o ausente</span><span>mismo profesional</span><span>mismo día u horario</span><span>varias visitas</span><span>interacción reciente</span><span>sede y modalidad</span></div></div>
+        <div class="chipcloud"><h4 class="no-t">Queda afuera, siempre</h4><div class="neg"><span>ya tiene reserva equivalente</span><span>contactada hace poco</span><span>sin teléfono válido</span><span>no contactar</span><span>entrega fallida</span><span>reclamo abierto</span><span>servicio o sede inactivos</span><span>horario vencido</span><span>quien aprueba sin permiso</span></div></div>
+        <div class="pipe-note" style="margin-top:6px; padding:15px 20px; font-size:12.5px;">La IA sólo ordena empates. <strong>Las exclusiones las controla siempre el sistema</strong> — nunca se saltean.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
   <div class="wrap">
     <span class="kicker blue">Arquitectura</span>
     <h2 class="sec-title">Un motor, tres casas, <strong>responsabilidades claras</strong></h2>
@@ -677,7 +816,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
   </div>
 </section>
 
-<section>
+<section class="alt">
   <div class="wrap">
     <span class="kicker blue">El papel de la IA</span>
     <h2 class="sec-title">La IA explica y redacta. <strong>Cyclone decide y ejecuta.</strong></h2>
@@ -712,36 +851,43 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
   </div>
 </section>
 
-<section class="alt">
+<section>
   <div class="wrap">
     <span class="kicker blue">WhatsApp · prerrequisito crítico</span>
     <h2 class="sec-title">El contacto proactivo <strong>necesita plantillas de Meta</strong></h2>
-    <p class="sec-sub">Con la implementación actual de Cyclone, los mensajes libres sólo salen dentro de la ventana de conversación habilitada. Para iniciar contacto hacen falta plantillas aprobadas — por eso la entrega se divide en dos, y la primera <strong>no depende de Meta</strong>.</p>
+    <p class="sec-sub">Iniciar una conversación por WhatsApp exige plantillas aprobadas por Meta. Por eso la entrega es en dos etapas — y la primera <strong>no depende de nadie</strong>.</p>
     <div class="wa-stages">
       <div class="wa-st hot">
-        <span class="tag">Primero · validación sin Meta</span>
-        <h3>El profesional envía, Ágora mide</h3>
-        <p>Flash prepara candidatos y mensaje; el profesional lo <strong>copia o abre WhatsApp manualmente</strong>. El enlace lleva atribución igual.</p>
+        <span class="tag">Primero · sin depender de Meta</span>
+        <h3>Vos enviás, Ágora mide</h3>
+        <p>Pulse te deja el mensaje listo: <strong>un toque lo copia o abre WhatsApp</strong> con todo cargado. El enlace lleva atribución igual.</p>
+        <div class="wa-mini">
+          <div class="wm-msg">¡Hola Ana! Se nos liberó un lugar mañana a las 15:00 para tu balayage con Caro. ¿Te lo guardamos? Reservá acá → agora.red/r/…</div>
+          <div class="wm-btns"><span class="fz-ghost wm-b">⧉ Copiar</span><span class="fz-cta wm-b">Abrir WhatsApp</span></div>
+        </div>
         <ul>
-          <li>Se mide <strong>selección → envío manual → clic → reserva</strong></li>
-          <li>Valida el corazón del producto (¿la recomendación sirve?) sin esperar aprobaciones externas</li>
-          <li>Riesgo de plataforma: cero</li>
+          <li>Se mide todo el recorrido: <strong>selección → envío → clic → reserva</strong></li>
+          <li>Valida que la recomendación sirve, sin esperar aprobaciones externas</li>
         </ul>
       </div>
       <div class="wa-st">
         <span class="tag">Después · automatización completa</span>
-        <h3>Plantillas aprobadas, envío desde Cyclone</h3>
-        <p>Crear y aprobar plantillas: <strong>horario disponible, recordatorio de nueva reserva, reactivación, confirmación de turno</strong>.</p>
+        <h3>Con plantillas aprobadas, sale solo</h3>
+        <p>Plantillas para <strong>horario disponible, reactivación, próxima reserva y confirmación</strong> — enviadas por tandas, con límites y horarios silenciosos.</p>
+        <div class="wa-mock" style="margin:12px 0;">
+          <div class="wa-bar"><span class="wa-av">EC</span><div><b>Estudio Caro</b><span>mensaje de plantilla</span></div></div>
+          <div class="wa-chat"><div class="wa-in">Se liberó un horario para tu <b>balayage</b>: mañana <b>15:00</b> con Caro. Reservá acá → <u>agora.red/r/…</u></div></div>
+        </div>
         <ul>
-          <li>La IA elige entre <strong>variantes aprobadas</strong> y completa variables permitidas — nunca texto libre disfrazado de plantilla</li>
-          <li>Respeta límites del plan, números inválidos, opt-out, deduplicación y <strong>costos de WhatsApp</strong></li>
+          <li>La IA sólo elige entre <strong>variantes aprobadas</strong> — nunca texto libre disfrazado de plantilla</li>
+          <li>Respeta opt-out, números inválidos, deduplicación y costos</li>
         </ul>
       </div>
     </div>
   </div>
 </section>
 
-<section>
+<section class="alt">
   <div class="wrap">
     <span class="kicker blue">Fases</span>
     <h2 class="sec-title">Primero en las sombras, <strong>después con las manos</strong></h2>
@@ -776,7 +922,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
   </div>
 </section>
 
-<section class="alt">
+<section>
   <div class="wrap">
     <span class="kicker blue">Métricas</span>
     <h2 class="sec-title">Una métrica norte, un embudo completo, <strong>ocho guardrails</strong></h2>
@@ -806,7 +952,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
   </div>
 </section>
 
-<section>
+<section class="alt">
   <div class="wrap">
     <span class="kicker blue">Criterios de aceptación del MVP</span>
     <h2 class="sec-title">Dieciséis condiciones, <strong>ninguna negociable</strong></h2>
@@ -831,7 +977,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
   </div>
 </section>
 
-<section class="alt">
+<section>
   <div class="wrap">
     <span class="kicker blue">Lo que ya existe</span>
     <h2 class="sec-title">Impulso no duplica: <strong>orquesta lo que ya construimos</strong></h2>
