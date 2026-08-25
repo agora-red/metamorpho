@@ -418,6 +418,9 @@ section.alt .mock-stage { background:linear-gradient(160deg,#F2F6FC 0%, #E9EFF8 
 .tb-acts .ai-spark .core { font-size:12px; }
 .tb-acts .ai-spark .badge { min-width:14px; height:14px; font-size:8px; top:-4px; right:-5px; }
 .tb-acts .pv-appico { font-size:13px; }
+.hero-kick { display:flex; align-items:center; gap:12px; }
+.hero-spark { width:38px; height:38px; cursor:default; }
+.hero-spark .core { font-size:17px; }
 .access-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:stretch; }
 .acc { display:flex; flex-direction:column; }
 .acc .shot { flex:1; min-height:210px; }
@@ -571,18 +574,18 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
 
 <div class="hero">
   <div class="wrap">
-    <span class="kicker blue">Ágora Impulso</span>
+    <div class="hero-kick"><span class="ai-spark hero-spark"><span class="core">✨</span></span><span class="kicker blue">Ágora Impulso</span></div>
     <h1>Se te canceló un turno. <strong>Impulso ya sabe a quién avisarle.</strong></h1>
-    <p class="lede">Un agente operativo dentro de Ágora que detecta oportunidades con tus datos reales, explica por qué importan, prepara la acción y <strong>te pide aprobación antes de tocar a un cliente</strong>. No es un chatbot: es una bandeja de oportunidades accionables, integrada en Flash.</p>
+    <p class="lede">Detecta oportunidades con tus datos reales, prepara la acción y <strong>te pide aprobación antes de tocar a un cliente</strong>. No es un chatbot: es una bandeja de oportunidades accionables dentro de Flash.</p>
     <span class="status"><span class="pulse"></span>Plan de producto para revisión — nada de esto está construido todavía</span>
   </div>
 </div>
 
 <section class="alt">
   <div class="wrap">
-    <span class="kicker blue">El prototipo · probalo ahora</span>
+    <span class="kicker blue">01 · El prototipo — probalo</span>
     <h2 class="sec-title">Es tu Pulse de siempre — <strong>ahora también actúa</strong></h2>
-    <p class="sec-sub">Mismo nombre, misma card, misma estética. Pulse hoy te cuenta la semana; expandido, suma el bloque <strong>«Para hoy»</strong> con hasta tres oportunidades listas para aprobar. <strong>Este prototipo es funcional</strong>: sacá una candidata, aprobá el envío y mirá el circuito correr — datos de ejemplo, corre entero en esta página.</p>
+    <p class="sec-sub">Mismo nombre, misma card, misma estética — Pulse suma el bloque <strong>«Para hoy»</strong>. <strong>El prototipo es funcional</strong>: sacá una candidata, aprobá y mirá el circuito correr.</p>
 
     <div class="proto-stage">
       <div class="pv-phone">
@@ -601,13 +604,13 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
       <aside class="pv-notes">
         <h3>Qué estás viendo</h3>
         <ul>
-          <li><strong>La card de Pulse que ya existe.</strong> Misma estética, mismos bloques: tu semana y la recomendación siguen igual.</li>
-          <li><strong>El bloque nuevo: «Para hoy».</strong> Hasta tres oportunidades accionables por día — el resto vive en la bandeja completa.</li>
-          <li><strong>Tocá «Revisar» en la primera.</strong> Cada clienta muestra por qué está; podés sacar a cualquiera con la ✕. Nada sale sin tu aprobación.</li>
-          <li><strong>Aprobá y mirá el circuito.</strong> Tanda chica, respuesta, reserva validada, turno ocupado — y el freno automático de las tandas pendientes.</li>
-          <li><strong>El botón ✨ del topbar.</strong> Vive arriba, junto a la campana, con el contador del día — desde cualquier pantalla, un toque te trae acá. Probalo en el prototipo.</li>
+          <li><strong>La card de Pulse que ya existe</strong> — tu semana y la recomendación siguen igual.</li>
+          <li><strong>«Para hoy», el bloque nuevo</strong> — hasta tres oportunidades por día.</li>
+          <li><strong>Tocá «Revisar»</strong> — cada clienta muestra su porqué; sacá a cualquiera con la ✕.</li>
+          <li><strong>Aprobá y mirá el circuito</strong> — tanda chica, respuesta, reserva, freno automático.</li>
+          <li><strong>El botón ✨ del topbar</strong> — desde cualquier pantalla, un toque te trae acá.</li>
         </ul>
-        <div class="pv-notes-foot">La bandeja completa organiza todo en <strong>Ahora · Programadas · Automáticas · Historial</strong>, con entradas desde la Agenda («se liberó este horario»), Clientes («reactivar este segmento») y Analítica (reservas e ingresos atribuidos). En mobile, la aprobación usa el SaveBar de Frost.</div>
+        <div class="pv-notes-foot">Bandeja completa: <strong>Ahora · Programadas · Automáticas · Historial</strong> — con entradas desde Agenda, Clientes y Analítica. En mobile, la aprobación usa el SaveBar de Frost.</div>
       </aside>
     </div>
 
@@ -624,7 +627,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
             <div class="mm-item"><span class="mi">🎓</span>Mis cursos</div>
           </div>
         </div>
-        <p class="acc-cap"><strong>En el Rail de escritorio, sección Principal.</strong> Entrada propia entre Inicio y Agenda, con borde aurora y el contador del día — el mismo menú donde ya viven Notificaciones y el buscador.</p>
+        <p class="acc-cap"><strong>Rail de escritorio · sección Principal.</strong> Entrada propia con contador, donde ya viven Notificaciones y el buscador.</p>
       </div>
       <div class="acc">
         <div class="shot">
@@ -643,7 +646,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
             <div class="ag-row"><span>15:00</span><div class="ag-evt">Balayage · Caro</div></div>
           </div>
         </div>
-        <p class="acc-cap"><strong>En mobile, arriba: junto a la lupa y la campana.</strong> La esquina de abajo a la derecha ya es de Intercom — tanto, que en la Agenda mobile hoy se esconde porque choca con los botones de acción. Por eso el botón ✨ vive fijo en el topbar, sin flotar sobre nada.</p>
+        <p class="acc-cap"><strong>Topbar mobile · junto a la lupa y la campana.</strong> Abajo a la derecha ya vive Intercom — el botón ✨ va arriba, fijo, sin flotar sobre nada.</p>
       </div>
     </div>
 
@@ -667,9 +670,9 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
 
 <section>
   <div class="wrap">
-    <span class="kicker blue">La decisión de producto</span>
+    <span class="kicker blue">02 · La decisión de producto</span>
     <h2 class="sec-title">Un empleado que propone, <strong>no un chat que espera</strong></h2>
-    <p class="sec-sub">Impulso trabaja en un ciclo cerrado: cada oportunidad nace de un dato real, se convierte en una acción concreta, y el resultado alimenta la siguiente decisión. El profesional siempre está en el medio.</p>
+    <p class="sec-sub">Un ciclo cerrado: del dato a la acción — con vos siempre en el medio.</p>
     <div class="loop">
       <div class="node"><div class="n">1</div><h4>Detecta</h4><p>Una oportunidad, con datos reales del negocio.</p></div>
       <div class="node"><div class="n">2</div><h4>Explica</h4><p>Por qué importa, en lenguaje simple.</p></div>
@@ -679,13 +682,13 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
       <div class="node"><div class="n">6</div><h4>Mide</h4><p>El resultado, y aprende de tu decisión.</p></div>
     </div>
     <div class="loop-back">↺ &nbsp;y cada resultado mejora la próxima oportunidad</div>
-    <div class="frame">La primera versión resuelve <strong>un único circuito completo</strong>: se libera un turno → Impulso encuentra clientes compatibles → prepara el contacto → el profesional aprueba → el mensaje sale por WhatsApp con el enlace de reserva → Nightwing recibe la reserva → Ágora atribuye el resultado. Todo lo demás llega después, sobre esa base probada.</div>
+    <div class="frame">La primera versión resuelve <strong>un único circuito completo</strong>: turno liberado → clientas compatibles → tu aprobación → WhatsApp → reserva → atribución. Todo lo demás llega después, sobre esa base probada.</div>
   </div>
 </section>
 
 <section class="alt">
   <div class="wrap">
-    <span class="kicker blue">El circuito, en pantallas</span>
+    <span class="kicker blue">03 · El circuito, en pantallas</span>
     <h2 class="sec-title">De la cancelación a la reserva, <strong>tal como se ve</strong></h2>
     <p class="sec-sub">Seis pantallas, tres protagonistas: <strong>Ágora</strong> detecta y prepara, <strong>vos</strong> aprobás, <strong>tu clienta</strong> reserva.</p>
 
@@ -762,16 +765,16 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
     </div>
     <div class="tanda-note">
       <h4>Por qué por tandas</h4>
-      <p>Primero <strong>2–3 clientas</strong>, esperar un rato configurable, y ampliar sólo si el turno sigue libre. Menos molestia para tu base — y nunca convocás a diez personas para un único lugar.</p>
+      <p>Primero <strong>2–3 clientas</strong>; se amplía sólo si el turno sigue libre y se frena solo cuando alguien reserva. Nunca convocás a diez personas para un lugar.</p>
     </div>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <span class="kicker blue">Casos de uso</span>
+    <span class="kicker blue">04 · Casos de uso</span>
     <h2 class="sec-title">Empieza en la agenda, <strong>crece hacia el negocio</strong></h2>
-    <p class="sec-sub">Cinco casos forman el MVP — y todos se ven igual en tu Pulse: <strong>una oportunidad concreta, lista para aprobar.</strong> Así aparecería cada una:</p>
+    <p class="sec-sub">Los cinco casos del MVP, tal como aparecerían en tu Pulse:</p>
 
     <div class="tier-head"><span class="tier-tag">P0 · MVP</span><h3>El circuito que hay que ganar primero</h3></div>
     <div class="case-grid">
@@ -807,16 +810,16 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
 
     <div class="never">
       <h4>Línea roja</h4>
-      <p><strong>Cambios de precios, devoluciones, cancelaciones y cobros nunca se ejecutan automáticamente</strong> en las primeras versiones. Impulso los puede sugerir; los ejecuta una persona.</p>
+      <p><strong>Precios, devoluciones, cancelaciones y cobros: nunca automáticos.</strong> Impulso sugiere; ejecuta una persona.</p>
     </div>
   </div>
 </section>
 
 <section class="alt">
   <div class="wrap">
-    <span class="kicker blue">Selección de candidatos</span>
-    <h2 class="sec-title">Explicable por diseño: <strong>cada cliente sabe por qué está</strong></h2>
-    <p class="sec-sub">El ranking inicial es determinístico — señales que se pueden mostrar, auditar y discutir. Nada de un modelo opaco decidiendo a quién molestar.</p>
+    <span class="kicker blue">05 · Selección de candidatas</span>
+    <h2 class="sec-title">Explicable por diseño: <strong>cada clienta sabe por qué está</strong></h2>
+    <p class="sec-sub">Ranking determinístico — nada de un modelo opaco decidiendo a quién molestar.</p>
     <div class="rank-stage">
       <div class="rank-card">
         <div class="rank-head"><b>Turno liberado · mañana 15:00</b><span>a quién invita primero — y a quién no</span></div>
@@ -839,9 +842,9 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
 
 <section>
   <div class="wrap">
-    <span class="kicker blue">Arquitectura</span>
+    <span class="kicker blue">06 · Arquitectura</span>
     <h2 class="sec-title">Un motor, tres casas, <strong>responsabilidades claras</strong></h2>
-    <p class="sec-sub">El dato fluye de la agenda a la atribución y vuelve al motor. Cada repo hace lo que ya sabe hacer.</p>
+    <p class="sec-sub">El dato fluye de la agenda a la atribución — y vuelve al motor.</p>
     <div class="arch">
       <span class="a-node">Agenda, clientes y reservas<small>los datos de siempre</small></span><span class="a-arr">→</span>
       <span class="a-node hot">Motor de oportunidades<small>Cyclone</small></span><span class="a-arr">→</span>
@@ -860,21 +863,18 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
         <h3><i style="background:var(--frost-primary)"></i>Cyclone</h3>
         <ul>
           <li><strong>Detectores y ranking</strong> determinísticos</li>
-          <li>Persistencia de oportunidades</li>
-          <li>Políticas de autonomía por caso</li>
           <li><strong>Ejecución idempotente</strong> con action runs</li>
+          <li>Políticas de autonomía por caso</li>
           <li>Integración con WhatsApp</li>
-          <li>Atribución de reservas</li>
-          <li>Auditoría y límites</li>
+          <li><strong>Atribución</strong>, auditoría y límites</li>
         </ul>
       </div>
       <div class="owner">
         <h3><i style="background:var(--frost-success)"></i>Flash</h3>
         <ul>
           <li>Bandeja y detalle de oportunidades</li>
-          <li><strong>Revisión de destinatarios</strong></li>
-          <li>Configuración de automatizaciones</li>
-          <li>Estados de ejecución y errores</li>
+          <li><strong>Revisión de destinatarias</strong></li>
+          <li>Automatizaciones y estados</li>
           <li>Eventos de interacción en PostHog</li>
         </ul>
       </div>
@@ -893,9 +893,9 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
 
 <section class="alt">
   <div class="wrap">
-    <span class="kicker blue">El papel de la IA</span>
-    <h2 class="sec-title">La IA explica y redacta. <strong>Cyclone decide y ejecuta.</strong></h2>
-    <p class="sec-sub">Salidas estructuradas con schema, siempre. Sin embeddings ni RAG en el MVP: los datos relevantes ya son estructurados.</p>
+    <span class="kicker blue">07 · El papel de la IA</span>
+    <h2 class="sec-title">La IA explica y redacta. <strong>El sistema decide y ejecuta.</strong></h2>
+    <p class="sec-sub">Salidas estructuradas, siempre. Sin embeddings ni RAG en el MVP.</p>
     <div class="split">
       <div class="col si">
         <h3 class="ia">La IA sí</h3>
@@ -928,9 +928,9 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
 
 <section>
   <div class="wrap">
-    <span class="kicker blue">WhatsApp · prerrequisito crítico</span>
+    <span class="kicker blue">08 · WhatsApp, el prerrequisito</span>
     <h2 class="sec-title">El contacto proactivo <strong>necesita plantillas de Meta</strong></h2>
-    <p class="sec-sub">Iniciar una conversación por WhatsApp exige plantillas aprobadas por Meta. Por eso la entrega es en dos etapas — y la primera <strong>no depende de nadie</strong>.</p>
+    <p class="sec-sub">Por eso la entrega es en dos etapas — y la primera <strong>no depende de nadie</strong>.</p>
     <div class="wa-stages">
       <div class="wa-st hot">
         <span class="tag">Primero · sin depender de Meta</span>
@@ -964,33 +964,33 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
 
 <section class="alt">
   <div class="wrap">
-    <span class="kicker blue">Fases</span>
+    <span class="kicker blue">09 · Fases</span>
     <h2 class="sec-title">Primero en las sombras, <strong>después con las manos</strong></h2>
-    <p class="sec-sub">Cada fase tiene una salida verificable antes de pasar a la siguiente. Ningún cliente recibe un mensaje hasta la Fase 1 — y ahí lo manda el profesional.</p>
+    <p class="sec-sub">Cada fase tiene salida verificable. Nadie recibe un mensaje hasta la Fase 1 — y ahí lo mandás vos.</p>
     <div class="road">
       <div class="step hot">
         <div class="tag">Fase 0</div><h3>Shadow mode</h3>
-        <p>Modelos, estados y el detector de cancelación/hueco. Genera oportunidades <strong>sin mostrarlas ni contactar a nadie</strong>; se evalúa a mano la calidad de candidatos y se registra por qué cada uno fue incluido.</p>
+        <p>El detector corre y genera oportunidades <strong>sin mostrarlas ni contactar a nadie</strong>. La calidad se evalúa a mano.</p>
         <div class="out"><b>Salida</b>Oportunidades confiables sin acciones externas</div>
       </div>
       <div class="step hot">
         <div class="tag">Fase 1</div><h3>MVP asistido</h3>
-        <p>Bandeja en Flash, detalle y edición de candidatos, mensaje preparado para <strong>copiar o abrir WhatsApp</strong>, deep link de Nightwing con token opaco, atribución, historial y descarte con motivo.</p>
+        <p>Bandeja y detalle en Flash, mensaje listo para <strong>copiar o abrir WhatsApp</strong>, deep link con atribución.</p>
         <div class="out"><b>Salida</b>Los profesionales usan la recomendación y recuperan turnos</div>
       </div>
       <div class="step">
         <div class="tag">Fase 2</div><h3>Ejecución integrada</h3>
-        <p>Plantillas de Meta aprobadas, envío desde Cyclone, tandas secuenciales, límites, quiet hours, reintentos y freno al ocuparse el horario.</p>
+        <p>Plantillas de Meta aprobadas, envío automático por tandas, límites, quiet hours y freno al ocuparse el horario.</p>
         <div class="out"><b>Salida</b>Circuito completamente ejecutable desde Ágora</div>
       </div>
       <div class="step">
         <div class="tag">Fase 3</div><h3>Retención</h3>
-        <p>Reactivación de en riesgo y ausentes, próxima reserva según cadencia, cumpleaños, bienvenida, conversaciones sin conversión y pedidos de seña para turnos que no la tienen.</p>
+        <p>Reactivación, próxima reserva según cadencia, cumpleaños, bienvenida y pedidos de seña.</p>
         <div class="out"><b>Salida</b>Los casos P1 corriendo sobre el mismo motor</div>
       </div>
       <div class="step">
         <div class="tag">Fase 4</div><h3>Piloto automático</h3>
-        <p>Políticas por caso, simulación «esto habría hecho Impulso», activación explícita, límites diarios, botón global de pausa y resumen semanal. <strong>Autonomía sólo para acciones de bajo riesgo.</strong></p>
+        <p>Simulación «esto habría hecho Impulso», activación explícita, límites diarios y botón global de pausa. <strong>Autonomía sólo de bajo riesgo.</strong></p>
         <div class="out"><b>Salida</b>Automatización que el negocio entiende y controla</div>
       </div>
     </div>
@@ -999,14 +999,14 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
 
 <section>
   <div class="wrap">
-    <span class="kicker blue">Métricas</span>
+    <span class="kicker blue">10 · Métricas</span>
     <h2 class="sec-title">Una métrica norte, un embudo completo, <strong>ocho guardrails</strong></h2>
-    <p class="sec-sub">Cyclone guarda la auditoría operacional; PostHog registra las interacciones desde Flash, respetando la política actual de eventos-only.</p>
+    <p class="sec-sub">El sistema audita la operación; PostHog mide la interacción.</p>
     <div class="north">
       <div class="ico">🎯</div>
       <div>
         <h4><span>Métrica norte</span>Valor atribuido a oportunidades de Impulso</h4>
-        <p>Separado con honestidad: <strong>ingresos recuperados</strong> (el turno cancelado que se volvió a ocupar) e <strong>ingresos incrementales estimados mediante experimento</strong> — más reservas recuperadas y clientes reactivados. Nunca un número inflado que mezcle lo que igual iba a pasar.</p>
+        <p><strong>Ingresos recuperados</strong> + <strong>incrementales estimados por experimento</strong>, más reservas y clientas reactivadas. Nunca un número inflado con lo que igual iba a pasar.</p>
       </div>
     </div>
     <div class="split-lbl">El embudo, evento por evento</div>
@@ -1029,7 +1029,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
 
 <section class="alt">
   <div class="wrap">
-    <span class="kicker blue">Criterios de aceptación del MVP</span>
+    <span class="kicker blue">11 · Criterios de aceptación</span>
     <h2 class="sec-title">Dieciséis condiciones, <strong>ninguna negociable</strong></h2>
     <div class="crit">
       <div>Una cancelación genera <strong>como máximo una</strong> oportunidad activa</div>
@@ -1054,7 +1054,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
 
 <section>
   <div class="wrap">
-    <span class="kicker blue">Lo que ya existe</span>
+    <span class="kicker blue">12 · Lo que ya existe</span>
     <h2 class="sec-title">Impulso no duplica: <strong>orquesta lo que ya construimos</strong></h2>
     <p class="sec-sub">Las piezas más difíciles del circuito ya están en producción. El motor nuevo las conecta — no las reescribe.</p>
     <div class="src-grid">
@@ -1064,7 +1064,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
       <div class="src"><b>Pulse ya tiene su card en el dashboard</b><p>La superficie que se expande es exactamente esta — misma estética, mismo nombre, un bloque nuevo.</p><code>flash · widgets/PulseCardView.tsx</code></div>
       <div class="src"><b>Nightwing ya interpreta fecha y hora</b><p>El flujo del servicio ya preselecciona fecha y horario — la base del deep link con atribución.</p><code>nightwing · Service/RightSection/Options.tsx</code></div>
     </div>
-    <div class="pipe-note" style="margin-top:28px;"><strong>Regla de implementación:</strong> no duplicar Pulse, segmentación ni disponibilidad. La selección y las exclusiones son determinísticas; la IA sólo explica y redacta con salidas estructuradas; y no hay envíos proactivos automáticos hasta resolver las plantillas aprobadas de Meta.</div>
+    <div class="pipe-note" style="margin-top:28px;"><strong>Regla:</strong> no duplicar Pulse, segmentación ni disponibilidad · selección determinística · la IA sólo explica y redacta · sin envíos automáticos hasta las plantillas de Meta.</div>
   </div>
 </section>
 
