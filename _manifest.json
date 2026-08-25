@@ -7,8 +7,8 @@
       "type": "proposal",
       "typeLabel": "Proposal",
       "title": "Reseñas verificadas",
-      "description": "Prototipo interactivo del sistema de reseñas post-visita, con el mapa COMPLETO de los 18 touchpoints en 4 actos: llega el pedido (WhatsApp, email con estrellas que ya puntúan, campanita del cliente, tabla de Actividad), el cliente califica (página propia sin login, variante 1–3★ con feedback privado, gracias + loop a Google), el negocio se entera (campanita, side menu, inbox con borradores sugeridos, email de nota privada, dashboard, ficha del cliente, promedio por profesional) y el mundo la ve (storefront, marketplace, Google Maps, cierre del loop → rebooking). La decisión central: cada negocio elige el modo — solo Ágora, solo Google Maps, ambas o apagado — y los 18 touchpoints reaccionan en vivo. Mocks fieles a las superficies reales de Ágora Pro, agora.red y los emails transaccionales.",
-      "detail": "proposal interactiva · 18 touchpoints · 4 modos en vivo · mapa navegable",
+      "description": "Prototipo interactivo del sistema de reseñas post-visita, con el mapa COMPLETO de los 17 touchpoints en 4 actos: llega el pedido (WhatsApp, email con estrellas que ya puntúan, tabla de Actividad), el cliente califica (página propia sin login, variante 1–3★ con feedback privado, gracias + loop a Google), el negocio se entera (campanita del profesional, side menu, inbox con borradores sugeridos, email de nota privada, dashboard, ficha del cliente, promedio por profesional) y el mundo la ve (storefront, marketplace, Google Maps, cierre del loop por email → rebooking). La decisión central: cada negocio elige el modo — solo Ágora, solo Google Maps, ambas o apagado — y los 17 touchpoints reaccionan en vivo. Mocks fieles a las superficies reales de Ágora Pro, agora.red y los emails transaccionales.",
+      "detail": "proposal interactiva · 17 touchpoints · 4 modos en vivo · mapa navegable",
       "date": "AGO 2026",
       "href": "./resenas-clientes-2026-08/index.html",
       "slug": "resenas-clientes-2026-08"
