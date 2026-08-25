@@ -404,12 +404,20 @@ section.alt .mock-stage { background:linear-gradient(160deg,#F2F6FC 0%, #E9EFF8 
 @property --orb-a { syntax:'<angle>'; initial-value:0deg; inherits:false; }
 @keyframes orb-spin { to { --orb-a:360deg; } }
 @keyframes orb-breathe { 0%,100% { transform:scale(1); } 50% { transform:scale(1.05); } }
-.ai-fab { position:absolute; right:18px; bottom:52px; z-index:6; width:54px; height:54px; cursor:pointer; }
-.ai-fab .halo { position:absolute; inset:-11px; border-radius:50%; background:conic-gradient(from var(--orb-a), #0072FB, #7B5CFF, #FF4658, #FFB13D, #0072FB); filter:blur(15px); opacity:.5; animation:orb-spin 5s linear infinite; }
-.ai-orb { position:relative; width:54px; height:54px; border-radius:50%; border:none; padding:0; cursor:pointer; background:conic-gradient(from var(--orb-a), #0072FB, #7B5CFF, #FF4658, #FFB13D, #0072FB); animation:orb-spin 5s linear infinite, orb-breathe 3.2s ease-in-out infinite; box-shadow:0 8px 26px -6px rgba(0,114,251,0.55), 0 3px 12px rgba(123,92,255,0.3); display:flex; align-items:center; justify-content:center; }
-.ai-orb::before { content:''; position:absolute; inset:3px; border-radius:50%; background:rgba(255,255,255,0.97); }
-.ai-orb .ico { position:relative; z-index:1; font-size:21px; }
-.ai-fab .badge { position:absolute; top:-4px; right:-4px; z-index:2; background:var(--frost-accent); color:#fff; font-size:9.5px; font-weight:700; min-width:18px; height:18px; border-radius:var(--r-chip); display:flex; align-items:center; justify-content:center; padding:0 5px; box-shadow:0 2px 7px rgba(255,70,88,0.5); font-variant-numeric:tabular-nums; }
+.ai-spark { position:relative; width:34px; height:34px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; flex:none; background:conic-gradient(from var(--orb-a), #0072FB, #7B5CFF, #FF4658, #FFB13D, #0072FB); animation:orb-spin 5s linear infinite, orb-breathe 3.2s ease-in-out infinite; box-shadow:0 4px 14px -3px rgba(0,114,251,0.5), 0 2px 8px rgba(123,92,255,0.25); }
+.ai-spark::before { content:''; position:absolute; inset:2.5px; border-radius:50%; background:rgba(255,255,255,0.97); }
+.ai-spark .core { position:relative; z-index:1; font-size:15px; }
+.ai-spark .badge { position:absolute; top:-5px; right:-6px; z-index:2; background:var(--frost-accent); color:#fff; font-size:9px; font-weight:700; min-width:16px; height:16px; border-radius:var(--r-chip); display:flex; align-items:center; justify-content:center; padding:0 4px; box-shadow:0 2px 6px rgba(255,70,88,0.5); font-variant-numeric:tabular-nums; }
+.pv-appacts { display:flex; align-items:center; gap:12px; }
+.pv-appico { font-size:15px; color:var(--frost-ink-soft); opacity:.7; }
+.tb-mock { display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--frost-border-soft); padding-bottom:9px; margin-bottom:6px; }
+.tb-brand { display:inline-flex; align-items:center; gap:6px; font-weight:600; font-size:13px; letter-spacing:-0.01em; }
+.tb-brand i { width:8px; height:8px; border-radius:50%; background:var(--frost-primary); font-style:normal; }
+.tb-acts { display:flex; align-items:center; gap:10px; }
+.tb-acts .ai-spark { width:28px; height:28px; }
+.tb-acts .ai-spark .core { font-size:12px; }
+.tb-acts .ai-spark .badge { min-width:14px; height:14px; font-size:8px; top:-4px; right:-5px; }
+.tb-acts .pv-appico { font-size:13px; }
 .access-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:stretch; }
 .acc { display:flex; flex-direction:column; }
 .acc .shot { flex:1; min-height:210px; }
@@ -578,10 +586,16 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
 
     <div class="proto-stage">
       <div class="pv-phone">
-        <div class="pv-appbar"><span class="pv-apptitle">Inicio</span><span class="pv-appdate">Martes 25 de agosto</span></div>
+        <div class="pv-appbar">
+          <span class="pv-apptitle">Inicio</span>
+          <div class="pv-appacts">
+            <span class="ai-spark" data-act="orb" role="button" aria-label="Abrir tus oportunidades"><span class="core">✨</span><span class="badge" id="pv-orb-badge">3</span></span>
+            <span class="pv-appico">🔔</span>
+            <span class="pv-appico">☰</span>
+          </div>
+        </div>
         <div id="pv-screen"></div>
         <button class="pv-reset" data-act="reset">↺ Reiniciar el prototipo</button>
-        <div class="ai-fab" data-act="orb" role="button" aria-label="Abrir tus oportunidades"><span class="halo"></span><button class="ai-orb"><span class="ico">✨</span></button><span class="badge" id="pv-orb-badge">3</span></div>
         <div class="pv-toast" id="pv-toast"></div>
       </div>
       <aside class="pv-notes">
@@ -591,7 +605,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
           <li><strong>El bloque nuevo: «Para hoy».</strong> Hasta tres oportunidades accionables por día — el resto vive en la bandeja completa.</li>
           <li><strong>Tocá «Revisar» en la primera.</strong> Cada clienta muestra por qué está; podés sacar a cualquiera con la ✕. Nada sale sin tu aprobación.</li>
           <li><strong>Aprobá y mirá el circuito.</strong> Tanda chica, respuesta, reserva validada, turno ocupado — y el freno automático de las tandas pendientes.</li>
-          <li><strong>El botón de la esquina ✨.</strong> Vive en toda la app, con el contador del día — desde cualquier pantalla, un toque te trae acá. Probalo en el prototipo.</li>
+          <li><strong>El botón ✨ del topbar.</strong> Vive arriba, junto a la campana, con el contador del día — desde cualquier pantalla, un toque te trae acá. Probalo en el prototipo.</li>
         </ul>
         <div class="pv-notes-foot">La bandeja completa organiza todo en <strong>Ahora · Programadas · Automáticas · Historial</strong>, con entradas desde la Agenda («se liberó este horario»), Clientes («reactivar este segmento») y Analítica (reservas e ingresos atribuidos). En mobile, la aprobación usa el SaveBar de Frost.</div>
       </aside>
@@ -604,25 +618,32 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
           <div class="mini menu-mock">
             <div class="mm-item on"><span class="mi">🏠</span>Inicio</div>
             <div class="mm-item pulse-item"><span class="mi">✨</span>Pulse<span class="mm-badge">3</span></div>
+            <div class="mm-item"><span class="mi">🪞</span>Mi página</div>
             <div class="mm-item"><span class="mi">📅</span>Agenda</div>
-            <div class="mm-item"><span class="mi">👥</span>Clientes</div>
             <div class="mm-item"><span class="mi">💰</span>Caja</div>
-            <div class="mm-item"><span class="mi">📊</span>Analítica</div>
+            <div class="mm-item"><span class="mi">🎓</span>Mis cursos</div>
           </div>
         </div>
-        <p class="acc-cap"><strong>En el menú, con lugar propio y contador.</strong> Pulse deja de ser sólo una card del inicio: entrada destacada, con las oportunidades del día siempre a la vista.</p>
+        <p class="acc-cap"><strong>En el Rail de escritorio, sección Principal.</strong> Entrada propia entre Inicio y Agenda, con borde aurora y el contador del día — el mismo menú donde ya viven Notificaciones y el buscador.</p>
       </div>
       <div class="acc">
-        <div class="shot" style="position:relative;">
+        <div class="shot">
           <div class="mini">
-            <div class="mini-head"><b>Agenda</b><span>Hoy · martes 25</span></div>
+            <div class="tb-mock">
+              <span class="tb-brand"><i></i>ágora</span>
+              <div class="tb-acts">
+                <span class="ai-spark"><span class="core">✨</span><span class="badge">3</span></span>
+                <span class="pv-appico">🔍</span>
+                <span class="pv-appico">🔔</span>
+                <span class="pv-appico">☰</span>
+              </div>
+            </div>
             <div class="ag-row"><span>10:00</span><div class="ag-evt">Nutrición capilar · Caro</div></div>
             <div class="ag-row"><span>11:30</span><div class="ag-evt">Corte y brushing · Caro</div></div>
             <div class="ag-row"><span>15:00</span><div class="ag-evt">Balayage · Caro</div></div>
           </div>
-          <div class="ai-fab" style="bottom:16px;"><span class="halo"></span><span class="ai-orb"><span class="ico">✨</span></span><span class="badge">3</span></div>
         </div>
-        <p class="acc-cap"><strong>Y flotando en una esquina, estés donde estés.</strong> El orbe de IA vive sobre la Agenda, Clientes o Caja — un toque abre tus oportunidades. Está en el prototipo de arriba: tocalo.</p>
+        <p class="acc-cap"><strong>En mobile, arriba: junto a la lupa y la campana.</strong> La esquina de abajo a la derecha ya es de Intercom — tanto, que en la Agenda mobile hoy se esconde porque choca con los botones de acción. Por eso el botón ✨ vive fijo en el topbar, sin flotar sobre nada.</p>
       </div>
     </div>
 
