@@ -1,0 +1,2 @@
+{"ts": "2026-08-25T14:05:00Z", "instruction": "self-review ronda 1", "diff_summary": "captions largos muted→ink-soft (AA), hint de switch deshabilitado warning→warning-ink #8A6410, token --frost-warning-ink, paso 2 arranca con 5★ pre-seleccionadas", "source": "self-review"}
+{"ts": "2026-08-25T14:12:00Z", "instruction": "self-review ronda 2", "diff_summary": "screen 520→552px y padding/gap del rating comprimidos para que la línea legal no roce el borde", "source": "self-review"}

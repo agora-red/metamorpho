@@ -1,8 +1,18 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
   "version": 1,
-  "updated_at": "2026-08-21",
+  "updated_at": "2026-08-25",
   "outputs": [
+    {
+      "type": "proposal",
+      "typeLabel": "Proposal",
+      "title": "Reseñas verificadas",
+      "description": "Prototipo interactivo del sistema de reseñas post-visita: pedido por WhatsApp, un tap, página propia sin login — y la decisión central: cada negocio elige dónde vive su reputación (solo Ágora, solo Google Maps, ambas o apagado), con pedir y mostrar como decisiones independientes. El selector de modo hace reaccionar en vivo el mensaje de WhatsApp, el flujo del cliente (5★ vs 1–3★ con feedback privado al negocio), la vitrina en storefront + marketplace y el admin con borradores de respuesta sugeridos. Reglas fijas: 1 visita real = 1 reseña, se publica todo, Google se ofrece a todos (anti-gating), máximo 1 pedido cada 30 días.",
+      "detail": "proposal interactiva · 4 modos en vivo · WA → rating → Google · vitrina + admin",
+      "date": "AGO 2026",
+      "href": "./resenas-clientes-2026-08/index.html",
+      "slug": "resenas-clientes-2026-08"
+    },
     {
       "type": "one-pager",
       "typeLabel": "One-pager",
