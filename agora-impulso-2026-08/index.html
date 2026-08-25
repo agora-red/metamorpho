@@ -400,6 +400,29 @@ section.alt .mock-stage { background:linear-gradient(160deg,#F2F6FC 0%, #E9EFF8 
 .pv-notes-foot { margin-top:16px; border-top:1px solid var(--frost-border-soft); padding-top:14px; font-size:12px; font-weight:300; color:var(--frost-muted); line-height:1.6; }
 .pv-notes-foot strong { font-weight:600; color:var(--frost-ink-soft); }
 
+/* ===== Orbe de IA + accesos rápidos ===== */
+@property --orb-a { syntax:'<angle>'; initial-value:0deg; inherits:false; }
+@keyframes orb-spin { to { --orb-a:360deg; } }
+@keyframes orb-breathe { 0%,100% { transform:scale(1); } 50% { transform:scale(1.05); } }
+.ai-fab { position:absolute; right:18px; bottom:52px; z-index:6; width:54px; height:54px; cursor:pointer; }
+.ai-fab .halo { position:absolute; inset:-11px; border-radius:50%; background:conic-gradient(from var(--orb-a), #0072FB, #7B5CFF, #FF4658, #FFB13D, #0072FB); filter:blur(15px); opacity:.5; animation:orb-spin 5s linear infinite; }
+.ai-orb { position:relative; width:54px; height:54px; border-radius:50%; border:none; padding:0; cursor:pointer; background:conic-gradient(from var(--orb-a), #0072FB, #7B5CFF, #FF4658, #FFB13D, #0072FB); animation:orb-spin 5s linear infinite, orb-breathe 3.2s ease-in-out infinite; box-shadow:0 8px 26px -6px rgba(0,114,251,0.55), 0 3px 12px rgba(123,92,255,0.3); display:flex; align-items:center; justify-content:center; }
+.ai-orb::before { content:''; position:absolute; inset:3px; border-radius:50%; background:rgba(255,255,255,0.97); }
+.ai-orb .ico { position:relative; z-index:1; font-size:21px; }
+.ai-fab .badge { position:absolute; top:-4px; right:-4px; z-index:2; background:var(--frost-accent); color:#fff; font-size:9.5px; font-weight:700; min-width:18px; height:18px; border-radius:var(--r-chip); display:flex; align-items:center; justify-content:center; padding:0 5px; box-shadow:0 2px 7px rgba(255,70,88,0.5); font-variant-numeric:tabular-nums; }
+.access-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:stretch; }
+.acc { display:flex; flex-direction:column; }
+.acc .shot { flex:1; min-height:210px; }
+.acc-cap { margin-top:12px; font-size:12.5px; font-weight:300; color:var(--frost-ink-soft); line-height:1.55; }
+.acc-cap strong { font-weight:600; color:var(--frost-ink); }
+.menu-mock { padding:10px; max-width:230px; margin:0 auto; }
+.mm-item { display:flex; align-items:center; gap:10px; padding:9px 11px; border-radius:10px; font-size:12px; font-weight:500; color:var(--frost-ink-soft); }
+.mm-item .mi { width:20px; text-align:center; font-size:13px; flex:none; }
+.mm-item.on { background:var(--frost-surface-muted); color:var(--frost-ink); font-weight:600; }
+.mm-item.pulse-item { position:relative; margin:4px 0; font-weight:600; color:var(--frost-ink); border:1.5px solid transparent; background:linear-gradient(#fff,#fff) padding-box, conic-gradient(from var(--orb-a), #0072FB, #7B5CFF, #FF4658, #FFB13D, #0072FB) border-box; animation:orb-spin 5s linear infinite; box-shadow:0 4px 14px -4px rgba(0,114,251,0.35); }
+.mm-badge { margin-left:auto; background:var(--frost-accent); color:#fff; font-size:9px; font-weight:700; min-width:17px; height:17px; border-radius:var(--r-chip); display:flex; align-items:center; justify-content:center; padding:0 5px; }
+@media (max-width:900px) { .access-grid { grid-template-columns:1fr; } }
+
 /* ===== Storyboard del circuito ===== */
 .story { display:grid; grid-template-columns:repeat(3,1fr); gap:30px 20px; margin-top:36px; }
 .frame-cap { display:flex; align-items:flex-start; gap:10px; margin-bottom:10px; }
@@ -558,6 +581,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
         <div class="pv-appbar"><span class="pv-apptitle">Inicio</span><span class="pv-appdate">Martes 25 de agosto</span></div>
         <div id="pv-screen"></div>
         <button class="pv-reset" data-act="reset">↺ Reiniciar el prototipo</button>
+        <div class="ai-fab" data-act="orb" role="button" aria-label="Abrir tus oportunidades"><span class="halo"></span><button class="ai-orb"><span class="ico">✨</span></button><span class="badge" id="pv-orb-badge">3</span></div>
         <div class="pv-toast" id="pv-toast"></div>
       </div>
       <aside class="pv-notes">
@@ -567,9 +591,39 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
           <li><strong>El bloque nuevo: «Para hoy».</strong> Hasta tres oportunidades accionables por día — el resto vive en la bandeja completa.</li>
           <li><strong>Tocá «Revisar» en la primera.</strong> Cada clienta muestra por qué está; podés sacar a cualquiera con la ✕. Nada sale sin tu aprobación.</li>
           <li><strong>Aprobá y mirá el circuito.</strong> Tanda chica, respuesta, reserva validada, turno ocupado — y el freno automático de las tandas pendientes.</li>
+          <li><strong>El botón de la esquina ✨.</strong> Vive en toda la app, con el contador del día — desde cualquier pantalla, un toque te trae acá. Probalo en el prototipo.</li>
         </ul>
         <div class="pv-notes-foot">La bandeja completa organiza todo en <strong>Ahora · Programadas · Automáticas · Historial</strong>, con entradas desde la Agenda («se liberó este horario»), Clientes («reactivar este segmento») y Analítica (reservas e ingresos atribuidos). En mobile, la aprobación usa el SaveBar de Frost.</div>
       </aside>
+    </div>
+
+    <div class="step-head" style="margin-top:48px;"><span class="step-num">El acceso</span><h3>Siempre a un toque, en toda la app</h3><span class="sub">no lo vas a buscar — te encuentra</span></div>
+    <div class="access-grid">
+      <div class="acc">
+        <div class="shot">
+          <div class="mini menu-mock">
+            <div class="mm-item on"><span class="mi">🏠</span>Inicio</div>
+            <div class="mm-item pulse-item"><span class="mi">✨</span>Pulse<span class="mm-badge">3</span></div>
+            <div class="mm-item"><span class="mi">📅</span>Agenda</div>
+            <div class="mm-item"><span class="mi">👥</span>Clientes</div>
+            <div class="mm-item"><span class="mi">💰</span>Caja</div>
+            <div class="mm-item"><span class="mi">📊</span>Analítica</div>
+          </div>
+        </div>
+        <p class="acc-cap"><strong>En el menú, con lugar propio y contador.</strong> Pulse deja de ser sólo una card del inicio: entrada destacada, con las oportunidades del día siempre a la vista.</p>
+      </div>
+      <div class="acc">
+        <div class="shot" style="position:relative;">
+          <div class="mini">
+            <div class="mini-head"><b>Agenda</b><span>Hoy · martes 25</span></div>
+            <div class="ag-row"><span>10:00</span><div class="ag-evt">Nutrición capilar · Caro</div></div>
+            <div class="ag-row"><span>11:30</span><div class="ag-evt">Corte y brushing · Caro</div></div>
+            <div class="ag-row"><span>15:00</span><div class="ag-evt">Balayage · Caro</div></div>
+          </div>
+          <div class="ai-fab" style="bottom:16px;"><span class="halo"></span><span class="ai-orb"><span class="ico">✨</span></span><span class="badge">3</span></div>
+        </div>
+        <p class="acc-cap"><strong>Y flotando en una esquina, estés donde estés.</strong> El orbe de IA vive sobre la Agenda, Clientes o Caja — un toque abre tus oportunidades. Está en el prototipo de arriba: tocalo.</p>
+      </div>
     </div>
 
     <p class="split-lbl" style="margin-top:36px;">Los estados operativos, completos desde el día uno</p>
@@ -1087,6 +1141,8 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
 
   function render(){
     root.innerHTML = S.screen === 'home' ? homeHTML() : S.screen === 'detail' ? detailHTML() : runHTML();
+    var bd = document.getElementById('pv-orb-badge');
+    if (bd) bd.textContent = S.done ? '2' : '3';
     if (S.screen === 'run') {
       var delays = [200, 1400, 2900, 4400, 5700];
       delays.forEach(function(ms, step){
@@ -1105,6 +1161,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
     var act = b.getAttribute('data-act');
     if (act === 'open') { clearTimers(); S.screen = 'detail'; render(); }
     else if (act === 'soon') { toast('En este prototipo, probá la primera oportunidad 😉'); }
+    else if (act === 'orb') { clearTimers(); S.screen = 'home'; render(); toast('Tus oportunidades del día — desde cualquier pantalla'); }
     else if (act === 'back') { clearTimers(); S.screen = 'home'; render(); }
     else if (act === 'rm') { S.removed.push(parseInt(b.getAttribute('data-i'), 10)); render(); toast('La sacaste — no recibe ningún mensaje'); }
     else if (act === 'restore') { S.removed = []; render(); }
