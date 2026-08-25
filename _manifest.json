@@ -17,8 +17,8 @@
       "type": "proposal",
       "typeLabel": "Proposal",
       "title": "Ágora Impulso",
-      "description": "Plan de producto del agente operativo de Ágora: detecta oportunidades con datos reales (turnos cancelados, huecos próximos, clientes ausentes), explica por qué importan, prepara la acción y pide aprobación antes de tocar a un cliente. El MVP resuelve un único circuito completo — se libera un turno → clientes compatibles con ranking determinístico y exclusiones duras → aprobación en Flash → WhatsApp por tandas → reserva con deep link en Nightwing → atribución. Incluye casos P0/P1/P2, arquitectura por repo, modelo de datos, contrato de approve, papel acotado de la IA, prerrequisito de plantillas de Meta, fases 0–4, métricas con guardrails y los 16 criterios de aceptación.",
-      "detail": "proposal · circuito completo · 5 casos P0 · fases 0–4 · mocks Frost",
+      "description": "Plan de producto del agente operativo de Ágora, para audiencia no técnica, con prototipo funcional incluido: detecta oportunidades con datos reales (turnos cancelados, huecos próximos, clientes ausentes), explica por qué importan, prepara la acción y pide aprobación antes de tocar a un cliente. El MVP resuelve un único circuito completo — se libera un turno → clientas compatibles con ranking determinístico y exclusiones duras → aprobación → WhatsApp por tandas → reserva con deep link en Nightwing → atribución. La superficie es el Pulse que ya existe en Flash, expandido con el bloque «Para hoy»: el prototipo interactivo replica su estética frost real y deja recorrer el circuito entero (quitar candidatas, aprobar, ejecución en vivo). Incluye casos P0/P1/P2, papel acotado de la IA, prerrequisito de plantillas de Meta, fases 0–4, métricas con guardrails y los 16 criterios de aceptación.",
+      "detail": "proposal · prototipo funcional Pulse expandido · circuito completo · fases 0–4",
       "date": "AGO 2026",
       "href": "./agora-impulso-2026-08/index.html",
       "slug": "agora-impulso-2026-08"
