@@ -6,113 +6,401 @@
 <title>Reseñas de clientes · Prototipo — Ágora</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   /* Frost */
   --frost-primary:#0072FB; --frost-primary-hover:#005CD4; --frost-primary-soft:#EEF6FF; --frost-primary-wash:rgba(0,114,251,0.08);
   --frost-accent:#FF4658; --frost-accent-soft:#FFE3E6; --frost-accent-wash:rgba(255,70,88,0.08);
-  --frost-success:#10B981; --frost-success-soft:#A9FFE7; --frost-success-wash:rgba(16,185,129,0.10);
-  --frost-warning:#F59E0B; --frost-warning-soft:#FFE77B; --frost-warning-wash:rgba(245,158,11,0.12);
+  --frost-success:#10B981; --frost-success-soft:#A9FFE7; --frost-success-wash:rgba(16,185,129,0.10); --frost-success-ink:#0B7A55;
+  --frost-warning:#F59E0B; --frost-warning-soft:#FFE77B; --frost-warning-wash:rgba(245,158,11,0.12); --frost-warning-ink:#8A6410;
   --frost-ink:#0F172A; --frost-ink-soft:#3A3A3A; --frost-muted:#868686; --frost-faint:#B5B5B5;
   --frost-surface:#FFFFFF; --frost-surface-muted:#EFF3F9; --frost-border:#E2E8F0; --frost-border-soft:#F2F2F2;
   --r-sm:6px; --r-item:10px; --r-btn:12px; --r-card:20px; --r-shell:28px; --r-chip:999px;
   --sh-xs:0 1px 2px rgba(15,23,42,0.04);
   --sh-sm:0 4px 12px -4px rgba(15,23,42,0.10);
   --sh-md:0 10px 30px -12px rgba(15,23,42,0.15);
+  --sh-lg:0 20px 50px -20px rgba(15,23,42,0.25);
   --sh-glow:0 4px 18px -2px rgba(0,114,251,0.30);
   --sans:'Montserrat', system-ui, -apple-system, sans-serif;
-  /* Rating stars ride the warning amber */
-  --star:var(--frost-warning); --frost-warning-ink:#8A6410;
-  /* Mocked third-party surfaces (WhatsApp / Google), scoped tokens */
+  --star:var(--frost-warning);
+  /* WhatsApp / Google, scoped a sus mocks */
   --wa-wall:#EFEAE2; --wa-header:#008069; --wa-header-ink:#FFFFFF; --wa-bubble:#FFFFFF; --wa-ink:#111B21; --wa-link:#027EB5;
   --g-blue:#1A73E8; --g-ink:#202124; --g-muted:#5F6368; --g-border:#DADCE0;
+  /* Email "Editorial" (layout real de los transaccionales) */
+  --mail-paper:#FAF9F6; --mail-card:#FFFFFF; --mail-hair:#E7E3DD; --mail-ink:#14110F; --mail-graphite:#4A4542; --mail-mist:#8A8582; --mail-box:#F5F3F0;
 }
 *{box-sizing:border-box; margin:0; padding:0}
 html{scroll-behavior:smooth}
 body{
   font-family:var(--sans); background:var(--frost-surface-muted); color:var(--frost-ink);
-  font-size:15px; line-height:1.65; -webkit-font-smoothing:antialiased;
-  font-variant-numeric:tabular-nums;
+  font-size:15px; line-height:1.65; -webkit-font-smoothing:antialiased; font-variant-numeric:tabular-nums;
 }
-.wrap{max-width:1080px; margin:0 auto; padding:0 28px}
-.narrow{max-width:780px; margin:0 auto; padding:0 28px}
+.wrap{max-width:1120px; margin:0 auto; padding:0 28px}
 a{color:var(--frost-primary); text-decoration:none}
+[hidden]{display:none !important}
 
-/* ── Chrome ─────────────────────────────── */
-.chrome{position:sticky; top:0; z-index:50; background:rgba(255,255,255,0.85); backdrop-filter:blur(12px); border-bottom:1px solid var(--frost-border)}
-.chrome .wrap{display:flex; align-items:center; justify-content:space-between; padding-top:14px; padding-bottom:14px}
+/* ── Chrome ── */
+.chrome{position:sticky; top:0; z-index:50; background:rgba(255,255,255,0.86); backdrop-filter:blur(12px); border-bottom:1px solid var(--frost-border)}
+.chrome .wrap{display:flex; align-items:center; justify-content:space-between; padding-top:13px; padding-bottom:13px}
 .chrome .right{display:flex; align-items:center; gap:14px}
+.chrome .right a.maplink{font-size:10.5px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--frost-muted)}
 .kicker{font-size:10.5px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:var(--frost-muted)}
-.mode-chip{
-  display:inline-flex; align-items:center; gap:7px; font-size:11px; font-weight:600;
-  background:var(--frost-primary-soft); color:var(--frost-primary); border-radius:var(--r-chip); padding:5px 12px;
-}
+.mode-chip{display:inline-flex; align-items:center; gap:7px; font-size:11px; font-weight:600; background:var(--frost-primary-soft); color:var(--frost-primary); border-radius:var(--r-chip); padding:5px 12px; white-space:nowrap}
 .mode-chip::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--frost-primary)}
+a.mode-chip{cursor:pointer}
 
-/* ── Hero ─────────────────────────────── */
-.hero{padding:84px 0 40px; text-align:left}
-h1{font-size:clamp(34px,5vw,54px); font-weight:200; letter-spacing:-0.02em; line-height:1.12; margin:18px 0 20px; text-wrap:balance}
+/* ── Hero ── */
+.hero{padding:78px 0 44px; background:linear-gradient(180deg, rgba(0,114,251,0.05), rgba(0,114,251,0) 62%)}
+h1{font-size:clamp(36px,5vw,58px); font-weight:200; letter-spacing:-0.02em; line-height:1.1; margin:18px 0 20px; text-wrap:balance}
 h1 b{font-weight:500}
-.dek{font-size:17px; font-weight:300; color:var(--frost-ink-soft); max-width:64ch}
+.dek{font-size:17px; font-weight:300; color:var(--frost-ink-soft); max-width:66ch}
 .dek b{font-weight:600}
-.hero-pills{display:flex; flex-wrap:wrap; gap:8px; margin-top:26px}
-.pill{
-  font-size:11.5px; font-weight:600; padding:6px 14px; border-radius:var(--r-chip);
-  background:var(--frost-surface); border:1px solid var(--frost-border); color:var(--frost-ink-soft); box-shadow:var(--sh-xs);
-}
-.pill.blue{background:var(--frost-primary-soft); border-color:transparent; color:var(--frost-primary)}
+.hero-stats{display:flex; gap:36px; margin-top:34px; flex-wrap:wrap}
+.hstat b{display:block; font-size:30px; font-weight:200; letter-spacing:-.01em}
+.hstat span{font-size:10.5px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--frost-muted)}
 
-/* ── Sections ─────────────────────────────── */
-section{padding:52px 0}
-.sec-head{margin-bottom:8px; display:flex; align-items:baseline; gap:14px; flex-wrap:wrap}
-h2{font-size:26px; font-weight:300; letter-spacing:-0.01em}
+/* ── Secciones / actos ── */
+section{padding:54px 0}
+h2{font-size:27px; font-weight:300; letter-spacing:-0.01em}
 h2 b{font-weight:500}
-.sec-sub{font-size:14.5px; font-weight:300; color:var(--frost-ink-soft); max-width:70ch; margin-bottom:8px}
+.sec-head{display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; margin-bottom:8px}
+.sec-sub{font-size:14.5px; font-weight:300; color:var(--frost-ink-soft); max-width:78ch; margin-bottom:6px}
 .sec-sub b{font-weight:600; color:var(--frost-ink)}
+.act{border-top:1px solid var(--frost-border)}
+.act.alt{background:linear-gradient(180deg, var(--frost-surface), var(--frost-surface-muted) 260px)}
+.act-head{display:flex; align-items:flex-start; gap:22px; margin-bottom:10px}
+.act-num{font-size:74px; font-weight:200; line-height:.9; color:var(--frost-primary); letter-spacing:-.03em}
+.act-head .k{margin-top:10px}
+.act-head h2{margin-top:2px}
+.backmap{font-size:10.5px; font-weight:600; color:var(--frost-muted); letter-spacing:.12em; text-transform:uppercase}
 
-/* ── Mode selector ─────────────────────────────── */
+/* ── Mapa ── */
+.map{background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-shell); padding:28px 30px 22px; box-shadow:var(--sh-sm); margin-top:24px}
+.map-row{display:flex; align-items:center; gap:10px; flex-wrap:wrap; padding:13px 0; border-top:1px dashed var(--frost-border-soft)}
+.map-row:first-child{border-top:none; padding-top:0}
+.map-act{flex:0 0 176px; font-size:11px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--frost-ink-soft)}
+.map-act small{display:block; font-weight:300; letter-spacing:0; text-transform:none; color:var(--frost-muted); font-size:11px}
+.map-nodes{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+.map-node{display:inline-flex; align-items:center; gap:7px; font-size:12px; font-weight:600; color:var(--frost-ink); background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-chip); padding:6px 12px 6px 7px; box-shadow:var(--sh-xs); transition:box-shadow .15s, transform .15s, border-color .15s}
+.map-node:hover{box-shadow:var(--sh-sm); transform:translateY(-1px); border-color:var(--frost-primary)}
+.map-node .n{font-size:9.5px; font-weight:600; background:var(--frost-primary-soft); color:var(--frost-primary); border-radius:var(--r-chip); padding:2px 7px}
+.map-arrow{color:var(--frost-faint); font-size:13px}
+.map-legend{display:flex; gap:14px; margin-top:16px; flex-wrap:wrap; align-items:center}
+
+/* ── Chips ── */
+.chip{display:inline-flex; align-items:center; gap:6px; font-size:10px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; border-radius:var(--r-chip); padding:3px 10px}
+.chip.app{background:var(--frost-surface-muted); color:var(--frost-ink-soft); text-transform:none; letter-spacing:0; font-size:11px}
+.chip.app .dot{width:7px; height:7px; border-radius:50%}
+.chip.exists{background:var(--frost-success-wash); color:var(--frost-success-ink)}
+.chip.new{background:var(--frost-primary-soft); color:var(--frost-primary)}
+.chip.phase{background:var(--frost-warning-wash); color:var(--frost-warning-ink)}
+
+/* ── Touchpoints ── */
+.tp{scroll-margin-top:86px; margin-top:36px}
+.tp-head{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:4px}
+.tp-num{font-size:11px; font-weight:600; letter-spacing:.14em; color:var(--frost-primary); background:var(--frost-primary-soft); border-radius:var(--r-sm); padding:4px 9px}
+.tp-head h3{font-size:17px; font-weight:600}
+.tp-sub{font-size:13.5px; font-weight:300; color:var(--frost-ink-soft); max-width:74ch; margin-bottom:16px}
+.tp-sub b{font-weight:600; color:var(--frost-ink)}
+.tp-body{position:relative}
+.tp-cap{margin:14px 2px 0; font-size:12.5px; font-weight:300; color:var(--frost-ink-soft); line-height:1.6; max-width:64ch}
+.tp-cap b{font-weight:600; color:var(--frost-ink)}
+.tp-dim > .tp-body{opacity:.35; filter:grayscale(.35); pointer-events:none}
+.tp-dim{position:relative}
+.tp-dim::after{content:attr(data-dim-note); position:absolute; left:50%; top:110px; transform:translateX(-50%); background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-btn); padding:11px 16px; font-size:12px; font-weight:600; color:var(--frost-ink-soft); box-shadow:var(--sh-md); white-space:nowrap; z-index:2; max-width:92%; text-align:center}
+.tp-row{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:8px 28px; align-items:start}
+.tp-row.cols3{grid-template-columns:repeat(3, minmax(0,1fr))}
+.tp.span2{grid-column:1/-1}
+@media(max-width:1000px){.tp-row.cols3{grid-template-columns:repeat(2, minmax(0,1fr))}}
+@media(max-width:880px){.tp-row, .tp-row.cols3{grid-template-columns:1fr}}
+
+/* ── Phone ── */
+.phone{width:300px; border-radius:32px; background:var(--frost-ink); padding:9px; box-shadow:var(--sh-md)}
+.screen{border-radius:24px; background:var(--frost-surface); overflow:hidden; height:552px; display:flex; flex-direction:column; position:relative}
+.sbar{display:flex; justify-content:space-between; align-items:center; padding:7px 16px 5px; font-size:10.5px; font-weight:600; color:var(--frost-ink); background:var(--frost-surface)}
+.sbar .ic{display:flex; gap:4px; align-items:center}
+.sbar .bars{display:flex; gap:1.5px; align-items:flex-end}
+.sbar .bars i{width:2.5px; background:var(--frost-ink); border-radius:1px}
+.sbar .batt{width:18px; height:9px; border:1px solid var(--frost-ink); border-radius:2.5px; position:relative}
+.sbar .batt::after{content:""; position:absolute; inset:1.5px; right:4px; background:var(--frost-ink); border-radius:1px}
+.sbar.on-dark{background:var(--wa-header); color:var(--wa-header-ink)}
+.sbar.on-dark .bars i{background:var(--wa-header-ink)}
+.sbar.on-dark .batt{border-color:var(--wa-header-ink)}
+.sbar.on-dark .batt::after{background:var(--wa-header-ink)}
+
+/* ── Browser ── */
+.browser{background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); overflow:hidden; box-shadow:var(--sh-md)}
+.b-bar{display:flex; align-items:center; gap:10px; padding:10px 14px; border-bottom:1px solid var(--frost-border-soft); background:var(--frost-surface-muted)}
+.b-dots{display:flex; gap:5px}
+.b-dots i{width:9px; height:9px; border-radius:50%; background:var(--frost-border)}
+.b-url{flex:0 1 340px; font-size:11.5px; font-weight:500; color:var(--frost-ink-soft); background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-chip); padding:4px 14px; display:flex; align-items:center; gap:7px}
+.b-url .lock{font-size:9px; color:var(--frost-muted)}
+.b-body{padding:20px 22px}
+
+/* ── Email (layout Editorial real) ── */
+.mail{background:var(--mail-paper); border:1px solid var(--frost-border); border-radius:var(--r-card); overflow:hidden; box-shadow:var(--sh-md); max-width:460px}
+.m-bar{padding:12px 18px; border-bottom:1px solid var(--frost-border-soft); background:var(--frost-surface)}
+.m-subject{font-size:13.5px; font-weight:600}
+.m-meta{font-size:11px; color:var(--frost-muted); font-weight:300; margin-top:2px}
+.m-meta b{font-weight:600; color:var(--frost-ink-soft)}
+.m-page{padding:22px 24px 24px}
+.m-brandrow{display:flex; justify-content:space-between; align-items:center; margin-bottom:18px}
+.m-brandrow .eyebrow{font-size:9.5px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--mail-mist)}
+.m-h1{font-size:24px; font-weight:600; letter-spacing:-.025em; color:var(--mail-ink); margin-bottom:4px}
+.m-sub{font-size:14px; font-weight:500; color:var(--mail-graphite); margin-bottom:16px}
+.m-card{background:var(--mail-card); border:1px solid var(--mail-hair); border-radius:6px; padding:18px 20px; text-align:center}
+.m-eyebrow{font-size:10px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--mail-mist); margin-bottom:8px}
+.m-ctx{font-size:12.5px; font-weight:300; color:var(--mail-graphite); margin-bottom:14px}
+.m-ctx b{font-weight:600; color:var(--mail-ink)}
+.m-stars{font-size:30px; letter-spacing:8px; color:var(--star); margin-bottom:4px}
+.m-stars-note{font-size:10.5px; color:var(--mail-mist); font-weight:300; margin-bottom:16px}
+.m-btn{display:inline-block; background:var(--frost-primary); color:#fff; font-weight:600; font-size:11px; letter-spacing:.14em; text-transform:uppercase; border-radius:4px; padding:13px 26px}
+.m-quote{background:var(--mail-box); border-radius:8px; padding:13px 16px; text-align:left; margin:0 0 16px}
+.m-quote .q-eyebrow{font-size:9.5px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--mail-mist); margin-bottom:5px}
+.m-quote .q-text{font-size:12.5px; font-weight:300; color:var(--mail-graphite); font-style:italic}
+.m-foot{display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--mail-hair); margin-top:18px; padding-top:12px}
+.m-foot .lnk{font-size:9.5px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--mail-mist)}
+.m-reason{font-size:10px; color:var(--mail-mist); font-weight:300; margin-top:8px; line-height:1.5; text-align:left}
+
+/* ── Campanita (panel) ── */
+.bellwrap{max-width:400px}
+.bellbar{display:flex; justify-content:flex-end; align-items:center; gap:14px; padding:10px 16px; background:var(--frost-surface); border:1px solid var(--frost-border); border-bottom:none; border-radius:var(--r-btn) var(--r-btn) 0 0}
+.bell{position:relative; width:34px; height:34px; border-radius:50%; background:var(--frost-surface-muted); display:flex; align-items:center; justify-content:center; font-size:15px}
+.bell .bdg{position:absolute; top:-3px; right:-3px; background:var(--frost-accent); color:#fff; font-size:9px; font-weight:600; border-radius:var(--r-chip); min-width:16px; height:16px; display:flex; align-items:center; justify-content:center; padding:0 4px}
+.bell .bdg.blue{background:var(--frost-primary)}
+.ava{width:30px; height:30px; border-radius:50%; background:var(--frost-primary-soft); color:var(--frost-primary); font-size:12px; font-weight:600; display:flex; align-items:center; justify-content:center; flex-shrink:0}
+.bellpanel{background:rgba(255,255,255,.94); backdrop-filter:blur(24px); border:1px solid var(--frost-border); border-radius:0 0 var(--r-card) var(--r-card); box-shadow:var(--sh-lg); overflow:hidden}
+.bp-head{padding:12px 18px 10px; border-bottom:1px solid var(--frost-border-soft)}
+.bp-head .bp-eyebrow{font-size:9px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--frost-muted)}
+.bp-head .bp-row{display:flex; justify-content:space-between; align-items:center; margin-top:2px}
+.bp-head .bp-title{font-size:14px; font-weight:600; display:flex; align-items:center; gap:6px}
+.bp-head .bp-title::after{content:""; width:5px; height:5px; border-radius:50%; background:var(--frost-primary)}
+.bp-head .bp-mark{font-size:10.5px; font-weight:600; color:var(--frost-primary)}
+.bp-item{display:flex; gap:12px; padding:12px 18px; border-bottom:1px solid var(--frost-border-soft); align-items:flex-start; position:relative}
+.bp-item:last-of-type{border-bottom:none}
+.bp-item.unread{background:var(--frost-primary-wash)}
+.bp-item.unread::before{content:""; position:absolute; left:0; top:0; bottom:0; width:2.5px; background:var(--frost-primary)}
+.bp-item.unread.warn::before{background:var(--frost-accent)}
+.bp-ic{width:34px; height:34px; border-radius:var(--r-item); display:flex; align-items:center; justify-content:center; font-size:15px; flex-shrink:0; background:var(--frost-warning-wash)}
+.bp-ic.lock{background:var(--frost-accent-wash)}
+.bp-ic.chat{background:var(--frost-success-wash)}
+.bp-t{font-size:12.5px; font-weight:500; line-height:1.45}
+.bp-t b{font-weight:600}
+.bp-t .st{color:var(--star); letter-spacing:1px; font-size:11px}
+.bp-sub{font-size:11.5px; font-weight:300; color:var(--frost-muted); margin-top:1px}
+.bp-when{font-size:9px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--frost-muted); margin-top:4px; display:flex; align-items:center; gap:5px}
+.bp-when::before{content:""; width:4px; height:4px; border-radius:50%; background:var(--frost-primary)}
+.bp-foot{padding:11px 18px; font-size:11px; font-weight:600; color:var(--frost-primary); border-top:1px solid var(--frost-border-soft); text-align:center}
+
+/* ── Rail Flash ── */
+.sidemenu{width:252px; background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); box-shadow:var(--sh-md); padding:16px 12px 12px; flex-shrink:0}
+.sm-brand{padding:2px 10px 14px}
+.sm-section{font-size:9px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--frost-faint); padding:12px 12px 5px}
+.sm-hair{height:1px; background:var(--frost-border-soft); margin:8px 6px}
+.sm-item{display:flex; align-items:center; gap:11px; font-size:12.5px; font-weight:500; color:var(--frost-ink-soft); padding:8px 12px; border-radius:var(--r-item)}
+.sm-item .ic{width:18px; text-align:center; font-size:13px; opacity:.75}
+.sm-item.on{background:var(--frost-primary-wash); color:var(--frost-primary); font-weight:600}
+.sm-item .cnt{margin-left:auto; background:var(--frost-accent); color:#fff; font-size:9.5px; font-weight:600; border-radius:var(--r-chip); min-width:17px; height:17px; display:flex; align-items:center; justify-content:center; padding:0 5px}
+.sm-item .tag{margin-left:auto; font-size:8.5px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; background:var(--frost-primary-soft); color:var(--frost-primary); border-radius:var(--r-chip); padding:2px 7px}
+.sm-item .tag + .cnt, .sm-item .cnt + .tag{margin-left:6px}
+.sm-item.newrow{outline:1.5px dashed var(--frost-primary); outline-offset:-1.5px}
+
+/* ── WhatsApp ── */
+.wa{background:var(--wa-wall); flex:1; display:flex; flex-direction:column}
+.wa-top{background:var(--wa-header); color:var(--wa-header-ink); padding:10px 14px 12px; display:flex; align-items:center; gap:10px}
+.wa-ava{width:32px; height:32px; border-radius:50%; background:var(--frost-warning-soft); color:var(--frost-ink); display:flex; align-items:center; justify-content:center; font-weight:600; font-size:14px; flex-shrink:0}
+.wa-top .name{font-weight:600; font-size:13.5px; line-height:1.2}
+.wa-top .sub{font-size:10.5px; opacity:.82}
+.wa-body{padding:18px 12px; flex:1; display:flex; flex-direction:column}
+.wa-msg{background:var(--wa-bubble); color:var(--wa-ink); border-radius:4px 14px 14px 14px; padding:11px 13px 8px; max-width:97%; font-size:13px; line-height:1.5; box-shadow:var(--sh-xs)}
+.wa-msg .hdr{font-weight:600; margin-bottom:4px}
+.wa-msg .time{display:block; text-align:right; font-size:10px; color:var(--g-muted); margin-top:6px}
+.wa-btn{margin-top:9px; border-top:1px solid var(--frost-border); padding-top:9px; text-align:center; color:var(--wa-link); font-weight:600; font-size:13px}
+
+/* ── Rating / gracias / Google sheet ── */
+.rate{padding:15px 18px 14px; flex:1; display:flex; flex-direction:column; gap:10px; background:var(--frost-surface)}
+.rate-biz{display:flex; align-items:center; gap:10px}
+.rate-ava{width:38px; height:38px; border-radius:50%; background:var(--frost-primary); color:#fff; font-weight:600; display:flex; align-items:center; justify-content:center; font-size:16px}
+.rate-biz .n{font-size:15px; font-weight:600; line-height:1.25}
+.ctx-chip{font-size:11.5px; font-weight:300; color:var(--frost-ink-soft); background:var(--frost-surface-muted); border-radius:var(--r-item); padding:7px 11px; line-height:1.5}
+.ctx-chip b{font-weight:600}
+.rate h4{font-size:19px; font-weight:500; text-align:center; margin-top:2px}
+.stars{display:flex; justify-content:center; gap:7px}
+.stars button, .stars i{background:none; border:none; font-size:31px; line-height:1; color:var(--frost-border); padding:2px; font-family:var(--sans); font-style:normal}
+.stars button{cursor:pointer; transition:transform .12s, color .12s}
+.stars button.on, .stars i.on{color:var(--star)}
+.stars button:hover{transform:scale(1.14)}
+.stars button:focus-visible{outline:2px solid var(--frost-primary); outline-offset:2px; border-radius:8px}
+.rate-hint{text-align:center; font-size:12px; font-weight:500; color:var(--frost-muted); min-height:18px}
+.tags{display:flex; flex-wrap:wrap; gap:6px; justify-content:center}
+.tags span{font-size:11px; font-weight:600; padding:5px 11px; border-radius:var(--r-chip); border:1px solid var(--frost-border); color:var(--frost-muted); background:var(--frost-surface)}
+.tags span.sel{background:var(--frost-warning-wash); border-color:var(--star); color:var(--frost-ink-soft)}
+.fake-input{border:1px solid var(--frost-border); border-radius:var(--r-btn); padding:10px 12px; font-size:12px; font-weight:300; color:var(--frost-faint); min-height:48px; background:var(--frost-surface); text-align:left}
+.fake-input.filled{color:var(--frost-ink-soft)}
+.priv{display:flex; gap:8px; align-items:flex-start; font-size:11.5px; font-weight:300; color:var(--frost-muted); text-align:left}
+.priv .box{width:15px; height:15px; border:1.5px solid var(--frost-border); border-radius:4px; flex-shrink:0; margin-top:1px; background:var(--frost-surface); color:#fff; font-size:10px; line-height:12px; text-align:center}
+.priv.on .box{background:var(--frost-primary); border-color:var(--frost-primary)}
+.cta{margin-top:auto; background:var(--frost-primary); color:#fff; text-align:center; font-weight:600; font-size:13.5px; border-radius:var(--r-btn); padding:12px; box-shadow:var(--sh-glow)}
+.legal{font-size:10px; font-weight:300; color:var(--frost-muted); text-align:center; line-height:1.5}
+.legal b{font-weight:600}
+.thanks{padding:24px 18px 16px; flex:1; display:flex; flex-direction:column; gap:13px; text-align:center; background:var(--frost-surface)}
+.check{width:58px; height:58px; border-radius:50%; background:var(--frost-success-wash); color:var(--frost-success); font-size:26px; display:flex; align-items:center; justify-content:center; margin:2px auto 0}
+.thanks h4{font-size:20px; font-weight:500}
+.thanks .sub{font-size:12.5px; font-weight:300; color:var(--frost-muted)}
+.gcard{border:1px solid var(--frost-border); border-radius:var(--r-card); padding:15px; text-align:left; background:var(--frost-surface); box-shadow:var(--sh-sm)}
+.gcard .gt{display:flex; gap:9px; align-items:center; font-weight:600; font-size:13px; margin-bottom:4px}
+.gcard p{font-size:11.5px; font-weight:300; color:var(--frost-muted); margin:0 0 11px}
+.gbtn{border:1.5px solid var(--frost-ink); border-radius:var(--r-btn); text-align:center; font-weight:600; font-size:12.5px; padding:10px; color:var(--frost-ink)}
+.ghost{border:1px solid var(--frost-border); border-radius:var(--r-btn); padding:11px; font-size:12.5px; font-weight:500; color:var(--frost-ink-soft)}
+.gdot{width:20px; height:20px; border-radius:50%; font-size:11px; font-weight:600; color:#fff; background:conic-gradient(#EA4335 0 25%, #FBBC05 25% 50%, #34A853 50% 75%, #4285F4 75% 100%); display:flex; align-items:center; justify-content:center; flex-shrink:0}
+.gsheet{padding:0; flex:1; display:flex; flex-direction:column; background:var(--frost-surface)}
+.g-top{display:flex; align-items:center; gap:9px; padding:12px 16px; border-bottom:1px solid var(--g-border)}
+.g-logo{font-size:15px; font-weight:600; color:var(--g-ink)}
+.g-body{padding:16px; display:flex; flex-direction:column; gap:12px; flex:1}
+.g-biz{font-size:16px; font-weight:600; color:var(--g-ink)}
+.g-user{display:flex; align-items:center; gap:9px}
+.g-user .gu{font-size:12px; color:var(--g-ink); font-weight:500}
+.g-user .gp{font-size:10.5px; color:var(--g-muted); font-weight:300}
+.g-stars{font-size:29px; letter-spacing:5px; color:var(--star); text-align:center}
+.g-text{border:1px solid var(--g-border); border-radius:var(--r-sm); padding:11px 12px; font-size:12px; color:var(--g-ink); font-weight:300; line-height:1.55; min-height:82px}
+.g-paste{font-size:10.5px; color:var(--g-muted); font-weight:300; text-align:center}
+.g-btn{margin-top:auto; background:var(--g-blue); color:#fff; text-align:center; font-weight:600; font-size:13px; border-radius:var(--r-chip); padding:11px}
+
+/* ── Actividad (tabla real de nightwing) ── */
+.nw-h1{font-size:19px; font-weight:500}
+.nw-tabs{display:flex; gap:18px; border-bottom:1px solid var(--frost-border); margin:12px 0 0; font-size:12.5px; color:var(--frost-muted); flex-wrap:wrap}
+.nw-tabs span{padding:7px 2px; display:inline-flex; gap:6px; align-items:center}
+.nw-tabs .on{color:var(--frost-primary); border-bottom:2px solid var(--frost-primary); font-weight:600}
+.nw-tabs .pill{font-size:10px; background:var(--frost-surface-muted); border-radius:var(--r-chip); padding:1px 7px; color:var(--frost-muted)}
+table.nw{width:100%; border-collapse:collapse; font-size:12px; margin-top:4px}
+table.nw th{text-align:left; font-size:10px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--frost-muted); padding:10px 10px 8px 0; border-bottom:1px solid var(--frost-border)}
+table.nw td{padding:11px 10px 11px 0; border-bottom:1px solid var(--frost-border-soft); color:var(--frost-ink-soft); vertical-align:middle}
+table.nw td.svc{font-weight:600; color:var(--frost-ink)}
+.status{display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:600}
+.status .dot{width:7px; height:7px; border-radius:50%}
+.rate-cta{display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:600; border:1.5px solid var(--star); color:var(--frost-warning-ink); background:var(--frost-warning-wash); border-radius:var(--r-chip); padding:4px 11px; white-space:nowrap}
+.rated{color:var(--star); letter-spacing:1.5px; font-size:11px; white-space:nowrap}
+
+/* ── Vitrina ── */
+.badges{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px}
+.badge{display:inline-flex; align-items:center; gap:7px; font-size:12px; font-weight:600; border-radius:var(--r-chip); padding:6px 13px; border:1px solid var(--frost-border); background:var(--frost-surface)}
+.badge .st{color:var(--star)}
+.badge.soft{background:var(--frost-surface-muted); border-color:transparent; color:var(--frost-ink-soft)}
+.review-card{border:1px solid var(--frost-border-soft); border-radius:var(--r-item); padding:13px 15px; margin-bottom:10px; background:var(--frost-surface)}
+.rc-top{display:flex; align-items:center; gap:8px; margin-bottom:4px; flex-wrap:wrap}
+.rc-top .who{font-weight:600; font-size:13px}
+.rc-top .st{color:var(--star); font-size:11.5px; letter-spacing:2px}
+.chip-ver{font-size:9.5px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; background:var(--frost-success-wash); color:var(--frost-success-ink); border-radius:var(--r-chip); padding:2.5px 9px}
+.chip-g{font-size:9.5px; font-weight:600; letter-spacing:.06em; background:var(--frost-surface-muted); color:var(--frost-muted); border-radius:var(--r-chip); padding:2.5px 9px}
+.rc-when{font-size:11px; color:var(--frost-faint); font-weight:300}
+.review-card p{font-size:12.5px; font-weight:300; color:var(--frost-ink-soft)}
+.vreply{margin-top:9px; border-left:2px solid var(--frost-border); padding-left:11px; font-size:11.5px; font-weight:300; color:var(--frost-muted)}
+.vreply b{font-weight:600}
+.empty-vitrina{border:1.5px dashed var(--frost-border); border-radius:var(--r-item); padding:26px 18px; text-align:center; font-size:12.5px; font-weight:300; color:var(--frost-muted)}
+.mk-card{border:1px solid var(--frost-border); border-radius:var(--r-card); overflow:hidden; background:var(--frost-surface); box-shadow:var(--sh-sm); max-width:330px}
+.mk-img{height:104px; background:linear-gradient(135deg, var(--frost-primary-soft), var(--frost-warning-wash))}
+.mk-body{padding:13px 16px 15px}
+.mk-body .n{font-weight:600; font-size:15px}
+.mk-body .r{font-size:12.5px; margin-top:4px; font-weight:500}
+.mk-body .r .st{color:var(--star)}
+.mk-body .r .gsep{color:var(--frost-muted); font-weight:300}
+.mk-body .loc{font-size:11.5px; color:var(--frost-muted); margin-top:2px; font-weight:300}
+
+/* ── Inbox admin ── */
+.admin{display:grid; grid-template-columns:1fr 1.4fr; overflow:hidden}
+@media(max-width:860px){.admin{grid-template-columns:1fr}}
+.inbox{border-right:1px solid var(--frost-border-soft)}
+@media(max-width:860px){.inbox{border-right:none; border-bottom:1px solid var(--frost-border-soft)}}
+.inbox-tabs{display:flex; gap:4px; padding:10px 12px; border-bottom:1px solid var(--frost-border-soft); flex-wrap:wrap}
+.inbox-tabs span{font-size:10.5px; font-weight:600; padding:4px 11px; border-radius:var(--r-chip); color:var(--frost-muted)}
+.inbox-tabs span.on{background:var(--frost-primary-soft); color:var(--frost-primary)}
+.inbox .row{padding:12px 16px; border-bottom:1px solid var(--frost-border-soft); font-size:12.5px}
+.inbox .row.sel{background:var(--frost-primary-wash)}
+.inbox .r1{display:flex; justify-content:space-between; gap:8px; align-items:center}
+.inbox .st{color:var(--star); letter-spacing:1.5px; font-size:11px}
+.inbox .who{font-weight:600}
+.src{font-size:9px; font-weight:600; letter-spacing:.08em; border-radius:5px; padding:2px 7px}
+.src.agora{background:var(--frost-primary-soft); color:var(--frost-primary)}
+.src.google{background:var(--frost-warning-wash); color:var(--frost-warning-ink)}
+.src.priv{background:var(--frost-accent-wash); color:var(--frost-accent)}
+.inbox .prev{color:var(--frost-muted); font-size:11.5px; font-weight:300; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.inbox-empty{padding:38px 20px; text-align:center; font-size:12.5px; font-weight:300; color:var(--frost-muted)}
+.detail{padding:16px 20px}
+.kpis{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px}
+.kpi{background:var(--frost-surface-muted); border-radius:var(--r-item); padding:9px 14px; font-size:11px; font-weight:300; color:var(--frost-muted)}
+.kpi b{display:block; font-size:15px; font-weight:600; color:var(--frost-ink)}
+.detail .rv p{font-size:13px; font-weight:300; color:var(--frost-ink-soft)}
+.ai-draft{border:1.5px dashed var(--frost-border); border-radius:var(--r-btn); padding:13px 15px; margin-top:13px; background:var(--frost-primary-soft)}
+.ai-draft .t{font-size:9.5px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--frost-primary); margin-bottom:6px}
+.ai-draft p{font-size:12.5px; font-weight:300; margin:0 0 11px; color:var(--frost-ink-soft)}
+.btn-row{display:flex; gap:8px}
+.btn{font-size:11.5px; font-weight:600; border-radius:var(--r-item); padding:7px 14px}
+.btn.pri{background:var(--frost-primary); color:#fff; box-shadow:var(--sh-glow)}
+.btn.sec{border:1px solid var(--frost-border); color:var(--frost-ink-soft); background:var(--frost-surface)}
+
+/* ── Widgets / ficha / staff ── */
+.wcard{background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); padding:16px 18px; box-shadow:var(--sh-sm)}
+.wcard .wk{font-size:10px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--frost-muted); margin-bottom:8px}
+.wcard .big{font-size:28px; font-weight:200; letter-spacing:-.01em; line-height:1.1}
+.wcard .big .st{color:var(--star); font-size:22px}
+.wcard .sub{font-size:11.5px; color:var(--frost-ink-soft); font-weight:300; margin-top:4px}
+.wcard .sub b{font-weight:600}
+.fchips{display:flex; gap:6px; margin:2px 0 8px}
+.fchips span{font-size:10px; font-weight:600; border-radius:var(--r-chip); padding:3px 10px; border:1px solid var(--frost-border); color:var(--frost-muted)}
+.fchips span.on{background:var(--frost-primary-soft); border-color:transparent; color:var(--frost-primary)}
+.tl{margin-top:4px}
+.tl-item{display:flex; gap:10px; padding:8px 0; border-top:1px dashed var(--frost-border-soft); font-size:12px; font-weight:300; color:var(--frost-ink-soft); position:relative}
+.tl-item:first-child{border-top:none}
+.tl-item .ic{flex-shrink:0}
+.tl-item b{font-weight:600}
+.tl-item .st{color:var(--star); letter-spacing:1px}
+.tl-when{font-size:10.5px; color:var(--frost-muted)}
+.staff-row{display:flex; justify-content:space-between; align-items:center; padding:8px 0 2px; font-size:12.5px}
+.staff-row .nm{font-weight:600}
+.staff-row .val{font-weight:500; color:var(--frost-ink-soft)}
+.staff-row .val .st{color:var(--star)}
+.staff-bar{height:4px; border-radius:var(--r-chip); background:var(--frost-surface-muted); margin:3px 0 5px; overflow:hidden}
+.staff-bar i{display:block; height:100%; background:var(--star); border-radius:var(--r-chip)}
+
+/* ── Google Maps profile ── */
+.gmap{border:1px solid var(--g-border); border-radius:var(--r-card); background:var(--frost-surface); overflow:hidden; box-shadow:var(--sh-md); max-width:380px}
+.gmap .gm-head{padding:16px 18px 12px}
+.gmap .gm-name{font-size:17px; font-weight:600; color:var(--g-ink)}
+.gmap .gm-rate{display:flex; align-items:center; gap:7px; font-size:12.5px; color:var(--g-muted); margin-top:3px}
+.gmap .gm-rate .st{color:var(--star); letter-spacing:1px}
+.gmap .gm-tabs{display:flex; gap:18px; padding:0 18px; border-bottom:1px solid var(--g-border); font-size:12px; color:var(--g-muted)}
+.gmap .gm-tabs span{padding:8px 0}
+.gmap .gm-tabs .on{color:var(--g-blue); border-bottom:2px solid var(--g-blue); font-weight:600}
+.gmap .gm-body{padding:14px 18px 16px}
+
+/* ── Modos / settings ── */
 .modes{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:22px}
 @media(max-width:900px){.modes{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:520px){.modes{grid-template-columns:1fr}}
-.mode{
-  position:relative; text-align:left; font-family:var(--sans); cursor:pointer;
-  background:var(--frost-surface); border:1.5px solid var(--frost-border); border-radius:var(--r-card);
-  padding:18px 18px 16px; box-shadow:var(--sh-xs); transition:border-color .15s, box-shadow .15s;
-}
+.mode{position:relative; text-align:left; font-family:var(--sans); cursor:pointer; background:var(--frost-surface); border:1.5px solid var(--frost-border); border-radius:var(--r-card); padding:18px 18px 16px; box-shadow:var(--sh-xs); transition:border-color .15s, box-shadow .15s}
 .mode:hover{box-shadow:var(--sh-sm)}
 .mode:focus-visible{outline:2px solid var(--frost-primary); outline-offset:2px}
 .mode.on{border-color:var(--frost-primary); background:linear-gradient(180deg, var(--frost-primary-wash), var(--frost-surface) 70%); box-shadow:var(--sh-sm)}
-.mode .check{
-  position:absolute; top:14px; right:14px; width:20px; height:20px; border-radius:50%;
-  border:1.5px solid var(--frost-border); background:var(--frost-surface);
-  display:flex; align-items:center; justify-content:center; font-size:11px; color:transparent;
-}
+.mode .check{position:absolute; top:14px; right:14px; width:20px; height:20px; border-radius:50%; border:1.5px solid var(--frost-border); background:var(--frost-surface); display:flex; align-items:center; justify-content:center; font-size:11px; color:transparent}
 .mode.on .check{background:var(--frost-primary); border-color:var(--frost-primary); color:#fff}
 .mode .m-name{font-size:14.5px; font-weight:600; margin-bottom:3px; padding-right:26px}
 .mode .m-tag{font-size:10px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--frost-primary); margin-bottom:8px}
 .mode .m-desc{font-size:12px; font-weight:300; color:var(--frost-ink-soft); line-height:1.5}
-.modes-note{font-size:12.5px; color:var(--frost-ink-soft); margin-top:14px; font-weight:300}
-.modes-note b{font-weight:600; color:var(--frost-ink-soft)}
-
-/* ── Flash settings mock ─────────────────────────────── */
+.modes-note{font-size:12.5px; color:var(--frost-ink-soft); margin-top:14px; font-weight:300; max-width:78ch}
+.modes-note b{font-weight:600; color:var(--frost-ink)}
 .settings-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:22px; margin-top:24px; align-items:start}
 @media(max-width:860px){.settings-grid{grid-template-columns:1fr}}
-.app-card{
-  background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card);
-  box-shadow:var(--sh-sm); overflow:hidden;
-}
-.app-card .head{padding:16px 20px; border-bottom:1px solid var(--frost-border-soft); display:flex; align-items:center; justify-content:space-between}
+.app-card{background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); box-shadow:var(--sh-sm); overflow:hidden}
+.app-card .head{padding:15px 20px; border-bottom:1px solid var(--frost-border-soft); display:flex; align-items:center; justify-content:space-between}
 .app-card .head .t{font-size:14px; font-weight:600}
 .app-card .body{padding:18px 20px 20px}
+.meta-chip{font-size:10.5px; font-weight:600; background:var(--frost-surface-muted); border-radius:var(--r-chip); padding:3px 10px; color:var(--frost-muted)}
 .set-kicker{font-size:10px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--frost-faint); margin:0 0 10px}
 .set-block{padding:14px 0; border-top:1px solid var(--frost-border-soft)}
 .set-block:first-child{border-top:none; padding-top:0}
 .seg{display:flex; background:var(--frost-surface-muted); border-radius:var(--r-btn); padding:3px; gap:3px; flex-wrap:wrap}
-.seg button{
-  flex:1; min-width:70px; font-family:var(--sans); font-size:11.5px; font-weight:600; color:var(--frost-muted);
-  background:transparent; border:none; border-radius:9px; padding:7px 6px; cursor:pointer;
-}
+.seg button{flex:1; min-width:70px; font-family:var(--sans); font-size:11.5px; font-weight:600; color:var(--frost-muted); background:transparent; border:none; border-radius:9px; padding:7px 6px; cursor:pointer}
 .seg button.on{background:var(--frost-surface); color:var(--frost-primary); box-shadow:var(--sh-xs)}
 .seg button:focus-visible{outline:2px solid var(--frost-primary); outline-offset:1px}
 .switch-row{display:flex; align-items:flex-start; justify-content:space-between; gap:14px; padding:9px 0}
@@ -121,196 +409,19 @@ h2 b{font-weight:500}
 .switch-row .hint{font-size:11px; color:var(--frost-warning-ink); font-weight:500; margin-top:2px; display:none}
 .switch-row.disabled .lbl,.switch-row.disabled .sub{color:var(--frost-faint)}
 .switch-row.disabled .hint{display:block}
-.sw{
-  width:40px; height:24px; border-radius:var(--r-chip); background:var(--frost-border); border:none; cursor:pointer;
-  position:relative; flex-shrink:0; transition:background .15s; margin-top:2px;
-}
-.sw::after{
-  content:""; position:absolute; top:3px; left:3px; width:18px; height:18px; border-radius:50%;
-  background:var(--frost-surface); box-shadow:var(--sh-xs); transition:left .15s;
-}
+.sw{width:40px; height:24px; border-radius:var(--r-chip); background:var(--frost-border); border:none; cursor:pointer; position:relative; flex-shrink:0; transition:background .15s; margin-top:2px}
+.sw::after{content:""; position:absolute; top:3px; left:3px; width:18px; height:18px; border-radius:50%; background:var(--frost-surface); box-shadow:var(--sh-xs); transition:left .15s}
 .sw.on{background:var(--frost-primary)}
 .sw.on::after{left:19px}
 .sw:disabled{opacity:.5; cursor:not-allowed}
 .sw:focus-visible{outline:2px solid var(--frost-primary); outline-offset:2px}
 .meta-row{font-size:12.5px; color:var(--frost-ink-soft); font-weight:300; display:flex; flex-wrap:wrap; gap:8px; align-items:center}
-.meta-chip{font-size:10.5px; font-weight:600; background:var(--frost-surface-muted); border-radius:var(--r-chip); padding:3px 10px; color:var(--frost-muted)}
 .side-notes{display:flex; flex-direction:column; gap:12px}
-.note{
-  background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card);
-  padding:16px 18px; box-shadow:var(--sh-xs); font-size:13px; font-weight:300; color:var(--frost-ink-soft);
-}
+.note{background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); padding:16px 18px; box-shadow:var(--sh-xs); font-size:13px; font-weight:300; color:var(--frost-ink-soft)}
 .note b{font-weight:600; color:var(--frost-ink)}
 .note .nk{font-size:10px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--frost-primary); display:block; margin-bottom:6px}
 
-/* ── Phones ─────────────────────────────── */
-.phones{display:flex; gap:24px; margin-top:26px; overflow-x:auto; padding:4px 2px 20px; scroll-snap-type:x proximity}
-.phone-col{flex:0 0 300px; scroll-snap-align:start}
-.step-tag{
-  display:inline-block; font-size:10px; font-weight:600; letter-spacing:.16em; text-transform:uppercase;
-  color:var(--frost-primary); background:var(--frost-primary-soft); border-radius:var(--r-sm); padding:4px 9px; margin:0 4px 10px;
-}
-.phone{width:300px; border-radius:32px; background:var(--frost-ink); padding:10px; box-shadow:var(--sh-md); transition:opacity .2s}
-.screen{border-radius:24px; background:var(--frost-surface); overflow:hidden; height:552px; display:flex; flex-direction:column; position:relative}
-.phone-cap{margin:14px 6px 0; font-size:12.5px; font-weight:300; color:var(--frost-ink-soft); line-height:1.55}
-.phone-cap b{font-weight:600; color:var(--frost-ink)}
-.phone-col.dim .phone{opacity:.35}
-.dim-note{
-  position:absolute; inset:auto 14px 40%; background:var(--frost-surface); border:1px solid var(--frost-border);
-  border-radius:var(--r-btn); padding:12px 14px; font-size:12px; font-weight:500; color:var(--frost-ink-soft);
-  box-shadow:var(--sh-md); text-align:center; display:none;
-}
-.phone-col.dim .dim-note{display:block}
-[hidden]{display:none !important}
-
-/* WhatsApp mock */
-.wa{background:var(--wa-wall); flex:1; display:flex; flex-direction:column}
-.wa-top{background:var(--wa-header); color:var(--wa-header-ink); padding:14px; display:flex; align-items:center; gap:10px}
-.wa-ava{width:32px; height:32px; border-radius:50%; background:var(--frost-warning-soft); color:var(--frost-ink); display:flex; align-items:center; justify-content:center; font-weight:600; font-size:14px; flex-shrink:0}
-.wa-top .name{font-weight:600; font-size:13.5px; line-height:1.2}
-.wa-top .sub{font-size:10.5px; opacity:.82}
-.wa-body{padding:18px 12px; flex:1}
-.wa-msg{
-  background:var(--wa-bubble); color:var(--wa-ink); border-radius:4px 14px 14px 14px;
-  padding:11px 13px 8px; max-width:97%; font-size:13px; line-height:1.5; box-shadow:var(--sh-xs);
-}
-.wa-msg .hdr{font-weight:600; margin-bottom:4px}
-.wa-msg .time{display:block; text-align:right; font-size:10px; color:var(--g-muted); margin-top:6px}
-.wa-btn{margin-top:9px; border-top:1px solid var(--frost-border); padding-top:9px; text-align:center; color:var(--wa-link); font-weight:600; font-size:13px}
-.wa-off{
-  margin:auto; text-align:center; font-size:12px; font-weight:500; color:var(--frost-muted);
-  background:rgba(255,255,255,.85); border-radius:var(--r-btn); padding:10px 16px;
-}
-
-/* Rating page mock */
-.rate{padding:18px 18px 16px; flex:1; display:flex; flex-direction:column; gap:11px; background:var(--frost-surface)}
-.rate-biz{display:flex; align-items:center; gap:10px}
-.rate-ava{width:40px; height:40px; border-radius:50%; background:var(--frost-primary); color:#fff; font-weight:600; display:flex; align-items:center; justify-content:center; font-size:16px}
-.rate-biz .n{font-size:15px; font-weight:600; line-height:1.25}
-.ctx-chip{font-size:11.5px; font-weight:300; color:var(--frost-ink-soft); background:var(--frost-surface-muted); border-radius:var(--r-item); padding:7px 11px; line-height:1.5}
-.ctx-chip b{font-weight:600}
-.rate h3{font-size:19px; font-weight:500; text-align:center; margin-top:2px}
-.stars{display:flex; justify-content:center; gap:7px}
-.stars button{
-  background:none; border:none; font-size:33px; line-height:1; cursor:pointer;
-  color:var(--frost-border); padding:2px; transition:transform .12s, color .12s; font-family:var(--sans);
-}
-.stars button.on{color:var(--star)}
-.stars button:hover{transform:scale(1.14)}
-.stars button:focus-visible{outline:2px solid var(--frost-primary); outline-offset:2px; border-radius:8px}
-.rate-hint{text-align:center; font-size:12px; font-weight:500; color:var(--frost-muted); min-height:18px}
-.tags{display:flex; flex-wrap:wrap; gap:6px; justify-content:center}
-.tags span{font-size:11px; font-weight:600; padding:5px 11px; border-radius:var(--r-chip); border:1px solid var(--frost-border); color:var(--frost-muted); background:var(--frost-surface)}
-.tags span.sel{background:var(--frost-warning-wash); border-color:var(--star); color:var(--frost-ink-soft)}
-.fake-input{border:1px solid var(--frost-border); border-radius:var(--r-btn); padding:10px 12px; font-size:12px; font-weight:300; color:var(--frost-faint); min-height:52px; background:var(--frost-surface)}
-.priv{display:flex; gap:8px; align-items:flex-start; font-size:11.5px; font-weight:300; color:var(--frost-muted)}
-.priv .box{width:15px; height:15px; border:1.5px solid var(--frost-border); border-radius:4px; flex-shrink:0; margin-top:1px; background:var(--frost-surface)}
-.priv.on .box{background:var(--frost-primary); border-color:var(--frost-primary)}
-.cta{
-  margin-top:auto; background:var(--frost-primary); color:#fff; text-align:center;
-  font-weight:600; font-size:13.5px; border-radius:var(--r-btn); padding:13px; box-shadow:var(--sh-glow);
-}
-.legal{font-size:10px; font-weight:300; color:var(--frost-muted); text-align:center; line-height:1.5}
-.legal b{font-weight:600}
-
-/* Google write-review mock */
-.gsheet{padding:0; flex:1; display:flex; flex-direction:column; background:var(--frost-surface)}
-.g-top{display:flex; align-items:center; gap:9px; padding:14px 16px; border-bottom:1px solid var(--g-border)}
-.g-logo{font-size:15px; font-weight:600; color:var(--g-ink)}
-.gdot{
-  width:22px; height:22px; border-radius:50%; font-size:12px; font-weight:600; color:#fff;
-  background:conic-gradient(#EA4335 0 25%, #FBBC05 25% 50%, #34A853 50% 75%, #4285F4 75% 100%);
-  display:flex; align-items:center; justify-content:center;
-}
-.g-body{padding:18px 16px; display:flex; flex-direction:column; gap:13px; flex:1}
-.g-biz{font-size:16px; font-weight:600; color:var(--g-ink)}
-.g-user{display:flex; align-items:center; gap:9px}
-.g-ava{width:30px; height:30px; border-radius:50%; background:var(--frost-primary-soft); color:var(--frost-primary); font-size:12px; font-weight:600; display:flex; align-items:center; justify-content:center}
-.g-user .gu{font-size:12px; color:var(--g-ink); font-weight:500}
-.g-user .gp{font-size:10.5px; color:var(--g-muted); font-weight:300}
-.g-stars{font-size:30px; letter-spacing:5px; color:var(--star); text-align:center}
-.g-text{border:1px solid var(--g-border); border-radius:var(--r-sm); padding:11px 12px; font-size:12px; color:var(--g-ink); font-weight:300; line-height:1.55; min-height:88px}
-.g-paste{font-size:10.5px; color:var(--g-muted); font-weight:300; text-align:center}
-.g-btn{margin-top:auto; background:var(--g-blue); color:#fff; text-align:center; font-weight:600; font-size:13px; border-radius:var(--r-chip); padding:11px}
-
-/* Thanks mock */
-.thanks{padding:28px 18px 18px; flex:1; display:flex; flex-direction:column; gap:14px; text-align:center; background:var(--frost-surface)}
-.check{width:60px; height:60px; border-radius:50%; background:var(--frost-success-wash); color:var(--frost-success); font-size:26px; display:flex; align-items:center; justify-content:center; margin:4px auto 0}
-.thanks h3{font-size:20px; font-weight:500}
-.thanks .sub{font-size:12.5px; font-weight:300; color:var(--frost-muted)}
-.gcard{border:1px solid var(--frost-border); border-radius:var(--r-card); padding:15px; text-align:left; background:var(--frost-surface); box-shadow:var(--sh-sm)}
-.gcard .gt{display:flex; gap:9px; align-items:center; font-weight:600; font-size:13px; margin-bottom:4px}
-.gcard p{font-size:11.5px; font-weight:300; color:var(--frost-muted); margin:0 0 11px}
-.gbtn{border:1.5px solid var(--frost-ink); border-radius:var(--r-btn); text-align:center; font-weight:600; font-size:12.5px; padding:10px; color:var(--frost-ink)}
-.ghost{border:1px solid var(--frost-border); border-radius:var(--r-btn); padding:11px; font-size:12.5px; font-weight:500; color:var(--frost-ink-soft)}
-
-/* ── Vitrina ─────────────────────────────── */
-.mockrow{display:grid; grid-template-columns:1.45fr 1fr; gap:22px; margin-top:24px; align-items:start}
-@media(max-width:860px){.mockrow{grid-template-columns:1fr}}
-.surface-lbl{font-size:10px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--frost-faint); margin-bottom:14px}
-.badges{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px}
-.badge{
-  display:inline-flex; align-items:center; gap:7px; font-size:12px; font-weight:600;
-  border-radius:var(--r-chip); padding:6px 13px; border:1px solid var(--frost-border); background:var(--frost-surface);
-}
-.badge .st{color:var(--star)}
-.badge.soft{background:var(--frost-surface-muted); border-color:transparent; color:var(--frost-ink-soft)}
-.review-card{border:1px solid var(--frost-border-soft); border-radius:var(--r-item); padding:13px 15px; margin-bottom:10px; background:var(--frost-surface)}
-.rc-top{display:flex; align-items:center; gap:8px; margin-bottom:4px; flex-wrap:wrap}
-.rc-top .who{font-weight:600; font-size:13px}
-.rc-top .st{color:var(--star); font-size:11.5px; letter-spacing:2px}
-.chip-ver{font-size:9.5px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; background:var(--frost-success-wash); color:#0B7A55; border-radius:var(--r-chip); padding:2.5px 9px}
-.chip-g{font-size:9.5px; font-weight:600; letter-spacing:.06em; background:var(--frost-surface-muted); color:var(--frost-muted); border-radius:var(--r-chip); padding:2.5px 9px}
-.rc-when{font-size:11px; color:var(--frost-faint); font-weight:300}
-.review-card p{font-size:12.5px; font-weight:300; color:var(--frost-ink-soft)}
-.vreply{margin-top:9px; border-left:2px solid var(--frost-border); padding-left:11px; font-size:11.5px; font-weight:300; color:var(--frost-muted)}
-.vreply b{font-weight:600}
-.empty-vitrina{
-  border:1.5px dashed var(--frost-border); border-radius:var(--r-item); padding:26px 18px;
-  text-align:center; font-size:12.5px; font-weight:300; color:var(--frost-muted);
-}
-.mk-card{border:1px solid var(--frost-border); border-radius:var(--r-card); overflow:hidden; background:var(--frost-surface); box-shadow:var(--sh-sm)}
-.mk-img{height:120px; background:linear-gradient(135deg, var(--frost-primary-soft), var(--frost-warning-wash))}
-.mk-body{padding:14px 16px 16px}
-.mk-body .n{font-weight:600; font-size:15px}
-.mk-body .r{font-size:12.5px; margin-top:4px; font-weight:500}
-.mk-body .r .st{color:var(--star)}
-.mk-body .r .gsep{color:var(--frost-muted); font-weight:300}
-.mk-body .loc{font-size:11.5px; color:var(--frost-muted); margin-top:2px; font-weight:300}
-.mk-note{font-size:12px; font-weight:300; color:var(--frost-ink-soft); margin-top:14px; line-height:1.6}
-.mk-note b{font-weight:600; color:var(--frost-ink)}
-
-/* ── Admin ─────────────────────────────── */
-.admin{display:grid; grid-template-columns:1fr 1.4fr; border:1px solid var(--frost-border); border-radius:var(--r-card); overflow:hidden; margin-top:24px; background:var(--frost-surface); box-shadow:var(--sh-sm)}
-@media(max-width:860px){.admin{grid-template-columns:1fr}}
-.inbox{border-right:1px solid var(--frost-border-soft)}
-@media(max-width:860px){.inbox{border-right:none; border-bottom:1px solid var(--frost-border-soft)}}
-.inbox .row{padding:13px 16px; border-bottom:1px solid var(--frost-border-soft); font-size:12.5px}
-.inbox .row.sel{background:var(--frost-primary-wash)}
-.inbox .r1{display:flex; justify-content:space-between; gap:8px; align-items:center}
-.inbox .st{color:var(--star); letter-spacing:1.5px; font-size:11px}
-.inbox .who{font-weight:600}
-.src{font-size:9px; font-weight:600; letter-spacing:.08em; border-radius:5px; padding:2px 7px}
-.src.agora{background:var(--frost-primary-soft); color:var(--frost-primary)}
-.src.google{background:var(--frost-warning-wash); color:var(--frost-warning-ink)}
-.inbox .prev{color:var(--frost-muted); font-size:11.5px; font-weight:300; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-.inbox-empty{padding:40px 20px; text-align:center; font-size:12.5px; font-weight:300; color:var(--frost-muted)}
-.detail{padding:18px 20px}
-.kpis{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:16px}
-.kpi{background:var(--frost-surface-muted); border-radius:var(--r-item); padding:9px 14px; font-size:11px; font-weight:300; color:var(--frost-muted)}
-.kpi b{display:block; font-size:15px; font-weight:600; color:var(--frost-ink)}
-.detail .rv p{font-size:13px; font-weight:300; color:var(--frost-ink-soft)}
-.ai-draft{border:1.5px dashed var(--frost-border); border-radius:var(--r-btn); padding:13px 15px; margin-top:14px; background:var(--frost-primary-soft)}
-.ai-draft .t{font-size:9.5px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--frost-primary); margin-bottom:6px}
-.ai-draft p{font-size:12.5px; font-weight:300; margin:0 0 11px; color:var(--frost-ink-soft)}
-.btn-row{display:flex; gap:8px}
-.btn{font-size:11.5px; font-weight:600; border-radius:var(--r-item); padding:7px 14px}
-.btn.pri{background:var(--frost-primary); color:#fff; box-shadow:var(--sh-glow)}
-.btn.sec{border:1px solid var(--frost-border); color:var(--frost-ink-soft); background:var(--frost-surface)}
-.detail-note{font-size:11.5px; font-weight:300; color:var(--frost-ink-soft); margin-top:14px; line-height:1.6}
-.detail-note b{font-weight:600; color:var(--frost-ink)}
-
-/* ── Reglas ─────────────────────────────── */
+/* ── Reglas ── */
 .rules{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:24px}
 @media(max-width:900px){.rules{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){.rules{grid-template-columns:1fr}}
@@ -320,7 +431,6 @@ h2 b{font-weight:500}
 .rule p{font-size:12.5px; font-weight:300; color:var(--frost-ink-soft); line-height:1.6}
 .rule p b{font-weight:600; color:var(--frost-ink)}
 
-/* ── Footer ─────────────────────────────── */
 .foot{border-top:1px solid var(--frost-border); background:var(--frost-surface); margin-top:30px}
 .foot .wrap{display:flex; align-items:center; justify-content:space-between; padding-top:26px; padding-bottom:34px; flex-wrap:wrap; gap:14px}
 .foot p{font-size:11.5px; font-weight:300; color:var(--frost-muted)}
@@ -329,26 +439,14 @@ h2 b{font-weight:500}
 </head>
 <body>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><g id="agora-mark"><path d="M41.3822 30.3938L38.187 35.7712L3.11719 35.8491L17.5348 10.9106L20.6466 16.2974L15.7314 24.9347L12.625 30.3938H41.3822Z" fill="#E2E8F0"/><path d="M20.6467 16.2973L17.5349 10.9106L3.11731 35.8491L0 30.3938L17.5349 0L31.8745 24.9385H25.6399L20.6467 16.2973Z" fill="#0072FF"/><path d="M23.8473 0L41.3822 30.3938H12.625L15.7314 24.9346L15.7384 24.9385H25.6398H31.8744L17.5348 0H23.8473Z" fill="#FF4658"/><path d="M76.7893 7.41158V4.76367H69.5647V7.41158H76.7893ZM72.2126 26.6334C74.4029 26.6334 76.3316 25.7835 77.6065 24.2797V26.3065H81.2351V10.1249H77.6065V12.1844C76.3316 10.6806 74.4029 9.79797 72.2126 9.79797C67.7668 9.79797 64.7266 13.5573 64.7266 18.232C64.7266 22.8741 67.7668 26.6334 72.2126 26.6334ZM73.1279 23.1356C70.382 23.1356 68.4206 21.0761 68.4206 18.232C68.4206 15.388 70.382 13.2958 73.1279 13.2958C75.7105 13.2958 77.6065 15.388 77.6065 18.232C77.6065 21.1088 75.6778 23.1356 73.1279 23.1356ZM92.2844 31.112C96.9264 31.112 100.718 28.2679 100.718 22.6125V10.1249H97.2533V12.5439C96.4034 10.9421 94.2131 9.79797 91.7614 9.79797C87.2828 9.79797 84.3407 13.2958 84.3407 17.6436C84.3407 21.9914 87.2828 25.4566 91.7614 25.4566C94.7035 25.4566 96.4361 23.9855 97.0899 22.6779V22.8087C97.0899 26.1104 95.39 28.3333 91.9248 28.3333C90.2576 28.3333 88.3616 27.7776 87.0867 26.6661L85.681 28.9544C87.1847 30.2947 89.5058 31.112 92.2844 31.112ZM92.5459 22.2856C89.9961 22.2856 88.0347 20.3242 88.0347 17.6436C88.0347 14.963 89.9961 12.9689 92.5459 12.9689C95.0958 12.9689 97.0899 14.9303 97.0899 17.5129C97.0899 20.3242 95.1612 22.2856 92.5459 22.2856ZM112.422 26.6334C117.194 26.6334 121.019 22.9067 121.019 18.232C121.019 13.5247 117.194 9.79797 112.422 9.79797C107.649 9.79797 103.824 13.5247 103.824 18.232C103.824 22.9067 107.649 26.6334 112.422 26.6334ZM112.422 23.1356C109.643 23.1356 107.518 21.0434 107.518 18.232C107.518 15.388 109.643 13.2958 112.422 13.2958C115.2 13.2958 117.325 15.388 117.325 18.232C117.325 21.0434 115.2 23.1356 112.422 23.1356ZM127.753 26.3065V19.7031C127.753 15.4534 130.042 13.7535 133.605 13.7535V9.79797C130.14 9.79797 128.374 11.694 127.753 13.3285V10.1249H124.125V26.3065H127.753ZM143.118 26.6334C145.308 26.6334 147.237 25.7835 148.512 24.2797V26.3065H152.14V10.1249H148.512V12.1844C147.237 10.6806 145.308 9.79797 143.118 9.79797C138.672 9.79797 135.632 13.5573 135.632 18.232C135.632 22.8741 138.672 26.6334 143.118 26.6334ZM144.033 23.1356C141.287 23.1356 139.326 21.0761 139.326 18.232C139.326 15.388 141.287 13.2958 144.033 13.2958C146.616 13.2958 148.512 15.388 148.512 18.232C148.512 21.1088 146.583 23.1356 144.033 23.1356Z" fill="#0F172A"/><rect x="52.7876" y="3.5874" width="0.683334" height="28.5292" fill="#E2E8F0"/></g></defs></svg>
+
 <header class="chrome">
   <div class="wrap">
-    <svg width="110" height="26" viewBox="0 0 153 36" xmlns="http://www.w3.org/2000/svg" aria-label="Ágora">
-      <path d="M41.3822 30.3938L38.187 35.7712L3.11719 35.8491L17.5348 10.9106L20.6466 16.2974L15.7314 24.9347L12.625 30.3938H41.3822Z" fill="#E2E8F0"/>
-      <path d="M17.5351 10.9106L20.6469 16.2974L16.7342 23.0921L12.1689 20.1848L17.5351 10.9106Z" fill="url(#p0)" fill-opacity="0.7"/>
-      <path d="M20.6467 16.2973L17.5349 10.9106L3.11731 35.8491L0 30.3938L17.5349 0L31.8745 24.9385H25.6399L20.6467 16.2973Z" fill="#0072FF"/>
-      <path d="M31.8543 24.9244L25.6302 24.9316L21.7061 18.1387L26.5114 15.6305L31.8543 24.9244Z" fill="url(#p1)" fill-opacity="0.7"/>
-      <path d="M23.8473 0L41.3822 30.3938H12.625L15.7314 24.9346L15.7384 24.9385H25.6398H31.8744L17.5348 0H23.8473Z" fill="#FF4658"/>
-      <path d="M12.625 30.3937L15.7289 24.9387L23.7202 24.9194L23.4706 30.3746L12.625 30.3937Z" fill="url(#p2)" fill-opacity="0.7"/>
-      <path d="M76.7893 7.41158V4.76367H69.5647V7.41158H76.7893ZM72.2126 26.6334C74.4029 26.6334 76.3316 25.7835 77.6065 24.2797V26.3065H81.2351V10.1249H77.6065V12.1844C76.3316 10.6806 74.4029 9.79797 72.2126 9.79797C67.7668 9.79797 64.7266 13.5573 64.7266 18.232C64.7266 22.8741 67.7668 26.6334 72.2126 26.6334ZM73.1279 23.1356C70.382 23.1356 68.4206 21.0761 68.4206 18.232C68.4206 15.388 70.382 13.2958 73.1279 13.2958C75.7105 13.2958 77.6065 15.388 77.6065 18.232C77.6065 21.1088 75.6778 23.1356 73.1279 23.1356ZM92.2844 31.112C96.9264 31.112 100.718 28.2679 100.718 22.6125V10.1249H97.2533V12.5439C96.4034 10.9421 94.2131 9.79797 91.7614 9.79797C87.2828 9.79797 84.3407 13.2958 84.3407 17.6436C84.3407 21.9914 87.2828 25.4566 91.7614 25.4566C94.7035 25.4566 96.4361 23.9855 97.0899 22.6779V22.8087C97.0899 26.1104 95.39 28.3333 91.9248 28.3333C90.2576 28.3333 88.3616 27.7776 87.0867 26.6661L85.681 28.9544C87.1847 30.2947 89.5058 31.112 92.2844 31.112ZM92.5459 22.2856C89.9961 22.2856 88.0347 20.3242 88.0347 17.6436C88.0347 14.963 89.9961 12.9689 92.5459 12.9689C95.0958 12.9689 97.0899 14.9303 97.0899 17.5129C97.0899 20.3242 95.1612 22.2856 92.5459 22.2856ZM112.422 26.6334C117.194 26.6334 121.019 22.9067 121.019 18.232C121.019 13.5247 117.194 9.79797 112.422 9.79797C107.649 9.79797 103.824 13.5247 103.824 18.232C103.824 22.9067 107.649 26.6334 112.422 26.6334ZM112.422 23.1356C109.643 23.1356 107.518 21.0434 107.518 18.232C107.518 15.388 109.643 13.2958 112.422 13.2958C115.2 13.2958 117.325 15.388 117.325 18.232C117.325 21.0434 115.2 23.1356 112.422 23.1356ZM127.753 26.3065V19.7031C127.753 15.4534 130.042 13.7535 133.605 13.7535V9.79797C130.14 9.79797 128.374 11.694 127.753 13.3285V10.1249H124.125V26.3065H127.753ZM143.118 26.6334C145.308 26.6334 147.237 25.7835 148.512 24.2797V26.3065H152.14V10.1249H148.512V12.1844C147.237 10.6806 145.308 9.79797 143.118 9.79797C138.672 9.79797 135.632 13.5573 135.632 18.232C135.632 22.8741 138.672 26.6334 143.118 26.6334ZM144.033 23.1356C141.287 23.1356 139.326 21.0761 139.326 18.232C139.326 15.388 141.287 13.2958 144.033 13.2958C146.616 13.2958 148.512 15.388 148.512 18.232C148.512 21.1088 146.583 23.1356 144.033 23.1356Z" fill="#0F172A"/>
-      <rect x="52.7876" y="3.5874" width="0.683334" height="28.5292" fill="#E2E8F0"/>
-      <defs>
-        <linearGradient id="p0" x1="18.8455" y1="15.9076" x2="12.5252" y2="18.5424" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
-        <linearGradient id="p1" x1="26.8652" y1="23.5719" x2="27.7524" y2="16.7522" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
-        <linearGradient id="p2" x1="16.3401" y1="26.6997" x2="21.8393" y2="30.8946" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
-      </defs>
-    </svg>
+    <svg width="106" height="25" viewBox="0 0 153 36" aria-label="Ágora"><use href="#agora-mark"></use></svg>
     <div class="right">
-      <span class="kicker">Prototipo · Reseñas</span>
-      <span class="mode-chip js-mode-chip">Modo: Ambas</span>
+      <a class="maplink" href="#mapa">Mapa</a>
+      <a class="mode-chip js-mode-chip" href="#modos">Modo: Ambas</a>
     </div>
   </div>
 </header>
@@ -359,15 +457,67 @@ h2 b{font-weight:500}
     <h1>Después de cada visita,<br>una <b>reseña que vale</b></h1>
     <p class="dek">
       Cada reserva completada dispara un pedido de reseña con <b>un solo tap desde WhatsApp</b>, sin cuenta ni login.
-      Y cada negocio elige dónde vive su reputación: <b>en Ágora, en Google Maps, en las dos — o en ninguna</b>.
-      Todo es opcional, por negocio.
+      Cada negocio elige dónde vive su reputación: <b>en Ágora, en Google Maps, en las dos — o en ninguna</b>.
+      Y la reseña no vive en una pantalla: acá está mapeado <b>cada lugar del sistema que toca</b>, de punta a punta.
     </p>
-    <div class="hero-pills">
-      <span class="pill blue">Verificadas: 1 visita real = 1 reseña</span>
-      <span class="pill">Un tap desde WhatsApp</span>
-      <span class="pill">Sin login</span>
-      <span class="pill">Feedback privado para el negocio</span>
-      <span class="pill">100% opcional</span>
+    <div class="hero-stats">
+      <div class="hstat"><b>18</b><span>touchpoints</span></div>
+      <div class="hstat"><b>4</b><span>actos</span></div>
+      <div class="hstat"><b>4</b><span>modos · todo opcional</span></div>
+      <div class="hstat"><b>6</b><span>superficies: WA · mail · 3 apps · Google</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="mapa" style="padding-top:30px">
+  <div class="wrap">
+    <div class="sec-head"><h2>El <b>mapa completo</b></h2></div>
+    <p class="sec-sub">Todos los lugares donde el sistema aparece, en orden. Cada nodo es clickeable, y todo el prototipo reacciona al <a href="#modos">modo elegido</a>.</p>
+    <div class="map">
+      <div class="map-row">
+        <div class="map-act">Acto 1<small>Llega el pedido</small></div>
+        <div class="map-nodes">
+          <a class="map-node" href="#t01"><span class="n">01</span>WhatsApp</a><span class="map-arrow">→</span>
+          <a class="map-node" href="#t02"><span class="n">02</span>Email</a><span class="map-arrow">→</span>
+          <a class="map-node" href="#t03"><span class="n">03</span>Campanita del cliente</a><span class="map-arrow">→</span>
+          <a class="map-node" href="#t04"><span class="n">04</span>Actividad</a>
+        </div>
+      </div>
+      <div class="map-row">
+        <div class="map-act">Acto 2<small>El cliente califica</small></div>
+        <div class="map-nodes">
+          <a class="map-node" href="#t05"><span class="n">05</span>Página de calificación</a><span class="map-arrow">→</span>
+          <a class="map-node" href="#t06"><span class="n">06</span>La variante 1–3★</a><span class="map-arrow">→</span>
+          <a class="map-node" href="#t07"><span class="n">07</span>Gracias + Google</a>
+        </div>
+      </div>
+      <div class="map-row">
+        <div class="map-act">Acto 3<small>El negocio se entera</small></div>
+        <div class="map-nodes">
+          <a class="map-node" href="#t08"><span class="n">08</span>Campanita del negocio</a><span class="map-arrow">→</span>
+          <a class="map-node" href="#t09"><span class="n">09</span>Side menu</a><span class="map-arrow">→</span>
+          <a class="map-node" href="#t10"><span class="n">10</span>Inbox Reseñas</a><span class="map-arrow">→</span>
+          <a class="map-node" href="#t11"><span class="n">11</span>Email al negocio</a><span class="map-arrow">→</span>
+          <a class="map-node" href="#t12"><span class="n">12</span>Dashboard</a><span class="map-arrow">→</span>
+          <a class="map-node" href="#t13"><span class="n">13</span>Ficha del cliente</a><span class="map-arrow">→</span>
+          <a class="map-node" href="#t14"><span class="n">14</span>Equipo</a>
+        </div>
+      </div>
+      <div class="map-row">
+        <div class="map-act">Acto 4<small>El mundo la ve</small></div>
+        <div class="map-nodes">
+          <a class="map-node" href="#t15"><span class="n">15</span>Tu página</a><span class="map-arrow">→</span>
+          <a class="map-node" href="#t16"><span class="n">16</span>Marketplace</a><span class="map-arrow">→</span>
+          <a class="map-node" href="#t17"><span class="n">17</span>Google Maps</a><span class="map-arrow">→</span>
+          <a class="map-node" href="#t18"><span class="n">18</span>El loop se cierra</a>
+        </div>
+      </div>
+      <div class="map-legend">
+        <span class="chip exists">Existe hoy — se reusa</span>
+        <span class="chip new">Nuevo</span>
+        <span class="chip phase">Fase 3 · GBP</span>
+        <span style="font-size:11.5px; color:var(--frost-muted); font-weight:300">Los apagados según el modo se muestran en gris</span>
+      </div>
     </div>
   </div>
 </section>
@@ -375,7 +525,7 @@ h2 b{font-weight:500}
 <section id="modos">
   <div class="wrap">
     <div class="sec-head"><h2>Elegí el <b>modo</b></h2></div>
-    <p class="sec-sub">La decisión de producto central: <b>dónde junta reseñas cada negocio es una elección, no una imposición.</b> Tocá un modo — todo el prototipo de abajo reacciona.</p>
+    <p class="sec-sub">La decisión de producto central: <b>dónde junta reseñas cada negocio es una elección, no una imposición.</b> Tocá un modo — los 18 touchpoints reaccionan.</p>
     <div class="modes" role="radiogroup" aria-label="Modo de reseñas">
       <button class="mode on" data-mode="ambas" role="radio" aria-checked="true">
         <span class="check">✓</span>
@@ -402,14 +552,8 @@ h2 b{font-weight:500}
         <div class="m-desc">No se pide nada después de la visita. Podés seguir mostrando lo que ya tenés, o nada.</div>
       </button>
     </div>
-    <p class="modes-note">Pedir y mostrar son <b>dos decisiones independientes</b>: un negocio puede apagar el pedido y seguir mostrando sus reseñas, o juntar en silencio sin mostrarlas todavía. Eso se ve en la configuración ↓</p>
-  </div>
-</section>
+    <p class="modes-note"><b>Pedir y mostrar son dos decisiones independientes</b>: un negocio puede apagar el pedido y seguir mostrando sus reseñas, o juntar en silencio sin mostrarlas todavía. Eso se configura acá ↓</p>
 
-<section id="config">
-  <div class="wrap">
-    <div class="sec-head"><h2>La <b>configuración</b> del negocio <span class="mode-chip js-mode-chip">Modo: Ambas</span></h2></div>
-    <p class="sec-sub">Así se ve en Ágora Pro. Dos diales — <b>dónde pedís</b> y <b>qué mostrás</b> — más el cuándo, ya resuelto con valores sanos.</p>
     <div class="settings-grid">
       <div class="app-card">
         <div class="head"><span class="t">Reseñas</span><span class="meta-chip">Lumen Estudio</span></div>
@@ -477,131 +621,495 @@ h2 b{font-weight:500}
   </div>
 </section>
 
-<section id="flujo">
+<!-- ═══════════ ACTO 1 ═══════════ -->
+<section class="act" id="acto-1">
   <div class="wrap">
-    <div class="sec-head"><h2>El <b>flujo del cliente</b> <span class="mode-chip js-mode-chip">Modo: Ambas</span></h2></div>
-    <p class="sec-sub">Un tap desde WhatsApp, sin cuenta, sin contraseña: el link es único por visita y ya sabe quién sos. <b>Las estrellas son clickeables</b> — probá 5★ y 2★.</p>
-    <div class="phones">
-
-      <div class="phone-col js-p1">
-        <span class="step-tag">1 · El pedido</span>
-        <div class="phone"><div class="screen">
-          <div class="wa">
-            <div class="wa-top">
-              <div class="wa-ava">L</div>
-              <div><div class="name">Lumen Estudio</div><div class="sub">cuenta de empresa</div></div>
-            </div>
-            <div class="wa-body js-wa-body">
-              <div class="wa-msg js-wa-msg">
-                <div class="hdr">Lumen Estudio</div>
-                <span class="js-wa-text">Hola Caro 👋 ¿cómo estuvo tu <b>Balayage + corte</b> de hoy?<br><br>Contanos en 30 segundos — al equipo le sirve muchísimo.</span>
-                <span class="time">20:15</span>
-                <div class="wa-btn js-wa-btn">⭐ Calificar mi visita</div>
-              </div>
-            </div>
-          </div>
-        </div></div>
-        <p class="phone-cap js-cap1"><b>2 horas después de la visita.</b> Mensaje de servicio, cortito y con nombre propio. Si el cliente no tiene WhatsApp, va por email.</p>
-      </div>
-
-      <div class="phone-col js-p2">
-        <span class="step-tag js-tag2">2 · La reseña</span>
-        <div class="phone"><div class="screen">
-          <div class="rate js-v-rate">
-            <div class="rate-biz">
-              <div class="rate-ava">L</div>
-              <div class="n">Lumen Estudio</div>
-            </div>
-            <div class="ctx-chip">Tu visita: <b>Balayage + corte</b> · con <b>Meli</b> · hoy 18:30</div>
-            <h3>¿Cómo estuvo?</h3>
-            <div class="stars js-stars" role="radiogroup" aria-label="Calificación">
-              <button aria-label="1 estrella">★</button><button aria-label="2 estrellas">★</button><button aria-label="3 estrellas">★</button><button aria-label="4 estrellas">★</button><button aria-label="5 estrellas">★</button>
-            </div>
-            <div class="rate-hint js-hint">Tocá una estrella</div>
-            <div class="tags js-tags" hidden></div>
-            <div class="fake-input js-comment" hidden></div>
-            <div class="priv js-priv" hidden><span class="box"></span><span class="js-privtxt"></span></div>
-            <div class="cta js-cta" hidden>Publicar reseña</div>
-            <p class="legal js-legal" hidden>Se publica como <b>Caro</b> · reseña verificada de una visita real</p>
-          </div>
-          <div class="gsheet js-v-gsheet" hidden>
-            <div class="g-top"><span class="gdot">G</span><span class="g-logo">Google</span></div>
-            <div class="g-body">
-              <div class="g-biz">Lumen Estudio</div>
-              <div class="g-user">
-                <div class="g-ava">C</div>
-                <div><div class="gu">Caro</div><div class="gp">La publicación será pública</div></div>
-              </div>
-              <div class="g-stars">★★★★★</div>
-              <div class="g-text">El balayage me encantó, Meli es una genia. Salí con el pelo soñado ✨</div>
-              <p class="g-paste">Texto pegado desde el portapapeles</p>
-              <div class="g-btn">Publicar</div>
-            </div>
-          </div>
-        </div></div>
-        <p class="phone-cap js-cap2"><b>Página propia, sin login.</b> El contexto de la visita es la verificación. Con 1–3★ el foco cambia: "¿qué podríamos mejorar?" con opción de mandarlo <b>solo al negocio</b>, en privado.</p>
-      </div>
-
-      <div class="phone-col js-p3">
-        <span class="step-tag">3 · El después</span>
-        <div class="phone"><div class="screen">
-          <div class="thanks js-v-thanks">
-            <div class="check">✓</div>
-            <h3>¡Gracias, Caro!</h3>
-            <p class="sub">Tu reseña verificada ya está en el perfil de Lumen Estudio.</p>
-            <div class="gcard js-gcard">
-              <div class="gt"><span class="gdot">G</span>¿La compartís también en Google?</div>
-              <p>Tu comentario ya quedó copiado — lo pegás y listo.</p>
-              <div class="gbtn">Dejar reseña en Google →</div>
-            </div>
-            <div class="ghost">Reservar otra visita</div>
-          </div>
-          <div class="dim-note js-p3-note" hidden></div>
-        </div></div>
-        <p class="phone-cap js-cap3"><b>El loop con Google.</b> Se le ofrece a todos, con el texto ya copiado. Y de paso, "Reservar otra visita" convierte la reseña en rebooking.</p>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<section id="vitrina">
-  <div class="wrap">
-    <div class="sec-head"><h2>La <b>vitrina</b> <span class="mode-chip js-mode-chip">Modo: Ambas</span></h2></div>
-    <p class="sec-sub">Qué ve un cliente nuevo, según lo que el negocio decidió mostrar. Dos fuentes <b>siempre etiquetadas</b>, nunca mezcladas como si fueran lo mismo.</p>
-    <div class="mockrow">
-      <div class="app-card"><div class="body" style="padding:20px 22px">
-        <p class="surface-lbl">Tu página · agora.red/lumen</p>
-        <div class="badges js-badges"></div>
-        <div class="js-reviews"></div>
-      </div></div>
+    <div class="act-head">
+      <div class="act-num">1</div>
       <div>
-        <div class="app-card"><div class="body" style="padding:20px 22px">
-          <p class="surface-lbl">Marketplace · market.agora.red</p>
-          <div class="mk-card">
-            <div class="mk-img"></div>
-            <div class="mk-body">
-              <div class="n">Lumen Estudio</div>
-              <div class="r js-mk-rating"></div>
-              <div class="loc">Palermo, Buenos Aires</div>
+        <div class="kicker k">Acto 1 · <a class="backmap" href="#mapa">↑ mapa</a></div>
+        <h2>Llega el <b>pedido</b> <span class="mode-chip js-mode-chip">Modo: Ambas</span></h2>
+        <p class="sec-sub">Cuatro puertas de entrada, en cascada: WhatsApp si hay teléfono, email si no — y siempre, sin push, desde la cuenta del cliente en agora.red.</p>
+      </div>
+    </div>
+
+    <div class="tp-row">
+      <div class="tp js-tp" id="t01" data-dim-modes="off" data-dim-note="No se envía ningún mensaje">
+        <div class="tp-head"><span class="tp-num">T01</span><h3>WhatsApp</h3><span class="chip app"><span class="dot" style="background:#008069"></span>WhatsApp</span><span class="chip exists">Reusa el job existente</span></div>
+        <p class="tp-sub">2–4 h después de la visita, por el job que ya corre cada 30 minutos. Template utility con opt-in del negocio, dedup y límite de plan ya resueltos.</p>
+        <div class="tp-body">
+          <div class="phone"><div class="screen">
+            <div class="sbar on-dark"><span>20:15</span><span class="ic"><span class="bars"><i style="height:4px"></i><i style="height:6px"></i><i style="height:8px"></i><i style="height:10px"></i></span><span class="batt"></span></span></div>
+            <div class="wa">
+              <div class="wa-top">
+                <div class="wa-ava">L</div>
+                <div><div class="name">Lumen Estudio</div><div class="sub">cuenta de empresa</div></div>
+              </div>
+              <div class="wa-body js-wa-body">
+                <div class="wa-msg js-wa-msg">
+                  <div class="hdr">Lumen Estudio</div>
+                  <span class="js-wa-text">Hola Caro 👋 ¿cómo estuvo tu <b>Balayage + corte</b> de hoy?<br><br>Contanos en 30 segundos — al equipo le sirve muchísimo.</span>
+                  <span class="time">20:15</span>
+                  <div class="wa-btn js-wa-btn">⭐ Calificar mi visita</div>
+                </div>
+              </div>
+            </div>
+          </div></div>
+          <p class="tp-cap js-cap-wa"><b>El botón depende del modo:</b> con reseñas propias abre <b>agora.red/r/&lt;token&gt;</b> (T05); en "solo Google" abre directo el perfil de Google del negocio.</p>
+        </div>
+      </div>
+
+      <div class="tp js-tp" id="t02" data-dim-modes="off" data-dim-note="No se envía ningún email">
+        <div class="tp-head"><span class="tp-num">T02</span><h3>Email</h3><span class="chip app"><span class="dot" style="background:#B5B5B5"></span>Email</span><span class="chip new">Nuevo</span></div>
+        <p class="tp-sub">El respaldo cuando no hay WhatsApp. Usa el layout "Editorial" de los transaccionales — y el truco god²: <b>las estrellas del email ya puntúan</b>, cada una abre la página con ese puntaje precargado.</p>
+        <div class="tp-body">
+          <div class="mail">
+            <div class="m-bar">
+              <div class="m-subject js-mail-subject">¿Cómo estuvo tu visita a Lumen Estudio? ⭐</div>
+              <div class="m-meta"><b>Ágora</b> — para caro@gmail.com</div>
+            </div>
+            <div class="m-page">
+              <div class="m-brandrow">
+                <svg width="82" height="19" viewBox="0 0 153 36" aria-label="Ágora"><use href="#agora-mark"></use></svg>
+                <span class="eyebrow js-mail-eyebrow">Tu opinión</span>
+              </div>
+              <div class="m-h1">Hola Caro,</div>
+              <div class="m-sub js-mail-sub">¿Cómo estuvo tu visita?</div>
+              <div class="m-card">
+                <div class="m-eyebrow">Tu visita</div>
+                <div class="m-ctx"><b>Balayage + corte</b> · con <b>Meli</b> · hoy 18:30</div>
+                <div class="js-mail-stars">
+                  <div class="m-stars">★★★★★</div>
+                  <div class="m-stars-note">Tocá una estrella — tu puntaje ya queda elegido</div>
+                </div>
+                <a class="m-btn js-mail-btn">Calificar mi visita</a>
+              </div>
+              <div class="m-foot">
+                <svg width="70" height="16" viewBox="0 0 153 36" aria-hidden="true"><use href="#agora-mark"></use></svg>
+                <span class="lnk">agora.red →</span>
+              </div>
+              <p class="m-reason">Recibiste este mensaje porque reservaste en Lumen Estudio a través de Ágora.</p>
             </div>
           </div>
-          <p class="mk-note js-mk-note"></p>
-        </div></div>
+          <p class="tp-cap">Mismo esqueleto que todos los mails de Ágora: fila de marca + eyebrow, "Hola {nombre}," card blanca, botón azul, footer con el motivo.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tp-row">
+      <div class="tp js-tp" id="t03" data-dim-modes="google off" data-dim-note="Solo con flujo propio de reseñas">
+        <div class="tp-head"><span class="tp-num">T03</span><h3>Campanita del cliente</h3><span class="chip app"><span class="dot" style="background:var(--frost-primary)"></span>agora.red</span><span class="chip exists">Campanita existe — tipo nuevo</span></div>
+        <p class="tp-sub">La campanita del cliente ya existe en agora.red (hoy solo notifica Comunidad). Se suman dos tipos: el pedido pendiente y — clave — <b>la respuesta del negocio</b> (T18).</p>
+        <div class="tp-body">
+          <div class="bellwrap" style="max-width:340px">
+            <div class="bellbar"><span class="bell">🔔<span class="bdg blue">2</span></span><span class="ava">C</span></div>
+            <div class="bellpanel js-bell-client">
+              <div class="bp-head"><div class="bp-row" style="margin-top:0"><span style="font-size:10.5px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--frost-muted)">Notificaciones</span></div></div>
+            </div>
+          </div>
+          <p class="tp-cap">La campanita se muestra solo si hay notificaciones (así funciona hoy). El pedido acá nunca duplica al WA/email — lo acompaña si sigue pendiente.</p>
+        </div>
+      </div>
+
+      <div class="tp js-tp" id="t04" data-dim-modes="" data-dim-note="">
+        <div class="tp-head"><span class="tp-num">T04</span><h3>Actividad del cliente</h3><span class="chip app"><span class="dot" style="background:var(--frost-primary)"></span>agora.red/actividades</span><span class="chip new">Acción nueva</span></div>
+        <p class="tp-sub">La tabla de reservas del cliente. Hoy un booking pasado <b>no tiene ninguna acción</b> — se suma la primera: calificar. Y si ya calificó, las estrellas quedan en la fila.</p>
+        <div class="tp-body">
+          <div class="browser">
+            <div class="b-bar"><span class="b-dots"><i></i><i></i><i></i></span><span class="b-url"><span class="lock">🔒</span>agora.red/actividades</span></div>
+            <div class="b-body">
+              <div class="nw-h1">Actividad</div>
+              <div class="nw-tabs"><span class="on">Reservas <span class="pill">4</span></span><span>Entradas</span><span>Planes mensuales</span><span>Comunidad</span></div>
+              <table class="nw">
+                <tr><th>Servicio</th><th>Negocio</th><th>Fecha y hora</th><th>Estado</th><th></th></tr>
+                <tr>
+                  <td class="svc">Balayage + corte</td><td>@lumen</td><td>Hoy · 18:30</td>
+                  <td><span class="status"><span class="dot" style="background:#0092FB"></span>Completada</span></td>
+                  <td class="js-nw-action"><span class="rate-cta">⭐ Calificar</span></td>
+                </tr>
+                <tr>
+                  <td class="svc">Perfilado de cejas</td><td>@lumen</td><td>12 jul · 15:00</td>
+                  <td><span class="status"><span class="dot" style="background:#0092FB"></span>Completada</span></td>
+                  <td><span class="rated">★★★★☆</span></td>
+                </tr>
+                <tr>
+                  <td class="svc">Color + brushing</td><td>@lumen</td><td>3 sep · 17:00</td>
+                  <td><span class="status"><span class="dot" style="background:#09D5A1"></span>Confirmada</span></td>
+                  <td></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <p class="tp-cap js-cap-t04"><b>En "solo Google"</b> el botón cambia a "⭐ Reseñar en Google"; <b>apagado</b>, la tabla queda como hoy — el historial de reseñas viejas no se borra.</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<section id="admin">
+<!-- ═══════════ ACTO 2 ═══════════ -->
+<section class="act alt" id="acto-2">
   <div class="wrap">
-    <div class="sec-head"><h2>El <b>admin</b> del negocio <span class="mode-chip js-mode-chip">Modo: Ambas</span></h2></div>
-    <p class="sec-sub">Un solo lugar para toda la reputación: leer, <b>responder con borrador sugerido</b>, reportar. Y la medición interna que no se publica: promedio por profesional y feedback privado.</p>
-    <div class="admin">
-      <div class="inbox js-inbox"></div>
-      <div class="detail">
-        <div class="kpis js-kpis"></div>
-        <div class="js-detail"></div>
+    <div class="act-head">
+      <div class="act-num">2</div>
+      <div>
+        <div class="kicker k">Acto 2 · <a class="backmap" href="#mapa">↑ mapa</a></div>
+        <h2>El cliente <b>califica</b> <span class="mode-chip js-mode-chip">Modo: Ambas</span></h2>
+        <p class="sec-sub">Una página propia, sin login: el link firmado ya sabe quién sos y qué visita fue. <b>Las estrellas del primer teléfono son clickeables.</b></p>
+      </div>
+    </div>
+
+    <div class="tp-row cols3">
+      <div class="tp js-tp" id="t05" data-dim-modes="off" data-dim-note="Sin pedido, no hay calificación">
+        <div class="tp-head"><span class="tp-num">T05</span><h3 class="js-t05-title">Página de calificación</h3><span class="chip app"><span class="dot" style="background:var(--frost-primary)"></span>agora.red/r/&lt;token&gt;</span><span class="chip new">Nuevo</span></div>
+        <p class="tp-sub">Estrellas grandes, chips para no escribir, comentario opcional. El contexto de la visita <b>es</b> la verificación.</p>
+        <div class="tp-body">
+          <div class="phone"><div class="screen">
+            <div class="sbar"><span>20:16</span><span class="ic"><span class="bars"><i style="height:4px"></i><i style="height:6px"></i><i style="height:8px"></i><i style="height:10px"></i></span><span class="batt"></span></span></div>
+            <div class="rate js-v-rate">
+              <div class="rate-biz">
+                <div class="rate-ava">L</div>
+                <div class="n">Lumen Estudio</div>
+              </div>
+              <div class="ctx-chip">Tu visita: <b>Balayage + corte</b> · con <b>Meli</b> · hoy 18:30</div>
+              <h4>¿Cómo estuvo?</h4>
+              <div class="stars js-stars" role="radiogroup" aria-label="Calificación">
+                <button aria-label="1 estrella">★</button><button aria-label="2 estrellas">★</button><button aria-label="3 estrellas">★</button><button aria-label="4 estrellas">★</button><button aria-label="5 estrellas">★</button>
+              </div>
+              <div class="rate-hint js-hint">Tocá una estrella</div>
+              <div class="tags js-tags" hidden></div>
+              <div class="fake-input js-comment" hidden></div>
+              <div class="priv js-priv" hidden><span class="box"></span><span class="js-privtxt"></span></div>
+              <div class="cta js-cta" hidden>Publicar reseña</div>
+              <p class="legal js-legal" hidden>Se publica como <b>Caro</b> · reseña verificada de una visita real</p>
+            </div>
+            <div class="gsheet js-v-gsheet" hidden>
+              <div class="g-top"><span class="gdot">G</span><span class="g-logo">Google</span></div>
+              <div class="g-body">
+                <div class="g-biz">Lumen Estudio</div>
+                <div class="g-user">
+                  <div class="ava">C</div>
+                  <div><div class="gu">Caro</div><div class="gp">La publicación será pública</div></div>
+                </div>
+                <div class="g-stars">★★★★★</div>
+                <div class="g-text">El balayage me encantó, Meli es una genia. Salí con el pelo soñado ✨</div>
+                <p class="g-paste">Texto pegado desde el portapapeles</p>
+                <div class="g-btn">Publicar</div>
+              </div>
+            </div>
+          </div></div>
+          <p class="tp-cap js-cap-t05"><b>Un tap ya es una reseña válida</b> (el comentario es opcional). En "solo Google" este paso es directamente el formulario de Google.</p>
+        </div>
+      </div>
+
+      <div class="tp js-tp" id="t06" data-dim-modes="google off" data-dim-note="Solo en el flujo propio">
+        <div class="tp-head"><span class="tp-num">T06</span><h3>La variante 1–3★</h3><span class="chip app"><span class="dot" style="background:var(--frost-primary)"></span>agora.red/r/&lt;token&gt;</span><span class="chip new">Nuevo</span></div>
+        <p class="tp-sub">Con puntaje bajo el foco pivotea: <b>"¿qué podríamos mejorar?"</b> y la opción de mandarlo solo al negocio — la medición de calidad privada que un vendor pidió textualmente.</p>
+        <div class="tp-body">
+          <div class="phone"><div class="screen">
+            <div class="sbar"><span>20:16</span><span class="ic"><span class="bars"><i style="height:4px"></i><i style="height:6px"></i><i style="height:8px"></i><i style="height:10px"></i></span><span class="batt"></span></span></div>
+            <div class="rate">
+              <div class="rate-biz">
+                <div class="rate-ava">L</div>
+                <div class="n">Lumen Estudio</div>
+              </div>
+              <div class="ctx-chip">Tu visita: <b>Depilación</b> · con <b>Agus</b> · hoy 16:00</div>
+              <h4>¿Cómo estuvo?</h4>
+              <div class="stars"><i class="on">★</i><i class="on">★</i><i>★</i><i>★</i><i>★</i></div>
+              <div class="rate-hint">Gracias por la sinceridad. ¿Qué podríamos mejorar?</div>
+              <div class="tags"><span class="sel">La demora</span><span>El resultado</span><span>La atención</span><span>El precio</span></div>
+              <div class="fake-input filled">Esperé 40 minutos con el turno reservado…</div>
+              <div class="priv on"><span class="box">✓</span><span>Enviar solo al negocio (no se publica)</span></div>
+              <div class="cta">Enviar</div>
+              <p class="legal">Le llega al negocio como <b>nota privada</b> — no aparece en tu perfil ni en su página</p>
+            </div>
+          </div></div>
+          <p class="tp-cap">El checkbox viene pre-marcado con 1–3★: el default protege al negocio <b>y</b> le da al cliente un canal real de queja. Puede desmarcarlo y publicar igual.</p>
+        </div>
+      </div>
+
+      <div class="tp js-tp" id="t07" data-dim-modes="google off" data-dim-note="El flujo termina en Google">
+        <div class="tp-head"><span class="tp-num">T07</span><h3>Gracias + el loop a Google</h3><span class="chip app"><span class="dot" style="background:var(--frost-primary)"></span>agora.red</span><span class="chip new">Nuevo</span></div>
+        <p class="tp-sub">La reseña ya está publicada. En "Ambas", el remate: repetirla en Google <b>con el texto ya copiado</b>. Y siempre, el gancho de reservar de nuevo.</p>
+        <div class="tp-body">
+          <div class="phone"><div class="screen">
+            <div class="sbar"><span>20:17</span><span class="ic"><span class="bars"><i style="height:4px"></i><i style="height:6px"></i><i style="height:8px"></i><i style="height:10px"></i></span><span class="batt"></span></span></div>
+            <div class="thanks">
+              <div class="check">✓</div>
+              <h4>¡Gracias, Caro!</h4>
+              <p class="sub">Tu reseña verificada ya está en el perfil de Lumen Estudio.</p>
+              <div class="gcard js-gcard">
+                <div class="gt"><span class="gdot">G</span>¿La compartís también en Google?</div>
+                <p>Tu comentario ya quedó copiado — lo pegás y listo.</p>
+                <div class="gbtn">Dejar reseña en Google →</div>
+              </div>
+              <div class="ghost">Reservar otra visita</div>
+            </div>
+          </div></div>
+          <p class="tp-cap js-cap-t07"><b>Se le ofrece a todos</b>, no solo a los de 5★ — la política anti-gating de Google. En "solo Ágora" esta card no existe: la reputación queda puertas adentro.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ ACTO 3 ═══════════ -->
+<section class="act" id="acto-3">
+  <div class="wrap">
+    <div class="act-head">
+      <div class="act-num">3</div>
+      <div>
+        <div class="kicker k">Acto 3 · <a class="backmap" href="#mapa">↑ mapa</a></div>
+        <h2>El negocio <b>se entera</b> <span class="mode-chip js-mode-chip">Modo: Ambas</span></h2>
+        <p class="sec-sub">Siete lugares en Ágora Pro donde la reputación aparece: del aviso instantáneo al promedio por profesional. Nada de esto se publica — es el tablero interno.</p>
+      </div>
+    </div>
+
+    <div class="tp-row">
+      <div class="tp js-tp" id="t08" data-dim-modes="off" data-dim-note="Sin actividad de reseñas">
+        <div class="tp-head"><span class="tp-num">T08</span><h3>Campanita del negocio</h3><span class="chip app"><span class="dot" style="background:var(--frost-ink)"></span>pro.agora.red</span><span class="chip js-chip-t08 exists">Campanita existe — tipo nuevo</span></div>
+        <p class="tp-sub">El centro de notificaciones de Ágora Pro ya existe (reservas, cancelaciones, reembolsos…). Se suman los tipos de reseña — y distinguen lo urgente: una <b>nota privada</b> no es lo mismo que un 5★.</p>
+        <div class="tp-body">
+          <div class="bellwrap">
+            <div class="bellbar"><span class="bell">🔔<span class="bdg js-bell-badge">3</span></span><span class="ava" style="background:var(--frost-warning-soft); color:var(--frost-ink)">L</span></div>
+            <div class="bellpanel js-bell-vendor">
+              <div class="bp-head">
+                <div class="bp-eyebrow">Tu bandeja</div>
+                <div class="bp-row"><span class="bp-title">Notificaciones</span><span class="bp-mark">Marcar todas</span></div>
+              </div>
+              <div class="js-bell-vendor-items"></div>
+              <div class="bp-foot">Ver todas las notificaciones →</div>
+            </div>
+          </div>
+          <p class="tp-cap js-cap-t08">Mismo dropdown que hoy ("Tu bandeja"), con dos tipos nuevos. Cada ítem deep-linkea a la reseña en el inbox (T10).</p>
+        </div>
+      </div>
+
+      <div class="tp js-tp" id="t09" data-dim-modes="off" data-dim-note="El contador aparece al activar reseñas">
+        <div class="tp-head"><span class="tp-num">T09</span><h3>El side menu</h3><span class="chip app"><span class="dot" style="background:var(--frost-ink)"></span>pro.agora.red</span><span class="chip new">Ítem nuevo</span></div>
+        <p class="tp-sub">"Reseñas" entra en <b>Marketing y comunicación</b>, al lado de Fidelización — la reputación es un motor de captación, no un ajuste.</p>
+        <div class="tp-body">
+          <div class="sidemenu">
+            <div class="sm-brand">
+              <svg width="84" height="20" viewBox="0 0 153 36" aria-hidden="true"><use href="#agora-mark"></use></svg>
+            </div>
+            <div class="sm-item"><span class="ic">🏠</span>Inicio</div>
+            <div class="sm-item"><span class="ic">📱</span>Mi página</div>
+            <div class="sm-item"><span class="ic">📅</span>Agenda</div>
+            <div class="sm-item"><span class="ic">🧾</span>Caja</div>
+            <div class="sm-hair"></div>
+            <div class="sm-section">Marketing y comunicación</div>
+            <div class="sm-item"><span class="ic">💬</span>Mensajes automáticos</div>
+            <div class="sm-item"><span class="ic">🏷️</span>Descuentos</div>
+            <div class="sm-item"><span class="ic">⭐</span>Fidelización</div>
+            <div class="sm-item on newrow js-sm-resenas"><span class="ic">✨</span>Reseñas<span class="cnt js-sm-count">3</span></div>
+            <div class="sm-item"><span class="ic">💬</span>Comunidad</div>
+            <div class="sm-item"><span class="ic">📈</span>Seguimiento</div>
+          </div>
+          <p class="tp-cap">El contador suma reseñas sin responder + notas privadas sin leer, y se apaga al ponerse al día — el menú no grita porque sí.</p>
+        </div>
+      </div>
+
+      <div class="tp js-tp span2" id="t10" data-dim-modes="" data-dim-note="">
+        <div class="tp-head"><span class="tp-num">T10</span><h3>El inbox de Reseñas</h3><span class="chip app"><span class="dot" style="background:var(--frost-ink)"></span>pro.agora.red/resenas</span><span class="chip new">Nuevo</span></div>
+        <p class="tp-sub">Toda la reputación en un solo lugar: reseñas propias, las de Google, y las notas privadas — con <b>borrador de respuesta sugerido</b> en un tap.</p>
+        <div class="tp-body">
+          <div class="browser">
+            <div class="b-bar"><span class="b-dots"><i></i><i></i><i></i></span><span class="b-url"><span class="lock">🔒</span>pro.agora.red/resenas</span></div>
+            <div class="admin">
+              <div class="inbox">
+                <div class="inbox-tabs js-inbox-tabs"></div>
+                <div class="js-inbox"></div>
+              </div>
+              <div class="detail">
+                <div class="kpis js-kpis"></div>
+                <div class="js-detail"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tp-row">
+      <div class="tp js-tp" id="t11" data-dim-modes="google off" data-dim-note="Las notas privadas son del flujo propio">
+        <div class="tp-head"><span class="tp-num">T11</span><h3>Email al negocio</h3><span class="chip app"><span class="dot" style="background:#B5B5B5"></span>Email</span><span class="chip new">Nuevo</span></div>
+        <p class="tp-sub">Lo delicado no espera a que abran la app: una nota privada o una reseña baja avisan al momento (ya existen 17 emails al vendor con este layout). El resto va en resumen semanal.</p>
+        <div class="tp-body">
+          <div class="mail">
+            <div class="m-bar">
+              <div class="m-subject">🔒 Vale te dejó una nota privada</div>
+              <div class="m-meta"><b>Ágora</b> — para hola@lumenestudio.com</div>
+            </div>
+            <div class="m-page">
+              <div class="m-brandrow">
+                <svg width="82" height="19" viewBox="0 0 153 36" aria-label="Ágora"><use href="#agora-mark"></use></svg>
+                <span class="eyebrow">Reseñas · Nota privada</span>
+              </div>
+              <div class="m-h1">Hola Lumen Estudio,</div>
+              <div class="m-sub"><b style="font-weight:600">Vale</b> calificó su visita de hoy (Depilación · con Agus) con <span style="color:var(--star); letter-spacing:1px">★★</span> y te dejó una nota que solo vos podés ver:</div>
+              <div class="m-quote">
+                <div class="q-eyebrow">La nota</div>
+                <div class="q-text">"Esperé 40 minutos con el turno reservado…"</div>
+              </div>
+              <div style="text-align:center"><a class="m-btn">Leer y responder</a></div>
+              <div class="m-foot">
+                <svg width="70" height="16" viewBox="0 0 153 36" aria-hidden="true"><use href="#agora-mark"></use></svg>
+                <span class="lnk">pro.agora.red →</span>
+              </div>
+              <p class="m-reason">Esto no se publica en tu página. Recibiste este mensaje porque sos vendor de Ágora.</p>
+            </div>
+          </div>
+          <p class="tp-cap">La "medición de calidad y atención" que pidió un vendor real — le llega <b>aunque nunca abra el panel</b>.</p>
+        </div>
+      </div>
+
+      <div class="tp js-tp" id="t12" data-dim-modes="off" data-dim-note="Sin datos de reputación todavía">
+        <div class="tp-head"><span class="tp-num">T12</span><h3>Dashboard</h3><span class="chip app"><span class="dot" style="background:var(--frost-ink)"></span>pro.agora.red</span><span class="chip new">Widget nuevo</span></div>
+        <p class="tp-sub">Un widget más en el inicio, junto a "Agenda del día", "Resumen mensual" y "Tareas pendientes".</p>
+        <div class="tp-body">
+          <div class="wcard" style="max-width:300px">
+            <div class="wk">Reputación · 30 días</div>
+            <div class="big js-dash-big"><span class="st">★</span> 4.9</div>
+            <div class="sub js-dash-sub"><b>12 reseñas nuevas</b> · 3 sin responder · 92% con 4★ o más</div>
+            <div class="staff-bar" style="margin-top:10px"><i style="width:92%"></i></div>
+          </div>
+          <p class="tp-cap js-cap-t12">Click → inbox (T10). En "solo Google" muestra el promedio de Google; el detalle fino llega con la fase GBP.</p>
+        </div>
+      </div>
+
+      <div class="tp js-tp" id="t13" data-dim-modes="google off" data-dim-note="Se llena con reseñas propias">
+        <div class="tp-head"><span class="tp-num">T13</span><h3>Ficha del cliente</h3><span class="chip app"><span class="dot" style="background:var(--frost-ink)"></span>pro.agora.red/clientes</span><span class="chip exists">Timeline existe — evento nuevo</span></div>
+        <p class="tp-sub">La ficha ya tiene su historial "Última actividad" (16 tipos de evento). La reseña es el 17°: antes del próximo turno de Caro, el negocio sabe qué valoró.</p>
+        <div class="tp-body">
+          <div class="wcard" style="max-width:300px">
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px">
+              <span class="ava">C</span>
+              <div><div style="font-size:14px; font-weight:600">Caro Méndez</div><div style="font-size:11px; color:var(--frost-muted); font-weight:300">12 visitas · promedio que deja: 4.8</div></div>
+            </div>
+            <div class="wk" style="margin:8px 0 4px">Última actividad</div>
+            <div class="fchips"><span class="on">Todo</span><span>Notas</span></div>
+            <div class="tl">
+              <div class="tl-item"><span class="ic">⭐</span><span><b>Dejó una reseña</b> <span class="st">★★★★★</span> — "Meli es una genia…"<br><span class="tl-when">Hoy · 20:16</span></span></div>
+              <div class="tl-item"><span class="ic">✓</span><span>Asistió · Balayage + corte con Meli<br><span class="tl-when">Hoy · 18:30</span></span></div>
+              <div class="tl-item"><span class="ic">📅</span><span>Reservó online<br><span class="tl-when">lun 18 ago</span></span></div>
+            </div>
+          </div>
+          <p class="tp-cap">También al revés: una nota privada de Caro aparece acá como contexto antes de atenderla de nuevo.</p>
+        </div>
+      </div>
+
+      <div class="tp js-tp" id="t14" data-dim-modes="google off" data-dim-note="La medición por profesional es del flujo propio">
+        <div class="tp-head"><span class="tp-num">T14</span><h3>Equipo</h3><span class="chip app"><span class="dot" style="background:var(--frost-ink)"></span>pro.agora.red/equipo</span><span class="chip new">Nuevo</span></div>
+        <p class="tp-sub">Cada reseña queda atada al profesional del turno. <b>Solo interno</b> — nunca se publica un ranking del equipo.</p>
+        <div class="tp-body">
+          <div class="wcard" style="max-width:300px">
+            <div class="wk">Promedio por profesional · 90 días</div>
+            <div class="staff-row"><span class="nm">Meli</span><span class="val"><span class="st">★</span> 4.9 <span style="color:var(--frost-muted); font-weight:300">(34)</span></span></div>
+            <div class="staff-bar"><i style="width:98%"></i></div>
+            <div class="staff-row"><span class="nm">Sofi</span><span class="val"><span class="st">★</span> 4.8 <span style="color:var(--frost-muted); font-weight:300">(28)</span></span></div>
+            <div class="staff-bar"><i style="width:96%"></i></div>
+            <div class="staff-row"><span class="nm">Agus</span><span class="val"><span class="st">★</span> 4.6 <span style="color:var(--frost-muted); font-weight:300">(19)</span></span></div>
+            <div class="staff-bar"><i style="width:92%"></i></div>
+            <div style="margin-top:10px"><span class="chip" style="background:var(--frost-surface-muted); color:var(--frost-muted)">Solo lo ve el dueño</span></div>
+          </div>
+          <p class="tp-cap">Con los tags (T05) esto se vuelve accionable: "Agus 4.6, y el tag más marcado es <i>la demora</i>".</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ ACTO 4 ═══════════ -->
+<section class="act alt" id="acto-4">
+  <div class="wrap">
+    <div class="act-head">
+      <div class="act-num">4</div>
+      <div>
+        <div class="kicker k">Acto 4 · <a class="backmap" href="#mapa">↑ mapa</a></div>
+        <h2>El mundo <b>la ve</b> <span class="mode-chip js-mode-chip">Modo: Ambas</span></h2>
+        <p class="sec-sub">Las vitrinas públicas — según lo que el negocio decidió mostrar. Dos fuentes <b>siempre etiquetadas</b>, nunca mezcladas como si fueran lo mismo.</p>
+      </div>
+    </div>
+
+    <div class="tp-row">
+      <div class="tp js-tp" id="t15" data-dim-modes="" data-dim-note="">
+        <div class="tp-head"><span class="tp-num">T15</span><h3>Tu página</h3><span class="chip app"><span class="dot" style="background:var(--frost-primary)"></span>agora.red/lumen</span><span class="chip exists">Sección Google existe — suma las propias</span></div>
+        <p class="tp-sub">El storefront ya muestra la pill de Google en todos los estilos de página. Se suma la fuente propia con su chip "Verificada" — y el <b>AggregateRating del schema pasa a ser legítimo</b> (hoy se alimenta de Google, contra sus guidelines).</p>
+        <div class="tp-body">
+          <div class="browser">
+            <div class="b-bar"><span class="b-dots"><i></i><i></i><i></i></span><span class="b-url"><span class="lock">🔒</span>agora.red/lumen</span></div>
+            <div class="b-body">
+              <div class="badges js-badges"></div>
+              <div class="js-reviews"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tp js-tp" id="t16" data-dim-modes="" data-dim-note="">
+        <div class="tp-head"><span class="tp-num">T16</span><h3>Marketplace</h3><span class="chip app"><span class="dot" style="background:var(--frost-primary)"></span>market.agora.red</span><span class="chip exists">Rating Google existe — prefiere el propio</span></div>
+        <p class="tp-sub">La card del directorio, donde hoy ya se rankea por rating de Google.</p>
+        <div class="tp-body">
+          <div class="browser" style="max-width:380px">
+            <div class="b-bar"><span class="b-dots"><i></i><i></i><i></i></span><span class="b-url"><span class="lock">🔒</span>market.agora.red/peluquerias</span></div>
+            <div class="b-body">
+              <div class="mk-card">
+                <div class="mk-img"></div>
+                <div class="mk-body">
+                  <div class="n">Lumen Estudio</div>
+                  <div class="r js-mk-rating"></div>
+                  <div class="loc">Palermo, Buenos Aires</div>
+                </div>
+              </div>
+              <p class="tp-cap js-mk-note" style="margin-top:12px"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tp-row">
+      <div class="tp js-tp" id="t17" data-dim-modes="agora off" data-dim-note="En este modo nada viaja a Google">
+        <div class="tp-head"><span class="tp-num">T17</span><h3>Google Maps</h3><span class="chip app"><span class="gdot" style="width:14px; height:14px; font-size:8px">G</span>maps.google.com</span><span class="chip exists">El perfil del negocio</span></div>
+        <p class="tp-sub">El destino final del loop: la reseña de Caro, pegada desde el flujo propio (Ambas) o publicada directo (Solo Google), sumando al rating público.</p>
+        <div class="tp-body">
+          <div class="gmap">
+            <div class="gm-head">
+              <div class="gm-name">Lumen Estudio</div>
+              <div class="gm-rate">4.7 <span class="st">★★★★★</span> · 133 reseñas · Peluquería</div>
+            </div>
+            <div class="gm-tabs"><span>Descripción</span><span class="on">Opiniones</span><span>Fotos</span></div>
+            <div class="gm-body">
+              <div class="rc-top"><span class="ava" style="width:26px; height:26px; font-size:11px">C</span><span class="who">Caro</span><span class="rc-when">hace 5 minutos</span></div>
+              <div style="color:var(--star); letter-spacing:2px; font-size:12px; margin:3px 0 5px">★★★★★</div>
+              <p style="font-size:12.5px; font-weight:300; color:var(--g-ink)">El balayage me encantó, Meli es una genia. Salí con el pelo soñado ✨</p>
+            </div>
+          </div>
+          <p class="tp-cap">Responderla <b>desde Ágora Pro</b> (sin entrar a Google) llega con la fase 3: OAuth de Google Business Profile — la API es gratis pero el acceso tarda semanas en aprobarse: conviene aplicar ya.</p>
+        </div>
+      </div>
+
+      <div class="tp js-tp" id="t18" data-dim-modes="google off" data-dim-note="El cierre del loop es del flujo propio">
+        <div class="tp-head"><span class="tp-num">T18</span><h3>El loop se cierra</h3><span class="chip app"><span class="dot" style="background:var(--frost-primary)"></span>agora.red</span><span class="chip new">Nuevo</span></div>
+        <p class="tp-sub">El negocio responde (T10) → el cliente se entera (campanita + email) → vuelve a la página del negocio → <b>"Reservar de nuevo"</b>. La reseña termina donde empezó: en otra visita.</p>
+        <div class="tp-body">
+          <div class="bellwrap" style="max-width:340px">
+            <div class="bellbar"><span class="bell">🔔<span class="bdg blue">1</span></span><span class="ava">C</span></div>
+            <div class="bellpanel">
+              <div class="bp-head"><div class="bp-row" style="margin-top:0"><span style="font-size:10.5px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--frost-muted)">Notificaciones</span></div></div>
+              <div class="bp-item unread">
+                <span class="bp-ic chat">💬</span>
+                <div>
+                  <div class="bp-t"><b>Lumen Estudio</b> respondió tu reseña: "¡Gracias Caro! Te esperamos para el retoque 💛"</div>
+                  <div class="bp-sub">Ver y reservar de nuevo →</div>
+                  <div class="bp-when">hace 1 h</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="tp-cap">La respuesta del negocio es <b>re-engagement gratis</b>: cada "gracias" es una invitación a volver. Acá la reseña se convierte en rebooking.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -616,7 +1124,7 @@ h2 b{font-weight:500}
       <div class="rule"><div class="rn">Credibilidad</div><h3>Se publica todo</h3><p>El negocio <b>responde y reporta</b>, no borra ni filtra. Una página llena de 5.0 perfectos no le sirve a nadie — la mezcla real convierte más.</p></div>
       <div class="rule"><div class="rn">Lo privado, privado</div><h3>Feedback solo para el negocio</h3><p>El cliente puede mandar su comentario <b>sin publicarlo</b>: llega como medición interna de calidad y atención, por profesional.</p></div>
       <div class="rule"><div class="rn">Sin trampas</div><h3>Google se ofrece a todos</h3><p>El pedido de reseña en Google no filtra por puntaje — <b>cumple la política anti-gating de Google</b> y protege el perfil del negocio.</p></div>
-      <div class="rule"><div class="rn">Sin spam</div><h3>Máximo 1 pedido cada 30 días</h3><p>La clienta que viene todas las semanas <b>no recibe un pedido por semana.</b> Un pedido por visita, con freno por cliente.</p></div>
+      <div class="rule"><div class="rn">Sin spam</div><h3>Máximo 1 pedido cada 30 días</h3><p>La clienta que viene todas las semanas <b>no recibe un pedido por semana.</b> Un pedido por visita, con freno por cliente y dedup entre canales.</p></div>
       <div class="rule"><div class="rn">Sin fricción</div><h3>Link único, sin login</h3><p>El link sabe quién sos y qué visita fue: <b>firmado, único y con vencimiento.</b> Nunca una pantalla de "iniciá sesión".</p></div>
     </div>
   </div>
@@ -634,11 +1142,9 @@ h2 b{font-weight:500}
   var MODE = 'ambas';
   var showAgora = true, showGoogle = true;
   var MODE_LABEL = {ambas:'Ambas', agora:'Solo Ágora', google:'Solo Google', off:'Apagado'};
-
   var $ = function(s, ctx){ return (ctx||document).querySelector(s); };
   var $$ = function(s, ctx){ return Array.prototype.slice.call((ctx||document).querySelectorAll(s)); };
 
-  /* ---------- data ---------- */
   var AGORA_REVIEWS = [
     {who:'Caro', stars:'★★★★★', when:'hoy', text:'El balayage me encantó, Meli es una genia. Salí con el pelo soñado ✨', reply:'¡Gracias Caro! Te esperamos para el retoque 💛'},
     {who:'Vale', stars:'★★★★☆', when:'hace 3 días', text:'Muy buena atención, solo demoró un poco en arrancar.', reply:null}
@@ -646,33 +1152,38 @@ h2 b{font-weight:500}
   var GOOGLE_REVIEWS = [
     {who:'Marta G.', stars:'★★★★★', when:'hace 2 meses', text:'Excelente lugar, muy prolijo y puntual. Lo recomiendo.', reply:null}
   ];
+  function bellVendorItems(mode){
+    if(mode==='google') return [
+      {ic:'⭐', cls:'', unread:true, warn:false, t:'<b>Nueva reseña en Google</b> — Marta G. <span class="st">★★★★★</span>', sub:'"Excelente lugar, muy prolijo y puntual…"', when:'hace 2 h'}
+    ];
+    return [
+      {ic:'⭐', cls:'', unread:true, warn:false, t:'<b>Caro</b> dejó una reseña <span class="st">★★★★★</span>', sub:'Balayage + corte · con Meli', when:'hace 5 min'},
+      {ic:'🔒', cls:'lock', unread:true, warn:true, t:'<b>Vale</b> te dejó una nota privada <span class="st">★★</span>', sub:'"Esperé 40 minutos con el turno…"', when:'hace 2 h'},
+      {ic:'⭐', cls:'', unread:false, warn:false, t:'<b>Vale</b> dejó una reseña <span class="st">★★★★</span>', sub:'Perfilado de cejas · con Sofi', when:'hace 3 días'}
+    ];
+  }
+  var BELL_CLIENT = [
+    {ic:'⭐', cls:'', unread:true, t:'¿Cómo estuvo tu visita a <b>Lumen Estudio</b>?', sub:'Calificá en 30 segundos', when:'hace 2 h'},
+    {ic:'💬', cls:'chat', unread:true, t:'<b>Lumen Estudio</b> respondió tu reseña 💛', sub:'Tocá para verla', when:'ayer'}
+  ];
 
-  /* ---------- mode selection ---------- */
   function setMode(m){
     MODE = m;
     if(m==='ambas'){ showAgora = true; showGoogle = true; }
     if(m==='agora'){ showAgora = true; showGoogle = false; }
     if(m==='google'){ showAgora = false; showGoogle = true; }
-    /* off: keep current display switches — pedir y mostrar son independientes */
     render();
   }
+  $$('.mode').forEach(function(b){ b.addEventListener('click', function(){ setMode(b.getAttribute('data-mode')); }); });
+  $$('.js-seg button').forEach(function(b){ b.addEventListener('click', function(){ setMode(b.getAttribute('data-mode')); }); });
+  $('.js-sw-agora').addEventListener('click', function(){ if(this.disabled) return; showAgora=!showAgora; render(); });
+  $('.js-sw-google').addEventListener('click', function(){ if(this.disabled) return; showGoogle=!showGoogle; render(); });
 
-  $$('.mode').forEach(function(b){
-    b.addEventListener('click', function(){ setMode(b.getAttribute('data-mode')); });
-  });
-  $$('.js-seg button').forEach(function(b){
-    b.addEventListener('click', function(){ setMode(b.getAttribute('data-mode')); });
-  });
-  $('.js-sw-agora').addEventListener('click', function(){
-    if(this.disabled) return; showAgora = !showAgora; render();
-  });
-  $('.js-sw-google').addEventListener('click', function(){
-    if(this.disabled) return; showGoogle = !showGoogle; render();
-  });
+  function bpItem(it){
+    return '<div class="bp-item'+(it.unread?' unread':'')+(it.warn?' warn':'')+'"><span class="bp-ic '+(it.cls||'')+'">'+it.ic+'</span><div><div class="bp-t">'+it.t+'</div>'+(it.sub?'<div class="bp-sub">'+it.sub+'</div>':'')+'<div class="bp-when">'+it.when+'</div></div></div>';
+  }
 
-  /* ---------- render ---------- */
   function render(){
-    /* chips + selectors */
     $$('.js-mode-chip').forEach(function(c){ c.textContent = 'Modo: ' + MODE_LABEL[MODE]; });
     $$('.mode').forEach(function(b){
       var on = b.getAttribute('data-mode')===MODE;
@@ -681,153 +1192,160 @@ h2 b{font-weight:500}
     $$('.js-seg button').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-mode')===MODE); });
     $$('.js-note').forEach(function(n){ n.hidden = n.getAttribute('data-for')!==MODE; });
 
-    /* settings switches */
-    var swA = $('.js-sw-agora'), swG = $('.js-sw-google');
-    var rowA = $('.js-row-agora');
-    var aDisabled = (MODE==='google');           /* sin paso propio no se juntan reseñas de Ágora */
-    if(aDisabled){ showAgora = false; }
-    swA.disabled = aDisabled;
-    rowA.classList.toggle('disabled', aDisabled);
+    var swA=$('.js-sw-agora'), swG=$('.js-sw-google'), rowA=$('.js-row-agora');
+    var aDisabled = (MODE==='google');
+    if(aDisabled){ showAgora=false; }
+    swA.disabled=aDisabled; rowA.classList.toggle('disabled', aDisabled);
     swA.classList.toggle('on', showAgora); swA.setAttribute('aria-checked', showAgora?'true':'false');
     swG.classList.toggle('on', showGoogle); swG.setAttribute('aria-checked', showGoogle?'true':'false');
 
-    /* ---- phones ---- */
-    var p1=$('.js-p1'), p2=$('.js-p2'), p3=$('.js-p3');
-    var waBtn=$('.js-wa-btn'), waText=$('.js-wa-text'), waMsg=$('.js-wa-msg'), waBody=$('.js-wa-body');
-    var off = MODE==='off';
+    /* dims genéricos */
+    $$('.js-tp').forEach(function(el){
+      var dims=(el.getAttribute('data-dim-modes')||'').split(' ').filter(Boolean);
+      el.classList.toggle('tp-dim', dims.indexOf(MODE)>=0);
+    });
 
-    p1.classList.toggle('dim', off);
-    var offNote = $('.js-wa-off', waBody);
-    if(off){
-      waMsg.style.display='none';
-      if(!offNote){
-        offNote=document.createElement('div'); offNote.className='wa-off js-wa-off';
-        offNote.textContent='No se envía ningún mensaje después de la visita';
-        waBody.appendChild(offNote);
-      }
+    /* T01 WA */
+    var waText=$('.js-wa-text'), waBtn=$('.js-wa-btn');
+    if(MODE==='google'){
+      waText.innerHTML='Hola Caro 👋 ¡gracias por venir hoy a tu <b>Balayage + corte</b>!<br><br>¿Nos dejás una reseña en Google? Ayuda un montón a que nos encuentren.';
+      waBtn.textContent='⭐ Dejar reseña en Google';
     } else {
-      waMsg.style.display='';
-      if(offNote) offNote.remove();
-      if(MODE==='google'){
-        waText.innerHTML='Hola Caro 👋 ¡gracias por venir hoy a tu <b>Balayage + corte</b>!<br><br>¿Nos dejás una reseña en Google? Ayuda un montón a que nos encuentren.';
-        waBtn.textContent='⭐ Dejar reseña en Google';
-      } else {
-        waText.innerHTML='Hola Caro 👋 ¿cómo estuvo tu <b>Balayage + corte</b> de hoy?<br><br>Contanos en 30 segundos — al equipo le sirve muchísimo.';
-        waBtn.textContent='⭐ Calificar mi visita';
-      }
+      waText.innerHTML='Hola Caro 👋 ¿cómo estuvo tu <b>Balayage + corte</b> de hoy?<br><br>Contanos en 30 segundos — al equipo le sirve muchísimo.';
+      waBtn.textContent='⭐ Calificar mi visita';
     }
-    $('.js-cap1').innerHTML = off
-      ? '<b>Modo apagado:</b> el estado inicial de todos los negocios. Nadie recibe nada que el negocio no activó.'
-      : (MODE==='google'
-        ? '<b>2 horas después de la visita.</b> El botón abre directo el formulario de reseña de Google del negocio — sin escalas.'
-        : '<b>2 horas después de la visita.</b> Mensaje de servicio, cortito y con nombre propio. Si el cliente no tiene WhatsApp, va por email.');
 
-    /* phone 2 */
-    var vRate=$('.js-v-rate'), vG=$('.js-v-gsheet');
-    p2.classList.toggle('dim', off);
-    vRate.hidden = (MODE==='google') || off;
-    vG.hidden = (MODE!=='google') || off;
-    $('.js-tag2').textContent = MODE==='google' ? '2 · Directo a Google' : '2 · La reseña';
-    var p2note=$('.js-p2 .dim-note');
-    if(!p2note){ p2note=document.createElement('div'); p2note.className='dim-note'; $('.js-p2 .screen').appendChild(p2note); }
-    p2note.textContent='Sin pedido, no hay paso 2'; p2note.style.display = off?'block':'none';
-    $('.js-cap2').innerHTML = off
-      ? 'El flujo completo queda en pausa. Nada se pierde: al reactivar, vuelve tal cual.'
-      : (MODE==='google'
-        ? '<b>Sin paso propio.</b> Google no verifica visitas ni tiene feedback privado — es el costo de este modo, y está bien: es una elección.'
-        : '<b>Página propia, sin login.</b> El contexto de la visita es la verificación. Con 1–3★ el foco cambia: "¿qué podríamos mejorar?" con opción de mandarlo <b>solo al negocio</b>, en privado.');
+    /* T02 email */
+    $('.js-mail-stars').hidden = (MODE==='google');
+    $('.js-mail-btn').textContent = (MODE==='google') ? 'Dejar reseña en Google' : 'Calificar mi visita';
+    $('.js-mail-subject').textContent = (MODE==='google') ? '¿Nos dejás una reseña en Google? ⭐' : '¿Cómo estuvo tu visita a Lumen Estudio? ⭐';
+    $('.js-mail-sub').textContent = (MODE==='google') ? '¿Nos ayudás con una reseña en Google?' : '¿Cómo estuvo tu visita?';
 
-    /* phone 3 */
-    var vThanks=$('.js-v-thanks'), gcard=$('.js-gcard'), p3note=$('.js-p3-note');
-    var p3dim = off || MODE==='google';
-    p3.classList.toggle('dim', p3dim);
-    vThanks.style.visibility = p3dim ? 'hidden' : 'visible';
-    gcard.hidden = (MODE!=='ambas');
-    p3note.hidden = !p3dim;
-    p3note.textContent = off ? 'Sin pedido, no hay paso 3' : 'El flujo termina en Google';
-    $('.js-cap3').innerHTML = off
-      ? 'Se reactiva con un tap en la configuración.'
-      : (MODE==='google'
-        ? 'La reseña queda publicada en el perfil de Google del negocio. Ágora la trae de vuelta a la vitrina si el negocio la muestra.'
-        : (MODE==='agora'
-          ? '<b>Gracias + rebooking.</b> En este modo no se ofrece Google: la reputación queda puertas adentro, como lo eligió el negocio.'
-          : '<b>El loop con Google.</b> Se le ofrece a todos, con el texto ya copiado. Y de paso, "Reservar otra visita" convierte la reseña en rebooking.'));
+    /* T03 campanita cliente */
+    var bc=$('.js-bell-client');
+    $$('.bp-item', bc).forEach(function(n){ n.remove(); });
+    BELL_CLIENT.forEach(function(it){ bc.insertAdjacentHTML('beforeend', bpItem(it)); });
 
-    /* ---- vitrina ---- */
-    var badges=$('.js-badges'), reviews=$('.js-reviews');
-    var bh='';
+    /* T04 actividad */
+    var nwa=$('.js-nw-action');
+    if(MODE==='off'){ nwa.innerHTML=''; }
+    else if(MODE==='google'){ nwa.innerHTML='<span class="rate-cta">⭐ Reseñar en Google</span>'; }
+    else { nwa.innerHTML='<span class="rate-cta">⭐ Calificar</span>'; }
+    $('.js-cap-t04').innerHTML = (MODE==='off')
+      ? 'Apagado, la tabla queda <b>como hoy</b> — el historial de reseñas viejas no se borra.'
+      : '<b>En "solo Google"</b> el botón cambia a "⭐ Reseñar en Google"; <b>apagado</b>, la tabla queda como hoy — el historial de reseñas viejas no se borra.';
+
+    /* T05 */
+    $('.js-v-rate').hidden=(MODE==='google');
+    $('.js-v-gsheet').hidden=(MODE!=='google');
+    $('.js-t05-title').textContent=(MODE==='google')?'Directo a Google':'Página de calificación';
+
+    /* T07 */
+    $('.js-gcard').hidden=(MODE!=='ambas');
+    $('.js-cap-t07').innerHTML=(MODE==='agora')
+      ? 'En "solo Ágora" la card de Google no existe: la reputación queda puertas adentro, como lo eligió el negocio. Queda el gancho de <b>reservar de nuevo</b>.'
+      : '<b>Se le ofrece a todos</b>, no solo a los de 5★ — la política anti-gating de Google. En "solo Ágora" esta card no existe: la reputación queda puertas adentro.';
+
+    /* T08 campanita vendor */
+    var bvItems=$('.js-bell-vendor-items');
+    var items=bellVendorItems(MODE);
+    bvItems.innerHTML=items.map(bpItem).join('');
+    var unread=items.filter(function(i){return i.unread}).length;
+    $('.js-bell-badge').textContent=unread;
+    var chip=$('.js-chip-t08');
+    chip.className='chip js-chip-t08 '+(MODE==='google'?'phase':'exists');
+    chip.textContent=(MODE==='google'?'Fase 3 · GBP':'Campanita existe — tipo nuevo');
+
+    /* T09 side menu */
+    $('.js-sm-count').textContent=unread;
+
+    /* T10 inbox */
+    renderInbox();
+
+    /* T12 dashboard */
+    if(MODE==='google'){
+      $('.js-dash-big').innerHTML='<span class="st">★</span> 4.7';
+      $('.js-dash-sub').innerHTML='<b>promedio en Google</b> · 133 reseñas totales';
+    } else {
+      $('.js-dash-big').innerHTML='<span class="st">★</span> 4.9';
+      $('.js-dash-sub').innerHTML='<b>12 reseñas nuevas</b> · 3 sin responder · 92% con 4★ o más';
+    }
+
+    /* T15 vitrina */
+    var badges=$('.js-badges'), reviews=$('.js-reviews'), bh='', rh='';
     if(showAgora) bh+='<span class="badge"><span class="st">★</span>4.9 · 86 reseñas en Ágora <span class="chip-ver">Verificadas</span></span>';
     if(showGoogle) bh+='<span class="badge soft"><span class="gdot" style="width:16px;height:16px;font-size:9px">G</span>4.7 · 132 en Google</span>';
     badges.innerHTML=bh;
-    var rh='';
-    if(showAgora){
-      AGORA_REVIEWS.forEach(function(r){
-        rh+='<div class="review-card"><div class="rc-top"><span class="who">'+r.who+'</span><span class="st">'+r.stars+'</span><span class="chip-ver">Verificada</span><span class="rc-when">'+r.when+'</span></div><p>'+r.text+'</p>';
-        if(r.reply) rh+='<div class="vreply"><b>Lumen Estudio:</b> '+r.reply+'</div>';
-        rh+='</div>';
-      });
-    }
-    if(showGoogle){
-      GOOGLE_REVIEWS.forEach(function(r){
-        rh+='<div class="review-card"><div class="rc-top"><span class="who">'+r.who+'</span><span class="st">'+r.stars+'</span><span class="chip-g">Google</span><span class="rc-when">'+r.when+'</span></div><p>'+r.text+'</p></div>';
-      });
-    }
+    if(showAgora) AGORA_REVIEWS.forEach(function(r){
+      rh+='<div class="review-card"><div class="rc-top"><span class="who">'+r.who+'</span><span class="st">'+r.stars+'</span><span class="chip-ver">Verificada</span><span class="rc-when">'+r.when+'</span></div><p>'+r.text+'</p>'+(r.reply?'<div class="vreply"><b>Lumen Estudio:</b> '+r.reply+'</div>':'')+'</div>';
+    });
+    if(showGoogle) GOOGLE_REVIEWS.forEach(function(r){
+      rh+='<div class="review-card"><div class="rc-top"><span class="who">'+r.who+'</span><span class="st">'+r.stars+'</span><span class="chip-g">Google</span><span class="rc-when">'+r.when+'</span></div><p>'+r.text+'</p></div>';
+    });
     if(!rh) rh='<div class="empty-vitrina">Tu página no muestra reseñas.<br>Podés prenderlas cuando quieras — lo juntado no se borra.</div>';
     reviews.innerHTML=rh;
 
+    /* T16 marketplace */
     var mk=$('.js-mk-rating'), mknote=$('.js-mk-note');
-    if(showAgora && showGoogle){ mk.innerHTML='<span class="st">★ 4.9</span> (86 verificadas) <span class="gsep">· G 4.7</span>'; mknote.innerHTML='La card del marketplace <b>prefiere el puntaje propio</b> (verificado) y muestra el de Google al lado.'; }
+    if(showAgora && showGoogle){ mk.innerHTML='<span class="st">★ 4.9</span> (86 verificadas) <span class="gsep">· G 4.7</span>'; mknote.innerHTML='La card <b>prefiere el puntaje propio</b> (verificado) y muestra el de Google al lado.'; }
     else if(showAgora){ mk.innerHTML='<span class="st">★ 4.9</span> (86 verificadas)'; mknote.innerHTML='Solo el puntaje propio: <b>reseñas verificadas de visitas reales.</b>'; }
     else if(showGoogle){ mk.innerHTML='<span class="st">★ 4.7</span> <span class="gsep">en Google (132)</span>'; mknote.innerHTML='Sin reseñas propias, la card usa el puntaje de Google — <b>como ya pasa hoy.</b>'; }
     else { mk.innerHTML='<span class="gsep">Sin puntaje visible</span>'; mknote.innerHTML='Sin reseñas a la vista, la card sale sin puntaje. <b>Elección del negocio</b> — aunque en un marketplace, la señal vende.'; }
+  }
 
-    /* ---- admin ---- */
-    var inbox=$('.js-inbox'), kpis=$('.js-kpis'), detail=$('.js-detail');
+  function renderInbox(){
+    var inbox=$('.js-inbox'), kpis=$('.js-kpis'), detail=$('.js-detail'), tabs=$('.js-inbox-tabs');
     function rowsFor(mode){
       if(mode==='agora') return [
         {sel:true, who:'Caro', src:'agora', stars:'★★★★★', prev:'El balayage me encantó, Meli es una genia…'},
-        {who:'Vale', src:'agora', stars:'★★★★☆', prev:'Muy buena atención, solo demoró un poco…'}
+        {who:'Vale', src:'priv', stars:'★★', prev:'🔒 Esperé 40 minutos con el turno reservado…'},
+        {who:'Vale', src:'agora', stars:'★★★★', prev:'Muy buena atención, solo demoró un poco…'}
       ];
       if(mode==='google') return [
         {sel:true, who:'Marta G.', src:'google', stars:'★★★★★', prev:'Excelente lugar, muy prolijo y puntual…'},
-        {who:'Luis P.', src:'google', stars:'★★★☆☆', prev:'Buen corte pero esperé bastante…'}
+        {who:'Luis P.', src:'google', stars:'★★★', prev:'Buen corte pero esperé bastante…'}
       ];
       if(mode==='ambas') return [
         {sel:true, who:'Caro', src:'agora', stars:'★★★★★', prev:'El balayage me encantó, Meli es una genia…'},
-        {who:'Vale', src:'agora', stars:'★★★★☆', prev:'Muy buena atención, solo demoró un poco…'},
+        {who:'Vale', src:'priv', stars:'★★', prev:'🔒 Esperé 40 minutos con el turno reservado…'},
         {who:'Marta G.', src:'google', stars:'★★★★★', prev:'Excelente lugar, muy prolijo y puntual…'}
       ];
       return [];
     }
     var rows=rowsFor(MODE);
+    tabs.innerHTML=(MODE==='google')
+      ? '<span class="on">Google</span>'
+      : '<span class="on">Todas</span><span>Ágora</span>'+(MODE==='ambas'?'<span>Google</span>':'')+'<span>Notas privadas</span>';
     if(rows.length===0){
       inbox.innerHTML='<div class="inbox-empty">Sin reseñas nuevas.<br>Activá el pedido cuando quieras — desde acá mismo.</div>';
+      tabs.innerHTML='';
       kpis.innerHTML='';
       detail.innerHTML='<p style="font-size:13px; font-weight:300; color:var(--frost-muted)">El historial queda guardado: si el negocio juntó reseñas antes de apagar, siguen acá.</p>';
-    } else {
-      inbox.innerHTML=rows.map(function(r){
-        return '<div class="row'+(r.sel?' sel':'')+'"><div class="r1"><span class="who">'+r.who+'</span><span class="src '+r.src+'">'+(r.src==='agora'?'ÁGORA':'GOOGLE')+'</span></div><div class="st">'+r.stars+'</div><div class="prev">'+r.prev+'</div></div>';
-      }).join('');
-      kpis.innerHTML = (MODE==='google')
-        ? '<div class="kpi"><b>4.7</b>promedio en Google</div><div class="kpi"><b>132</b>reseñas totales</div>'
-        : '<div class="kpi"><b>4.9</b>promedio 30 días</div><div class="kpi"><b>Meli 4.9</b>Sofi 4.8 · Agus 4.6</div><div class="kpi"><b>3</b>notas privadas sin leer</div>';
-      var first=rows[0];
-      var d='<div class="rv"><div class="rc-top" style="margin-bottom:5px"><span class="who" style="font-weight:600">'+first.who+'</span> <span class="st" style="color:var(--star); letter-spacing:2px; font-size:11.5px">'+first.stars+'</span></div><p>'+first.prev.replace('…','.')+'</p></div>';
-      d+='<div class="ai-draft"><div class="t">Borrador sugerido</div><p>'+(MODE==='google'
-        ? '¡Gracias por la buena onda, Marta! Nos alegra que lo hayas notado prolijo y puntual — te esperamos cuando quieras.'
-        : '¡Gracias Caro! A Meli le va a encantar leer esto 💛 Te esperamos en 8 semanas para el retoque del balayage.')+'</p><div class="btn-row"><span class="btn pri">Usar borrador</span><span class="btn sec">Editar</span></div></div>';
-      d+='<p class="detail-note">'+(MODE==='google'
-        ? 'Leer es inmediato. <b>Responder en Google desde acá</b> llega con la conexión del perfil de Google Business (fase 3).'
-        : 'Las respuestas se publican debajo de la reseña. Las <b>notas privadas</b> y el promedio por profesional no se publican nunca — son la medición interna de calidad.')+'</p>';
-      detail.innerHTML=d;
+      return;
     }
+    inbox.innerHTML=rows.map(function(r){
+      var srcLbl = r.src==='agora'?'ÁGORA':(r.src==='google'?'GOOGLE':'PRIVADA');
+      return '<div class="row'+(r.sel?' sel':'')+'"><div class="r1"><span class="who">'+r.who+'</span><span class="src '+r.src+'">'+srcLbl+'</span></div><div class="st">'+r.stars+'</div><div class="prev">'+r.prev+'</div></div>';
+    }).join('');
+    kpis.innerHTML=(MODE==='google')
+      ? '<div class="kpi"><b>4.7</b>promedio en Google</div><div class="kpi"><b>133</b>reseñas totales</div>'
+      : '<div class="kpi"><b>4.9</b>promedio 30 días</div><div class="kpi"><b>Meli 4.9</b>Sofi 4.8 · Agus 4.6</div><div class="kpi"><b>1</b>nota privada sin leer</div>';
+    var first=rows[0];
+    var d='<div class="rv"><div class="rc-top" style="margin-bottom:5px"><span class="who" style="font-weight:600">'+first.who+'</span> <span style="color:var(--star); letter-spacing:2px; font-size:11.5px">'+first.stars+'</span></div><p>'+first.prev.replace('…','.')+'</p></div>';
+    d+='<div class="ai-draft"><div class="t">Borrador sugerido</div><p>'+(MODE==='google'
+      ? '¡Gracias por la buena onda, Marta! Nos alegra que lo hayas notado prolijo y puntual — te esperamos cuando quieras.'
+      : '¡Gracias Caro! A Meli le va a encantar leer esto 💛 Te esperamos en 8 semanas para el retoque del balayage.')+'</p><div class="btn-row"><span class="btn pri">Usar borrador</span><span class="btn sec">Editar</span></div></div>';
+    d+='<p class="tp-cap" style="margin-top:12px">'+(MODE==='google'
+      ? 'Leer es inmediato. <b>Responder en Google desde acá</b> llega con la conexión del perfil de Google Business (fase 3).'
+      : 'Las respuestas se publican debajo de la reseña. Las <b>notas privadas</b> y el promedio por profesional no se publican nunca.')+'</p>';
+    detail.innerHTML=d;
   }
 
-  /* ---------- interactive stars ---------- */
-  var starBtns = $$('.js-stars button');
+  /* estrellas interactivas (T05) */
+  var starBtns=$$('.js-stars button');
   function renderStars(n){
     starBtns.forEach(function(b,i){ b.classList.toggle('on', i<n); });
-    var high = n>=4;
+    var high=n>=4;
     $('.js-hint').textContent = high ? '¡Genial! ¿Qué fue lo mejor?' : 'Gracias por la sinceridad. ¿Qué podríamos mejorar?';
     $('.js-tags').innerHTML = high
       ? '<span class="sel">El resultado</span><span>El trato</span><span class="sel">La puntualidad</span><span>El lugar</span>'
@@ -840,13 +1358,12 @@ h2 b{font-weight:500}
   }
   starBtns.forEach(function(b,i){ b.addEventListener('click', function(){ renderStars(i+1); }); });
 
-  /* deep-link a un modo: ?mode=agora|google|ambas|off (y ?stars=N para la captura) */
-  var q = new URLSearchParams(location.search);
-  var qm = q.get('mode');
-  if(qm && MODE_LABEL[qm]) MODE = qm, setMode(qm);
-  var qs = parseInt(q.get('stars'), 10);
+  /* deep-links: ?mode=ambas|agora|google|off · ?stars=1..5 */
+  var q=new URLSearchParams(location.search);
+  var qm=q.get('mode');
+  if(qm && MODE_LABEL[qm]) MODE=qm;
+  var qs=parseInt(q.get('stars'),10);
   renderStars(qs>=1 && qs<=5 ? qs : 5);
-
   render();
 })();
 </script>
