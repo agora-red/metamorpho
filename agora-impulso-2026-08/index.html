@@ -355,7 +355,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
       <div class="node"><div class="n">6</div><h4>Mide</h4><p>El resultado, y aprende de tu decisión.</p></div>
     </div>
     <div class="loop-back">↺ &nbsp;y cada resultado mejora la próxima oportunidad</div>
-    <div class="frame">La primera versión resuelve <strong>un único circuito completo</strong>: se libera un turno → Impulso encuentra clientes compatibles → prepara el contacto → el profesional aprueba → WhatsApp gestiona la respuesta → Nightwing recibe la reserva → Ágora atribuye el resultado. Todo lo demás llega después, sobre esa base probada.</div>
+    <div class="frame">La primera versión resuelve <strong>un único circuito completo</strong>: se libera un turno → Impulso encuentra clientes compatibles → prepara el contacto → el profesional aprueba → el mensaje sale por WhatsApp con el enlace de reserva → Nightwing recibe la reserva → Ágora atribuye el resultado. Todo lo demás llega después, sobre esa base probada.</div>
   </div>
 </section>
 
@@ -369,7 +369,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
       <div class="c-step"><div class="c-dot"><span>🔍</span></div><div class="c-body"><span class="who cyclone">Cyclone</span><h4>Busca clientes compatibles</h4><p>Ya consumieron ese servicio o uno compatible, están cerca de su frecuencia habitual de regreso, los atendió ese profesional, tienen teléfono válido, no tienen otra reserva equivalente, no fueron contactados hace poco y no rechazaron comunicaciones. Cada candidato recibe un <strong>puntaje determinístico</strong>.</p></div></div>
       <div class="c-step"><div class="c-dot"><span>💬</span></div><div class="c-body"><span class="who flash">Flash</span><h4>Te lo cuenta en tu idioma</h4><p>«Se liberó mañana a las 15:00. Encontramos 8 clientes compatibles. Los primeros 3 están cerca de su fecha habitual de regreso.» La IA redacta la explicación; los datos ya vienen calculados.</p></div></div>
       <div class="c-step"><div class="c-dot"><span>✅</span></div><div class="c-body"><span class="who flash">Flash</span><h4>Revisás y aprobás</h4><p>Destinatarios, mensaje y horario, todos editables. Podés quitar a quien quieras. <strong>Nada sale sin tu aprobación.</strong></p></div></div>
-      <div class="c-step"><div class="c-dot"><span>📲</span></div><div class="c-body"><span class="who wa">WhatsApp</span><h4>Sale la primera tanda</h4><p>Impulso contacta una tanda chica. WaBot atiende las respuestas y ofrece el enlace de reserva correspondiente.</p></div></div>
+      <div class="c-step"><div class="c-dot"><span>📲</span></div><div class="c-body"><span class="who wa">WhatsApp</span><h4>Sale la primera tanda</h4><p>Impulso contacta una tanda chica. Cada mensaje lleva el <strong>enlace directo de reserva</strong>; si el cliente responde, la conversación sigue en el WhatsApp del negocio, como siempre.</p></div></div>
       <div class="c-step"><div class="c-dot"><span>🗓</span></div><div class="c-body"><span class="who nw">Nightwing</span><h4>El cliente reserva en dos taps</h4><p>El enlace abre el servicio con <strong>fecha y hora preseleccionadas</strong>. Nightwing valida la disponibilidad una vez más antes de confirmar. Si el horario ya se ocupó, muestra alternativas — nunca un checkout inválido.</p></div></div>
       <div class="c-step"><div class="c-dot"><span>🏁</span></div><div class="c-body"><span class="who cyclone">Cyclone</span><h4>Se cierra el circuito</h4><p>La primera reserva válida ocupa el horario, <strong>los contactos pendientes dejan de enviarse</strong>, y la oportunidad queda completada con el ingreso recuperado atribuido a Impulso.</p></div></div>
     </div>
@@ -494,7 +494,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
           <li><strong>Automáticas</strong> — reglas que vos habilitaste.</li>
           <li><strong>Historial</strong> — completadas, descartadas, vencidas y fallidas.</li>
         </ul>
-        <p style="margin-top:16px;">Y entradas contextuales donde ya trabajás: en la <strong>Agenda</strong> («se liberó este horario — Impulso puede buscar quién lo ocupe»), en <strong>Clientes</strong> («preparar reactivación para este segmento»), en <strong>WaBot</strong> (conversaciones originadas por Impulso, identificadas) y en <strong>Analítica</strong> (reservas e ingresos atribuidos).</p>
+        <p style="margin-top:16px;">Y entradas contextuales donde ya trabajás: en la <strong>Agenda</strong> («se liberó este horario — Impulso puede buscar quién lo ocupe»), en <strong>Clientes</strong> («preparar reactivación para este segmento») y en <strong>Analítica</strong> (reservas e ingresos atribuidos).</p>
       </div>
     </div>
 
@@ -554,7 +554,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
       <span class="a-node">Bandeja de Impulso<small>persistida</small></span><span class="a-arr">→</span>
       <span class="a-node hot">Revisión en Flash<small>el freno humano</small></span><span class="a-arr">→</span>
       <span class="a-node">Ejecutor idempotente<small>action runs</small></span><span class="a-arr">→</span>
-      <span class="a-node">WhatsApp + WaBot<small>conversación</small></span><span class="a-arr">→</span>
+      <span class="a-node">WhatsApp<small>plantillas y tandas</small></span><span class="a-arr">→</span>
       <span class="a-node hot">Reserva en Nightwing<small>validación final</small></span><span class="a-arr">→</span>
       <span class="a-node">Atribución y métricas<small>auditoría</small></span>
     </div>
@@ -661,9 +661,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
           <li><strong>Explica una oportunidad</strong> en lenguaje simple</li>
           <li>Redacta <strong>alternativas de tono</strong></li>
           <li>Resume por qué ciertos clientes son compatibles</li>
-          <li><strong>Clasifica respuestas</strong> de WhatsApp</li>
-          <li>Elige la siguiente herramienta conversacional</li>
-          <li>Adapta la conversación dentro de límites</li>
+          <li><strong>Clasifica respuestas</strong> de WhatsApp (¿aceptó, rechazó, pregunta?) para actualizar el estado del contacto</li>
           <li>Convierte «sólo clientes frecuentes» en <strong>filtros estructurados</strong></li>
         </ul>
       </div>
@@ -732,7 +730,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
       </div>
       <div class="step">
         <div class="tag">Fase 2</div><h3>Ejecución integrada</h3>
-        <p>Plantillas de Meta aprobadas, envío desde Cyclone, tandas secuenciales, límites, quiet hours, reintentos, freno al ocuparse el horario y contexto para WaBot.</p>
+        <p>Plantillas de Meta aprobadas, envío desde Cyclone, tandas secuenciales, límites, quiet hours, reintentos y freno al ocuparse el horario.</p>
         <div class="out"><b>Salida</b>Circuito completamente ejecutable desde Ágora</div>
       </div>
       <div class="step">
@@ -812,12 +810,11 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
     <div class="src-grid">
       <div class="src"><b>Pulse ya detecta señales</b><p>Clientes ausentes, en riesgo, cumpleaños y días lentos ya salen del selector de Pulse.</p><code>cyclone · services/pulse/select.ts</code></div>
       <div class="src"><b>La segmentación ya calcula cadencia</b><p>Frecuencia personal, riesgo y ausencia por cliente ya existen como señales calculadas.</p><code>cyclone · services/client-segmentation.ts</code></div>
-      <div class="src"><b>WaBot ya conversa y enlaza</b><p>Obtiene historial del cliente y construye enlaces de reserva desde las herramientas del asesor.</p><code>cyclone · whatsapp-bot/advisor/tools.ts</code></div>
       <div class="src"><b>Las plantillas ya tienen sistema</b><p>Auto-mensajes de WhatsApp con feature flags por negocio: la base para las plantillas de Impulso.</p><code>cyclone · services/whatsapp/auto-messages.ts</code></div>
       <div class="src"><b>Flash ya tiene superficie editorial</b><p>La card de Pulse en el dashboard es el precedente directo de la superficie diaria de Impulso.</p><code>flash · widgets/PulseCardView.tsx</code></div>
       <div class="src"><b>Nightwing ya interpreta fecha y hora</b><p>El flujo del servicio ya preselecciona fecha y horario — la base del deep link con atribución.</p><code>nightwing · Service/RightSection/Options.tsx</code></div>
     </div>
-    <div class="pipe-note" style="margin-top:28px;"><strong>Regla de implementación:</strong> no duplicar Pulse, segmentación, disponibilidad ni WaBot. La selección y las exclusiones son determinísticas; la IA sólo explica y redacta con salidas estructuradas; y no hay envíos proactivos automáticos hasta resolver las plantillas aprobadas de Meta.</div>
+    <div class="pipe-note" style="margin-top:28px;"><strong>Regla de implementación:</strong> no duplicar Pulse, segmentación ni disponibilidad. La selección y las exclusiones son determinísticas; la IA sólo explica y redacta con salidas estructuradas; y no hay envíos proactivos automáticos hasta resolver las plantillas aprobadas de Meta.</div>
   </div>
 </section>
 
