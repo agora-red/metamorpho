@@ -163,7 +163,7 @@
         transition: all 160ms var(--f-ease); white-space: nowrap;
       }
       .btn:hover { color: var(--f-ink); box-shadow: var(--f-shadow-sm); }
-      .btn svg { width: 15px; height: 15px; }
+      .btn svg { width: 15px; height: 15px; flex: 0 0 auto; }
       .btn.pri {
         background: var(--f-brand); border-color: var(--f-brand); color: #fff; box-shadow: var(--f-shadow-glow);
       }
@@ -171,17 +171,47 @@
       .btn.neg { color: var(--f-coral-text); border-color: color-mix(in srgb, var(--f-coral) 32%, var(--f-hair-strong)); }
       .btn.pri.neg { background: #E03145; border-color: #E03145; color: #fff; box-shadow: none; }
       .btn.pri.neg:hover { background: #C42638; color: #fff; }
+      /* Botón de WhatsApp de la tabla de Por cobrar. Antes era un outline blanco de 34px
+         fijo: no se leía como una acción de WhatsApp y además quedaba más alto que el
+         "Registrar cobro" de al lado (.btn.sm mide ~32px). Ahora va sobre un tinte verde
+         —visible en una lista sin gritar como un sólido saturado en cada fila—, el glifo
+         en verde oscuro (AA sobre el tinte) y se estira a la altura de su hermano. */
+      .btn.wa {
+        padding: 0; width: 36px; height: auto; align-self: stretch; min-height: 32px;
+        justify-content: center; background: #E7F9EF; color: #0F7A3D;
+        border-color: rgba(18,140,74,.28); box-shadow: none;
+      }
+      .btn.wa svg { width: 21px; height: 21px; }
+      .btn.wa:hover {
+        background: #25D366; border-color: #1FB855; color: #fff;
+        box-shadow: 0 4px 12px -4px rgba(37,211,102,.7);
+      }
+      .btn.wa:active { transform: translateY(1px); }
+      .btn.wa:focus-visible { outline: 2px solid #0F7A3D; outline-offset: 2px; }
       .btn.ghost { background: transparent; box-shadow: none; }
       .btn.sm { padding: 7px 12px; font-size: 12px; border-radius: var(--f-r-item); }
 
       /* ---------- Tabs (solo cuando el rail no está) ---------- */
-      .tabs { display: none; gap: 6px; margin-bottom: 18px; overflow-x: auto; padding-bottom: 2px; }
+      /* Las secciones no entran a lo ancho en mobile: se scrollea de costado. Sin una
+         señal, la fila se lee como si terminara ahí — el degradado y la flecha dicen que
+         sigue, y aparecen solo del lado que de verdad tiene algo más. */
+      .tabswrap { display: none; position: relative; margin-bottom: 18px; }
+      .tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
+      .tabs::-webkit-scrollbar { display: none; }
+      .tabswrap .tarrow {
+        position: absolute; top: 0; bottom: 2px; width: 40px; border: 0; cursor: pointer; padding: 0;
+        display: none; align-items: center; color: var(--f-ink); opacity: 0; transition: opacity 160ms var(--f-ease);
+      }
+      .tabswrap .tarrow.l { left: 0; justify-content: flex-start; background: linear-gradient(to right, var(--f-paper) 55%, rgba(239,243,249,0)); }
+      .tabswrap .tarrow.r { right: 0; justify-content: flex-end; background: linear-gradient(to left, var(--f-paper) 55%, rgba(239,243,249,0)); }
+      .tabswrap.mas-izq .tarrow.l, .tabswrap.mas-der .tarrow.r { display: flex; opacity: 1; }
+      .tabswrap .tarrow svg { width: 16px; height: 16px; }
       .tabs button {
         border: 1px solid transparent; background: transparent; padding: 8px 14px; font-size: 13px;
         font-weight: 500; color: var(--f-ink-mid); border-radius: var(--f-r-chip); white-space: nowrap;
       }
       .tabs button.on { background: var(--f-card); color: var(--f-brand-deep); font-weight: 600; box-shadow: var(--f-shadow-xs); }
-      @media (max-width: 1100px) { .tabs { display: flex; } }
+      @media (max-width: 1100px) { .tabswrap { display: block; } }
 
       /* ==========================================================================
          LAYOUT — panel de filtros a la izquierda + contenido
@@ -284,41 +314,142 @@
       .adtr.tot .v { font-size: 17px; }
       .adsub + .adsub { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--f-hair); }
       .adnote { font-size: 12.5px; color: var(--f-ink-mid); line-height: 1.55; margin: 10px 0 0; }
-      /* Accionables: cada fila es un hecho + la acción que lo resuelve. El ícono lleva el
-         tono de la sección a la que manda; el texto nunca se apoya solo en el color. */
-      .actbox { padding: 18px 18px 8px; }
-      .actrow {
-        display: flex; align-items: center; gap: 14px; width: 100%; text-align: left; cursor: pointer;
-        background: transparent; border: 0; border-top: 1px solid var(--f-hair); padding: 13px 2px;
+      /* ---------- Selector de fechas ---------- */
+      .dpwrap { position: relative; }
+      .dpbar {
+        display: flex; align-items: center; gap: 12px; width: 100%; cursor: pointer;
+        background: var(--f-card); border: 1px solid var(--f-hair); border-radius: var(--f-r-card);
+        box-shadow: var(--f-shadow-xs); padding: 0 16px; height: 62px; text-align: left;
+        transition: all 150ms var(--f-ease);
       }
-      .actbox .actrow:first-of-type { border-top: 0; }
-      .actrow:hover { background: var(--f-paper); }
-      .actrow .ai { flex: 0 0 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; }
-      .actrow .ai svg { width: 16px; height: 16px; }
-      .actrow .ai.t-cobro { background: #fff2f3; color: #b3162a; }
-      .actrow .ai.t-equipo { background: #eef6ff; color: #005cd4; }
-      .actrow .ai.t-caja { background: #e8fbf5; color: #07806a; }
-      .actrow .ai.t-gasto { background: #fff7e8; color: #92600a; }
-      .actrow .ai.t-rojo { background: #fff2f3; color: #b3162a; }
-      .actrow .at { flex: 1; min-width: 0; }
-      .actrow .at > b { display: block; font-size: 15px; font-weight: 600; color: var(--f-ink); font-variant-numeric: tabular-nums; }
-      .actrow .at > span { display: block; font-size: 12.5px; color: var(--f-ink-mid); line-height: 1.45; margin-top: 2px; }
-      .actrow .at > span b { font-weight: 600; color: var(--f-ink-soft); }
-      .actrow .aa {
-        display: inline-flex; align-items: center; gap: 4px; flex: 0 0 auto; white-space: nowrap;
-        font-size: 12.5px; font-weight: 600; color: var(--f-brand-deep);
+      .dpbar:hover { border-color: var(--f-brand); box-shadow: 0 0 0 3px var(--f-brand-wash); }
+      .dpwrap.open .dpbar { border-color: var(--f-brand); box-shadow: 0 0 0 3px var(--f-brand-wash); }
+      .dpbar .ic { width: 17px; height: 17px; flex: 0 0 17px; color: var(--f-brand); }
+      .dpbar .lb { font-size: 14px; font-weight: 600; color: var(--f-ink); }
+      .dpbar .rg { font-size: 13px; color: var(--f-ink-mid); font-variant-numeric: tabular-nums; }
+      .dpbar .rg i { font-style: normal; color: var(--f-ink-mid); margin: 0 3px; }
+      .dpbar .ch { width: 14px; height: 14px; margin-left: auto; color: var(--f-ink-mid); flex: 0 0 14px; }
+      .dppop {
+        position: absolute; z-index: 85; top: calc(100% + 8px); left: 0; display: flex; cursor: default;
+        width: 786px; max-width: 100%;
+        background: var(--f-card); border: 1px solid var(--f-hair-strong); border-radius: var(--f-r-card);
+        box-shadow: var(--f-shadow-lg); overflow: hidden;
       }
-      .actrow .aa svg { width: 13px; height: 13px; }
-      @media (max-width: 760px) {
-        .actrow { flex-wrap: wrap; }
-        .actrow .aa { margin-left: 48px; }
+      .dppresets { width: 190px; flex: 0 0 190px; border-right: 1px solid var(--f-hair); padding: 12px 10px; background: var(--f-paper); }
+      .dppresets .k { font-size: 9.5px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--f-ink-mid); margin: 2px 0 8px 10px; }
+      .dppresets button {
+        display: block; width: 100%; text-align: left; border: 0; background: transparent; cursor: pointer;
+        padding: 8px 10px; border-radius: var(--f-r-item); font-size: 13px; font-weight: 500; color: var(--f-ink-soft);
       }
-      /* Cabecera filtrable: el filtro se lee donde se lee el dato. Activo = pastilla azul
-         con el número de opciones elegidas, para que se vea sin tener que abrirlo. */
-      /* La pastilla está SIEMPRE, no solo en hover: una columna que filtra tiene que
-         parecer un control desde el vamos. Sin márgenes negativos — se recortaban contra
-         el borde de la celda. El embudo dice "filtra"; el chevron, "esto se despliega". */
-      .tbl th.colf { cursor: pointer; user-select: none; padding: 0 8px 10px; }
+      .dppresets button:hover { background: var(--f-card); color: var(--f-ink); }
+      .dppresets button.on { background: var(--f-brand-wash); color: var(--f-brand-deep); font-weight: 600; }
+      .dpcals { display: flex; flex-wrap: wrap; width: 596px; max-width: 100%; box-sizing: border-box; padding: 14px 16px 12px; }
+      .dpcal { width: 262px; }
+      .dpcal + .dpcal { margin-left: 20px; padding-left: 20px; border-left: 1px solid var(--f-hair); }
+      .dpcals .dphint { width: 100%; }
+      .dpnav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+      .dpnav b { font-size: 13.5px; font-weight: 600; color: var(--f-ink); }
+      .dpnav button { border: 0; background: transparent; cursor: pointer; color: var(--f-ink-mid); width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; }
+      .dpnav button:hover:not(:disabled) { background: var(--f-paper); color: var(--f-ink); }
+      .dpnav button:disabled { opacity: .25; cursor: default; }
+      .dpnav svg { width: 15px; height: 15px; }
+      .dpdow, .dpgrid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+      .dpdow span { text-align: center; font-size: 9.5px; font-weight: 600; letter-spacing: .1em; color: var(--f-ink-mid); padding-bottom: 6px; }
+      .dpd {
+        border: 0; background: transparent; cursor: pointer; height: 34px; border-radius: 9px;
+        font-family: inherit; font-size: 12.5px; font-weight: 500; color: var(--f-ink-soft); font-variant-numeric: tabular-nums;
+      }
+      .dpd:hover:not(:disabled) { background: var(--f-brand-wash); color: var(--f-brand-deep); }
+      .dpd:disabled { color: var(--f-ink-whisper); opacity: .4; cursor: default; }
+      .dpd.in { background: var(--f-brand-wash); color: var(--f-brand-deep); border-radius: 0; }
+      .dpd.bd, .dpd.ini { background: var(--f-brand); color: #fff; font-weight: 600; border-radius: 9px; }
+      /* ---------- Picker full screen (mobile) ---------- */
+      .dpfull {
+        position: fixed; inset: 0; z-index: 90; background: var(--f-card);
+        display: flex; flex-direction: column; cursor: default;
+      }
+      .dpf-h { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 18px 20px 14px; border-bottom: 1px solid var(--f-hair); }
+      .dpf-h h3 { margin: 0; font-size: 17px; font-weight: 600; color: var(--f-ink); }
+      .dpf-h .x { border: 0; background: var(--f-paper); width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; color: var(--f-ink-mid); cursor: pointer; }
+      .dpf-h .x svg { width: 15px; height: 15px; }
+      .dpf-rango { display: flex; align-items: center; gap: 10px; padding: 14px 20px 12px; }
+      .dpf-rango > svg { width: 18px; height: 18px; flex: 0 0 18px; color: var(--f-ink-mid); }
+      .dpf-campo {
+        flex: 1; min-width: 0; border: 1px solid var(--f-hair-strong); border-radius: var(--f-r-input);
+        padding: 8px 12px; background: var(--f-card);
+      }
+      .dpf-campo.on { border-color: var(--f-brand); box-shadow: 0 0 0 3px var(--f-brand-wash); }
+      .dpf-campo span { display: block; font-size: 9px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--f-ink-mid); }
+      .dpf-campo b { display: block; font-size: 14px; font-weight: 600; color: var(--f-ink); margin-top: 2px; }
+      .dpf-presets { display: flex; gap: 7px; overflow-x: auto; padding: 4px 20px 14px; scrollbar-width: none; }
+      .dpf-presets::-webkit-scrollbar { display: none; }
+      .dpf-presets button {
+        white-space: nowrap; border: 1px solid var(--f-hair-strong); background: var(--f-card);
+        border-radius: 999px; padding: 8px 14px; font-family: inherit; font-size: 12.5px; font-weight: 600;
+        color: var(--f-ink-soft); cursor: pointer;
+      }
+      .dpf-presets button.on { background: var(--f-brand-wash); border-color: var(--f-brand); color: var(--f-brand-deep); }
+      .dpf-cals { flex: 1; overflow-y: auto; padding: 0 20px 12px; }
+      .dpf-cals .dpcal { width: auto; }
+      .dpf-cals .dpcal + .dpcal { margin: 18px 0 0; padding: 18px 0 0; border-top: 1px solid var(--f-hair); border-left: 0; }
+      .dpf-cals .dpd { height: 42px; font-size: 14px; }
+      .dpf-f { border-top: 1px solid var(--f-hair); padding: 12px 20px calc(14px + env(safe-area-inset-bottom, 0px)); background: var(--f-card); }
+      .dpf-res { margin: 0 0 10px; font-size: 12.5px; color: var(--f-ink-mid); }
+      .dpf-res b { color: var(--f-ink); font-weight: 600; }
+      .dpf-btns { display: flex; gap: 10px; }
+      .dpf-btns .btn { flex: 1; justify-content: center; height: 48px; font-size: 14px; }
+
+      .dphint { font-size: 11.5px; color: var(--f-ink-mid); margin: 12px 2px 0; line-height: 1.45; }
+
+      /* Hero: la respuesta a la pregunta de la sección, antes que cualquier desglose. */
+      .hero { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 8px 22px; margin-bottom: 22px; }
+      .hero .q { font-size: 13px; color: var(--f-ink-mid); width: 100%; margin-bottom: 2px; }
+      .hero .n { font-size: 46px; font-weight: 200; letter-spacing: -0.04em; line-height: 1; font-variant-numeric: tabular-nums; color: var(--f-ink); }
+      .hero .n.neg { color: var(--f-coral); }
+      .hero .d { font-size: 13px; color: var(--f-ink-mid); padding-bottom: 5px; }
+      .hero .d b { color: var(--f-ink-soft); font-weight: 600; }
+
+      /* Centinela del scroll infinito */
+      .loadmore {
+        display: flex; align-items: center; justify-content: center; gap: 9px;
+        padding: 16px 10px; font-size: 12px; font-weight: 500; color: var(--f-ink-mid);
+        border-top: 1px solid var(--f-hair);
+      }
+      .loadmore b { color: var(--f-ink-soft); font-weight: 600; }
+      .loadmore .spin {
+        width: 13px; height: 13px; border-radius: 50%; border: 2px solid var(--f-hair-strong);
+        border-top-color: var(--f-brand); animation: gira 700ms linear infinite;
+      }
+      @keyframes gira { to { transform: rotate(360deg); } }
+
+      .descrow { display: flex; gap: 10px; align-items: stretch; }
+      .descrow input { flex: 1; min-width: 0; }
+      .descrow .radios.sm { flex: 0 0 auto; }
+      .descrow .radios.sm button { padding: 0 14px; font-size: 13px; }
+
+      /* ---------- Barra de la tabla: buscador + conteo ---------- */
+      .tsearch {
+        display: flex; align-items: center; gap: 8px; flex: 0 1 320px; min-width: 0;
+        background: var(--f-paper); border: 1px solid transparent; border-radius: var(--f-r-input);
+        padding: 7px 10px; transition: all 140ms var(--f-ease);
+      }
+      .tsearch svg { width: 14px; height: 14px; flex: 0 0 14px; color: var(--f-ink-mid); }
+      .tsearch input {
+        flex: 1; min-width: 0; border: 0; background: transparent; outline: none;
+        font-family: inherit; font-size: 13px; font-weight: 500; color: var(--f-ink);
+      }
+      .tsearch input::placeholder { color: var(--f-ink-mid); font-weight: 500; }
+      .tsearch:focus-within { background: var(--f-card); border-color: var(--f-brand); box-shadow: 0 0 0 3px var(--f-brand-wash); }
+      .tsearch:focus-within svg, .tsearch.on svg { color: var(--f-brand); }
+      .tsearch.on { background: var(--f-brand-wash); border-color: rgba(0,114,251,.22); }
+      .tsearch .tx { border: 0; background: transparent; padding: 0; cursor: pointer; color: var(--f-ink-mid); display: grid; place-items: center; }
+      .tsearch .tx svg { width: 12px; height: 12px; }
+      .cp-q { padding: 10px; }
+      .cp-q .tsearch { width: 100%; }
+
+      /* ---------- Filtro en la cabecera de la columna ---------- */
+      .tbl th.colf { cursor: pointer; user-select: none; padding: 14px 8px 10px; }
+      .tbl th.colf.pl { padding-left: 18px; }
       .tbl th.colf .cf {
         display: inline-flex; align-items: center; gap: 7px; padding: 5px 10px;
         border-radius: 999px; border: 1px solid var(--f-hair-strong); background: var(--f-paper);
@@ -346,9 +477,15 @@
         display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 2px 8px 8px;
         font-size: 9.5px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--f-ink-mid);
       }
+      .fopt-g {
+        font-size: 9px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase;
+        color: var(--f-ink-mid); padding: 12px 10px 5px; border-top: 1px solid var(--f-hair); margin-top: 4px;
+      }
+      .cp-b > .fopt-g:first-child { border-top: 0; margin-top: 0; padding-top: 4px; }
       .cp-x { border: 0; background: transparent; color: var(--f-brand-deep); font-size: 10px; font-weight: 600; letter-spacing: 0.06em; cursor: pointer; }
       .cp-f { display: flex; justify-content: flex-end; padding: 8px 4px 2px; margin-top: 4px; border-top: 1px solid var(--f-hair); }
-      .chart { width: 100%; }
+
+      /* ---------- Gráfico ---------- */
       .chart svg { width: 100%; height: auto; display: block; }
       .chart .ax { font-family: var(--mono); font-size: 10px; letter-spacing: -.01em; fill: var(--f-ink-mid); }
       .chart .axv { font-size: 17px; font-weight: 600; fill: var(--f-ink); font-family: inherit; font-variant-numeric: tabular-nums; }
@@ -358,104 +495,14 @@
       .chartlegend i { width: 14px; height: 3px; border-radius: 2px; }
       .chartlegend i.dot { width: 9px; height: 9px; border-radius: 50%; }
       .chartlegend .last { margin-left: auto; color: var(--f-ink-soft); font-weight: 500; }
-      /* Barra de la tabla: buscador a la izquierda, conteo a la derecha. Vive adentro de
-         la card, arriba de la cabecera, para que se lea como parte de la tabla. */
-      .tbar { display: flex; align-items: center; gap: 12px; padding: 12px 10px; border-bottom: 1px solid var(--f-hair); }
-      .tsearch {
-        display: flex; align-items: center; gap: 8px; flex: 0 1 320px; min-width: 0;
-        background: var(--f-paper); border: 1px solid transparent; border-radius: var(--f-r-input);
-        padding: 7px 10px; transition: all 140ms var(--f-ease);
-      }
-      .tsearch svg { width: 14px; height: 14px; flex: 0 0 14px; color: var(--f-ink-whisper); }
-      .tsearch input {
-        flex: 1; min-width: 0; border: 0; background: transparent; outline: none;
-        font-family: inherit; font-size: 13px; font-weight: 500; color: var(--f-ink);
-      }
-      .tsearch input::placeholder { color: var(--f-ink-mid); font-weight: 500; }
-      .tsearch:focus-within { background: var(--f-card); border-color: var(--f-brand); box-shadow: 0 0 0 3px var(--f-brand-wash); }
-      .tsearch:focus-within svg, .tsearch.on svg { color: var(--f-brand); }
-      .tsearch.on { background: var(--f-brand-wash); border-color: rgba(0,114,251,.22); }
-      .tsearch .tx { border: 0; background: transparent; padding: 0; cursor: pointer; color: var(--f-ink-mid); display: grid; place-items: center; }
-      .tsearch .tx svg { width: 12px; height: 12px; }
-      .tcount { margin-left: auto; font-size: 11.5px; font-weight: 600; color: var(--f-ink-mid); white-space: nowrap; }
-      @media (max-width: 520px) { .tsearch { flex: 1; } .tcount { display: none; } }
-      /* ---------- Selector de fechas ---------- */
-      .dpwrap { position: relative; }
-      .dpbar {
-        display: flex; align-items: center; gap: 12px; width: 100%; cursor: pointer;
-        background: var(--f-card); border: 1px solid var(--f-hair); border-radius: var(--f-r-card);
-        box-shadow: var(--f-shadow-xs); padding: 0 16px; height: 62px; text-align: left;
-        transition: all 150ms var(--f-ease);
-      }
-      .dpbar:hover { border-color: var(--f-brand); box-shadow: 0 0 0 3px var(--f-brand-wash); }
-      .dpwrap.open .dpbar { border-color: var(--f-brand); box-shadow: 0 0 0 3px var(--f-brand-wash); }
-      .dpbar .ic { width: 17px; height: 17px; flex: 0 0 17px; color: var(--f-brand); }
-      .dpbar .lb { font-size: 14px; font-weight: 600; color: var(--f-ink); }
-      .dpbar .rg { font-size: 13px; color: var(--f-ink-mid); font-variant-numeric: tabular-nums; }
-      .dpbar .rg i { font-style: normal; color: var(--f-ink-mid); margin: 0 3px; }
-      .dpbar .ch { width: 14px; height: 14px; margin-left: auto; color: var(--f-ink-mid); flex: 0 0 14px; }
-      .dppop {
-        position: absolute; z-index: 85; top: calc(100% + 8px); left: 0; display: flex; cursor: default;
-        background: var(--f-card); border: 1px solid var(--f-hair-strong); border-radius: var(--f-r-card);
-        box-shadow: var(--f-shadow-lg); overflow: hidden;
-      }
-      .dppresets { width: 190px; flex: 0 0 190px; border-right: 1px solid var(--f-hair); padding: 12px 10px; background: var(--f-paper); }
-      .dppresets .k { font-size: 9.5px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--f-ink-mid); margin: 2px 0 8px 10px; }
-      .dppresets button {
-        display: block; width: 100%; text-align: left; border: 0; background: transparent; cursor: pointer;
-        padding: 8px 10px; border-radius: var(--f-r-item); font-size: 13px; font-weight: 500; color: var(--f-ink-soft);
-      }
-      .dppresets button:hover { background: var(--f-card); color: var(--f-ink); }
-      .dppresets button.on { background: var(--f-brand-wash); color: var(--f-brand-deep); font-weight: 600; }
-      .dpcals { display: flex; flex-wrap: wrap; padding: 14px 16px 12px; }
-      .dpcal { width: 262px; }
-      .dpcal + .dpcal { margin-left: 20px; padding-left: 20px; border-left: 1px solid var(--f-hair); }
-      .dpcals .dphint { width: 100%; }
-      .dpnav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
-      .dpnav b { font-size: 13.5px; font-weight: 600; color: var(--f-ink); }
-      .dpnav button { border: 0; background: transparent; cursor: pointer; color: var(--f-ink-mid); width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; }
-      .dpnav button:hover:not(:disabled) { background: var(--f-paper); color: var(--f-ink); }
-      .dpnav button:disabled { opacity: .25; cursor: default; }
-      .dpnav svg { width: 15px; height: 15px; }
-      .dpdow, .dpgrid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
-      .dpdow span { text-align: center; font-size: 9.5px; font-weight: 600; letter-spacing: .1em; color: var(--f-ink-mid); padding-bottom: 6px; }
-      .dpd {
-        border: 0; background: transparent; cursor: pointer; height: 34px; border-radius: 9px;
-        font-family: inherit; font-size: 12.5px; font-weight: 500; color: var(--f-ink-soft); font-variant-numeric: tabular-nums;
-      }
-      .dpd:hover:not(:disabled) { background: var(--f-brand-wash); color: var(--f-brand-deep); }
-      .dpd:disabled { color: var(--f-ink-whisper); opacity: .4; cursor: default; }
-      .dpd.in { background: var(--f-brand-wash); color: var(--f-brand-deep); border-radius: 0; }
-      .dpd.bd, .dpd.ini { background: var(--f-brand); color: #fff; font-weight: 600; border-radius: 9px; }
-      .dphint { font-size: 11.5px; color: var(--f-ink-mid); margin: 10px 2px 0; line-height: 1.45; }
-      @media (max-width: 760px) {
-        .fbar { flex-wrap: wrap; }
-        .fbar .fbx { width: 100%; }
-        .fbar .ffield { flex: 1; min-width: 0; }
-        .dppop { flex-direction: column; left: 0; right: 0; }
-        .dppresets { width: auto; flex: none; border-right: 0; border-bottom: 1px solid var(--f-hair); display: flex; gap: 6px; overflow-x: auto; padding: 10px; }
-        .dppresets .k { display: none; }
-        .dppresets button { width: auto; white-space: nowrap; border: 1px solid var(--f-hair-strong); background: var(--f-card); }
-        .dpcals { display: block; }
-        .dpcal { width: auto; }
-        .dpcal + .dpcal { margin: 16px 0 0; padding: 16px 0 0; border-left: 0; border-top: 1px solid var(--f-hair); }
-      }
 
-      /* Hero: la respuesta a la pregunta de la sección, antes que cualquier desglose. */
-      .hero { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 8px 22px; margin-bottom: 22px; }
-      .hero .q { font-size: 13px; color: var(--f-ink-mid); width: 100%; margin-bottom: 2px; }
-      .hero .n { font-size: 46px; font-weight: 200; letter-spacing: -0.04em; line-height: 1; font-variant-numeric: tabular-nums; color: var(--f-ink); }
-      .hero .n.neg { color: var(--f-coral-text); }
-      .hero .d { font-size: 13px; color: var(--f-ink-mid); padding-bottom: 5px; }
-      .hero .d b { color: var(--f-ink-soft); font-weight: 600; }
-      /* Comisiones: los dos totales en una columna angosta a la izquierda, como el panel
-         de producción, y todo el resto a la derecha. */
+      /* ---------- Comisiones: columna de totales + contenido ---------- */
       .colside { display: grid; grid-template-columns: 264px minmax(0, 1fr); gap: 20px; align-items: start; }
       .cstats { display: grid; gap: 12px; position: sticky; top: 18px; }
+      .cstats .stat .v { font-size: 26px; }
       .cstats .dpbar { flex-wrap: wrap; height: auto; padding: 13px 16px; gap: 4px 10px; }
       .cstats .dpbar .ch { flex: 0 0 14px; }
       .cstats .dppop { left: 0; }
-      .cstats .stat .v { font-size: 30px; }
       .cmain > .sec:first-child { margin-top: 0; }
       @media (max-width: 1100px) {
         .colside { grid-template-columns: minmax(0, 1fr); }
@@ -463,7 +510,8 @@
         .cstats .dpwrap { grid-column: 1 / -1; }
       }
       @media (max-width: 620px) { .cstats { grid-template-columns: 1fr; } }
-      .picklist { display: flex; flex-direction: column; gap: 8px; }
+
+      .picklist { display: flex; flex-direction: column; gap: 8px; max-height: 46vh; overflow-y: auto; }
       .pickrow { display: flex; align-items: center; justify-content: space-between; gap: 14px; width: 100%; text-align: left;
         background: var(--f-paper); border: 1px solid transparent; border-radius: var(--f-r-item); padding: 12px 14px; cursor: pointer; }
       .pickrow:hover { border-color: var(--f-brand); background: var(--f-brand-wash); }
@@ -513,6 +561,69 @@
       .card > h3, .sec > h3 { margin: 0 0 4px; font-size: 16px; font-weight: 300; letter-spacing: -0.01em; }
       .card > h3 strong, .sec > h3 strong { font-weight: 600; }
       .card > .cap, .sec > .cap { font-size: 12.5px; color: var(--f-ink-mid); margin: 0 0 18px; }
+      /* Acción de una card, anclada arriba a la derecha: el h3 y el .cap son hijos DIRECTOS
+         de .card (los selectores usan `>`), así que envolverlos para hacer un header flex
+         los dejaba sin estilo. */
+      .card { position: relative; }
+      .cardact { position: absolute; top: 18px; right: 18px; z-index: 1; }
+      /* Cifra protagonista de una card, en la MISMA línea que su h3: colgada al final del
+         gráfico se leía como un rótulo suelto del eje, no como el número del que habla el
+         título (JP, 26/ago). */
+      /* Flota arriba a la derecha del card; en mobile no hay lugar y pasa a fluir (ver
+         el bloque responsive), porque encimado sobre el título es ilegible. */
+      .cardnum {
+        position: absolute; top: 18px; right: 22px; z-index: 1; font-size: 26px; font-weight: 200;
+        letter-spacing: -0.035em; color: var(--f-ink); font-variant-numeric: tabular-nums;
+        line-height: 1.05;
+      }
+
+      /* ---------- Gestor de categorías de gasto ---------- */
+      .catmgr { display: flex; flex-direction: column; gap: 6px; }
+      .catrow {
+        display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: var(--f-r-item);
+        border: 1px solid transparent; background: var(--f-paper); transition: all 140ms var(--f-ease);
+      }
+      .catrow:hover { border-color: var(--f-hair-strong); background: var(--f-card); }
+      .catrow.drag { opacity: .45; }
+      .catrow.ghost { background: transparent; border-style: dashed; border-color: var(--f-hair-strong); }
+      .catrow.auto { background: var(--f-brand-wash); border-color: rgba(0,114,251,.2); }
+      .catrow.auto:hover { border-color: rgba(0,114,251,.2); background: var(--f-brand-wash); }
+      .catrow .grip.lock { cursor: default; color: var(--f-brand); }
+      .catrow.ghost .cname { color: var(--f-ink-mid); font-weight: 500; font-style: italic; }
+      .catrow.over { border-color: var(--f-brand); box-shadow: 0 0 0 3px var(--f-brand-wash); }
+      /* El grip va SIEMPRE visible: es la única señal de que la fila se arrastra
+         (misma decisión que el organizador de servicios). */
+      .catrow .grip {
+        cursor: grab; color: var(--f-ink-whisper); display: flex; flex-shrink: 0;
+        width: 22px; height: 22px; align-items: center; justify-content: center;
+      }
+      .catrow .grip:active { cursor: grabbing; }
+      .catrow .grip svg { width: 15px; height: 15px; }
+      .catrow .cname { font-size: 13px; font-weight: 600; color: var(--f-ink); flex: 1; min-width: 0; }
+      .catrow .cmeta {
+        font-size: 11.5px; color: var(--f-ink-mid); white-space: nowrap;
+        font-variant-numeric: tabular-nums; flex-shrink: 0;
+      }
+      .catrow .cact {
+        flex-shrink: 0; width: 28px; height: 28px; border-radius: 8px; display: flex;
+        align-items: center; justify-content: center; color: var(--f-ink-whisper);
+        border: 1px solid transparent; background: transparent; transition: all 140ms var(--f-ease);
+      }
+      .catrow .cact:hover { color: var(--f-ink); border-color: var(--f-hair-strong); background: var(--f-card); }
+      .catrow .cact.del:hover { color: var(--f-coral-text); border-color: color-mix(in srgb, var(--f-coral) 30%, var(--f-hair-strong)); }
+      .catrow .cact svg { width: 14px; height: 14px; }
+      .catrow input.cedit {
+        flex: 1; min-width: 0; font: inherit; font-size: 13px; font-weight: 600; color: var(--f-ink);
+        padding: 5px 9px; border-radius: 8px; border: 1px solid var(--f-brand);
+        box-shadow: 0 0 0 3px var(--f-brand-wash); background: var(--f-card);
+      }
+      .catnew {
+        margin-top: 10px; width: 100%; padding: 11px; border-radius: var(--f-r-item);
+        border: 1px dashed var(--f-hair-strong); background: transparent; color: var(--f-ink-mid);
+        font-size: 12.5px; font-weight: 600; transition: all 140ms var(--f-ease);
+      }
+      .catnew:hover { border-color: var(--f-brand); color: var(--f-brand); background: var(--f-brand-wash); }
+
       .grid { display: grid; gap: 14px; }
       .g2 { grid-template-columns: 1fr 1fr; }
       .g3 { grid-template-columns: repeat(3, 1fr); }
@@ -533,6 +644,10 @@
         font-size: 9.5px; font-weight: 600; letter-spacing: 0.20em; text-transform: uppercase;
         color: var(--f-ink-mid); display: flex; align-items: center; gap: 8px;
       }
+      /* Sin ícono la tarjeta se compacta: el rótulo ya no tiene que alinearse contra un
+         cuadrado de 28px, así que baja el padding y se acorta el aire sobre el número. */
+      .stat.noico { padding: 14px 16px; }
+      .stat.noico .v { margin-top: 6px; }
       .stat .v { font-size: 28px; font-weight: 200; letter-spacing: -0.035em; margin: 10px 0 3px; font-variant-numeric: tabular-nums; }
       .stat .s { font-size: 12px; color: var(--f-ink-mid); }
       .stat .s b { color: var(--f-ink); font-weight: 600; }
@@ -549,8 +664,8 @@
       /* Toggle sobre superficie clara */
       .lseg { display: inline-flex; background: var(--f-card); border: 1px solid var(--f-hair-strong); border-radius: var(--f-r-chip); padding: 3px; box-shadow: var(--f-shadow-xs); }
       .lseg button {
-        border: 0; background: transparent; color: var(--f-ink-mid); font-size: 11.5px; font-weight: 600;
-        padding: 6px 13px; border-radius: var(--f-r-chip); white-space: nowrap; cursor: pointer;
+        border: 0; background: transparent; color: var(--f-ink-mid); font-size: 13.5px; font-weight: 600;
+        padding: 11px 22px; border-radius: var(--f-r-chip); white-space: nowrap; cursor: pointer;
         transition: all 160ms var(--f-ease);
       }
       .lseg button.on { background: var(--f-brand-wash); color: var(--f-brand-deep); }
@@ -566,6 +681,20 @@
       .cascade .r .lbl { color: var(--f-ink-mid); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; min-width: 0; }
       .cascade .r .amt { margin-left: auto; padding-left: 10px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
       .cascade .r.neg .amt { color: var(--f-coral-text); }
+      /* Subfilas: hijas de la fila de arriba, no ítems del mismo nivel. Lo que más las
+         hacía leer como pares era el NÚMERO —mismo peso y tinta que el total de Egresos—,
+         así que baja a tamaño chico, peso normal y tinta media. La guía en L las cuelga
+         visualmente de su padre. */
+      .cascade .r.sub { padding: 5px 0; }
+      .cascade .r.sub .lbl {
+        position: relative; padding-left: 26px; font-size: 12.5px; color: var(--f-ink-mid);
+      }
+      .cascade .r.sub .lbl::before {
+        content: ''; position: absolute; left: 9px; top: -11px; bottom: 50%; width: 9px;
+        border-left: 1px solid var(--f-hair-strong); border-bottom: 1px solid var(--f-hair-strong);
+        border-bottom-left-radius: 5px;
+      }
+      .cascade .r.sub .amt { font-size: 12.5px; font-weight: 500; color: var(--f-ink-mid); }
       .cascade .r.rule { border-top: 1px solid var(--f-hair); }
       .cascade .r.total { border-top: 1px solid var(--f-hair-strong); padding-top: 14px; }
       .cascade .r.total .lbl { color: var(--f-ink); font-weight: 600; }
@@ -616,20 +745,34 @@
       .bars .val { text-align: right; font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; }
       .bars .val em { display: block; font-style: normal; font-size: 11px; font-weight: 500; color: var(--f-ink-mid); }
 
-      /* Tarjeta por profesional — clickeable, filtra el listado de abajo */
-      .pcards { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; margin-bottom: 20px; }
+      /* Tarjeta por profesional — mismo diseño que TeamPayments en producción: grilla pareja
+         de 2/3/4 columnas, avatar chico a la izquierda, nombre arriba en gris, el saldo como
+         protagonista y el cobrado abajo. Seleccionada = borde de marca + check arriba a la
+         derecha (no un borde solo, que se confundía con el hover). */
+      .pcards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-bottom: 20px; }
+      @media (min-width: 760px) { .pcards { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; } }
+      @media (min-width: 1280px) { .pcards { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
       .pcard {
-        display: flex; align-items: center; gap: 12px; text-align: left; width: 100%;
-        background: var(--f-card); border: 1px solid var(--f-hair); border-radius: var(--f-r-card);
-        box-shadow: var(--f-shadow-xs); padding: 14px; transition: all 170ms var(--f-ease);
+        position: relative; display: flex; align-items: center; gap: 12px; text-align: left; width: 100%;
+        background: var(--f-card); border: 1px solid var(--f-hair); border-radius: 16px;
+        box-shadow: var(--f-shadow-xs); padding: 12px; transition: all 170ms var(--f-ease);
       }
-      .pcard:hover { box-shadow: var(--f-shadow-sm); transform: translateY(-1px); }
-      .pcard.on { border-color: var(--f-brand); box-shadow: 0 0 0 3px var(--f-brand-wash); }
-      .pcard .t { min-width: 0; flex: 1; }
-      .pcard .nm { font-size: 13px; font-weight: 600; color: var(--f-ink); }
-      .pcard .vv { font-size: 21px; font-weight: 200; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; margin: 2px 0 1px; }
-      .pcard .ss { font-size: 11px; color: var(--f-ink-mid); }
-      .pcard .ss b { color: var(--f-success-text); font-weight: 600; }
+      .pcard:hover { border-color: rgba(0,114,251,.35); }
+      .pcard.on { border-color: var(--f-brand); background: var(--f-brand-wash); }
+      .pcard .ck {
+        position: absolute; right: 8px; top: 8px; width: 16px; height: 16px; border-radius: 50%;
+        background: var(--f-brand); color: #fff; display: grid; place-items: center;
+      }
+      .pcard .ck svg { width: 9px; height: 9px; }
+      .pcard .t { min-width: 0; flex: 1; padding-right: 12px; }
+      .pcard .nm { font-size: 12px; font-weight: 500; color: var(--f-ink-mid); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .pcard .vv { font-size: 18px; font-weight: 300; letter-spacing: -0.02em; line-height: 1.25; font-variant-numeric: tabular-nums; color: var(--f-ink); }
+      .pcard .ss { margin-top: 2px; font-size: 10px; font-weight: 500; line-height: 1.3; color: var(--f-ink-mid); }
+      .pcard .ss b { display: block; font-family: var(--f-mono); font-size: 11px; font-weight: 600; color: var(--f-ink-soft); font-variant-numeric: tabular-nums; }
+      .pcard .avp {
+        width: 36px; height: 36px; flex: 0 0 36px; font-size: 13px;
+        background: var(--f-brand-wash); color: var(--f-brand-deep); box-shadow: inset 0 0 0 1px var(--f-hair-strong);
+      }
 
       /* Progreso pagado / total */
       .prog { height: 6px; background: var(--f-paper-deep); border-radius: 999px; overflow: hidden; min-width: 70px; }
@@ -647,6 +790,9 @@
       .chip.pend { background: var(--f-warning-wash); color: var(--f-warning-text); border-color: rgba(245,158,11,.25); }
       .chip.bad { background: var(--f-coral-wash); color: var(--f-coral-text); border-color: rgba(255,70,88,.22); }
       .chip.mute { background: var(--f-paper); color: var(--f-ink-mid); border-color: var(--f-hair); }
+      /* La categoría que escribe Ágora sola, no el dueño. */
+      .chip.sys { background: var(--f-brand-wash); color: var(--f-brand-deep); border-color: rgba(0,114,251,.2); gap: 4px; }
+      .chip.sys svg { width: 9px; height: 9px; flex: 0 0 9px; }
       .chip.brand { background: var(--f-brand-wash); color: var(--f-brand-deep); border-color: rgba(0,114,251,.2); }
 
       /* ==========================================================================
@@ -655,7 +801,7 @@
       .tbl { width: 100%; border-collapse: collapse; }
       .tbl th {
         text-align: left; font-size: 9.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
-        color: var(--f-ink-mid); padding: 0 14px 12px; border-bottom: 1px solid var(--f-hair-strong); white-space: nowrap;
+        color: var(--f-ink-mid); padding: 16px 14px 12px; border-bottom: 1px solid var(--f-hair-strong); white-space: nowrap;
       }
       .tbl th.sortable { cursor: pointer; user-select: none; }
       .tbl th.sortable:hover { color: var(--f-ink); }
@@ -675,7 +821,12 @@
       .tblwrap { overflow-x: auto; }
       /* Piso de ancho para las columnas de texto largo: sin esto el navegador las
          comprime hasta partirlas en 3+ renglones. Los datos cortos nunca se parten. */
-      .tbl th.cw, .tbl td.cw { min-width: 230px; }
+      /* La columna de concepto pasó a tener filtro propio, y la cabecera del filtro suma su
+         chrome (embudo + chevron + padding). Con el mínimo viejo de 230px las tablas de
+         Cobros y Por cobrar se iban de ancho y recortaban la última columna (el botón de
+         acción). El concepto puede envolver en dos líneas: es el campo largo, no el que se
+         escanea de un vistazo. */
+      .tbl th.cw, .tbl td.cw { min-width: 186px; }
       .tcard { padding: 0 8px; }
       .tcard.pt { padding-top: 8px; }
       /* Alto fijo e igual en todas las secciones: entran ~7 filas y la tabla scrollea
@@ -796,7 +947,8 @@
 
       .sheet {
         position: fixed; z-index: 80; left: 50%; top: 50%; transform: translate(-50%, -46%) scale(.97);
-        width: 560px; max-width: 94vw; max-height: 88vh; overflow-y: auto; background: var(--f-card);
+        width: 560px; max-width: 94vw; max-height: 88vh; overflow: hidden; background: var(--f-card);
+        display: flex; flex-direction: column;
         border-radius: var(--f-r-shell); box-shadow: var(--f-shadow-lg); opacity: 0; pointer-events: none;
         transition: opacity 220ms var(--f-ease), transform 220ms var(--f-ease);
       }
@@ -804,8 +956,8 @@
       .sheet .sh { padding: 22px 26px 0; display: flex; align-items: flex-start; gap: 14px; }
       .sheet .sh h3 { margin: 0; font-size: 19px; font-weight: 300; }
       .sheet .sh h3 strong { font-weight: 600; }
-      .sheet .sb { padding: 18px 26px 22px; }
-      .sheet .sf { padding: 16px 26px 22px; display: flex; gap: 10px; }
+      .sheet .sb { padding: 18px 26px 22px; flex: 1; min-height: 0; overflow-y: auto; }
+      .sheet .sf { padding: 16px 26px 22px; display: flex; gap: 10px; border-top: 1px solid var(--f-hair); background: var(--f-card); }
       .fld { margin-bottom: 14px; }
       .fld label { display: block; font-size: 9.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--f-ink-mid); margin-bottom: 7px; }
       .fld input, .fld select, .fld textarea {
@@ -928,8 +1080,6 @@
            el pie quedan fijos para no perder de vista qué se está leyendo ni el total. */
         .tcard { margin-left: -20px; margin-right: -20px; border-left: 0; border-right: 0; border-radius: 0; }
         .tcard .tblwrap { max-height: 60vh; }
-        .tcard .tbar { padding: 10px; }
-        .tcard .tsearch { padding: 12px 10px; }
         .tcard .tbl th:first-child, .tcard .tbl td:first-child { padding-left: 20px; }
         .tcard .tbl th:last-child, .tcard .tbl td:last-child { padding-right: 20px; }
 
@@ -937,12 +1087,26 @@
         .g5 { grid-template-columns: repeat(3, 1fr); }
       }
       @media (max-width: 760px) {
+        .cardnum { position: static; display: block; margin: 2px 0 10px; font-size: 30px; }
+        .fbar { flex-wrap: wrap; }
+        .fbar .fbx { width: 100%; }
+        .fbar .ffield { flex: 1; min-width: 0; }
+        .dppop { flex-direction: column; left: 0; right: 0; width: auto; }
+        .dppresets { width: auto; flex: none; border-right: 0; border-bottom: 1px solid var(--f-hair); display: flex; gap: 6px; overflow-x: auto; padding: 10px; }
+        .dppresets .k { display: none; }
+        .dppresets button { width: auto; white-space: nowrap; border: 1px solid var(--f-hair-strong); background: var(--f-card); }
+        .dpcals { display: block; width: auto; }
+        .dpcal { width: auto; }
+        .dpcal + .dpcal { margin: 16px 0 0; padding: 16px 0 0; border-left: 0; border-top: 1px solid var(--f-hair); }
         .mhead { padding: 18px 0 14px; }
         /* Las acciones que crean algo viven en la barra de abajo: en el header solo queda
            Exportar, así que va chico y en línea con el título, no como una barra aparte. */
         .mhead .acts { margin-left: auto; width: auto; min-height: 0; flex-wrap: nowrap; }
-        .mhead .acts .btn { height: 36px; padding: 0 12px; font-size: 12.5px; }
-        .mhead .acts .btn svg { width: 14px; height: 14px; }
+        /* Solo el ícono: el título ya dice de qué sección se exporta. */
+        .mhead .acts .btn { width: 42px; height: 42px; padding: 0; justify-content: center; }
+        .mhead .acts .btn span { display: none; }
+        .mhead .acts .btn { gap: 0; }
+        .mhead .acts .btn svg { width: 19px; height: 19px; }
         .frost-h1 { font-size: 27px; }
         .g4, .g3, .g2, .g5 { grid-template-columns: 1fr; }
         /* Resumen en mobile: sin cards. Cada item es una fila separada por una línea,
@@ -959,10 +1123,31 @@
         .statrow .stat .s { grid-column: 1; grid-row: 2; margin-top: 3px; }
         .statrow .stat .v { grid-column: 2; grid-row: 1 / span 2; margin: 0; font-size: 21px; text-align: right; }
         .statrow .stat.clickable:hover { transform: none; box-shadow: none; }
+        /* Misma idea en la columna de Comisiones. */
+        .cstats { gap: 0; }
+        .cstats .stat {
+          background: none; border: 0; box-shadow: none; border-radius: 0; padding: 13px 0;
+          display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 14px;
+          align-items: center; border-top: 1px solid var(--f-hair-strong);
+        }
+        .cstats .stat .k { grid-column: 1; grid-row: 1; font-size: 8.5px; letter-spacing: 0.10em; }
+        .cstats .stat .s { grid-column: 1; grid-row: 2; margin-top: 3px; font-size: 11.5px; }
+        .cstats .stat .v { grid-column: 2; grid-row: 1 / span 2; margin: 0; font-size: 21px; text-align: right; }
+        .cstats .dpwrap { margin-bottom: 8px; }
         .dhead { margin-bottom: 12px; }
         .split .legs { grid-template-columns: 1fr !important; }
         .card { padding: 18px; }
         .drawer .dh, .drawer .db, .drawer .df, .sheet .sh, .sheet .sb, .sheet .sf { padding-left: 20px; padding-right: 20px; }
+        /* Full screen: en un teléfono un modal centrado con scroll propio pelea con el
+           scroll de la página y deja los botones fuera de alcance. */
+        .sheet {
+          inset: 0; left: 0; top: 0; width: 100%; max-width: none; max-height: none;
+          height: 100dvh; border-radius: 0; transform: translateY(16px);
+        }
+        .sheet.on { transform: none; }
+        .sheet .sb { flex: 1; overflow-y: auto; }
+        .sheet .sf { padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--f-hair); }
+        .sheet .sf .btn { height: 48px; }
       }
     </style>
   </head>
@@ -981,7 +1166,11 @@
             <div class="acts" id="mActs"></div>
           </div>
 
-          <nav class="tabs" id="tabs"></nav>
+          <div class="tabswrap" id="tabswrap">
+            <nav class="tabs" id="tabs" onscroll="marcarTabs()"></nav>
+            <button class="tarrow l" onclick="deslizarTabs(-1)" aria-label="Ver secciones anteriores"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+            <button class="tarrow r" onclick="deslizarTabs(1)" aria-label="Ver más secciones"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+          </div>
 
           <div class="fbar" id="fbar"></div>
           <div id="view"></div>
@@ -1006,6 +1195,8 @@
          1 · UTILIDADES
       ===================================================================== */
       const TODAY = '2026-08-04';
+      // Hora de referencia para los formularios: "este instante" del prototipo.
+      const AHORA = '17:40';
       const $ = (s, r) => (r || document).querySelector(s);
       const el = (id) => document.getElementById(id);
       const parse = (s) => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d, 12, 0, 0); };
@@ -1035,7 +1226,8 @@
         check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg>',
         clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.5l3.5 2"/></svg>',
         alert: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3.5 1.8 21h20.4z"/><path d="M12 10v4.5M12 17.6v.1"/></svg>',
-        wa: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.6 7.3L3 20.5l1.8-5.2A8.5 8.5 0 1 1 21 11.5z"/></svg>',
+        // Glifo oficial de WhatsApp (sólido), no una nube de chat genérica.
+        wa: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.01-1.04 2.47 0 1.46 1.06 2.87 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.19 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.17-1.42-.07-.13-.27-.2-.57-.35z"/><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.38a9.87 9.87 0 0 0 4.75 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm0 18.13h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.36c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.41a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23z"/></svg>',
         link: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M10 13.5a4 4 0 0 0 5.7 0l2.8-2.8a4 4 0 1 0-5.7-5.7l-1.4 1.4"/><path d="M14 10.5a4 4 0 0 0-5.7 0l-2.8 2.8a4 4 0 1 0 5.7 5.7l1.4-1.4"/></svg>',
         cash: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><rect x="2.5" y="6" width="19" height="12" rx="2.5"/><circle cx="12" cy="12" r="2.6"/></svg>',
         down: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v13M6.5 12.5 12 18l5.5-5.5"/></svg>',
@@ -1051,6 +1243,10 @@
          Un solo ledger (MOVS). Todo lo demás se DERIVA de él por rango, así
          ninguna vista puede descuadrar contra otra.
       ===================================================================== */
+      /* `account` es dónde queda la plata, no el medio: caja (efectivo en el cajón),
+         `banco` (todo lo que se va afuera — transferencias y depósitos del posnet) y `mp`
+         (billetera de Mercado Pago). Se rotula "Tu cuenta" porque Ágora no sabe si eso es
+         un banco, una billetera virtual o una cuenta personal. */
       const METHODS = {
         ef: { label: 'Efectivo', short: 'Efectivo', color: 'var(--m-ef)', hex: '#059669', account: 'caja' },
         tr: { label: 'Transferencia', short: 'Transfer.', color: 'var(--m-tr)', hex: '#00306E', account: 'banco' },
@@ -1065,7 +1261,6 @@
         capacitacion: { label: 'Capacitaciones',    min: 85000, max: 320000, staff: false, online: true },
         descargable:  { label: 'Descargables',      min: 12000, max: 68000,  staff: false, online: true },
         giftcard:     { label: 'Gift cards',        min: 30000, max: 100000, staff: false, online: true },
-        manual:       { label: 'Ingresos manuales', min: 5000,  max: 60000,  staff: false },
       };
       // El rubro define el catálogo de servicios del negocio. Todo lo que muestra el módulo
       // —incluido el ejemplo de la vista Conceptos— sale de acá, nunca de un texto fijo.
@@ -1074,6 +1269,7 @@
           label: 'Belleza', negocio: 'Estudio Bloom', staff: ['Sofía', 'Mariana', 'Lucía', 'Tomás', 'Valentina'],
           servicios: ['Corte + brushing', 'Color raíz', 'Mechas balayage', 'Brushing', 'Alisado orgánico', 'Manicura semipermanente', 'Pedicura spa', 'Limpieza facial profunda', 'Depilación láser · zona chica', 'Perfilado de cejas', 'Lifting de pestañas'],
           largo: 'Alisado orgánico', caros: ['Mechas balayage + corte', 'Tratamiento capilar intensivo'],
+          sedes: ['Palermo', 'Villa Crespo'],
           adicionales: ['Ampolla de keratina', 'Baño de brillo', 'Diseño de cejas', 'Esmaltado semipermanente'],
           capacitaciones: ['Capacitación · Balayage avanzado', 'Capacitación · Corte con tijera japonesa', 'Capacitación · Skincare profesional', 'Capacitación · Barbería moderna'],
           descargables: ['Guía de cuidado post-color', 'Rutina capilar en casa', 'Manual de uñas paso a paso'],
@@ -1083,6 +1279,7 @@
         wellness: {
           label: 'Bienestar', negocio: 'Casa Serena', staff: ['Paula', 'Ignacio', 'Rocío', 'Damián', 'Malena'],
           adicionales: ['Ventosas', 'Aceite esencial', 'Piedras calientes', 'Estiramiento asistido'],
+          sedes: ['Palermo', 'Núñez'],
           servicios: ['Masaje descontracturante', 'Masaje deportivo', 'Drenaje linfático', 'Reflexología', 'Yoga individual', 'Reiki', 'Sesión de meditación guiada', 'Terapia con piedras calientes', 'Estiramiento asistido'],
           largo: 'Masaje de tejido profundo', caros: ['Drenaje linfático completo', 'Jornada de spa'],
           capacitaciones: ['Capacitación · Masaje descontracturante', 'Capacitación · Aromaterapia aplicada', 'Capacitación · Drenaje linfático', 'Capacitación · Respiración y meditación'],
@@ -1093,6 +1290,7 @@
         salud: {
           label: 'Salud', negocio: 'Consultorio Norte', staff: ['Dra. Ruiz', 'Lic. Paz', 'Dr. Solá', 'Lic. Aguirre', 'Dra. Vidal'],
           adicionales: ['Electroestimulación', 'Vendaje neuromuscular', 'Informe por escrito', 'Control de seguimiento'],
+          sedes: ['Belgrano', 'Caballito'],
           servicios: ['Consulta nutricional', 'Sesión de kinesiología', 'Control cardiológico', 'Consulta psicológica', 'Fonoaudiología', 'Evaluación postural', 'Plan de rehabilitación'],
           largo: 'Evaluación integral', caros: ['Tratamiento kinesiológico', 'Evaluación nutricional completa'],
           capacitaciones: ['Capacitación · Vendaje neuromuscular', 'Capacitación · Primeros auxilios', 'Capacitación · Nutrición deportiva', 'Capacitación · Ergonomía laboral'],
@@ -1113,26 +1311,29 @@
         capacitacion: [],
         giftcard: ['Gift card'],
         descargable: [],
-        manual: ['Alquiler de sillón', 'Venta de mobiliario', 'Reintegro de proveedor', 'Ingreso varios'],
       };
       let STAFF = [];
       const CLIENTS = ['Camila Ferrari', 'Julieta Roldán', 'Martina Sosa', 'Agustina Paz', 'Lucía Benítez', 'Florencia Ríos', 'Delfina Álvarez', 'Micaela Torres', 'Rocío Medina', 'Brenda Cabrera', 'Ana Laura Gómez', 'Sol Miranda', 'Victoria Peralta', 'Belén Ortiz', 'Carla Domínguez', 'Malena Ibarra', 'Guadalupe Ponce', 'Paula Ledesma', 'Antonella Vera', 'Nicolás Arrieta', 'Federico Luna', 'Matías Herrera', 'Joaquín Sánchez', 'Ramiro Costa', 'Valeria Nieto', 'Sabrina Quiroga', 'Emilia Castro', 'Abril Godoy', 'Renata Silva', 'Bautista Molina'];
+      // La categoría automática: no la crea ni la toca el dueño, la escribe Ágora cada vez
+      // que se liquida una comisión. No se renombra, no se borra y no se arrastra.
+      const AUTO_CAT = 'sueldos';
       const ECATS = [
-        { k: 'insumos', label: 'Insumos de trabajo' },
-        { k: 'reventa', label: 'Mercadería para reventa' },
-        { k: 'sueldos', label: 'Sueldos y comisiones' },
-        { k: 'alquiler', label: 'Alquiler y expensas' },
-        { k: 'servicios', label: 'Servicios (luz, agua, internet)' },
-        { k: 'equipos', label: 'Equipamiento y herramientas' },
-        { k: 'mantenimiento', label: 'Mantenimiento y limpieza' },
-        { k: 'marketing', label: 'Marketing y publicidad' },
-        { k: 'impuestos', label: 'Impuestos y tasas' },
-        { k: 'otros', label: 'Otros' },
+        { k: 'sueldos', label: 'Liquidación de comisiones', auto: true },
       ];
+      const esAuto = (k) => k === AUTO_CAT;
+      // Los gastos de una categoría eliminada caen acá. NO es una categoría: no se crea, no
+      // se ordena, no se borra y no se ofrece al registrar un gasto nuevo. Solo existe para
+      // que borrar una categoría no deje gastos colgando de una clave que ya no existe.
+      const SIN_CAT = '__sin__';
+      const SIN_CAT_LABEL = 'Sin categoría';
+      const catLabel = (k) => (!k || k === SIN_CAT)
+        ? SIN_CAT_LABEL
+        : (ECATS.find((c) => c.k === k) || { label: SIN_CAT_LABEL }).label;
+
       const ECONCEPT = {
         insumos: ['Tintura y decolorante', 'Pomadas y ceras', 'Toallas y descartables', 'Hojas y navajas', 'Talco y after shave', 'Esmaltes y geles'],
         reventa: ['Shampoo para reventa', 'Pomada para reventa', 'Aceite para barba', 'Kit de cuidado capilar'],
-        sueldos: ['Liquidación de comisiones', 'Sueldo recepción'],
+        sueldos: ['Liquidación de comisiones'],
         alquiler: ['Alquiler del local', 'Expensas'],
         servicios: ['Luz (Edesur)', 'Internet y telefonía', 'Agua'],
         equipos: ['Máquina de corte', 'Service de máquinas', 'Tijeras y navajas', 'Secador de pelo', 'Sillón de barbería'],
@@ -1144,7 +1345,7 @@
       /* ---- Comisiones al equipo ----
          Cada profesional tiene un esquema (% sobre servicios y sobre productos). La comisión se
          DEVENGA con cada cobro y se PAGA en una liquidación, que entra al ledger como un gasto de
-         categoría "Sueldos y comisiones". Así el resultado deja de tener un monto inventado. */
+         categoría "Liquidación de comisiones". Así el resultado deja de tener un monto inventado. */
       const RATE_SET = [
         { svc: 0.45, prod: 0.10 }, { svc: 0.40, prod: 0.10 }, { svc: 0.50, prod: 0.12 },
         { svc: 0.40, prod: 0.08 }, { svc: 0.35, prod: 0.10 },
@@ -1172,7 +1373,7 @@
       // Comisión de cobro POR MEDIO. Solo la de Mercado Pago: viene en el `fee_details` de la
       // respuesta de pago de MP, así que es un dato real, no una estimación.
       // Efectivo y transferencia no tienen costo. Las de tarjeta van en 0 a propósito: el posnet es
-      // del negocio, Ágora no procesa esos cobros y no tiene forma de saber qué le cobra su banco —
+      // del negocio, Ágora no procesa esos cobros y no tiene forma de saber qué le cobra su proveedor —
       // inventar un porcentaje ahí sería ensuciar el neto con un número que nadie puede auditar.
       // Sin comisión de cobro: no tenemos el dato con certeza (decisión JP, 18/ago). MP la informa en
       // `fee_details` pero Cyclone todavía no la persiste, y la del posnet propio no la vemos nunca.
@@ -1233,7 +1434,7 @@
           for (let i = 0; i < n; i++) {
             const asset = closed
               ? wpick([['curso', 46], ['giftcard', 26], ['capacitacion', 16], ['descargable', 12]])
-              : wpick([['servicio', 60], ['producto', 16], ['curso', 7], ['giftcard', 5], ['descargable', 4], ['manual', 5], ['capacitacion', 3]]);
+              : wpick([['servicio', 62], ['producto', 18], ['curso', 8], ['giftcard', 5], ['descargable', 4], ['capacitacion', 3]]);
             const cfg = ASSETS[asset];
             let amount, concept;
             if (asset === 'giftcard') { amount = pick([30000, 50000, 80000, 100000]); concept = 'Gift card ' + $$(amount); }
@@ -1241,12 +1442,11 @@
             let method;
             if (cfg.online) method = 'mp';
             else if (asset === 'capacitacion') method = wpick([['tr', 60], ['mp', 28], ['ef', 12]]);
-            else if (asset === 'manual') method = wpick([['ef', 55], ['tr', 30], ['mp', 15]]);
             else method = wpick([['ef', 28], ['tr', 22], ['mp', 24], ['cr', 18], ['de', 8]]);
 
             const st = 'ok'; // los "sin cerrar" se marcan abajo, fuera del PRNG (ver nota)
             const hora = `${String(closed ? rint(9, 22) : rint(9, 20)).padStart(2, '0')}:${String(rint(0, 59)).padStart(2, '0')}`;
-            const cli = asset === 'manual' ? null : pick(CLIENTS);
+            const cli = pick(CLIENTS);
             const quien = cfg.staff ? pick(STAFF) : null;
             const base = { date: day, time: hora, dir: 'in', method, asset, client: cli, staff: quien,
               st, account: METHODS[method].account, cat: null, src: cfg.online ? 'online' : 'local' };
@@ -1260,7 +1460,7 @@
           // Devolución ocasional
           if (!closed && rnd() < 0.09) {
             const m = wpick([['ef', 40], ['tr', 25], ['mp', 35]]);
-            MOVS.push({ id: ++_id, date: day, time: `${String(rint(11, 19)).padStart(2, '0')}:${String(rint(0, 59)).padStart(2, '0')}`, dir: 'out', amount: round100(12000 + rnd() * 55000), method: m, asset: 'refund', concept: 'Devolución a clienta', client: pick(CLIENTS), staff: null, st: 'refund', account: METHODS[m].account, cat: 'otros', src: 'local' });
+            MOVS.push({ id: ++_id, date: day, time: `${String(rint(11, 19)).padStart(2, '0')}:${String(rint(0, 59)).padStart(2, '0')}`, dir: 'out', amount: round100(12000 + rnd() * 55000), method: m, asset: 'refund', concept: 'Devolución a clienta', client: pick(CLIENTS), staff: null, st: 'refund', account: METHODS[m].account, cat: SIN_CAT, src: 'local' });
           }
           // Gastos
           const dn = parse(day).getDate();
@@ -1268,13 +1468,13 @@
           if (dn === 5) fixed.push(['alquiler', 980000, 'banco']);
           if (dn === 20) fixed.push(['impuestos', 286000, 'banco']);
           if (dn === 12) fixed.push(['servicios', 168000, 'banco']);
-          fixed.forEach(([c, amt, acc]) => MOVS.push({ id: ++_id, date: day, time: '10:' + String(rint(0, 59)).padStart(2, '0'), dir: 'out', amount: amt, method: 'tr', asset: 'gasto', concept: pick(ECONCEPT[c]), client: null, staff: null, st: 'ok', account: acc, cat: c, src: 'local' }));
+          fixed.forEach(([c, amt, acc]) => MOVS.push({ id: ++_id, date: day, time: '10:' + String(rint(0, 59)).padStart(2, '0'), dir: 'out', amount: amt, method: 'tr', asset: 'gasto', concept: pick(ECONCEPT[c]), client: null, staff: null, st: 'ok', account: acc, cat: SIN_CAT, src: 'local' }));
           const ng = closed ? 0 : rint(0, 2);
           for (let i = 0; i < ng; i++) {
             const c = wpick([['insumos', 34], ['reventa', 14], ['marketing', 12], ['mantenimiento', 10],
               ['equipos', 9], ['otros', 12], ['servicios', 5], ['impuestos', 4]]);
             const acc = wpick([['caja', 55], ['banco', 32], ['mp', 13]]);
-            MOVS.push({ id: ++_id, date: day, time: `${String(rint(9, 19)).padStart(2, '0')}:${String(rint(0, 59)).padStart(2, '0')}`, dir: 'out', amount: round100(9000 + rnd() * 160000), method: acc === 'caja' ? 'ef' : acc === 'mp' ? 'mp' : 'tr', asset: 'gasto', concept: pick(ECONCEPT[c]), client: null, staff: null, st: 'ok', account: acc, cat: c, src: 'local' });
+            MOVS.push({ id: ++_id, date: day, time: `${String(rint(9, 19)).padStart(2, '0')}:${String(rint(0, 59)).padStart(2, '0')}`, dir: 'out', amount: round100(9000 + rnd() * 160000), method: acc === 'caja' ? 'ef' : acc === 'mp' ? 'mp' : 'tr', asset: 'gasto', concept: pick(ECONCEPT[c]), client: null, staff: null, st: 'ok', account: acc, cat: SIN_CAT, src: 'local' });
           }
           day = addD(day, 1);
         }
@@ -1319,6 +1519,10 @@
         { id: 'R-160', client: 'Matías Herrera', phone: '11 3771-9008', origin: 'producto', prod: 0, total: 61000, paid: 20000, staff: 2, date: '2026-08-02' },
         { id: 'R-161', client: 'Valeria Nieto', phone: '11 2098-4416', origin: 'servicio', svc: 1, total: 74000, paid: 30000, staff: 1, date: '2026-08-04' },
         { id: 'R-101', client: 'Micaela Torres', phone: '11 3345-0091', origin: 'servicio', svc: 'caro1', total: 156000, paid: 56000, staff: 0, date: '2026-06-18' },
+        // Con seña y turno todavía por venir: el saldo entra el día del turno, no hay que perseguirlo.
+        { id: 'R-170', client: 'Emilia Castro', phone: '11 6014-2277', origin: 'servicio', svc: 'caro0', total: 138000, paid: 55000, staff: 2, date: '2026-08-07' },
+        { id: 'R-171', client: 'Julián Sosa', phone: '11 4489-3310', origin: 'servicio', svc: 'largo', total: 96000, paid: 38000, staff: 3, date: '2026-08-12' },
+        { id: 'R-172', client: 'Renata Aguirre', phone: '11 2233-7781', origin: 'servicio', svc: 2, total: 68000, paid: 27000, staff: 1, date: '2026-08-19' },
       ];
       let RECV = [];
       // Orígenes que PUEDEN dejar saldo. Cursos online y gift cards no están: se cobran 100% por
@@ -1381,7 +1585,7 @@
         custom: { label: 'Personalizado', from: addD(TODAY, -29), to: TODAY },
       };
       const PRESETS = ['hoy', 'ayer', 'd7', 'd30', 'semana', 'semanaAnt', 'mes', 'jul'];
-      const S = { container: 'finanzas', tab: 'resumen', range: 'd30', persona: 'venue', staff: 'all', dist: 'cobrado', sub: {}, cobPage: 1, cobQ: '', comF: { q: '', tipo: 'all', estado: 'all' }, movF: { q: '', method: 'all', asset: 'all' }, movSort: { k: 'date', dir: -1 }, movPage: 1, cobF: { q: '', origin: 'all' }, open: null };
+      const S = { container: 'finanzas', tab: 'resumen', range: 'd30', persona: 'venue', staff: 'all', dist: 'cobrado', sub: {}, cobPage: 1, cobQ: '', comF: { q: '', tipo: 'all', concepto: 'all' }, movF: { q: '', method: 'all', asset: 'all', concepto: 'all' }, movSort: { k: 'date', dir: -1 }, movPage: 1, cobF: { q: '', origin: 'all', concepto: 'all' }, cobConcepto: 'all', gasConcepto: 'all', open: null };
 
       const inRange = (m, r) => m.date >= r.from && m.date <= r.to;
       // Los filtros de medio, tipo de venta, profesional y origen son multi-select: el valor es
@@ -1507,22 +1711,13 @@
          5 · COMPONENTES REUTILIZABLES
       ===================================================================== */
       const avatarFor = (name, hex) => `<div class="av" style="background:color-mix(in srgb, ${hex} 16%, #fff);color:color-mix(in srgb, ${hex} 78%, #0F172A)">${esc((name || '—').trim()[0] || '—')}</div>`;
-      // Avatar del profesional: sin fotos en el prototipo, pero cada uno con su tono propio
-      // dentro de la rampa del sistema (azules + slate), iniciales y anillo — como producción.
-      const AV_RAMP = [
-        ['#e3efff', '#00306E'], ['#dbeafe', '#005cd4'], ['#e2e8f0', '#334155'],
-        ['#d7e9ff', '#0057C7'], ['#eef2f7', '#475569'],
-      ];
       const iniciales = (n) => (n || '—').trim().split(/\s+/).slice(0, 2).map((w) => w[0]).join('').toUpperCase();
-      function avatarPro(name) {
-        let h = 0; for (let i = 0; i < (name || '').length; i++) h = (h * 31 + name.charCodeAt(i)) >>> 0;
-        const [bg, fg] = AV_RAMP[h % AV_RAMP.length];
-        return `<div class="avp" style="background:${bg};color:${fg}">${esc(iniciales(name))}</div>`;
-      }
-
+      // Sin ícono (JP, 26/ago): el cuadradito de color no distinguía una tarjeta de otra —
+      // el rótulo ya lo hace — y comía el alto que las hacía altas de más en la columna
+      // lateral. `bg`/`fg`/`ic` siguen aceptándose para no tocar los ~14 llamadores.
       function statTile(o) {
-        return `<div class="card tight stat clickable" ${o.go ? `onclick="${o.go}"` : ''}>
-          <div class="k"><span class="ico" style="background:${o.bg}${o.ic ? '' : ''};color:${o.fg}">${o.ic}</span>${o.k}</div>
+        return `<div class="card tight stat noico clickable" ${o.go ? `onclick="${o.go}"` : ''}>
+          <div class="k">${o.k}</div>
           <div class="v">${o.v}</div><div class="s">${o.s}</div></div>`;
       }
 
@@ -1543,12 +1738,31 @@
         }).join('')}</div>`;
       }
 
+      /* REGLA — El agrupamiento POR SUCURSAL solo aplica con MÁS DE UNA sede activa.
+         Con un solo local el corte devuelve una fila con el 100% y una segunda de lo vendido
+         online: no dice nada que no diga el total. La sucursal sale del profesional que
+         atendió, porque cada uno trabaja en una sede; lo que se vende online (cursos, gift
+         cards, descargables) no pasa por ninguna y va a su propio bucket. */
+      const variasSedes = () => V_().sedes.length > 1;
+      const SIN_SEDE = 'Online · sin sucursal';
+      function sedeDe(st) {
+        if (!st) return SIN_SEDE;
+        const sedes = V_().sedes;
+        const i = Math.max(0, STAFF.indexOf(st));
+        return sedes[Math.min(sedes.length - 1, Math.floor(i / Math.ceil(STAFF.length / sedes.length)))];
+      }
+      function bySede(rows) {
+        const by = {};
+        rows.forEach((m) => { const k = sedeDe(m.staff); by[k] = (by[k] || 0) + m.amount; });
+        return Object.entries(by).sort((a, b) => b[1] - a[1]);
+      }
+
       // Ranking completo por concepto. El corte por tipo de venta dice "Servicios 63%"; este
       // dice CUÁL servicio, que es lo que se puede accionar (precio, agenda, promo). No se
       // recorta: la card scrollea, así que los adicionales quedan alcanzables.
       function concentracion(inc) {
         const by = {};
-        inc.filter((m) => m.asset !== 'manual').forEach((m) => { by[m.concept] = (by[m.concept] || 0) + m.amount; });
+        inc.forEach((m) => { by[m.concept] = (by[m.concept] || 0) + m.amount; });
         return Object.entries(by).sort((a, b) => b[1] - a[1]);
       }
 
@@ -1565,6 +1779,33 @@
             </div>
             <div class="val">${$$(r[1])}<em>${pc(r[1], tot)}%</em></div></div>`;
         }).join('')}</div><span class="fade"></span><span class="more"></span></div>`;
+      }
+
+      /* ---------------- SCROLL INFINITO EN TABLAS ----------------
+         Un centinela al final de la lista: cuando entra en el viewport del contenedor que
+         scrollea, se carga el siguiente tramo. Sin botón, y sin traer todo de una. */
+      function masFilas(mostradas, total, campo) {
+        if (mostradas >= total) return '';
+        return `<div class="loadmore" data-page="${campo}">
+          <span class="spin"></span>Cargando más… <b>${mostradas}</b> de ${total}
+        </div>`;
+      }
+      let IO = null;
+      function bindInfinito() {
+        if (IO) IO.disconnect();
+        const sent = document.querySelector('.loadmore');
+        if (!sent) return;
+        const root = sent.closest('.tblwrap') || null;
+        IO = new IntersectionObserver((ents) => {
+          ents.forEach((e2) => {
+            if (!e2.isIntersecting) return;
+            const campo = sent.dataset.page;
+            S[campo]++;
+            IO.disconnect();
+            render();
+          });
+        }, { root, rootMargin: '80px' });
+        IO.observe(sent);
       }
 
       // El degradado y el contador solo aparecen si de verdad quedó contenido abajo.
@@ -1586,15 +1827,22 @@
       const TABS = [
         { k: 'resumen', l: 'Resumen' },
         { k: 'movimientos', l: 'Ventas' },
-        { k: 'cobranzas', l: 'Por cobrar' },
-        { k: 'cobros', l: 'Cobros' },
+        { k: 'cobranzas', l: 'Ventas por cobrar' },
+        { k: 'cobros', l: 'Ventas cobradas' },
         { k: 'gastos', l: 'Gastos' },
-        { k: 'comisiones', l: 'Comisiones' },
+        { k: 'comisiones', l: 'Comisiones del equipo' },
         { k: 'resultado', l: 'Resultado' },
-        { k: 'arqueo', l: 'Caja' },
+        { k: 'arqueo', l: 'Gestión de caja' },
       ];
-      // Comisiones solo existe si hay equipo. Un profesional independiente no liquida a nadie.
-      const tabsVisibles = () => TABS.filter((t) => t.k !== 'comisiones' || S.persona === 'venue');
+      /* REGLA — Comisiones es una sección de EQUIPO.
+         Existe solo si el negocio tiene profesionales cargados: un profesional independiente
+         se cobra a sí mismo, no liquida a nadie. Lo mismo vale para todo agrupamiento POR
+         PROFESIONAL (la columna en las tablas, el corte del Resumen, las tarjetas): sin
+         equipo hay una sola persona y el corte no informa nada.
+         En producción esto se resuelve con `is_venue` + el add-on `revenue_share_enabled`;
+         acá lo aproxima `S.persona === 'venue'`. */
+      const conEquipo = () => S.persona === 'venue' && STAFF.length > 1;
+      const tabsVisibles = () => TABS.filter((t) => t.k !== 'comisiones' || conEquipo());
       // Tabs de los otros dos containers tocados por la propuesta (mockups, no navegables por dentro).
       const TABS_ACT = [
         { k: 'reservas', l: 'Reservas' },
@@ -1631,7 +1879,11 @@
 
         // Sin columna de valores a la izquierda: el número que importa está rotulado sobre
         // el último punto y el resto sale del tooltip. Las guías solas ya dan la escala.
-        const W = 960, H = 300, PL = 10, PR = 16, PT = 30, PB = 30;
+        // En un teléfono el mismo viewBox deja la curva aplastada y los rótulos ilegibles:
+        // más alto relativo, menos rótulos y trazos más gruesos.
+        const angosto = window.innerWidth <= 760;
+        const W = angosto ? 380 : 960, H = angosto ? 250 : 210;
+        const PL = angosto ? 4 : 10, PR = angosto ? 6 : 16, PT = angosto ? 14 : 28, PB = angosto ? 30 : 28;
         const max = Math.max(...pts.map((p) => p.v)) || 1;
         const tope = Math.ceil(max / 1e6) * 1e6 || max;
         const x = (i) => PL + (i / (pts.length - 1)) * (W - PL - PR);
@@ -1646,16 +1898,16 @@
           return `<line x1="${PL}" y1="${y(v).toFixed(1)}" x2="${W - PR}" y2="${y(v).toFixed(1)}" stroke="var(--f-hair)" stroke-width="1"/>`;
         }).join('');
 
-        const cadaX = Math.max(1, Math.round(pts.length / 7));
+        const cadaX = Math.max(1, Math.round(pts.length / (angosto ? 4 : 7)));
         // El último siempre se rotula, pero si el anterior le queda encima, ese se saltea.
         const ultimoRot = pts.length - 1;
         const chocan = ultimoRot % cadaX !== 0 && (ultimoRot - Math.floor(ultimoRot / cadaX) * cadaX) < cadaX * 0.55;
         const xlab = pts.map((p, i) => ((i % cadaX === 0 && !(chocan && i === Math.floor(ultimoRot / cadaX) * cadaX)) || i === ultimoRot)
-          ? `<text x="${x(i).toFixed(1)}" y="${H - 8}" text-anchor="${i === 0 ? 'start' : i === pts.length - 1 ? 'end' : 'middle'}" class="ax">${fD(p.day)}</text>` : '').join('');
+          ? `<text x="${x(i).toFixed(1)}" y="${H - 8}" text-anchor="${i === 0 ? 'start' : i === pts.length - 1 ? 'end' : 'middle'}" class="ax" style="font-size:${angosto ? 11 : 10}px">${fD(p.day)}</text>` : '').join('');
 
         const liqs = pts.map((p, i) => p.pag > 0
           ? `<g><line x1="${x(i).toFixed(1)}" y1="${PT}" x2="${x(i).toFixed(1)}" y2="${y(0)}" stroke="var(--f-coral)" stroke-width="1" stroke-dasharray="3 3" opacity=".45"/>
-             <circle cx="${x(i).toFixed(1)}" cy="${y(p.v).toFixed(1)}" r="5" fill="var(--f-coral)" stroke="var(--f-card)" stroke-width="2"/></g>` : '').join('');
+             <circle cx="${x(i).toFixed(1)}" cy="${y(p.v).toFixed(1)}" r="${angosto ? 5 : 5}" fill="var(--f-coral)" stroke="var(--f-card)" stroke-width="2"/></g>` : '').join('');
 
         const hover = pts.map((p, i) => {
           const w = (W - PL - PR) / (pts.length - 1);
@@ -1666,6 +1918,7 @@
 
         const ult = pts[pts.length - 1];
         return {
+          saldo: ult.v,
           pagos: pts.filter((p) => p.pag > 0).length,
           totalPagado: pts.reduce((a2, p) => a2 + p.pag, 0),
           svg: `<div class="chart"><svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Evolución del saldo de comisiones sin liquidar">
@@ -1674,10 +1927,9 @@
               <stop offset="100%" stop-color="var(--f-brand)" stop-opacity="0"/></linearGradient></defs>
             ${ticks}
             <path d="${area}" fill="url(#gcom)"/>
-            <path d="${linea}" fill="none" stroke="var(--f-brand)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+            <path d="${linea}" fill="none" stroke="var(--f-brand)" stroke-width="${angosto ? 2.2 : 2}" stroke-linejoin="round" stroke-linecap="round"/>
             ${liqs}
             <circle cx="${x(pts.length - 1).toFixed(1)}" cy="${y(ult.v).toFixed(1)}" r="4" fill="var(--f-brand)" stroke="var(--f-card)" stroke-width="2"/>
-            <text x="${(W - PR).toFixed(1)}" y="${(PT - 12).toFixed(1)}" text-anchor="end" class="axv">${$$(ult.v)}</text>
             ${xlab}${hover}
           </svg></div>`,
         };
@@ -1690,17 +1942,42 @@
          Ordenar queda para las columnas donde ordenar sirve (fecha, cliente, monto). */
       let COLF = null;
 
-      function thF(k, label) {
+      function thF(k, label, extra) {
         const d = fieldDefs()[k];
         if (!d) return '';
         const n = d.v === 'all' || !Array.isArray(d.v) ? 0 : d.v.length;
-        return `<th class="colf ${n ? 'on' : ''}" data-colf="${k}" onclick="toggleColF('${k}')" title="Filtrar por ${esc(d.l.toLowerCase())}">
+        return `<th class="colf ${extra || ''} ${n ? 'on' : ''}" data-colf="${k}" onclick="toggleColF('${k}')" title="Filtrar por ${esc(d.l.toLowerCase())}">
           <span class="cf">
             <svg class="fi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16l-6.2 7.4V19l-3.6-2v-4.6z"/></svg>
             ${esc(label)}${n ? `<em>${n}</em>` : ''}
             <svg class="ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
           </span>
         </th>`;
+      }
+
+      /* El buscador por cliente es un filtro más de la tabla, así que vive donde se lee:
+         en la cabecera de la columna Cliente, con el mismo popover que el resto. */
+      function thS(k, label, extra) {
+        const d = fieldDefs()[k];
+        if (!d) return '';
+        return `<th class="colf ${extra || ''} ${d.v ? 'on' : ''}" data-colf="${k}" onclick="toggleColF('${k}')" title="Buscar por ${esc(label.toLowerCase())}">
+          <span class="cf">
+            <svg class="fi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
+            ${esc(label)}${d.v ? '<em>1</em>' : ''}
+            <svg class="ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </th>`;
+      }
+
+      // Cada tecla re-renderiza la tabla, así que hay que devolverle el foco y el cursor
+      // al input nuevo para poder seguir escribiendo.
+      function buscarColF(k, v) {
+        const viejo = document.querySelector('#colpop input');
+        const pos = viejo ? viejo.selectionStart : null;
+        fieldDefs()[k].set(v);
+        render(); pintarColF();
+        const nuevo = document.querySelector('#colpop input');
+        if (nuevo) { nuevo.focus(); nuevo.setSelectionRange(pos == null ? nuevo.value.length : pos, pos == null ? nuevo.value.length : pos); }
       }
 
       function toggleColF(k) { COLF = COLF === k ? null : k; pintarColF(); }
@@ -1716,27 +1993,48 @@
         render(); pintarColF();
       }
 
-      function pintarColF() {
-        const box = el('colpop');
-        const anchor = COLF && document.querySelector(`[data-colf="${COLF}"]`);
-        if (!COLF || !anchor) { box.classList.remove('on'); COLF = null; return; }
-        const d = fieldDefs()[COLF];
-        const activo = d.v !== 'all' && Array.isArray(d.v) && d.v.length;
-        box.innerHTML = `
-          <div class="cp-h">${esc(d.l)}${activo ? `<button class="cp-x" onclick="event.stopPropagation();pickColF('${COLF}','all')">Limpiar</button>` : ''}</div>
-          <div class="cp-b">${(d.multi ? [['all', d.allLabel]] : []).concat(d.o).map(([v, l]) => {
-            const on = d.multi ? (v === 'all' ? d.v === 'all' : inSel(d.v, v) && d.v !== 'all') : d.v === v;
-            return `<button class="fopt ${on ? 'on' : ''}" onclick="event.stopPropagation();pickColF('${COLF}', ${jsStr(v)})"><span>${l}</span>${on ? ICO.check : ''}</button>`;
-          }).join('')}</div>
-          ${d.multi ? `<div class="cp-f"><button class="btn pri sm" onclick="event.stopPropagation();COLF=null;pintarColF()">Listo</button></div>` : ''}`;
-        box.classList.add('on');
+      function colPos(anchor, box, w) {
         const r = anchor.getBoundingClientRect();
-        const w = Math.max(210, Math.min(280, box.offsetWidth || 240));
         box.style.width = w + 'px';
         box.style.left = Math.max(12, Math.min(window.innerWidth - w - 12, r.left)) + 'px';
         const abajo = window.innerHeight - r.bottom;
         const h = box.offsetHeight;
         box.style.top = (abajo > h + 16 || r.top < h + 16 ? r.bottom + 6 : r.top - h - 6) + 'px';
+      }
+
+      function pintarColF() {
+        const box = el('colpop');
+        const anchor = COLF && document.querySelector(`[data-colf="${COLF}"]`);
+        if (!COLF || !anchor) { box.classList.remove('on'); COLF = null; return; }
+        const d = fieldDefs()[COLF];
+        if (d.type === 'text') {
+          box.innerHTML = `<div class="cp-q">
+            <div class="tsearch ${d.v ? 'on' : ''}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
+              <input type="text" value="${esc(d.v)}" placeholder="${esc(d.ph || 'Buscar')}" oninput="event.stopPropagation();buscarColF('${COLF}', this.value)" onclick="event.stopPropagation()" />
+              ${d.v ? `<button class="tx" title="Limpiar" onclick="event.stopPropagation();buscarColF('${COLF}', '')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>` : ''}
+            </div></div>`;
+          box.classList.add('on');
+          colPos(anchor, box, 268);
+          const inp = box.querySelector('input');
+          if (inp && document.activeElement !== inp) { inp.focus(); inp.setSelectionRange(inp.value.length, inp.value.length); }
+          return;
+        }
+        const activo = d.v !== 'all' && Array.isArray(d.v) && d.v.length;
+        box.innerHTML = `
+          <div class="cp-h">${esc(d.l)}${activo ? `<button class="cp-x" onclick="event.stopPropagation();pickColF('${COLF}','all')">Limpiar</button>` : ''}</div>
+          <div class="cp-b">${(() => {
+            let ult = null;
+            return (d.multi ? [['all', d.allLabel]] : []).concat(d.o).map(([v, l, g]) => {
+              const on = d.multi ? (v === 'all' ? d.v === 'all' : inSel(d.v, v) && d.v !== 'all') : d.v === v;
+              const cab = g && g !== ult ? `<div class="fopt-g">${esc(g)}</div>` : '';
+              ult = g || ult;
+              return cab + `<button class="fopt ${on ? 'on' : ''}" onclick="event.stopPropagation();pickColF('${COLF}', ${jsStr(v)})"><span>${l}</span>${on ? ICO.check : ''}</button>`;
+            }).join('');
+          })()}</div>
+          ${d.multi ? `<div class="cp-f"><button class="btn pri sm" onclick="event.stopPropagation();COLF=null;pintarColF()">Listo</button></div>` : ''}`;
+        box.classList.add('on');
+        colPos(anchor, box, Math.max(210, Math.min(280, box.offsetWidth || 240)));
       }
       window.addEventListener('scroll', () => { if (COLF) pintarColF(); }, true);
       window.addEventListener('resize', () => { if (COLF) pintarColF(); });
@@ -1753,7 +2051,11 @@
          arma con dos clicks (desde / hasta) y queda guardado en RANGES.custom. */
       let DP = false, DPMES = TODAY.slice(0, 7), DPINI = null;
 
-      function toggleDP() { DP = !DP; if (DP) { DPMES = mesMas(RANGES[S.range].to.slice(0, 7), -1); DPINI = null; } render(); }
+      function toggleDP() {
+        DP = !DP;
+        if (DP) { DPMES = mesMas(RANGES[S.range].to.slice(0, 7), -1); DPINI = null; if (chico()) abrirPickerFull(); }
+        render();
+      }
       function pickPreset(k) { S.range = k; S.movPage = 1; S.cobPage = 1; DP = false; render(); }
       function mesDP(n) {
         const [y, m] = DPMES.split('-').map(Number);
@@ -1798,7 +2100,7 @@
         }
         const mesRaw = new Date(Date.UTC(y, m - 1, 1)).toLocaleDateString('es-AR', { month: 'long', year: 'numeric', timeZone: 'UTC' });
         const nombreMes = mesRaw[0].toUpperCase() + mesRaw.slice(1);
-        const flecha = (n, dis, lbl) => `<button ${dis ? 'disabled' : `onclick="event.stopPropagation();mesDP(${n})"`} aria-label="${lbl}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="${n < 0 ? 'M15 6l-6 6 6 6' : 'M9 6l6 6 6-6'}"/></svg></button>`;
+        const flecha = (n, dis, lbl) => `<button ${dis ? 'disabled' : `onclick="event.stopPropagation();mesDP(${n})"`} aria-label="${lbl}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="${n < 0 ? 'M15 6l-6 6 6 6' : 'M9 6l6 6-6 6'}"/></svg></button>`;
         return `<div class="dpcal">
           <div class="dpnav">
             ${lado === 'izq' ? flecha(-1, false, 'Mes anterior') : '<span></span>'}
@@ -1820,7 +2122,8 @@
             <span class="rg">${fD(r.from)} <i>→</i> ${fD(r.to)}</span>
             <svg class="ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
           </button>
-          ${DP ? `<div class="dppop" onclick="event.stopPropagation()">
+          ${DP && chico() ? pickerFull() : ''}
+          ${DP && !chico() ? `<div class="dppop" onclick="event.stopPropagation()">
             <div class="dppresets">
               <p class="k">Atajos</p>
               ${PRESETS.map((k) => `<button class="${S.range === k ? 'on' : ''}" onclick="pickPreset('${k}')">${RANGES[k].label}</button>`).join('')}
@@ -1830,96 +2133,96 @@
         </div>`;
       }
 
-      /* ---------------- ACCIONABLES DEL RESUMEN ----------------
-         El Resumen cuenta qué pasó; esto dice qué hacer. Cada línea es un hecho derivado
-         del ledger o del estado de la caja: si no es cierta, la línea no existe. Nada de
-         alertas de relleno, y nada de antigüedad de deuda (decisión JP, 6/ago). */
-      // String seguro para meter dentro de un onclick="..." del HTML.
-      const jsStr = (v) => esc("'" + String(v).replace(/\\/g, '\\\\').replace(/'/g, "\\'") + "'");
-      const CHEV_R = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
-      const rangoPrevio = (r) => {
-        const dias = dDiff(r.from, r.to) + 1;
-        return { from: addD(r.from, -dias), to: addD(r.from, -1) };
-      };
-      function accionables() {
-        const r = RANGES[S.range], ms = scope();
-        const out = [];
+      /* ---------------- PICKER FULL SCREEN (mobile) ----------------
+         En un teléfono el popover no entra: pasa a ser una hoja completa con los dos
+         extremos del rango arriba, los atajos en una fila que scrollea y el footer con el
+         resumen y las acciones. Acá los cambios se ACUMULAN y recién se aplican con el
+         botón: tocar un día en un popover que se cierra solo es imposible de corregir. */
+      const chico = () => window.innerWidth <= 760;
+      let DPSEL = null;
 
-        // 1 · Ventas entregadas que todavía no se cobraron.
-        const ab = activeRecv();
-        if (ab.length) {
-          const tot = ab.reduce((s2, x) => s2 + saldoOf(x), 0);
-          const sinSena = ab.filter((x) => !x.paid).length;
-          out.push({ t: 'cobro', ic: ICO.alert, k: $$(tot),
-            d: `en ${ab.length} venta${ab.length === 1 ? '' : 's'} entregada${ab.length === 1 ? '' : 's'} que todavía no cobraste${sinSena ? ` · ${sinSena} sin ninguna seña` : ''}`,
-            a: 'Ver por cobrar', go: `go('cobranzas')` });
-        }
-
-        // 2 · Lo que le debés al equipo.
-        if (S.persona === 'venue') {
-          const con = STAFF.filter((st) => saldoComision(st) > 0);
-          const tot = con.reduce((s2, st) => s2 + saldoComision(st), 0);
-          if (tot > 0) out.push({ t: 'equipo', ic: ICO.up, k: $$(tot),
-            d: `de comisiones sin liquidar · ${con.length} profesional${con.length === 1 ? '' : 'es'} con saldo abierto`,
-            a: 'Liquidar', go: `go('comisiones')` });
-        }
-
-        // 3 · La caja quedó abierta.
-        if (CAJA_ABIERTA) out.push({ t: 'caja', ic: ICO.wallet, k: 'Caja abierta',
-          d: `desde las ${APERTURA.hora}. Al terminar el día contás el efectivo y la cerrás.`,
-          a: 'Ir a Caja', go: `go('arqueo')` });
-
-        // 4 · El último arqueo no coincidió.
-        const cierres = sessionsIn({ from: '2026-01-01', to: TODAY });
-        const ult = cierres[0];
-        if (ult && ult.cnt !== ult.exp) {
-          const d = ult.cnt - ult.exp;
-          out.push({ t: 'caja', ic: ICO.alert, k: `${d > 0 ? 'Sobró' : 'Faltó'} ${$$(Math.abs(d))}`,
-            d: `en el cierre del ${fDL(ult.date)}${ult.why ? ` · ${ult.why.toLowerCase()}` : ''}`,
-            a: 'Ver cierres', go: `go('arqueo')` });
-        }
-
-        // 5 · Gastaste más de lo que entró.
-        const neto = sum(income(ms)) - sum(refunds(ms)) - sum(expenses(ms));
-        if (neto < 0) out.push({ t: 'rojo', ic: ICO.up, k: $$(Math.abs(neto)),
-          d: `de resultado negativo: en ${RANGES[S.range].label.toLowerCase()} salió más plata de la que entró.`,
-          a: 'Ver resultado', go: `go('resultado')` });
-
-        // 6 · Una categoría de gasto que se disparó contra el período anterior de igual largo.
-        const prev = rangoPrevio(r);
-        const gAhora = byKey(expenses(ms), 'cat');
-        const msPrev = MOVS.filter((m) => inRange(m, prev) && inSel(S.staff, m.staff));
-        const gAntes = Object.fromEntries(byKey(expenses(msPrev), 'cat'));
-        const totG = gAhora.reduce((s2, x) => s2 + x[1], 0) || 1;
-        gAhora.forEach(([k, v]) => {
-          const antes = gAntes[k] || 0;
-          if (antes > 0 && v >= antes * 1.5 && v / totG >= 0.08) {
-            out.push({ t: 'gasto', ic: ICO.up, k: `+${Math.round(((v - antes) / antes) * 100)}%`,
-              d: `en <b>${(ECATS.find((c) => c.k === k) || { label: k }).label}</b> contra el período anterior · ${$$(antes)} → ${$$(v)}`,
-              a: 'Ver gastos', go: `go('gastos')` });
-          }
-        });
-
-        // 7 · Un gasto fijo cuyo día habitual ya pasó y este mes no se registró.
-        const mes = TODAY.slice(0, 7), dia = Number(TODAY.slice(8));
-        [['alquiler', 5], ['servicios', 12], ['impuestos', 20]].forEach(([cat, d]) => {
-          if (dia <= d) return;
-          const hay = MOVS.some((m) => m.dir === 'out' && m.cat === cat && m.date.slice(0, 7) === mes);
-          if (!hay) out.push({ t: 'gasto', ic: ICO.alert, k: 'Falta un gasto fijo',
-            d: `<b>${(ECATS.find((c) => c.k === cat) || { label: cat }).label}</b> se registra todos los meses cerca del ${d} y este mes no está. Sin él, el resultado se ve mejor de lo que es.`,
-            a: 'Registrar gasto', go: `openGasto()` });
-        });
-
-        // 8 · Efectivo cargado con la caja cerrada: entra recién en el próximo arqueo.
-        if (!CAJA_ABIERTA) {
-          const ef = MOVS.filter((m) => m.date === TODAY && m.method === 'ef' && m.src === 'local');
-          if (ef.length) out.push({ t: 'caja', ic: ICO.wallet, k: $$(sum(ef)),
-            d: `en efectivo registrado hoy con la caja cerrada · entra en el próximo arqueo`,
-            a: 'Abrir caja', go: `go('arqueo')` });
-        }
-        return out;
+      function abrirPickerFull() {
+        const r = RANGES[S.range];
+        DPSEL = { from: r.from, to: r.to };
+        DPMES = mesMas(r.to.slice(0, 7), -1);
+      }
+      function pickDiaFull(day) {
+        if (!DPSEL.from || DPSEL.to || day < DPSEL.from) DPSEL = { from: day, to: null };
+        else DPSEL.to = day;
+        render();
+      }
+      function presetFull(k) { const r = RANGES[k]; DPSEL = { from: r.from, to: r.to }; DPMES = mesMas(r.to.slice(0, 7), -1); render(); }
+      function limpiarFecha() { presetFull('d30'); }
+      function aplicarFecha() {
+        if (!DPSEL.from) { toast('Elegí al menos un día'); return; }
+        const from = DPSEL.from, to = DPSEL.to || DPSEL.from;
+        const preset = PRESETS.find((k) => RANGES[k].from === from && RANGES[k].to === to);
+        if (preset) S.range = preset;
+        else { RANGES.custom = { label: 'Personalizado', from, to }; S.range = 'custom'; }
+        S.movPage = 1; S.cobPage = 1; DP = false; render();
       }
 
+      function pickerFull() {
+        if (!DPSEL) abrirPickerFull();
+        const { from, to } = DPSEL;
+        const dias = to ? dDiff(from, to) + 1 : 1;
+        return `<div class="dpfull" onclick="event.stopPropagation()">
+          <div class="dpf-h">
+            <h3>Filtrar por fecha</h3>
+            <button class="x" onclick="DP=false;render()" aria-label="Cerrar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+          </div>
+          <div class="dpf-rango">
+            <div class="dpf-campo ${!to ? 'on' : ''}"><span>Inicio</span><b>${fDL(from)}</b></div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M14 7l5 5-5 5"/></svg>
+            <div class="dpf-campo ${to ? 'on' : ''}"><span>Fin</span><b>${to ? fDL(to) : '—'}</b></div>
+          </div>
+          <div class="dpf-presets">
+            ${PRESETS.map((k) => `<button class="${RANGES[k].from === from && RANGES[k].to === to ? 'on' : ''}" onclick="presetFull('${k}')">${RANGES[k].label}</button>`).join('')}
+          </div>
+          <div class="dpf-cals">
+            ${mesFullHTML(DPMES, 'izq')}${mesFullHTML(mesMas(DPMES, 1), 'der')}
+          </div>
+          <div class="dpf-f">
+            <p class="dpf-res"><b>${dias} día${dias === 1 ? '' : 's'}</b> · del ${fDL(from)}${to && to !== from ? ` al ${fDL(to)}` : ''}</p>
+            <div class="dpf-btns">
+              <button class="btn" onclick="limpiarFecha()">Limpiar</button>
+              <button class="btn pri" onclick="aplicarFecha()">Aplicar</button>
+            </div>
+          </div>
+        </div>`;
+      }
+
+      function mesFullHTML(mes, lado) {
+        const [y, m] = mes.split('-').map(Number);
+        const primero = new Date(Date.UTC(y, m - 1, 1));
+        const total = new Date(Date.UTC(y, m, 0)).getUTCDate();
+        const offset = (primero.getUTCDay() + 6) % 7;
+        const { from, to } = DPSEL;
+        const celdas = [];
+        for (let i = 0; i < offset; i++) celdas.push('<span></span>');
+        for (let d = 1; d <= total; d++) {
+          const day = `${mes}-${String(d).padStart(2, '0')}`;
+          const futuro = day > TODAY;
+          const dentro = to ? day >= from && day <= to : day === from;
+          const punta = day === from || day === to;
+          celdas.push(`<button class="dpd ${dentro && !punta ? 'in' : ''} ${punta ? 'bd' : ''}"
+            ${futuro ? 'disabled' : `onclick="event.stopPropagation();pickDiaFull('${day}')"`}>${d}</button>`);
+        }
+        const raw = new Date(Date.UTC(y, m - 1, 1)).toLocaleDateString('es-AR', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+        const flecha = (n, dis, lbl) => `<button ${dis ? 'disabled' : `onclick="event.stopPropagation();mesDP(${n})"`} aria-label="${lbl}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="${n < 0 ? 'M15 6l-6 6 6 6' : 'M9 6l6 6-6 6'}"/></svg></button>`;
+        return `<div class="dpcal">
+          <div class="dpnav">
+            ${lado === 'izq' ? flecha(-1, false, 'Mes anterior') : '<span></span>'}
+            <b>${raw[0].toUpperCase() + raw.slice(1)}</b>
+            ${lado === 'der' ? flecha(1, mes >= TODAY.slice(0, 7), 'Mes siguiente') : '<span></span>'}
+          </div>
+          <div class="dpdow">${['L', 'M', 'M', 'J', 'V', 'S', 'D'].map((x) => `<span>${x}</span>`).join('')}</div>
+          <div class="dpgrid">${celdas.join('')}</div>
+        </div>`;
+      }
+
+      // String seguro para meter dentro de un onclick="..." del HTML.
+      const jsStr = (v) => esc("'" + String(v).replace(/\\/g, '\\\\').replace(/'/g, "\\'") + "'");
       /* ---------------- RESUMEN ---------------- */
       function vResumen() {
         const ms = scope(), r = RANGES[S.range];
@@ -1946,18 +2249,10 @@
         const byAsset = byKey(dist, 'asset');
         const byStaff = byKey(dist.filter((m) => m.staff), 'staff');
         const top = concentracion(dist);
+        const bySed = conEquipo() && variasSedes() ? bySede(dist) : [];
 
-        const acts = accionables();
         return `
-        ${acts.length ? `<div class="sec"><div class="card actbox">
-          <div class="adhead bare"><h4>Necesita tu <strong>atención</strong></h4>
-            <span class="cap">${acts.length} item${acts.length === 1 ? '' : 's'} para revisar</span></div>
-          ${acts.map((a) => `<button class="actrow" onclick="${a.go}">
-            <span class="ai t-${a.t}">${a.ic}</span>
-            <span class="at"><b>${a.k}</b><span>${a.d}</span></span>
-            <span class="aa">${a.a}${CHEV_R}</span>
-          </button>`).join('')}
-        </div></div>` : ''}
+
 
         <div class="grid g5 statrow sec">
           ${statTile({ k: 'Ventas totales', v: $$(vendido), s: pendTot ? `<b>${$$(pendTot)}</b> todavía sin cobrar` : 'Todo cobrado', ic: ICO.bag, bg: '#eef0ff', fg: '#4338ca', go: `go('movimientos')` })}
@@ -1993,15 +2288,21 @@
         <div class="grid g2 top sec">
           ${top.length ? `<div class="card">
             <h3>${dl} por concepto</h3>
-            <p class="cap">${vend ? 'Todo lo vendido' : 'Solo lo cobrado'} del período por concepto, no por categoría. Clickeá una fila para ver esas ventas.</p>
+            <p class="cap">${vend ? 'Todo lo vendido' : 'Solo lo cobrado'} del período por concepto.</p>
             ${barsList(top, { labelOf: (k) => k, go: (k) => `goMov({q:${jsStr(k)}})` })}
           </div>` : ''}
-          ${S.persona === 'venue' && byStaff.length ? `<div class="card">
+          ${conEquipo() && byStaff.length ? `<div class="card">
             <h3>${dl} por profesional</h3>
-            <p class="cap">Solo lo que tiene profesional asignado. Cursos, capacitaciones, descargables y gift cards no cuentan acá.</p>
+            <p class="cap">Cursos, capacitaciones, descargables y gift cards no cuentan acá.</p>
             ${barsList(byStaff, { go: (k) => `goMovStaff('${k}')` })}
           </div>` : ''}
         </div>
+
+        ${bySed.length > 1 ? `<div class="sec"><div class="card">
+          <h3>${dl} por sucursal</h3>
+          <p class="cap">Lo que se vende online no pasa por ninguna sucursal.</p>
+          ${barsList(bySed, { labelOf: (k) => k })}
+        </div></div>` : ''}
 
 
 `;
@@ -2012,28 +2313,33 @@
       function vCobranzas() {
         const act = activeRecv();
         const total = act.reduce((s, r) => s + saldoOf(r), 0);
-        const conSena = act.filter((r) => r.paid > 0);
+        // Lo que se debe por un turno que todavía no pasó no es una cobranza a perseguir:
+        // entra solo el día que el cliente viene. Separarlo dice cuánto hay que reclamar.
+        const futuros = act.filter((r) => r.origin === 'servicio' && r.date > TODAY);
+        const sumFut = futuros.reduce((s2, r) => s2 + saldoOf(r), 0);
         const filtered = filterRecv();
         return `
         <div class="grid g2 sec">
-          ${statTile({ k: 'Total por cobrar', v: $$(total), s: `${act.length} cobrable${act.length === 1 ? '' : 's'} abierto${act.length === 1 ? '' : 's'} · todo el historial`, ic: ICO.doc, bg: '#eef6ff', fg: '#005cd4' })}
-          ${statTile({ k: 'Ya tienen seña', v: $$(conSena.reduce((s, r) => s + r.paid, 0)), s: `<b>${conSena.length} de ${act.length}</b> pagaron una parte`, ic: ICO.check, bg: '#e8fbf5', fg: '#07806a' })}
+          ${statTile({ k: 'Total por cobrar', v: $$(total), s: sumFut
+            ? `<b>${$$(total - sumFut)}</b> de trabajo ya entregado`
+            : `${act.length} cobrable${act.length === 1 ? '' : 's'} abierto${act.length === 1 ? '' : 's'}`, ic: ICO.doc, bg: '#eef6ff', fg: '#005cd4' })}
+          ${statTile({ k: 'De turnos por venir', v: $$(sumFut), s: futuros.length
+            ? `<b>${futuros.length}</b> ${futuros.length === 1 ? Z().turno + ' agendado' : Z().turnos + ' agendados'} · se cobra el día`
+            : `Ningún ${Z().turno} agendado con saldo`, ic: ICO.clock, bg: '#e8fbf5', fg: '#07806a' })}
         </div>
 
         <div class="sec">
           <div class="card tcard">
-            ${tbar('buscarRecv', `${filtered.length} de ${act.length} cobrable${act.length === 1 ? '' : 's'}`)}
             <div class="tblwrap"><table class="tbl">
               <thead><tr>
-                <th style="padding-left:18px">${Z().Cliente}</th>
-                ${thF('origin', 'Origen')}
-                <th class="cw">Concepto</th>
+                ${thS('buscarRecv', Z().Cliente, 'pl')}
+                ${thF('origin', 'Tipo')}
+                ${thF('recvConcepto', 'Concepto', 'cw')}
                 ${S.persona === 'venue' ? thF('staff', 'Profesional') : ''}
                 <th class="r">Total</th><th class="r">Cobrado</th><th class="r">Falta cobrar</th>
                 <th style="padding-right:18px"></th>
               </tr></thead>
               <tbody>${filtered.length ? filtered.map(rowRecv).join('') : `<tr><td colspan="${S.persona === 'venue' ? 8 : 7}"><div class="empty"><b>Nada por acá</b>No hay cobrables que cumplan con este filtro.</div></td></tr>`}</tbody>
-              ${filtered.length ? `<tfoot><tr><td colspan="${S.persona === 'venue' ? 6 : 5}" style="padding-left:18px">${filtered.length} cobrable${filtered.length === 1 ? '' : 's'} en pantalla</td><td class="r">${$$(filtered.reduce((s, r) => s + saldoOf(r), 0))}</td><td></td></tr></tfoot>` : ''}
             </table></div>
           </div>
         </div>
@@ -2050,15 +2356,16 @@
         let rows = activeRecv();
         rows = rows.filter((r) => inSel(S.cobF.origin, r.origin));
         if (S.persona === 'venue') rows = rows.filter((r) => inSel(S.staff, r.staff));
+        rows = rows.filter((r) => inSel(S.cobF.concepto, r.concept));
         const q = S.cobF.q.trim().toLowerCase();
-        if (q) rows = rows.filter((r) => (r.client + ' ' + r.concept + ' ' + r.id).toLowerCase().includes(q));
+        if (q) rows = rows.filter((r) => r.client.toLowerCase().includes(q));
         return rows.sort((a, b) => saldoOf(b) - saldoOf(a));
       }
 
       function rowRecv(r) {
         const hue = r.paid > 0 ? '#0072FB' : '#475569';
         return `<tr class="hoverable" onclick="openRecv('${r.id}')">
-          <td style="padding-left:18px"><div class="who">${avatarFor(r.client, hue)}<div class="t"><b>${esc(r.client)}</b><span class="mono">${r.phone}</span></div></div></td>
+          <td class="nw" style="padding-left:18px"><div class="who">${avatarFor(r.client, hue)}<div class="t"><b>${esc(r.client)}</b><span class="mono">${r.phone}</span></div></div></td>
           <td><span class="chip mute">${ORIGIN_LABEL[r.origin]}</span></td>
           <td class="cw" style="font-weight:600">${esc(r.concept)}</td>
           ${S.persona === 'venue' ? `<td style="font-size:12.5px;color:${r.staff ? 'var(--f-ink)' : 'var(--f-ink-mid)'}">${r.staff || '—'}</td>` : ''}
@@ -2067,7 +2374,8 @@
           <td class="r amt">${$$(saldoOf(r))}</td>
           <td style="padding-right:18px" onclick="event.stopPropagation()">
             <div style="display:flex;gap:6px;justify-content:flex-end">
-              <button class="btn sm" onclick="toast('Cobro registrado · ${$$(saldoOf(r))}')">Registrar cobro</button>
+              <button class="btn sm wa" onclick="event.stopPropagation();openRecordatorio('${r.id}')" title="Recordar por WhatsApp" aria-label="Recordar por WhatsApp">${ICO.wa}</button>
+              <button class="btn sm" onclick="openCobrar('${r.id}')">Registrar cobro</button>
             </div></td></tr>`;
       }
 
@@ -2078,11 +2386,14 @@
         // (devoluciones). Los gastos y las liquidaciones al equipo NO entran acá: viven en
         // la sección Gastos, que es su lugar (decisión JP, 20/ago).
         // Un ingreso manual entra al resultado pero no es una venta: no va en esta lista.
-        let rows = scope().filter((m) => (m.dir === 'in' || m.asset === 'refund') && m.asset !== 'manual');
+        let rows = scope().filter((m) => m.dir === 'in' || m.asset === 'refund');
         rows = rows.filter((m) => inSel(f.method, m.method));
         rows = rows.filter((m) => inSel(f.asset, m.asset));
         const q = f.q.trim().toLowerCase();
-        if (q) rows = rows.filter((m) => (m.concept + ' ' + (m.client || '') + ' ' + (m.staff || '') + ' ' + m.id).toLowerCase().includes(q));
+        rows = rows.filter((m) => inSel(f.concepto, m.concept));
+        // El buscador es SOLO por cliente. Concepto tiene su filtro de columna, el
+        // profesional el suyo, y el número interno no es algo que nadie busque (JP, 26/ago).
+        if (q) rows = rows.filter((m) => (m.client || '').toLowerCase().includes(q));
         const k = S.movSort.k, dir = S.movSort.dir;
         rows.sort((a, b) => {
           let va = a[k], vb = b[k];
@@ -2104,15 +2415,18 @@
 
         return `
         <div class="sec">
+          <div class="hero">
+            <span class="n">${$$(tin - tout)}</span>
+            <span class="d">en <b>${rows.length}</b> venta${rows.length === 1 ? '' : 's'}${tout ? ` · <b>${$$(tout)}</b> devueltos` : ''}</span>
+          </div>
           <p class="lede">Cada venta cobrada, una por una — las que entran solas y las que registrás a mano.</p>
           <div class="card tcard">
-            ${tbar('buscarMov', `${rows.length} venta${rows.length === 1 ? '' : 's'}`)}
             <div class="tblwrap"><table class="tbl">
               <thead><tr>
                 ${th('date', 'Fecha', '')}
                 ${thF('asset', 'Tipo')}
-                <th class="cw">Concepto</th>
-                ${th('client', Z().Cliente)}
+                ${thF('concepto', 'Concepto', 'cw')}
+                ${thS('buscarMov', Z().Cliente, 'nw')}
                 ${S.persona === 'venue' ? thF('staff', 'Profesional') : ''}
                 ${thF('method', 'Medio')}
                 <th>Cuenta</th>
@@ -2121,30 +2435,26 @@
               </tr></thead>
               <tbody>${shown.length ? shown.map(rowMov).join('') : `<tr><td colspan="${S.persona === 'venue' ? 9 : 8}"><div class="empty"><b>Sin ventas</b>Probá ampliar el rango o limpiar los filtros.</div></td></tr>`}</tbody>
               <tfoot><tr>
-                <td colspan="${S.persona === 'venue' ? 7 : 6}">
+                <td colspan="${S.persona === 'venue' ? 8 : 7}" style="padding-left:18px">
                   ${rows.length} venta${rows.length === 1 ? '' : 's'} · mostrando ${shown.length}
-                  <span style="font-weight:500;color:var(--f-ink-mid);margin-left:14px">
-                    <span style="color:var(--f-success-text)">+${$$(tin)}</span> cobrado${tout ? ` · <span style="color:var(--f-coral-text)">−${$$(tout)}</span> devueltos` : ''}</span>
                 </td>
-                <td class="r amt" style="font-size:15px">${$$(tin - tout)}</td>
                 <td class="r amt" style="padding-right:18px;color:var(--f-warning-text)">${(() => { const t = shown.reduce((s2, m) => s2 + pendDe(m), 0); return t ? $$(t) : '—'; })()}</td>
               </tr></tfoot>
-            </table></div>
+            </table>${masFilas(shown.length, rows.length, 'movPage')}</div>
           </div>
-          ${shown.length < rows.length ? `<div style="text-align:center;margin-top:22px"><button class="btn" onclick="S.movPage++;render()">Mostrar ${Math.min(25, rows.length - shown.length)} más</button></div>` : ''}
         </div>`;
       }
 
       function rowMov(m) {
         const meth = METHODS[m.method];
-        const label = m.dir === 'out' ? (m.asset === 'gasto' ? (ECATS.find((c) => c.k === m.cat) || {}).label : 'Devolución') : ASSETS[m.asset] ? ASSETS[m.asset].label : m.asset;
-        const acc = { caja: 'Caja', banco: 'Banco', mp: mpTag() }[m.account];
+        const label = m.dir === 'out' ? (m.asset === 'gasto' ? catLabel(m.cat) : 'Devolución') : ASSETS[m.asset] ? ASSETS[m.asset].label : m.asset;
+        const acc = { caja: 'Caja', banco: 'Tu cuenta', mp: mpTag() }[m.account];
         const pend = pendDe(m);
         return `<tr class="hoverable" onclick="openMov(${m.id})">
           <td><div style="font-weight:600">${fD(m.date)}</div><div class="mono" style="font-size:11px;color:var(--f-ink-mid)">${m.time}</div></td>
           <td><span class="chip ${m.dir === 'out' ? 'bad' : 'mute'}">${esc(label || '—')}</span></td>
           <td class="cw" style="font-weight:600;font-size:13px;color:var(--f-ink)">${esc(m.concept)}</td>
-          <td style="font-size:12.5px;color:${m.client ? 'var(--f-ink)' : 'var(--f-ink-mid)'}">${m.client ? esc(m.client) : '—'}</td>
+          <td class="nw" style="font-size:12.5px;color:${m.client ? 'var(--f-ink)' : 'var(--f-ink-mid)'}">${m.client ? esc(m.client) : '—'}</td>
           ${S.persona === 'venue' ? `<td style="font-weight:600;color:${m.staff || m.staffPay ? 'var(--f-ink)' : 'var(--f-ink-mid)'}">${m.staff || m.staffPay || '—'}</td>` : ''}
           <td>${methodTag(m.method)}</td>
           <td style="font-size:12.5px;white-space:nowrap">${m.dir === 'out' ? 'Sale de ' + acc : acc}</td>
@@ -2158,35 +2468,32 @@
 
           const q = S.cobQ.trim().toLowerCase();
           const ms = income(scope())
-            .filter((m) => !q || (m.concept + ' ' + (m.client || '') + ' ' + (m.staff || '')).toLowerCase().includes(q))
+            .filter((m) => inSel(S.cobConcepto, m.concept))
+            // Buscador solo por cliente: concepto y profesional tienen filtro propio.
+            .filter((m) => !q || (m.client || '').toLowerCase().includes(q))
             .slice().sort((a, b) => (a.date === b.date ? b.id - a.id : a.date < b.date ? 1 : -1));
           const refs = refunds(scope());
-          const manual = ms.filter((m) => m.asset === 'manual');
           const shown = ms.slice(0, S.cobPage * 25);
           const venue = S.persona === 'venue';
-          const cols = venue ? 8 : 7;
-          const ACC = { caja: 'Caja', banco: 'Banco', mp: mpTag('Billetera') };
+          const cols = venue ? 9 : 8;
+          const ACC = { caja: 'Caja', banco: 'Tu cuenta', mp: mpTag('Billetera') };
           body = `
           <div class="hero">
             <span class="n">${$$(sum(ms))}</span>
             <span class="d">en <b>${ms.length}</b> cobro${ms.length === 1 ? '' : 's'}${refs.length ? ` · <b>${$$(sum(refs))}</b> devueltos` : ''}</span>
           </div>
-          ${manual.length ? `<div class="note" style="margin-bottom:20px">
-            <b>${manual.length} cobro${manual.length === 1 ? '' : 's'} que no ${manual.length === 1 ? 'viene' : 'vienen'} de una venta</b> — ${$$(sum(manual))} en el período.
-            Suman al resultado y a la caja, pero no aparecen en <a href="#" onclick="go('movimientos');return false">Ventas</a> ni generan comisión.
-          </div>` : ''}
           <div class="card tcard">
-            ${tbar('buscarCob', `${ms.length} cobro${ms.length === 1 ? '' : 's'}`)}
             <div class="tblwrap"><table class="tbl">
               <thead><tr>
-                <th class="nw" style="padding-left:18px">Fecha</th><th class="cw">Concepto</th><th>Tipo</th>
+                <th class="nw" style="padding-left:18px">Fecha</th>${thF('cobConcepto', 'Concepto', 'cw')}${thS('buscarCob', Z().Cliente, 'nw')}${thF('asset', 'Tipo')}
                 ${venue ? thF('staff', 'Profesional') : ''}
                 <th>Medio</th><th>Entra a</th><th title="Automático: lo capturó Ágora. A mano: lo cargaste vos.">Cómo se registró</th>
                 <th class="r" style="padding-right:18px">Monto</th>
               </tr></thead>
               <tbody>${shown.map((m) => `<tr class="hoverable" onclick="openMov(${m.id})">
                 <td style="padding-left:18px"><div style="font-weight:600">${fD(m.date)}</div><div class="mono" style="font-size:11px;color:var(--f-ink-mid)">${m.time}</div></td>
-                <td class="cw" style="font-weight:600">${esc(m.concept)}${m.client ? `<div style="font-size:11.5px;color:var(--f-ink-mid);font-weight:500">${esc(m.client)}</div>` : ''}</td>
+                <td class="cw" style="font-weight:600">${esc(m.concept)}</td>
+                <td class="nw" style="font-size:12.5px;color:${m.client ? 'var(--f-ink)' : 'var(--f-ink-mid)'}">${m.client ? esc(m.client) : '—'}</td>
                 <td><span class="chip mute">${(ASSETS[m.asset] || { label: '—' }).label}</span></td>
                 ${venue ? `<td style="font-size:12.5px;color:${m.staff ? 'var(--f-ink)' : 'var(--f-ink-mid)'}">${m.staff || '—'}</td>` : ''}
                 <td style="font-size:12.5px">${METHODS[m.method] ? (m.method === 'mp' ? mpTag() : METHODS[m.method].label) : '—'}</td>
@@ -2194,11 +2501,10 @@
                 <td><span class="chip ${m.src === 'online' || m.method === 'mp' ? 'ok' : 'mute'}">${m.src === 'online' || m.method === 'mp' ? 'Automático' : 'A mano'}</span></td>
                 <td class="r amt" style="padding-right:18px">${$$(m.amount)}</td></tr>`).join('') || `<tr><td colspan="${cols}"><div class="empty"><b>Sin cobros</b>No entró plata en este período.</div></td></tr>`}</tbody>
               ${shown.length ? `<tfoot><tr><td colspan="${cols - 1}" style="padding-left:18px">${shown.length < ms.length ? `${shown.length} de ${ms.length} cobros` : `${ms.length} cobro${ms.length === 1 ? '' : 's'}`}</td><td class="r">${$$(sum(shown))}</td></tr></tfoot>` : ''}
-            </table></div>
-          </div>
-          ${shown.length < ms.length ? `<div style="text-align:center;margin-top:22px"><button class="btn" onclick="S.cobPage++;render()">Mostrar ${Math.min(25, ms.length - shown.length)} más</button></div>` : ''}`;
+            </table>${masFilas(shown.length, ms.length, 'cobPage')}</div>
+          </div>`;
         return `<div class="sec">
-          <p class="lede">Cada vez que entró plata. Una venta cobrada parcialmente suma la parte cobrada, y lo pendiente vive en <a href="#" onclick="go('cobranzas');return false">Por cobrar</a>.</p>
+          <p class="lede">Una venta cobrada parcialmente suma la parte cobrada, y lo pendiente vive en <a href="#" onclick="go('cobranzas');return false">Por cobrar</a>.</p>
           ${body}</div>`;
       }
 
@@ -2206,36 +2512,35 @@
       function vGastos() {
         let body = '';
 
-          const ms = expenses(scope());
+          const ms = expenses(scope()).filter((m) => inSel(S.gasConcepto, m.concept));
           const byCat = byKey(ms, 'cat');
-          const mayor = byCat[0];
           body = `
           <div class="hero">
-            <span class="q">¿Cuánto gasté en este período?</span>
             <span class="n">${$$(sum(ms))}</span>
-            <span class="d">en <b>${ms.length}</b> gasto${ms.length === 1 ? '' : 's'}${mayor ? ` · el más pesado, <b>${(ECATS.find((c) => c.k === mayor[0]) || { label: mayor[0] }).label}</b> con ${$$(mayor[1])}` : ''}</span>
+            <span class="d">en <b>${ms.length}</b> gasto${ms.length === 1 ? '' : 's'}</span>
           </div>
           <div class="grid g2 top" style="margin-bottom:24px">
             <div class="card"><h3>Gastos por categoría</h3>
-              <p class="cap">${RANGES[S.range].label} · total ${$$(sum(ms))} · <a href="#" onclick="openCats();return false">administrar categorías</a></p>
-              ${byCat.length ? barsList(byCat, { labelOf: (k) => (ECATS.find((c) => c.k === k) || { label: k }).label, go: () => '' }) : '<div class="empty">Sin gastos en el período</div>'}</div>
-            <div class="card"><h3>De dónde sale la plata</h3><p class="cap">Cada gasto declara su origen — es lo que mantiene la caja y los saldos consistentes.</p>
-              ${barsList(byKey(ms, 'account'), { dot: true, colorOf: (k) => ({ caja: 'var(--m-ef)', banco: 'var(--m-tr)', mp: 'var(--m-mp)' }[k]), labelOf: (k) => ({ caja: 'Caja (efectivo)', banco: 'Banco', mp: 'Billetera Mercado Pago' }[k] || k), go: () => '' })}</div>
+              <p class="cap">${RANGES[S.range].label}</p>
+              <button class="btn sm cardact" onclick="openCats()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h9"/><circle cx="19" cy="18" r="2.4"/></svg>
+                Categorías</button>
+              ${byCat.length ? barsList(byCat, { labelOf: catLabel, go: () => '' }) : '<div class="empty">Sin gastos en el período</div>'}</div>
+            <div class="card"><h3>De dónde sale la plata</h3><p class="cap">Distribución según origen de los pagos.</p>
+              ${barsList(byKey(ms, 'account'), { prop: true, dot: true, colorOf: (k) => ({ caja: 'var(--m-ef)', banco: 'var(--m-tr)', mp: 'var(--m-mp)' }[k]), labelOf: (k) => ({ caja: 'Caja (efectivo)', banco: 'Tu cuenta', mp: 'Billetera Mercado Pago' }[k] || k), go: () => '' })}</div>
           </div>
           <div class="card tcard pt">
             <div class="tblwrap"><table class="tbl">
-              <thead><tr><th class="nw" style="padding-left:18px">Fecha</th><th class="cw">Concepto</th><th>Categoría</th><th class="nw">Sale de</th><th class="r" style="padding-right:18px">Monto</th></tr></thead>
+              <thead><tr><th class="nw" style="padding-left:18px">Fecha</th>${thF('gasConcepto', 'Concepto', 'cw')}<th>Categoría</th><th class="nw">Sale de</th><th class="r" style="padding-right:18px">Monto</th></tr></thead>
               <tbody>${ms.slice(0, 40).map((m) => `<tr class="hoverable" onclick="openMov(${m.id})">
                 <td style="padding-left:18px"><div style="font-weight:600">${fD(m.date)}</div><div class="mono" style="font-size:11px;color:var(--f-ink-mid)">${m.time}</div></td>
                 <td class="cw" style="font-weight:600">${esc(m.concept)}</td>
-                <td><span class="chip mute">${(ECATS.find((c) => c.k === m.cat) || { label: '—' }).label}</span></td>
-                <td style="font-size:12.5px">${{ caja: 'Caja (efectivo)', banco: 'Banco', mp: mpTag('Billetera') }[m.account]}</td>
+                <td><span class="chip ${esAuto(m.cat) ? 'sys' : 'mute'}">${esAuto(m.cat) ? CAT_ICO.bolt : ''}${catLabel(m.cat)}</span></td>
+                <td style="font-size:12.5px">${{ caja: 'Caja (efectivo)', banco: 'Tu cuenta', mp: mpTag('Billetera') }[m.account]}</td>
                 <td class="r amt out" style="padding-right:18px">−${$$(m.amount)}</td></tr>`).join('') || `<tr><td colspan="5"><div class="empty"><b>Sin gastos</b>No hay gastos registrados en este período.</div></td></tr>`}</tbody>
             </table></div>
           </div>`;
-        return `<div class="sec">
-          <p class="lede">Cada salida de plata, con su categoría y de qué cuenta salió. Las liquidaciones al equipo entran acá como gasto de <b>Sueldos y comisiones</b>.</p>
-          ${body}</div>`;
+        return `<div class="sec">${body}</div>`;
       }
 
       /* ---------------- RESULTADO ---------------- */
@@ -2251,13 +2556,15 @@
         const otros = sum(exp.filter((m) => !m.staffPay));
         const egresos = comis + otros;
         const neto = cobrado - dev - egresos;
-        const sinLiquidar = STAFF.reduce((s2, st) => s2 + Math.max(0, saldoComision(st)), 0);
-        const fila = (lbl, val, o) => `<div class="r ${(o && o.cls) || ''}">
-          <span class="lbl" style="${o && o.sub ? 'padding-left:18px;font-size:12.5px' : ''}">${lbl}</span>
-          <span class="amt" style="${o && o.sub ? 'font-size:13px' : ''}">${o && o.neg && val ? '−' : ''}${$$(val)}</span></div>`;
+        // `sub` cuelga la fila de la de arriba (guía en L + número chico y en tinta media).
+        // Antes era solo una sangría en el label: los números quedaban con el mismo peso que
+        // el de Egresos y las tres filas se leían como hermanas.
+        const fila = (lbl, val, o) => `<div class="r ${(o && o.cls) || ''} ${o && o.sub ? 'sub' : ''}">
+          <span class="lbl">${lbl}</span>
+          <span class="amt">${o && o.neg && val ? '−' : ''}${$$(val)}</span></div>`;
 
         const body = `
-          <div class="grid sec gmain" style="margin-bottom:24px">
+          <div class="sec" style="margin-bottom:24px">
             <div class="card">
               <h3>Cómo se compone tu <strong>neto</strong></h3>
               <p class="cap">${RANGES[S.range].label} · ${fD(RANGES[S.range].from)} — ${fD(RANGES[S.range].to)}. Lo que entró menos lo que salió.</p>
@@ -2270,29 +2577,9 @@
                 <div class="r total"><span class="lbl">Neto del período</span><span class="amt">${neto < 0 ? '−' : ''}${$$(Math.abs(neto))}</span></div>
               </div>
             </div>
-            <div class="card">
-              <h3>Comisiones <strong>sin liquidar</strong></h3>
-              <p class="cap">Devengado por el equipo que todavía no pagaste.</p>
-              <div class="stat"><div class="v" style="color:${sinLiquidar ? 'var(--f-coral-text)' : 'var(--f-ink)'}">${$$(sinLiquidar)}</div></div>
-              <div class="note" style="margin-top:14px">
-                <b>No entra al neto de arriba.</b> Este resultado es base caja: una comisión pesa el día que la
-                liquidás, no el día que se devenga. ${S.persona === 'venue' ? `Se gestiona en <a href="#" onclick="go('comisiones');return false">Comisiones</a>.` : ''}
-              </div>
-            </div>
           </div>
 
-          <div class="grid g2 top sec">
-            <div class="card">
-              <h3>De dónde vino</h3>
-              <p class="cap">Lo cobrado del período por tipo de venta.</p>
-              ${barsList(byKey(inc, 'asset'), { labelOf: (k) => (ASSETS[k] ? ASSETS[k].label : k) })}
-            </div>
-            <div class="card">
-              <h3>En qué se fue</h3>
-              <p class="cap">Los egresos del período por categoría. Las comisiones liquidadas entran como <b>Sueldos y comisiones</b>.</p>
-              ${exp.length ? barsList(byKey(exp, 'cat'), { labelOf: (k) => (ECATS.find((c) => c.k === k) || { label: k }).label }) : '<div class="empty">Sin egresos en el período</div>'}
-            </div>
-          </div>`;
+`;
 
         return `<div class="sec">
           <div class="hero">
@@ -2467,24 +2754,41 @@
         const devPeriodo = Math.round(conPro.reduce((s2, m) => s2 + comisionDe(m), 0));
         const nPro = sel === 'all' ? STAFF.length : sel.length;
         const curva = curvaComisiones(r, sel);
+        const filas = STAFF.map((st) => {
+          const ms = MOVS.filter((m) => m.staff === st && m.date >= r.from && m.date <= r.to && m.dir === 'in');
+          return { st, cobrado: sum(ms), saldo: saldoComision(st) };
+        }).sort((x, y) => y.saldo - x.saldo);
         const mov = filterComis();
         const shown = mov.slice(0, S.movPage * 25);
-        const devTotal = mov.filter((x) => x.tipo === 'venta').reduce((s2, x) => s2 + x.comision, 0);
-        const pagTotal = mov.filter((x) => x.tipo !== 'venta').reduce((s2, x) => s2 + x.comision, 0);
 
         return `
         <div class="colside sec">
           <aside class="cstats">
             ${dateBar()}
+            ${statTile({ k: 'Comisiones del período', v: $$(devPeriodo), s: 'Sobre lo cobrado en el período', ic: ICO.up, bg: '#eef6ff', fg: '#005cd4' })}
+            ${statTile({ k: 'Total cobrado', v: $$(cobrado), s: `${conPro.length} cobro${conPro.length === 1 ? '' : 's'} en el período`, ic: ICO.down, bg: '#e8fbf5', fg: '#07806a' })}
             ${statTile({ k: 'Ventas totales', v: $$(vendido), s: vendido - cobrado ? `<b>${$$(vendido - cobrado)}</b> todavía sin cobrar` : 'Todo cobrado', ic: ICO.bag, bg: '#eef0ff', fg: '#4338ca' })}
-            ${statTile({ k: 'Total cobrado', v: $$(cobrado), s: `${conPro.length} cobro${conPro.length === 1 ? '' : 's'} con profesional asignado`, ic: ICO.down, bg: '#e8fbf5', fg: '#07806a' })}
-            ${statTile({ k: 'Comisiones del período', v: $$(devPeriodo), s: `${sel === 'all' ? 'Todo el equipo' : nPro === 1 ? esc(sel[0]) : nPro + ' profesionales'} · lo que les corresponde`, ic: ICO.up, bg: '#eef6ff', fg: '#005cd4' })}
           </aside>
           <div class="cmain">
 
+            <div class="sec">
+              <h3 style="font-size:16px;font-weight:300;margin:0 0 12px">Pendiente de liquidación <strong>por profesional</strong></h3>
+              <div class="pcards">
+                ${filas.map((f) => { const on = sel !== 'all' && inSel(sel, f.st); return `<button class="pcard ${on ? 'on' : ''}" onclick="pickProfesional(${jsStr(f.st)})" title="Sumar o sacar del filtro">
+                  ${on ? `<span class="ck">${ICO.check}</span>` : ''}
+                  <div class="avp">${esc(iniciales(f.st))}</div>
+                  <div class="t">
+                    <div class="nm">${esc(f.st)}</div>
+                    <div class="vv"${f.saldo < 0 ? ' style="color:var(--f-coral-text)"' : ''}>${$$(f.saldo)}</div>
+                    <div class="ss">Cobros<b>${$$(f.cobrado)}</b></div>
+                  </div>
+                </button>`; }).join('')}
+              </div>
+            </div>
+
             ${curva ? `<div class="sec"><div class="card">
               <h3>Comisiones <strong>pendientes de liquidar</strong></h3>
-              <p class="cap">${sel === 'all' ? 'De todo el equipo' : Array.isArray(sel) && sel.length === 1 ? `De ${esc(sel[0])}` : `De ${sel.length} profesionales`} · ${RANGES[S.range].label.toLowerCase()}. La curva sube con cada venta que devenga y baja de golpe cada vez que liquidás.</p>
+              <span class="cardnum">${$$(curva.saldo)}</span>
               ${curva.svg}
               <div class="chartlegend">
                 <span><i style="background:var(--f-brand)"></i>Saldo pendiente</span>
@@ -2497,14 +2801,12 @@
               <h3 style="font-size:16px;font-weight:300;margin:0 0 4px">Todo el <strong>movimiento</strong></h3>
               <p class="cap" style="margin-bottom:14px">Las ventas que devengan y los pagos que las cancelan, en una sola lista.</p>
               <div class="card tcard">
-                ${tbar('buscarCom', `${mov.length} movimiento${mov.length === 1 ? '' : 's'}`)}
                 <div class="tblwrap"><table class="tbl">
                   <thead><tr>
                     <th class="nw" style="padding-left:18px">Fecha</th>
                     ${thF('comTipo', 'Tipo')}
                     ${thF('staff', 'Profesional')}
-                    <th class="cw">Concepto</th>
-                    ${thF('comEstado', 'Estado')}
+                    ${thF('comConcepto', 'Concepto', 'cw')}
                     <th class="r">Cobro</th>
                     <th class="r" style="padding-right:18px">Comisión</th>
                   </tr></thead>
@@ -2513,21 +2815,17 @@
                     <td><span class="chip ${x.tipo === 'venta' ? 'mute' : x.tipo === 'ajuste' ? 'pend' : 'brand'}">${TIPO_COM[x.tipo]}</span></td>
                     <td class="nw" style="font-weight:600">${esc(x.quien)}</td>
                     <td class="cw" style="font-weight:600">${esc(x.m.concept)}</td>
-                    <td><span class="adstat ${x.estado === 'Liquidada' ? 'ok' : x.estado === 'Pendiente' ? 'warn' : 'mute'}"><i></i>${x.estado}</span></td>
                     <td class="r amt" style="color:var(--f-ink-mid)">${x.tipo === 'venta' ? $$(x.m.amount) : '—'}</td>
                     <td class="r amt" style="padding-right:18px;color:${x.tipo === 'venta' ? 'var(--f-ink)' : 'var(--f-coral-text)'}">${x.tipo === 'venta' ? '' : '−'}${$$(x.comision)}</td></tr>`).join('')
-                    : `<tr><td colspan="7"><div class="empty"><b>Sin movimientos</b>Probá ampliar el período o quitar los filtros.</div></td></tr>`}</tbody>
-                  ${shown.length ? `<tfoot><tr><td colspan="5" style="padding-left:18px">${mov.length} movimiento${mov.length === 1 ? '' : 's'} · mostrando ${shown.length}</td>
-                    <td class="r">${$$(devTotal)} devengado</td>
-                    <td class="r amt" style="padding-right:18px;font-size:15px">${pagTotal ? '−' + $$(pagTotal) : '—'}</td></tr></tfoot>` : ''}
-                </table></div>
+                    : `<tr><td colspan="6"><div class="empty"><b>Sin movimientos</b>Probá ampliar el período o quitar los filtros.</div></td></tr>`}</tbody>
+                  ${shown.length ? `<tfoot><tr><td colspan="6" style="padding-left:18px">${mov.length} movimiento${mov.length === 1 ? '' : 's'} · mostrando ${shown.length}</td></tr></tfoot>` : ''}
+                </table>${masFilas(shown.length, mov.length, 'movPage')}</div>
               </div>
-              ${shown.length < mov.length ? `<div style="text-align:center;margin-top:18px"><button class="btn" onclick="S.movPage++;render()">Mostrar ${Math.min(25, mov.length - shown.length)} más</button></div>` : ''}
             </div>
 
             <div class="sec"><div class="note">
-              La comisión se <b>devenga</b> cuando la venta se cobra, y se <b>liquida</b> cuando le pagás al profesional.
-              Al resultado del negocio entra recién el día de la liquidación. Los porcentajes de cada uno se configuran en
+              La comisión se <b>devenga</b> cuando la venta se cobra.
+              Los porcentajes de cada uno se configuran en
               <a href="#" onclick="toast('Se abriría la configuración de comisiones del equipo');return false">Equipo</a>.
             </div></div>
 
@@ -2537,40 +2835,48 @@
 
       const TIPO_COM = { venta: 'Venta', pago: 'Pago', ajuste: 'Ajuste' };
 
-      // Una sola lista: las ventas que devengan, los pagos que las cancelan y los ajustes
-      // manuales. El estado de una venta se resuelve por antigüedad contra la última
-      // liquidación de ese profesional (FIFO): no llevamos el detalle de qué venta cerró cada pago.
-      function filterComis() {
+      /* Una sola lista: las ventas que devengan, los pagos que las cancelan y los ajustes
+         manuales. Las entries NO llevan estado de liquidación: no se liquida venta por venta
+         sino contra el SALDO ACUMULADO del profesional, así que marcar una fila como
+         "liquidada" sería inventar una relación que el negocio no tiene. */
+      // Las entries SIN filtrar. Separado de filterComis para que el filtro de concepto
+      // pueda leer de acá sus opciones sin morderse la cola.
+      function comisEntries() {
         const r = RANGES[S.range];
-        const ultPago = {};
-        MOVS.filter((m) => m.staffPay).forEach((m) => {
-          if (!ultPago[m.staffPay] || m.date > ultPago[m.staffPay]) ultPago[m.staffPay] = m.date;
-        });
         const out = [];
         MOVS.filter((m) => m.date >= r.from && m.date <= r.to).forEach((m) => {
           if (comisionDe(m) > 0) {
-            out.push({ m, tipo: 'venta', quien: m.staff, comision: Math.round(comisionDe(m)),
-              estado: ultPago[m.staff] && m.date <= ultPago[m.staff] ? 'Liquidada' : 'Pendiente' });
+            out.push({ m, tipo: 'venta', quien: m.staff, comision: Math.round(comisionDe(m)) });
           } else if (m.staffPay) {
-            out.push({ m, tipo: 'pago', quien: m.staffPay, comision: m.amount, estado: 'Pagado' });
+            out.push({ m, tipo: 'pago', quien: m.staffPay, comision: m.amount });
           }
         });
         AJUSTES.filter((a) => a.date >= r.from && a.date <= r.to).forEach((a) => {
           out.push({ m: { id: 0, date: a.date, time: '12:00', concept: a.motivo, amount: Math.abs(a.amount) },
-            tipo: 'ajuste', quien: a.staff, comision: Math.abs(a.amount), estado: a.amount > 0 ? 'Extra' : 'Descuento' });
+            tipo: 'ajuste', quien: a.staff, comision: Math.abs(a.amount), signo: a.amount > 0 ? 1 : -1 });
         });
+        return out;
+      }
+
+      function filterComis() {
+        const out = comisEntries();
         const f = S.comF;
         let rows = out
           .filter((x) => inSel(S.staff, x.quien))
           .filter((x) => inSel(f.tipo, x.tipo))
-          .filter((x) => inSel(f.estado, x.estado));
+          .filter((x) => inSel(f.concepto, x.m.concept));
         const q = f.q.trim().toLowerCase();
-        if (q) rows = rows.filter((x) => ((x.m.concept || '') + ' ' + (x.quien || '')).toLowerCase().includes(q));
+        // Buscador solo por profesional: el concepto tiene filtro de columna propio.
+        if (q) rows = rows.filter((x) => (x.quien || '').toLowerCase().includes(q));
         return rows.sort((a, b) => (a.m.date === b.m.date ? (b.m.time || '').localeCompare(a.m.time || '') : b.m.date.localeCompare(a.m.date)));
       }
 
+      // Click = sumar o sacar del filtro. Sin nadie elegido vuelve a "todo el equipo".
       function pickProfesional(st) {
-        S.staff = (S.staff !== 'all' && S.staff.length === 1 && S.staff[0] === st) ? 'all' : [st];
+        const cur = S.staff === 'all' ? [] : S.staff.slice();
+        const i = cur.indexOf(st);
+        if (i >= 0) cur.splice(i, 1); else cur.push(st);
+        S.staff = cur.length ? cur : 'all';
         S.movPage = 1; render();
       }
 
@@ -2700,7 +3006,7 @@
         sheet({
           title: dir === 'in' ? 'Ingreso de efectivo a la caja' : 'Retiro de efectivo de la caja',
           body: `<div class="fld"><label>Monto</label><input type="number" id="mcAmt" placeholder="0" /></div>
-            <div class="fld"><label>Concepto</label><input id="mcCon" placeholder="${dir === 'in' ? 'Ej: refuerzo de cambio' : 'Ej: depósito al banco'}" /></div>
+            <div class="fld"><label>Concepto</label><input id="mcCon" placeholder="${dir === 'in' ? 'Ej: refuerzo de cambio' : 'Ej: depósito a tu cuenta'}" /></div>
             <div class="note">${dir === 'in' ? 'Suma al efectivo esperado del arqueo. No es una venta: no entra al resultado.' : 'Resta del efectivo esperado. Si es un depósito bancario, la plata cambia de lugar pero no es un gasto.'}</div>`,
           ok: dir === 'in' ? 'Registrar ingreso' : 'Registrar retiro',
           onOk: () => {
@@ -2764,12 +3070,13 @@
               <div class="hint" id="lqHint">Saldo abierto de ${quien}: <b>${$$(saldo)}</b>. Podés pagar menos y dejar el resto abierto.</div></div>
             <div class="fld"><label>¿De dónde sale la plata?</label>
               <div class="radios" id="lqAcc">
-                <button data-a="banco" class="on">Banco / transferencia</button>
+                <button data-a="banco" class="on">Tu cuenta</button>
                 <button data-a="caja">Caja (efectivo)</button>
                 <button data-a="mp">Billetera Mercado Pago</button>
-              </div></div>
+              </div>
+              <div class="hint"><b>Tu cuenta</b> es donde recibís las transferencias y los depósitos del posnet — un banco o una billetera virtual, según cómo trabajes.</div></div>
             <div class="fld"><label>Período que estás pagando</label><input id="lqPer" value="hasta ${fD(TODAY)}" /></div>
-            <div class="note">Entra al resultado como gasto de <b>“Sueldos y comisiones”</b> y baja el saldo del profesional. Si sale de la caja, el arqueo del día lo toma.</div>`,
+            <div class="note">Entra al resultado como gasto de <b>“Liquidación de comisiones”</b> y baja el saldo del profesional. Si sale de la caja, el arqueo del día lo toma.</div>`,
           ok: 'Registrar liquidación',
           onOk: () => {
             const amt = Number(el('lqAmt').value || 0);
@@ -2805,21 +3112,24 @@
           title: 'Registrar gasto',
           body: `<div class="fld"><label>Monto</label><input type="number" id="gAmt" placeholder="0" /></div>
             <div class="fld"><label>Concepto</label><input id="gCon" placeholder="Ej: tintura y decolorante" /></div>
-            <div class="fld"><label>Categoría</label><select id="gCat">${ECATS.map((c) => `<option value="${c.k}">${c.label}</option>`).join('')}<option value="__new">＋ Nueva categoría…</option></select></div>
+            <div class="fld"><label>Categoría</label><select id="gCat">
+              <option value="${SIN_CAT}">${SIN_CAT_LABEL}</option>
+              ${ECATS.filter((c) => !c.auto).map((c) => `<option value="${c.k}">${c.label}</option>`).join('')}
+              <option value="__new">＋ Nueva categoría…</option></select></div>
             <div class="fld"><label>¿De dónde sale la plata?</label>
               <div class="radios" id="gAcc">
                 <button class="on" data-a="caja">Caja (efectivo)</button>
-                <button data-a="banco">Banco / transferencia</button>
+                <button data-a="banco">Tu cuenta</button>
                 <button data-a="mp">Billetera Mercado Pago</button>
               </div>
-              <div class="hint">Es lo que mantiene el arqueo y los saldos coherentes: un gasto pagado de la caja baja el efectivo esperado del día.</div></div>
+              <div class="hint">Es lo que mantiene el arqueo coherente: un gasto pagado de la caja baja el efectivo esperado del día. <b>Tu cuenta</b> es donde recibís transferencias y depósitos del posnet.</div></div>
             <div class="fld"><label>Fecha</label><input type="date" id="gDate" value="${TODAY}" /></div>`,
           ok: 'Registrar gasto',
           onOk: () => {
             const amt = Number(el('gAmt').value || 0);
             if (!amt) { toast('Poné un monto'); return false; }
             const a = $('#gAcc button.on').dataset.a;
-            MOVS.unshift({ id: ++_id, date: el('gDate').value || TODAY, time: '12:00', dir: 'out', amount: amt, method: a === 'caja' ? 'ef' : a === 'mp' ? 'mp' : 'tr', asset: 'gasto', concept: el('gCon').value || 'Gasto', client: null, staff: null, st: 'ok', account: a, cat: el('gCat').value === '__new' ? 'otros' : el('gCat').value, src: 'local' });
+            MOVS.unshift({ id: ++_id, date: el('gDate').value || TODAY, time: '12:00', dir: 'out', amount: amt, method: a === 'caja' ? 'ef' : a === 'mp' ? 'mp' : 'tr', asset: 'gasto', concept: el('gCon').value || 'Gasto', client: null, staff: null, st: 'ok', account: a, cat: el('gCat').value === '__new' ? SIN_CAT : el('gCat').value, src: 'local' });
             toast(`Gasto registrado · ${$$(amt)}`);
           },
           after: () => {
@@ -2836,7 +3146,7 @@
         sheet({
           title: 'Registrar venta',
           body: `<div class="fld"><label>¿Qué estás cobrando?</label>
-              <select id="cAsset">${Object.entries(ASSETS).filter(([k]) => k !== 'manual').map(([k, a]) => `<option value="${k}">${a.label}</option>`).join('')}</select></div>
+              <select id="cAsset">${Object.entries(ASSETS).map(([k, a]) => `<option value="${k}">${a.label}</option>`).join('')}</select></div>
             <div class="fld"><label>Monto</label><input type="number" id="cAmt" placeholder="0" /></div>
             <div class="fld"><label>${Z().Cliente}</label><input id="cCli" placeholder="Buscar o crear ${Z().cliente}" /></div>
             <div class="fld"><label>Medio de cobro</label>
@@ -2847,7 +3157,7 @@
                 <button data-m="cr">Tarjeta crédito</button>
                 <button data-m="de">Tarjeta débito</button>
               </div>
-              <div class="hint">Efectivo, transferencia y Mercado Pago son los medios de Ágora. Las tarjetas son de tu posnet: las registrás acá pero la plata te la deposita tu banco.</div></div>
+              <div class="hint">Efectivo, transferencia y Mercado Pago son los medios de Ágora. Las tarjetas son de tu posnet: las registrás acá pero la plata la deposita tu proveedor en tu cuenta.</div></div>
             <div class="fld" id="cSaldoFld"><label>¿Queda saldo pendiente?</label><input type="number" id="cSaldo" placeholder="0 — si dejás saldo, se crea un cobrable" />
               <div class="hint">Si queda saldo, aparece en <b>Por cobrar</b> hasta que el cliente lo pague.</div></div>
             <div class="hint" id="cSoloOnline" style="display:none">
@@ -2887,114 +3197,178 @@
         });
       }
 
-      // Dos pasos, igual que el CollectModal de producción: primero la lista de ventas con
-      // saldo (parcial o total), después cuánto entra y con qué medio.
-      let COB_SEL = null;
+      /* ---------------- REGISTRAR COBRO ----------------
+         Espeja CollectPaymentModal de producción: intención (seña / saldo / total), monto
+         editable topeado al pendiente, detección de pago parcial, medio de cobro, descuento
+         ad hoc (en $ o en %) y fecha y hora del cobro —este instante por default, editable
+         para cargarlo atrasado—. El paso 1 lista las ventas por cobrar con buscador por
+         cliente y, para servicios, ordenadas por fecha de turno ascendente: primero lo más
+         viejo, que es lo que se reclama antes. */
+      let COB_SEL = null, COB_Q = '', COB_DESC = { v: 0, unidad: '$' };
+
       function openCobrar(id) {
         const abiertos = activeRecv();
         if (!abiertos.length) { toast('No hay ventas con cobro pendiente'); return; }
         COB_SEL = id && abiertos.some((r) => r.id === id) ? id : null;
+        COB_Q = ''; COB_DESC = { v: 0, unidad: '$' };
         pintarCobrar();
       }
+
+      function listaCobrables() {
+        const q = COB_Q.trim().toLowerCase();
+        return activeRecv()
+          .filter((r) => !q || (r.client + ' ' + r.concept).toLowerCase().includes(q))
+          // Servicios primero, por fecha de turno ascendente; después el resto.
+          .sort((a, b) => {
+            const sa = a.origin === 'servicio' ? 0 : 1, sb = b.origin === 'servicio' ? 0 : 1;
+            return sa !== sb ? sa - sb : a.date.localeCompare(b.date);
+          });
+      }
+
+      function buscarCobrable(v) {
+        COB_Q = v;
+        const box = el('rcList');
+        if (!box) return;
+        box.innerHTML = filasCobrables();
+        const inp = el('rcBuscar');
+        if (inp) { inp.focus(); inp.setSelectionRange(inp.value.length, inp.value.length); }
+      }
+
+      function filasCobrables() {
+        const rows = listaCobrables();
+        if (!rows.length) return `<div class="empty"><b>Nada por acá</b>No hay ventas que coincidan con la búsqueda.</div>`;
+        return rows.map((x) => `<button class="pickrow" onclick="COB_SEL='${x.id}';pintarCobrar()">
+          <div class="t"><b>${esc(x.client)}</b><span>${esc(x.concept)} · ${x.origin === 'servicio' ? Z().turno + ' del ' : ''}${fD(x.date)}</span></div>
+          <div class="a"><b>${$$(saldoOf(x))}</b><span>${x.paid ? 'de ' + $$(x.total) : 'sin seña'}</span></div>
+        </button>`).join('');
+      }
+
+      function setDescuento(v, unidad) {
+        COB_DESC = { v: Math.max(0, Number(v) || 0), unidad: unidad || COB_DESC.unidad };
+        const r = activeRecv().find((x) => x.id === COB_SEL);
+        if (r) pintarTotalCobro(r);
+      }
+      function descuentoDe(r) {
+        const bruto = Number(el('rcAmt') ? el('rcAmt').value : 0) || 0;
+        return COB_DESC.unidad === '%' ? Math.round(bruto * (Math.min(100, COB_DESC.v) / 100)) : Math.min(bruto, COB_DESC.v);
+      }
+      function pintarTotalCobro(r) {
+        const bruto = Number(el('rcAmt').value || 0);
+        const desc = descuentoDe(r);
+        const neto = Math.max(0, bruto - desc);
+        const parcial = neto > 0 && neto < saldoOf(r);
+        el('rcTotal').innerHTML = `
+          <div class="adtr"><span class="k">Cobra</span><span class="v">${$$(bruto)}</span></div>
+          ${desc ? `<div class="adtr"><span class="k">Descuento${COB_DESC.unidad === '%' ? ` (${COB_DESC.v}%)` : ''}</span><span class="v" style="color:var(--f-coral-text)">−${$$(desc)}</span></div>` : ''}
+          <div class="adtr tot"><span class="k">Entra ahora</span><span class="v">${$$(neto)}</span></div>
+          <p class="hint" style="margin:8px 0 0">${neto > saldoOf(r) ? `<b style="color:var(--f-coral-text)">Supera el saldo de ${$$(saldoOf(r))}.</b>`
+            : parcial ? `<b>Pago parcial.</b> Queda ${$$(saldoOf(r) - neto)} abierto.` : 'Cancela el saldo por completo.'}</p>`;
+      }
+
       function pintarCobrar() {
         const abiertos = activeRecv();
         const r = COB_SEL ? abiertos.find((x) => x.id === COB_SEL) : null;
         if (!r) {
           sheet({
             title: 'Ventas por cobrar',
-            body: `<p class="hint" style="margin:-4px 0 14px">Elegí la venta que estás cobrando. Están las que tienen saldo parcial y las que no pagaron nada.</p>
-              <div class="picklist">${abiertos.map((x) => `<button class="pickrow" onclick="COB_SEL='${x.id}';pintarCobrar()">
-                <div class="t"><b>${esc(x.client)}</b><span>${esc(x.concept)} · ${fD(x.date)}</span></div>
-                <div class="a"><b>${$$(saldoOf(x))}</b><span>${x.paid ? 'de ' + $$(x.total) : 'sin seña'}</span></div>
-              </button>`).join('')}</div>`,
+            body: `<div class="tsearch" style="margin:-2px 0 12px">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
+                <input id="rcBuscar" type="text" value="${esc(COB_Q)}" placeholder="Buscar ${Z().cliente}" oninput="buscarCobrable(this.value)" />
+              </div>
+              <p class="hint" style="margin:0 0 10px">Los ${Z().turnos} primero, del más viejo al más nuevo.</p>
+              <div class="picklist" id="rcList">${filasCobrables()}</div>`,
             ok: null,
           });
           return;
         }
+        const saldo = saldoOf(r);
         sheet({
           title: `Cobrar · ${r.client}`,
           body: `<div class="adtr" style="padding-top:0"><span class="k">${esc(r.concept)}</span><span class="v">${$$(r.total)}</span></div>
             <div class="adtr"><span class="k">Ya cobrado</span><span class="v" style="color:var(--f-success-text)">${r.paid ? '−' + $$(r.paid) : '$0'}</span></div>
-            <div class="adtr tot" style="margin-bottom:16px"><span class="k">Falta cobrar</span><span class="v">${$$(saldoOf(r))}</span></div>
-            <div class="fld"><label>¿Cuánto entra ahora?</label><input type="number" id="rcAmt" value="${saldoOf(r)}" />
-              <div class="hint">Podés cobrar menos: el resto queda abierto.</div></div>
+            <div class="adtr tot" style="margin-bottom:16px"><span class="k">Falta cobrar</span><span class="v">${$$(saldo)}</span></div>
+
+            <div class="fld"><label>¿Qué estás cobrando?</label>
+              <div class="radios" id="rcIntent">
+                ${r.paid ? '' : `<button data-i="sena" data-m="${Math.round(r.total * 0.4)}">Seña</button>`}
+                <button class="on" data-i="saldo" data-m="${saldo}">${r.paid ? 'Saldo' : 'Total'}</button>
+                <button data-i="parcial" data-m="">Un monto</button>
+              </div></div>
+
+            <div class="fld"><label>Monto</label><input type="number" id="rcAmt" value="${saldo}" oninput="pintarTotalCobro(activeRecv().find((x)=>x.id===COB_SEL))" /></div>
+
             <div class="fld"><label>Medio de cobro</label>
               <div class="radios" id="rcMet">
                 <button class="on" data-m="ef">Efectivo</button>
                 <button data-m="tr">Transferencia</button>
                 <button data-m="mp">${mpTag('Mercado Pago')}</button>
+                <button data-m="cr">Tarjeta</button>
               </div></div>
-            <button class="btn ghost sm" onclick="COB_SEL=null;pintarCobrar()">← Elegir otra venta</button>`,
+
+            <div class="fld"><label>Descuento (opcional)</label>
+              <div class="descrow">
+                <input type="number" id="rcDesc" placeholder="0" value="${COB_DESC.v || ''}" oninput="setDescuento(this.value)" />
+                <div class="radios sm" id="rcUnid">
+                  <button class="${COB_DESC.unidad === '$' ? 'on' : ''}" data-u="$">$</button>
+                  <button class="${COB_DESC.unidad === '%' ? 'on' : ''}" data-u="%">%</button>
+                </div>
+              </div>
+              <div class="hint">Un ajuste puntual sobre este cobro. No cambia el precio de la venta.</div></div>
+
+            <div class="fld"><label>Fecha y hora del cobro</label>
+              <div class="descrow">
+                <input type="date" id="rcFecha" value="${TODAY}" max="${TODAY}" />
+                <input type="time" id="rcHora" value="${AHORA}" />
+              </div>
+              <div class="hint">Por default, este instante. Cambialo si lo estás cargando atrasado.</div></div>
+
+            <div id="rcTotal" class="cascade" style="margin-top:4px"></div>
+            <button class="btn ghost sm" style="margin-top:14px" onclick="COB_SEL=null;pintarCobrar()">← Elegir otra venta</button>`,
           ok: 'Registrar cobro',
           onOk: () => {
-            const amt = Number(el('rcAmt').value || 0);
-            if (!amt) { toast('Poné un monto'); return false; }
-            if (amt > saldoOf(r)) { toast(`No podés cobrar más que el saldo (${$$(saldoOf(r))})`); return false; }
+            const bruto = Number(el('rcAmt').value || 0);
+            if (!bruto) { toast('Poné un monto'); return false; }
+            const desc = descuentoDe(r);
+            const neto = Math.max(0, bruto - desc);
+            if (neto > saldoOf(r)) { toast(`No podés cobrar más que el saldo (${$$(saldoOf(r))})`); return false; }
             const m = $('#rcMet button.on').dataset.m;
-            r.paid += amt;
-            MOVS.unshift({ id: ++_id, date: TODAY, time: '12:00', dir: 'in', amount: amt, method: m,
+            const fecha = el('rcFecha').value || TODAY;
+            r.paid += neto;
+            MOVS.unshift({ id: ++_id, date: fecha, time: el('rcHora').value || AHORA, dir: 'in', amount: neto, method: m,
               asset: r.origin, concept: r.concept, client: r.client, staff: r.staff, st: 'ok', recv: r.id,
-              account: m === 'ef' ? 'caja' : m === 'mp' ? 'mp' : 'banco', src: 'local' });
+              account: m === 'ef' ? 'caja' : m === 'mp' ? 'mp' : 'banco', src: 'local', desc: desc || undefined });
             COB_SEL = null;
-            toast(saldoOf(r) > 0 ? `Cobro registrado · queda ${$$(saldoOf(r))}` : `Venta cobrada por completo · ${$$(amt)}`);
+            toast(saldoOf(r) > 0 ? `Cobro registrado · queda ${$$(saldoOf(r))}` : `Venta cobrada por completo · ${$$(neto)}`);
           },
           after: () => {
-            $('#rcMet').addEventListener('click', (e) => {
-              const b = e.target.closest('button'); if (!b) return;
-              $('#rcMet button.on').classList.remove('on'); b.classList.add('on');
+            const seg = (sel2, cb) => $(sel2).addEventListener('click', (e2) => {
+              const b2 = e2.target.closest('button'); if (!b2) return;
+              $(sel2 + ' button.on').classList.remove('on'); b2.classList.add('on'); cb(b2);
             });
+            seg('#rcIntent', (b2) => { if (b2.dataset.m) el('rcAmt').value = b2.dataset.m; el('rcAmt').focus(); pintarTotalCobro(r); });
+            seg('#rcMet', () => {});
+            seg('#rcUnid', (b2) => setDescuento(el('rcDesc').value, b2.dataset.u));
+            pintarTotalCobro(r);
           },
         });
       }
 
-      // Las categorías son configuración de los gastos, no una vista: se editan en su propio lugar.
-      function openCats() {
-        const all = expenses(MOVS);
-        sheet({
-          title: 'Categorías de gasto',
-          body: `<p class="hint" style="margin:-4px 0 14px">Con qué agrupás los gastos en el resultado. Se usan en <b>Registrar gasto</b> y en el desglose por categoría.</p>
-            <div class="catlist">${ECATS.map((c) => {
-              const ms = all.filter((m) => m.cat === c.k);
-              return `<div class="catrow">
-                <div><b>${c.label}</b><span>${ms.length} gasto${ms.length === 1 ? '' : 's'} · ${$$(sum(ms))}</span></div>
-                <button class="btn sm ghost" onclick="toast('Se abriría la edición de “${c.label}”')">Editar</button></div>`;
-            }).join('')}</div>
-            <button class="btn sm" style="margin-top:14px" onclick="toast('Se crearía una categoría nueva')">＋ Nueva categoría</button>`,
-          ok: null,
-        });
-      }
-
-      // Cobros: plata que entra y NO es una venta (reintegro, alquiler de un sillón).
+      /* Antes de cargar plata, hay que decir DE QUÉ venta viene. Todo lo que entra sale de
+         una venta: de una reserva ya agendada o de una venta de mostrador. No existe el
+         "ingreso suelto" — si no hay venta detrás, no hay cobro que registrar. */
       function openIngreso() {
         sheet({
-          title: 'Registrar ingreso',
-          body: `<div class="fld"><label>Monto</label><input type="number" id="iAmt" placeholder="0" /></div>
-            <div class="fld"><label>Concepto</label><input id="iCon" placeholder="Ej: reintegro de proveedor, alquiler de sillón" /></div>
-            <div class="fld"><label>¿A dónde entra la plata?</label>
-              <div class="radios" id="iAcc">
-                <button class="on" data-a="caja">Caja (efectivo)</button>
-                <button data-a="banco">Banco / transferencia</button>
-                <button data-a="mp">Billetera Mercado Pago</button>
-              </div></div>
-            <div class="fld"><label>Fecha</label><input type="date" id="iDate" value="${TODAY}" /></div>
-            <div class="note">Suma al resultado como ingreso, pero <b>no cuenta como venta</b>: no aparece en Ventas ni genera comisión.</div>`,
-          ok: 'Registrar ingreso',
-          onOk: () => {
-            const amt = Number(el('iAmt').value || 0);
-            if (!amt) { toast('Poné un monto'); return false; }
-            const a = $('#iAcc button.on').dataset.a;
-            MOVS.unshift({ id: ++_id, date: el('iDate').value || TODAY, time: '12:00', dir: 'in', amount: amt,
-              method: a === 'caja' ? 'ef' : a === 'mp' ? 'mp' : 'tr', asset: 'manual',
-              concept: el('iCon').value || 'Ingreso manual', client: null, staff: null, st: 'ok',
-              account: a, src: 'local' });
-            toast(`Ingreso registrado · ${$$(amt)}`);
-          },
-          after: () => {
-            $('#iAcc').addEventListener('click', (e) => {
-              const b = e.target.closest('button'); if (!b) return;
-              $('#iAcc button.on').classList.remove('on'); b.classList.add('on');
-            });
-          },
+          title: '¿Qué estás registrando?',
+          body: `<div class="picklist">
+              <button class="pickrow" onclick="closeAll();openCobrar()">
+                <div class="t"><b>Cobro de ${Z().unTurno} agendado</b><span>Elegís la reserva y cargás cuánto entra, con qué medio y si hubo descuento.</span></div>
+                <div class="a"><b>${activeRecv().length}</b><span>por cobrar</span></div>
+              </button>
+              <button class="pickrow" onclick="closeAll();openVenta()">
+                <div class="t"><b>Venta de mostrador</b><span>Un producto o servicio que no venía de una reserva. Podés dejar saldo pendiente.</span></div>
+              </button>
+            </div>`,
+          ok: null,
         });
       }
 
@@ -3012,6 +3386,38 @@
         bank: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10 12 4l9 6M5 10v9M19 10v9M3 19h18"/></svg>',
       };
       const adX = `<button class="x" onclick="closeAll()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>`;
+
+      /* El mensaje cambia según de qué se trate el saldo: si no pagó nada se pide la SEÑA
+         para reservar el turno; si ya dejó algo, se pide el SALDO. Nunca nombra a Ágora y
+         lleva al frente la página del vendor (regla de copy de cara al cliente). */
+      function textoRecordatorio(r) {
+        const z = Z();
+        const falta = saldoOf(r);
+        if (!r.paid) {
+          const sena = Math.round(r.total * 0.4);
+          return `Hola ${r.client.split(' ')[0]}, ¿cómo estás? Te escribo por ${r.concept}. `
+            + `Para reservar tu ${z.turno} hace falta una seña de ${$$(sena)}, y el resto lo abonás el día. `
+            + `Podés pagarla por transferencia o desde www.agora.red/estudio-bloom. ¡Gracias!`;
+        }
+        return `Hola ${r.client.split(' ')[0]}, ¿cómo estás? Te paso el detalle de ${r.concept}: `
+          + `de ${$$(r.total)} ya abonaste ${$$(r.paid)}, así que queda un saldo de ${$$(falta)}. `
+          + `Podés abonarlo por transferencia o cuando vengas. ¡Gracias!`;
+      }
+
+      function openRecordatorio(id) {
+        const r = RECV.find((x) => x.id === id); if (!r) return;
+        const txt = textoRecordatorio(r);
+        sheet({
+          title: 'Recordatorio por WhatsApp',
+          body: `<div class="adtr" style="padding-top:0"><span class="k">${esc(r.client)} · ${r.phone}</span><span class="v">${$$(saldoOf(r))}</span></div>
+            <p class="hint" style="margin:10px 0 12px">${r.paid ? 'Ya dejó seña: el mensaje pide el saldo.' : `Todavía no pagó nada: el mensaje pide la seña para reservar ${Z().unTurno}.`}</p>
+            <div class="fld"><label>Mensaje</label><textarea id="waTxt" rows="6">${esc(txt)}</textarea>
+              <div class="hint">Editalo antes de mandarlo si querés.</div></div>
+            <div class="note">Se abre WhatsApp con el mensaje cargado. Todavía no hay recordatorios automáticos: esto es un envío manual.</div>`,
+          ok: 'Abrir WhatsApp',
+          onOk: () => { toast(`Se abriría WhatsApp con ${r.client}`); },
+        });
+      }
 
       function openRecv(id) {
         const r = RECV.find((x) => x.id === id); if (!r) return;
@@ -3060,7 +3466,7 @@
           </div>
           <div class="df">
             <button class="btn pri" onclick="closeAll();openCobrar('${r.id}')">Registrar cobro de ${$$(saldoOf(r))}</button>
-            <button class="btn ghost" onclick="toast('Se abriría la venta asociada')">Ver la venta</button>
+            <button class="btn" onclick="closeAll();openRecordatorio('${r.id}')">${ICO.wa || ''}Recordar por WhatsApp</button>
           </div>`;
         el('drawer').classList.add('on'); el('scrim').classList.add('on');
       }
@@ -3072,9 +3478,9 @@
         const pend = r ? saldoOf(r) : 0;
         const esGasto = m.dir === 'out';
         const tipo = esGasto
-          ? (m.asset === 'gasto' ? 'Gasto · ' + ((ECATS.find((c) => c.k === m.cat) || {}).label || '') : 'Devolución')
+          ? (m.asset === 'gasto' ? 'Gasto · ' + catLabel(m.cat) : 'Devolución')
           : (ASSETS[m.asset] ? ASSETS[m.asset].label : m.asset);
-        const acc = { caja: 'Caja (efectivo)', banco: 'Banco', mp: mpTag('Billetera Mercado Pago') }[m.account];
+        const acc = { caja: 'Caja (efectivo)', banco: 'Tu cuenta', mp: mpTag('Billetera Mercado Pago') }[m.account];
         const auto = m.src === 'online' || m.method === 'mp';
         el('drawer').innerHTML = `
           <div class="dh">
@@ -3132,9 +3538,48 @@
       }
       const CHEV = '<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>';
 
+      // El grupo de un concepto es su tipo de venta; para gastos, su categoría.
+      const etiquetaAsset = (m) => m.asset === 'gasto'
+        ? ((ECATS.find((c) => c.k === m.cat) || {}).label || 'Otros')
+        : m.asset === 'refund' ? 'Devoluciones'
+        : ((ASSETS[m.asset] || {}).label || m.asset);
+      const ORDEN_GRUPO = (g) => {
+        const orden = [...Object.values(ORIGIN_LABEL), ...Object.values(ASSETS).map((a) => a.label),
+          'Devoluciones', ...ECATS.map((c) => c.label), 'Venta', 'Pago', 'Ajuste'];
+        const i = orden.indexOf(g);
+        return i < 0 ? 999 : i;
+      };
+
       function fieldDefs() {
         const r = RANGES[S.range];
         const venue = S.persona === 'venue';
+        // Los conceptos que existen en el rango, ordenados por plata: un filtro con 200
+        // opciones alfabéticas no se usa; con las que de verdad movieron algo, sí.
+        /* Cada opción es [valor, etiqueta, grupo]: el popover corta con un título cada vez
+           que cambia el grupo. Adentro de cada grupo van por plata, no alfabéticos — así lo
+           que más movió queda arriba de su bloque. */
+        const agrupar = (by, grupo) => Object.entries(by)
+          .map(([k, v]) => [k, v, grupo[k]])
+          .sort((a, b) => (a[2] === b[2] ? b[1] - a[1] : ORDEN_GRUPO(a[2]) - ORDEN_GRUPO(b[2])))
+          .map(([k, , g]) => [k, k, g]);
+        const conceptosDe = (pred) => {
+          const by = {}, grupo = {};
+          scope().filter(pred).forEach((m) => { by[m.concept] = (by[m.concept] || 0) + m.amount; grupo[m.concept] = etiquetaAsset(m); });
+          return agrupar(by, grupo);
+        };
+        const conceptos = conceptosDe((m) => m.dir === 'in');
+        const conceptosGasto = conceptosDe((m) => m.dir === 'out' && m.asset === 'gasto');
+        // Por cobrar no sale del ledger: sus conceptos son los de los saldos abiertos.
+        const conceptosRecv = (() => {
+          const by = {}, grupo = {};
+          activeRecv().forEach((r) => { by[r.concept] = (by[r.concept] || 0) + saldoOf(r); grupo[r.concept] = ORIGIN_LABEL[r.origin]; });
+          return agrupar(by, grupo);
+        })();
+        const conceptosCom = (() => {
+          const by = {}, grupo = {};
+          comisEntries().forEach((x) => { by[x.m.concept] = (by[x.m.concept] || 0) + x.comision; grupo[x.m.concept] = TIPO_COM[x.tipo]; });
+          return agrupar(by, grupo);
+        })();
         return {
           rango: {
             l: 'Período', v: S.range, hint: `${fD(r.from)} — ${fD(r.to)}`,
@@ -3146,12 +3591,8 @@
             o: STAFF.map((x) => [x, x]),
             set: (v) => { S.staff = v; }, act: S.staff !== 'all',
           },
-          sucursal: {
-            l: 'Sucursal', v: 'all', o: [['all', 'Todas'], ['palermo', 'Palermo']],
-            set: () => {}, act: false,
-          },
           buscarMov: {
-            l: 'Buscar', type: 'text', v: S.movF.q, ph: 'Concepto, cliente o N°',
+            l: 'Buscar', type: 'text', v: S.movF.q, ph: 'Buscar por nombre',
             set: (v) => { S.movF.q = v; S.movPage = 1; }, act: !!S.movF.q,
           },
           method: {
@@ -3159,36 +3600,51 @@
             o: Object.entries(METHODS).map(([k, m]) => [k, m.label]),
             set: (v) => { S.movF.method = v; S.movPage = 1; }, act: S.movF.method !== 'all',
           },
+          concepto: {
+            l: 'Concepto', v: S.movF.concepto, multi: true, allLabel: 'Todos',
+            o: conceptos,
+            set: (v) => { S.movF.concepto = v; S.movPage = 1; }, act: S.movF.concepto !== 'all',
+          },
           asset: {
             l: 'Tipo de venta', v: S.movF.asset, multi: true, allLabel: 'Todas',
-            // 'manual' no entra: los ingresos manuales no son ventas y no viven en esta lista.
-            o: [...Object.entries(ASSETS).filter(([k]) => k !== 'manual').map(([k, a]) => [k, a.label]), ['refund', 'Devoluciones']],
+            o: [...Object.entries(ASSETS).map(([k, a]) => [k, a.label]), ['refund', 'Devoluciones']],
             set: (v) => { S.movF.asset = v; S.movPage = 1; }, act: S.movF.asset !== 'all',
-          },
-          buscarCom: {
-            l: 'Buscar', type: 'text', v: S.comF.q, ph: 'Concepto o profesional',
-            set: (v) => { S.comF.q = v; S.movPage = 1; }, act: !!S.comF.q,
           },
           comTipo: {
             l: 'Tipo', v: S.comF.tipo, multi: true, allLabel: 'Todos',
             o: [['venta', 'Venta'], ['pago', 'Pago'], ['ajuste', 'Ajuste']],
             set: (v) => { S.comF.tipo = v; S.movPage = 1; }, act: S.comF.tipo !== 'all',
           },
-          comEstado: {
-            l: 'Estado', v: S.comF.estado, multi: true, allLabel: 'Todos',
-            o: [['Pendiente', 'Pendiente'], ['Liquidada', 'Liquidada'], ['Pagado', 'Pagado'], ['Extra', 'Extra'], ['Descuento', 'Descuento']],
-            set: (v) => { S.comF.estado = v; S.movPage = 1; }, act: S.comF.estado !== 'all',
-          },
           buscarCob: {
-            l: 'Buscar', type: 'text', v: S.cobQ, ph: `${Z().Cliente} o concepto`,
+            l: 'Buscar', type: 'text', v: S.cobQ, ph: 'Buscar por nombre',
             set: (v) => { S.cobQ = v; S.cobPage = 1; }, act: !!S.cobQ,
           },
           buscarRecv: {
-            l: 'Buscar', type: 'text', v: S.cobF.q, ph: `${Z().Cliente} o concepto`,
+            l: 'Buscar', type: 'text', v: S.cobF.q, ph: 'Buscar por nombre',
             set: (v) => { S.cobF.q = v; }, act: !!S.cobF.q,
           },
+          cobConcepto: {
+            l: 'Concepto', v: S.cobConcepto, multi: true, allLabel: 'Todos',
+            o: conceptos,
+            set: (v) => { S.cobConcepto = v; S.cobPage = 1; }, act: S.cobConcepto !== 'all',
+          },
+          gasConcepto: {
+            l: 'Concepto', v: S.gasConcepto, multi: true, allLabel: 'Todos',
+            o: conceptosGasto,
+            set: (v) => { S.gasConcepto = v; }, act: S.gasConcepto !== 'all',
+          },
+          recvConcepto: {
+            l: 'Concepto', v: S.cobF.concepto, multi: true, allLabel: 'Todos',
+            o: conceptosRecv,
+            set: (v) => { S.cobF.concepto = v; }, act: S.cobF.concepto !== 'all',
+          },
+          comConcepto: {
+            l: 'Concepto', v: S.comF.concepto, multi: true, allLabel: 'Todos',
+            o: conceptosCom,
+            set: (v) => { S.comF.concepto = v; }, act: S.comF.concepto !== 'all',
+          },
           origin: {
-            l: 'Origen', v: S.cobF.origin, multi: true, allLabel: 'Todos',
+            l: 'Tipo', v: S.cobF.origin, multi: true, allLabel: 'Todos',
             o: Object.entries(ORIGIN_LABEL),
             set: (v) => { S.cobF.origin = v; }, act: S.cobF.origin !== 'all',
           },
@@ -3205,8 +3661,8 @@
         if (S.tab === 'movimientos') {
           const rows = filterMovs();
           return {
-            f: ['buscarMov', 'rango', 'asset', 'method', 'staff'],
-            cols: ['asset', 'method', 'staff'],
+            f: ['buscarMov', 'rango', 'asset', 'concepto', 'method', 'staff'],
+            cols: ['asset', 'concepto', 'method', 'staff'],
             search: 'buscarMov',
           };
         }
@@ -3215,18 +3671,17 @@
         if (S.tab === 'cobranzas') return null;
         // El período arriba; tipo, profesional y estado viven en la cabecera de la tabla.
         if (S.tab === 'comisiones') return {
-          f: ['rango', 'staff', 'comTipo', 'comEstado', 'buscarCom'],
-          cols: ['staff', 'comTipo', 'comEstado'],
-          search: 'buscarCom',
+          f: ['rango', 'staff', 'comTipo', 'comConcepto'],
+          cols: ['staff', 'comTipo', 'comConcepto'],
         };
         if (S.tab === 'cobros') return {
-          f: ['rango', 'staff', 'buscarCob'],
-          cols: ['staff'],
+          f: ['rango', 'staff', 'asset', 'cobConcepto', 'buscarCob'],
+          cols: ['staff', 'asset', 'cobConcepto'],
           search: 'buscarCob',
         };
         // Un gasto del negocio no es de nadie en particular: filtrar por profesional acá
         // no significa nada (decisión JP, 25/ago).
-        if (S.tab === 'gastos') return { f: ['rango'] };
+        if (S.tab === 'gastos') return { f: ['rango', 'gasConcepto'], cols: ['gasConcepto'] };
         // El resultado del negocio no se recorta por profesional: un gasto de alquiler no es
         // de nadie, así que filtrar dejaría un neto que no cierra.
         if (S.tab === 'resultado') return { f: ['rango'] };
@@ -3243,29 +3698,13 @@
         return `${d.v.length} seleccionados`;
       }
 
-      // Barra de la tabla: el buscador es una acción de la tabla, como los filtros de
-      // columna, no un campo apartado en el panel. Mismo componente en desktop y mobile.
-      function tbar(k, resumen) {
-        const d = fieldDefs()[k];
-        if (!d) return '';
-        return `<div class="tbar">
-          <div class="tsearch ${d.v ? 'on' : ''}">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
-            <input type="text" data-tsearch="${k}" value="${esc(d.v)}" placeholder="${esc(d.ph || 'Buscar')}" oninput="setFiltro('${k}', this.value)" />
-            ${d.v ? `<button class="tx" title="Limpiar" onclick="setFiltro('${k}', '')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>` : ''}
-          </div>
-          ${resumen ? `<span class="tcount">${resumen}</span>` : ''}
-        </div>`;
-      }
-
       function fieldsHTML(scope2, lista) {
         const D = fieldDefs(), spec = panelSpec();
         if (!spec) return '';
         if (lista) return lista.map((k) => campoHTML(k, D[k], scope2)).join('');
-        // En desktop los filtros de columna viven en la cabecera; en mobile la tabla scrollea
-        // de costado, así que se quedan en el modal. El buscador nunca está acá: es una
-        // acción de la tabla, en las dos pantallas.
-        const fuera = (scope2 === 'd' ? (spec.cols || []) : []).concat(spec.search || []);
+        // Los filtros de columna y el buscador viven en la cabecera de la tabla, no en el
+        // panel de arriba: se filtra donde se lee. Acá quedan solo los que no son de columna.
+        const fuera = (spec.cols || []).concat(spec.search || []);
         const campos = spec.f.filter((k) => !fuera.includes(k));
         return campos.map((k) => campoHTML(k, D[k], scope2)).join('');
       }
@@ -3329,8 +3768,8 @@
       }
       function limpiarFiltros() {
         S.range = 'd30'; S.staff = 'all'; S.open = null;
-        S.movF = { q: '', method: 'all', asset: 'all' }; S.cobQ = '';
-        S.comF = { q: '', tipo: 'all', estado: 'all' };
+        S.movF = { q: '', method: 'all', asset: 'all', concepto: 'all' }; S.cobQ = '';
+        S.comF = { q: '', tipo: 'all', concepto: 'all' };
         S.cobF = { q: '', origin: 'all' };
         S.movPage = 1; render();
       }
@@ -3349,7 +3788,7 @@
           <div class="sh"><h3>${o.title}</h3>
             <button class="x" onclick="closeAll()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
           <div class="sb">${o.body}</div>
-          <div class="sf">${o.ok
+          <div class="sf">${o.extra || ''}${o.ok
             ? `<button class="btn pri" id="sheetOk" style="flex:1;justify-content:center">${o.ok}</button>
                <button class="btn ghost" onclick="closeAll()">Cancelar</button>`
             : `<button class="btn" style="flex:1;justify-content:center" onclick="closeAll()">Cerrar</button>`}</div>`;
@@ -3357,6 +3796,184 @@
         if (o.ok) el('sheetOk').onclick = () => { if (o.onOk() !== false) { closeAll(); render(); } };
         if (o.after) o.after();
       }
+      /* ---------------- ADMINISTRAR CATEGORÍAS DE GASTO ----------------
+         Espeja el organizador de categorías de servicios de Flash: grip SIEMPRE visible
+         (es la única señal de que la fila se arrastra), drag & drop para ordenar, renombrar
+         en la misma fila, y borrar pidiendo destino cuando la categoría tiene gastos adentro.
+         Se guarda solo — no hay botón "Guardar orden": si te vas sin apretarlo, perdés el
+         trabajo. Cada cambio repinta también la vista de atrás, así el desglose y el total
+         se actualizan mientras el gestor sigue abierto. */
+      let _catDrag = null;
+      let _catEdit = null;
+
+      // Gastos de una categoría EN EL RANGO (lo que muestra la fila) y en TODO el ledger
+      // (lo que decide si al borrarla hay que reubicar algo).
+      const catEnRango = (k) => expenses(scope()).filter((m) => m.cat === k);
+      const catEnLedger = (k) => MOVS.filter((m) => m.asset === 'gasto' && m.cat === k);
+
+      const CAT_ICO = {
+        grip: '<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="5" r="1.7"/><circle cx="15" cy="5" r="1.7"/><circle cx="9" cy="12" r="1.7"/><circle cx="15" cy="12" r="1.7"/><circle cx="9" cy="19" r="1.7"/><circle cx="15" cy="19" r="1.7"/></svg>',
+        pencil: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L20 8l-4-4L4 16z"/></svg>',
+        trash: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V4.5h6V7M6.5 7l1 12.5h9L17.5 7"/></svg>',
+        bolt: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 2 4 13.6h6L9.5 22 20 10.2h-6.6z"/></svg>',
+      };
+
+      function openCats() {
+        _catEdit = null;
+        sheet({
+          title: 'Categorías de <strong>gastos</strong>',
+          // Sin categorías propias todavía no hay nada que ordenar: la bajada explica el
+          // estado en vez de dar una instrucción que no aplica.
+          body: `<p class="cap" id="catCap" style="margin:-6px 0 14px"></p>
+            <div class="catmgr" id="catList"></div>`,
+          // Crear y cerrar quedan anclados abajo: con 10 categorías el botón de crear se iba
+          // de pantalla justo cuando lo necesitás.
+          extra: `<button class="btn" style="flex:1;justify-content:center" onclick="catAdd()">＋ Nueva categoría</button>`,
+          after: renderCats,
+        });
+      }
+
+      const CAT_CAP = () => (ECATS.some((c) => !c.auto)
+        ? 'Arrastrá para ordenar. Este orden manda en el desglose por categoría y en el selector al registrar un gasto.'
+        : 'Todavía no creaste ninguna: hasta que lo hagas, tus gastos figuran <b>sin categoría</b>.');
+
+      function renderCats() {
+        const box = el('catList');
+        if (!box) return;
+        if (el('catCap')) el('catCap').innerHTML = CAT_CAP();
+        const huerfanos = catEnLedger(SIN_CAT).length;
+        box.innerHTML = ECATS.map((c, i) => {
+          const editing = _catEdit === c.k;
+          // La automática no se arrastra ni se edita: es de Ágora, no del dueño.
+          if (c.auto) {
+            return `<div class="catrow auto" data-k="${c.k}" data-i="${i}">
+              <span class="grip lock" aria-hidden="true">${CAT_ICO.bolt}</span>
+              <span class="cname">${esc(c.label)}</span>
+              <span class="cmeta">Automática</span>
+            </div>`;
+          }
+          return `<div class="catrow${editing ? ' editing' : ''}" ${editing ? '' : 'draggable="true"'} data-k="${c.k}" data-i="${i}">
+            <span class="grip" aria-hidden="true">${CAT_ICO.grip}</span>
+            ${editing
+              ? `<input class="cedit" id="catEdit" value="${esc(c.label)}" maxlength="40" />`
+              : `<span class="cname">${esc(c.label)}</span>
+                 <button class="cact" onclick="catRename('${c.k}')" title="Renombrar" aria-label="Renombrar ${esc(c.label)}">${CAT_ICO.pencil}</button>
+                 <button class="cact del" onclick="catDelete('${c.k}')" title="Eliminar" aria-label="Eliminar ${esc(c.label)}">${CAT_ICO.trash}</button>`}
+          </div>`;
+        }).join('')
+        // El cajón de los gastos que quedaron sueltos al borrar una categoría. No se
+        // arrastra, no se renombra y no se borra: no es una categoría, es dónde caen.
+        + (huerfanos
+          ? `<div class="catrow ghost"><span class="grip" aria-hidden="true"></span>
+               <span class="cname">${SIN_CAT_LABEL}</span></div>`
+          : '');
+
+        if (_catEdit) {
+          const inp = el('catEdit');
+          inp.focus(); inp.select();
+          inp.onblur = () => catRenameCommit(inp.value);
+          inp.onkeydown = (e) => {
+            if (e.key === 'Enter') { inp.blur(); }
+            if (e.key === 'Escape') { _catEdit = null; renderCats(); }
+          };
+        }
+
+        box.querySelectorAll('.catrow[draggable]').forEach((row) => {
+          row.addEventListener('dragstart', (e) => {
+            _catDrag = row.dataset.k;
+            row.classList.add('drag');
+            e.dataTransfer.effectAllowed = 'move';
+            // Firefox no dispara drag sin payload.
+            e.dataTransfer.setData('text/plain', row.dataset.k);
+          });
+          row.addEventListener('dragend', () => { _catDrag = null; renderCats(); });
+          row.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            if (_catDrag && _catDrag !== row.dataset.k) row.classList.add('over');
+          });
+          row.addEventListener('dragleave', () => row.classList.remove('over'));
+          row.addEventListener('drop', (e) => {
+            e.preventDefault(); row.classList.remove('over');
+            catMove(_catDrag, row.dataset.k);
+          });
+        });
+      }
+
+      // Reordena moviendo la arrastrada a la posición de la soltada (splice, no swap: cambiar
+      // dos de lugar rompe el orden del resto cuando el salto es largo).
+      function catMove(fromK, toK) {
+        if (!fromK || fromK === toK || esAuto(fromK) || esAuto(toK)) return;
+        const from = ECATS.findIndex((c) => c.k === fromK);
+        const to = ECATS.findIndex((c) => c.k === toK);
+        if (from < 0 || to < 0) return;
+        ECATS.splice(to, 0, ECATS.splice(from, 1)[0]);
+        renderCats(); render();
+      }
+
+      function catRename(k) { if (esAuto(k)) return; _catEdit = k; renderCats(); }
+
+      function catRenameCommit(value) {
+        const k = _catEdit;
+        _catEdit = null;
+        const label = (value || '').trim();
+        const cat = ECATS.find((c) => c.k === k);
+        if (cat && label && label !== cat.label) {
+          cat.label = label;
+          toast('Categoría renombrada');
+          render();
+        }
+        renderCats();
+      }
+
+      function catAdd() {
+        // La clave se deriva del nombre (como el slug del backend) y se desambigua con un
+        // sufijo: dos categorías distintas con la misma clave se pisarían los gastos.
+        const label = (prompt('Nombre de la nueva categoría') || '').trim();
+        if (!label) return;
+        let k = label.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '') || 'cat';
+        if (ECATS.some((c) => c.k === k)) k = `${k}_${ECATS.length}`;
+        // Entra arriba de la automática, que va siempre última: no es una categoría del
+        // dueño y no tiene por qué competir por el primer lugar de la lista.
+        const i = ECATS.findIndex((c) => c.auto);
+        ECATS.splice(i >= 0 ? i : ECATS.length, 0, { k, label });
+        toast(`Categoría "${label}" creada`);
+        renderCats(); render();
+      }
+
+      function catDelete(k) {
+        const cat = ECATS.find((c) => c.k === k);
+        if (!cat || cat.auto) return;
+
+        const usados = catEnLedger(k);
+
+        // Sin gastos adentro no hay nada que decidir: se borra y listo.
+        if (!usados.length) {
+          ECATS.splice(ECATS.indexOf(cat), 1);
+          toast(`Categoría "${cat.label}" eliminada`);
+          renderCats(); render();
+          return;
+        }
+
+        // Con gastos adentro NO se pide destino (JP, 26/ago): elegir a mano a cuál de las
+        // otras pasan 17 gastos es una decisión que el dueño no tiene por qué tomar en ese
+        // momento, y cualquier destino que elija es mentira. Quedan sin categoría —
+        // siguen sumando al total y al desglose, en su propia barra— y se recategorizan
+        // después, uno por uno o creando la categoría de nuevo. Igual se avisa antes:
+        // es plata de 17 filas que cambia de lugar en el desglose.
+        sheet({
+          title: `Eliminar <strong>${esc(cat.label)}</strong>`,
+          body: `<div class="note">Sus <b>${usados.length} gasto${usados.length === 1 ? '' : 's'}</b> quedan <b>sin categoría</b>. Siguen contando en el total y podés volver a categorizarlos cuando quieras.</div>`,
+          ok: 'Eliminar categoría',
+          onOk: () => {
+            usados.forEach((m) => { m.cat = SIN_CAT; });
+            ECATS.splice(ECATS.indexOf(cat), 1);
+            toast(`"${cat.label}" eliminada · ${usados.length} gasto${usados.length === 1 ? '' : 's'} sin categoría`);
+            // sheet() cierra y renderiza al confirmar; se reabre el gestor para seguir.
+            setTimeout(openCats, 240);
+          },
+        });
+      }
+
       function closeAll() {
         el('sheet').classList.remove('on'); el('drawer').classList.remove('on'); el('scrim').classList.remove('on');
       }
@@ -3383,6 +4000,19 @@
       /* =====================================================================
          8 · RENDER
       ===================================================================== */
+      // Marca de qué lado queda contenido, y desplaza de a una pantalla.
+      function marcarTabs() {
+        const n = el('tabs'), w = el('tabswrap');
+        if (!n || !w) return;
+        w.classList.toggle('mas-izq', n.scrollLeft > 6);
+        w.classList.toggle('mas-der', n.scrollLeft + n.clientWidth < n.scrollWidth - 6);
+      }
+      function deslizarTabs(dir) {
+        const n = el('tabs');
+        n.scrollBy({ left: dir * Math.round(n.clientWidth * 0.7), behavior: 'smooth' });
+        setTimeout(marcarTabs, 350);
+      }
+
       let _rz;
       window.addEventListener('resize', () => { clearTimeout(_rz); _rz = setTimeout(renderHead, 120); });
       function render() {
@@ -3393,6 +4023,10 @@
         el('tabs').classList.toggle('hide', S.container !== 'finanzas');
         if (S.container === 'finanzas') {
           el('tabs').innerHTML = tabsVisibles().map((t) => `<button class="${S.tab === t.k ? 'on' : ''}" onclick="go('${t.k}')">${t.l}</button>`).join('');
+          // La sección activa siempre a la vista, aunque esté fuera de pantalla.
+          const act = el('tabs').querySelector('button.on');
+          if (act) act.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+          marcarTabs();
         }
 
         const V = { resumen: vResumen, cobranzas: vCobranzas, movimientos: vMovimientos, cobros: vCobros,
@@ -3405,6 +4039,7 @@
         renderPanel();
         bindTips();
         marcarScrolls();
+        bindInfinito();
       }
 
       /* ---- Rail: la navegación real de Flash con la propuesta aplicada ---- */
@@ -3447,7 +4082,7 @@
       // Acciones por vista: exportar no aplica en Caja ni en Conceptos, y registrar
       // cobro/gasto no aplica en Resumen ni en Conceptos (decisión JP, 20/ago).
       const BTN_EXPORT = `<button class="btn ghost" onclick="toast('Exportado: 1 archivo .csv con lo que estás viendo')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M8 11l4 4 4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>Exportar</button>`;
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M8 11l4 4 4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg><span>Exportar</span></button>`;
       const ic = (d) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
       const I_PLUS = ic('<path d="M12 5v14M5 12h14"/>');
       const I_UP = ic('<path d="M12 19V5M6 11l6-6 6 6"/>');
@@ -3459,32 +4094,36 @@
       // la segunda cierra un saldo que ya existe. Por eso cada una vive en una sección distinta.
       const BTN_VENTA = `<button class="btn pri" onclick="openVenta()">${I_PLUS}Registrar venta</button>`;
       const BTN_COBRO = `<button class="btn pri" onclick="openCobrar()">${I_PLUS}Registrar cobro</button>`;
-      // Cada una en su sección: el ingreso en Cobros, el gasto en Gastos.
-      const BTN_INGRESO = `<button class="btn pri" onclick="openIngreso()">${I_UP}Registrar ingreso</button>`;
+      // Cada una en su sección: el ingreso en Ventas cobradas, el gasto en Gastos.
+      const BTN_INGRESO = `<button class="btn pri" onclick="openIngreso()">${I_PLUS}Registrar cobro</button>`;
       const BTN_GASTO = `<button class="btn pri neg" onclick="openGasto()">${I_DOWN}Registrar gasto</button>`;
       const BTN_LIQUIDAR = `<button class="btn pri" onclick="openLiquidar(null)">${I_TEAM}Registrar pago</button>`;
       const BTN_AJUSTE = `<button class="btn" onclick="openAjuste()">${I_PLUS}Ajuste manual</button>`;
       // Solo en Caja: son las únicas dos que mueven el cajón sin tocar el resultado.
       const BTN_REPO = `<button class="btn" onclick="openMovCaja('in')">${I_PLUS}Ingreso de efectivo</button>`;
       const BTN_RETIRO = `<button class="btn neg" onclick="openMovCaja('out')">${I_OUT}Retiro de efectivo</button>`;
+      // Con la caja cerrada, abrirla es LA acción de la vista: sube a la cabecera como
+      // primaria, a la altura del título, y no solo como CTA enterrado abajo del explicativo.
+      const I_CAJA = ic('<path d="M3 10 5.5 4h13L21 10"/><path d="M3 10h18v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M10 14h4"/>');
+      const BTN_ABRIR_CAJA = `<button class="btn pri" onclick="openAbrirCaja()">${I_CAJA}Abrir la caja del día</button>`;
 
       // Acciones que CREAN algo: en desktop van en el header, en mobile en la barra inferior.
       const ACTS = {
         resumen: () => '',
         movimientos: () => BTN_VENTA,
         cobranzas: () => BTN_COBRO,
-        cobros: () => BTN_INGRESO + BTN_COBRO,
+        cobros: () => BTN_INGRESO,
         gastos: () => BTN_GASTO,
         resultado: () => '',
         comisiones: () => BTN_AJUSTE + BTN_LIQUIDAR,
-        // Con la caja cerrada no hay cajón que mover: abrir se hace desde la vista.
-        arqueo: () => (CAJA_ABIERTA ? BTN_REPO + BTN_RETIRO : ''),
+        // Con la caja cerrada no hay cajón que mover: la única acción posible es abrirla.
+        arqueo: () => (CAJA_ABIERTA ? BTN_REPO + BTN_RETIRO : BTN_ABRIR_CAJA),
       };
       // Exportar no crea nada: se queda arriba siempre.
       const CON_EXPORT = ['movimientos', 'cobros', 'gastos'];
       const TITLES = {
         comisiones: ['Comisiones del ', 'equipo'], resumen: ['Tu ', 'resumen'], movimientos: ['Todas las ', 'ventas'], cobranzas: ['Lo que falta ', 'cobrar'],
-        cobros: ['Todo lo ', 'cobrado'], gastos: ['Todos los ', 'gastos'], resultado: ['Tu ', 'resultado'],
+        cobros: ['Ventas ', 'cobradas'], gastos: ['Todos los ', 'gastos'], resultado: ['Tu ', 'resultado'],
         arqueo: ['Cierre de ', 'caja'],
       };
 

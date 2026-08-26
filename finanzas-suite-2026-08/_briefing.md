@@ -415,3 +415,55 @@ barra: no se filtran por período.
 **Cobros, Gastos y Resultado abren con la respuesta.** Cada una encabeza con la pregunta que la sección
 contesta y el número en display: *¿Cuánto cobré en este período?* $40.270.100 · *¿Cuánto gasté?* $2.695.900
 —con la categoría más pesada al lado— · *¿Cuál fue mi resultado?* $37.528.000, en coral si da negativo.
+
+### El buscador se muda a la columna, y la barra de tabla desaparece (JP, 26/ago)
+
+**Cliente dejó de ordenar y pasó a buscar.** Ordenar alfabéticamente por nombre no responde ninguna
+pregunta del negocio; buscar a alguien, sí. La cabecera de **Cliente** ahora abre el mismo popover que los
+filtros de columna, con lupa en vez de embudo y la pastilla azul cuando hay una búsqueda activa. Está en
+Ventas, Ventas por cobrar y Cobros. Quedan ordenables **Fecha** y **Monto**, que es donde ordenar sirve.
+
+Con el buscador adentro de la columna, **la barra de tabla se quedó sin contenido**: lo único que sobrevivía
+era el contador de filas, que repetía el número grande de arriba. Se eliminó entera. Comisiones tenía además
+un buscador por profesional que **nunca filtró nada** —el estado se seteaba y no se leía—; se fue con la
+barra, y el filtro de columna Profesional ya cubre ese caso.
+
+**Los pies de tabla dejan de repetir totales.** Ventas mostraba `+$40.810.500 cobrado` y el total otra vez a
+la derecha; Comisiones, el devengado y el pagado. Los tres ya estaban arriba en display. Queda el conteo de
+filas, y en Ventas el pendiente de cobro, que no está en ningún otro lado.
+
+**El panel de fechas dejó de estirarse.** Se abría al ancho del contenedor (1140 px) con los dos meses
+flotando en el medio: la bajada del calendario lleva `width:100%` y su ancho *max-content* inflaba el flex
+wrap. Ahora mide lo que ocupa —**786 px**: atajos 190 + los dos meses 596—, como el componente de producción.
+De paso, la flecha de *mes siguiente* dibujaba un chevron hacia abajo.
+
+### Las cards del equipo, iguales a producción (JP, 26/ago)
+
+Las tarjetas por profesional de Comisiones pasan a ser las de `TeamPayments`: grilla pareja de **2/3/4
+columnas**, avatar de 36 px con la inicial en azul de marca —el mismo tono para todos, no una rampa por
+persona—, nombre arriba en gris chico, el **saldo** como protagonista y *Cobros* + monto en mono abajo.
+Seleccionada = borde de marca, fondo lavado y **check azul arriba a la derecha**; antes solo cambiaba el
+borde y se confundía con el hover. El saldo se muestra tal cual, en coral si queda negativo —pagaste de más
+o hubo un ajuste grande—, que es como se comporta producción.
+
+Se eliminó el botón *Ver todo el equipo ✕*: se deselecciona volviendo a tocar la card, que es el mismo gesto
+con el que se seleccionó.
+
+**El rail nombra lo que la sección hace**: Por cobrar → **Ventas por cobrar**, Comisiones → **Comisiones del
+equipo**, Caja → **Gestión de caja**.
+
+### Las categorías de gasto arrancan vacías, salvo una (JP, 26/ago)
+
+El negocio **no nace con categorías**. Hasta que el dueño arme las suyas, todos sus gastos figuran **Sin
+categoría** —siguen sumando al total y al desglose, en su propia barra—. Es el estado real de una cuenta
+nueva, y es lo que le da sentido al gestor de categorías: si vienen diez precargadas, nunca lo abre.
+
+La única que existe desde el día cero es **Liquidación de comisiones** (antes *Sueldos y comisiones*), y es
+**automática**: la escribe Ágora cada vez que se liquida al equipo, no el dueño. Se distingue en los tres
+lugares donde aparece —fila con rayo y etiqueta *Automática* en el gestor, sin arrastre ni renombre ni
+borrado; pastilla azul con rayo en la tabla de gastos; fuera del selector al registrar un gasto a mano, que
+ahora abre en *Sin categoría*—. Ningún gasto generado cae en esa categoría salvo las liquidaciones, así que
+el nombre más específico no mislabelea nada.
+
+**La barra apilada llega a Gastos.** *De dónde sale la plata* usa la misma barra de proporción que *Cobros
+por medio* (`barsList({ prop: true })`), con los colores de las filas de abajo.
