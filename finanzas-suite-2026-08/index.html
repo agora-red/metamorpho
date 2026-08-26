@@ -1842,7 +1842,25 @@
          En producción esto se resuelve con `is_venue` + el add-on `revenue_share_enabled`;
          acá lo aproxima `S.persona === 'venue'`. */
       const conEquipo = () => S.persona === 'venue' && STAFF.length > 1;
-      const tabsVisibles = () => TABS.filter((t) => t.k !== 'comisiones' || conEquipo());
+
+      /* REGLA — EMPAQUETADO (decisión JP, 26/ago).
+         El add-on que hoy se vende como "Comisiones de equipo" pasa a incluir TRES secciones:
+         Gastos · Comisiones del equipo · Resultado. Sin el add-on, Finanzas queda en lo que
+         entra —Resumen, Ventas, Ventas por cobrar, Cobros—; con el add-on suma lo que sale y
+         lo que queda. **Gestión de caja sigue siendo un add-on aparte.**
+         `conAddon()` es el gate comercial y `conEquipo()` el estructural: Comisiones necesita
+         los dos (podés pagar el add-on y no tener equipo), Gastos y Resultado solo el primero.
+         OJO: el gate NO cuelga de la persona. Un profesional independiente también puede
+         comprar el add-on —tiene gastos y tiene resultado—, solo que no liquida a nadie. Acá
+         el prototipo muestra el add-on activo (es lo que se está diseñando); el día que haya
+         que mostrar la versión sin add-on, `conAddon()` es el único lugar a tocar. */
+      const PACK = ['gastos', 'comisiones', 'resultado'];
+      const conAddon = () => true;
+      const tabsVisibles = () => TABS.filter((t) => {
+        if (t.k === 'comisiones') return conAddon() && conEquipo();
+        if (PACK.includes(t.k)) return conAddon();
+        return true;
+      });
       // Tabs de los otros dos containers tocados por la propuesta (mockups, no navegables por dentro).
       const TABS_ACT = [
         { k: 'reservas', l: 'Reservas' },

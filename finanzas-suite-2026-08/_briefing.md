@@ -467,3 +467,38 @@ el nombre más específico no mislabelea nada.
 
 **La barra apilada llega a Gastos.** *De dónde sale la plata* usa la misma barra de proporción que *Cobros
 por medio* (`barsList({ prop: true })`), con los colores de las filas de abajo.
+
+### Empaquetado: el add-on deja de ser "comisiones" (JP, 26/ago)
+
+**Gastos · Comisiones del equipo · Resultado** pasan a venderse juntas, dentro del add-on que hoy se
+factura como *Comisiones de equipo*. **Gestión de caja sigue siendo un add-on aparte.**
+
+El corte tiene sentido: sin el add-on, Finanzas contesta **lo que entra** —Resumen, Ventas, Ventas por
+cobrar, Cobros—, que es lo que hoy ya vive disperso entre Actividad y Analítica y no se puede cobrar aparte.
+Con el add-on suma **lo que sale y lo que queda**. Las tres secciones son el mismo circuito: no hay resultado
+sin gastos, y lo que se le paga al equipo es el gasto más grande de la mayoría de los negocios.
+
+**El nombre ya no describe lo que vende.** *Comisiones de equipo* nombra una de las tres secciones —y la
+única que un profesional independiente no usa—, así que deja afuera a todo un segmento que sí compraría
+gastos y resultado. Recomendación: **Rentabilidad**, con bajada *"Gastos, comisiones del equipo y resultado"*.
+Es la única palabra que implica las tres —no hay rentabilidad sin saber qué gastás ni qué le pagás al
+equipo—, vende un resultado y no una pantalla, y no se pisa con el nombre del módulo, que es gratis.
+Alternativas descartadas: *Finanzas avanzadas* (se confunde con el módulo base), *Gastos y rentabilidad*
+(enumera en vez de nombrar).
+
+**Ojo con el gate.** El add-on **no** cuelga de si el negocio tiene equipo: un profesional independiente
+también tiene gastos y resultado. En el código quedan separados —`conAddon()` es el gate comercial y
+`conEquipo()` el estructural—; Comisiones necesita los dos, Gastos y Resultado solo el primero. El prototipo
+muestra el add-on activo, que es lo que se está diseñando.
+
+### Lo que se mueve y lo que NO se toca
+
+Esta propuesta reorganiza **dónde vive cada cosa**, no reescribe la lógica. Se mantiene tal cual está —ya
+afinada y probada estas últimas semanas— la de **Caja** (apertura/cierre, arqueo, diferencias con motivo,
+reposición y retiro de fondo), **descuentos y ajustes manuales**, y **cobros totales y parciales** con toda
+su lógica de saldos.
+
+Lo que sí se mueve: **Actividad pierde "Todas las transacciones"** —ese listado es ahora **Ventas** en
+Finanzas, con filtros por tipo de venta, concepto, medio, profesional y cliente— y **Analítica se recorta**
+para no pisarse: salen *Ventas totales*, *Ticket promedio* y *Reporte de ventas*. Analítica queda con una
+sola pregunta: cómo viene la operación (ocupación, clientes, cancelaciones).
