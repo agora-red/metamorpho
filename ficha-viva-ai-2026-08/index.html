@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ficha viva · inteligencia servida — Ágora</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --frost-primary:        #0072FB;
+  --frost-primary-hover:  #005CD4;
+  --frost-primary-soft:   #EEF6FF;
+  --frost-primary-wash:   rgba(0,114,251,0.08);
+  --frost-accent:         #FF4658;
+  --frost-accent-soft:    #FFE3E6;
+  --frost-accent-wash:    rgba(255,70,88,0.08);
+  --frost-success:        #10B981;
+  --frost-warning:        #F59E0B;
+  --frost-warning-wash:   rgba(245,158,11,0.10);
+  --frost-warning-text:   #92600A;
+  --frost-ink:       #0F172A;
+  --frost-ink-soft:  #3A3A3A;
+  --frost-muted:     #868686;
+  --frost-faint:     #B5B5B5;
+  --frost-surface:        #FFFFFF;
+  --frost-surface-muted:  #EFF3F9;
+  --frost-border:         #E2E8F0;
+  --frost-border-soft:    #F2F2F2;
+  --aurora-a: #0072FB; --aurora-b: #7C3AED; --aurora-c: #FF4658;
+  --r-sm: 6px; --r-item: 10px; --r-btn: 12px; --r-card: 20px; --r-shell: 28px; --r-chip: 999px;
+  --sh-xs: 0 1px 2px rgba(15,23,42,0.04);
+  --sh-sm: 0 4px 12px -4px rgba(15,23,42,0.10);
+  --sh-md: 0 10px 30px -12px rgba(15,23,42,0.15);
+  --sh-glow: 0 4px 18px -2px rgba(0,114,251,0.30);
+  --sans: 'Montserrat', system-ui, -apple-system, sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: var(--sans); background: var(--frost-surface-muted); color: var(--frost-ink);
+  font-variant-numeric: tabular-nums; line-height: 1.55; -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+.kicker { font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--frost-muted); }
+
+/* ── Chrome ── */
+header.chrome { background: var(--frost-surface); border-bottom: 1px solid var(--frost-border); }
+header.chrome .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.chrome-tag { font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--frost-faint); }
+
+/* ── Hero ── */
+.hero { padding: 72px 0 40px; }
+.hero h1 { font-size: clamp(30px, 4.5vw, 44px); font-weight: 200; letter-spacing: -0.02em; line-height: 1.12; margin: 14px 0 16px; }
+.hero h1 b { font-weight: 500; }
+.hero p.lede { max-width: 640px; font-size: 15px; font-weight: 300; color: var(--frost-ink-soft); }
+.hero p.lede b { font-weight: 600; }
+
+/* ── Secciones ── */
+section.block { padding: 44px 0; }
+.block > .wrap > h2 { font-size: 22px; font-weight: 300; margin: 8px 0 6px; }
+.block > .wrap > h2 b { font-weight: 600; }
+.block > .wrap > p.sub { font-size: 13.5px; font-weight: 300; color: var(--frost-muted); max-width: 620px; margin-bottom: 26px; }
+
+/* ── Controles del prototipo ── */
+.controls { display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-end; margin-bottom: 26px; }
+.control-group { display: flex; flex-direction: column; gap: 8px; }
+.state-cards { display: flex; flex-wrap: wrap; gap: 8px; }
+.state-card {
+  border: 1px solid var(--frost-border); background: var(--frost-surface); border-radius: var(--r-btn);
+  padding: 9px 14px; font-family: var(--sans); font-size: 12.5px; font-weight: 500; color: var(--frost-ink-soft);
+  cursor: pointer; transition: all .15s ease; text-align: left;
+}
+.state-card small { display: block; font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--frost-faint); margin-bottom: 2px; }
+.state-card.active { border-color: var(--frost-primary); background: var(--frost-primary-wash); color: var(--frost-ink); box-shadow: var(--sh-xs); }
+.state-card.active small { color: var(--frost-primary); }
+.dial { display: inline-flex; background: var(--frost-surface); border: 1px solid var(--frost-border); border-radius: var(--r-chip); padding: 3px; }
+.dial button {
+  border: 0; background: transparent; font-family: var(--sans); font-size: 12px; font-weight: 600;
+  padding: 7px 18px; border-radius: var(--r-chip); cursor: pointer; color: var(--frost-muted); transition: all .15s ease;
+}
+.dial button.active { background: var(--frost-ink); color: #fff; }
+
+/* ── Stage: banda + phone ── */
+.stage { display: grid; grid-template-columns: 1.5fr 1fr; gap: 28px; align-items: start; }
+@media (max-width: 900px) { .stage { grid-template-columns: 1fr; } }
+.stage-label { font-size: 10.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--frost-faint); margin-bottom: 10px; }
+
+/* Panel drawer simulado (desktop) */
+.drawer-mock { background: var(--frost-surface); border: 1px solid var(--frost-border); border-radius: var(--r-card); box-shadow: var(--sh-md); overflow: hidden; }
+.drawer-head { display: flex; align-items: center; gap: 12px; padding: 18px 22px 14px; }
+.avatar { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-size: 13px; font-weight: 600; letter-spacing: 0.02em; background: linear-gradient(135deg, var(--frost-primary), var(--frost-primary-hover)); box-shadow: 0 4px 14px -2px rgba(0,114,251,0.35); }
+.drawer-head .who { flex: 1; min-width: 0; }
+.drawer-head .who .name { font-size: 15px; font-weight: 600; }
+.drawer-head .who .meta { font-size: 11px; color: var(--frost-muted); }
+.drawer-head .who .meta i { font-style: normal; color: var(--frost-success); }
+.ver-perfil { font-size: 11.5px; font-weight: 600; color: var(--frost-primary); background: var(--frost-primary-wash); border: 0; border-radius: var(--r-chip); padding: 7px 14px; cursor: default; }
+.contact-row { display: flex; gap: 14px; padding: 0 22px 14px; font-size: 11.5px; color: var(--frost-muted); border-bottom: 1px solid var(--frost-border-soft); }
+
+.ficha { padding: 16px 22px 20px; }
+
+/* Stats */
+.stats { display: flex; margin-bottom: 14px; }
+.stat { padding: 0 20px; border-right: 1px solid var(--frost-border-soft); min-width: 0; }
+.stat:first-child { padding-left: 0; } .stat:last-child { border-right: 0; }
+.stat .lbl { font-size: 9.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--frost-muted); }
+.stat .val { font-size: 21px; font-weight: 600; letter-spacing: -0.01em; margin-top: 3px; line-height: 1; white-space: nowrap; }
+.mode-aurora .stat .val { background: linear-gradient(100deg, var(--frost-ink) 55%, var(--frost-primary)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* La datita — insight card */
+.datita-shell { position: relative; border-radius: calc(var(--r-item) + 1px); padding: 1px; margin-bottom: 12px; }
+.mode-sobrio .datita-shell { background: var(--frost-border); }
+@property --ang { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+.mode-aurora .datita-shell {
+  background: conic-gradient(from var(--ang) at 50% 50%, var(--aurora-a), var(--aurora-b), var(--aurora-c), var(--aurora-a));
+  animation: spin 9s linear infinite;
+}
+@keyframes spin { to { --ang: 360deg; } }
+.datita { position: relative; background: var(--frost-surface); border-radius: var(--r-item); padding: 11px 14px 11px 12px; display: flex; gap: 10px; align-items: flex-start; overflow: hidden; }
+.mode-sobrio .datita { background: #FAFCFF; }
+.mode-aurora .datita { background: var(--frost-surface); }
+.mode-aurora .datita.tone-warning { background: linear-gradient(0deg, var(--frost-warning-wash), var(--frost-warning-wash)), var(--frost-surface); }
+.datita .spark { flex-shrink: 0; margin-top: 1px; font-size: 13px; line-height: 1.4; color: var(--frost-primary); }
+.mode-aurora .datita .spark { animation: twinkle 3.2s ease-in-out infinite; }
+@keyframes twinkle { 0%,100% { opacity: .9; transform: scale(1); } 50% { opacity: .45; transform: scale(.82); } }
+.datita .txt { min-width: 0; }
+.datita .txt .k { font-size: 9px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--frost-primary); display: block; margin-bottom: 2px; }
+.datita .txt .t { font-size: 13px; font-weight: 500; color: var(--frost-ink); overflow-wrap: break-word; }
+.datita.tone-warning .spark, .datita.tone-warning .txt .k { color: var(--frost-warning-text); }
+.datita.tone-warning { background: linear-gradient(0deg, var(--frost-warning-wash), var(--frost-warning-wash)), var(--frost-surface); }
+.mode-aurora .datita::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.65) 50%, transparent 70%);
+  transform: translateX(-120%); animation: shimmer 1.1s ease-out .15s 1 forwards;
+}
+@keyframes shimmer { to { transform: translateX(120%); } }
+@media (prefers-reduced-motion: reduce) { .mode-aurora .datita-shell, .mode-aurora .datita .spark, .mode-aurora .datita::after { animation: none; } }
+
+/* Contexto + chips */
+.contexto { font-size: 12px; font-weight: 300; color: var(--frost-ink-soft); }
+.contexto b { font-weight: 500; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.chip { font-size: 10px; font-weight: 600; border-radius: var(--r-chip); padding: 4px 9px; line-height: 1; white-space: nowrap; }
+.chip.brand { background: var(--frost-primary-wash); color: var(--frost-primary-hover); }
+.chip.neutral { background: var(--frost-border-soft); color: var(--frost-ink-soft); }
+.chip.warning { background: var(--frost-warning-wash); color: var(--frost-warning-text); }
+
+/* Phone mock */
+.phone { width: 300px; margin: 0 auto; background: var(--frost-ink); border-radius: 38px; padding: 10px; box-shadow: var(--sh-md); }
+.phone .screen { background: var(--frost-surface-muted); border-radius: 30px; overflow: hidden; }
+.phone .notch { height: 22px; display: grid; place-items: center; }
+.phone .notch i { display: block; width: 76px; height: 5px; border-radius: 99px; background: rgba(15,23,42,.18); }
+.phone .app { padding: 10px 12px 16px; }
+.phone .drawer-head { padding: 10px 4px 8px; }
+.phone .avatar { width: 36px; height: 36px; font-size: 11px; }
+.phone .drawer-head .who .name { font-size: 13px; }
+.phone .ficha { background: var(--frost-surface); border: 1px solid var(--frost-border); border-radius: 16px; padding: 12px; }
+.phone .stat { padding: 0 10px; } .phone .stat:first-child { padding-left: 0; }
+.phone .stat .val { font-size: 17px; }
+.phone .datita .txt .t { font-size: 12px; }
+
+/* ── Tu día ── */
+.tudia { max-width: 700px; background: var(--frost-surface); border: 1px solid var(--frost-border); border-radius: var(--r-card); box-shadow: var(--sh-sm); overflow: hidden; }
+.tudia-head { display: flex; align-items: center; gap: 10px; padding: 13px 18px; }
+.tudia-head .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--frost-primary); box-shadow: 0 0 0 4px var(--frost-primary-wash); }
+.mode-aurora .tudia-head .dot { animation: pulse 2.6s ease-in-out infinite; }
+@keyframes pulse { 0%,100% { box-shadow: 0 0 0 4px var(--frost-primary-wash); } 50% { box-shadow: 0 0 0 7px rgba(0,114,251,0.14); } }
+.tudia-head .k { font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; }
+.tudia-head .k span { color: var(--frost-faint); text-transform: none; letter-spacing: 0; font-weight: 500; }
+.tudia-head .count { font-size: 10px; font-weight: 600; background: var(--frost-primary-wash); color: var(--frost-primary-hover); border-radius: var(--r-chip); padding: 4px 9px; }
+.tudia-head .x { margin-left: auto; color: var(--frost-faint); font-size: 14px; }
+.tudia ul { list-style: none; border-top: 1px solid var(--frost-border-soft); }
+.tudia li { display: flex; gap: 14px; padding: 11px 18px; border-bottom: 1px solid var(--frost-border-soft); align-items: baseline; }
+.tudia li:last-child { border-bottom: 0; }
+.tudia .hora { font-size: 13px; font-weight: 700; color: var(--frost-primary-hover); width: 44px; flex-shrink: 0; }
+.tudia .quien { min-width: 0; flex: 1; }
+.tudia .quien .n { font-size: 13.5px; font-weight: 600; }
+.tudia .quien .l { font-size: 12px; color: var(--frost-ink-soft); font-weight: 300; }
+.mode-aurora .tudia .quien .l.ai::before { content: '✦ '; color: var(--frost-primary); font-size: 10px; }
+
+/* ── Anatomía ── */
+.anatomy { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.a-card { background: var(--frost-surface); border: 1px solid var(--frost-border); border-radius: var(--r-card); padding: 20px; box-shadow: var(--sh-xs); }
+.a-card h3 { font-size: 13.5px; font-weight: 600; margin: 10px 0 6px; }
+.a-card p { font-size: 12.5px; font-weight: 300; color: var(--frost-ink-soft); }
+.a-card .demo { height: 54px; border-radius: var(--r-item); display: grid; place-items: center; font-size: 12px; color: var(--frost-muted); background: var(--frost-surface-muted); position: relative; overflow: hidden; }
+.a-card code { font-family: var(--sans); font-size: 10.5px; font-weight: 600; color: var(--frost-primary-hover); background: var(--frost-primary-soft); border-radius: 5px; padding: 2px 7px; }
+
+/* anti-tacky */
+.no-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; }
+.no-item { background: var(--frost-surface); border: 1px solid var(--frost-border); border-radius: var(--r-item); padding: 14px 16px; font-size: 12.5px; }
+.no-item b { display: block; font-weight: 600; color: var(--frost-accent); font-size: 12px; margin-bottom: 3px; }
+.no-item span { font-weight: 300; color: var(--frost-ink-soft); }
+
+footer { padding: 46px 0 60px; }
+footer .wrap { border-top: 1px solid var(--frost-border); padding-top: 26px; font-size: 12px; color: var(--frost-muted); font-weight: 300; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+</style>
+</head>
+<body>
+
+<header class="chrome">
+  <div class="wrap">
+    <svg width="112" height="26" viewBox="0 0 153 36" xmlns="http://www.w3.org/2000/svg" aria-label="Ágora">
+      <path d="M41.3822 30.3938L38.187 35.7712L3.11719 35.8491L17.5348 10.9106L20.6466 16.2974L15.7314 24.9347L12.625 30.3938H41.3822Z" fill="#E2E8F0"/>
+      <path d="M17.5351 10.9106L20.6469 16.2974L16.7342 23.0921L12.1689 20.1848L17.5351 10.9106Z" fill="url(#p0)" fill-opacity="0.7"/>
+      <path d="M20.6467 16.2973L17.5349 10.9106L3.11731 35.8491L0 30.3938L17.5349 0L31.8745 24.9385H25.6399L20.6467 16.2973Z" fill="#0072FF"/>
+      <path d="M31.8543 24.9244L25.6302 24.9316L21.7061 18.1387L26.5114 15.6305L31.8543 24.9244Z" fill="url(#p1)" fill-opacity="0.7"/>
+      <path d="M23.8473 0L41.3822 30.3938H12.625L15.7314 24.9346L15.7384 24.9385H25.6398H31.8744L17.5348 0H23.8473Z" fill="#FF4658"/>
+      <path d="M12.625 30.3937L15.7289 24.9387L23.7202 24.9194L23.4706 30.3746L12.625 30.3937Z" fill="url(#p2)" fill-opacity="0.7"/>
+      <path d="M76.7893 7.41158V4.76367H69.5647V7.41158H76.7893ZM72.2126 26.6334C74.4029 26.6334 76.3316 25.7835 77.6065 24.2797V26.3065H81.2351V10.1249H77.6065V12.1844C76.3316 10.6806 74.4029 9.79797 72.2126 9.79797C67.7668 9.79797 64.7266 13.5573 64.7266 18.232C64.7266 22.8741 67.7668 26.6334 72.2126 26.6334ZM73.1279 23.1356C70.382 23.1356 68.4206 21.0761 68.4206 18.232C68.4206 15.388 70.382 13.2958 73.1279 13.2958C75.7105 13.2958 77.6065 15.388 77.6065 18.232C77.6065 21.1088 75.6778 23.1356 73.1279 23.1356ZM92.2844 31.112C96.9264 31.112 100.718 28.2679 100.718 22.6125V10.1249H97.2533V12.5439C96.4034 10.9421 94.2131 9.79797 91.7614 9.79797C87.2828 9.79797 84.3407 13.2958 84.3407 17.6436C84.3407 21.9914 87.2828 25.4566 91.7614 25.4566C94.7035 25.4566 96.4361 23.9855 97.0899 22.6779V22.8087C97.0899 26.1104 95.39 28.3333 91.9248 28.3333C90.2576 28.3333 88.3616 27.7776 87.0867 26.6661L85.681 28.9544C87.1847 30.2947 89.5058 31.112 92.2844 31.112ZM92.5459 22.2856C89.9961 22.2856 88.0347 20.3242 88.0347 17.6436C88.0347 14.963 89.9961 12.9689 92.5459 12.9689C95.0958 12.9689 97.0899 14.9303 97.0899 17.5129C97.0899 20.3242 95.1612 22.2856 92.5459 22.2856ZM112.422 26.6334C117.194 26.6334 121.019 22.9067 121.019 18.232C121.019 13.5247 117.194 9.79797 112.422 9.79797C107.649 9.79797 103.824 13.5247 103.824 18.232C103.824 22.9067 107.649 26.6334 112.422 26.6334ZM112.422 23.1356C109.643 23.1356 107.518 21.0434 107.518 18.232C107.518 15.388 109.643 13.2958 112.422 13.2958C115.2 13.2958 117.325 15.388 117.325 18.232C117.325 21.0434 115.2 23.1356 112.422 23.1356ZM127.753 26.3065V19.7031C127.753 15.4534 130.042 13.7535 133.605 13.7535V9.79797C130.14 9.79797 128.374 11.694 127.753 13.3285V10.1249H124.125V26.3065H127.753ZM143.118 26.6334C145.308 26.6334 147.237 25.7835 148.512 24.2797V26.3065H152.14V10.1249H148.512V12.1844C147.237 10.6806 145.308 9.79797 143.118 9.79797C138.672 9.79797 135.632 13.5573 135.632 18.232C135.632 22.8741 138.672 26.6334 143.118 26.6334ZM144.033 23.1356C141.287 23.1356 139.326 21.0761 139.326 18.232C139.326 15.388 141.287 13.2958 144.033 13.2958C146.616 13.2958 148.512 15.388 148.512 18.232C148.512 21.1088 146.583 23.1356 144.033 23.1356Z" fill="#0F172A"/>
+      <rect x="52.7876" y="3.5874" width="0.683334" height="28.5292" fill="#E2E8F0"/>
+      <defs>
+        <linearGradient id="p0" x1="18.8455" y1="15.9076" x2="12.5252" y2="18.5424" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
+        <linearGradient id="p1" x1="26.8652" y1="23.5719" x2="27.7524" y2="16.7522" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
+        <linearGradient id="p2" x1="16.3401" y1="26.6997" x2="21.8393" y2="30.8946" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
+      </defs>
+    </svg>
+    <span class="chrome-tag">Design Studio · Propuesta</span>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="kicker">Ficha viva del cliente · upgrade visual</span>
+    <h1>La misma inteligencia,<br><b>servida como inteligencia</b></h1>
+    <p class="lede">La ficha viva ya está en prod: números por SQL, la datita priorizada, el digest de notas. Esta propuesta no agrega capacidades — les da <b>presencia</b>. Dos diales: <b>Sobrio</b> (shippeable hoy, cero riesgo) y <b>Aurora</b> (la IA se nota). Elegí estado y dial, y compará.</p>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <h2>01 · La banda del turno, <b>estado por estado</b></h2>
+    <p class="sub">Los 5 estados reales de la datita (la prioridad que ya corre en prod). Ana Pérez es ficticia; los formatos de los números son los reales.</p>
+
+    <div class="controls">
+      <div class="control-group">
+        <span class="kicker">Estado de la datita</span>
+        <div class="state-cards" id="stateCards"></div>
+      </div>
+      <div class="control-group">
+        <span class="kicker">Dial de intensidad</span>
+        <div class="dial">
+          <button data-mode="sobrio" class="active">Sobrio</button>
+          <button data-mode="aurora">Aurora</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="stage mode-sobrio" id="stage">
+      <div>
+        <div class="stage-label">Detalle del turno · desktop</div>
+        <div class="drawer-mock">
+          <div class="drawer-head">
+            <div class="avatar">AP</div>
+            <div class="who">
+              <div class="name">Ana Pérez</div>
+              <div class="meta"><i>●</i> Confirmada · 15:00 hs · Habitual</div>
+            </div>
+            <button class="ver-perfil">Ver perfil</button>
+          </div>
+          <div class="contact-row"><span>11 5555-0134</span><span>ana.perez@gmail.com</span></div>
+          <div class="ficha" id="fichaDesktop"></div>
+        </div>
+      </div>
+      <div>
+        <div class="stage-label">Mobile · drawer full-screen</div>
+        <div class="phone">
+          <div class="screen">
+            <div class="notch"><i></i></div>
+            <div class="app">
+              <div class="drawer-head">
+                <div class="avatar">AP</div>
+                <div class="who"><div class="name">Ana Pérez</div><div class="meta"><i>●</i> Confirmada · 15:00</div></div>
+              </div>
+              <div class="ficha" id="fichaMobile"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <h2>02 · "Tu día" <b>con la misma voz</b></h2>
+    <p class="sub">El strip de la Agenda hereda el lenguaje: el punto vivo respira (Aurora) y las líneas que escribió la ficha llevan la marca ✦ — las que son puro dato, no.</p>
+    <div class="mode-sobrio" id="tudiaWrap">
+      <div class="tudia">
+        <div class="tudia-head">
+          <span class="dot"></span>
+          <span class="k">Tu día <span>· jueves 27</span></span>
+          <span class="count">6 turnos</span>
+          <span class="x">✕</span>
+        </div>
+        <ul>
+          <li><span class="hora">10:00</span><div class="quien"><div class="n">Sofía M.</div><div class="l ai">Primera visita · llegó por Instagram</div></div></li>
+          <li><span class="hora">11:30</span><div class="quien"><div class="n">Valentina R.</div><div class="l ai">12ª visita · viene cada ~2 semanas</div></div></li>
+          <li><span class="hora">15:00</span><div class="quien"><div class="n">Ana Pérez</div><div class="l ai">4ª visita · vuelve tras 8 semanas</div></div></li>
+          <li><span class="hora">16:30</span><div class="quien"><div class="n">Caro D.</div><div class="l">2ª visita</div></div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <h2>03 · Anatomía del <b>lenguaje de inteligencia</b></h2>
+    <p class="sub">Cuatro tratamientos, todos CSS puro sobre tokens Frost. Cada uno se puede adoptar por separado.</p>
+    <div class="anatomy">
+      <div class="a-card">
+        <div class="demo"><span style="position:relative;padding:8px 22px;border-radius:10px;background:#fff;border:1px solid transparent;background-image:linear-gradient(#fff,#fff),conic-gradient(#0072FB,#7C3AED,#FF4658,#0072FB);background-origin:border-box;background-clip:padding-box,border-box;font-weight:500;color:var(--frost-ink)">la datita</span></div>
+        <h3>Aurora hairline</h3>
+        <p>Borde gradiente cónico de 1px girando a 9s — el gesto universal de "esto lo pensó una IA", en susurro. Solo en la datita, nunca en toda la card.</p>
+        <code>conic-gradient + @property</code>
+      </div>
+      <div class="a-card">
+        <div class="demo"><span style="color:var(--frost-primary);font-size:20px">✦</span></div>
+        <h3>Sparkle ✦</h3>
+        <p>Un solo glyph, titilando suave cada 3 segundos en Aurora, estático en Sobrio. Marca lo generado; lo determinístico va sin marca.</p>
+        <code>opacity + scale keyframes</code>
+      </div>
+      <div class="a-card">
+        <div class="demo"><span style="font-weight:500;background:linear-gradient(100deg,#0F172A 40%,#0072FB);-webkit-background-clip:text;background-clip:text;color:transparent">$127.000</span></div>
+        <h3>Tinta con gradiente</h3>
+        <p>Los números de los stats terminan en azul brand — leen como "calculados", no tipeados. Sutileza: el 55% del recorrido sigue siendo ink.</p>
+        <code>background-clip: text</code>
+      </div>
+      <div class="a-card">
+        <div class="demo"><span style="font-weight:500;color:var(--frost-muted)">→ shimmer 1 vez</span></div>
+        <h3>Reveal al llegar</h3>
+        <p>Cuando la datita aparece, un barrido de luz único de 1,1s — "recién pensada". Nunca en loop, y respeta <code>prefers-reduced-motion</code>.</p>
+        <code>mask + translateX, 1 shot</code>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <h2>04 · Lo que <b>NO</b> hacemos</h2>
+    <p class="sub">El manifiesto anti-tacky. La inteligencia se insinúa; no se grita.</p>
+    <div class="no-list">
+      <div class="no-item"><b>✕ Typing effect</b><span>El texto no se "tipea solo": es un asistente profesional, no un chatbot de demo.</span></div>
+      <div class="no-item"><b>✕ Badge "AI-powered"</b><span>Nada de etiquetas "con IA ✨" — la ficha demuestra, no declara.</span></div>
+      <div class="no-item"><b>✕ Robots y cerebros</b><span>Cero iconografía de robot, chip o cerebro. El glyph es ✦ y nada más.</span></div>
+      <div class="no-item"><b>✕ Inventar con estilo</b><span>El tratamiento visual jamás decora un dato inventado: sin señal, la ficha calla — con o sin aurora.</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Ficha viva · propuesta visual — capacidades 100% ya en prod · clientes ficticios</span>
+    <span>Ágora · agosto 2026</span>
+  </div>
+</footer>
+
+<script>
+const STATES = {
+  vencido: {
+    label: 'Vencida', small: 'Señal',
+    stats: [['Visitas','4'],['Ritmo','~4 sem'],['Total','$81.600']],
+    tone: 'warning', kicker: 'Hace falta un empujón',
+    text: 'Hace 5 semanas que no viene, 3 más que su ritmo',
+    ctx: '<b>Última:</b> kapping · con Ludmila · 19 may · como siempre',
+    chips: [['neutral','Sin próximo turno']]
+  },
+  nota: {
+    label: 'Con notas', small: 'Digest IA',
+    stats: [['Visitas','14'],['Ritmo','~2 sem'],['Total','$367.000']],
+    tone: 'brand', kicker: 'Lo que sabés de Ana',
+    text: 'Prefiere turnos tarde · alergia amoníaco · tono más frío la última vez',
+    ctx: '<b>Última:</b> Balayage con Caro · 8 jul',
+    chips: [['neutral','Sin próximo turno']]
+  },
+  sin_proximo: {
+    label: 'Sin próximo', small: 'Señal',
+    stats: [['Visitas','12'],['Ritmo','~2 sem'],['Total','$244.400']],
+    tone: 'brand', kicker: 'Oportunidad',
+    text: 'Viene cada ~2 semanas y todavía no agendó la próxima',
+    ctx: '<b>Última:</b> Service de capping liso · con Milagros · 29 jun',
+    chips: []
+  },
+  cumple: {
+    label: 'Cumpleaños', small: 'Señal',
+    stats: [['Visitas','14'],['Total','$185.050']],
+    tone: 'brand', kicker: 'Fecha marcada',
+    text: 'Cumple años el 24 sep',
+    ctx: '<b>Última:</b> B. Corte semanal PREMIUM · con Caro · 17 jul · como siempre',
+    chips: [['neutral','Sin próximo turno']]
+  },
+  primera: {
+    label: 'Primera visita', small: 'Debut',
+    stats: [],
+    tone: 'brand', kicker: 'Primera impresión',
+    text: 'Primera visita · llegó por Instagram',
+    ctx: null,
+    chips: []
+  }
+};
+
+function fichaHTML(s) {
+  const stats = s.stats.length
+    ? `<div class="stats">${s.stats.map(([l,v]) => `<div class="stat"><span class="lbl">${l}</span><div class="val">${v}</div></div>`).join('')}</div>`
+    : '';
+  const chips = s.chips.length
+    ? `<div class="chips">${s.chips.map(([t,l]) => `<span class="chip ${t}">${l}</span>`).join('')}</div>`
+    : '';
+  return `${stats}
+    <div class="datita-shell"><div class="datita tone-${s.tone}">
+      <span class="spark">✦</span>
+      <span class="txt"><span class="k">${s.kicker}</span><span class="t">${s.text}</span></span>
+    </div></div>
+    ${s.ctx ? `<div class="contexto">${s.ctx}</div>` : ''}
+    ${chips}`;
+}
+
+let state = 'nota', mode = 'sobrio';
+const cardsEl = document.getElementById('stateCards');
+Object.entries(STATES).forEach(([key, s]) => {
+  const b = document.createElement('button');
+  b.className = 'state-card' + (key === state ? ' active' : '');
+  b.innerHTML = `<small>${s.small}</small>${s.label}`;
+  b.onclick = () => { state = key; render(); };
+  b.dataset.key = key;
+  cardsEl.appendChild(b);
+});
+document.querySelectorAll('.dial button').forEach((b) => {
+  b.onclick = () => { mode = b.dataset.mode; render(); };
+});
+
+function render() {
+  const s = STATES[state];
+  document.querySelectorAll('.state-card').forEach((b) => b.classList.toggle('active', b.dataset.key === state));
+  document.querySelectorAll('.dial button').forEach((b) => b.classList.toggle('active', b.dataset.mode === mode));
+  const stage = document.getElementById('stage');
+  stage.className = 'stage mode-' + mode;
+  document.getElementById('tudiaWrap').className = 'mode-' + mode;
+  document.getElementById('fichaDesktop').innerHTML = fichaHTML(s);
+  document.getElementById('fichaMobile').innerHTML = fichaHTML(s);
+}
+render();
+
+const params = new URLSearchParams(location.search);
+if (params.get('estado') && STATES[params.get('estado')]) { state = params.get('estado'); }
+if (['sobrio','aurora'].includes(params.get('dial'))) { mode = params.get('dial'); }
+render();
+</script>
+</body>
+</html>

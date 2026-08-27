@@ -1,13 +1,23 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
   "version": 1,
-  "updated_at": "2026-08-26",
+  "updated_at": "2026-08-27",
   "outputs": [
+    {
+      "type": "proposal",
+      "typeLabel": "Proposal",
+      "title": "Ficha viva · inteligencia servida",
+      "description": "Upgrade visual AI-feel de la ficha viva en prod · dial Sobrio/Aurora · 5 estados de la datita",
+      "detail": "prototipo reactivo · banda + Tu día + anatomía",
+      "date": "AGO 2026",
+      "href": "./ficha-viva-ai-2026-08/index.html",
+      "slug": "ficha-viva-ai-2026-08"
+    },
     {
       "type": "prototype",
       "typeLabel": "Prototype",
       "title": "Finanzas · prototipo funcional",
-      "description": "El módulo de Finanzas de punta a punta: resumen, ventas, ventas por cobrar, cobros, gastos, comisiones del equipo, resultado y gestión de caja, sobre un solo ledger para que ningún total contradiga a otro.",
+      "description": "El módulo de Finanzas de punta a punta: ventas, cobranzas, caja, gastos, comisiones y resultado, sobre un solo ledger para que ningún total contradiga a otro.",
       "detail": "8 secciones · prototipo navegable",
       "date": "AGO 2026",
       "href": "./finanzas-suite-2026-08/index.html",
