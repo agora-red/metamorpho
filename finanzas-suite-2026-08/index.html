@@ -49,9 +49,8 @@
         --f-warning-text: #B45309;
 
         --f-r-chip: 999px; --f-r-item: 10px; --f-r-button: 12px; --f-r-input: 12px;
-        /* PRUEBA (JP, 20/ago): superficies tipo card con esquinas rectas.
-           Valores originales de Frost: --f-r-card: 20px · --f-r-shell: 28px */
-        --f-r-card: 0px; --f-r-shell: 0px;
+        /* Frost recupera volumen sin perder precisión: el radio crece con la superficie. */
+        --f-r-card: 20px; --f-r-shell: 28px;
 
         --f-shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
         --f-shadow-sm: 0 4px 12px -4px rgba(15, 23, 42, 0.10);
@@ -809,6 +808,11 @@
       .tbl th.act { color: var(--f-brand-deep); }
       .tbl th.act .ar { opacity: 1; }
       .tbl td { padding: 13px 14px; border-bottom: 1px solid var(--f-hair); font-size: 13px; vertical-align: middle; color: var(--f-ink-soft); }
+      /* Medio y destino se escanean como una unidad. El wrapper de Mercado Pago ya trae
+         logo + texto; la celda fija su alineación para que no cambie la línea base frente
+         a texto plano ni se pegue a la columna contigua. */
+      .tbl td.paycell { min-width: 150px; padding-inline: 18px; }
+      .tbl td.paycell > span { display: inline-flex; align-items: center; min-height: 24px; line-height: 1.25; }
       .tbl tbody tr { transition: background 130ms var(--f-ease); }
       .tbl tbody tr.hoverable:hover { background: var(--f-brand-wash); cursor: pointer; }
       .tbl .r { text-align: right; font-variant-numeric: tabular-nums; }
@@ -1132,8 +1136,11 @@
         }
         .cstats .stat .k { grid-column: 1; grid-row: 1; font-size: 8.5px; letter-spacing: 0.10em; }
         .cstats .stat .s { grid-column: 1; grid-row: 2; margin-top: 3px; font-size: 11.5px; }
-        .cstats .stat .v { grid-column: 2; grid-row: 1 / span 2; margin: 0; font-size: 21px; text-align: right; }
+        .cstats .stat .v { grid-column: 2; grid-row: 1 / span 2; margin: 0; font-size: clamp(17px, 5vw, 21px); text-align: right; }
+        .cstats .statmark { display: none; }
         .cstats .dpwrap { margin-bottom: 8px; }
+        .commission-chart { display: none; }
+        .pcard .vv { font-size: clamp(15px, 4.4vw, 18px); white-space: nowrap; }
         .dhead { margin-bottom: 12px; }
         .split .legs { grid-template-columns: 1fr !important; }
         .card { padding: 18px; }
@@ -1148,6 +1155,321 @@
         .sheet .sb { flex: 1; overflow-y: auto; }
         .sheet .sf { padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--f-hair); }
         .sheet .sf .btn { height: 48px; }
+      }
+
+      /* ==========================================================================
+         FINANZAS · VISUAL PASS 2026-08
+         La estructura y el contenido se conservan. Esta capa recupera la jerarquía
+         Frost, vuelve comparables los gráficos y concentra el énfasis en el neto.
+         ========================================================================== */
+      ::selection { background: var(--f-brand); color: #fff; }
+      * { scrollbar-color: var(--f-hair-stronger) transparent; scrollbar-width: thin; }
+      *::-webkit-scrollbar { width: 10px; height: 10px; }
+      *::-webkit-scrollbar-thumb { background: var(--f-hair-stronger); border: 3px solid transparent; border-radius: 999px; background-clip: padding-box; }
+      input, textarea { caret-color: var(--f-brand); }
+
+      body { background: #F3F6FB; }
+      .app { min-height: 100vh; }
+      main { position: relative; }
+      .wrap { max-width: 1380px; padding: 0 42px; }
+
+      .rail { width: 252px; flex-basis: 252px; background: rgba(255,255,255,.97); }
+      .railin { padding: 24px 14px 30px; }
+      .rail .brand { padding: 2px 12px 24px; }
+      .rail .brand img { height: 22px; }
+      .rail a { min-height: 42px; padding: 10px 12px; }
+      .rail a.on {
+        background: var(--f-card); color: var(--f-brand-deep);
+        box-shadow: inset 0 0 0 1px rgba(0,114,251,.12), var(--f-shadow-xs);
+      }
+      .rail .kids { margin-left: 20px; padding-left: 8px; }
+      .rail .kids a.on { background: var(--f-brand-wash); box-shadow: none; }
+
+      .mhead { padding: 34px 0 22px; }
+      .frost-kicker { display: none; }
+      .frost-h1 { font-size: clamp(34px, 3vw, 48px); line-height: 1.02; letter-spacing: -.035em; }
+      .mhead .acts .btn { min-width: 46px; }
+      .btn { border-color: var(--f-hair-strong); box-shadow: var(--f-shadow-xs); }
+      .btn:hover { transform: translateY(-1px); border-color: var(--f-hair-stronger); }
+      .btn.pri:hover { box-shadow: 0 14px 28px -16px rgba(0,92,212,.72); }
+      .dpbar { border-color: var(--f-hair-strong); box-shadow: 0 8px 24px -20px rgba(15,23,42,.30); }
+
+      .card {
+        border-color: rgba(15,23,42,.08);
+        box-shadow: 0 18px 42px -34px rgba(15,23,42,.42), 0 1px 2px rgba(15,23,42,.03);
+      }
+      .card.clickable:hover { transform: translateY(-3px); border-color: rgba(0,114,251,.20); box-shadow: 0 24px 48px -32px rgba(15,23,42,.38); }
+      .card > h3, .sec > h3 { font-size: 17px; line-height: 1.25; }
+      .sec { margin-bottom: 30px; }
+
+      /* KPIs generales: semántica visible y ritmo editorial. El Resumen toma este
+         vocabulario y lo recompone abajo como una sola lectura financiera. */
+      .stat { min-height: 146px; overflow: hidden; }
+      button.stat { width: 100%; text-align: left; color: inherit; font-family: inherit; }
+      .statmark {
+        position: absolute; top: 14px; right: 14px; width: 34px; height: 34px;
+        border-radius: 11px; display: grid; place-items: center;
+      }
+      .statmark svg { width: 17px; height: 17px; }
+      .statrow { grid-template-columns: 1.08fr 1.08fr .92fr .92fr 1.18fr; gap: 14px; }
+      .statrow .stat { min-height: 152px; padding: 20px 18px; }
+      .statrow .stat .k { max-width: calc(100% - 42px); font-size: 9px; letter-spacing: .13em; }
+      .statrow .stat .v { font-size: clamp(22px, 1.65vw, 29px); margin-top: 25px; }
+      .statrow .stat .s { line-height: 1.45; }
+      .statrow .stat:last-child { background: var(--f-ink); border-color: var(--f-ink); }
+      .statrow .stat:last-child .k { color: rgba(255,255,255,.68); }
+      .statrow .stat:last-child .v { color: #fff; }
+      .statrow .stat:last-child .s { color: rgba(255,255,255,.68); }
+      .statrow .stat:last-child .s b { color: #fff; }
+      .statrow .stat:last-child .statmark { background: rgba(255,255,255,.12) !important; color: #fff !important; }
+      .statrow .stat:last-child::after {
+        content: '→'; position: absolute; right: 18px; bottom: 15px;
+        color: rgba(255,255,255,.52); font-size: 18px;
+      }
+
+      /* Resumen: un cockpit, no cinco tarjetas hermanas. Los dos balances de contexto
+         viven en una columna tranquila; los tres flujos forman la ecuación del período. */
+      body.is-summary .fbar { justify-content: flex-end; }
+      body.is-summary .fbar .dpwrap { flex: 0 1 540px; }
+      .summary-cockpit {
+        position: relative; isolation: isolate; overflow: hidden;
+        grid-template-columns: minmax(170px,.76fr) minmax(205px,1fr) minmax(190px,.92fr) minmax(245px,1.2fr);
+        grid-template-rows: repeat(2, minmax(126px,1fr));
+        grid-template-areas: 'ventas cobrado gastos neto' 'cobrar cobrado gastos neto';
+        gap: 12px 36px; padding: 18px;
+        border: 1px solid rgba(255,255,255,.08); border-radius: var(--f-r-shell);
+        background:
+          radial-gradient(circle at 78% 18%, rgba(0,114,251,.20), transparent 31%),
+          radial-gradient(circle at 17% 92%, rgba(16,185,129,.10), transparent 28%),
+          #0B1427;
+        box-shadow: 0 34px 72px -42px rgba(5,13,30,.78), 0 1px 2px rgba(15,23,42,.18);
+      }
+      .summary-cockpit::before {
+        content: ''; position: absolute; z-index: -1; inset: 0; opacity: .34; pointer-events: none;
+        background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px);
+        background-size: 100% 25%; mask-image: linear-gradient(to right, transparent, #000 28%, #000);
+      }
+      .summary-cockpit .stat {
+        z-index: 1; min-width: 0; min-height: 0; overflow: visible; margin: 0;
+        color: #fff; border-color: rgba(255,255,255,.09);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,.035), 0 18px 34px -28px rgba(0,0,0,.88);
+      }
+      .summary-cockpit .stat:nth-child(1) { grid-area: ventas; }
+      .summary-cockpit .stat:nth-child(2) { grid-area: cobrado; }
+      .summary-cockpit .stat:nth-child(3) { grid-area: cobrar; }
+      .summary-cockpit .stat:nth-child(4) { grid-area: gastos; }
+      .summary-cockpit .stat:nth-child(5) { grid-area: neto; }
+      .summary-cockpit .stat:nth-child(1),
+      .summary-cockpit .stat:nth-child(3) {
+        display: flex; flex-direction: column; justify-content: center; padding: 18px 16px;
+        background: transparent; border: 0; border-radius: 0; box-shadow: none;
+      }
+      .summary-cockpit .stat:nth-child(1) { border-bottom: 1px solid rgba(255,255,255,.10); }
+      .summary-cockpit .stat:nth-child(2),
+      .summary-cockpit .stat:nth-child(4),
+      .summary-cockpit .stat:nth-child(5) {
+        display: flex; flex-direction: column; justify-content: flex-end; padding: 24px 20px;
+        background: rgba(255,255,255,.055); backdrop-filter: blur(14px);
+      }
+      .summary-cockpit .stat:nth-child(5) {
+        background: #fff; color: var(--f-ink); border-color: #fff;
+        box-shadow: 0 24px 48px -28px rgba(0,114,251,.72), inset 0 0 0 1px rgba(255,255,255,.7);
+      }
+      .summary-cockpit .stat .k { color: rgba(255,255,255,.62); }
+      .summary-cockpit .stat .s { color: rgba(226,232,240,.72); }
+      .summary-cockpit .stat .s b { color: #fff; }
+      .summary-cockpit .stat .v {
+        color: #fff; font-size: clamp(27px,2vw,36px); margin: 16px 0 6px;
+        letter-spacing: -.045em;
+      }
+      .summary-cockpit .stat:nth-child(1) .v,
+      .summary-cockpit .stat:nth-child(3) .v { font-size: clamp(21px,1.55vw,27px); margin: 10px 0 3px; }
+      .summary-cockpit .stat:nth-child(5) .k,
+      .summary-cockpit .stat:nth-child(5) .s { color: var(--f-ink-mid); }
+      .summary-cockpit .stat:nth-child(5) .s b { color: var(--f-ink); }
+      .summary-cockpit .stat:nth-child(5) .v { color: var(--f-ink); font-size: clamp(34px,2.7vw,46px); }
+      .summary-cockpit .stat:nth-child(5) .statmark { background: var(--f-brand-wash-strong) !important; color: var(--f-brand-deep) !important; }
+      .summary-cockpit .stat:nth-child(5)::after { display: none; }
+      .summary-cockpit .stat:nth-child(1) .statmark,
+      .summary-cockpit .stat:nth-child(3) .statmark {
+        display: none;
+      }
+      .summary-cockpit .stat:nth-child(2)::after,
+      .summary-cockpit .stat:nth-child(4)::after {
+        content: ''; position: absolute; z-index: 3; top: 50%; right: -27px;
+        width: 18px; height: 2px; border-radius: 2px; background: rgba(255,255,255,.48);
+      }
+      .summary-cockpit .stat:nth-child(4)::after { box-shadow: 0 7px 0 rgba(255,255,255,.48); transform: translateY(-3.5px); }
+      .summary-cockpit .stat.clickable:hover {
+        transform: translateY(-3px); border-color: rgba(255,255,255,.19);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,.07), 0 25px 38px -28px rgba(0,0,0,.95);
+      }
+      .summary-cockpit .stat:nth-child(1):hover,
+      .summary-cockpit .stat:nth-child(3):hover { transform: translateX(3px); background: rgba(255,255,255,.035); }
+      .summary-cockpit .stat:nth-child(5):hover { border-color: #fff; box-shadow: 0 30px 56px -28px rgba(0,114,251,.88); }
+
+      /* El reparto deja de usar dos mitades intercambiables: cada lectura recibe el ancho
+         que necesita según densidad y capacidad de decisión. */
+      .summary-primary { grid-template-columns: minmax(340px,.82fr) minmax(0,1.18fr); }
+      .summary-secondary { grid-template-columns: minmax(0,1.28fr) minmax(320px,.72fr); }
+
+      /* Rank bars: la barra segmentada muestra participación; cada fila se normaliza
+         contra el líder para que las diferencias sean comparables de verdad. */
+      .propbar { height: 18px; gap: 4px; padding: 2px; margin-bottom: 20px; background: var(--f-paper); border-radius: 999px; }
+      .propbar span { min-width: 3px; }
+      .barsbox { min-height: 302px; }
+      .bars .row { grid-template-columns: minmax(0,1fr) 108px; gap: 20px; padding: 13px 11px; }
+      button.row { width: 100%; text-align: left; color: inherit; font: inherit; background: transparent; border: 0; border-bottom: 1px solid var(--f-hair); }
+      .bars .name { font-weight: 600; }
+      .bars .track { height: 9px; margin-top: 8px; background: #E7ECF3; }
+      .bars .fill { transform-origin: left center; }
+      .bars .val { font-size: 14px; }
+      .bars .val em { margin-top: 2px; }
+      @keyframes financeBarIn { from { transform: scaleX(.08); opacity: .55; } to { transform: scaleX(1); opacity: 1; } }
+
+      /* Resultado: una cascada espacial —entra, sale, queda— usando la misma aritmética. */
+      .result-hero { margin: 2px 0 30px; padding: 8px 0 2px; }
+      .result-hero .q { font-size: 14px; }
+      .result-hero .n { font-size: clamp(54px, 6vw, 84px); font-weight: 300; }
+      .result-hero .d { max-width: 54ch; padding-bottom: 8px; }
+      .result-card { padding: clamp(22px, 3vw, 34px); }
+      .result-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(260px, .8fr); gap: 34px; align-items: stretch; }
+      .waterfall {
+        position: relative; display: grid; grid-template-columns: repeat(3, minmax(0,1fr));
+        gap: clamp(14px, 3vw, 34px); min-height: 320px; padding: 42px 16px 50px;
+        border-bottom: 1px solid var(--f-hair-strong);
+      }
+      .waterfall::before, .waterfall::after {
+        content: ''; position: absolute; left: 16px; right: 16px; border-top: 1px dashed var(--f-hair-strong);
+      }
+      .waterfall::before { top: 33%; }
+      .waterfall::after { top: 63%; }
+      .wfcol { position: relative; min-width: 0; }
+      .wfbar {
+        position: absolute; left: 8%; right: 8%; bottom: var(--bottom); height: var(--height);
+        min-height: 4px; border-radius: 12px 12px 4px 4px;
+        box-shadow: inset 0 0 0 1px rgba(255,255,255,.18), 0 14px 24px -18px currentColor;
+        transform-origin: bottom center; animation: waterfallIn 720ms var(--f-ease) both;
+      }
+      .wfcol.in .wfbar { background: var(--f-brand); color: var(--f-brand); }
+      .wfcol.out .wfbar { background: var(--f-coral); color: var(--f-coral); border-radius: 4px 4px 12px 12px; }
+      .wfcol.net .wfbar { background: var(--f-success); color: var(--f-success); }
+      .wfcol.net.negative .wfbar { background: var(--f-coral); color: var(--f-coral); }
+      .wfvalue { position: absolute; left: 0; right: 0; bottom: calc(var(--bottom) + var(--height) + 10px); text-align: center; font-size: clamp(14px, 1.4vw, 20px); font-weight: 700; letter-spacing: -.025em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+      .wflabel { position: absolute; left: -6px; right: -6px; bottom: -36px; text-align: center; font-size: 11px; font-weight: 700; color: var(--f-ink-mid); }
+      @keyframes waterfallIn { from { transform: scaleY(.08); opacity: .55; } to { transform: scaleY(1); opacity: 1; } }
+      .result-grid .cascade { align-self: center; padding: 8px 0; }
+      .result-grid .cascade .r { padding: 12px 0; }
+      .result-grid .cascade .r.total { margin-top: 10px; padding-top: 18px; }
+      .result-grid .cascade .r.total .amt { font-size: 28px; }
+
+      /* Tablas y caja: lectura operativa más nítida sin convertirlas en decoración. */
+      .tcard { overflow: hidden; }
+      .tcard .tbl thead th { background: rgba(255,255,255,.96); backdrop-filter: blur(10px); }
+      .tbl td { padding-top: 14px; padding-bottom: 14px; }
+      .tbl tbody tr.hoverable:hover { background: rgba(0,114,251,.055); }
+      .arq { grid-template-columns: minmax(0,1fr) 350px; gap: 22px; }
+      .arq > div { min-width: 0; }
+      .arq > div:first-child { display: grid; grid-template-columns: minmax(0,1fr); gap: 20px; }
+      .arq > div:first-child > .card { margin-bottom: 0 !important; }
+      .arq .card > h3 { font-size: 19px; }
+      .contado .cwrap { background: var(--f-card); border-color: var(--f-hair-strong); box-shadow: inset 0 0 0 1px rgba(15,23,42,.015); }
+      .contado input { font-size: 42px; }
+      .verdict { padding: 24px 18px; }
+      .verdict .v { font-size: 42px; font-weight: 300; }
+
+      /* Cambio de vista: mejora progresiva. Sin View Transitions la navegación sigue
+         siendo inmediata; con soporte, el shell permanece estable y cambia solo el main. */
+      @supports (view-transition-name: none) {
+        html[data-route-transition] main { view-transition-name: finance-main; }
+        ::view-transition-group(finance-main) { animation-duration: 460ms; animation-timing-function: var(--f-ease); }
+        ::view-transition-old(finance-main) { animation: financeViewOut 180ms ease-in both; }
+        ::view-transition-new(finance-main) { animation: financeViewIn 460ms var(--f-ease) both; }
+      }
+      @keyframes financeViewOut {
+        to { opacity: 0; filter: blur(5px); clip-path: inset(0 0 8% 0 round 0 0 28px 28px); }
+      }
+      @keyframes financeViewIn {
+        from { opacity: 0; filter: blur(10px); clip-path: inset(7% 0 0 0 round 28px 28px 0 0); }
+        to { opacity: 1; filter: blur(0); clip-path: inset(0 round 0); }
+      }
+
+      @media (max-width: 1180px) {
+        .wrap { padding: 0 30px; }
+        .statrow:not(.summary-cockpit) { grid-template-columns: repeat(3, minmax(0,1fr)); }
+        .summary-cockpit {
+          grid-template-columns: minmax(155px,.7fr) minmax(190px,1fr) minmax(180px,.9fr) minmax(225px,1.15fr);
+          column-gap: 28px;
+        }
+        .result-grid { grid-template-columns: 1fr; }
+        .result-grid .cascade { display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; }
+        .result-grid .cascade .r.total { grid-column: 1 / -1; }
+        .arq { grid-template-columns: minmax(0,1fr); }
+      }
+      @media (max-width: 1100px) {
+        .wrap { padding: 0 22px; }
+        .mhead { padding-top: 24px; }
+      }
+      @media (max-width: 1340px) {
+        .summary-cockpit {
+          grid-template-columns: repeat(2,minmax(0,1fr));
+          grid-template-rows: auto minmax(172px,auto) minmax(178px,auto);
+          grid-template-areas: 'ventas cobrar' 'cobrado gastos' 'neto neto';
+          gap: 30px 18px;
+        }
+        .summary-cockpit .stat:nth-child(1) { border: 0; border-right: 1px solid rgba(255,255,255,.10); }
+        .summary-cockpit .stat:nth-child(2)::after { right: -18px; }
+        .summary-cockpit .stat:nth-child(4)::after {
+          top: auto; right: calc(50% - 9px); bottom: -18px;
+          box-shadow: 0 7px 0 rgba(255,255,255,.48); transform: translateY(-3.5px);
+        }
+        .summary-primary, .summary-secondary { grid-template-columns: 1fr; }
+      }
+      @media (max-width: 760px) {
+        .wrap { padding: 0 18px; }
+        .frost-h1 { font-size: 31px; }
+        body.is-summary .fbar .dpwrap { flex: 1 1 auto; }
+        .statrow:not(.summary-cockpit) { grid-template-columns: 1fr; }
+        .stat { min-height: 0; }
+        .statrow:not(.summary-cockpit) .stat { min-height: 0; }
+        .statrow:not(.summary-cockpit) .statmark { display: none; }
+        .statrow:not(.summary-cockpit) .stat:last-child { background: none; border-color: var(--f-hair-strong); }
+        .statrow:not(.summary-cockpit) .stat:last-child .k { color: var(--f-ink-mid); }
+        .statrow:not(.summary-cockpit) .stat:last-child .v { color: var(--f-ink); }
+        .statrow:not(.summary-cockpit) .stat:last-child .s { color: var(--f-ink-mid); }
+        .statrow:not(.summary-cockpit) .stat:last-child::after { display: none; }
+        .summary-cockpit {
+          grid-template-columns: 1fr; grid-template-rows: auto;
+          grid-template-areas: 'ventas' 'cobrar' 'cobrado' 'gastos' 'neto';
+          gap: 28px; padding: 14px;
+        }
+        .summary-cockpit .stat:nth-child(1), .summary-cockpit .stat:nth-child(3) { min-height: 82px; padding: 14px 12px; }
+        .summary-cockpit .stat:nth-child(1) { border: 0; border-bottom: 1px solid rgba(255,255,255,.10); }
+        .summary-cockpit .stat:nth-child(2), .summary-cockpit .stat:nth-child(4) { min-height: 140px; }
+        .summary-cockpit .stat:nth-child(5) { min-height: 156px; background: #fff; border-color: #fff; }
+        .summary-cockpit .stat:nth-child(2)::after,
+        .summary-cockpit .stat:nth-child(4)::after {
+          top: auto; right: calc(50% - 9px); bottom: -17px; transform: none;
+        }
+        .summary-cockpit .stat:nth-child(4)::after { box-shadow: 0 7px 0 rgba(255,255,255,.48); transform: translateY(-3.5px); }
+        .summary-cockpit .statmark { display: grid; }
+        .summary-cockpit .stat:nth-child(1) .statmark,
+        .summary-cockpit .stat:nth-child(3) .statmark { display: none; }
+        .barsbox { min-height: 286px; }
+        .bars .row { grid-template-columns: minmax(0,1fr) 92px; gap: 12px; padding-left: 4px; padding-right: 4px; }
+        .result-hero .n { font-size: clamp(44px, 14vw, 64px); }
+        .result-card { padding: 20px 18px; }
+        .waterfall { min-height: 260px; gap: 12px; padding-left: 2px; padding-right: 2px; }
+        .waterfall::before, .waterfall::after { left: 2px; right: 2px; }
+        .wfvalue { font-size: 12px; }
+        .wflabel { font-size: 10px; }
+        .result-grid { gap: 24px; }
+        .result-grid .cascade { display: flex; }
+        .arq .card > h3 { font-size: 17px; }
+        .tcard { margin-left: -18px; margin-right: -18px; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
       }
     </style>
   </head>
@@ -1425,6 +1747,18 @@
         CONTADO = null;
       }
 
+      // Ningún egreso en efectivo puede dejar un cajón físico por debajo de cero. El
+      // prototipo conserva el gasto y su fecha, pero usa la cuenta bancaria si la caja no
+      // alcanza; así el resultado no cambia y el historial de cierres sigue siendo posible.
+      function disponibleEnCaja(date) {
+        const day = MOVS.filter((m) => m.date === date);
+        const inn = day.filter((m) => m.dir === 'in' && m.method === 'ef' && m.st === 'ok')
+          .reduce((s, m) => s + m.amount, 0);
+        const out = day.filter((m) => m.dir === 'out' && m.account === 'caja')
+          .reduce((s, m) => s + m.amount, 0);
+        return OPENING + inn - out;
+      }
+
       function build() {
         let day = FROM;
         while (dDiff(day, TODAY) >= 0) {
@@ -1459,8 +1793,11 @@
           }
           // Devolución ocasional
           if (!closed && rnd() < 0.09) {
-            const m = wpick([['ef', 40], ['tr', 25], ['mp', 35]]);
-            MOVS.push({ id: ++_id, date: day, time: `${String(rint(11, 19)).padStart(2, '0')}:${String(rint(0, 59)).padStart(2, '0')}`, dir: 'out', amount: round100(12000 + rnd() * 55000), method: m, asset: 'refund', concept: 'Devolución a clienta', client: pick(CLIENTS), staff: null, st: 'refund', account: METHODS[m].account, cat: SIN_CAT, src: 'local' });
+            let m = wpick([['ef', 40], ['tr', 25], ['mp', 35]]);
+            const time = `${String(rint(11, 19)).padStart(2, '0')}:${String(rint(0, 59)).padStart(2, '0')}`;
+            const amount = round100(12000 + rnd() * 55000);
+            if (m === 'ef' && amount > disponibleEnCaja(day)) m = 'tr';
+            MOVS.push({ id: ++_id, date: day, time, dir: 'out', amount, method: m, asset: 'refund', concept: 'Devolución a clienta', client: pick(CLIENTS), staff: null, st: 'refund', account: METHODS[m].account, cat: SIN_CAT, src: 'local' });
           }
           // Gastos
           const dn = parse(day).getDate();
@@ -1473,8 +1810,11 @@
           for (let i = 0; i < ng; i++) {
             const c = wpick([['insumos', 34], ['reventa', 14], ['marketing', 12], ['mantenimiento', 10],
               ['equipos', 9], ['otros', 12], ['servicios', 5], ['impuestos', 4]]);
-            const acc = wpick([['caja', 55], ['banco', 32], ['mp', 13]]);
-            MOVS.push({ id: ++_id, date: day, time: `${String(rint(9, 19)).padStart(2, '0')}:${String(rint(0, 59)).padStart(2, '0')}`, dir: 'out', amount: round100(9000 + rnd() * 160000), method: acc === 'caja' ? 'ef' : acc === 'mp' ? 'mp' : 'tr', asset: 'gasto', concept: pick(ECONCEPT[c]), client: null, staff: null, st: 'ok', account: acc, cat: SIN_CAT, src: 'local' });
+            let acc = wpick([['caja', 55], ['banco', 32], ['mp', 13]]);
+            const time = `${String(rint(9, 19)).padStart(2, '0')}:${String(rint(0, 59)).padStart(2, '0')}`;
+            const amount = round100(9000 + rnd() * 160000);
+            if (acc === 'caja' && amount > disponibleEnCaja(day)) acc = 'banco';
+            MOVS.push({ id: ++_id, date: day, time, dir: 'out', amount, method: acc === 'caja' ? 'ef' : acc === 'mp' ? 'mp' : 'tr', asset: 'gasto', concept: pick(ECONCEPT[c]), client: null, staff: null, st: 'ok', account: acc, cat: SIN_CAT, src: 'local' });
           }
           day = addD(day, 1);
         }
@@ -1493,12 +1833,13 @@
             const monto = Math.round(MOVS.filter((m) => m.staff === st && m.date >= desde && m.date <= hasta)
               .reduce((s2, m) => s2 + comisionDe(m), 0));
             if (monto <= 0) return;
+            const pagaEnCaja = i % 3 === 0 && monto <= disponibleEnCaja(lun);
             MOVS.push({
               id: ++_id, date: lun, time: '10:' + String(10 + i * 3).padStart(2, '0'), dir: 'out',
-              amount: monto, method: i % 3 === 0 ? 'ef' : 'tr', asset: 'gasto',
+              amount: monto, method: pagaEnCaja ? 'ef' : 'tr', asset: 'gasto',
               concept: `Comisiones de ${st} · semana del ${fD(desde)}`,
               client: null, staff: null, staffPay: st, periodo: `${fD(desde)} — ${fD(hasta)}`, st: 'ok',
-              account: i % 3 === 0 ? 'caja' : 'banco', cat: 'sueldos', src: 'local',
+              account: pagaEnCaja ? 'caja' : 'banco', cat: 'sueldos', src: 'local',
             });
           });
           lun = addD(lun, 7);
@@ -1585,7 +1926,7 @@
         custom: { label: 'Personalizado', from: addD(TODAY, -29), to: TODAY },
       };
       const PRESETS = ['hoy', 'ayer', 'd7', 'd30', 'semana', 'semanaAnt', 'mes', 'jul'];
-      const S = { container: 'finanzas', tab: 'resumen', range: 'd30', persona: 'venue', staff: 'all', dist: 'cobrado', sub: {}, cobPage: 1, cobQ: '', comF: { q: '', tipo: 'all', concepto: 'all' }, movF: { q: '', method: 'all', asset: 'all', concepto: 'all' }, movSort: { k: 'date', dir: -1 }, movPage: 1, cobF: { q: '', origin: 'all', concepto: 'all' }, cobConcepto: 'all', gasConcepto: 'all', open: null };
+      const S = { container: 'finanzas', tab: 'resumen', range: 'd30', persona: 'venue', staff: 'all', dist: 'cobrado', sub: {}, cobPage: 1, cobQ: '', cobMethod: 'all', comF: { q: '', tipo: 'all', concepto: 'all' }, movF: { q: '', method: 'all', asset: 'all', concepto: 'all' }, movSort: { k: 'date', dir: -1 }, movPage: 1, cobF: { q: '', origin: 'all', concepto: 'all' }, cobConcepto: 'all', gasConcepto: 'all', open: null };
 
       const inRange = (m, r) => m.date >= r.from && m.date <= r.to;
       // Los filtros de medio, tipo de venta, profesional y origen son multi-select: el valor es
@@ -1593,7 +1934,11 @@
       const inSel = (sel, v) => sel === 'all' || (Array.isArray(sel) && sel.includes(v));
       function scope() {
         const r = RANGES[S.range];
-        return MOVS.filter((m) => inRange(m, r) && inSel(S.staff, m.staff));
+        // Resumen, Gastos y Resultado son vistas del negocio entero. Si alguien llega desde
+        // una tabla filtrada por profesional, ese filtro puede seguir en el estado pero no
+        // debe contaminar vistas que ni siquiera lo exponen.
+        const ignoraProfesional = ['resumen', 'gastos', 'resultado'].includes(S.tab);
+        return MOVS.filter((m) => inRange(m, r) && (ignoraProfesional || inSel(S.staff, m.staff)));
       }
       // Un movimiento existe solo si la plata se movió: en Ágora un pago está confirmado o
       // devuelto. Los estados que NO mueven plata (pendiente, no pagado, cancelado) no generan fila.
@@ -1712,13 +2057,14 @@
       ===================================================================== */
       const avatarFor = (name, hex) => `<div class="av" style="background:color-mix(in srgb, ${hex} 16%, #fff);color:color-mix(in srgb, ${hex} 78%, #0F172A)">${esc((name || '—').trim()[0] || '—')}</div>`;
       const iniciales = (n) => (n || '—').trim().split(/\s+/).slice(0, 2).map((w) => w[0]).join('').toUpperCase();
-      // Sin ícono (JP, 26/ago): el cuadradito de color no distinguía una tarjeta de otra —
-      // el rótulo ya lo hace — y comía el alto que las hacía altas de más en la columna
-      // lateral. `bg`/`fg`/`ic` siguen aceptándose para no tocar los ~14 llamadores.
+      // El ícono vuelve como clave semántica compacta —no como decoración— y toma los tonos
+      // que cada llamador ya definía para ingreso, alerta, gasto y resultado.
       function statTile(o) {
-        return `<div class="card tight stat noico clickable" ${o.go ? `onclick="${o.go}"` : ''}>
+        const tag = o.go ? 'button' : 'div';
+        return `<${tag} ${o.go ? 'type="button"' : ''} class="card tight stat noico ${o.go ? 'clickable' : ''}" ${o.go ? `onclick="${o.go}"` : ''}>
+          ${o.ic ? `<span class="statmark" aria-hidden="true" style="background:${o.bg};color:${o.fg}">${o.ic}</span>` : ''}
           <div class="k">${o.k}</div>
-          <div class="v">${o.v}</div><div class="s">${o.s}</div></div>`;
+          <div class="v"${o.metric ? ` data-metric="${esc(o.metric)}" data-money="${Number(o.raw) || 0}"` : ''}>${o.v}</div><div class="s">${o.s}</div></${tag}>`;
       }
 
 
@@ -1768,16 +2114,20 @@
 
       function barsList(rows, opts) {
         const tot = rows.reduce((s2, r) => s2 + r[1], 0) || 1;
+        const max = Math.max(1, ...rows.map((r) => r[1]));
         const colorOf = opts.colorOf || (() => 'var(--f-brand)');
         return `${opts.prop ? propBar(rows, opts.colorOf) : ''}<div class="barsbox"><div class="bars" onscroll="marcarScroll(this)">${rows.map((r) => {
           const color = colorOf(r[0]);
           const pct = (r[1] / tot) * 100;
-          return `<div class="row" onclick="${opts.go ? opts.go(r[0]) : ''}">
+          const rank = (r[1] / max) * 100;
+          const action = opts.go ? opts.go(r[0]) : '';
+          const tag = action ? 'button' : 'div';
+          return `<${tag} ${action ? 'type="button"' : ''} class="row" data-bar-key="${esc(String(r[0]))}" ${action ? `onclick="${action}"` : ''}>
             <div class="meter">
               <div class="name">${opts.dot ? `<i style="background:${color}"></i>` : ''}${esc(opts.labelOf ? opts.labelOf(r[0]) : r[0])}</div>
-              <div class="track"><div class="fill" style="width:${Math.max(1.5, pct)}%;background:${color}"></div></div>
+              <div class="track"><div class="fill" data-rank="${Math.max(1.5, rank)}" style="width:${Math.max(1.5, rank)}%;background:${color}"></div></div>
             </div>
-            <div class="val">${$$(r[1])}<em>${pc(r[1], tot)}%</em></div></div>`;
+            <div class="val">${$$(r[1])}<em>${pc(r[1], tot)}%</em></div></${tag}>`;
         }).join('')}</div><span class="fade"></span><span class="more"></span></div>`;
       }
 
@@ -2015,9 +2365,11 @@
         const r = anchor.getBoundingClientRect();
         box.style.width = w + 'px';
         box.style.left = Math.max(12, Math.min(window.innerWidth - w - 12, r.left)) + 'px';
-        const abajo = window.innerHeight - r.bottom;
-        const h = box.offsetHeight;
-        box.style.top = (abajo > h + 16 || r.top < h + 16 ? r.bottom + 6 : r.top - h - 6) + 'px';
+        // La dirección es parte de la afordancia: siempre baja desde la cabecera. Si el
+        // listado es largo, scrollea adentro en el espacio disponible en vez de saltar hacia
+        // arriba y quedar cortado por el borde del viewport.
+        box.style.top = (r.bottom + 6) + 'px';
+        box.style.maxHeight = Math.max(72, window.innerHeight - r.bottom - 18) + 'px';
       }
 
       function pintarColF() {
@@ -2074,7 +2426,7 @@
         if (DP) { DPMES = mesMas(RANGES[S.range].to.slice(0, 7), -1); DPINI = null; if (chico()) abrirPickerFull(); }
         render();
       }
-      function pickPreset(k) { S.range = k; S.movPage = 1; S.cobPage = 1; DP = false; render(); }
+      function pickPreset(k) { S.range = k; S.movPage = 1; S.cobPage = 1; DP = false; renderFinanceUpdate('period'); }
       function mesDP(n) {
         const [y, m] = DPMES.split('-').map(Number);
         const d = new Date(Date.UTC(y, m - 1 + n, 1));
@@ -2084,7 +2436,7 @@
       function pickDia(day) {
         if (!DPINI || day < DPINI) { DPINI = day; render(); return; }
         RANGES.custom = { label: 'Personalizado', from: DPINI, to: day };
-        S.range = 'custom'; S.movPage = 1; S.cobPage = 1; DPINI = null; DP = false; render();
+        S.range = 'custom'; S.movPage = 1; S.cobPage = 1; DPINI = null; DP = false; renderFinanceUpdate('period');
       }
 
       // Dos meses juntos: armar un rango que cruza el cambio de mes no debería obligar
@@ -2177,7 +2529,7 @@
         const preset = PRESETS.find((k) => RANGES[k].from === from && RANGES[k].to === to);
         if (preset) S.range = preset;
         else { RANGES.custom = { label: 'Personalizado', from, to }; S.range = 'custom'; }
-        S.movPage = 1; S.cobPage = 1; DP = false; render();
+        S.movPage = 1; S.cobPage = 1; DP = false; renderFinanceUpdate('period');
       }
 
       function pickerFull() {
@@ -2272,14 +2624,14 @@
         return `
 
 
-        <div class="grid g5 statrow sec">
-          ${statTile({ k: 'Ventas totales', v: $$(vendido), s: pendTot ? `<b>${$$(pendTot)}</b> todavía sin cobrar` : 'Todo cobrado', ic: ICO.bag, bg: '#eef0ff', fg: '#4338ca', go: `go('movimientos')` })}
-          ${statTile({ k: 'Cobrado', v: $$(bruto), s: `<b>${inc.length}</b> cobro${inc.length === 1 ? '' : 's'} en el período`, ic: ICO.down, bg: '#e8fbf5', fg: '#07806a', go: `go('cobros')` })}
-          ${statTile({ k: 'Por cobrar', v: $$(porCobrar), s: pcAntes
+        <div class="grid g5 statrow summary-cockpit sec" aria-label="Ventas totales y por cobrar como contexto. Cobrado menos gastos da el neto del período.">
+          ${statTile({ k: 'Ventas totales', v: $$(vendido), raw: vendido, metric: 'vendido', s: pendTot ? `<b>${$$(pendTot)}</b> todavía sin cobrar` : 'Todo cobrado', ic: ICO.bag, bg: '#eef0ff', fg: '#4338ca', go: `go('movimientos')` })}
+          ${statTile({ k: 'Cobrado', v: $$(bruto), raw: bruto, metric: 'cobrado', s: `<b>${inc.length}</b> cobro${inc.length === 1 ? '' : 's'} en el período`, ic: ICO.down, bg: '#e8fbf5', fg: '#07806a', go: `go('cobros')` })}
+          ${statTile({ k: 'Por cobrar', v: $$(porCobrar), raw: porCobrar, metric: 'por-cobrar', s: pcAntes
             ? `<b>${$$(pendTot)}</b> de este período`
             : `${abiertos.length} cobrable${abiertos.length === 1 ? '' : 's'} abierto${abiertos.length === 1 ? '' : 's'}`, ic: ICO.alert, bg: '#fff2f3', fg: '#b3162a', go: `go('cobranzas')` })}
-          ${statTile({ k: 'Gastos', v: $$(gast), s: `<b>${exp.length}</b> gasto${exp.length === 1 ? '' : 's'} registrado${exp.length === 1 ? '' : 's'}`, ic: ICO.up, bg: '#fff2f3', fg: '#b3162a', go: `go('gastos')` })}
-          ${statTile({ k: 'Neto del período', v: $$(neto), s: 'Cobrado menos gastos', ic: ICO.wallet, bg: '#eef6ff', fg: '#005cd4', go: `go('resultado')` })}
+          ${statTile({ k: 'Gastos', v: $$(gast), raw: gast, metric: 'gastos', s: `<b>${exp.length}</b> gasto${exp.length === 1 ? '' : 's'} registrado${exp.length === 1 ? '' : 's'}`, ic: ICO.up, bg: '#fff2f3', fg: '#b3162a', go: `go('gastos')` })}
+          ${statTile({ k: 'Neto del período', v: $$(neto), raw: neto, metric: 'neto', s: 'Cobrado menos gastos', ic: ICO.wallet, bg: '#eef6ff', fg: '#005cd4', go: `go('resultado')` })}
         </div>
 
         <div class="dhead">
@@ -2290,10 +2642,10 @@
           </div>
         </div>
 
-        <div class="grid g2 top sec">
+        <div class="grid g2 top sec summary-charts summary-primary">
           <div class="card">
             <h3>${dl} por medio</h3>
-            <p class="cap">${vend ? 'Con qué te paga la gente. Lo que todavía no entró no tiene medio: va en <b>Sin cobrar</b>.' : 'Con qué te paga la gente. Clickeá una fila para ver esos movimientos.'}</p>
+            <p class="cap">Qué medios de pago eligen tus clientes.</p>
             ${barsList(byMethod, { prop: true, colorOf: (k) => (METHODS[k] ? METHODS[k].color : 'var(--f-ink-whisper)'), labelOf: (k) => (METHODS[k] ? METHODS[k].label : 'Sin cobrar'), go: (k) => (METHODS[k] ? `goMov({method:['${k}']})` : `go('cobranzas')`) })}
           </div>
           <div class="card">
@@ -2303,7 +2655,7 @@
           </div>
         </div>
 
-        <div class="grid g2 top sec">
+        <div class="grid g2 top sec summary-charts summary-secondary">
           ${top.length ? `<div class="card">
             <h3>${dl} por concepto</h3>
             <p class="cap">${vend ? 'Todo lo vendido' : 'Solo lo cobrado'} del período por concepto.</p>
@@ -2362,10 +2714,6 @@
           </div>
         </div>
 
-        <div class="sec"><div class="note">
-          <b>Es una foto, no una agenda.</b> Muestra cuánto falta entrar y de quién, pero todavía no persigue el cobro:
-          sin recordatorios automáticos ni estados de seguimiento. Cuando te paguen, registrás el cobro y la fila se cierra.
-        </div></div>
 `;
       }
 
@@ -2381,9 +2729,8 @@
       }
 
       function rowRecv(r) {
-        const hue = r.paid > 0 ? '#0072FB' : '#475569';
         return `<tr class="hoverable" onclick="openRecv('${r.id}')">
-          <td class="nw" style="padding-left:18px"><div class="who">${avatarFor(r.client, hue)}<div class="t"><b>${esc(r.client)}</b><span class="mono">${r.phone}</span></div></div></td>
+          <td class="nw" style="padding-left:18px"><div class="who"><div class="t"><b>${esc(r.client)}</b><span class="mono">${r.phone}</span></div></div></td>
           <td><span class="chip mute">${ORIGIN_LABEL[r.origin]}</span></td>
           <td class="cw" style="font-weight:600">${esc(r.concept)}</td>
           ${S.persona === 'venue' ? `<td style="font-size:12.5px;color:${r.staff ? 'var(--f-ink)' : 'var(--f-ink-mid)'}">${r.staff || '—'}</td>` : ''}
@@ -2429,13 +2776,14 @@
         const shown = rows.slice(0, S.movPage * 25);
         const tin = sum(rows.filter((m) => m.dir === 'in' && m.st === 'ok'));
         const tout = sum(rows.filter((m) => m.dir === 'out'));
+        const ventas = rows.filter((m) => m.dir === 'in').length;
         const th = (k, l, cls) => `<th class="sortable ${cls || ''} ${S.movSort.k === k ? 'act' : ''}" onclick="sortMov('${k}')">${l} <span class="ar">${S.movSort.k === k ? (S.movSort.dir === 1 ? '↑' : '↓') : '↕'}</span></th>`;
 
         return `
         <div class="sec">
           <div class="hero">
             <span class="n">${$$(tin - tout)}</span>
-            <span class="d">en <b>${rows.length}</b> venta${rows.length === 1 ? '' : 's'}${tout ? ` · <b>${$$(tout)}</b> devueltos` : ''}</span>
+            <span class="d">en <b>${ventas}</b> venta${ventas === 1 ? '' : 's'}${tout ? ` · <b>${$$(tout)}</b> devueltos` : ''}</span>
           </div>
           <p class="lede">Cada venta cobrada, una por una — las que entran solas y las que registrás a mano.</p>
           <div class="card tcard">
@@ -2486,11 +2834,12 @@
 
           const q = S.cobQ.trim().toLowerCase();
           const ms = income(scope())
+            .filter((m) => inSel(S.cobMethod, m.method))
             .filter((m) => inSel(S.cobConcepto, m.concept))
             // Buscador solo por cliente: concepto y profesional tienen filtro propio.
             .filter((m) => !q || (m.client || '').toLowerCase().includes(q))
             .slice().sort((a, b) => (a.date === b.date ? b.id - a.id : a.date < b.date ? 1 : -1));
-          const refs = refunds(scope());
+          const refs = refunds(scope()).filter((m) => inSel(S.cobMethod, m.method));
           const shown = ms.slice(0, S.cobPage * 25);
           const venue = S.persona === 'venue';
           const cols = venue ? 9 : 8;
@@ -2505,7 +2854,7 @@
               <thead><tr>
                 <th class="nw" style="padding-left:18px">Fecha</th>${thF('cobConcepto', 'Concepto', 'cw')}${thS('buscarCob', Z().Cliente, 'nw')}${thF('asset', 'Tipo')}
                 ${venue ? thF('staff', 'Profesional') : ''}
-                <th>Medio</th><th>Entra a</th><th title="Automático: lo capturó Ágora. A mano: lo cargaste vos.">Cómo se registró</th>
+                ${thF('cobMethod', 'Medio')}<th>Entra a</th><th title="Automático: lo capturó Ágora. A mano: lo cargaste vos.">Cómo se registró</th>
                 <th class="r" style="padding-right:18px">Monto</th>
               </tr></thead>
               <tbody>${shown.map((m) => `<tr class="hoverable" onclick="openMov(${m.id})">
@@ -2514,8 +2863,8 @@
                 <td class="nw" style="font-size:12.5px;color:${m.client ? 'var(--f-ink)' : 'var(--f-ink-mid)'}">${m.client ? esc(m.client) : '—'}</td>
                 <td><span class="chip mute">${(ASSETS[m.asset] || { label: '—' }).label}</span></td>
                 ${venue ? `<td style="font-size:12.5px;color:${m.staff ? 'var(--f-ink)' : 'var(--f-ink-mid)'}">${m.staff || '—'}</td>` : ''}
-                <td style="font-size:12.5px">${METHODS[m.method] ? (m.method === 'mp' ? mpTag() : METHODS[m.method].label) : '—'}</td>
-                <td style="font-size:12.5px">${ACC[m.account] || '—'}</td>
+                <td class="paycell" style="font-size:12.5px">${METHODS[m.method] ? (m.method === 'mp' ? mpTag() : `<span>${METHODS[m.method].label}</span>`) : '—'}</td>
+                <td class="paycell" style="font-size:12.5px">${ACC[m.account] || '—'}</td>
                 <td><span class="chip ${m.src === 'online' || m.method === 'mp' ? 'ok' : 'mute'}">${m.src === 'online' || m.method === 'mp' ? 'Automático' : 'A mano'}</span></td>
                 <td class="r amt" style="padding-right:18px">${$$(m.amount)}</td></tr>`).join('') || `<tr><td colspan="${cols}"><div class="empty"><b>Sin cobros</b>No entró plata en este período.</div></td></tr>`}</tbody>
               ${shown.length ? `<tfoot><tr><td colspan="${cols - 1}" style="padding-left:18px">${shown.length < ms.length ? `${shown.length} de ${ms.length} cobros` : `${ms.length} cobro${ms.length === 1 ? '' : 's'}`}</td><td class="r">${$$(sum(shown))}</td></tr></tfoot>` : ''}
@@ -2550,7 +2899,7 @@
           <div class="card tcard pt">
             <div class="tblwrap"><table class="tbl">
               <thead><tr><th class="nw" style="padding-left:18px">Fecha</th>${thF('gasConcepto', 'Concepto', 'cw')}<th>Categoría</th><th class="nw">Sale de</th><th class="r" style="padding-right:18px">Monto</th></tr></thead>
-              <tbody>${ms.slice(0, 40).map((m) => `<tr class="hoverable" onclick="openMov(${m.id})">
+              <tbody>${ms.map((m) => `<tr class="hoverable" onclick="openMov(${m.id})">
                 <td style="padding-left:18px"><div style="font-weight:600">${fD(m.date)}</div><div class="mono" style="font-size:11px;color:var(--f-ink-mid)">${m.time}</div></td>
                 <td class="cw" style="font-weight:600">${esc(m.concept)}</td>
                 <td><span class="chip ${esAuto(m.cat) ? 'sys' : 'mute'}">${esAuto(m.cat) ? CAT_ICO.bolt : ''}${catLabel(m.cat)}</span></td>
@@ -2574,6 +2923,9 @@
         const otros = sum(exp.filter((m) => !m.staffPay));
         const egresos = comis + otros;
         const neto = cobrado - dev - egresos;
+        const totalSale = egresos + dev;
+        const escala = Math.max(1, cobrado, totalSale, Math.abs(neto));
+        const wf = (n) => `${Math.max(1.5, (Math.abs(n) / escala) * 100).toFixed(2)}%`;
         // `sub` cuelga la fila de la de arriba (guía en L + número chico y en tinta media).
         // Antes era solo una sangría en el label: los números quedaban con el mismo peso que
         // el de Egresos y las tres filas se leían como hermanas.
@@ -2583,16 +2935,29 @@
 
         const body = `
           <div class="sec" style="margin-bottom:24px">
-            <div class="card">
+            <div class="card result-card">
               <h3>Cómo se compone tu <strong>neto</strong></h3>
               <p class="cap">${RANGES[S.range].label} · ${fD(RANGES[S.range].from)} — ${fD(RANGES[S.range].to)}. Lo que entró menos lo que salió.</p>
-              <div class="cascade">
-                ${fila('Cobrado', cobrado)}
-                ${dev ? fila('Devoluciones', dev, { cls: 'neg', neg: true }) : ''}
-                ${fila('Egresos', egresos, { cls: 'neg', neg: true })}
-                ${fila('Gastos', otros, { sub: true, neg: true })}
-                ${fila('Comisiones liquidadas', comis, { sub: true, neg: true })}
-                <div class="r total"><span class="lbl">Neto del período</span><span class="amt">${neto < 0 ? '−' : ''}${$$(Math.abs(neto))}</span></div>
+              <div class="result-grid">
+                <div class="waterfall" role="img" aria-label="Cobrado menos egresos da el neto del período">
+                  <div class="wfcol in" style="--bottom:0%;--height:${wf(cobrado)}">
+                    <span class="wfvalue">${$$(cobrado)}</span><span class="wfbar"></span><span class="wflabel">Cobrado</span>
+                  </div>
+                  <div class="wfcol out" style="--bottom:${neto > 0 ? wf(neto) : '0%'};--height:${wf(totalSale)}">
+                    <span class="wfvalue">−${$$(totalSale)}</span><span class="wfbar"></span><span class="wflabel">Egresos</span>
+                  </div>
+                  <div class="wfcol net ${neto < 0 ? 'negative' : ''}" style="--bottom:0%;--height:${wf(neto)}">
+                    <span class="wfvalue">${neto < 0 ? '−' : ''}${$$(Math.abs(neto))}</span><span class="wfbar"></span><span class="wflabel">Neto del período</span>
+                  </div>
+                </div>
+                <div class="cascade">
+                  ${fila('Cobrado', cobrado)}
+                  ${dev ? fila('Devoluciones', dev, { cls: 'neg', neg: true }) : ''}
+                  ${fila('Egresos', egresos, { cls: 'neg', neg: true })}
+                  ${fila('Gastos', otros, { sub: true, neg: true })}
+                  ${fila('Comisiones liquidadas', comis, { sub: true, neg: true })}
+                  <div class="r total"><span class="lbl">Neto del período</span><span class="amt">${neto < 0 ? '−' : ''}${$$(Math.abs(neto))}</span></div>
+                </div>
               </div>
             </div>
           </div>
@@ -2600,10 +2965,10 @@
 `;
 
         return `<div class="sec">
-          <div class="hero">
+          <div class="hero result-hero">
             <span class="q">¿Cuál fue mi resultado en este período?</span>
             <span class="n ${neto < 0 ? 'neg' : ''}">${neto < 0 ? '−' : ''}${$$(Math.abs(neto))}</span>
-            <span class="d"><b>${$$(cobrado)}</b> cobrado − <b>${$$(egresos + dev)}</b> entre egresos y devoluciones</span>
+            <span class="d"><b>${$$(cobrado)}</b> cobrado − <b>${$$(totalSale)}</b> entre egresos y devoluciones</span>
           </div>
           <p class="lede"><b>Solo cuenta lo que efectivamente entró y salió</b> — no las ventas totales.</p>
           ${body}</div>`;
@@ -2804,7 +3169,7 @@
               </div>
             </div>
 
-            ${curva ? `<div class="sec"><div class="card">
+            ${curva ? `<div class="sec commission-chart"><div class="card">
               <h3>Comisiones <strong>pendientes de liquidar</strong></h3>
               <span class="cardnum">${$$(curva.saldo)}</span>
               ${curva.svg}
@@ -3618,6 +3983,11 @@
             o: Object.entries(METHODS).map(([k, m]) => [k, m.label]),
             set: (v) => { S.movF.method = v; S.movPage = 1; }, act: S.movF.method !== 'all',
           },
+          cobMethod: {
+            l: 'Medio', v: S.cobMethod, multi: true, allLabel: 'Todos',
+            o: Object.entries(METHODS).map(([k, m]) => [k, m.label]),
+            set: (v) => { S.cobMethod = v; S.cobPage = 1; }, act: S.cobMethod !== 'all',
+          },
           concepto: {
             l: 'Concepto', v: S.movF.concepto, multi: true, allLabel: 'Todos',
             o: conceptos,
@@ -3693,8 +4063,8 @@
           cols: ['staff', 'comTipo', 'comConcepto'],
         };
         if (S.tab === 'cobros') return {
-          f: ['rango', 'staff', 'asset', 'cobConcepto', 'buscarCob'],
-          cols: ['staff', 'asset', 'cobConcepto'],
+          f: ['rango', 'staff', 'asset', 'cobConcepto', 'cobMethod', 'buscarCob'],
+          cols: ['staff', 'asset', 'cobConcepto', 'cobMethod'],
           search: 'buscarCob',
         };
         // Un gasto del negocio no es de nadie en particular: filtrar por profesional acá
@@ -3786,9 +4156,10 @@
       }
       function limpiarFiltros() {
         S.range = 'd30'; S.staff = 'all'; S.open = null;
-        S.movF = { q: '', method: 'all', asset: 'all', concepto: 'all' }; S.cobQ = '';
+        S.movF = { q: '', method: 'all', asset: 'all', concepto: 'all' };
+        S.cobQ = ''; S.cobMethod = 'all'; S.cobConcepto = 'all'; S.gasConcepto = 'all';
         S.comF = { q: '', tipo: 'all', concepto: 'all' };
-        S.cobF = { q: '', origin: 'all' };
+        S.cobF = { q: '', origin: 'all', concepto: 'all' };
         S.movPage = 1; render();
       }
       function renderPanel() {
@@ -4003,16 +4374,46 @@
       }
 
       /* ---- Navegación / drill-down ---- */
-      function go(tab) { S.container = 'finanzas'; S.tab = tab; render(); window.scrollTo({ top: 0, behavior: 'instant' }); }
+      const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let ROUTE_TRANSITION = null;
+      function renderRoute(change) {
+        change();
+        const paint = () => { render(); window.scrollTo({ top: 0, behavior: 'instant' }); };
+        if (reduceMotion() || ROUTE_TRANSITION) { paint(); return; }
+        if (!document.startViewTransition) {
+          paint();
+          requestAnimationFrame(() => {
+            const main = document.querySelector('main');
+            if (main && main.animate) main.animate([
+              { opacity: .01, filter: 'blur(10px)', clipPath: 'inset(7% 0 0 0 round 28px 28px 0 0)' },
+              { opacity: 1, filter: 'blur(0)', clipPath: 'inset(0 round 0)' },
+            ], { duration: 460, easing: 'cubic-bezier(.22,1,.36,1)' });
+          });
+          return;
+        }
+        document.documentElement.dataset.routeTransition = 'on';
+        try {
+          ROUTE_TRANSITION = document.startViewTransition(paint);
+          ROUTE_TRANSITION.finished.catch(() => {}).finally(() => {
+            delete document.documentElement.dataset.routeTransition;
+            ROUTE_TRANSITION = null;
+          });
+        } catch (_) {
+          delete document.documentElement.dataset.routeTransition;
+          ROUTE_TRANSITION = null;
+          paint();
+        }
+      }
+      function go(tab) { renderRoute(() => { S.container = 'finanzas'; S.tab = tab; }); }
       const goTab = go;
-      function goCont(c) { S.container = c; render(); window.scrollTo({ top: 0, behavior: 'instant' }); }
+      function goCont(c) { renderRoute(() => { S.container = c; }); }
       function goMov(preset) {
         S.movF = Object.assign({ q: '', method: 'all', asset: 'all' }, preset);
         S.movPage = 1; go('movimientos');
       }
       function goMovStaff(k) { S.staff = [k]; goMov({}); }
       // Toggle de las 3 tablas de distribución del Resumen: todo lo vendido vs solo lo cobrado.
-      function setDist(v) { S.dist = v; render(); }
+      function setDist(v) { S.dist = v; renderFinanceUpdate('distribution'); }
       function sortMov(k) { if (S.movSort.k === k) S.movSort.dir *= -1; else S.movSort = { k, dir: k === 'amount' || k === 'date' ? -1 : 1 }; render(); }
 
       /* =====================================================================
@@ -4033,7 +4434,87 @@
 
       let _rz;
       window.addEventListener('resize', () => { clearTimeout(_rz); _rz = setTimeout(renderHead, 120); });
+
+      // Continuidad de datos: conserva las cifras y longitudes anteriores, repinta con el
+      // estado nuevo y las interpola. No depende de una API experimental y no bloquea inputs.
+      function financeSnapshot() {
+        const metrics = {};
+        document.querySelectorAll('.summary-cockpit [data-metric]').forEach((n) => { metrics[n.dataset.metric] = Number(n.dataset.money); });
+        const bars = {};
+        document.querySelectorAll('.summary-charts').forEach((group, gi) => {
+          group.querySelectorAll('.card').forEach((card, ci) => {
+            card.querySelectorAll('[data-bar-key]').forEach((row) => {
+              const fill = row.querySelector('.fill[data-rank]');
+              if (fill) bars[`${gi}:${ci}:${row.dataset.barKey}`] = Number(fill.dataset.rank);
+            });
+          });
+        });
+        return { metrics, bars };
+      }
+
+      function animateFinanceUpdate(previous, kind) {
+        if (reduceMotion()) return;
+        const cockpit = document.querySelector('.summary-cockpit');
+        if (cockpit) {
+          cockpit.animate([
+            { boxShadow: '0 34px 72px -42px rgba(5,13,30,.78), 0 1px 2px rgba(15,23,42,.18)', filter: 'brightness(1)' },
+            { offset: .34, boxShadow: '0 40px 86px -34px rgba(0,114,251,.52), 0 1px 2px rgba(15,23,42,.18)', filter: 'brightness(1.08)' },
+            { boxShadow: '0 34px 72px -42px rgba(5,13,30,.78), 0 1px 2px rgba(15,23,42,.18)', filter: 'brightness(1)' },
+          ], { duration: 760, easing: 'cubic-bezier(.22,1,.36,1)' });
+        }
+
+        document.querySelectorAll('.summary-cockpit [data-metric]').forEach((node) => {
+          const target = Number(node.dataset.money);
+          const start = previous.metrics[node.dataset.metric];
+          if (!Number.isFinite(start) || start === target) return;
+          const began = performance.now();
+          const duration = 720;
+          node.animate([
+            { filter: 'blur(4px)', transform: 'translateY(7px)' },
+            { filter: 'blur(0)', transform: 'translateY(0)' },
+          ], { duration, easing: 'cubic-bezier(.22,1,.36,1)' });
+          const tick = (now) => {
+            const t = Math.min(1, (now - began) / duration);
+            const eased = t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+            node.textContent = $$(start + (target - start) * eased);
+            if (t < 1) requestAnimationFrame(tick);
+            else node.textContent = $$(target);
+          };
+          requestAnimationFrame(tick);
+        });
+
+        document.querySelectorAll('.summary-charts').forEach((group, gi) => {
+          group.querySelectorAll('.card').forEach((card, ci) => {
+            card.querySelectorAll('[data-bar-key]').forEach((row) => {
+              const fill = row.querySelector('.fill[data-rank]');
+              if (!fill) return;
+              const target = Number(fill.dataset.rank);
+              const start = previous.bars[`${gi}:${ci}:${row.dataset.barKey}`];
+              const ratio = Number.isFinite(start) ? Math.max(.015, start / target) : .08;
+              fill.animate([
+                { transform: `scaleX(${ratio})`, filter: 'saturate(.7)' },
+                { transform: 'scaleX(1)', filter: 'saturate(1)' },
+              ], { duration: kind === 'distribution' ? 620 : 760, easing: 'cubic-bezier(.22,1,.36,1)', fill: 'both' });
+            });
+          });
+        });
+
+        const date = document.querySelector('.fbar .dpbar');
+        if (kind === 'period' && date) date.animate([
+          { borderColor: 'var(--f-brand)', boxShadow: '0 0 0 0 rgba(0,114,251,0)' },
+          { offset: .35, borderColor: 'var(--f-brand)', boxShadow: '0 0 0 5px rgba(0,114,251,.10)' },
+          { borderColor: 'var(--f-hair-strong)', boxShadow: '0 8px 24px -20px rgba(15,23,42,.30)' },
+        ], { duration: 700, easing: 'cubic-bezier(.22,1,.36,1)' });
+      }
+
+      function renderFinanceUpdate(kind) {
+        const previous = financeSnapshot();
+        render();
+        requestAnimationFrame(() => animateFinanceUpdate(previous, kind));
+      }
+
       function render() {
+        document.body.classList.toggle('is-summary', S.container === 'finanzas' && S.tab === 'resumen');
         renderRail();
         renderHead();
 
@@ -4099,7 +4580,7 @@
       /* ---- Header del container activo ---- */
       // Acciones por vista: exportar no aplica en Caja ni en Conceptos, y registrar
       // cobro/gasto no aplica en Resumen ni en Conceptos (decisión JP, 20/ago).
-      const BTN_EXPORT = `<button class="btn ghost" onclick="toast('Exportado: 1 archivo .csv con lo que estás viendo')">
+      const BTN_EXPORT = `<button class="btn ghost" aria-label="Exportar" onclick="toast('Exportado: 1 archivo .csv con lo que estás viendo')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M8 11l4 4 4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg><span>Exportar</span></button>`;
       const ic = (d) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
       const I_PLUS = ic('<path d="M12 5v14M5 12h14"/>');
