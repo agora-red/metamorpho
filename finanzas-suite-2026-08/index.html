@@ -1308,6 +1308,20 @@
       .summary-cockpit .stat:nth-child(3):hover { transform: translateX(3px); background: rgba(255,255,255,.035); }
       .summary-cockpit .stat:nth-child(5):hover { border-color: #fff; box-shadow: 0 30px 56px -28px rgba(0,114,251,.88); }
 
+      /* Sin el add-on no queda una ecuación incompleta: Ventas y Por cobrar siguen como
+         contexto, mientras Cobrado ocupa el lugar principal. No aparecen huecos, signos
+         huérfanos ni una tarjeta vacía fingiendo un resultado que el plan no incluye. */
+      .summary-cockpit.no-addon {
+        grid-template-columns: minmax(220px,.72fr) minmax(360px,1.28fr);
+        grid-template-rows: repeat(2,minmax(126px,1fr));
+        grid-template-areas: 'ventas cobrado' 'cobrar cobrado';
+        gap: 12px 34px;
+      }
+      .summary-cockpit.no-addon .stat:nth-child(2) { justify-content: center; padding: 30px; }
+      .summary-cockpit.no-addon .stat:nth-child(2) .v { font-size: clamp(38px,4vw,62px); }
+      .summary-cockpit.no-addon .stat:nth-child(2)::after,
+      .summary-cockpit.no-addon .stat:nth-child(3)::after { display: none; }
+
       /* El reparto deja de usar dos mitades intercambiables: cada lectura recibe el ancho
          que necesita según densidad y capacidad de decisión. */
       .summary-primary { grid-template-columns: minmax(340px,.82fr) minmax(0,1.18fr); }
@@ -1423,6 +1437,13 @@
           top: auto; right: calc(50% - 9px); bottom: -18px;
           box-shadow: 0 7px 0 rgba(255,255,255,.48); transform: translateY(-3.5px);
         }
+        .summary-cockpit.no-addon {
+          grid-template-columns: minmax(210px,.72fr) minmax(0,1.28fr);
+          grid-template-rows: repeat(2,minmax(132px,auto));
+          grid-template-areas: 'ventas cobrado' 'cobrar cobrado';
+          gap: 12px 24px;
+        }
+        .summary-cockpit.no-addon .stat:nth-child(1) { border: 0; border-bottom: 1px solid rgba(255,255,255,.10); }
         .summary-primary, .summary-secondary { grid-template-columns: 1fr; }
       }
       @media (max-width: 760px) {
@@ -1452,6 +1473,13 @@
           top: auto; right: calc(50% - 9px); bottom: -17px; transform: none;
         }
         .summary-cockpit .stat:nth-child(4)::after { box-shadow: 0 7px 0 rgba(255,255,255,.48); transform: translateY(-3.5px); }
+        .summary-cockpit.no-addon {
+          grid-template-columns: 1fr; grid-template-rows: auto;
+          grid-template-areas: 'ventas' 'cobrar' 'cobrado';
+          gap: 28px;
+        }
+        .summary-cockpit.no-addon .stat:nth-child(2) { min-height: 156px; padding: 24px 20px; }
+        .summary-cockpit.no-addon .stat:nth-child(2) .v { font-size: clamp(34px,11vw,46px); }
         .summary-cockpit .statmark { display: grid; }
         .summary-cockpit .stat:nth-child(1) .statmark,
         .summary-cockpit .stat:nth-child(3) .statmark { display: none; }
@@ -1953,6 +1981,10 @@
         custom: { label: 'Personalizado', from: addD(TODAY, -29), to: TODAY },
       };
       const PRESETS = ['hoy', 'ayer', 'd7', 'd30', 'semana', 'semanaAnt', 'mes', 'jul'];
+      // Estados de revisión compartibles sin sumar controles de demo a la interfaz.
+      // `?gastos=0` fuerza el vacío real; `?addon=off` replica el paquete básico.
+      const DEMO_PARAMS = new URLSearchParams(window.location.search);
+      const DEMO_SIN_GASTOS = DEMO_PARAMS.get('gastos') === '0';
       const S = { container: 'finanzas', tab: 'resumen', range: 'd30', persona: 'venue', staff: 'all', dist: 'cobrado', sub: {}, cobPage: 1, cobQ: '', cobMethod: 'all', comF: { q: '', tipo: 'all', concepto: 'all' }, movF: { q: '', method: 'all', asset: 'all', concepto: 'all' }, movSort: { k: 'date', dir: -1 }, movPage: 1, cobF: { q: '', origin: 'all', concepto: 'all' }, cobConcepto: 'all', gasConcepto: 'all', open: null };
 
       const inRange = (m, r) => m.date >= r.from && m.date <= r.to;
@@ -1971,7 +2003,7 @@
       // devuelto. Los estados que NO mueven plata (pendiente, no pagado, cancelado) no generan fila.
       const income = (ms) => ms.filter((m) => m.dir === 'in' && m.st === 'ok');
       const refunds = (ms) => ms.filter((m) => m.dir === 'out' && m.asset === 'refund');
-      const expenses = (ms) => ms.filter((m) => m.dir === 'out' && m.asset === 'gasto');
+      const expenses = (ms) => DEMO_SIN_GASTOS ? [] : ms.filter((m) => m.dir === 'out' && m.asset === 'gasto');
       const sum = (ms) => ms.reduce((s, m) => s + m.amount, 0);
 
       function byKey(ms, k) {
@@ -2228,11 +2260,10 @@
          `conAddon()` es el gate comercial y `conEquipo()` el estructural: Comisiones necesita
          los dos (podés pagar el add-on y no tener equipo), Gastos y Resultado solo el primero.
          OJO: el gate NO cuelga de la persona. Un profesional independiente también puede
-         comprar el add-on —tiene gastos y tiene resultado—, solo que no liquida a nadie. Acá
-         el prototipo muestra el add-on activo (es lo que se está diseñando); el día que haya
-         que mostrar la versión sin add-on, `conAddon()` es el único lugar a tocar. */
+         comprar el add-on —tiene gastos y tiene resultado—, solo que no liquida a nadie.
+         El prototipo muestra ambos paquetes: `?addon=off` activa la variante básica. */
       const PACK = ['gastos', 'comisiones', 'resultado'];
-      const conAddon = () => true;
+      const conAddon = () => DEMO_PARAMS.get('addon') !== 'off';
       const tabsVisibles = () => TABS.filter((t) => {
         if (t.k === 'comisiones') return conAddon() && conEquipo();
         if (PACK.includes(t.k)) return conAddon();
@@ -2626,6 +2657,7 @@
         const inc = income(ms), exp = expenses(ms), ref = refunds(ms);
         const bruto = sum(inc), gast = sum(exp), dev = sum(ref);
         const neto = bruto - dev - gast;
+        const addon = conAddon();
         // "Por cobrar" es el saldo abierto TOTAL (un balance, no un flujo), mientras que el
         // "sin cobrar" de Ventas totales es solo el de las ventas hechas EN el período. Los dos
         // números son correctos y distintos: acá se explicita la relación para que se vea la resta.
@@ -2651,14 +2683,20 @@
         return `
 
 
-        <div class="grid g5 statrow summary-cockpit sec" aria-label="Ventas totales y por cobrar como contexto. Cobrado menos gastos y devoluciones da el neto del período.">
+        <div class="grid g5 statrow summary-cockpit ${addon ? '' : 'no-addon'} sec" aria-label="${addon
+          ? 'Ventas totales y por cobrar como contexto. Cobrado menos gastos y devoluciones da el neto del período.'
+          : 'Ventas totales y por cobrar como contexto del dinero cobrado en el período.'}">
           ${statTile({ k: 'Ventas totales', v: $$(vendido), raw: vendido, metric: 'vendido', s: pendTot ? `<b>${$$(pendTot)}</b> todavía sin cobrar` : 'Todo cobrado', ic: ICO.bag, bg: '#eef0ff', fg: '#4338ca', go: `go('movimientos')` })}
           ${statTile({ k: 'Cobrado', v: $$(bruto), raw: bruto, metric: 'cobrado', s: `<b>${inc.length}</b> cobro${inc.length === 1 ? '' : 's'} en el período`, ic: ICO.down, bg: '#e8fbf5', fg: '#07806a', go: `go('cobros')` })}
           ${statTile({ k: 'Por cobrar', v: $$(porCobrar), raw: porCobrar, metric: 'por-cobrar', s: pcAntes
             ? `<b>${$$(pendTot)}</b> de este período`
             : `${abiertos.length} cobrable${abiertos.length === 1 ? '' : 's'} abierto${abiertos.length === 1 ? '' : 's'}`, ic: ICO.alert, bg: '#fff2f3', fg: '#b3162a', go: `go('cobranzas')` })}
-          ${statTile({ k: 'Gastos', v: $$(gast), raw: gast, metric: 'gastos', s: `<b>${exp.length}</b> gasto${exp.length === 1 ? '' : 's'} registrado${exp.length === 1 ? '' : 's'}`, ic: ICO.up, bg: '#fff2f3', fg: '#b3162a', go: `go('gastos')` })}
-          ${statTile({ k: 'Neto del período', v: $$(neto), raw: neto, metric: 'neto', s: 'Cobrado menos gastos y devoluciones', ic: ICO.wallet, bg: '#eef6ff', fg: '#005cd4', go: `go('resultado')` })}
+          ${addon ? statTile({ k: 'Gastos', v: $$(gast), raw: gast, metric: 'gastos', s: exp.length
+            ? `<b>${exp.length}</b> gasto${exp.length === 1 ? '' : 's'} registrado${exp.length === 1 ? '' : 's'}`
+            : 'Sin gastos registrados', ic: ICO.up, bg: exp.length ? '#fff2f3' : '#eef2f7', fg: exp.length ? '#b3162a' : '#64748b', go: `go('gastos')` }) : ''}
+          ${addon ? statTile({ k: 'Neto del período', v: $$(neto), raw: neto, metric: 'neto', s: gast || dev
+            ? 'Cobrado menos gastos y devoluciones'
+            : 'Todo lo cobrado queda como neto', ic: ICO.wallet, bg: '#eef6ff', fg: '#005cd4', go: `go('resultado')` }) : ''}
         </div>
 
         <div class="dhead">
@@ -2921,7 +2959,7 @@
                 Categorías</button>
               ${byCat.length ? barsList(byCat, { labelOf: catLabel, go: () => '' }) : '<div class="empty">Sin gastos en el período</div>'}</div>
             <div class="card"><h3>De dónde sale la plata</h3><p class="cap">Distribución según origen de los pagos.</p>
-              ${barsList(byKey(ms, 'account'), { prop: true, dot: true, colorOf: (k) => ({ caja: 'var(--m-ef)', banco: 'var(--m-tr)', mp: 'var(--m-mp)' }[k]), labelOf: (k) => ({ caja: 'Caja (efectivo)', banco: 'Tu cuenta', mp: 'Billetera Mercado Pago' }[k] || k), go: () => '' })}</div>
+              ${ms.length ? barsList(byKey(ms, 'account'), { prop: true, dot: true, colorOf: (k) => ({ caja: 'var(--m-ef)', banco: 'var(--m-tr)', mp: 'var(--m-mp)' }[k]), labelOf: (k) => ({ caja: 'Caja (efectivo)', banco: 'Tu cuenta', mp: 'Billetera Mercado Pago' }[k] || k), go: () => '' }) : '<div class="empty"><b>Sin movimientos</b>Todavía no salió plata en este período.</div>'}</div>
           </div>
           <div class="card tcard pt">
             <div class="tblwrap"><table class="tbl">
