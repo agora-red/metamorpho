@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Finanzas · Prototipo funcional v3 — Ágora</title>
+    <title>Finanzas · Bossiostyle — Ágora</title>
     <link rel="icon" href="assets/agora-iso.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -1588,15 +1588,35 @@
       // —incluido el ejemplo de la vista Conceptos— sale de acá, nunca de un texto fijo.
       const VERTICALS = {
         beauty: {
-          label: 'Belleza', negocio: 'Estudio Bloom', staff: ['Sofía', 'Mariana', 'Lucía', 'Tomás', 'Valentina'],
-          servicios: ['Corte + brushing', 'Color raíz', 'Mechas balayage', 'Brushing', 'Alisado orgánico', 'Manicura semipermanente', 'Pedicura spa', 'Limpieza facial profunda', 'Depilación láser · zona chica', 'Perfilado de cejas', 'Lifting de pestañas'],
-          largo: 'Alisado orgánico', caros: ['Mechas balayage + corte', 'Tratamiento capilar intensivo'],
-          sedes: ['Palermo', 'Villa Crespo'],
-          adicionales: ['Ampolla de keratina', 'Baño de brillo', 'Diseño de cejas', 'Esmaltado semipermanente'],
-          capacitaciones: ['Capacitación · Balayage avanzado', 'Capacitación · Corte con tijera japonesa', 'Capacitación · Skincare profesional', 'Capacitación · Barbería moderna'],
-          descargables: ['Guía de cuidado post-color', 'Rutina capilar en casa', 'Manual de uñas paso a paso'],
+          // Catálogo y equipo públicos de Bossiostyle (agora.red/bossiostyle, 28/ago/2026).
+          // Los movimientos y clientes del prototipo siguen siendo simulados; los precios de
+          // servicio sí respetan el catálogo publicado para que el ejemplo tenga escala real.
+          label: 'Barbería y peluquería', negocio: 'Bossiostyle',
+          staff: ['Matias', 'Lucas', 'Sofia', 'Joako', 'Saira', 'Cris'],
+          servicios: [
+            'Servicio de corte Bossiostyle', 'Corte de Barba', 'Servicio Bossiostyle + Barba',
+            'Servicio Bossiostyle PREMIUM', 'Servicio BossioStyle + barba PREMIUM',
+            'Servicio de corte + BARBA DELUXE (vapor)', 'Servicio de corte pelo largo',
+            'Mechas/Claritos', 'Alisado', 'Ondulaciones / Permanente', 'Global color',
+            'Color largos', 'Corte + Alisado de flequillo', 'Trenzas',
+          ],
+          precios: {
+            'Servicio de corte Bossiostyle': 26000, 'Corte de Barba': 22000,
+            'Servicio Bossiostyle + Barba': 32000, 'Servicio Bossiostyle PREMIUM': 30000,
+            'Servicio BossioStyle + barba PREMIUM': 37000,
+            'Servicio de corte + BARBA DELUXE (vapor)': 50000,
+            'Servicio de corte pelo largo': 47000, 'Mechas/Claritos': 90000,
+            'Alisado': 80000, 'Ondulaciones / Permanente': 100000,
+            'Global color': 99000, 'Color largos': 100000,
+            'Corte + Alisado de flequillo': 65000, 'Trenzas': 70000,
+          },
+          largo: 'Alisado', caros: ['Ondulaciones / Permanente', 'Color largos'],
+          sedes: ['San Martín'],
+          adicionales: [],
+          capacitaciones: ['Capacitación · ScalingBarber', 'Capacitación · BS Crew', 'Capacitación · Fade y terminaciones', 'Capacitación · Color y claritos'],
+          descargables: ['Guía de cuidado del corte', 'Rutina para barba', 'Guía de styling en casa'],
           voz: { cliente: 'cliente', clientes: 'clientes', Cliente: 'Cliente', turno: 'turno', turnos: 'turnos', unTurno: 'un turno' },
-          productos: ['Shampoo reparador 500ml', 'Serum de puntas', 'Máscara de keratina', 'Protector térmico', 'Óleo capilar', 'Kit post-color'],
+          productos: ['Pomada de acabado', 'Shampoo profesional', 'Aceite para barba', 'Cera mate', 'Kit de cuidado capilar', 'Fragancia'],
         },
         wellness: {
           label: 'Bienestar', negocio: 'Casa Serena', staff: ['Paula', 'Ignacio', 'Rocío', 'Damián', 'Malena'],
@@ -1629,13 +1649,15 @@
       const CONCEPTS = {
         servicio: [],
         producto: [],
-        curso: ['Curso online · Colorimetría desde cero', 'Curso online · Uñas esculpidas nivel 1', 'Curso online · Cejas y pestañas', 'Curso online · Gestión de tu salón'],
+        curso: ['Curso online · ScalingBarber', 'Curso online · Fade y terminaciones', 'Curso online · Barba Deluxe', 'Curso online · Color y claritos'],
         capacitacion: [],
         giftcard: ['Gift card'],
         descargable: [],
       };
       let STAFF = [];
-      const CLIENTS = ['Camila Ferrari', 'Julieta Roldán', 'Martina Sosa', 'Agustina Paz', 'Lucía Benítez', 'Florencia Ríos', 'Delfina Álvarez', 'Micaela Torres', 'Rocío Medina', 'Brenda Cabrera', 'Ana Laura Gómez', 'Sol Miranda', 'Victoria Peralta', 'Belén Ortiz', 'Carla Domínguez', 'Malena Ibarra', 'Guadalupe Ponce', 'Paula Ledesma', 'Antonella Vera', 'Nicolás Arrieta', 'Federico Luna', 'Matías Herrera', 'Joaquín Sánchez', 'Ramiro Costa', 'Valeria Nieto', 'Sabrina Quiroga', 'Emilia Castro', 'Abril Godoy', 'Renata Silva', 'Bautista Molina'];
+      // Identidades ficticias: el ejemplo toma la operación pública de Bossiostyle, nunca
+      // nombres, teléfonos ni información financiera de sus clientes reales.
+      const CLIENTS = ['Valentín Rojas', 'Franco Suárez', 'Thiago Martínez', 'Julián Acosta', 'Lautaro Medina', 'Agustín Paz', 'Nicolás Benítez', 'Santino Torres', 'Bruno Cabrera', 'Tomás Silva', 'Delfina Álvarez', 'Camila Ferrari', 'Martina Sosa', 'Julieta Roldán', 'Micaela Torres', 'Rocío Medina', 'Ana Gómez', 'Sol Miranda', 'Victoria Peralta', 'Belén Ortiz', 'Federico Luna', 'Matías Herrera', 'Joaquín Sánchez', 'Ramiro Costa', 'Valeria Nieto', 'Sabrina Quiroga', 'Emilia Castro', 'Abril Godoy', 'Renata Silva', 'Bautista Molina'];
       // La categoría automática: no la crea ni la toca el dueño, la escribe Ágora cada vez
       // que se liquida una comisión. No se renombra, no se borra y no se arrastra.
       const AUTO_CAT = 'sueldos';
@@ -1772,7 +1794,12 @@
             const cfg = ASSETS[asset];
             let amount, concept;
             if (asset === 'giftcard') { amount = pick([30000, 50000, 80000, 100000]); concept = 'Gift card ' + $$(amount); }
-            else { amount = round100(cfg.min + rnd() * (cfg.max - cfg.min)); concept = pick(CONCEPTS[asset]); }
+            else {
+              concept = pick(CONCEPTS[asset]);
+              amount = asset === 'servicio' && V_().precios && V_().precios[concept]
+                ? V_().precios[concept]
+                : round100(cfg.min + rnd() * (cfg.max - cfg.min));
+            }
             let method;
             if (cfg.online) method = 'mp';
             else if (asset === 'capacitacion') method = wpick([['tr', 60], ['mp', 28], ['ef', 12]]);
@@ -1784,9 +1811,9 @@
             const quien = cfg.staff ? pick(STAFF) : null;
             const base = { date: day, time: hora, dir: 'in', method, asset, client: cli, staff: quien,
               st, account: METHODS[method].account, cat: null, src: cfg.online ? 'online' : 'local' };
-            // Un tercio de los turnos lleva un adicional. Se le descuenta al servicio en vez
-            // de sumarse: la venta vale lo mismo y se reparte en dos conceptos.
-            const conAdic = asset === 'servicio' && rnd() < 0.34;
+            // Si el rubro define adicionales, un tercio de los turnos lleva uno. Se le descuenta
+            // al servicio en vez de sumarse: la venta vale lo mismo y se reparte en dos conceptos.
+            const conAdic = asset === 'servicio' && V_().adicionales.length > 0 && rnd() < 0.34;
             const adic = conAdic ? round100(amount * (0.12 + rnd() * 0.16)) : 0;
             MOVS.push({ ...base, id: ++_id, amount: amount - adic, concept });
             if (adic) MOVS.push({ ...base, id: ++_id, amount: adic, concept: pick(V_().adicionales), addon: true });
@@ -1797,7 +1824,7 @@
             const time = `${String(rint(11, 19)).padStart(2, '0')}:${String(rint(0, 59)).padStart(2, '0')}`;
             const amount = round100(12000 + rnd() * 55000);
             if (m === 'ef' && amount > disponibleEnCaja(day)) m = 'tr';
-            MOVS.push({ id: ++_id, date: day, time, dir: 'out', amount, method: m, asset: 'refund', concept: 'Devolución a clienta', client: pick(CLIENTS), staff: null, st: 'refund', account: METHODS[m].account, cat: SIN_CAT, src: 'local' });
+            MOVS.push({ id: ++_id, date: day, time, dir: 'out', amount, method: m, asset: 'refund', concept: 'Devolución a cliente', client: pick(CLIENTS), staff: null, st: 'refund', account: METHODS[m].account, cat: SIN_CAT, src: 'local' });
           }
           // Gastos
           const dn = parse(day).getDate();
@@ -1855,15 +1882,15 @@
       // estados de seguimiento (decisión JP, 18/ago): V1 solo muestra cuánto falta, no persigue.
       // `svc` marca las filas cuyo concepto sale del catálogo de servicios del rubro.
       const RECV_BASE = [
-        { id: 'R-118', client: 'Camila Ferrari', phone: '11 5623-4410', origin: 'servicio', svc: 'caro0', total: 142000, paid: 60000, staff: 1, date: '2026-07-02' },
-        { id: 'R-153', client: 'Antonella Vera', phone: '11 5511-6620', origin: 'servicio', svc: 'largo', total: 118000, paid: 40000, staff: 0, date: '2026-07-29' },
-        { id: 'R-160', client: 'Matías Herrera', phone: '11 3771-9008', origin: 'producto', prod: 0, total: 61000, paid: 20000, staff: 2, date: '2026-08-02' },
-        { id: 'R-161', client: 'Valeria Nieto', phone: '11 2098-4416', origin: 'servicio', svc: 1, total: 74000, paid: 30000, staff: 1, date: '2026-08-04' },
-        { id: 'R-101', client: 'Micaela Torres', phone: '11 3345-0091', origin: 'servicio', svc: 'caro1', total: 156000, paid: 56000, staff: 0, date: '2026-06-18' },
+        { id: 'R-118', client: 'Camila Ferrari', phone: '11 5623-4410', origin: 'servicio', svc: 'caro0', total: 100000, paid: 40000, staff: 1, date: '2026-07-02' },
+        { id: 'R-153', client: 'Julián Acosta', phone: '11 5511-6620', origin: 'servicio', svc: 'largo', total: 80000, paid: 30000, staff: 0, date: '2026-07-29' },
+        { id: 'R-160', client: 'Matías Herrera', phone: '11 3771-9008', origin: 'producto', prod: 0, total: 35000, paid: 15000, staff: 2, date: '2026-08-02' },
+        { id: 'R-161', client: 'Valentín Rojas', phone: '11 2098-4416', origin: 'servicio', svc: 1, total: 22000, paid: 10000, staff: 1, date: '2026-08-04' },
+        { id: 'R-101', client: 'Micaela Torres', phone: '11 3345-0091', origin: 'servicio', svc: 'caro1', total: 100000, paid: 45000, staff: 0, date: '2026-06-18' },
         // Con seña y turno todavía por venir: el saldo entra el día del turno, no hay que perseguirlo.
-        { id: 'R-170', client: 'Emilia Castro', phone: '11 6014-2277', origin: 'servicio', svc: 'caro0', total: 138000, paid: 55000, staff: 2, date: '2026-08-07' },
-        { id: 'R-171', client: 'Julián Sosa', phone: '11 4489-3310', origin: 'servicio', svc: 'largo', total: 96000, paid: 38000, staff: 3, date: '2026-08-12' },
-        { id: 'R-172', client: 'Renata Aguirre', phone: '11 2233-7781', origin: 'servicio', svc: 2, total: 68000, paid: 27000, staff: 1, date: '2026-08-19' },
+        { id: 'R-170', client: 'Emilia Castro', phone: '11 6014-2277', origin: 'servicio', svc: 'caro0', total: 100000, paid: 40000, staff: 2, date: '2026-08-07' },
+        { id: 'R-171', client: 'Bruno Cabrera', phone: '11 4489-3310', origin: 'servicio', svc: 'largo', total: 80000, paid: 30000, staff: 3, date: '2026-08-12' },
+        { id: 'R-172', client: 'Renata Silva', phone: '11 2233-7781', origin: 'servicio', svc: 2, total: 32000, paid: 12000, staff: 1, date: '2026-08-19' },
       ];
       let RECV = [];
       // Orígenes que PUEDEN dejar saldo. Cursos online y gift cards no están: se cobran 100% por
@@ -2624,14 +2651,14 @@
         return `
 
 
-        <div class="grid g5 statrow summary-cockpit sec" aria-label="Ventas totales y por cobrar como contexto. Cobrado menos gastos da el neto del período.">
+        <div class="grid g5 statrow summary-cockpit sec" aria-label="Ventas totales y por cobrar como contexto. Cobrado menos gastos y devoluciones da el neto del período.">
           ${statTile({ k: 'Ventas totales', v: $$(vendido), raw: vendido, metric: 'vendido', s: pendTot ? `<b>${$$(pendTot)}</b> todavía sin cobrar` : 'Todo cobrado', ic: ICO.bag, bg: '#eef0ff', fg: '#4338ca', go: `go('movimientos')` })}
           ${statTile({ k: 'Cobrado', v: $$(bruto), raw: bruto, metric: 'cobrado', s: `<b>${inc.length}</b> cobro${inc.length === 1 ? '' : 's'} en el período`, ic: ICO.down, bg: '#e8fbf5', fg: '#07806a', go: `go('cobros')` })}
           ${statTile({ k: 'Por cobrar', v: $$(porCobrar), raw: porCobrar, metric: 'por-cobrar', s: pcAntes
             ? `<b>${$$(pendTot)}</b> de este período`
             : `${abiertos.length} cobrable${abiertos.length === 1 ? '' : 's'} abierto${abiertos.length === 1 ? '' : 's'}`, ic: ICO.alert, bg: '#fff2f3', fg: '#b3162a', go: `go('cobranzas')` })}
           ${statTile({ k: 'Gastos', v: $$(gast), raw: gast, metric: 'gastos', s: `<b>${exp.length}</b> gasto${exp.length === 1 ? '' : 's'} registrado${exp.length === 1 ? '' : 's'}`, ic: ICO.up, bg: '#fff2f3', fg: '#b3162a', go: `go('gastos')` })}
-          ${statTile({ k: 'Neto del período', v: $$(neto), raw: neto, metric: 'neto', s: 'Cobrado menos gastos', ic: ICO.wallet, bg: '#eef6ff', fg: '#005cd4', go: `go('resultado')` })}
+          ${statTile({ k: 'Neto del período', v: $$(neto), raw: neto, metric: 'neto', s: 'Cobrado menos gastos y devoluciones', ic: ICO.wallet, bg: '#eef6ff', fg: '#005cd4', go: `go('resultado')` })}
         </div>
 
         <div class="dhead">
