@@ -315,6 +315,52 @@ section.alt .mock-stage { background:linear-gradient(160deg,#F2F6FC 0%, #E9EFF8 
 .fz-card.panel { border:0; box-shadow:none; border-radius:0; background:transparent; padding-top:12px; }
 .fz-card.panel .pv-head, .fz-card.panel .pv-sig { display:none; }
 
+/* ══ Lenguaje «aurora» — el mismo que la ficha viva del cliente usa en producción
+   (flash/src/styles/_tailwind.css). El gradiente cónico ES el borde; el hijo lleva
+   fondo OPACO o el gradiente se ve a través de toda la card. ══ */
+@property --fv-ang { syntax:'<angle>'; initial-value:0deg; inherits:false; }
+@keyframes fv-aurora-spin { to { --fv-ang:360deg; } }
+@keyframes fv-shimmer { to { transform:translateX(120%); } }
+@keyframes fv-twinkle { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.72; transform:scale(.9); } }
+@keyframes fv-rise { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
+
+.fv-shell { position:relative; border-radius:17px; padding:1px; background:conic-gradient(from var(--fv-ang) at 50% 50%, #0072fb, #7c3aed, #ff4658, #0072fb); animation:fv-aurora-spin 9s linear infinite; }
+.fv-core { position:relative; border-radius:16px; overflow:hidden; background:#FFFFFF; }
+.fv-core::after { content:''; position:absolute; inset:0; pointer-events:none; background:linear-gradient(105deg, transparent 30%, rgba(255,255,255,.6) 50%, transparent 70%); transform:translateX(-120%); animation:fv-shimmer 1.1s ease-out .35s 1 forwards; }
+.fv-twinkle { animation:fv-twinkle 3.2s ease-in-out infinite; }
+
+/* Los stats del bloque de hechos: tinta gradiente, como los de la ficha viva */
+.pv-fact .vl.ink { background:linear-gradient(120deg, var(--frost-ink) 30%, var(--frost-primary)); -webkit-background-clip:text; background-clip:text; color:transparent; font-weight:500; }
+
+/* Entrada escalonada de las láminas del panel */
+.pv-panel .fz-lamina, .pv-panel .fv-shell { animation:fv-rise .5s cubic-bezier(.22,1,.36,1) both; }
+.pv-panel .fv-shell { animation-delay:.08s; }
+.pv-panel .fz-lamina:nth-of-type(2) { animation-delay:.16s; }
+.pv-panel .fz-lamina:nth-of-type(3) { animation-delay:.24s; }
+.pv-panel .fz-lamina:nth-of-type(4) { animation-delay:.32s; }
+
+/* Grabber del panel, como un bottom-sheet nativo */
+.pv-grab { width:38px; height:4px; border-radius:99px; background:rgba(15,23,42,0.14); margin:9px auto 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fv-shell, .fv-twinkle, .fv-core::after, .pv-panel, .pv-panel .fz-lamina, .pv-panel .fv-shell { animation:none; }
+}
+
+/* Remate del bloque aurora: el kicker en marca, los stats con más presencia y un
+   halo detrás del orbe — el panel tiene que leerse como «esto lo pensó algo». */
+.fv-core .fz-kicker { color:var(--frost-primary); letter-spacing:0.15em; }
+.fv-core .pv-kico.slate { background:linear-gradient(135deg, rgba(0,114,251,0.16), rgba(124,58,237,0.16)); }
+.fv-core .pv-fact .vl { font-size:16px; white-space:nowrap; }
+.pv-fact { min-width:0; }
+.fv-core .pv-fact .lb { color:rgba(15,23,42,0.40); }
+.fv-core .pv-fpill { background:linear-gradient(180deg, rgba(15,23,42,0.055), rgba(15,23,42,0.035)); }
+.pv-pnl-head { position:relative; }
+.pv-pnl-head::after { content:''; position:absolute; left:14px; top:6px; width:60px; height:34px; border-radius:50%; background:radial-gradient(closest-side, rgba(0,114,251,0.28), transparent); filter:blur(9px); pointer-events:none; }
+.pv-appacts .ai-spark { position:relative; }
+.pv-appacts .ai-spark::after { content:''; position:absolute; inset:-4px; border-radius:50%; border:1.5px solid rgba(0,114,251,0.35); animation:orb-ring 2.6s ease-out infinite; pointer-events:none; }
+@keyframes orb-ring { 0% { transform:scale(.85); opacity:.9; } 70%,100% { transform:scale(1.35); opacity:0; } }
+@media (prefers-reduced-motion: reduce) { .pv-appacts .ai-spark::after { animation:none; opacity:0; } }
+
 /* Navegación de las 5 vistas (hero) */
 .viewnav { display:flex; flex-wrap:wrap; gap:8px; margin-top:26px; }
 .viewnav a { display:inline-flex; align-items:center; gap:7px; text-decoration:none; font-size:12.5px; font-weight:500; color:var(--frost-ink-soft); background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:999px; padding:7px 14px 7px 8px; box-shadow:var(--sh-xs); transition:border-color .15s, color .15s; }
@@ -896,17 +942,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
       <div><strong>El l&iacute;mite sano:</strong> cu&aacute;ntas oportunidades se descartan sin abrir. Si sube, molestamos.</div>
     </div>
 
-    <p class="split-lbl" style="margin-top:44px;">Casi todo esto ya existe: hay que conectarlo</p>
-    <div class="pipe">
-      <div class="src"><b>El c&aacute;lculo de d&iacute;a y hora pico</b><p>Ya se calcula para el resumen mensual; hoy sale una vez por mes.</p><code>cyclone &middot; services/wrapped/metrics-extra.ts</code></div>
-      <div class="src"><b>La cancelaci&oacute;n ya avisa en vivo</b><p>El evento que enciende la campana es el mismo al que se engancha el detector.</p><code>cyclone &middot; emitBookingCancellation</code></div>
-      <div class="src"><b>Los segmentos de clientas</b><p>En riesgo, ausente, frecuente: ya calculados, con los criterios de cada negocio.</p><code>cyclone &middot; services/client-segmentation.ts</code></div>
-      <div class="src"><b>El motor del Pulse</b><p>Elecci&oacute;n de &aacute;ngulo, anti-repetici&oacute;n y redacci&oacute;n: se le suma un bloque, no se reescribe.</p><code>cyclone &middot; services/pulse/</code></div>
-      <div class="src"><b>La ficha viva del cliente</b><p>La gram&aacute;tica y los componentes del bloque nuevo salen de ac&aacute;.</p><code>flash &middot; ClientLiveSummary.tsx</code></div>
-      <div class="src"><b>La reserva desde el enlace</b><p>La clienta reserva en dos toques, con validaci&oacute;n final de disponibilidad.</p><code>nightwing &middot; checkout</code></div>
     </div>
-    <div class="pipe-note" style="margin-top:28px;"><strong>Regla:</strong> no duplicar Pulse, segmentaci&oacute;n ni disponibilidad &middot; selecci&oacute;n determin&iacute;stica, la IA solo explica y redacta &middot; <strong>Ágora nunca manda el mensaje: lo mand&aacute;s vos</strong>.</div>
-  </div>
 </section>
 
 <footer>
@@ -957,7 +993,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
     rodaje: {
       lbl:'Con rodaje', sub:'8 meses &middot; sola',
       kicker:'As&iacute; trabaj&aacute;s',
-      tiles:[['Tu d&iacute;a','Jueves'],['Tu franja','A la tarde'],['Vuelven','1 de cada 2']],
+      tiles:[['Tu d&iacute;a','Jueves'],['Tu franja','A la tarde'],['Vuelven','La mitad']],
       pills:['4 de cada 10 turnos son jueves',
              'Balayage es el 38% de lo que hac&eacute;s',
              'Este mes moviste 12 turnos vos y 2 tus clientas']
@@ -965,7 +1001,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
     equipo: {
       lbl:'Con equipo', sub:'4 profesionales &middot; 1 local',
       kicker:'As&iacute; trabaja el local',
-      tiles:[['Su d&iacute;a','S&aacute;bado'],['Su franja','A la tarde'],['Vuelven','6 de cada 10']],
+      tiles:[['Su d&iacute;a','S&aacute;bado'],['Su franja','A la tarde'],['Vuelven','6 de 10']],
       pills:['Caro: 38 clientas propias &middot; vuelven 7 de cada 10',
              'Meli: 24 clientas propias &middot; vuelven 5 de cada 10',
              'El s&aacute;bado concentra 3 de cada 10 turnos del local']
@@ -973,7 +1009,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
     sedes: {
       lbl:'Varias sucursales', sub:'2 locales &middot; 9 profesionales',
       kicker:'As&iacute; trabaja Palermo',
-      tiles:[['Su d&iacute;a','Viernes'],['Su franja','A la tarde'],['Vuelven','5 de cada 10']],
+      tiles:[['Su d&iacute;a','Viernes'],['Su franja','A la tarde'],['Vuelven','5 de 10']],
       pills:['Palermo trabaja viernes; Belgrano, s&aacute;bados',
              'Color es el 41% de Palermo y el 22% de Belgrano',
              'Belgrano suma 2 clientas nuevas por semana m&aacute;s que Palermo'],
@@ -984,19 +1020,20 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
   function factsHTML(){
     var c = CASOS[S.caso] || CASOS.rodaje;
     var tiles = c.tiles.map(function(t){
-      return '<div class="pv-fact"><span class="lb">'+t[0]+'</span><span class="vl">'+t[1]+'</span></div>';
+      return '<div class="pv-fact"><span class="lb">'+t[0]+'</span><span class="vl ink">'+t[1]+'</span></div>';
     }).join('');
     var pills = c.pills.map(function(p){ return '<span class="pv-fpill">'+p+'</span>'; }).join('');
     var tabs = c.sedes
       ? '<div class="pv-sedes"><span class="on">Palermo</span><span>Belgrano</span><span>Todo el negocio</span></div>'
       : '';
-    return '<div class="fz-lamina fz-tint-slate"><div class="pv-krow"><span class="pv-kico slate">&#129517;</span>' +
+    return '<div class="fv-shell"><div class="fv-core"><div class="fz-lamina fz-tint-slate" style="border:0; border-radius:16px;">' +
+      '<div class="pv-krow"><span class="pv-kico slate fv-twinkle">&#10024;</span>' +
       '<span class="fz-kicker">'+c.kicker+'</span>' +
       (c.soft ? '<span class="pv-softpill">creciendo</span>' : '') + '</div>' +
       tabs +
       '<div class="pv-facts">'+tiles+'</div>' +
       '<div class="pv-factpills">'+pills+'</div>' +
-    '</div>';
+    '</div></div></div>';
   }
 
   function homeHTML(){
@@ -1011,6 +1048,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
       '<div class="pb-row"><span>17:00</span><div class="pb-evt">Color raíz · Meli</div></div>' +
     '</div>' +
     '<div class="pv-panel">' +
+      '<div class="pv-grab"></div>' +
       '<div class="pv-pnl-head"><span class="pv-pnl-orb">✨</span><div class="pv-pnl-tt"><b>Tu Pulse</b><span>semana del 17–23 ago</span></div><span class="pv-pnl-x">✕</span></div>' +
     '<div class="fz-card panel">' +
       '<div class="pv-sig"><span class="rule"></span><svg viewBox="0 0 96 16" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M0 8 H30 l3 -5.5 l4 11 l4 -9 l3 3.5 H96"/></svg></div>' +
