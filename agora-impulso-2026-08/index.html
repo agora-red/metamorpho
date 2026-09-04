@@ -737,6 +737,106 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
   .p0-grid, .tray-desc, .ctx-grid, .guard-grid, .tables, .road { grid-template-columns:1fr; }
   header.chrome .kicker { display:none; }
 }
+
+/* ════ CAPA OSCURA DEL PANEL — va al final a propósito: las reglas base de
+   .pv-* viven más abajo en la hoja y con igual especificidad ganaban. ════ */
+/* ══════════════════════════════════════════════════════════════════════════
+   EL PANEL ENTERO EN OSCURO — Pulse es la capa inteligente de Flash, y se ve.
+   El panel completo vive sobre una superficie profunda; cada bloque se
+   distingue por su ACENTO (marca, violeta, ámbar), no por ser más claro. La
+   app de fondo queda clara: así el panel se lee como algo que baja encima,
+   no como otra pantalla.
+   ══════════════════════════════════════════════════════════════════════════ */
+.pv-panel { background:linear-gradient(180deg, #0E1626 0%, #080D18 100%); border:0;
+  box-shadow:0 -22px 60px -20px rgba(8,13,24,.80), 0 -1px 0 rgba(255,255,255,.10) inset; }
+.pv-grab { background:rgba(255,255,255,.22); }
+.pv-pnl-head { border-bottom:1px solid rgba(255,255,255,.09);
+  background:linear-gradient(180deg, rgba(124,58,237,.14), transparent); }
+.pv-pnl-head::after { background:radial-gradient(closest-side, rgba(124,58,237,.55), transparent); }
+.pv-pnl-orb { box-shadow:0 0 0 2px rgba(255,255,255,.14) inset, 0 3px 16px -3px rgba(124,58,237,.9); }
+.pv-pnl-tt b { color:#F2F6FF; }
+.pv-pnl-tt span { color:#7D8FB0; }
+.pv-pnl-x { color:#6C7E9C; }
+.fz-card.panel { background:transparent; }
+
+/* Láminas del panel: vidrio sobre oscuro, con su acento propio */
+.pv-panel .fz-lamina { border-radius:15px; border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.045); backdrop-filter:blur(6px); }
+.pv-panel .fz-tint-blue { background:linear-gradient(160deg, rgba(0,114,251,.16), rgba(255,255,255,.035) 62%); border-color:rgba(0,114,251,.24); }
+.pv-panel .fz-tint-lav  { background:linear-gradient(160deg, rgba(124,58,237,.20), rgba(255,255,255,.035) 62%); border-color:rgba(124,58,237,.30); }
+.pv-panel .fz-tint-sun  { background:linear-gradient(160deg, rgba(245,158,11,.16), rgba(255,255,255,.035) 62%); border-color:rgba(245,158,11,.28); }
+.pv-panel .fz-tint-mint { background:linear-gradient(160deg, rgba(16,185,129,.18), rgba(255,255,255,.035) 62%); border-color:rgba(16,185,129,.30); }
+.pv-panel .fz-kicker { color:#8FA1BF; }
+
+/* Tu semana */
+.pv-panel .pv-stat + .pv-stat { border-top-color:rgba(255,255,255,.10); }
+.pv-panel .pv-stat .lb { color:#8FA1BF; }
+.pv-panel .pv-stat .num { color:#F2F6FF; }
+.pv-panel .pv-stat .num small { color:#7D8FB0; }
+.pv-panel .fz-delta.pos { background:rgba(16,185,129,.18); color:#6EE7B7; }
+.pv-panel .fz-delta.flat { background:rgba(255,255,255,.10); color:#A7B6D0; }
+.pv-panel .pv-kico { background:rgba(255,255,255,.10); }
+.pv-panel .pv-kico.sun { background:rgba(245,158,11,.22); }
+
+/* La recomendación */
+.pv-panel .pv-quote { color:#E4EBF8; }
+.pv-panel .pv-quote::before { background:linear-gradient(180deg, #7C3AED, #0072FB); }
+
+/* Para hoy */
+.pv-panel .pv-opp + .pv-opp { border-top-color:rgba(255,255,255,.09); }
+.pv-panel .pv-opp .ic { background:rgba(255,255,255,.07); border-color:rgba(255,255,255,.12); }
+.pv-panel .pv-opp .ic.done { background:rgba(16,185,129,.18); border-color:rgba(16,185,129,.35); }
+.pv-panel .pv-opp .tx b { color:#F2F6FF; }
+.pv-panel .pv-opp .tx span { color:#93A3C0; }
+.pv-panel .pv-opp .go { background:linear-gradient(135deg, #0072FB, #7C3AED); border:0; color:#fff;
+  box-shadow:0 3px 14px -4px rgba(124,58,237,.85); }
+.pv-panel .pv-seeall { color:#9CC2FF; border-top-color:rgba(255,255,255,.09); }
+.pv-panel .st-done { background:rgba(16,185,129,.20); color:#6EE7B7; }
+.pv-panel .pv-newpill { background:linear-gradient(135deg, #0072FB, #7C3AED); }
+
+/* La agenda de fondo, más apagada: el panel es el foco */
+.pv-behind { opacity:.32; }
+
+/* Detalle y ejecución, en la misma superficie profunda */
+.pv-panel .pv-top { padding:0 2px 10px; }
+.pv-panel .pv-back { color:#9CC2FF; }
+.pv-panel .pv-state.rev, .pv-panel .pv-state.run { background:rgba(0,114,251,.20); color:#9CC2FF; }
+.pv-panel .pv-state.ok { background:rgba(16,185,129,.20); color:#6EE7B7; }
+.pv-panel .pv-dhead .t { color:#F2F6FF; }
+.pv-panel .pv-dhead .when { background:rgba(0,114,251,.20); color:#9CC2FF; }
+.pv-panel .pv-dsub { color:#93A3C0; }
+.pv-panel .pv-cands { border-color:rgba(255,255,255,.09); }
+.pv-panel .pv-cand + .pv-cand { border-top-color:rgba(255,255,255,.09); }
+.pv-panel .pv-cand .av { background:linear-gradient(135deg, rgba(0,114,251,.30), rgba(124,58,237,.30)); color:#DCE8FF; }
+.pv-panel .pv-cand .who b { color:#F2F6FF; }
+.pv-panel .pv-cand .chips span { background:rgba(255,255,255,.08); color:#A7B6D0; }
+.pv-panel .pv-cand .chips span.hot { background:rgba(0,114,251,.24); color:#BFD8FF; }
+.pv-panel .pv-cand .rm { color:#6C7E9C; }
+.pv-panel .pv-more { color:#7D8FB0; }
+.pv-panel .pv-wa { background:rgba(16,185,129,.10); border-color:rgba(16,185,129,.26); color:#D6E7DF; }
+.pv-panel .pv-wa b { color:#6EE7B7; }
+.pv-panel .pv-wa .lk { color:#9CC2FF; }
+.pv-panel .pv-tanda { background:rgba(255,255,255,.06); color:#A7B6D0; }
+.pv-panel .pv-tanda b { color:#F2F6FF; }
+.pv-panel .fz-ghost { background:transparent; border-color:rgba(255,255,255,.18); color:#C3D0E6; }
+.pv-panel .fz-cta { background:linear-gradient(135deg, #0072FB, #7C3AED); border:0; box-shadow:0 4px 18px -5px rgba(124,58,237,.9); }
+.pv-panel .pv-empty { color:#93A3C0; }
+.pv-panel .pv-empty button { color:#9CC2FF; }
+.pv-panel .pv-run-step .tx { color:#B4C3DC; }
+.pv-panel .pv-run-step .tx b { color:#FFFFFF; }
+.pv-panel .pv-opp .tx b { color:#F2F6FF; }
+.pv-panel .pv-opp .tx span { color:#93A3C0; }
+.pv-panel .pv-cand .who b { color:#F2F6FF; }
+.pv-panel .pv-wa { color:#CFE3DA; }
+.pv-panel .pv-inwa { background:rgba(16,185,129,.16); border-color:rgba(16,185,129,.30); color:#CFF0E0; }
+.pv-panel .pv-success b { color:#FFFFFF; }
+.pv-panel .pv-run-step b { color:#F2F6FF; }
+.pv-panel .pv-run-step .ic { background:rgba(255,255,255,.08); }
+.pv-panel .pv-run-step .ic.ok { background:rgba(16,185,129,.20); }
+.pv-panel .pv-inwa { background:rgba(16,185,129,.14); color:#BFE9D6; }
+.pv-panel .pv-success b { color:#F2F6FF; }
+.pv-panel .pv-success div { color:#A7B6D0 !important; }
+
 </style>
 </head>
 <body>
@@ -807,7 +907,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
   <div class="wrap">
     <span class="kicker blue">Vista 2 &middot; Qu&eacute; es</span>
     <h2 class="sec-title">Tres tiempos, un solo lugar: <strong>el &#10024; de la barra</strong></h2>
-    <p class="sec-sub">Pulse sale del panel y pasa a vivir <strong>al lado de la campana</strong>. Los hechos derivados viven en una superficie propia, oscura: <strong>lo que el sistema pens&oacute; no se parece a lo que solo anot&oacute;</strong>, y se nota de un vistazo cu&aacute;nto mir&oacute; para decirlo. <strong>El prototipo es funcional</strong>: eleg&iacute; el tipo de negocio y prob&aacute; el circuito.</p>
+    <p class="sec-sub">Pulse sale del panel y pasa a vivir <strong>al lado de la campana</strong>, con superficie propia: <strong>es la capa que piensa, y se nota</strong>. Cada bloque trae su acento, y el de los hechos dice cu&aacute;ntos turnos ley&oacute; para afirmarlos. <strong>El prototipo es funcional</strong>: eleg&iacute; el tipo de negocio y prob&aacute; el circuito completo.</p>
 
     <div class="tri-grid" style="margin-bottom:36px;">
       <div class="tri"><span class="tri-num">1</span><h3>As&iacute; trabaj&aacute;s</h3><p class="tri-win">90 d&iacute;as</p><p>Tu d&iacute;a fuerte, tu franja, tu servicio estrella, cu&aacute;ntas clientas vuelven, cu&aacute;ntos turnos moviste vos y cu&aacute;ntos ellas &mdash; con <strong>cu&aacute;ntos turnos ley&oacute;</strong> para afirmarlo. <strong>Describe, no aconseja.</strong></p><span class="tri-tag new">El bloque nuevo</span></div>
@@ -844,7 +944,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
         <h3>Qu&eacute; est&aacute;s viendo</h3>
         <ul>
           <li><strong>Cambi&aacute; el tipo de negocio arriba</strong> &mdash; el mismo Pulse le&iacute;do por uno de dos semanas, uno con rodaje, uno con equipo y uno con dos sucursales.</li>
-          <li><strong>&laquo;As&iacute; trabaj&aacute;s&raquo;</strong> &mdash; la &uacute;nica superficie oscura del panel, a prop&oacute;sito: separa <strong>lo que el sistema pens&oacute;</strong> de lo que solo registr&oacute;. Y arriba dice qu&eacute; ley&oacute; para decirlo.</li>
+          <li><strong>&laquo;As&iacute; trabaj&aacute;s&raquo;</strong> &mdash; el &uacute;nico bloque con el borde vivo, y arriba dice <strong>qu&eacute; ley&oacute;</strong> para afirmarlo: &laquo;le&iacute; tus &uacute;ltimos 57 turnos&raquo;.</li>
           <li><strong>&laquo;Para hoy&raquo;</strong> &mdash; hasta tres oportunidades, la primera es navegable.</li>
           <li><strong>Toc&aacute; &laquo;Revisar&raquo;</strong> &mdash; cada clienta muestra su porqu&eacute;; sac&aacute; a cualquiera con la &#10005;.</li>
           <li><strong>Prepar&aacute; los mensajes</strong> &mdash; los mand&aacute;s vos, la clienta reserva sola desde el enlace.</li>
@@ -1122,8 +1222,13 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
       return '<div class="pv-cand"><span class="av">'+c.av+'</span><div class="who"><b>'+c.n+'</b><div class="chips">'+chips(c)+'</div></div><button class="rm" data-act="rm" data-i="'+i+'" aria-label="Quitar a '+c.n+'">✕</button></div>';
     }).join('');
     return '' +
-    '<div class="pv-top"><button class="pv-back" data-act="back">← Pulse</button><span class="pv-state rev">Lista para revisar</span></div>' +
-    '<div class="fz-card">' +
+    '<div class="pv-behind" aria-hidden="true">' +
+      '<div class="pb-row"><span>15:00</span><div class="pb-evt hole">Balayage · Caro — se canceló</div></div>' +
+    '</div>' +
+    '<div class="pv-panel">' +
+      '<div class="pv-grab"></div>' +
+      '<div class="pv-top"><button class="pv-back" data-act="back">← Pulse</button><span class="pv-state rev">Lista para revisar</span></div>' +
+    '<div class="fz-card panel">' +
       '<div class="pv-dhead"><span class="t">Se liberó un turno</span><span class="when">Mañana · 15:00</span></div>' +
       '<div class="pv-dsub">Balayage · 1 h 30 · con Caro · cancelado hace 12 min</div>' +
       '<div class="fz-lamina fz-tint-lav" style="margin-top:10px;"><div class="pv-krow"><span class="pv-kico">✨</span><span class="fz-kicker">Por qué importa</span></div><div class="pv-quote">Encontramos 8 clientas compatibles. Las primeras 3 están cerca de su fecha habitual de regreso.</div></div>' +
@@ -1134,7 +1239,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
           '<div class="pv-tanda">✋ Ágora deja los '+rem.length+' mensajes escritos, uno por clienta. <b>Los mandás vos</b> desde tu WhatsApp — y si alguna reserva, te avisamos para que no sigas.</div>'
       ) +
       '<div class="pv-actions"><button class="fz-ghost" data-act="dismiss">Descartar</button><button class="fz-cta" data-act="approve"'+(empty?' disabled':'')+'>Preparar los mensajes</button></div>' +
-    '</div>';
+    '</div></div>';
   }
 
   function runHTML(){
@@ -1143,8 +1248,13 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
     var t1 = names.slice(0, 2).join(' y ');
     var waitT2 = names.length > 2 ? ', y ' + names[2] + ' queda para después' : '';
     return '' +
-    '<div class="pv-top"><button class="pv-back" data-act="back">← Pulse</button><span class="pv-state run" id="pv-runstate"><i></i>Ejecutándose</span></div>' +
-    '<div class="fz-card">' +
+    '<div class="pv-behind" aria-hidden="true">' +
+      '<div class="pb-row"><span>15:00</span><div class="pb-evt hole">Balayage · Caro — se canceló</div></div>' +
+    '</div>' +
+    '<div class="pv-panel">' +
+      '<div class="pv-grab"></div>' +
+      '<div class="pv-top"><button class="pv-back" data-act="back">← Pulse</button><span class="pv-state run" id="pv-runstate"><i></i>En curso</span></div>' +
+    '<div class="fz-card panel">' +
       '<div class="pv-dhead"><span class="t">Se liberó un turno</span><span class="when">Mañana · 15:00</span></div>' +
       '<div class="pv-dsub">Los mensajes quedaron listos. Esto es lo que pasa cuando los mandás:</div>' +
       '<div style="margin-top:4px;">' +
@@ -1154,7 +1264,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
         '<div class="pv-run-step" data-step="3"><span class="ic">🗓</span><span class="tx"><b>'+S.hero+' reservó desde el enlace.</b> Antes de confirmar, se validó que el horario siguiera libre.</span></div>' +
         '<div class="pv-run-step" data-step="4"><span class="ic ok">🏁</span><span class="tx"><div class="fz-lamina fz-tint-mint pv-success"><b>Turno ocupado — $32.000 recuperados.</b><div style="font-size:10.5px; color:var(--frost-ink-soft); margin-top:3px;">Te avisamos para que no le escribas a nadie más.</div><button class="fz-cta" data-act="finish">Volver al Pulse</button></div></span></div>' +
       '</div>' +
-    '</div>';
+    '</div></div>';
   }
 
   function render(){
