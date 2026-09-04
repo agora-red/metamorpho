@@ -125,6 +125,58 @@ h2 b{font-weight:600}
 .push .tm{font-size:8.5px;font-weight:500;color:var(--frost-muted);flex-shrink:0}
 
 /* ---------- editorial blocks ---------- */
+/* journey: 3 pasos con celular */
+.journey{display:grid;grid-template-columns:repeat(3,1fr);gap:2.2vw;width:100%;align-items:start}
+.jstep{display:flex;flex-direction:column;align-items:center;gap:16px;position:relative}
+.jstep .lbl{display:flex;align-items:center;gap:10px;align-self:flex-start}
+.jstep .lbl .no{font-size:11px;font-weight:600;letter-spacing:.14em;color:var(--frost-primary);background:var(--frost-primary-soft);border-radius:var(--r-chip);padding:5px 11px}
+.jstep .lbl .tx{font-size:16px;font-weight:600;letter-spacing:-.01em}
+.jstep .dsc{font-size:13.5px;font-weight:300;color:var(--frost-ink-soft);line-height:1.45;align-self:flex-start}
+.jstep .dsc b{font-weight:600;color:var(--frost-ink)}
+.jarrow{position:absolute;top:96px;right:-1.5vw;font-size:22px;color:var(--frost-faint);z-index:3}
+
+/* mock: poster QR */
+.poster{background:#fff;border-radius:16px;padding:20px 18px;box-shadow:var(--sh-md);border:1px solid var(--frost-border);width:214px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:11px}
+.poster .ttl{font-size:13px;font-weight:600;color:var(--b);letter-spacing:-.01em}
+.poster .qr{width:104px;height:104px;border-radius:10px;background:
+  repeating-linear-gradient(90deg,var(--b) 0 7px,transparent 7px 14px),
+  repeating-linear-gradient(0deg,var(--b) 0 7px,transparent 7px 14px);
+  background-color:#fff;border:5px solid #fff;outline:1px solid var(--b-soft)}
+.poster .sm{font-size:10.5px;font-weight:500;color:var(--frost-muted);line-height:1.35}
+
+/* mock: ficha de tienda */
+.storecard{background:#fff;border-radius:16px;padding:18px;box-shadow:var(--sh-md);border:1px solid var(--frost-border);width:214px;display:flex;flex-direction:column;gap:12px}
+.storecard .top{display:flex;gap:11px;align-items:center}
+.storecard .ic{width:46px;height:46px;border-radius:11px;background:var(--b);color:#fff;font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.storecard .nm{font-size:13.5px;font-weight:600;line-height:1.2}
+.storecard .dev{font-size:10.5px;font-weight:500;color:var(--frost-muted);margin-top:2px}
+.storecard .get{background:var(--frost-primary);color:#fff;text-align:center;font-size:12px;font-weight:600;padding:8px;border-radius:var(--r-chip)}
+.storecard .meta{display:flex;justify-content:space-between;font-size:9.5px;font-weight:500;color:var(--frost-muted);border-top:1px solid var(--frost-border-soft);padding-top:9px}
+
+/* login mock */
+.field{background:#fff;border:1px solid rgba(15,23,42,.12);border-radius:11px;padding:11px 12px;font-size:12.5px;font-weight:500;color:var(--frost-ink);display:flex;align-items:center;gap:8px}
+.field .ph{color:var(--frost-faint);font-weight:400}
+.codes{display:flex;gap:8px}
+.codes span{flex:1;aspect-ratio:1/1.15;border-radius:11px;border:1px solid rgba(15,23,42,.12);background:#fff;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:600;color:var(--b)}
+.codes span.empty{color:var(--frost-faint);border-style:dashed}
+
+/* stores comparison */
+.stores{display:grid;grid-template-columns:1fr 1fr;gap:2vw;width:100%;max-width:1160px}
+.storecol{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-card);padding:28px 26px;box-shadow:var(--sh-sm);display:flex;flex-direction:column;gap:16px}
+.storecol .plat{display:flex;align-items:center;gap:11px}
+.storecol .glyph{width:34px;height:34px;border-radius:9px;background:var(--frost-ink);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.storecol .plat .nm{font-size:19px;font-weight:600;letter-spacing:-.01em}
+.storecol .plat .sub2{font-size:11.5px;font-weight:500;color:var(--frost-muted);margin-top:1px}
+.storecol ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+.storecol li{font-size:14px;font-weight:300;color:var(--frost-ink-soft);line-height:1.4;padding-left:26px;position:relative}
+.storecol li b{font-weight:600;color:var(--frost-ink)}
+.storecol li::before{content:'✓';position:absolute;left:0;top:0;color:var(--frost-success-deep);font-weight:700}
+.storecol li.no{color:var(--frost-muted)}
+.storecol li.no::before{content:'—';color:var(--frost-faint)}
+.note{background:var(--frost-primary-soft);border:1px solid rgba(0,114,251,.18);border-radius:var(--r-card);padding:20px 24px;font-size:14px;font-weight:300;color:var(--frost-ink-soft);line-height:1.5;max-width:1160px;width:100%;margin-top:2vh}
+.note b{font-weight:600;color:var(--frost-ink)}
+.note .hd{display:block;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--frost-primary);margin-bottom:8px}
+
 /* numbered points column */
 .pts{max-width:42ch;display:flex;flex-direction:column;gap:30px;justify-content:center}
 .pt{display:flex;gap:16px;align-items:flex-start}
@@ -185,7 +237,7 @@ h2 b{font-weight:600}
 
 <!-- 2 · UNA APP, TU MARCA -->
 <section class="slide tint">
-  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">02 / 09</span></div>
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">02 / 11</span></div>
   <div class="head">
     <div class="kicker">La idea</div>
     <h2>La misma app. <b>Tu marca.</b></h2>
@@ -242,9 +294,121 @@ h2 b{font-weight:600}
   <div class="caption"><b>Dos negocios, una sola app</b> · cada uno con su identidad</div>
 </section>
 
-<!-- 3 · SUS TURNOS -->
+<!-- 3 · CÓMO LLEGA EL CLIENTE -->
 <section class="slide">
-  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">03 / 09</span></div>
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">03 / 11</span></div>
+  <div class="head">
+    <div class="kicker">El recorrido</div>
+    <h2>Cómo llega tu cliente a <b>tu espacio</b>.</h2>
+    <p class="cap">El enlace lo deja <b>adentro de tu negocio</b>, no en una lista de negocios. No tiene que buscarte ni elegirte entre otros.</p>
+  </div>
+  <div class="stage">
+    <div class="journey brand-salon">
+      <div class="jstep">
+        <div class="lbl"><span class="no">01</span><span class="tx">Lo ve</span></div>
+        <p class="dsc">El código QR del mostrador, el botón de tu página, o el mismo recordatorio del turno que ya le mandás.</p>
+        <div class="poster">
+          <div class="ttl">Hall Salon</div>
+          <div class="qr"></div>
+          <div class="sm">Escaneá y llevate<br>tu salón al celular</div>
+        </div>
+        <span class="jarrow">→</span>
+      </div>
+      <div class="jstep">
+        <div class="lbl"><span class="no">02</span><span class="tx">La baja</span></div>
+        <p class="dsc">Va derecho a la tienda de su teléfono. Una sola vez, y queda instalada.</p>
+        <div class="storecard">
+          <div class="top">
+            <span class="ic">HS</span>
+            <div><div class="nm">Hall Salon</div><div class="dev">Turnos, puntos y comunidad</div></div>
+          </div>
+          <div class="get">Obtener</div>
+          <div class="meta"><span>App Store</span><span>Google Play</span></div>
+        </div>
+        <span class="jarrow">→</span>
+      </div>
+      <div class="jstep">
+        <div class="lbl"><span class="no">03</span><span class="tx">Entra a lo tuyo</span></div>
+        <p class="dsc">Abre y ya está en <b>tu espacio</b>, con tu marca. Si tenía un turno, lo ve arriba de todo.</p>
+        <div class="phone sm" style="border-width:8px;border-radius:32px">
+          <div class="notch" style="width:88px;height:19px"></div>
+          <div class="screen" style="width:198px;height:auto">
+            <div class="appbar"><span class="mk">HS</span><span class="nm">Hall Salon</span><span class="av"></span></div>
+            <div class="body" style="padding:11px">
+              <div class="c hero">
+                <div class="lb">Tu próximo turno</div>
+                <div class="t1" style="font-size:14px">Jueves 11, 15:30</div>
+                <div class="t3" style="margin-top:4px">Color y corte · con Caro</div>
+              </div>
+              <div class="c"><div class="mini"><span class="thumb" style="width:30px;height:30px;font-size:13px">★</span><div><div class="t2">2.450 puntos</div><div class="t4">Nivel Oro</div></div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="caption"><b>Un enlace, tres pasos</b> · el cliente nunca ve una lista de negocios</div>
+</section>
+
+<!-- 4 · EL LOGIN -->
+<section class="slide tint">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">04 / 11</span></div>
+  <div class="head">
+    <div class="kicker">Entrar</div>
+    <h2>Su teléfono y un código. <b>Nada más.</b></h2>
+    <p class="cap">Sin contraseña que inventar y sin contraseña que olvidar — que es donde se cae la gente en las apps del rubro. Y si ya reservó con vos alguna vez, <b>su historial ya está adentro</b> esperándola.</p>
+  </div>
+  <div class="stage">
+    <div class="phone sm brand-salon">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="appbar"><span class="mk">HS</span><span class="nm">Hall Salon</span></div>
+        <div class="body" style="justify-content:center;gap:14px">
+          <div class="sect">Paso 1</div>
+          <div class="t1" style="font-size:17px">Tu teléfono</div>
+          <div class="t4" style="margin-top:-6px">Te mandamos un código por WhatsApp</div>
+          <div class="field"><span>+54</span><span class="ph">11 5555 5555</span></div>
+          <div class="row"><span class="btn solid">Continuar</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="phone sm brand-salon">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="appbar"><span class="mk">HS</span><span class="nm">Hall Salon</span></div>
+        <div class="body" style="justify-content:center;gap:14px">
+          <div class="sect">Paso 2</div>
+          <div class="t1" style="font-size:17px">Tu código</div>
+          <div class="t4" style="margin-top:-6px">Te lo mandamos al 11 5555 5555</div>
+          <div class="codes"><span>4</span><span>7</span><span>2</span><span class="empty">·</span></div>
+          <div class="t4" style="text-align:center;margin-top:2px">Reenviar en 0:24</div>
+        </div>
+      </div>
+    </div>
+    <div class="phone sm brand-salon">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="appbar"><span class="mk">HS</span><span class="nm">Hall Salon</span><span class="av"></span></div>
+        <div class="body">
+          <div class="c hero">
+            <div class="lb">Hola, Sofi</div>
+            <div class="t1">Jueves 11, 15:30</div>
+            <div class="t3" style="margin-top:5px">Color y corte · con Caro</div>
+          </div>
+          <div class="sect">Ya estaba acá</div>
+          <div class="c"><div class="mini"><span class="thumb">★</span><div><div class="t2">2.450 puntos</div><div class="t4">De tus 14 visitas</div></div></div></div>
+          <div class="c"><div class="mini"><span class="thumb" style="font-size:11px">14 AGO</span><div><div class="t2">Corte y brushing</div><div class="t4">Con Caro</div></div></div></div>
+        </div>
+        <div class="tabbar"><div class="on"><i></i>Turnos</div><div><i></i>Puntos</div><div><i></i>Comunidad</div><div><i></i>Cursos</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="caption"><b>Sin contraseñas</b> · el historial ya está, no hay que cargarlo de nuevo</div>
+</section>
+
+<!-- 5 · SUS TURNOS -->
+<section class="slide">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">05 / 11</span></div>
   <div class="head">
     <div class="kicker">Lo primero que ve</div>
     <h2>El próximo turno, <b>arriba de todo</b>.</h2>
@@ -296,9 +460,9 @@ h2 b{font-weight:600}
   <div class="caption"><b>Turnos</b> · próximo turno, repetir e historial</div>
 </section>
 
-<!-- 4 · LOS AVISOS -->
+<!-- 6 · LOS AVISOS -->
 <section class="slide tint">
-  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">04 / 09</span></div>
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">06 / 11</span></div>
   <div class="head">
     <div class="kicker">Lo que llega solo</div>
     <h2>Avisos con <b>tu nombre</b>, en la pantalla bloqueada.</h2>
@@ -331,9 +495,9 @@ h2 b{font-weight:600}
   <div class="caption"><b>Avisos</b> · recordatorios, confirmaciones y lugares que se liberan</div>
 </section>
 
-<!-- 5 · PUNTOS, COMUNIDAD, CURSOS -->
+<!-- 7 · PUNTOS, COMUNIDAD, CURSOS -->
 <section class="slide">
-  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">05 / 09</span></div>
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">07 / 11</span></div>
   <div class="head">
     <div class="kicker">Y todo lo demás, en el mismo lugar</div>
     <h2>Sus puntos, tu comunidad, tus cursos.</h2>
@@ -398,17 +562,17 @@ h2 b{font-weight:600}
   <div class="caption"><b>Puntos · Comunidad · Cursos</b> · las tres pestañas que hacen que no la borre</div>
 </section>
 
-<!-- 6 · EL GANCHO DIARIO -->
+<!-- 8 · EL GANCHO DIARIO -->
 <section class="slide ink center">
-  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">06 / 09</span></div>
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">08 / 11</span></div>
   <div class="kicker">Por qué esta app se queda en el celular</div>
   <h2 style="color:#fff;max-width:17ch;font-size:clamp(32px,4.4vw,60px);line-height:1.06">El turno de mañana hace que la abra.<br><b>Todo lo demás hace que no la borre.</b></h2>
   <p class="sub" style="max-width:52ch">Una app que solo sirve para reservar se abre tres veces al año y termina desinstalada. Cuando adentro también están <b>sus puntos, tu comunidad y sus cursos</b>, hay algo nuevo cada semana — y el ícono se queda.</p>
 </section>
 
-<!-- 7 · LO QUE NOS HACE ÚNICOS -->
+<!-- 9 · LO QUE NOS HACE ÚNICOS -->
 <section class="slide">
-  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">07 / 09</span></div>
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">09 / 11</span></div>
   <div class="head">
     <div class="kicker">Por qué nadie más puede hacer esto</div>
     <h2>Las apps del rubro hacen <b>una mitad o la otra</b>.</h2>
@@ -450,35 +614,52 @@ h2 b{font-weight:600}
   <div class="caption"><b>El cruce</b> · el turno es el gancho diario; el resto es la razón para quedarse</div>
 </section>
 
-<!-- 8 · CÓMO LLEGA -->
+<!-- 10 · DÓNDE ESTÁ LA APP -->
 <section class="slide tint">
-  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">08 / 09</span></div>
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">10 / 11</span></div>
   <div class="head">
-    <div class="kicker">Cómo llega al profesional</div>
-    <h2>Dos formas. En las dos, <b>no hace ningún trámite</b>.</h2>
+    <div class="kicker">Dónde está la app</div>
+    <h2>En las dos tiendas. Con <b>una diferencia</b>.</h2>
+    <p class="cap">Tu espacio con tu marca funciona igual en iPhone y en Android. Lo que cambia es si además podés tener <b>una app aparte, con tu nombre en la tienda</b>.</p>
   </div>
-  <div class="stage">
-    <div class="steps">
-      <div class="step">
-        <span class="tag">Para todos</span>
-        <h3>Tu espacio dentro de la app de Ágora</h3>
-        <p>Tus clientes bajan la app de Ágora y entran a <b>tu espacio</b>, con tu marca y todo lo tuyo adentro. Se llega desde tu página, un enlace o un código QR. Disponible en <b>iPhone y Android</b>.</p>
-        <div class="zero"><i></i>Cero trámites · cero costo para el profesional</div>
+  <div class="stage" style="flex-direction:column;gap:0">
+    <div class="stores">
+      <div class="storecol">
+        <div class="plat">
+          <span class="glyph"></span>
+          <div><div class="nm">App Store</div><div class="sub2">iPhone y iPad</div></div>
+        </div>
+        <ul>
+          <li>Tu cliente baja <b>la app de Ágora</b></li>
+          <li>Adentro entra a <b>tu espacio, con tu marca</b>: colores, logo, tipografía</li>
+          <li>Turnos, avisos, puntos, comunidad y cursos — <b>todo igual</b></li>
+          <li class="no">Sin ficha propia en la tienda: el nombre y el ícono que se bajan son los de Ágora</li>
+        </ul>
       </div>
-      <div class="step">
-        <span class="tag">Add-on</span>
-        <h3>Tu propia app en Google Play</h3>
-        <p>Una app aparte, <b>con el nombre y el ícono de tu negocio</b>. Tus clientes la buscan por tu nombre en la tienda y la encuentran. La publicamos y la mantenemos nosotros.</p>
-        <div class="zero"><i></i>Cero trámites · la publicamos nosotros</div>
+      <div class="storecol">
+        <div class="plat">
+          <span class="glyph">▶</span>
+          <div><div class="nm">Google Play</div><div class="sub2">Android</div></div>
+        </div>
+        <ul>
+          <li>Tu cliente baja <b>la app de Ágora</b></li>
+          <li>Adentro entra a <b>tu espacio, con tu marca</b>: colores, logo, tipografía</li>
+          <li>Turnos, avisos, puntos, comunidad y cursos — <b>todo igual</b></li>
+          <li>Y además: <b>tu propia app</b>, con tu nombre y tu ícono. Tus clientes te buscan por tu nombre en la tienda y te encuentran</li>
+        </ul>
       </div>
     </div>
+    <div class="note">
+      <span class="hd">Por qué la diferencia</span>
+      Apple no permite que publiquemos una app por cada negocio desde nuestra cuenta; <b>Google sí</b>. Por eso en iPhone tu marca vive adentro de la app, y en Android además podés tener la tuya. <b>En los dos casos vos no hacés ningún trámite</b>: sin cuentas de desarrollador, sin papeles y sin pagarle nada a las tiendas.
+    </div>
   </div>
-  <div class="caption"><b>Sin cuentas de desarrollador, sin papeles, sin pagos a las tiendas</b></div>
+  <div class="caption"><b>Mismo producto en las dos</b> · la ficha propia en la tienda es el extra de Android</div>
 </section>
 
-<!-- 9 · CIERRE -->
+<!-- 11 · CIERRE -->
 <section class="slide ink center">
-  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">09 / 09</span></div>
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">11 / 11</span></div>
   <div class="kicker">En una línea</div>
   <h1 style="font-size:clamp(34px,5vw,72px);max-width:20ch">El lugar donde tu<br>cliente <b>te tiene<br>a mano</b>, siempre.</h1>
   <p class="sub" style="max-width:46ch">Sus turnos, sus puntos, tu comunidad y tus cursos — con tu marca, en su celular, sin que tengas que hacer nada.</p>
