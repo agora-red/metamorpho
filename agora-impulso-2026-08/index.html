@@ -315,51 +315,87 @@ section.alt .mock-stage { background:linear-gradient(160deg,#F2F6FC 0%, #E9EFF8 
 .fz-card.panel { border:0; box-shadow:none; border-radius:0; background:transparent; padding-top:12px; }
 .fz-card.panel .pv-head, .fz-card.panel .pv-sig { display:none; }
 
-/* ══ Lenguaje «aurora» — el mismo que la ficha viva del cliente usa en producción
-   (flash/src/styles/_tailwind.css). El gradiente cónico ES el borde; el hijo lleva
-   fondo OPACO o el gradiente se ve a través de toda la card. ══ */
+/* ══════════════════════════════════════════════════════════════════════════
+   EL BLOQUE INTELIGENTE — la única superficie oscura del panel.
+   Decisión de diseño: el contraste no va en «todo oscuro» sino en separar lo
+   que el sistema PENSÓ de lo que el sistema REGISTRÓ. La semana y las
+   oportunidades quedan en Frost claro; los hechos derivados viven en una
+   superficie profunda con el gradiente de Ágora (azul → violeta → coral, los
+   mismos del isotipo) como borde vivo. Toda la audacia gastada en un solo lugar.
+   ══════════════════════════════════════════════════════════════════════════ */
 @property --fv-ang { syntax:'<angle>'; initial-value:0deg; inherits:false; }
 @keyframes fv-aurora-spin { to { --fv-ang:360deg; } }
-@keyframes fv-shimmer { to { transform:translateX(120%); } }
-@keyframes fv-twinkle { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.72; transform:scale(.9); } }
-@keyframes fv-rise { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
+@keyframes fv-scan { 0% { transform:translateX(-101%); } 100% { transform:translateX(101%); } }
+@keyframes fv-rise { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
+@keyframes fv-breathe { 0%,100% { opacity:.55; } 50% { opacity:1; } }
 
-.fv-shell { position:relative; border-radius:17px; padding:1px; background:conic-gradient(from var(--fv-ang) at 50% 50%, #0072fb, #7c3aed, #ff4658, #0072fb); animation:fv-aurora-spin 9s linear infinite; }
-.fv-core { position:relative; border-radius:16px; overflow:hidden; background:#FFFFFF; }
-.fv-core::after { content:''; position:absolute; inset:0; pointer-events:none; background:linear-gradient(105deg, transparent 30%, rgba(255,255,255,.6) 50%, transparent 70%); transform:translateX(-120%); animation:fv-shimmer 1.1s ease-out .35s 1 forwards; }
-.fv-twinkle { animation:fv-twinkle 3.2s ease-in-out infinite; }
+.fv-shell { position:relative; border-radius:18px; padding:1.5px;
+  background:conic-gradient(from var(--fv-ang) at 50% 50%, #0072FB, #7C3AED, #FF4658, #0072FB);
+  animation:fv-aurora-spin 7s linear infinite;
+  box-shadow:0 14px 38px -16px rgba(11,18,32,.75), 0 0 26px -8px rgba(124,58,237,.40); }
+.fv-core { position:relative; border-radius:16.5px; overflow:hidden; padding:14px 15px 15px;
+  background:
+    radial-gradient(120% 90% at 8% -20%, rgba(0,114,251,.30), transparent 62%),
+    radial-gradient(90% 80% at 108% 118%, rgba(255,70,88,.20), transparent 60%),
+    #0B1220; }
+/* Barrido de lectura: cruza una vez al abrir. Es el «lo miré recién». */
+.fv-core::after { content:''; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(100deg, transparent 34%, rgba(124,58,237,.30) 50%, transparent 66%);
+  transform:translateX(-101%); animation:fv-scan 1.5s cubic-bezier(.4,0,.2,1) .25s 1 forwards; }
 
-/* Los stats del bloque de hechos: tinta gradiente, como los de la ficha viva */
-.pv-fact .vl.ink { background:linear-gradient(120deg, var(--frost-ink) 30%, var(--frost-primary)); -webkit-background-clip:text; background-clip:text; color:transparent; font-weight:500; }
+/* Encabezado: qué es, y qué leyó para decirlo */
+.fv-top { display:flex; align-items:center; gap:8px; margin-bottom:12px; }
+.fv-mark { width:18px; height:18px; border-radius:6px; flex:none; display:inline-flex; align-items:center; justify-content:center;
+  background:linear-gradient(135deg, #0072FB, #7C3AED); box-shadow:0 0 14px -2px rgba(124,58,237,.85); }
+.fv-mark i { width:5px; height:5px; border-radius:50%; background:#fff; font-style:normal; animation:fv-breathe 2.4s ease-in-out infinite; }
+.fv-ttl { flex:1; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase;
+  background:linear-gradient(90deg, #BFD8FF, #E9D5FF); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.fv-read { font-size:9px; font-weight:500; letter-spacing:0.04em; color:#7D8FB0; white-space:nowrap; }
+.fv-read b { color:#BFD8FF; font-weight:600; font-variant-numeric:tabular-nums; }
+.fv-soft { font-size:8px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; border-radius:999px; padding:2px 7px;
+  background:rgba(124,58,237,.22); color:#D8C6FF; }
 
-/* Entrada escalonada de las láminas del panel */
-.pv-panel .fz-lamina, .pv-panel .fv-shell { animation:fv-rise .5s cubic-bezier(.22,1,.36,1) both; }
-.pv-panel .fv-shell { animation-delay:.08s; }
-.pv-panel .fz-lamina:nth-of-type(2) { animation-delay:.16s; }
-.pv-panel .fz-lamina:nth-of-type(3) { animation-delay:.24s; }
-.pv-panel .fz-lamina:nth-of-type(4) { animation-delay:.32s; }
+/* Los tres hechos: alto contraste sobre la superficie profunda */
+.fv-facts { display:grid; grid-template-columns:repeat(3,1fr); gap:0; }
+.fv-fact { padding:0 11px; border-left:1px solid rgba(255,255,255,.10); animation:fv-rise .5s cubic-bezier(.22,1,.36,1) both; }
+.fv-fact:first-child { padding-left:0; border-left:0; }
+.fv-fact:nth-child(1){ animation-delay:.30s; } .fv-fact:nth-child(2){ animation-delay:.40s; } .fv-fact:nth-child(3){ animation-delay:.50s; }
+.fv-fact .lb { display:block; font-size:8.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.14em; color:#6C7E9C; margin-bottom:4px; }
+.fv-fact .vl { font-size:17px; font-weight:400; letter-spacing:-0.015em; line-height:1.15; white-space:nowrap; color:#F2F6FF;
+  text-shadow:0 0 22px rgba(124,58,237,.45); }
 
-/* Grabber del panel, como un bottom-sheet nativo */
+/* Las líneas de detalle */
+.fv-lines { margin-top:13px; padding-top:11px; border-top:1px solid rgba(255,255,255,.09); display:flex; flex-direction:column; gap:6px; }
+.fv-line { display:flex; align-items:flex-start; gap:8px; font-size:10.5px; font-weight:300; line-height:1.4; color:#C3D0E6;
+  animation:fv-rise .5s cubic-bezier(.22,1,.36,1) both; }
+.fv-line:nth-child(1){ animation-delay:.60s; } .fv-line:nth-child(2){ animation-delay:.68s; } .fv-line:nth-child(3){ animation-delay:.76s; }
+.fv-line::before { content:''; margin-top:5px; width:4px; height:4px; border-radius:50%; flex:none;
+  background:linear-gradient(135deg, #0072FB, #FF4658); box-shadow:0 0 8px rgba(0,114,251,.8); }
+.fv-line b { color:#FFFFFF; font-weight:600; }
+
+/* Pestañas de sede, en oscuro */
+.fv-tabs { display:flex; gap:5px; margin-bottom:11px; }
+.fv-tabs span { font-size:9px; font-weight:600; border-radius:999px; padding:3px 9px; background:rgba(255,255,255,.07); color:#8FA1BF; }
+.fv-tabs span.on { background:linear-gradient(135deg, #0072FB, #7C3AED); color:#fff; box-shadow:0 0 14px -3px rgba(124,58,237,.9); }
+
+/* Entrada escalonada de las láminas claras del panel */
+.pv-panel .fz-lamina { animation:fv-rise .5s cubic-bezier(.22,1,.36,1) both; }
+.pv-panel .fz-lamina:nth-of-type(1){ animation-delay:.55s; }
+.pv-panel .fz-lamina:nth-of-type(2){ animation-delay:.66s; }
+.pv-panel .fz-lamina:nth-of-type(3){ animation-delay:.77s; }
 .pv-grab { width:38px; height:4px; border-radius:99px; background:rgba(15,23,42,0.14); margin:9px auto 0; }
+.pv-pnl-head { position:relative; }
+.pv-pnl-head::after { content:''; position:absolute; left:14px; top:6px; width:60px; height:34px; border-radius:50%;
+  background:radial-gradient(closest-side, rgba(124,58,237,0.30), transparent); filter:blur(9px); pointer-events:none; }
+.pv-appacts .ai-spark { position:relative; }
+.pv-appacts .ai-spark::after { content:''; position:absolute; inset:-4px; border-radius:50%; border:1.5px solid rgba(124,58,237,0.45);
+  animation:orb-ring 2.6s ease-out infinite; pointer-events:none; }
+@keyframes orb-ring { 0% { transform:scale(.85); opacity:.9; } 70%,100% { transform:scale(1.35); opacity:0; } }
 
 @media (prefers-reduced-motion: reduce) {
-  .fv-shell, .fv-twinkle, .fv-core::after, .pv-panel, .pv-panel .fz-lamina, .pv-panel .fv-shell { animation:none; }
+  .fv-shell, .fv-core::after, .fv-fact, .fv-line, .pv-panel, .pv-panel .fz-lamina, .fv-mark i, .pv-appacts .ai-spark::after { animation:none; }
+  .pv-appacts .ai-spark::after { opacity:0; }
 }
-
-/* Remate del bloque aurora: el kicker en marca, los stats con más presencia y un
-   halo detrás del orbe — el panel tiene que leerse como «esto lo pensó algo». */
-.fv-core .fz-kicker { color:var(--frost-primary); letter-spacing:0.15em; }
-.fv-core .pv-kico.slate { background:linear-gradient(135deg, rgba(0,114,251,0.16), rgba(124,58,237,0.16)); }
-.fv-core .pv-fact .vl { font-size:16px; white-space:nowrap; }
-.pv-fact { min-width:0; }
-.fv-core .pv-fact .lb { color:rgba(15,23,42,0.40); }
-.fv-core .pv-fpill { background:linear-gradient(180deg, rgba(15,23,42,0.055), rgba(15,23,42,0.035)); }
-.pv-pnl-head { position:relative; }
-.pv-pnl-head::after { content:''; position:absolute; left:14px; top:6px; width:60px; height:34px; border-radius:50%; background:radial-gradient(closest-side, rgba(0,114,251,0.28), transparent); filter:blur(9px); pointer-events:none; }
-.pv-appacts .ai-spark { position:relative; }
-.pv-appacts .ai-spark::after { content:''; position:absolute; inset:-4px; border-radius:50%; border:1.5px solid rgba(0,114,251,0.35); animation:orb-ring 2.6s ease-out infinite; pointer-events:none; }
-@keyframes orb-ring { 0% { transform:scale(.85); opacity:.9; } 70%,100% { transform:scale(1.35); opacity:0; } }
-@media (prefers-reduced-motion: reduce) { .pv-appacts .ai-spark::after { animation:none; opacity:0; } }
 
 /* Navegación de las 5 vistas (hero) */
 .viewnav { display:flex; flex-wrap:wrap; gap:8px; margin-top:26px; }
@@ -771,10 +807,10 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
   <div class="wrap">
     <span class="kicker blue">Vista 2 &middot; Qu&eacute; es</span>
     <h2 class="sec-title">Tres tiempos, un solo lugar: <strong>el &#10024; de la barra</strong></h2>
-    <p class="sec-sub">Pulse sale del panel y pasa a vivir <strong>al lado de la campana</strong>, como un panel que se abre desde cualquier pantalla. <strong>El prototipo es funcional</strong>: eleg&iacute; el tipo de negocio, toc&aacute; el &#10024;, sac&aacute; una candidata y prepar&aacute; los mensajes.</p>
+    <p class="sec-sub">Pulse sale del panel y pasa a vivir <strong>al lado de la campana</strong>. Los hechos derivados viven en una superficie propia, oscura: <strong>lo que el sistema pens&oacute; no se parece a lo que solo anot&oacute;</strong>, y se nota de un vistazo cu&aacute;nto mir&oacute; para decirlo. <strong>El prototipo es funcional</strong>: eleg&iacute; el tipo de negocio y prob&aacute; el circuito.</p>
 
     <div class="tri-grid" style="margin-bottom:36px;">
-      <div class="tri"><span class="tri-num">1</span><h3>As&iacute; trabaj&aacute;s</h3><p class="tri-win">90 d&iacute;as</p><p>Tu d&iacute;a fuerte, tu franja, tu servicio estrella, cu&aacute;ntas clientas vuelven, cu&aacute;ntos turnos moviste vos y cu&aacute;ntos ellas. <strong>Describe, no aconseja.</strong></p><span class="tri-tag new">El bloque nuevo</span></div>
+      <div class="tri"><span class="tri-num">1</span><h3>As&iacute; trabaj&aacute;s</h3><p class="tri-win">90 d&iacute;as</p><p>Tu d&iacute;a fuerte, tu franja, tu servicio estrella, cu&aacute;ntas clientas vuelven, cu&aacute;ntos turnos moviste vos y cu&aacute;ntos ellas &mdash; con <strong>cu&aacute;ntos turnos ley&oacute;</strong> para afirmarlo. <strong>Describe, no aconseja.</strong></p><span class="tri-tag new">El bloque nuevo</span></div>
       <div class="tri"><span class="tri-num">2</span><h3>Tu semana</h3><p class="tri-win">7 d&iacute;as</p><p>Reservas, ingresos y clientas nuevas con su comparaci&oacute;n, m&aacute;s la recomendaci&oacute;n cuando hay algo que recomendar. <strong>Tal como est&aacute; hoy.</strong></p><span class="tri-tag">Ya existe</span></div>
       <div class="tri"><span class="tri-num">3</span><h3>Para hoy</h3><p class="tri-win">minutos</p><p>El turno que se liber&oacute; reci&eacute;n y las clientas que encajan, con su porqu&eacute; visible. <strong>Prepara el mensaje; lo mand&aacute;s vos.</strong></p><span class="tri-tag imp">Impulso</span></div>
     </div>
@@ -808,7 +844,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
         <h3>Qu&eacute; est&aacute;s viendo</h3>
         <ul>
           <li><strong>Cambi&aacute; el tipo de negocio arriba</strong> &mdash; el mismo Pulse le&iacute;do por uno de dos semanas, uno con rodaje, uno con equipo y uno con dos sucursales.</li>
-          <li><strong>&laquo;As&iacute; trabaj&aacute;s&raquo;</strong> &mdash; los hechos del trimestre. Sin flechas ni consejos: describe, y crece con el negocio.</li>
+          <li><strong>&laquo;As&iacute; trabaj&aacute;s&raquo;</strong> &mdash; la &uacute;nica superficie oscura del panel, a prop&oacute;sito: separa <strong>lo que el sistema pens&oacute;</strong> de lo que solo registr&oacute;. Y arriba dice qu&eacute; ley&oacute; para decirlo.</li>
           <li><strong>&laquo;Para hoy&raquo;</strong> &mdash; hasta tres oportunidades, la primera es navegable.</li>
           <li><strong>Toc&aacute; &laquo;Revisar&raquo;</strong> &mdash; cada clienta muestra su porqu&eacute;; sac&aacute; a cualquiera con la &#10005;.</li>
           <li><strong>Prepar&aacute; los mensajes</strong> &mdash; los mand&aacute;s vos, la clienta reserva sola desde el enlace.</li>
@@ -978,41 +1014,46 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
       lbl:'Recien empieza', sub:'2 semanas &middot; 6 turnos',
       kicker:'Tus primeros pasos',
       tiles:[['Turnos','6'],['Clientas','5'],['Volvieron','1']],
-      pills:['Ana volvi&oacute; a las 3 semanas &mdash; tu primera clienta que repite',
-             'Con 10 turnos vamos a poder decirte tu d&iacute;a y tu franja'],
+      read:'le&iacute; tus <b>6</b> turnos',
+      lines:['<b>Ana</b> volvi&oacute; a las 3 semanas &mdash; tu primera clienta que repite',
+             'Con <b>10</b> turnos vamos a poder decirte tu d&iacute;a y tu franja'],
       soft:true
     },
     joven: {
       lbl:'Primeros meses', sub:'2 meses &middot; 17 turnos',
       kicker:'As&iacute; ven&iacute;s trabajando',
       tiles:[['Tu d&iacute;a','Jueves'],['Tu franja','A la tarde'],['Volvieron','3']],
-      pills:['Por ahora tus jueves mandan &mdash; 4 de tus 12 turnos',
-             'Todav&iacute;a no hay suficiente para hablar de tu servicio estrella'],
+      read:'le&iacute; <b>17</b> turnos &middot; 2 meses',
+      lines:['Por ahora tus jueves mandan &mdash; <b>4 de tus 12</b> turnos',
+             'Todav&iacute;a no alcanza para hablar de tu servicio estrella'],
       soft:true
     },
     rodaje: {
       lbl:'Con rodaje', sub:'8 meses &middot; sola',
       kicker:'As&iacute; trabaj&aacute;s',
       tiles:[['Tu d&iacute;a','Jueves'],['Tu franja','A la tarde'],['Vuelven','La mitad']],
-      pills:['4 de cada 10 turnos son jueves',
-             'Balayage es el 38% de lo que hac&eacute;s',
-             'Este mes moviste 12 turnos vos y 2 tus clientas']
+      read:'le&iacute; tus &uacute;ltimos <b>57</b> turnos &middot; 90 d&iacute;as',
+      lines:['<b>4 de cada 10</b> turnos son jueves',
+             'Balayage es el <b>38%</b> de lo que hac&eacute;s',
+             'Este mes moviste <b>12</b> turnos vos y <b>2</b> tus clientas']
     },
     equipo: {
       lbl:'Con equipo', sub:'4 profesionales &middot; 1 local',
       kicker:'As&iacute; trabaja el local',
       tiles:[['Su d&iacute;a','S&aacute;bado'],['Su franja','A la tarde'],['Vuelven','6 de 10']],
-      pills:['Caro: 38 clientas propias &middot; vuelven 7 de cada 10',
-             'Meli: 24 clientas propias &middot; vuelven 5 de cada 10',
-             'El s&aacute;bado concentra 3 de cada 10 turnos del local']
+      read:'le&iacute; <b>212</b> turnos &middot; <b>4</b> profesionales',
+      lines:['<b>Caro</b>: 38 clientas propias &middot; vuelven 7 de cada 10',
+             '<b>Meli</b>: 24 clientas propias &middot; vuelven 5 de cada 10',
+             'El s&aacute;bado concentra <b>3 de cada 10</b> turnos del local']
     },
     sedes: {
       lbl:'Varias sucursales', sub:'2 locales &middot; 9 profesionales',
       kicker:'As&iacute; trabaja Palermo',
       tiles:[['Su d&iacute;a','Viernes'],['Su franja','A la tarde'],['Vuelven','5 de 10']],
-      pills:['Palermo trabaja viernes; Belgrano, s&aacute;bados',
-             'Color es el 41% de Palermo y el 22% de Belgrano',
-             'Belgrano suma 2 clientas nuevas por semana m&aacute;s que Palermo'],
+      read:'le&iacute; <b>486</b> turnos &middot; <b>2</b> sedes',
+      lines:['<b>Palermo</b> trabaja viernes; <b>Belgrano</b>, s&aacute;bados',
+             'Color es el <b>41%</b> de Palermo y el <b>22%</b> de Belgrano',
+             'Belgrano suma <b>2</b> clientas nuevas por semana m&aacute;s que Palermo'],
       sedes:true
     }
   };
@@ -1020,20 +1061,23 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
   function factsHTML(){
     var c = CASOS[S.caso] || CASOS.rodaje;
     var tiles = c.tiles.map(function(t){
-      return '<div class="pv-fact"><span class="lb">'+t[0]+'</span><span class="vl ink">'+t[1]+'</span></div>';
+      return '<div class="fv-fact"><span class="lb">'+t[0]+'</span><span class="vl">'+t[1]+'</span></div>';
     }).join('');
-    var pills = c.pills.map(function(p){ return '<span class="pv-fpill">'+p+'</span>'; }).join('');
+    var lines = c.lines.map(function(l){ return '<div class="fv-line">'+l+'</div>'; }).join('');
     var tabs = c.sedes
-      ? '<div class="pv-sedes"><span class="on">Palermo</span><span>Belgrano</span><span>Todo el negocio</span></div>'
+      ? '<div class="fv-tabs"><span class="on">Palermo</span><span>Belgrano</span><span>Todo el negocio</span></div>'
       : '';
-    return '<div class="fv-shell"><div class="fv-core"><div class="fz-lamina fz-tint-slate" style="border:0; border-radius:16px;">' +
-      '<div class="pv-krow"><span class="pv-kico slate fv-twinkle">&#10024;</span>' +
-      '<span class="fz-kicker">'+c.kicker+'</span>' +
-      (c.soft ? '<span class="pv-softpill">creciendo</span>' : '') + '</div>' +
+    return '<div class="fv-shell"><div class="fv-core">' +
+      '<div class="fv-top">' +
+        '<span class="fv-mark"><i></i></span>' +
+        '<span class="fv-ttl">'+c.kicker+'</span>' +
+        (c.soft ? '<span class="fv-soft">creciendo</span>' : '') +
+        '<span class="fv-read">'+c.read+'</span>' +
+      '</div>' +
       tabs +
-      '<div class="pv-facts">'+tiles+'</div>' +
-      '<div class="pv-factpills">'+pills+'</div>' +
-    '</div></div></div>';
+      '<div class="fv-facts">'+tiles+'</div>' +
+      '<div class="fv-lines">'+lines+'</div>' +
+    '</div></div>';
   }
 
   function homeHTML(){
