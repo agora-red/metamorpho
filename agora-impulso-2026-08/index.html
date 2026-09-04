@@ -916,13 +916,13 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
     </div>
 
     <div class="caso-picker" id="caso-picker">
-      <span class="cp-lbl">Mir&aacute; el Pulse de&hellip;</span>
+      <span class="cp-lbl">El Pulse de negocios reales &mdash; datos de producci&oacute;n al 4 sep</span>
       <div class="cp-opts">
-        <button class="cp" data-caso="nuevo"><b>Reci&eacute;n empieza</b><span>2 semanas &middot; 6 turnos</span></button>
-        <button class="cp" data-caso="joven"><b>Primeros meses</b><span>2 meses &middot; 17 turnos</span></button>
-        <button class="cp on" data-caso="rodaje"><b>Con rodaje</b><span>8 meses &middot; sola</span></button>
-        <button class="cp" data-caso="equipo"><b>Con equipo</b><span>4 profesionales</span></button>
-        <button class="cp" data-caso="sedes"><b>Varias sucursales</b><span>2 locales</span></button>
+        <button class="cp" data-caso="nuevo"><b>Reci&eacute;n empieza</b><span>mayhuanails &middot; 4 semanas</span></button>
+        <button class="cp" data-caso="joven"><b>Primeros meses</b><span>aluenstudio &middot; 2,5 meses</span></button>
+        <button class="cp on" data-caso="rodaje"><b>Con rodaje</b><span>cmlashes &middot; 9 meses</span></button>
+        <button class="cp" data-caso="equipo"><b>Con equipo</b><span>hallsalon &middot; 6 profesionales</span></button>
+        <button class="cp" data-caso="sedes"><b>Varias sucursales</b><span>ejemplo &middot; 2 locales</span></button>
       </div>
     </div>
 
@@ -943,8 +943,8 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
       <aside class="pv-notes">
         <h3>Qu&eacute; est&aacute;s viendo</h3>
         <ul>
-          <li><strong>Cambi&aacute; el tipo de negocio arriba</strong> &mdash; el mismo Pulse le&iacute;do por uno de dos semanas, uno con rodaje, uno con equipo y uno con dos sucursales.</li>
-          <li><strong>&laquo;As&iacute; trabaj&aacute;s&raquo;</strong> &mdash; el &uacute;nico bloque con el borde vivo, y arriba dice <strong>qu&eacute; ley&oacute;</strong> para afirmarlo: &laquo;le&iacute; tus &uacute;ltimos 57 turnos&raquo;.</li>
+          <li><strong>Cambi&aacute; el negocio arriba</strong> &mdash; son <strong>negocios reales de producci&oacute;n</strong> con sus n&uacute;meros del 4 de septiembre. Cada uno dice algo distinto porque cada uno tiene distinto para decir.</li>
+          <li><strong>&laquo;As&iacute; trabaj&aacute;s&raquo;</strong> &mdash; el &uacute;nico bloque con el borde vivo, y arriba dice <strong>cu&aacute;ntos turnos ley&oacute;</strong> para afirmarlo. Fijate en cmlashes: sus turnos est&aacute;n repartidos, as&iacute; que <strong>no le inventa un d&iacute;a fuerte</strong>.</li>
           <li><strong>&laquo;Para hoy&raquo;</strong> &mdash; hasta tres oportunidades, la primera es navegable.</li>
           <li><strong>Toc&aacute; &laquo;Revisar&raquo;</strong> &mdash; cada clienta muestra su porqu&eacute;; sac&aacute; a cualquiera con la &#10005;.</li>
           <li><strong>Prepar&aacute; los mensajes</strong> &mdash; los mand&aacute;s vos, la clienta reserva sola desde el enlace.</li>
@@ -1109,52 +1109,68 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
   /* Los cinco casos que muestra el prototipo: el bloque de hechos crece con el
      negocio y se adapta a como trabaja. Los porcentajes de la seccion 00b salen
      de la medicion del 4/9/2026 sobre la base de produccion. */
+  /* Cinco negocios REALES de producción, medidos el 4/9/2026 sobre sus últimos
+     90 días. Los hechos que no llegan al umbral (día ≥30%, franja ≥50%,
+     servicio ≥30%) simplemente no aparecen — por eso cada ficha dice distinto.
+     Nombres de clientas cambiados; los del negocio son sus usuarios públicos. */
   var CASOS = {
     nuevo: {
-      lbl:'Recien empieza', sub:'2 semanas &middot; 6 turnos',
+      lbl:'Reci&eacute;n empieza', sub:'mayhuanails &middot; 4 semanas',
       kicker:'Tus primeros pasos',
-      tiles:[['Turnos','6'],['Clientas','5'],['Volvieron','1']],
-      read:'le&iacute; tus <b>6</b> turnos',
-      lines:['<b>Ana</b> volvi&oacute; a las 3 semanas &mdash; tu primera clienta que repite',
-             'Con <b>10</b> turnos vamos a poder decirte tu d&iacute;a y tu franja'],
-      soft:true
+      read:'le&iacute; tus <b>32</b> turnos',
+      tiles:[['Turnos','32'],['Clientas','27'],['Volvieron','6']],
+      lines:['Tus <b>jueves</b> ya se notan: 1 de cada 3 turnos',
+             'Capping es la <b>mitad</b> de lo que hac&eacute;s',
+             'Te reagendaron <b>7</b> turnos este mes &mdash; los moviste vos'],
+      soft:true,
+      week:[['Reservas','32',null],['Clientas nuevas','27',null]],
+      tip:'De tus 27 clientas, <b>6 ya volvieron</b>. Es tu primer se&ntilde;al de que el servicio engancha.'
     },
     joven: {
-      lbl:'Primeros meses', sub:'2 meses &middot; 17 turnos',
+      lbl:'Primeros meses', sub:'aluenstudio &middot; 2 meses y medio',
       kicker:'As&iacute; ven&iacute;s trabajando',
-      tiles:[['Tu d&iacute;a','Jueves'],['Tu franja','A la tarde'],['Volvieron','3']],
-      read:'le&iacute; <b>17</b> turnos &middot; 2 meses',
-      lines:['Por ahora tus jueves mandan &mdash; <b>4 de tus 12</b> turnos',
-             'Todav&iacute;a no alcanza para hablar de tu servicio estrella'],
-      soft:true
+      read:'le&iacute; <b>81</b> turnos &middot; 90 d&iacute;as',
+      tiles:[['Tu franja','A la noche'],['Tu servicio','Kapping'],['Vuelven','Casi la mitad']],
+      lines:['<b>6 de cada 10</b> turnos son a la noche',
+             'Kapping es el <b>62%</b> de lo que hac&eacute;s',
+             'Todav&iacute;a no hay un d&iacute;a fuerte: los ten&eacute;s repartidos'],
+      soft:true,
+      week:[['Reservas','81',null],['Clientas','52',null]],
+      tip:'Cancelaste <b>10</b> turnos este mes y tus clientas solo 2. Si fue por agenda, mover el horario puede evitarlo.'
     },
     rodaje: {
-      lbl:'Con rodaje', sub:'8 meses &middot; sola',
+      lbl:'Con rodaje', sub:'cmlashes &middot; 9 meses, sola',
       kicker:'As&iacute; trabaj&aacute;s',
-      tiles:[['Tu d&iacute;a','Jueves'],['Tu franja','A la tarde'],['Vuelven','La mitad']],
-      read:'le&iacute; tus &uacute;ltimos <b>57</b> turnos &middot; 90 d&iacute;as',
-      lines:['<b>4 de cada 10</b> turnos son jueves',
-             'Balayage es el <b>38%</b> de lo que hac&eacute;s',
-             'Este mes moviste <b>12</b> turnos vos y <b>2</b> tus clientas']
+      read:'le&iacute; tus &uacute;ltimos <b>118</b> turnos &middot; 90 d&iacute;as',
+      tiles:[['Tu servicio','Combo Lashbrow'],['Vuelven','1 de cada 2'],['Clientas','89']],
+      lines:['El <b>combo Lashbrow</b> es el 31% de lo que hac&eacute;s',
+             'De tus <b>318</b> clientas del a&ntilde;o, casi la mitad volvi&oacute;',
+             'Tus turnos est&aacute;n <b>repartidos</b>: no hay un d&iacute;a ni una franja que mande'],
+      week:[['Reservas','118',null],['Clientas','89',null]],
+      tip:'Cero cancelaciones tuyas en el mes. Tus clientas tampoco cancelan: <b>la agenda te est&aacute; funcionando</b>.'
     },
     equipo: {
-      lbl:'Con equipo', sub:'4 profesionales &middot; 1 local',
+      lbl:'Con equipo', sub:'hallsalon &middot; 6 profesionales',
       kicker:'As&iacute; trabaja el local',
-      tiles:[['Su d&iacute;a','S&aacute;bado'],['Su franja','A la tarde'],['Vuelven','6 de 10']],
-      read:'le&iacute; <b>212</b> turnos &middot; <b>4</b> profesionales',
-      lines:['<b>Caro</b>: 38 clientas propias &middot; vuelven 7 de cada 10',
-             '<b>Meli</b>: 24 clientas propias &middot; vuelven 5 de cada 10',
-             'El s&aacute;bado concentra <b>3 de cada 10</b> turnos del local']
+      read:'le&iacute; <b>785</b> turnos &middot; <b>6</b> profesionales',
+      tiles:[['Su d&iacute;a','S&aacute;bado'],['Su servicio','Corte corto'],['Vuelven','M&aacute;s de la mitad']],
+      lines:['<b>Rodrigo</b> retiene mejor: vuelven 7 de cada 10 de sus clientas',
+             '<b>Agustin</b> atiende m&aacute;s gente: 520 clientas en el a&ntilde;o',
+             'El s&aacute;bado concentra <b>3 de cada 10</b> turnos del local'],
+      week:[['Reservas','785',null],['Clientas','446',null]],
+      tip:'El local cancel&oacute; <b>34</b> turnos este mes y las clientas <b>1</b>. Vale mirar qu&eacute; pas&oacute; esas veces.'
     },
     sedes: {
-      lbl:'Varias sucursales', sub:'2 locales &middot; 9 profesionales',
+      lbl:'Varias sucursales', sub:'ejemplo &middot; 2 locales',
       kicker:'As&iacute; trabaja Palermo',
-      tiles:[['Su d&iacute;a','Viernes'],['Su franja','A la tarde'],['Vuelven','5 de 10']],
       read:'le&iacute; <b>486</b> turnos &middot; <b>2</b> sedes',
+      tiles:[['Su d&iacute;a','Viernes'],['Su franja','A la tarde'],['Vuelven','5 de 10']],
       lines:['<b>Palermo</b> trabaja viernes; <b>Belgrano</b>, s&aacute;bados',
              'Color es el <b>41%</b> de Palermo y el <b>22%</b> de Belgrano',
              'Belgrano suma <b>2</b> clientas nuevas por semana m&aacute;s que Palermo'],
-      sedes:true
+      sedes:true,
+      week:[['Reservas','486',null],['Clientas','291',null]],
+      tip:'Belgrano crece m&aacute;s r&aacute;pido en clientas nuevas. <b>Palermo retiene mejor</b> a las que ya tiene.'
     }
   };
 
@@ -1180,6 +1196,19 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
     '</div></div>';
   }
 
+  /* «Tu semana» y la recomendación también salen del negocio elegido: son los
+     números reales de sus últimos 90 días, no de una semana inventada. */
+  function weekHTML(){
+    var c = CASOS[S.caso] || CASOS.rodaje;
+    var stats = c.week.map(function(w){
+      return '<div class="pv-stat"><span class="lb">'+w[0]+'</span><span class="vals"><span class="num">'+w[1]+'</span></span></div>';
+    }).join('');
+    return '<div class="fz-lamina fz-tint-blue">'+stats+'</div>' +
+      '<div class="fz-lamina fz-tint-lav"><div class="pv-krow"><span class="pv-kico">✨</span>' +
+      '<span class="fz-kicker">Una recomendación</span></div>' +
+      '<div class="pv-quote">'+c.tip+'</div></div>';
+  }
+
   function homeHTML(){
     var opp1 = S.done
       ? '<div class="pv-opp"><span class="ic done">✓</span><div class="tx"><b>Turno ocupado — reservó '+S.hero+'</b><span>Balayage con Caro · mañana 15:00 · $32.000 recuperados</span></div><span class="st-done">Completada</span></div>'
@@ -1197,12 +1226,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
     '<div class="fz-card panel">' +
       '<div class="pv-sig"><span class="rule"></span><svg viewBox="0 0 96 16" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M0 8 H30 l3 -5.5 l4 11 l4 -9 l3 3.5 H96"/></svg></div>' +
       factsHTML() +
-      '<div class="fz-lamina fz-tint-blue">' +
-        '<div class="pv-stat"><span class="lb">Reservas</span><span class="vals"><span class="num">31</span><span class="fz-delta pos">↑ 12%</span></span></div>' +
-        '<div class="pv-stat"><span class="lb">Ingresos</span><span class="vals"><span class="num"><small>$</small>486.000</span><span class="fz-delta pos">↑ 8%</span></span></div>' +
-        '<div class="pv-stat"><span class="lb">Clientas nuevas</span><span class="vals"><span class="num">6</span><span class="fz-delta flat">= 0%</span></span></div>' +
-      '</div>' +
-      '<div class="fz-lamina fz-tint-lav"><div class="pv-krow"><span class="pv-kico">✨</span><span class="fz-kicker">Una recomendación</span></div><div class="pv-quote">Tus martes a la tarde quedaron flojos tres semanas seguidas. Una promo puntual para ese día puede moverlos.</div></div>' +
+      weekHTML() +
       '<div class="fz-lamina fz-tint-sun"><div class="pv-krow"><span class="pv-kico sun">⚡</span><span class="fz-kicker">Para hoy</span><span class="pv-newpill">NUEVO</span></div>' +
         opp1 +
         '<div class="pv-opp"><span class="ic">👋</span><div class="tx"><b>Seis clientas cerca de su fecha de regreso</b><span>Reactivación lista para revisar y aprobar</span></div><button class="go" data-act="soon">Revisar</button></div>' +
