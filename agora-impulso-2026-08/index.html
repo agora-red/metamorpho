@@ -295,8 +295,29 @@ section.alt .mock-stage { background:linear-gradient(160deg,#F2F6FC 0%, #E9EFF8 
 .ev p strong { font-weight:600; color:var(--frost-ink); }
 .ev-foot { margin-top:16px; font-size:11px; font-weight:300; color:var(--frost-faint); line-height:1.5; }
 .ev-foot .mono { font-variant-numeric:tabular-nums; color:var(--frost-muted); }
+/* «¿Y si…?» — los estados operativos dichos como preguntas del profesional */
+.qa-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:16px; }
+.qa { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-item); padding:15px 17px; box-shadow:var(--sh-xs); }
+.qa b { display:block; font-size:12.5px; font-weight:600; color:var(--frost-ink); margin-bottom:5px; }
+.qa p { margin:0; font-size:12px; font-weight:300; line-height:1.5; color:var(--frost-ink-soft); }
+
+/* Escalera de antigüedad — qué ve cada negocio según cuánto lleva */
+.stair { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:32px; }
+.st-card { position:relative; background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); padding:20px; box-shadow:var(--sh-sm); display:flex; flex-direction:column; }
+.st-card.on { border-color:rgba(0,114,251,0.30); background:linear-gradient(170deg, rgba(0,114,251,0.045) 0%, #FFFFFF 60%); }
+.st-when { font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--frost-primary); margin-bottom:8px; }
+.st-card.pre .st-when { color:var(--frost-faint); }
+.st-share { font-size:26px; font-weight:200; letter-spacing:-0.02em; line-height:1; color:var(--frost-ink); font-variant-numeric:tabular-nums; }
+.st-share small { font-size:14px; font-weight:300; color:var(--frost-muted); }
+.st-share em { display:block; font-style:normal; font-size:10.5px; font-weight:500; color:var(--frost-muted); margin-top:4px; letter-spacing:0; }
+.st-says { margin-top:14px; padding-top:12px; border-top:1px solid var(--frost-border-soft); }
+.st-says b { display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:rgba(15,23,42,0.45); margin-bottom:7px; }
+.st-says span { display:block; font-size:12px; font-weight:300; line-height:1.5; color:var(--frost-ink-soft); padding-left:13px; position:relative; margin-bottom:4px; }
+.st-says span::before { content:''; position:absolute; left:0; top:7px; width:4px; height:4px; border-radius:50%; background:var(--frost-primary); opacity:0.45; }
+.st-says.mute span::before { background:var(--frost-faint); }
+@media (max-width:980px) { .stair { grid-template-columns:repeat(2,1fr); } .qa-grid { grid-template-columns:repeat(2,1fr); } }
 @media (max-width:880px) {
-  .tri-grid, .ev-grid { grid-template-columns:1fr; }
+  .tri-grid, .ev-grid, .qa-grid, .stair { grid-template-columns:1fr; }
 }
 
 /* criterios */
@@ -340,6 +361,19 @@ section.alt .mock-stage { background:linear-gradient(160deg,#F2F6FC 0%, #E9EFF8 
 .pv-fact .lb { display:block; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; color:rgba(15,23,42,0.45); margin-bottom:3px; }
 .pv-fact .vl { font-weight:300; font-size:15px; letter-spacing:-0.01em; line-height:1.1; color:var(--frost-ink); }
 .pv-factpills { display:flex; flex-wrap:wrap; gap:5px; margin-top:10px; padding-top:9px; border-top:1px solid rgba(15,23,42,0.08); }
+.caso-picker { margin-bottom:20px; }
+.cp-lbl { display:block; font-size:11px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:var(--frost-muted); margin-bottom:10px; }
+.cp-opts { display:flex; flex-wrap:wrap; gap:8px; }
+.cp { cursor:pointer; text-align:left; font-family:inherit; background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-btn); padding:9px 14px; box-shadow:var(--sh-xs); transition:border-color .15s, box-shadow .15s, background .15s; }
+.cp b { display:block; font-size:12.5px; font-weight:600; color:var(--frost-ink); }
+.cp span { display:block; font-size:10.5px; font-weight:300; color:var(--frost-muted); margin-top:1px; }
+.cp:hover { border-color:rgba(0,114,251,0.35); }
+.cp.on { border-color:var(--frost-primary); background:var(--frost-primary-soft); box-shadow:var(--sh-glow); }
+.cp.on b { color:var(--frost-primary-hover); }
+.pv-softpill { font-size:8.5px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; border-radius:999px; padding:2px 7px; background:rgba(0,114,251,0.10); color:var(--frost-primary-hover); }
+.pv-sedes { display:flex; gap:5px; margin-bottom:10px; }
+.pv-sedes span { font-size:9.5px; font-weight:600; border-radius:999px; padding:3px 9px; background:rgba(15,23,42,0.05); color:var(--frost-muted); }
+.pv-sedes span.on { background:var(--frost-primary); color:#fff; }
 .pv-fpill { font-size:10px; font-weight:500; line-height:1.35; border-radius:999px; padding:3px 9px; background:rgba(15,23,42,0.05); color:var(--frost-ink-soft); }
 .fz-kicker { font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.16em; color:#94A3B8; font-variant-numeric:tabular-nums; }
 .fz-dot { width:6px; height:6px; border-radius:50%; background:var(--frost-primary); display:inline-block; animation:fz-pulse 1.8s ease-in-out infinite; }
@@ -676,7 +710,97 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
         <p><strong>vale el hueco mediano.</strong> Es la plata que Impulso va a buscar, y la razón por la que el circuito arranca por la cancelación.</p>
       </div>
     </div>
-    <p class="ev-foot">Muestras aleatorias sobre la base de producción: 300 a 500 negocios activos según la medición, ventanas de 30 y 90 días. El detalle de cada consulta está en <span class="mono">docs/research-inteligencia-simple-profesional.md</span>.</p>
+    <p class="ev-foot">Muestras aleatorias sobre la base de producción: 300 a 700 negocios activos según la medición, ventanas de 30 y 90 días. El detalle de cada consulta está en <span class="mono">docs/research-inteligencia-simple-profesional.md</span>.</p>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <span class="kicker blue">00b · La escalera</span>
+    <h2 class="sec-title">Un negocio de dos semanas <strong>no tiene hábitos todavía</strong></h2>
+    <p class="sec-sub">Uno de cada cuatro negocios activos arrancó hace menos de tres meses. El Pulse <strong>no les puede hablar igual</strong> — y tampoco puede quedarse mudo. Por eso el bloque crece con el negocio: dice lo que ya se puede afirmar, y anuncia lo que viene.</p>
+
+    <div class="stair">
+      <div class="st-card pre">
+        <span class="st-when">Primeras semanas</span>
+        <span class="st-share">13<small>%</small><em>de los negocios activos · 2 turnos en 90 días</em></span>
+        <div class="st-says mute">
+          <b>El Pulse dice</b>
+          <span>Llevás 6 turnos y conociste 5 clientas.</span>
+          <span>Tu primera clienta volvió: Ana, a las tres semanas.</span>
+          <span>Cuando llegues a 10 turnos vamos a poder decirte tu día y tu franja.</span>
+        </div>
+        <div class="st-says mute" style="border:0; padding-top:8px; margin-top:6px;">
+          <b>Todavía no</b>
+          <span>Día fuerte, franja, servicio estrella: sin volumen no se afirman.</span>
+        </div>
+      </div>
+      <div class="st-card">
+        <span class="st-when">Primeros meses</span>
+        <span class="st-share">14<small>%</small><em>1 a 3 meses · 17 turnos · 62% ya tiene un hecho</em></span>
+        <div class="st-says">
+          <b>El Pulse dice</b>
+          <span>Por ahora tus jueves mandan — 4 de tus 12 turnos.</span>
+          <span>Trabajás sobre todo a la tarde.</span>
+          <span>Tres clientas ya volvieron una segunda vez.</span>
+        </div>
+        <div class="st-says mute" style="border:0; padding-top:8px; margin-top:6px;">
+          <b>Cómo lo dice</b>
+          <span>«Por ahora» — el hecho es real pero joven, y el copy lo admite.</span>
+        </div>
+      </div>
+      <div class="st-card on">
+        <span class="st-when">Con rodaje</span>
+        <span class="st-share">42<small>%</small><em>3 a 12 meses · 45 turnos · 79% con hechos</em></span>
+        <div class="st-says">
+          <b>El Pulse dice</b>
+          <span>Los jueves son tu día: 4 de cada 10 turnos.</span>
+          <span>Trabajás sobre todo a la tarde.</span>
+          <span>Balayage es el 38% de lo que hacés.</span>
+          <span>Vuelve 1 de cada 2 clientas.</span>
+        </div>
+        <div class="st-says mute" style="border:0; padding-top:8px; margin-top:6px;">
+          <b>El bloque, completo</b>
+          <span>Es el caso que muestra el prototipo de acá abajo.</span>
+        </div>
+      </div>
+      <div class="st-card on">
+        <span class="st-when">Más de un año</span>
+        <span class="st-share">31<small>%</small><em>60 turnos · 83% con hechos</em></span>
+        <div class="st-says">
+          <b>Suma lo que solo el tiempo da</b>
+          <span>Todo lo anterior, más firme.</span>
+          <span>Septiembre suele ser tu mes flojo.</span>
+          <span>Tus clientas de hace un año: 34 siguen viniendo.</span>
+        </div>
+        <div class="st-says mute" style="border:0; padding-top:8px; margin-top:6px;">
+          <b>La regla que no cambia</b>
+          <span>Si un hecho no llega al umbral, no se dice. Mejor callado que obvio.</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="split-lbl" style="margin-top:44px;">Y funciona igual trabajes como trabajes</p>
+    <div class="tri-grid">
+      <div class="tri">
+        <span class="tri-num">50<small style="font-size:16px;">%</small></span>
+        <h3>Sola, sin equipo</h3>
+        <p class="tri-win">la mitad de los negocios</p>
+        <p>El bloque habla de <strong>tu</strong> agenda: tu día, tu franja, tu servicio. No aparece nada de equipo, porque no hay equipo. <strong>Ninguna tarjeta vacía diciendo «no tenés profesionales».</strong></p>
+      </div>
+      <div class="tri">
+        <span class="tri-num">48<small style="font-size:16px;">%</small></span>
+        <h3>Con equipo en un local</h3>
+        <p class="tri-win">mediana de 4 profesionales</p>
+        <p>Suma una línea por profesional: <strong>cuántas clientas propias tiene y cuántas vuelven con él</strong>. La dueña lo ve completo; cada profesional ve lo suyo, con el mismo permiso que ya usa la Analítica.</p>
+      </div>
+      <div class="tri">
+        <span class="tri-num">1,5<small style="font-size:16px;">%</small></span>
+        <h3>Con varias sucursales</h3>
+        <p class="tri-win">32 negocios, y creciendo</p>
+        <p>Los hechos se leen <strong>por sucursal y en total</strong>: el día fuerte de Palermo no es el de Belgrano. El turno liberado que Impulso propone recuperar es siempre <strong>de una sede concreta</strong>, con las clientas de esa sede.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -684,7 +808,18 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
   <div class="wrap">
     <span class="kicker blue">01 · El prototipo — probalo</span>
     <h2 class="sec-title">Es tu Pulse de siempre — <strong>ahora te lee y actúa</strong></h2>
-    <p class="sec-sub">Mismo nombre, misma card, misma estética — Pulse suma dos bloques: <strong>«Así trabajás»</strong> arriba y <strong>«Para hoy»</strong> abajo. <strong>El prototipo es funcional</strong>: sacá una candidata, aprobá y mirá el circuito correr.</p>
+    <p class="sec-sub">Mismo nombre, misma card, misma estética — Pulse suma dos bloques: <strong>«Así trabajás»</strong> arriba y <strong>«Para hoy»</strong> abajo. <strong>El prototipo es funcional</strong>: cambiá el tipo de negocio, sacá una candidata, prepará los mensajes y mirá el circuito correr.</p>
+
+    <div class="caso-picker" id="caso-picker">
+      <span class="cp-lbl">Mir&aacute; el Pulse de&hellip;</span>
+      <div class="cp-opts">
+        <button class="cp" data-caso="nuevo"><b>Reci&eacute;n empieza</b><span>2 semanas &middot; 6 turnos</span></button>
+        <button class="cp" data-caso="joven"><b>Primeros meses</b><span>2 meses &middot; 17 turnos</span></button>
+        <button class="cp on" data-caso="rodaje"><b>Con rodaje</b><span>8 meses &middot; sola</span></button>
+        <button class="cp" data-caso="equipo"><b>Con equipo</b><span>4 profesionales</span></button>
+        <button class="cp" data-caso="sedes"><b>Varias sucursales</b><span>2 locales</span></button>
+      </div>
+    </div>
 
     <div class="proto-stage">
       <div class="pv-phone">
@@ -703,11 +838,12 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
       <aside class="pv-notes">
         <h3>Qué estás viendo</h3>
         <ul>
-          <li><strong>«Así trabajás», el bloque de hechos</strong> — cómo trabaja el negocio en 90 días. Sin flechas ni consejos: describe.</li>
+          <li><strong>Cambiá el caso arriba</strong> — el mismo Pulse visto por un negocio de dos semanas, uno con rodaje, uno con equipo y uno con dos sucursales.</li>
+          <li><strong>«Así trabajás», el bloque de hechos</strong> — cómo trabaja el negocio en 90 días. Sin flechas ni consejos: describe, y crece con el negocio.</li>
           <li><strong>La card de Pulse que ya existe</strong> — tu semana y la recomendación siguen igual.</li>
           <li><strong>«Para hoy», el bloque nuevo</strong> — hasta tres oportunidades por día.</li>
           <li><strong>Tocá «Revisar»</strong> — cada clienta muestra su porqué; sacá a cualquiera con la ✕.</li>
-          <li><strong>Aprobá y mirá el circuito</strong> — tanda chica, respuesta, reserva, freno automático.</li>
+          <li><strong>Prepará los mensajes y mirá el circuito</strong> — los mandás vos, la clienta reserva sola desde el enlace.</li>
           <li><strong>El botón ✨ del topbar</strong> — desde cualquier pantalla, un toque te trae acá.</li>
         </ul>
         <div class="pv-notes-foot">Bandeja completa: <strong>Ahora · Programadas · Automáticas · Historial</strong> — con entradas desde Agenda, Clientes y Analítica. En mobile, la aprobación usa el SaveBar de Frost.</div>
@@ -750,20 +886,14 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
       </div>
     </div>
 
-    <p class="split-lbl" style="margin-top:36px;">Los estados operativos, completos desde el día uno</p>
-    <div class="states">
-      <span><i class="st-b"></i>Analizando</span>
-      <span><i class="st-b"></i>Lista para revisar</span>
-      <span><i class="st-n"></i>Sin candidatos suficientes</span>
-      <span><i class="st-b"></i>Aprobada / programada</span>
-      <span><i class="st-b"></i>Ejecutándose</span>
-      <span><i class="st-y"></i>Parcialmente enviada</span>
-      <span><i class="st-g"></i>Horario ocupado</span>
-      <span><i class="st-g"></i>Completada</span>
-      <span><i class="st-n"></i>Vencida</span>
-      <span><i class="st-n"></i>Descartada</span>
-      <span><i class="st-r"></i>Fallida y reintentable</span>
-      <span><i class="st-y"></i>Pausada por permisos o límites</span>
+    <p class="split-lbl" style="margin-top:40px;">¿Y si…? — lo que pasa en cada caso, dicho como pasa</p>
+    <div class="qa-grid">
+      <div class="qa"><b>¿Y si no tengo a quién avisarle?</b><p>No te aparece nada. Impulso solo habla cuando encontró clientas que de verdad encajan.</p></div>
+      <div class="qa"><b>¿Y si alguien reserva el horario?</b><p>Se frena solo. Nadie más recibe el mensaje, y el turno queda marcado como recuperado.</p></div>
+      <div class="qa"><b>¿Y si no le escribo a nadie?</b><p>No pasa nada. La oportunidad vence sola cuando pasa el horario, sin insistirte.</p></div>
+      <div class="qa"><b>¿Y si le escribo y no contesta?</b><p>Queda registrado que ya la contactaste, para que Impulso no te la vuelva a proponer mañana.</p></div>
+      <div class="qa"><b>¿Y si me equivoqué de clienta?</b><p>La sacás con la ✕ antes de preparar los mensajes. Y como cada mensaje lo enviás vos, nunca sale nada que no hayas leído.</p></div>
+      <div class="qa"><b>¿Y si no quiero que me proponga nada?</b><p>Apagás el bloque desde Ajustes. El resto del Pulse sigue funcionando igual.</p></div>
     </div>
   </div>
 </section>
@@ -778,7 +908,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
       <div class="node"><div class="n">2</div><h4>Explica</h4><p>Por qué importa, en lenguaje simple.</p></div>
       <div class="node"><div class="n">3</div><h4>Prepara</h4><p>Una acción concreta: destinatarios, mensaje, momento.</p></div>
       <div class="node you"><div class="n">4 · Vos</div><h4>Aprobás</h4><p>Según el nivel de riesgo de la acción.</p></div>
-      <div class="node"><div class="n">5</div><h4>Ejecuta</h4><p>Por tandas, con límites y frenos.</p></div>
+      <div class="node you"><div class="n">5 · Vos</div><h4>Enviás</h4><p>Desde tu WhatsApp o tu mail, con tu nombre.</p></div>
       <div class="node"><div class="n">6</div><h4>Mide</h4><p>El resultado, y aprende de tu decisión.</p></div>
     </div>
     <div class="loop-back">↺ &nbsp;y cada resultado mejora la próxima oportunidad</div>
@@ -828,7 +958,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
       </div>
 
       <div class="sframe">
-        <div class="frame-cap"><span class="fnum">4</span><div class="cap-t"><b>Le llega por WhatsApp</b><span>primero lo mandás vos; con plantillas de Meta, sale solo</span></div><span class="fwho cli">Tu clienta</span></div>
+        <div class="frame-cap"><span class="fnum">4</span><div class="cap-t"><b>Se lo mandás vos</b><span>Ágora escribe el mensaje, vos apretás enviar desde tu WhatsApp</span></div><span class="fwho cli">Tu clienta</span></div>
         <div class="shot">
           <div class="wa-mock">
             <div class="wa-bar"><span class="wa-av">EC</span><div><b>Estudio Caro</b><span>en línea</span></div></div>
@@ -853,7 +983,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
       </div>
 
       <div class="sframe">
-        <div class="frame-cap"><span class="fnum">6</span><div class="cap-t"><b>Turno ocupado, circuito cerrado</b><span>las tandas pendientes se frenan solas</span></div><span class="fwho agora">Ágora</span></div>
+        <div class="frame-cap"><span class="fnum">6</span><div class="cap-t"><b>Turno ocupado, circuito cerrado</b><span>te avisamos para que no sigas escribiendo</span></div><span class="fwho agora">Ágora</span></div>
         <div class="shot">
           <div class="mini">
             <div class="pv-opp" style="padding-top:2px;"><span class="ic done">✓</span><div class="tx"><b>Turno ocupado — reservó Ana</b><span>Balayage con Caro · mañana 15:00</span></div><span class="st-done">Completada</span></div>
@@ -864,8 +994,8 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
 
     </div>
     <div class="tanda-note">
-      <h4>Por qué por tandas</h4>
-      <p>Primero <strong>2–3 clientas</strong>; se amplía sólo si el turno sigue libre y se frena solo cuando alguien reserva. Nunca convocás a diez personas para un lugar.</p>
+      <h4>Por qué de a pocas</h4>
+      <p>Impulso te propone <strong>2 o 3 clientas</strong>, no diez. Un lugar es un lugar: si convocás a todas, la que llega segunda se queda afuera y la próxima vez no contesta. Si ninguna responde, ampliás la lista vos.</p>
     </div>
   </div>
 </section>
@@ -952,8 +1082,8 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
       <span class="a-node">Políticas de riesgo<small>por tipo de acción</small></span><span class="a-arr">→</span>
       <span class="a-node">Bandeja de Impulso<small>persistida</small></span><span class="a-arr">→</span>
       <span class="a-node hot">Revisión en Flash<small>el freno humano</small></span><span class="a-arr">→</span>
-      <span class="a-node">Ejecutor idempotente<small>action runs</small></span><span class="a-arr">→</span>
-      <span class="a-node">WhatsApp<small>plantillas y tandas</small></span><span class="a-arr">→</span>
+      <span class="a-node">Mensaje preparado<small>copiar o abrir el chat</small></span><span class="a-arr">→</span>
+      <span class="a-node hot">Lo mandás vos<small>tu WhatsApp, tu mail</small></span><span class="a-arr">→</span>
       <span class="a-node hot">Reserva en Nightwing<small>validación final</small></span><span class="a-arr">→</span>
       <span class="a-node">Atribución y métricas<small>auditoría</small></span>
     </div>
@@ -1028,34 +1158,32 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
 
 <section>
   <div class="wrap">
-    <span class="kicker blue">08 · WhatsApp, el prerrequisito</span>
-    <h2 class="sec-title">El contacto proactivo <strong>necesita plantillas de Meta</strong></h2>
-    <p class="sec-sub">Por eso la entrega es en dos etapas — y la primera <strong>no depende de nadie</strong>.</p>
+    <span class="kicker blue">08 · El mensaje</span>
+    <h2 class="sec-title">Ágora prepara el mensaje. <strong>Lo mandás vos.</strong></h2>
+    <p class="sec-sub">Impulso <strong>no manda nada por su cuenta</strong>. Prepara a quién, qué decir y con qué enlace — y el mensaje sale de tu WhatsApp o de tu mail, con tu nombre y tu tono. La relación con tu clienta sigue siendo tuya.</p>
     <div class="wa-stages">
       <div class="wa-st hot">
-        <span class="tag">Primero · sin depender de Meta</span>
-        <h3>Vos enviás, Ágora mide</h3>
-        <p>Pulse te deja el mensaje listo: <strong>un toque lo copia o abre WhatsApp</strong> con todo cargado. El enlace lleva atribución igual.</p>
+        <span class="tag">Así funciona</span>
+        <h3>Un toque y el mensaje está escrito</h3>
+        <p>Copiás el texto o abrís el chat con todo cargado. <strong>El enlace lleva la atribución</strong>, así que la reserva que salga de ahí queda contada aunque vos hayas apretado enviar.</p>
         <div class="wa-mini">
           <div class="wm-msg">¡Hola Ana! Se nos liberó un lugar mañana a las 15:00 para tu balayage con Caro. ¿Te lo guardamos? Reservá acá → agora.red/r/…</div>
-          <div class="wm-btns"><span class="fz-ghost wm-b">⧉ Copiar</span><span class="fz-cta wm-b">Abrir WhatsApp</span></div>
+          <div class="wm-btns"><span class="fz-ghost wm-b">⧉ Copiar</span><span class="fz-cta wm-b">Abrir el chat</span></div>
         </div>
         <ul>
-          <li>Se mide todo el recorrido: <strong>selección → envío → clic → reserva</strong></li>
-          <li>Valida que la recomendación sirve, sin esperar aprobaciones externas</li>
+          <li>Se mide el recorrido completo: <strong>selección → envío → clic → reserva</strong></li>
+          <li>Podés editar el texto antes de mandarlo — es tuyo, no una plantilla cerrada</li>
         </ul>
       </div>
       <div class="wa-st">
-        <span class="tag">Después · automatización completa</span>
-        <h3>Con plantillas aprobadas, sale solo</h3>
-        <p>Plantillas para <strong>horario disponible, reactivación, próxima reserva y pedido de seña</strong> — enviadas por tandas, con límites y horarios silenciosos.</p>
-        <div class="wa-mock" style="margin:12px 0;">
-          <div class="wa-bar"><span class="wa-av">EC</span><div><b>Estudio Caro</b><span>mensaje de plantilla</span></div></div>
-          <div class="wa-chat"><div class="wa-in">Se liberó un horario para tu <b>balayage</b>: mañana <b>15:00</b> con Caro. Reservá acá → <u>agora.red/r/…</u></div></div>
-        </div>
-        <ul>
-          <li>La IA sólo elige entre <strong>variantes aprobadas</strong> — nunca texto libre disfrazado de plantilla</li>
-          <li>Respeta opt-out, números inválidos, deduplicación y costos</li>
+        <span class="tag">Lo que Impulso no hace</span>
+        <h3>Nada sale sin que lo toques</h3>
+        <p>No hay envío automático, ni plantillas que salgan solas, ni mensajes a nombre de Ágora. <strong>Si no apretás enviar, no pasa nada.</strong></p>
+        <ul style="margin-top:12px;">
+          <li>Sin campañas automáticas de reactivación</li>
+          <li>Sin contactar a alguien que no elegiste</li>
+          <li>Sin consumir tu pack de WhatsApp: sale de tu teléfono</li>
+          <li>El mail es la otra puerta, para la clienta que no dio teléfono</li>
         </ul>
       </div>
     </div>
@@ -1074,24 +1202,19 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
         <div class="out"><b>Salida</b>Oportunidades confiables sin acciones externas</div>
       </div>
       <div class="step hot">
-        <div class="tag">Fase 1</div><h3>MVP asistido</h3>
-        <p>Bandeja y detalle en Flash, mensaje listo para <strong>copiar o abrir WhatsApp</strong>, deep link con atribución.</p>
+        <div class="tag">Fase 1</div><h3>El turno que se liberó</h3>
+        <p>Bandeja y detalle en Flash, mensaje listo para <strong>copiar o abrir el chat</strong>, enlace con atribución. Lo mandás vos.</p>
         <div class="out"><b>Salida</b>Los profesionales usan la recomendación y recuperan turnos</div>
       </div>
       <div class="step">
-        <div class="tag">Fase 2</div><h3>Ejecución integrada</h3>
-        <p>Plantillas de Meta aprobadas, envío automático por tandas, límites, quiet hours y freno al ocuparse el horario.</p>
-        <div class="out"><b>Salida</b>Circuito completamente ejecutable desde Ágora</div>
+        <div class="tag">Fase 2</div><h3>Más motivos, misma regla</h3>
+        <p>Reactivación, próxima reserva según cadencia, cumpleaños y pedidos de seña — cada uno con su lista y su mensaje preparado. <strong>Ninguno se envía solo.</strong></p>
+        <div class="out"><b>Salida</b>Los otros casos corriendo sobre el mismo motor</div>
       </div>
       <div class="step">
-        <div class="tag">Fase 3</div><h3>Retención</h3>
-        <p>Reactivación, próxima reserva según cadencia, cumpleaños, bienvenida y pedidos de seña.</p>
-        <div class="out"><b>Salida</b>Los casos P1 corriendo sobre el mismo motor</div>
-      </div>
-      <div class="step">
-        <div class="tag">Fase 4</div><h3>Piloto automático</h3>
-        <p>Simulación «esto habría hecho Impulso», activación explícita, límites diarios y botón global de pausa. <strong>Autonomía sólo de bajo riesgo.</strong></p>
-        <div class="out"><b>Salida</b>Automatización que el negocio entiende y controla</div>
+        <div class="tag">Fase 3</div><h3>Menos toques</h3>
+        <p>Listas que se arman solas, mensajes agrupados para mandar de a varios, y memoria de a quién ya contactaste. <strong>El envío sigue siendo tuyo.</strong></p>
+        <div class="out"><b>Salida</b>El mismo circuito, con menos fricción</div>
       </div>
     </div>
   </div>
@@ -1139,7 +1262,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
       <div>El profesional puede <strong>quitar destinatarios</strong></div>
       <div>Toda mutación valida <strong>permisos y estado actual</strong></div>
       <div>Aprobar dos veces <strong>no duplica acciones</strong></div>
-      <div>Ocupar el horario <strong>cancela las tandas pendientes</strong></div>
+      <div>Al ocuparse el horario, <strong>Ágora te avisa para que frenes</strong></div>
       <div>Un enlace vencido muestra <strong>alternativas</strong>, no un checkout inválido</div>
       <div>La reserva <strong>conserva la atribución</strong> hasta completarse</div>
       <div>El profesional puede <strong>descartar y explicar por qué</strong></div>
@@ -1164,7 +1287,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
       <div class="src"><b>Pulse ya tiene su card en el dashboard</b><p>La superficie que se expande es exactamente esta — misma estética, mismo nombre, un bloque nuevo.</p><code>flash · widgets/PulseCardView.tsx</code></div>
       <div class="src"><b>Nightwing ya interpreta fecha y hora</b><p>El flujo del servicio ya preselecciona fecha y horario — la base del deep link con atribución.</p><code>nightwing · Service/RightSection/Options.tsx</code></div>
     </div>
-    <div class="pipe-note" style="margin-top:28px;"><strong>Regla:</strong> no duplicar Pulse, segmentación ni disponibilidad · selección determinística · la IA sólo explica y redacta · sin envíos automáticos hasta las plantillas de Meta.</div>
+    <div class="pipe-note" style="margin-top:28px;"><strong>Regla:</strong> no duplicar Pulse, segmentación ni disponibilidad · selección determinística · la IA sólo explica y redacta · <strong>Ágora nunca manda el mensaje: lo mandás vos</strong>.</div>
   </div>
 </section>
 
@@ -1193,6 +1316,71 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
   function remaining(){ return CANDS.filter(function(_, i){ return S.removed.indexOf(i) === -1; }); }
   function chips(c){ return c.chips.map(function(ch){ return '<span class="'+(ch[1]?'hot':'')+'">'+ch[0]+'</span>'; }).join(''); }
 
+  /* Los cinco casos que muestra el prototipo: el bloque de hechos crece con el
+     negocio y se adapta a como trabaja. Los porcentajes de la seccion 00b salen
+     de la medicion del 4/9/2026 sobre la base de produccion. */
+  var CASOS = {
+    nuevo: {
+      lbl:'Recien empieza', sub:'2 semanas &middot; 6 turnos',
+      kicker:'Tus primeros pasos',
+      tiles:[['Turnos','6'],['Clientas','5'],['Volvieron','1']],
+      pills:['Ana volvi&oacute; a las 3 semanas &mdash; tu primera clienta que repite',
+             'Con 10 turnos vamos a poder decirte tu d&iacute;a y tu franja'],
+      soft:true
+    },
+    joven: {
+      lbl:'Primeros meses', sub:'2 meses &middot; 17 turnos',
+      kicker:'As&iacute; ven&iacute;s trabajando',
+      tiles:[['Tu d&iacute;a','Jueves'],['Tu franja','A la tarde'],['Volvieron','3']],
+      pills:['Por ahora tus jueves mandan &mdash; 4 de tus 12 turnos',
+             'Todav&iacute;a no hay suficiente para hablar de tu servicio estrella'],
+      soft:true
+    },
+    rodaje: {
+      lbl:'Con rodaje', sub:'8 meses &middot; sola',
+      kicker:'As&iacute; trabaj&aacute;s',
+      tiles:[['Tu d&iacute;a','Jueves'],['Tu franja','A la tarde'],['Vuelven','1 de cada 2']],
+      pills:['4 de cada 10 turnos son jueves',
+             'Balayage es el 38% de lo que hac&eacute;s',
+             'Este mes moviste 12 turnos vos y 2 tus clientas']
+    },
+    equipo: {
+      lbl:'Con equipo', sub:'4 profesionales &middot; 1 local',
+      kicker:'As&iacute; trabaja el local',
+      tiles:[['Su d&iacute;a','S&aacute;bado'],['Su franja','A la tarde'],['Vuelven','6 de cada 10']],
+      pills:['Caro: 38 clientas propias &middot; vuelven 7 de cada 10',
+             'Meli: 24 clientas propias &middot; vuelven 5 de cada 10',
+             'El s&aacute;bado concentra 3 de cada 10 turnos del local']
+    },
+    sedes: {
+      lbl:'Varias sucursales', sub:'2 locales &middot; 9 profesionales',
+      kicker:'As&iacute; trabaja Palermo',
+      tiles:[['Su d&iacute;a','Viernes'],['Su franja','A la tarde'],['Vuelven','5 de cada 10']],
+      pills:['Palermo trabaja viernes; Belgrano, s&aacute;bados',
+             'Color es el 41% de Palermo y el 22% de Belgrano',
+             'Belgrano suma 2 clientas nuevas por semana m&aacute;s que Palermo'],
+      sedes:true
+    }
+  };
+
+  function factsHTML(){
+    var c = CASOS[S.caso] || CASOS.rodaje;
+    var tiles = c.tiles.map(function(t){
+      return '<div class="pv-fact"><span class="lb">'+t[0]+'</span><span class="vl">'+t[1]+'</span></div>';
+    }).join('');
+    var pills = c.pills.map(function(p){ return '<span class="pv-fpill">'+p+'</span>'; }).join('');
+    var tabs = c.sedes
+      ? '<div class="pv-sedes"><span class="on">Palermo</span><span>Belgrano</span><span>Todo el negocio</span></div>'
+      : '';
+    return '<div class="fz-lamina fz-tint-slate"><div class="pv-krow"><span class="pv-kico slate">&#129517;</span>' +
+      '<span class="fz-kicker">'+c.kicker+'</span>' +
+      (c.soft ? '<span class="pv-softpill">creciendo</span>' : '') + '</div>' +
+      tabs +
+      '<div class="pv-facts">'+tiles+'</div>' +
+      '<div class="pv-factpills">'+pills+'</div>' +
+    '</div>';
+  }
+
   function homeHTML(){
     var opp1 = S.done
       ? '<div class="pv-opp"><span class="ic done">✓</span><div class="tx"><b>Turno ocupado — reservó '+S.hero+'</b><span>Balayage con Caro · mañana 15:00 · $32.000 recuperados</span></div><span class="st-done">Completada</span></div>'
@@ -1201,18 +1389,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
     '<div class="fz-card">' +
       '<div class="pv-head"><div><div class="pv-kickrow"><span class="fz-dot"></span><span class="fz-kicker">Pulse · semana del 17–23 ago</span></div><div class="pv-title">Tu semana<i>.</i></div></div><span class="pv-chev">⌃</span></div>' +
       '<div class="pv-sig"><span class="rule"></span><svg viewBox="0 0 96 16" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M0 8 H30 l3 -5.5 l4 11 l4 -9 l3 3.5 H96"/></svg></div>' +
-      '<div class="fz-lamina fz-tint-slate"><div class="pv-krow"><span class="pv-kico slate">🧭</span><span class="fz-kicker">Así trabajás</span></div>' +
-        '<div class="pv-facts">' +
-          '<div class="pv-fact"><span class="lb">Tu día</span><span class="vl">Jueves</span></div>' +
-          '<div class="pv-fact"><span class="lb">Tu franja</span><span class="vl">A la tarde</span></div>' +
-          '<div class="pv-fact"><span class="lb">Vuelven</span><span class="vl">1 de cada 2</span></div>' +
-        '</div>' +
-        '<div class="pv-factpills">' +
-          '<span class="pv-fpill">4 de cada 10 turnos son jueves</span>' +
-          '<span class="pv-fpill">Balayage es el 38% de lo que hacés</span>' +
-          '<span class="pv-fpill">Este mes moviste 12 turnos vos y 2 tus clientas</span>' +
-        '</div>' +
-      '</div>' +
+      factsHTML() +
       '<div class="fz-lamina fz-tint-blue">' +
         '<div class="pv-stat"><span class="lb">Reservas</span><span class="vals"><span class="num">31</span><span class="fz-delta pos">↑ 12%</span></span></div>' +
         '<div class="pv-stat"><span class="lb">Ingresos</span><span class="vals"><span class="num"><small>$</small>486.000</span><span class="fz-delta pos">↑ 8%</span></span></div>' +
@@ -1246,9 +1423,9 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
         ? '<div class="pv-empty">Sacaste a todas las candidatas.<br><button data-act="restore">Restaurar la lista</button></div>'
         : '<div class="pv-cands">'+candsHtml+'<div class="pv-more">+ 5 candidatas más con puntaje menor · entran sólo si el turno sigue libre</div></div>' +
           '<div class="pv-wa"><b>Vista previa · WhatsApp</b>¡Hola '+first+'! Se nos liberó un lugar mañana a las 15:00 para tu balayage con Caro. ¿Te lo guardamos? Reservá directo acá → <span class="lk">agora.red/r/…</span></div>' +
-          '<div class="pv-tanda">⏱ Sale de a tandas: primero '+Math.min(rem.length,3)+' — sigue sólo si el turno queda libre, y se frena solo cuando alguien reserva.</div>'
+          '<div class="pv-tanda">✋ Ágora deja los '+rem.length+' mensajes escritos, uno por clienta. <b>Los mandás vos</b> desde tu WhatsApp — y si alguna reserva, te avisamos para que no sigas.</div>'
       ) +
-      '<div class="pv-actions"><button class="fz-ghost" data-act="dismiss">Descartar</button><button class="fz-cta" data-act="approve"'+(empty?' disabled':'')+'>Aprobar envío</button></div>' +
+      '<div class="pv-actions"><button class="fz-ghost" data-act="dismiss">Descartar</button><button class="fz-cta" data-act="approve"'+(empty?' disabled':'')+'>Preparar los mensajes</button></div>' +
     '</div>';
   }
 
@@ -1256,18 +1433,18 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
     var rem = remaining();
     var names = rem.map(function(c){ return c.n.split(' ')[0]; });
     var t1 = names.slice(0, 2).join(' y ');
-    var waitT2 = names.length > 2 ? ' — ' + names[2] + ' espera la tanda 2' : '';
+    var waitT2 = names.length > 2 ? ', y ' + names[2] + ' queda para después' : '';
     return '' +
     '<div class="pv-top"><button class="pv-back" data-act="back">← Pulse</button><span class="pv-state run" id="pv-runstate"><i></i>Ejecutándose</span></div>' +
     '<div class="fz-card">' +
       '<div class="pv-dhead"><span class="t">Se liberó un turno</span><span class="when">Mañana · 15:00</span></div>' +
-      '<div class="pv-dsub">Aprobaste recién — esto pasa solo, y podés pausarlo cuando quieras:</div>' +
+      '<div class="pv-dsub">Los mensajes quedaron listos. Esto es lo que pasa cuando los mandás:</div>' +
       '<div style="margin-top:4px;">' +
-        '<div class="pv-run-step" data-step="0"><span class="ic ok">✓</span><span class="tx"><b>Aprobado.</b> Destinatarias y mensaje quedaron congelados: lo que viste es lo que sale.</span></div>' +
-        '<div class="pv-run-step" data-step="1"><span class="ic">📲</span><span class="tx"><b>Tanda 1 enviada</b> a '+t1+waitT2+'.</span></div>' +
+        '<div class="pv-run-step" data-step="0"><span class="ic ok">✓</span><span class="tx"><b>Listos para enviar.</b> Un mensaje por clienta, con su nombre y su servicio. Podés editarlos antes de mandar.</span></div>' +
+        '<div class="pv-run-step" data-step="1"><span class="ic">📲</span><span class="tx"><b>Le escribiste</b> a '+t1+waitT2+' — desde tu WhatsApp, con tu nombre.</span></div>' +
         '<div class="pv-run-step" data-step="2"><span class="ic">💬</span><span class="tx"><b>Respondió '+S.hero+'</b><br><span class="pv-inwa">¡Sí! Mañana a las 15 me viene perfecto 🙌</span></span></div>' +
         '<div class="pv-run-step" data-step="3"><span class="ic">🗓</span><span class="tx"><b>'+S.hero+' reservó desde el enlace.</b> Antes de confirmar, se validó que el horario siguiera libre.</span></div>' +
-        '<div class="pv-run-step" data-step="4"><span class="ic ok">🏁</span><span class="tx"><div class="fz-lamina fz-tint-mint pv-success"><b>Turno ocupado — $32.000 recuperados.</b><div style="font-size:10.5px; color:var(--frost-ink-soft); margin-top:3px;">Las tandas pendientes se frenaron solas: nadie más recibió el mensaje.</div><button class="fz-cta" data-act="finish">Volver al Pulse</button></div></span></div>' +
+        '<div class="pv-run-step" data-step="4"><span class="ic ok">🏁</span><span class="tx"><div class="fz-lamina fz-tint-mint pv-success"><b>Turno ocupado — $32.000 recuperados.</b><div style="font-size:10.5px; color:var(--frost-ink-soft); margin-top:3px;">Te avisamos para que no le escribas a nadie más.</div><button class="fz-cta" data-act="finish">Volver al Pulse</button></div></span></div>' +
       '</div>' +
     '</div>';
   }
@@ -1303,6 +1480,31 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
     else if (act === 'finish') { clearTimers(); S.done = true; S.screen = 'home'; render(); toast('El turno quedó atribuido a Pulse en tu Analítica'); }
     else if (act === 'reset') { clearTimers(); S.screen = 'home'; S.removed = []; S.done = false; S.hero = 'Ana'; render(); toast('Prototipo reiniciado'); }
   });
+
+  /* Deep-link ?caso=nuevo|joven|rodaje|equipo|sedes — para compartir un estado
+     concreto y para las capturas de la propuesta. */
+  (function(){
+    var q = (location.search.match(/[?&]caso=([a-z]+)/) || [])[1];
+    if (q && CASOS[q]) S.caso = q;
+  })();
+
+  var picker = document.getElementById('caso-picker');
+  if (picker) picker.addEventListener('click', function(e){
+    var b = e.target.closest('[data-caso]');
+    if (!b) return;
+    S.caso = b.getAttribute('data-caso');
+    picker.querySelectorAll('.cp').forEach(function(el){ el.classList.toggle('on', el === b); });
+    clearTimers(); S.screen = 'home'; render();
+    toast('As\u00ed lo ve ' + (CASOS[S.caso] ? CASOS[S.caso].lbl.toLowerCase() : ''));
+  });
+
+  (function(){
+    var p = document.getElementById('caso-picker');
+    if (!p) return;
+    p.querySelectorAll('.cp').forEach(function(el){
+      el.classList.toggle('on', el.getAttribute('data-caso') === S.caso);
+    });
+  })();
 
   render();
 })();
