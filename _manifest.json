@@ -6,6 +6,16 @@
     {
       "type": "proposal",
       "typeLabel": "Proposal",
+      "title": "Tu app · el espacio del profesional",
+      "description": "La app nativa de Ágora vista desde el cliente final: la misma app con la marca de cada negocio, y adentro sus turnos, sus puntos, la comunidad y los cursos.",
+      "detail": "9 slides · mockups de pantallas · iPhone y Android sin trámites",
+      "date": "SEP 2026",
+      "href": "./app-cliente-profesional-2026-09/index.html",
+      "slug": "app-cliente-profesional-2026-09"
+    },
+    {
+      "type": "proposal",
+      "typeLabel": "Proposal",
       "title": "Ágora Impulso",
       "description": "El Pulse se muda al ✨ de la barra y contesta tres preguntas: cómo trabajás, cómo te fue, y qué turno podés recuperar ahora.",
       "detail": "proposal visual · 5 vistas · prototipo con 5 tipos de negocio · evidencia sobre negocios activos",
