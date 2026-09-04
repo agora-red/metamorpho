@@ -273,6 +273,32 @@ section.alt .mock-stage { background:linear-gradient(160deg,#F2F6FC 0%, #E9EFF8 
 .guard b { font-weight:600; display:block; margin-bottom:1px; }
 .split-lbl { margin-top:28px; font-size:11px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:var(--frost-muted); }
 
+/* Los tres tiempos del Pulse + la evidencia de producción (sección 00) */
+.tri-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:32px; }
+.tri { position:relative; background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-card); padding:22px 22px 20px; box-shadow:var(--sh-sm); display:flex; flex-direction:column; }
+.tri-num { position:absolute; top:18px; right:20px; font-size:32px; font-weight:200; line-height:1; color:rgba(15,23,42,0.10); font-variant-numeric:tabular-nums; }
+.tri h3 { font-size:17px; font-weight:600; letter-spacing:-0.01em; margin:0 0 2px; }
+.tri-win { font-size:10.5px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:var(--frost-faint); margin:0 0 12px; }
+.tri p { font-size:13px; font-weight:300; line-height:1.55; color:var(--frost-ink-soft); margin:0; }
+.tri p strong { font-weight:600; color:var(--frost-ink); }
+.tri-tag { align-self:flex-start; margin-top:16px; font-size:9.5px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; border-radius:999px; padding:4px 10px; background:rgba(15,23,42,0.05); color:var(--frost-muted); }
+.tri-tag.new { background:var(--frost-primary-soft); color:var(--frost-primary-hover); }
+.tri-tag.imp { background:rgba(245,158,11,0.14); color:#B45309; }
+
+.ev-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:18px; }
+.ev { background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-item); padding:18px 20px 16px; box-shadow:var(--sh-xs); }
+.ev.hi { border-color:rgba(0,114,251,0.28); background:linear-gradient(160deg, rgba(0,114,251,0.05) 0%, #FFFFFF 62%); }
+.ev-num { display:block; font-size:34px; font-weight:200; letter-spacing:-0.03em; line-height:1; color:var(--frost-ink); font-variant-numeric:tabular-nums; margin-bottom:10px; }
+.ev-num small { font-size:18px; font-weight:300; color:var(--frost-muted); }
+.ev.hi .ev-num { color:var(--frost-primary-hover); }
+.ev p { font-size:12.5px; font-weight:300; line-height:1.5; color:var(--frost-ink-soft); margin:0; }
+.ev p strong { font-weight:600; color:var(--frost-ink); }
+.ev-foot { margin-top:16px; font-size:11px; font-weight:300; color:var(--frost-faint); line-height:1.5; }
+.ev-foot .mono { font-variant-numeric:tabular-nums; color:var(--frost-muted); }
+@media (max-width:880px) {
+  .tri-grid, .ev-grid { grid-template-columns:1fr; }
+}
+
 /* criterios */
 .crit { display:grid; grid-template-columns:1fr 1fr; gap:8px 20px; margin-top:36px; }
 .crit div { font-size:13px; font-weight:300; color:var(--frost-ink-soft); background:var(--frost-surface); border:1px solid var(--frost-border); border-radius:var(--r-item); padding:11px 15px 11px 38px; position:relative; box-shadow:var(--sh-xs); }
@@ -304,6 +330,17 @@ section.alt .mock-stage { background:linear-gradient(160deg,#F2F6FC 0%, #E9EFF8 
 .fz-tint-lav  { background:linear-gradient(160deg, rgba(0,114,251,0.07) 0%, #FFFFFF 64%); }
 .fz-tint-mint { background:linear-gradient(160deg, rgba(16,185,129,0.065) 0%, #FFFFFF 64%); }
 .fz-tint-sun  { background:linear-gradient(160deg, rgba(245,158,11,0.06) 0%, #FFFFFF 64%); }
+.fz-tint-slate{ background:linear-gradient(160deg, rgba(15,23,42,0.045) 0%, #FFFFFF 64%); }
+/* «Así trabajás» — hechos estables del negocio, en la misma gramática que la ficha viva
+   del cliente: tiles escaneables arriba, una fila de pills abajo. Sin deltas y sin flechas:
+   no es el pulso de la semana, es cómo trabaja el negocio. */
+.pv-facts { display:grid; grid-template-columns:repeat(3,1fr); gap:0; }
+.pv-fact { padding:2px 10px; border-left:1px solid rgba(15,23,42,0.10); }
+.pv-fact:first-child { padding-left:0; border-left:0; }
+.pv-fact .lb { display:block; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; color:rgba(15,23,42,0.45); margin-bottom:3px; }
+.pv-fact .vl { font-weight:300; font-size:15px; letter-spacing:-0.01em; line-height:1.1; color:var(--frost-ink); }
+.pv-factpills { display:flex; flex-wrap:wrap; gap:5px; margin-top:10px; padding-top:9px; border-top:1px solid rgba(15,23,42,0.08); }
+.pv-fpill { font-size:10px; font-weight:500; line-height:1.35; border-radius:999px; padding:3px 9px; background:rgba(15,23,42,0.05); color:var(--frost-ink-soft); }
 .fz-kicker { font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.16em; color:#94A3B8; font-variant-numeric:tabular-nums; }
 .fz-dot { width:6px; height:6px; border-radius:50%; background:var(--frost-primary); display:inline-block; animation:fz-pulse 1.8s ease-in-out infinite; }
 @keyframes fz-pulse { 0%,100% { box-shadow:0 0 0 0 rgba(0,114,251,0.4); } 50% { box-shadow:0 0 0 6px rgba(0,114,251,0); } }
@@ -333,6 +370,7 @@ section.alt .mock-stage { background:linear-gradient(160deg,#F2F6FC 0%, #E9EFF8 
 .pv-krow { display:flex; align-items:center; gap:7px; margin-bottom:7px; }
 .pv-kico { width:20px; height:20px; border-radius:6px; display:inline-flex; align-items:center; justify-content:center; font-size:10px; background:rgba(0,114,251,0.08); flex:none; }
 .pv-kico.sun { background:rgba(245,158,11,0.14); }
+.pv-kico.slate { background:rgba(15,23,42,0.07); }
 .pv-quote { position:relative; padding-left:12px; font-size:12px; font-weight:500; line-height:1.55; color:var(--frost-ink); }
 .pv-quote::before { content:''; position:absolute; left:0; top:2px; bottom:2px; width:2.5px; border-radius:999px; background:linear-gradient(180deg, var(--frost-primary) 0%, rgba(0,114,251,0.35) 100%); }
 .pv-newpill { font-size:8px; font-weight:700; letter-spacing:0.14em; background:var(--frost-primary); color:#fff; border-radius:999px; padding:2px 7px; }
@@ -568,7 +606,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
         <linearGradient id="p2" x1="16.3401" y1="26.6997" x2="21.8393" y2="30.8946" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
       </defs>
     </svg>
-    <span class="kicker">Propuesta de producto · Agosto 2026</span>
+    <span class="kicker">Propuesta de producto · Agosto 2026 — ampliada 4 sep 2026</span>
   </div>
 </header>
 
@@ -581,11 +619,72 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
   </div>
 </div>
 
+<section>
+  <div class="wrap">
+    <span class="kicker blue">00 · Lo que cambió en septiembre</span>
+    <h2 class="sec-title">Pulse contesta una sola pregunta. <strong>Deberían ser tres.</strong></h2>
+    <p class="sec-sub">La ficha viva del cliente salió a producción el 4 de septiembre y funcionó por una razón simple: <strong>dice hechos que el negocio ya generó, sin pedir que se cargue nada</strong>. Esa misma gramática le falta al Pulse — y los números dicen por qué.</p>
+
+    <div class="tri-grid">
+      <div class="tri">
+        <span class="tri-num">1</span>
+        <h3>Así trabajás</h3>
+        <p class="tri-win">ventana de 90 días</p>
+        <p>Los hechos estables del negocio: tu día fuerte, tu franja, tu servicio estrella, cuántas clientas vuelven, cuántos turnos moviste vos y cuántos ellas. <strong>Describe, no aconseja.</strong></p>
+        <span class="tri-tag new">El bloque nuevo</span>
+      </div>
+      <div class="tri">
+        <span class="tri-num">2</span>
+        <h3>Tu semana</h3>
+        <p class="tri-win">ventana de 7 días</p>
+        <p>Reservas, ingresos y clientas nuevas con su comparación. El pulso del período, tal como está hoy. <strong>Y la recomendación, cuando hay algo que recomendar.</strong></p>
+        <span class="tri-tag">Ya existe</span>
+      </div>
+      <div class="tri">
+        <span class="tri-num">3</span>
+        <h3>Para hoy</h3>
+        <p class="tri-win">ventana de horas</p>
+        <p>El turno que se liberó y las clientas compatibles, con su porqué visible. <strong>Ejecuta, siempre con tu aprobación.</strong></p>
+        <span class="tri-tag imp">Impulso</span>
+      </div>
+    </div>
+
+    <p class="split-lbl" style="margin-top:40px;">Medido en producción el 4 de septiembre de 2026</p>
+    <div class="ev-grid">
+      <div class="ev">
+        <span class="ev-num">15<small>%</small></span>
+        <p><strong>de los Pulse se abren.</strong> 4.941 generados en 35 días, 1.378 negocios. El problema no es qué dice: es que está colapsado en un widget.</p>
+      </div>
+      <div class="ev">
+        <span class="ev-num">39<small>%</small></span>
+        <p><strong>de las semanas no tiene nada que decir.</strong> La recomendación se omite cuando no pasa nada notable, y el Pulse queda en tres números.</p>
+      </div>
+      <div class="ev">
+        <span class="ev-num">5</span>
+        <p><strong>turnos por semana</strong> tiene el negocio mediano. Con ese volumen «reservas +20%» es un turno más. La semana sola es una ventana pobre.</p>
+      </div>
+      <div class="ev hi">
+        <span class="ev-num">95<small>%</small></span>
+        <p><strong>de los negocios tiene al menos un hecho estable que contar</strong> — día fuerte, franja o servicio estrella. El bloque nuevo casi nunca se queda mudo.</p>
+      </div>
+      <div class="ev hi">
+        <span class="ev-num">1.250</span>
+        <p><strong>huecos por mes que quedan vacíos.</strong> De 2.278 cancelaciones con 12 h de aviso, el 55% nunca se vuelve a ocupar. Afecta a 863 negocios.</p>
+      </div>
+      <div class="ev hi">
+        <span class="ev-num"><small>$</small>30.000</span>
+        <p><strong>vale el hueco mediano.</strong> Es la plata que Impulso va a buscar, y la razón por la que el circuito arranca por la cancelación.</p>
+      </div>
+    </div>
+    <p class="ev-foot">Muestras aleatorias sobre la base de producción: 300 a 500 negocios activos según la medición, ventanas de 30 y 90 días. El detalle de cada consulta está en <span class="mono">docs/research-inteligencia-simple-profesional.md</span>.</p>
+  </div>
+</section>
+
 <section class="alt">
   <div class="wrap">
     <span class="kicker blue">01 · El prototipo — probalo</span>
-    <h2 class="sec-title">Es tu Pulse de siempre — <strong>ahora también actúa</strong></h2>
-    <p class="sec-sub">Mismo nombre, misma card, misma estética — Pulse suma el bloque <strong>«Para hoy»</strong>. <strong>El prototipo es funcional</strong>: sacá una candidata, aprobá y mirá el circuito correr.</p>
+    <h2 class="sec-title">Es tu Pulse de siempre — <strong>ahora te lee y actúa</strong></h2>
+    <p class="sec-sub">Mismo nombre, misma card, misma estética — Pulse suma dos bloques: <strong>«Así trabajás»</strong> arriba y <strong>«Para hoy»</strong> abajo. <strong>El prototipo es funcional</strong>: sacá una candidata, aprobá y mirá el circuito correr.</p>
 
     <div class="proto-stage">
       <div class="pv-phone">
@@ -604,6 +703,7 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
       <aside class="pv-notes">
         <h3>Qué estás viendo</h3>
         <ul>
+          <li><strong>«Así trabajás», el bloque de hechos</strong> — cómo trabaja el negocio en 90 días. Sin flechas ni consejos: describe.</li>
           <li><strong>La card de Pulse que ya existe</strong> — tu semana y la recomendación siguen igual.</li>
           <li><strong>«Para hoy», el bloque nuevo</strong> — hasta tres oportunidades por día.</li>
           <li><strong>Tocá «Revisar»</strong> — cada clienta muestra su porqué; sacá a cualquiera con la ✕.</li>
@@ -1101,6 +1201,18 @@ footer .fine { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; 
     '<div class="fz-card">' +
       '<div class="pv-head"><div><div class="pv-kickrow"><span class="fz-dot"></span><span class="fz-kicker">Pulse · semana del 17–23 ago</span></div><div class="pv-title">Tu semana<i>.</i></div></div><span class="pv-chev">⌃</span></div>' +
       '<div class="pv-sig"><span class="rule"></span><svg viewBox="0 0 96 16" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M0 8 H30 l3 -5.5 l4 11 l4 -9 l3 3.5 H96"/></svg></div>' +
+      '<div class="fz-lamina fz-tint-slate"><div class="pv-krow"><span class="pv-kico slate">🧭</span><span class="fz-kicker">Así trabajás</span></div>' +
+        '<div class="pv-facts">' +
+          '<div class="pv-fact"><span class="lb">Tu día</span><span class="vl">Jueves</span></div>' +
+          '<div class="pv-fact"><span class="lb">Tu franja</span><span class="vl">A la tarde</span></div>' +
+          '<div class="pv-fact"><span class="lb">Vuelven</span><span class="vl">1 de cada 2</span></div>' +
+        '</div>' +
+        '<div class="pv-factpills">' +
+          '<span class="pv-fpill">4 de cada 10 turnos son jueves</span>' +
+          '<span class="pv-fpill">Balayage es el 38% de lo que hacés</span>' +
+          '<span class="pv-fpill">Este mes moviste 12 turnos vos y 2 tus clientas</span>' +
+        '</div>' +
+      '</div>' +
       '<div class="fz-lamina fz-tint-blue">' +
         '<div class="pv-stat"><span class="lb">Reservas</span><span class="vals"><span class="num">31</span><span class="fz-delta pos">↑ 12%</span></span></div>' +
         '<div class="pv-stat"><span class="lb">Ingresos</span><span class="vals"><span class="num"><small>$</small>486.000</span><span class="fz-delta pos">↑ 8%</span></span></div>' +
