@@ -1,8 +1,18 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
   "version": 1,
-  "updated_at": "2026-09-04",
+  "updated_at": "2026-09-07",
   "outputs": [
+    {
+      "type": "proposal",
+      "typeLabel": "Proposal",
+      "title": "Redes con IA · del visual a Instagram",
+      "description": "La IA genera el fondo, Ágora escribe el precio y lo publica en el Instagram del profesional. PoC con 27 imágenes reales, seis modelos y una escalera de 21 precios.",
+      "detail": "14 slides · PoC + propuesta",
+      "date": "SEP 2026",
+      "href": "./redes-ia-instagram-2026-09/index.html",
+      "slug": "redes-ia-instagram-2026-09"
+    },
     {
       "type": "proposal",
       "typeLabel": "Proposal",

@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Redes con IA · Del visual a Instagram sin salir de Ágora</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --frost-primary:#0072FB; --frost-primary-soft:#EEF6FF; --frost-primary-wash:rgba(0,114,251,.08);
+  --frost-accent:#FF4658; --frost-success:#10B981; --frost-success-deep:#047857; --frost-warning:#F59E0B;
+  --frost-ink:#0F172A; --frost-ink-soft:#3A3A3A; --frost-muted:#868686; --frost-faint:#B5B5B5;
+  --frost-surface:#FFFFFF; --frost-surface-muted:#EFF3F9; --frost-border:#E2E8F0; --frost-border-soft:#F2F2F2;
+  --r-sm:6px; --r-item:10px; --r-btn:12px; --r-card:20px; --r-shell:28px; --r-chip:999px;
+  --sh-xs:0 1px 2px rgba(15,23,42,0.04);
+  --sh-sm:0 4px 12px -4px rgba(15,23,42,0.10);
+  --sh-md:0 10px 30px -12px rgba(15,23,42,0.15);
+  --sh-lg:0 24px 60px -24px rgba(15,23,42,0.32);
+  --sans:'Montserrat',system-ui,-apple-system,sans-serif;
+  --v-bg:#f1e7dd; --v-primary:#96694d; --v-ink:#3e342b;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
+body{font-family:var(--sans);font-variant-numeric:tabular-nums;color:var(--frost-ink);background:var(--frost-surface-muted);-webkit-font-smoothing:antialiased}
+.slide{min-height:100vh;width:100%;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:center;padding:10vh 7vw 8vh;position:relative;overflow:hidden}
+.slide.center{justify-content:center;padding-top:8vh}
+.slide.ink{background:var(--frost-ink);color:#fff}
+.slide.tint{background:linear-gradient(160deg,#F7F1EF 0%,#EFF3F9 100%)}
+.chrome{position:absolute;top:3.4vh;left:7vw;right:7vw;display:flex;justify-content:space-between;align-items:center;z-index:5}
+.chrome .num{font-size:12px;font-weight:600;letter-spacing:.12em;color:var(--frost-faint)}
+.slide.ink .chrome .num{color:rgba(255,255,255,.45)}
+.wordmark{display:flex;align-items:center;gap:9px;font-weight:500;font-size:17px;letter-spacing:-.01em}
+.wordmark .dot{width:9px;height:9px;border-radius:50%;background:var(--frost-primary);box-shadow:0 0 10px var(--frost-primary)}
+.slide.ink .wordmark{color:#fff}
+.kicker{font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--frost-primary);margin-bottom:16px}
+.slide.ink .kicker{color:#57A5FF}
+h1{font-weight:200;font-size:clamp(44px,6.4vw,86px);line-height:1;letter-spacing:-.02em;max-width:16ch}
+h1 b{font-weight:600}
+h2{font-weight:300;font-size:clamp(25px,3.1vw,40px);line-height:1.08;letter-spacing:-.015em;max-width:24ch}
+h2 b{font-weight:600}
+.sub{font-size:clamp(16px,1.6vw,21px);font-weight:300;color:rgba(255,255,255,.82);margin-top:22px;max-width:46ch;line-height:1.45}
+.sub b{font-weight:600;color:#fff}
+.badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:var(--r-chip);padding:8px 16px;font-size:13px;font-weight:500;color:rgba(255,255,255,.9);margin-top:32px;align-self:flex-start}
+.badge .g{width:7px;height:7px;border-radius:50%;background:var(--frost-success);box-shadow:0 0 8px var(--frost-success)}
+.head{display:flex;flex-direction:column;margin-bottom:2.6vh;max-width:70ch;flex-shrink:0}
+.head .cap{font-size:14.5px;font-weight:300;color:var(--frost-ink-soft);margin-top:10px;line-height:1.5;max-width:66ch}
+.head .cap b{font-weight:600;color:var(--frost-ink)}
+.head .cap code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;background:#fff;border:1px solid var(--frost-border);border-radius:var(--r-sm);padding:1px 6px}
+.caption{position:absolute;bottom:3.4vh;left:7vw;right:7vw;font-size:12.5px;font-weight:500;color:var(--frost-faint);letter-spacing:.02em;display:flex;gap:8px;align-items:center}
+.caption b{color:var(--frost-muted);font-weight:600}
+/* ── two columns ── */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:2.4vw;width:100%}
+.cols.three{grid-template-columns:1fr 1fr 1fr}
+.card{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-card);padding:24px 26px;box-shadow:var(--sh-sm)}
+.card.soft{background:var(--frost-primary-soft);border-color:transparent}
+.card.warn{background:#FFF7E8;border-color:transparent}
+.card h3{font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--frost-primary);margin-bottom:14px}
+.card.warn h3{color:#B45309}
+.card ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.card li{font-size:14px;font-weight:300;line-height:1.4;display:flex;gap:10px;color:var(--frost-ink-soft)}
+.card li b{font-weight:600;color:var(--frost-ink)}
+.card li i{font-style:normal;flex:none;width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-top:2px}
+.card li i.ok{background:rgba(16,185,129,.14);color:var(--frost-success-deep)}
+.card li i.no{background:rgba(255,70,88,.12);color:#B91C1C}
+.card p{font-size:14px;font-weight:300;line-height:1.5;color:var(--frost-ink-soft)}
+.card p b{font-weight:600;color:var(--frost-ink)}
+/* ── steps ── */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1.6vw;width:100%}
+.step{background:#fff;border:1px solid var(--frost-border);border-radius:var(--r-card);padding:22px 22px 20px;box-shadow:var(--sh-sm);position:relative}
+.step .no{font-size:11px;font-weight:600;letter-spacing:.14em;color:var(--frost-primary);background:var(--frost-primary-soft);border-radius:var(--r-chip);padding:5px 11px;display:inline-block;margin-bottom:14px}
+.step .tt{font-size:17px;font-weight:600;letter-spacing:-.01em;line-height:1.2}
+.step .dsc{font-size:13.5px;font-weight:300;color:var(--frost-ink-soft);line-height:1.45;margin-top:8px}
+.step .dsc b{font-weight:600;color:var(--frost-ink)}
+.step.ia{background:var(--frost-ink);color:#fff;border-color:transparent}
+.step.ia .tt{color:#fff} .step.ia .dsc{color:rgba(255,255,255,.78)} .step.ia .dsc b{color:#fff}
+.step.ia .no{background:rgba(255,255,255,.12);color:#57A5FF}
+/* ── chips ── */
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.chip{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--frost-border);border-radius:var(--r-chip);padding:8px 16px;font-size:13.5px;font-weight:500}
+.chip .dot{width:8px;height:8px;border-radius:50%;background:var(--frost-success)}
+.chip.pend .dot{background:var(--frost-faint)}
+.chip small{color:var(--frost-muted);font-weight:500}
+/* ── image grids ── */
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:1.1vw;width:100%;align-items:start}
+.grid.four{grid-template-columns:repeat(4,1fr)}
+.grid.three{grid-template-columns:repeat(3,1fr);max-width:46vw}
+.cell{margin:0;min-width:0}
+.cell img{width:100%;height:auto;display:block;border-radius:var(--r-item);border:1px solid var(--frost-border);box-shadow:var(--sh-sm);background:#fff}
+.cell.lead img{outline:2.5px solid var(--frost-primary);outline-offset:3px}
+.cell figcaption{font-size:11.5px;line-height:1.4;margin-top:8px;color:var(--frost-muted);display:flex;flex-direction:column;gap:1px}
+.cell figcaption b{color:var(--frost-ink);font-weight:600}
+.cell.orig figcaption b{color:var(--frost-primary)}
+.obs{list-style:none;display:flex;flex-direction:column;gap:7px;margin-top:2.2vh}
+.obs li{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;line-height:1.4;color:var(--frost-ink-soft);font-weight:300}
+.obs li b{font-weight:600;color:var(--frost-ink)}
+.obs li i{font-style:normal;flex:none;width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-top:1px}
+.obs li.ok i{background:rgba(16,185,129,.14);color:var(--frost-success-deep)}
+.obs li.warn i{background:rgba(245,158,11,.16);color:#B45309}
+/* ── hybrid ── */
+.stage{display:flex;gap:3vw;align-items:center;justify-content:center;min-height:0;width:100%}
+.stage.split{justify-content:space-between;align-items:stretch}
+.hib{display:flex;gap:2.4vw;align-items:flex-start;width:100%}
+.hib figure{margin:0;flex:none}
+.hib figure img{display:block;border-radius:var(--r-item);border:1px solid var(--frost-border);box-shadow:var(--sh-md)}
+.hib figcaption{font-size:12px;color:var(--frost-muted);margin-top:8px}
+.hib figcaption b{color:var(--frost-ink);font-weight:600}
+.layers{display:flex;flex-direction:column;gap:9px;flex:1;min-width:0}
+.layer{background:#fff;border:1px solid var(--frost-border);border-radius:var(--r-card);padding:12px 16px;box-shadow:var(--sh-xs);display:flex;gap:14px;align-items:flex-start}
+.layer .sw{flex:none;width:34px;height:34px;border-radius:var(--r-item)}
+.layer .tt{font-size:14.5px;font-weight:600;letter-spacing:-.01em}
+.layer .dsc{font-size:12.5px;font-weight:300;color:var(--frost-ink-soft);line-height:1.45;margin-top:3px}
+.layer .dsc b{font-weight:600;color:var(--frost-ink)}
+/* ── table ── */
+table{border-collapse:collapse;width:100%;font-size:12px;background:#fff;border-radius:var(--r-card);overflow:hidden;box-shadow:var(--sh-sm);border:1px solid var(--frost-border)}
+th{text-align:left;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--frost-muted);font-weight:600;padding:7px 8px;white-space:nowrap;border-bottom:1px solid var(--frost-border);background:var(--frost-surface-muted)}
+td{padding:4px 8px;border-bottom:1px solid var(--frost-border-soft);font-weight:400;white-space:nowrap}
+td.num{font-weight:600;color:var(--frost-ink)}
+tr:last-child td{border-bottom:none}
+tr.pend td{color:var(--frost-muted)}
+tr.run td:first-child{font-weight:600;color:var(--frost-ink)}
+tr.run td:last-child{color:var(--frost-success-deep);font-weight:600}
+.tables{display:grid;grid-template-columns:1fr 1fr;gap:1.6vw;width:100%;align-items:start}
+.cols.notes{margin-top:2vh} .cols.notes .card{padding:16px 20px} .cols.notes .card h3{margin-bottom:8px} .cols.notes .card p{font-size:13px}
+/* ── decisions ── */
+.dec{display:grid;grid-template-columns:repeat(3,1fr);gap:1.8vw;width:100%}
+.dec .card .big{font-size:26px;font-weight:200;letter-spacing:-.02em;line-height:1.1;margin-bottom:10px}
+.dec .card .big b{font-weight:600}
+.tiny{font-size:13px;color:var(--frost-muted);margin-top:24px;font-weight:500}
+@media (max-width:900px){
+  .slide{min-height:auto;padding:14vh 6vw 10vh}
+  .cols,.cols.three,.steps,.dec,.tablewrap{grid-template-columns:1fr}
+  .grid,.grid.four{grid-template-columns:repeat(3,1fr)}
+  .grid.three{max-width:100%}
+  .hib{flex-direction:column}
+  .caption{position:static;margin-top:20px}
+}
+</style>
+</head>
+<body>
+
+<!-- 01 · cover -->
+<section class="slide ink center">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">PROPUESTA · SEP 2026</span></div>
+  <p class="kicker">Redes · generación de imágenes con IA</p>
+  <h1>La IA genera el visual.<br><b>Ágora lo publica</b><br>en Instagram.</h1>
+  <p class="sub">El 5 de septiembre Meta aprobó los permisos para publicar en la cuenta del profesional. Este PoC retoma el de julio con la <b>data real de un negocio</b> y una <b>escalera de modelos con costo por imagen</b> — de US$0,005 a US$0,20.</p>
+  <span class="badge"><span class="g"></span>Permisos de Instagram aprobados · 5 sep 2026</span>
+</section>
+
+<!-- 02 · qué cambió -->
+<section class="slide tint">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">02 / 14</span></div>
+  <div class="head">
+    <p class="kicker">Qué cambió el 5 de septiembre</p>
+    <h2>Cualquier profesional puede conectar su Instagram <b>y Ágora publica por él</b>.</h2>
+    <p class="cap">Publicar solo funcionaba en las cuentas de prueba de la app. Con la revisión aprobada, los dos permisos valen para todos los negocios de la plataforma.</p>
+  </div>
+  <div class="cols">
+    <div class="card">
+      <h3>Lo que podemos hacer</h3>
+      <ul>
+        <li><i class="ok">✓</i><span><b>Publicar en su cuenta</b>: imagen en el feed, reel, carrusel de 2 a 10 imágenes e historia — con texto y texto alternativo.</span></li>
+        <li><i class="ok">✓</i><span><b>Leer su perfil y sus publicaciones</b>: usuario, foto, seguidores, y cada post con su imagen, texto, fecha y cantidad de likes y comentarios.</span></li>
+        <li><i class="ok">✓</i><span><b>Ver cuántas publicaciones le quedan</b> antes de publicar (el tope es 50 por día).</span></li>
+        <li><i class="ok">✓</i><span>Cyclone ya sabe publicar <b>imagen, reel y carrusel</b>; la historia es un tipo de contenedor más de la misma API, falta sumarla.</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Lo que no</h3>
+      <ul>
+        <li><i class="no">×</i><span>Alcance, impresiones y guardados.</span></li>
+        <li><i class="no">×</i><span>Leer o responder comentarios, mensajes directos, menciones.</span></li>
+        <li><i class="no">×</i><span>Lista de seguidores ni búsqueda por hashtag.</span></li>
+        <li><i class="no">×</i><span>Nada de cuentas que no sean la que el profesional conectó.</span></li>
+      </ul>
+    </div>
+  </div>
+  <p class="caption"><b>Hoy</b> el builder de Redes solo publica imágenes en el feed · reel y carrusel están en el servidor pero no en la pantalla · historia no está en ninguno de los dos</p>
+</section>
+
+<!-- 03 · lo que existe -->
+<section class="slide">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">03 / 14</span></div>
+  <div class="head">
+    <p class="kicker">Lo que ya existe</p>
+    <h2>El builder de Redes arma placas con la <b>data real</b> del negocio.</h2>
+    <p class="cap">Tres plantillas HTML, cero fricción: el profesional no carga nada porque el brand kit, los servicios y la disponibilidad ya están en Ágora. Lo único fijo es el fondo — siempre el mismo degradé.</p>
+  </div>
+  <div class="steps">
+    <div class="step"><span class="no">01</span><div class="tt">La data</div><p class="dsc"><b>Brand kit</b> (colores, fuentes, avatar), <b>servicios</b> con precio y duración, <b>turnos libres</b> de la agenda. Todo sale de la base.</p></div>
+    <div class="step"><span class="no">02</span><div class="tt">La plantilla</div><p class="dsc">Editorial, Bold o Lista de precios. Historia 9:16, feed 4:5 o cuadrada. <b>El texto es HTML</b>: exacto, gratis, instantáneo.</p></div>
+    <div class="step"><span class="no">03</span><div class="tt">La imagen</div><p class="dsc">Se rasteriza en el navegador a 1080 px y se sube a S3, porque Instagram <b>busca la imagen por URL</b>.</p></div>
+    <div class="step"><span class="no">04</span><div class="tt">La publicación</div><p class="dsc">Un toque: Ágora crea el contenedor y publica en el feed. <b>Descargar</b> sigue disponible para historias.</p></div>
+  </div>
+  <p class="caption"><b>La propuesta</b> cambia solo el paso 02: el fondo o la foto los genera la IA · el texto sigue siendo capa HTML</p>
+</section>
+
+<!-- 04 · el PoC -->
+<section class="slide tint">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">04 / 14</span></div>
+  <div class="head">
+    <p class="kicker">El PoC · segunda vuelta</p>
+    <h2>Los cuatro casos de julio, con la data real de <b>Color &amp; Style</b> y una escalera de seis modelos.</h2>
+    <p class="cap">Vendor de prueba: <b>Color &amp; Style</b> (centrodepelo, Bariloche). Brand kit actual leído de prod — marrón <code>#96694d</code> sobre beige <code>#f1e7dd</code>, Fraunces + Inter. Servicio: <b>Corte de pelo dama (incluye lavado) · $21.500 · 60 min</b>, con su foto de portada real. Cada caso corrió una vez por variante; latencia y costo son los medidos, no los de la tabla de precios.</p>
+  </div>
+  <div class="chips"><span class="chip"><span class="dot"></span>GPT Image 1 Mini<small>· 21 s · US$0,013</small></span>
+<span class="chip"><span class="dot"></span>GPT Image 2 · low<small>· 19 s · US$0,007</small></span>
+<span class="chip"><span class="dot"></span>GPT Image 1<small>· 21 s · US$0,065</small></span>
+<span class="chip"><span class="dot"></span>GPT Image 1.5<small>· 19 s · US$0,065</small></span>
+<span class="chip"><span class="dot"></span>GPT Image 2 · medium<small>· 38 s · US$0,044</small></span>
+<span class="chip"><span class="dot"></span>GPT Image 2 · high<small>· 99 s · US$0,17</small></span></div>
+  <div class="cols three" style="margin-top:2.6vh">
+    <div class="card"><h3>En julio</h3><p>Tres modelos (Nano Banana 2, Nano Banana Pro, GPT Image 2 high). <b>Nano Banana 2 ganó</b> por calidad/precio. Seedream quedó sin probar: fal.ai sin saldo.</p></div>
+    <div class="card"><h3>Hoy</h3><p><b>27 imágenes en 5 casos</b> con la clave de OpenAI de la empresa: US$1,65 en total. Google, ByteDance y el resto quedaron mapeados con precio, listos para correr.</p></div>
+    <div class="card"><h3>Qué mide</h3><p>Fidelidad a la paleta, <b>texto en español</b> (tildes del voseo, precio y URL exactos), fidelidad a la foto original, y tiempo y costo reales por imagen.</p></div>
+  </div>
+  <p class="caption"><b>Costos</b> calculados sobre los tokens de cada respuesta a la tarifa vigente · el total figura en la última página</p>
+</section>
+
+<!-- 05 · caso 1 -->
+<section class="slide">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">05 / 14</span></div>
+  <div class="head">
+    <p class="kicker">Caso 1 · Fondo de marca</p>
+    <h2>Un fondo con la paleta exacta, <b>sin texto</b>, para poner la capa HTML encima.</h2>
+    <p class="cap">Reemplaza al degradé fijo de la plantilla Editorial. Se genera una vez por negocio y se cachea: el costo se paga una sola vez.</p>
+  </div>
+  <div class="grid"><figure class="cell"><img src="assets/fondo-gpt-image-1-mini-medium.jpg" alt="GPT Image 1 Mini · fondo"><figcaption><b>GPT Image 1 Mini</b><span>20 s · US$0,013</span></figcaption></figure>
+<figure class="cell lead"><img src="assets/fondo-gpt-image-2-low.jpg" alt="GPT Image 2 · low · fondo"><figcaption><b>GPT Image 2 · low</b><span>20 s · US$0,005</span></figcaption></figure>
+<figure class="cell"><img src="assets/fondo-gpt-image-1-medium.jpg" alt="GPT Image 1 · fondo"><figcaption><b>GPT Image 1</b><span>21 s · US$0,064</span></figcaption></figure>
+<figure class="cell"><img src="assets/fondo-gpt-image-1.5-medium.jpg" alt="GPT Image 1.5 · fondo"><figcaption><b>GPT Image 1.5</b><span>19 s · US$0,063</span></figcaption></figure>
+<figure class="cell"><img src="assets/fondo-gpt-image-2-medium.jpg" alt="GPT Image 2 · medium · fondo"><figcaption><b>GPT Image 2 · medium</b><span>37 s · US$0,042</span></figcaption></figure>
+<figure class="cell"><img src="assets/fondo-gpt-image-2-high.jpg" alt="GPT Image 2 · high · fondo"><figcaption><b>GPT Image 2 · high</b><span>96 s · US$0,17</span></figcaption></figure></div>
+  <ul class="obs"><li class="ok"><i>✓</i><span><b>Los seis respetaron la paleta exacta</b> — beige, tan y marrón — sin texto ni objetos, con seda y mármol como pedía el prompt.</span></li>
+<li class="ok"><i>✓</i><span><b>GPT Image 2 · low es indistinguible del high para este uso</b>: US$0,005 contra US$0,17, 20 s contra 96 s. Para un fondo que se cachea, la calidad alta no compra nada.</span></li>
+<li class="warn"><i>!</i><span>GPT Image 1.5 cierra el centro con seda oscura y deja menos lugar para la capa de texto — el prompt tiene que insistir en el espacio negativo.</span></li></ul>
+</section>
+
+<!-- 06 · caso 2 -->
+<section class="slide tint">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">06 / 14</span></div>
+  <div class="head">
+    <p class="kicker">Caso 2 · Anuncio libre</p>
+    <h2>La placa entera generada por el modelo, <b>texto incluido</b>, en español rioplatense.</h2>
+    <p class="cap">«Color &amp; Style · Peluquería y barbería en Bariloche · Reservá tu turno en agora.red/centrodepelo». El caso que mide si se puede confiar texto al modelo cuando no hay un dato crítico.</p>
+  </div>
+  <div class="grid"><figure class="cell"><img src="assets/anuncio-gpt-image-1-mini-medium.jpg" alt="GPT Image 1 Mini · anuncio"><figcaption><b>GPT Image 1 Mini</b><span>18 s · US$0,013</span></figcaption></figure>
+<figure class="cell lead"><img src="assets/anuncio-gpt-image-2-low.jpg" alt="GPT Image 2 · low · anuncio"><figcaption><b>GPT Image 2 · low</b><span>19 s · US$0,006</span></figcaption></figure>
+<figure class="cell"><img src="assets/anuncio-gpt-image-1-medium.jpg" alt="GPT Image 1 · anuncio"><figcaption><b>GPT Image 1</b><span>20 s · US$0,064</span></figcaption></figure>
+<figure class="cell"><img src="assets/anuncio-gpt-image-1.5-medium.jpg" alt="GPT Image 1.5 · anuncio"><figcaption><b>GPT Image 1.5</b><span>19 s · US$0,065</span></figcaption></figure>
+<figure class="cell"><img src="assets/anuncio-gpt-image-2-medium.jpg" alt="GPT Image 2 · medium · anuncio"><figcaption><b>GPT Image 2 · medium</b><span>39 s · US$0,042</span></figcaption></figure>
+<figure class="cell"><img src="assets/anuncio-gpt-image-2-high.jpg" alt="GPT Image 2 · high · anuncio"><figcaption><b>GPT Image 2 · high</b><span>101 s · US$0,17</span></figcaption></figure></div>
+  <ul class="obs"><li class="ok"><i>✓</i><span><b>Cinco de seis clavaron el texto</b>: «Peluquería y barbería», «Reservá» con tilde, URL exacta — y todos sumaron tijera, peine y cinta como pedía el prompt.</span></li>
+<li class="warn"><i>!</i><span><b>GPT Image 1 Mini escribió «Peluqueria y barberia» sin tildes</b> y partió la URL en dos líneas. El más barato es el único que falla en español.</span></li>
+<li class="ok"><i>✓</i><span>GPT Image 2 · low (US$0,006, 19 s) rinde como el high (US$0,17, 101 s): misma composición editorial, mismo texto perfecto.</span></li></ul>
+</section>
+
+<!-- 07 · caso 3 -->
+<section class="slide">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">07 / 14</span></div>
+  <div class="head">
+    <p class="kicker">Caso 3 · Placa de servicio</p>
+    <h2>Servicio real con precio y duración: <b>un dígito mal y el post es un problema</b>.</h2>
+    <p class="cap">«Corte de pelo dama (incluye lavado) · $21.500 · 60 min · Reservá en agora.red/centrodepelo». Es el stress de datos: el modelo tiene que copiar, no inventar.</p>
+  </div>
+  <div class="grid"><figure class="cell"><img src="assets/servicio-gpt-image-1-mini-medium.jpg" alt="GPT Image 1 Mini · servicio"><figcaption><b>GPT Image 1 Mini</b><span>21 s · US$0,013</span></figcaption></figure>
+<figure class="cell"><img src="assets/servicio-gpt-image-2-low.jpg" alt="GPT Image 2 · low · servicio"><figcaption><b>GPT Image 2 · low</b><span>20 s · US$0,006</span></figcaption></figure>
+<figure class="cell"><img src="assets/servicio-gpt-image-1-medium.jpg" alt="GPT Image 1 · servicio"><figcaption><b>GPT Image 1</b><span>18 s · US$0,064</span></figcaption></figure>
+<figure class="cell lead"><img src="assets/servicio-gpt-image-1.5-medium.jpg" alt="GPT Image 1.5 · servicio"><figcaption><b>GPT Image 1.5</b><span>16 s · US$0,066</span></figcaption></figure>
+<figure class="cell"><img src="assets/servicio-gpt-image-2-medium.jpg" alt="GPT Image 2 · medium · servicio"><figcaption><b>GPT Image 2 · medium</b><span>36 s · US$0,042</span></figcaption></figure>
+<figure class="cell"><img src="assets/servicio-gpt-image-2-high.jpg" alt="GPT Image 2 · high · servicio"><figcaption><b>GPT Image 2 · high</b><span>101 s · US$0,17</span></figcaption></figure></div>
+  <ul class="obs"><li class="ok"><i>✓</i><span><b>Los seis copiaron el dato crítico sin inventar</b>: $21.500 · 60 min · agora.red/centrodepelo. Cero dígitos cambiados en seis corridas.</span></li>
+<li class="warn"><i>!</i><span><b>GPT Image 1 inventó una palabra</b>: «Peluqueria y barbería BREMIUM» — no estaba en el prompt. El modelo más viejo es el que alucina.</span></li>
+<li class="warn"><i>!</i><span>GPT Image 2 · low y medium rotularon en inglés («Service · Price · Duration»). El prompt llevaba esas etiquetas como nombres de campo: <b>es un artefacto nuestro</b>, se corrige rotulando en español. GPT Image 1.5 y 2 · high sí escribieron «Precio · Duración».</span></li></ul>
+</section>
+
+<!-- 08 · caso 4 -->
+<section class="slide tint">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">08 / 14</span></div>
+  <div class="head">
+    <p class="kicker">Caso 4 · Mejora de foto del negocio</p>
+    <h2>La portada real del servicio, cuadrada, <b>extendida a vertical</b> con un salón alrededor.</h2>
+    <p class="cap">Image-to-image: el modelo recibe la foto y la consigna de no tocar a la persona. Lo que importa es cuánto respeta el original.</p>
+  </div>
+  <div class="grid" style="grid-template-columns:repeat(7,1fr)">
+    <figure class="cell orig"><img src="assets/cover-original.jpg" alt="Portada original del servicio"><figcaption><b>Original</b><span>portada real · 1:1</span></figcaption></figure>
+    <figure class="cell"><img src="assets/foto-gpt-image-1-mini-medium.jpg" alt="GPT Image 1 Mini · foto"><figcaption><b>GPT Image 1 Mini</b><span>26 s · US$0,014</span></figcaption></figure>
+<figure class="cell lead"><img src="assets/foto-gpt-image-2-low.jpg" alt="GPT Image 2 · low · foto"><figcaption><b>GPT Image 2 · low</b><span>16 s · US$0,013</span></figcaption></figure>
+<figure class="cell"><img src="assets/foto-gpt-image-1-medium.jpg" alt="GPT Image 1 · foto"><figcaption><b>GPT Image 1</b><span>23 s · US$0,066</span></figcaption></figure>
+<figure class="cell"><img src="assets/foto-gpt-image-1.5-medium.jpg" alt="GPT Image 1.5 · foto"><figcaption><b>GPT Image 1.5</b><span>22 s · US$0,066</span></figcaption></figure>
+<figure class="cell"><img src="assets/foto-gpt-image-2-medium.jpg" alt="GPT Image 2 · medium · foto"><figcaption><b>GPT Image 2 · medium</b><span>41 s · US$0,050</span></figcaption></figure>
+<figure class="cell"><img src="assets/foto-gpt-image-2-high.jpg" alt="GPT Image 2 · high · foto"><figcaption><b>GPT Image 2 · high</b><span>99 s · US$0,17</span></figcaption></figure>
+  </div>
+  <ul class="obs"><li class="ok"><i>✓</i><span><b>Los seis conservaron a la persona</b>, el pelo lila y las manos con el secador y la tijera, y armaron un salón cálido alrededor en la paleta pedida.</span></li>
+<li class="ok"><i>✓</i><span>GPT Image 2 procesa la foto de entrada en alta fidelidad por diseño: <b>en las tres calidades la clienta queda intacta</b>; medium y high además la sientan en un sillón de cuero coherente con la escena.</span></li>
+<li class="warn"><i>!</i><span><b>El salón es inventado</b> — arcos, espejos y plantas que no existen en el local. Va como opción con vista previa, nunca automático.</span></li></ul>
+</section>
+
+<!-- 09 · historia -->
+<section class="slide">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">09 / 14</span></div>
+  <div class="head">
+    <p class="kicker">Historia 9:16</p>
+    <h2>Solo GPT Image 2 acepta el tamaño exacto de una historia: <b>1088 × 1936</b>.</h2>
+    <p class="cap">El resto de los modelos generan en tres tamaños fijos (cuadrado o 2:3) y hay que recortar. GPT Image 2 acepta cualquier medida en múltiplos de 16, así que la historia y el feed 4:5 (1088 × 1360) salen sin recorte. Misma placa de servicio, dejando libres las zonas donde Instagram pinta su interfaz.</p>
+  </div>
+  <div class="stage split">
+    <div class="grid three"><figure class="cell lead"><img src="assets/historia-gpt-image-2-low.jpg" alt="GPT Image 2 · low · historia"><figcaption><b>GPT Image 2 · low</b><span>16 s · US$0,005</span></figcaption></figure>
+<figure class="cell"><img src="assets/historia-gpt-image-2-medium.jpg" alt="GPT Image 2 · medium · historia"><figcaption><b>GPT Image 2 · medium</b><span>46 s · US$0,041</span></figcaption></figure>
+<figure class="cell"><img src="assets/historia-gpt-image-2-high.jpg" alt="GPT Image 2 · high · historia"><figcaption><b>GPT Image 2 · high</b><span>85 s · US$0,16</span></figcaption></figure></div>
+    <ul class="obs" style="margin-top:0;max-width:30vw"><li class="ok"><i>✓</i><span><b>1088 × 1936 exactos, sin recorte</b>: la historia sale lista para publicar en las tres calidades.</span></li>
+<li class="ok"><i>✓</i><span>Texto y dato perfectos en las tres: $21.500 · 60 min · URL.</span></li>
+<li class="warn"><i>!</i><span><b>Ninguna respetó del todo la zona inferior</b>: el «Reservá en…» quedó en el último 8 %, donde Instagram pone la barra de respuesta. Otra razón para que el texto sea capa HTML con zonas seguras.</span></li>
+<li class="warn"><i>!</i><span>Etiquetas en inglés («Service · Price · Duration») por el mismo artefacto del prompt del caso 3.</span></li></ul>
+  </div>
+</section>
+
+<!-- 10 · híbrida -->
+<section class="slide tint">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">10 / 14</span></div>
+  <div class="head">
+    <p class="kicker">La arquitectura · placa híbrida</p>
+    <h2>Fondo generado por IA. <b>El precio lo pone Ágora.</b></h2>
+    <p class="cap">Esto no es un boceto: es el fondo del caso 1 (GPT Image 2 · low, US$0,005) con la capa de texto compuesta aparte, con las fuentes del brand kit. Es exactamente lo que haría el builder — el modelo pinta, la plantilla escribe.</p>
+  </div>
+  <div class="hib">
+    <figure><img src="assets/hibrida-feed.jpg" alt="Placa híbrida · feed" style="width:min(20vw,280px)"><figcaption><b>Feed 4:5</b> · 1080 × 1350</figcaption></figure>
+    <figure><img src="assets/hibrida-story.jpg" alt="Placa híbrida · historia" style="width:min(15vw,210px)"><figcaption><b>Historia 9:16</b> · 1080 × 1920 · zonas seguras respetadas</figcaption></figure>
+    <div class="layers">
+      <div class="layer"><span class="sw" style="background:linear-gradient(135deg,#f1e7dd,#c9a989)"></span><div><div class="tt">Capa 1 · el fondo, por IA</div><p class="dsc">Paleta del brand kit en el prompt. <b>Una vez por negocio</b>, cacheado. Entre US$0,005 y US$0,07 según el modelo.</p></div></div>
+      <div class="layer"><span class="sw" style="background:var(--v-primary)"></span><div><div class="tt">Capa 2 · el texto, por la plantilla</div><p class="dsc">Nombre, servicio, <b>precio y duración exactos</b>, URL. Fuentes del brand kit, tildes garantizadas, cero riesgo de dígitos inventados. Gratis e instantáneo.</p></div></div>
+      <div class="layer"><span class="sw" style="background:var(--frost-ink)"></span><div><div class="tt">Capa 3 · la foto, opcional</div><p class="dsc">La portada real del servicio ambientada por el modelo (caso 4), <b>con vista previa</b> antes de publicar — el salón generado no es el local real.</p></div></div>
+      <div class="layer"><span class="sw" style="background:var(--frost-primary)"></span><div><div class="tt">Salida · Instagram</div><p class="dsc">PNG a S3 y publicación con los permisos nuevos: <b>feed, carrusel o historia</b>, desde la misma pantalla.</p></div></div>
+    </div>
+  </div>
+  <p class="caption"><b>Hallazgo</b> · el brand kit del builder no conoce Fraunces ni Inter (las fuentes reales de este negocio) y cae a Montserrat — un arreglo chico, previo a esto</p>
+</section>
+
+<!-- 11 · mapa de modelos -->
+<section class="slide">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">11 / 14</span></div>
+  <div class="head">
+    <p class="kicker">El mapa completo</p>
+    <h2>Veintiún modelos, <b>una sola credencial</b>, precio por imagen conocido de antemano.</h2>
+    <p class="cap">Vercel AI Gateway ya está en la cuenta del equipo y expone 371 modelos con su tarifa. Los seis de OpenAI corrieron hoy; los otros quince están listos con la misma llamada, apenas se carguen créditos — la capa gratuita del gateway no cubre imagen.</p>
+  </div>
+  <div class="tables"><table><thead><tr><th>Modelo</th><th>Proveedor</th><th>Por imagen</th><th>Entrada</th><th>Estado</th></tr></thead><tbody><tr class="run"><td>GPT Image 2 · low</td><td>OpenAI</td><td class="num">US$0,007</td><td>foto</td><td>corrido · 19 s</td></tr>
+<tr class="pend"><td>Muse Image 1.0</td><td>Meta</td><td class="num">US$0,010</td><td>foto</td><td>pendiente</td></tr>
+<tr class="run"><td>GPT Image 1 Mini</td><td>OpenAI</td><td class="num">US$0,013</td><td>foto</td><td>corrido · 21 s</td></tr>
+<tr class="pend"><td>Grok Imagine Image</td><td>xAI</td><td class="num">US$0,020</td><td>texto</td><td>pendiente</td></tr>
+<tr class="pend"><td>Seedream 4.0</td><td>ByteDance</td><td class="num">US$0,030</td><td>texto</td><td>pendiente</td></tr>
+<tr class="pend"><td>Nano Banana 2 Lite</td><td>Google</td><td class="num">US$0,034</td><td>foto</td><td>pendiente</td></tr>
+<tr class="pend"><td>Seedream 5.0 Lite</td><td>ByteDance</td><td class="num">US$0,035</td><td>texto</td><td>pendiente</td></tr>
+<tr class="pend"><td>Seedream 5.0 Pro</td><td>ByteDance</td><td class="num">US$0,035</td><td>texto</td><td>pendiente</td></tr>
+<tr class="pend"><td>Recraft V4.1</td><td>Recraft</td><td class="num">US$0,035</td><td>texto</td><td>pendiente</td></tr>
+<tr class="pend"><td>Nano Banana (2.5)</td><td>Google</td><td class="num">US$0,039</td><td>foto</td><td>pendiente</td></tr>
+<tr class="pend"><td>FLUX.1 Kontext Pro</td><td>Black Forest Labs</td><td class="num">US$0,040</td><td>foto</td><td>pendiente</td></tr></tbody></table><table><thead><tr><th>Modelo</th><th>Proveedor</th><th>Por imagen</th><th>Entrada</th><th>Estado</th></tr></thead><tbody><tr class="pend"><td>FLUX 1.1 [pro]</td><td>Black Forest Labs</td><td class="num">US$0,040</td><td>texto</td><td>pendiente</td></tr>
+<tr class="pend"><td>Seedream 4.5</td><td>ByteDance</td><td class="num">US$0,040</td><td>texto</td><td>pendiente</td></tr>
+<tr class="run"><td>GPT Image 2 · medium</td><td>OpenAI</td><td class="num">US$0,044</td><td>foto</td><td>corrido · 38 s</td></tr>
+<tr class="pend"><td>FLUX 1.1 [pro] Ultra</td><td>Black Forest Labs</td><td class="num">US$0,060</td><td>texto</td><td>pendiente</td></tr>
+<tr class="pend"><td>Grok Imagine 2.0</td><td>xAI</td><td class="num">US$0,060</td><td>texto</td><td>pendiente</td></tr>
+<tr class="run"><td>GPT Image 1</td><td>OpenAI</td><td class="num">US$0,065</td><td>foto</td><td>corrido · 21 s</td></tr>
+<tr class="run"><td>GPT Image 1.5</td><td>OpenAI</td><td class="num">US$0,065</td><td>foto</td><td>corrido · 19 s</td></tr>
+<tr class="pend"><td>Nano Banana 2</td><td>Google</td><td class="num">US$0,067</td><td>foto</td><td>pendiente</td></tr>
+<tr class="pend"><td>Nano Banana Pro</td><td>Google</td><td class="num">US$0,13</td><td>foto</td><td>pendiente</td></tr>
+<tr class="run"><td>GPT Image 2 · high</td><td>OpenAI</td><td class="num">US$0,17</td><td>foto</td><td>corrido · 99 s</td></tr></tbody></table></div>
+  <div class="cols notes">
+    <div class="card soft"><h3>Por qué el gateway</h3><p>Una credencial para todos los proveedores, <b>costo por request con etiqueta por negocio</b>, tope de gasto y logs. Sin cuentas nuevas en Google, ByteDance ni Black Forest Labs — la traba de julio desaparece.</p></div>
+    <div class="card warn"><h3>Pendiente</h3><p>Créditos pagos en Vercel AI Gateway para correr Nano Banana 2 (el ganador de julio), Seedream 5.0 Pro (el que pidió JP) y FLUX. <b>Con US$10 sobra</b> para repetir esta corrida completa tres veces.</p></div>
+  </div>
+  <p class="caption"><b>Entrada</b> foto = acepta una imagen de entrada · texto = solo desde el prompt · precios del catálogo del gateway a 1K; OpenAI = promedio medido hoy</p>
+</section>
+
+<!-- 12 · propuesta -->
+<section class="slide tint">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">12 / 14</span></div>
+  <div class="head">
+    <p class="kicker">La propuesta</p>
+    <h2>Un botón nuevo en el builder: <b>«Generar fondo con IA»</b>. Y publicar donde ahora se puede.</h2>
+    <p class="cap">No es una pantalla nueva ni un producto aparte. Es el paso 02 del flujo que ya existe, con un modelo atrás, y la publicación ampliada a lo que los permisos habilitan.</p>
+  </div>
+  <div class="steps">
+    <div class="step"><span class="no">01</span><div class="tt">Elegí la placa</div><p class="dsc">Servicio, disponibilidad o lista de precios — <b>como hoy</b>. La data ya está cargada.</p></div>
+    <div class="step ia"><span class="no">02 · NUEVO</span><div class="tt">Generá el fondo</div><p class="dsc">Un toque, <b>10 a 20 segundos</b>. Tres variantes para elegir. Si tiene foto del servicio, la ambienta. Se cachea por negocio.</p></div>
+    <div class="step"><span class="no">03</span><div class="tt">Ajustá el texto</div><p class="dsc">Capa HTML con precio, duración y URL exactos. <b>Ningún dígito pasa por el modelo.</b></p></div>
+    <div class="step"><span class="no">04</span><div class="tt">Publicá</div><p class="dsc"><b>Feed, carrusel o historia</b> en su Instagram — o descargar. Con el aviso de cuántas publicaciones le quedan hoy.</p></div>
+  </div>
+  <div class="cols three" style="margin-top:2.6vh">
+    <div class="card"><h3>En Cyclone</h3><p>Rol <b><code>image</code></b> en el registro de modelos (como <code>vision</code> o <code>content</code>), sin modelo hardcodeado. Endpoint en social-posting con <b>límite por negocio</b>, PNG a S3, costo registrado por vendor.</p></div>
+    <div class="card"><h3>En Flash</h3><p>El botón en el builder, las tres variantes con vista previa, y <b>carrusel e historia</b> en el paso de publicar — el carrusel el servidor ya lo sabe hacer; la historia es un contenedor más.</p></div>
+    <div class="card"><h3>Con qué modelo</h3><p>Arrancar con <b>GPT Image 2 · low</b> para fondos (US$0,005, 20 s) y <b>medium</b> para fotos. Nano Banana 2 y Seedream se comparan apenas haya créditos; el rol se cambia por variable de entorno.</p></div>
+  </div>
+</section>
+
+<!-- 13 · decisiones -->
+<section class="slide">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">13 / 14</span></div>
+  <div class="head">
+    <p class="kicker">Qué hay que decidir</p>
+    <h2>Tres cosas, <b>ninguna grande</b>.</h2>
+  </div>
+  <div class="dec">
+    <div class="card"><div class="big"><b>1.</b> Créditos</div><p>Cargar crédito en Vercel AI Gateway (US$10 alcanzan) para correr los quince modelos que faltan — Nano Banana 2, Seedream 5.0 Pro, FLUX — con la misma data y los mismos casos. Es la única traba real, y es la misma que frenó julio.</p></div>
+    <div class="card"><div class="big"><b>2.</b> Repetir</div><p>Correr cada caso de texto 3 a 5 veces por modelo para medir la <b>tasa de error en español</b>. Hoy es una corrida por variante: alentador, no estadística. El script queda en el repo, cambiar de negocio es editar un diccionario.</p></div>
+    <div class="card"><div class="big"><b>3.</b> Alcance</div><p>Si va: primero el <b>fondo con IA</b> (cacheable, barato, sin riesgo de texto), después la foto ambientada con vista previa. Publicar en <b>carrusel e historia</b> puede ir antes que todo esto — no depende de la IA.</p></div>
+  </div>
+  <p class="caption"><b>Costo de esta corrida</b> · US$1,65 en 27 imágenes con la cuenta de OpenAI de la empresa · script y datos en el repo de Cyclone</p>
+</section>
+
+<!-- 14 · cierre -->
+<section class="slide ink center">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">14 / 14</span></div>
+  <p class="kicker">Redes con IA</p>
+  <h1 style="max-width:18ch">El fondo lo pinta el modelo. <b>El precio lo escribe Ágora.</b> Y lo publica.</h1>
+  <p class="sub">Nadie en el rubro genera visuales con la data real del negocio. Nosotros ya la tenemos cargada — y desde el 5 de septiembre, también la puerta a su Instagram.</p>
+  <span class="badge"><span class="g"></span>www.agora.red · propuesta interna · septiembre 2026</span>
+</section>
+
+</body>
+</html>
