@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GPT Image 2 en Ágora</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --frost-primary:#0072FB; --frost-primary-soft:#EEF6FF; --frost-primary-wash:rgba(0,114,251,.08);
+  --frost-accent:#FF4658; --frost-success:#10B981; --frost-success-deep:#047857; --frost-warning:#F59E0B;
+  --frost-ink:#0F172A; --frost-ink-soft:#3A3A3A; --frost-muted:#868686; --frost-faint:#B5B5B5;
+  --frost-surface:#FFFFFF; --frost-surface-muted:#EFF3F9; --frost-border:#E2E8F0; --frost-border-soft:#F2F2F2;
+  --r-sm:6px; --r-item:10px; --r-btn:12px; --r-card:20px; --r-shell:28px; --r-chip:999px;
+  --sh-xs:0 1px 2px rgba(15,23,42,0.04); --sh-sm:0 4px 12px -4px rgba(15,23,42,0.10);
+  --sh-md:0 10px 30px -12px rgba(15,23,42,0.15); --sh-lg:0 24px 60px -24px rgba(15,23,42,0.32);
+  --sans:'Montserrat',system-ui,-apple-system,sans-serif; --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
+body{font-family:var(--sans);font-variant-numeric:tabular-nums;color:var(--frost-ink);background:var(--frost-surface-muted);-webkit-font-smoothing:antialiased}
+.slide{min-height:100vh;width:100%;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:center;padding:10vh 7vw 8vh;position:relative;overflow:hidden}
+.slide.center{padding-top:8vh}
+.slide.ink{background:var(--frost-ink);color:#fff}
+.slide.tint{background:linear-gradient(160deg,#F7F1EF 0%,#EFF3F9 100%)}
+.chrome{position:absolute;top:3.4vh;left:7vw;right:7vw;display:flex;justify-content:space-between;align-items:center;z-index:5}
+.chrome .num{font-size:12px;font-weight:600;letter-spacing:.12em;color:var(--frost-faint)}
+.slide.ink .chrome .num{color:rgba(255,255,255,.45)}
+.wordmark{display:flex;align-items:center;gap:9px;font-weight:500;font-size:17px;letter-spacing:-.01em}
+.wordmark .dot{width:9px;height:9px;border-radius:50%;background:var(--frost-primary);box-shadow:0 0 10px var(--frost-primary)}
+.slide.ink .wordmark{color:#fff}
+.kicker{font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--frost-primary);margin-bottom:14px}
+.slide.ink .kicker{color:#57A5FF}
+h1{font-weight:200;font-size:clamp(44px,6.4vw,86px);line-height:1;letter-spacing:-.02em;max-width:18ch}
+h1 b{font-weight:600}
+h2{font-weight:300;font-size:clamp(24px,3vw,38px);line-height:1.08;letter-spacing:-.015em;max-width:26ch}
+h2 b{font-weight:600}
+h2 code,.cap code,.card code,td code,.obs code,.dsc code{font-family:var(--mono);font-size:.82em;background:#fff;border:1px solid var(--frost-border);border-radius:var(--r-sm);padding:1px 6px;font-weight:500}
+.slide.ink code{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2)}
+.sub{font-size:clamp(16px,1.6vw,21px);font-weight:300;color:rgba(255,255,255,.82);margin-top:22px;max-width:48ch;line-height:1.45}
+.sub b{font-weight:600;color:#fff}
+.badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:var(--r-chip);padding:8px 16px;font-size:13px;font-weight:500;color:rgba(255,255,255,.9);margin-top:32px;align-self:flex-start}
+.badge .g{width:7px;height:7px;border-radius:50%;background:var(--frost-success);box-shadow:0 0 8px var(--frost-success)}
+.head{display:flex;flex-direction:column;margin-bottom:2.4vh;max-width:72ch;flex-shrink:0}
+.head .cap{font-size:14.5px;font-weight:300;color:var(--frost-ink-soft);margin-top:10px;line-height:1.5;max-width:70ch}
+.head .cap b{font-weight:600;color:var(--frost-ink)}
+.caption{position:absolute;bottom:3.4vh;left:7vw;right:7vw;font-size:12.5px;font-weight:500;color:var(--frost-faint);letter-spacing:.02em;display:flex;gap:8px;align-items:center}
+.caption b{color:var(--frost-muted);font-weight:600}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:2vw;width:100%;align-items:start}
+.grid.tall{display:flex;gap:1.2vw;align-items:flex-end} .grid.tall .cell{flex:0 1 auto} .grid.tall .cell img{height:42vh;width:auto;max-width:100%}
+.cols.three{grid-template-columns:1fr 1fr 1fr}
+.cols.four{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-card);padding:20px 22px;box-shadow:var(--sh-sm)}
+.card.soft{background:var(--frost-primary-soft);border-color:transparent}
+.card.warn{background:#FFF7E8;border-color:transparent}
+.card.ink{background:var(--frost-ink);color:#fff;border-color:transparent}
+.card h3{font-size:11.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--frost-primary);margin-bottom:10px}
+.card.warn h3{color:#B45309} .card.ink h3{color:#57A5FF}
+.card p,.card li{font-size:13.5px;font-weight:300;line-height:1.5;color:var(--frost-ink-soft)}
+.card.ink p{color:rgba(255,255,255,.8)} .card.ink p b{color:#fff}
+.card p b,.card li b{font-weight:600;color:var(--frost-ink)}
+.card ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+.card li{display:flex;gap:9px}
+.card li i{font-style:normal;flex:none;width:17px;height:17px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:700;margin-top:2px}
+.card li i.ok{background:rgba(16,185,129,.14);color:var(--frost-success-deep)}
+.card li i.no{background:rgba(255,70,88,.12);color:#B91C1C}
+.big{font-size:34px;font-weight:200;letter-spacing:-.02em;line-height:1;margin-bottom:6px}
+.big b{font-weight:600}
+.grid{display:grid;gap:1.1vw;width:100%;align-items:start}
+.cell{margin:0;min-width:0}
+.cell img{width:100%;height:auto;display:block;border-radius:var(--r-item);border:1px solid var(--frost-border);box-shadow:var(--sh-sm);background:#fff}
+.cell.lead img{outline:2.5px solid var(--frost-primary);outline-offset:3px}
+.cell.checker img{background:conic-gradient(#e6e9ef 25%,#fff 0 50%,#e6e9ef 0 75%,#fff 0) 0 0/24px 24px}
+.cell figcaption{font-size:11.5px;line-height:1.4;margin-top:8px;color:var(--frost-muted);display:flex;flex-direction:column;gap:1px}
+.cell figcaption b{color:var(--frost-ink);font-weight:600}
+.cell.orig figcaption b{color:var(--frost-primary)}
+.obs{list-style:none;display:flex;flex-direction:column;gap:7px;margin-top:2vh}
+.obs li{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;line-height:1.4;color:var(--frost-ink-soft);font-weight:300}
+.obs li b{font-weight:600;color:var(--frost-ink)}
+.obs li i{font-style:normal;flex:none;width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-top:1px}
+.obs li.ok i{background:rgba(16,185,129,.14);color:var(--frost-success-deep)}
+.obs li.warn i{background:rgba(245,158,11,.16);color:#B45309}
+table{border-collapse:collapse;width:100%;font-size:12px;background:#fff;border-radius:var(--r-card);overflow:hidden;box-shadow:var(--sh-sm);border:1px solid var(--frost-border)}
+th{text-align:left;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--frost-muted);font-weight:600;padding:8px 12px;border-bottom:1px solid var(--frost-border);background:var(--frost-surface-muted)}
+td{padding:4px 10px;border-bottom:1px solid var(--frost-border-soft);font-weight:400;vertical-align:top;line-height:1.35}
+td:first-child{font-family:var(--mono);font-size:12px;font-weight:500;white-space:nowrap}
+td.num{font-weight:600;color:var(--frost-ink);white-space:nowrap}
+tr:last-child td{border-bottom:none}
+tr.dim td{color:var(--frost-muted)}
+.prompt{background:var(--frost-ink);color:#E6EDF7;border-radius:var(--r-card);padding:20px 22px;font-family:var(--mono);font-size:12.5px;line-height:1.6;white-space:pre-wrap}
+.prompt em{font-style:normal;color:#57A5FF} .prompt s{text-decoration:none;color:#FDBA74} .prompt u{text-decoration:none;color:#6EE7B7}
+.stage{display:flex;gap:2.4vw;align-items:flex-start;width:100%}
+.stage > *{min-width:0}
+.stat{display:flex;flex-direction:column;gap:2px}
+.stat .v{font-size:40px;font-weight:200;letter-spacing:-.03em;line-height:1} .stat .v b{font-weight:600}
+.stat .l{font-size:12.5px;color:var(--frost-muted);font-weight:500}
+.stats{display:flex;gap:3vw;margin-bottom:2vh}
+@media (max-width:900px){ .slide{min-height:auto;padding:14vh 6vw 10vh} .cols,.cols.three,.cols.four,.grid{grid-template-columns:1fr 1fr!important} .stage{flex-direction:column} .caption{position:static;margin-top:20px} .stats{flex-wrap:wrap} }
+</style>
+</head>
+<body>
+
+<!-- 01 -->
+<section class="slide ink center">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">MANUAL · SEP 2026</span></div>
+  <p class="kicker">GPT Image 2 · generación de imágenes</p>
+  <h1>Un modelo, <b>US$0,005</b> por imagen, y todo lo que se le puede pedir con la data de un negocio.</h1>
+  <p class="sub">Qué variables recibe, qué hace cada una y qué casos de uso abre — cada uno con su imagen, generada con la <b>paleta, las fuentes y los servicios reales</b> de cuatro negocios de Ágora.</p>
+  <span class="badge"><span class="g"></span>14 imágenes nuevas · US$0,24 · 7 sep 2026</span>
+</section>
+
+<!-- 02 · ficha -->
+<section class="slide tint">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">02 / 14</span></div>
+  <div class="head">
+    <p class="kicker">Ficha del modelo</p>
+    <h2>Genera desde texto, edita fotos, y <b>escribe bien en español</b>.</h2>
+  </div>
+  <div class="cols four">
+    <div class="card"><h3>Dos puertas</h3><p><code>/images/generations</code> crea desde un prompt. <code>/images/edits</code> recibe hasta <b>16 fotos</b> y una máscara opcional, y devuelve una imagen nueva que las respeta.</p></div>
+    <div class="card"><h3>Tres calidades · medidas hoy</h3><p><b>low</b> US$0,005 · 20 s<br><b>medium</b> US$0,042 · 37 s<br><b>high</b> US$0,17 · 96 s<br><span style="font-size:12px;color:var(--frost-muted)">a 1024 × 1536 · el costo sale de los tokens que devuelve cada respuesta</span></p></div>
+    <div class="card"><h3>Tamaños</h3><p>Tres fijos (1024², 1024 × 1536, 1536 × 1024) y <b>cualquier medida libre</b>: lados múltiplos de 16, entre 655.360 y 8,3 millones de píxeles, hasta 3:1. Instagram y la vidriera salen exactos.</p></div>
+    <div class="card"><h3>Lo que no tiene</h3><p>Sin <b>semilla</b>: el mismo prompt nunca repite la imagen — lo que se quiere conservar se <b>cachea</b>. Sin estilos predefinidos: el estilo va en el prompt. En edición procesa las fotos siempre en alta fidelidad.</p></div>
+  </div>
+  <div class="cols" style="margin-top:2vh">
+    <div class="card soft"><h3>Qué devuelve</h3><p>La imagen en base64 (PNG, JPEG o WebP) y un bloque <code>usage</code> con tokens de entrada y de salida. Con eso el <b>costo exacto de cada request</b> se calcula solo y se puede registrar por negocio.</p></div>
+    <div class="card"><h3>Cómo lo usaríamos</h3><p>Rol <code>image</code> en el registro de modelos de Cyclone, sin modelo hardcodeado. Cada caso de uso arma su prompt a partir del <b>brand kit + el dato</b> (servicio, precio, oferta), y guarda el resultado en S3 con el costo en un ledger por vendor.</p></div>
+  </div>
+</section>
+
+<!-- 03 · variables -->
+<section class="slide">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">03 / 14</span></div>
+  <div class="head">
+    <p class="kicker">Las variables</p>
+    <h2>Todo lo que recibe, y <b>para qué lo usaríamos</b>.</h2>
+  </div>
+  <div class="cols">
+    <table>
+      <thead><tr><th>Generar</th><th>Valores</th><th>Para qué</th></tr></thead>
+      <tbody>
+        <tr><td>prompt</td><td>hasta 32.000 caracteres</td><td>Rubro + paleta hex + composición + prohibiciones. El 90 % del resultado.</td></tr>
+        <tr><td>size</td><td>fijos o <b>libres</b> (múltiplo de 16, ≤ 3:1)</td><td>Portada 1024², feed 1088 × 1360, historia 1088 × 1936, banner 1920 × 640, WhatsApp 1200 × 624.</td></tr>
+        <tr><td>quality</td><td>low · medium · high · auto</td><td><b>low</b> para lo que se cachea; medium para fotos; high casi nunca.</td></tr>
+        <tr><td>n</td><td>1 a 10</td><td>Tres variantes de un fondo en una llamada: el «elegí una» del builder.</td></tr>
+        <tr><td>background</td><td>transparent · opaque · auto</td><td>Assets con alfa (ornamentos, sellos) para poner <b>sobre</b> la plantilla.</td></tr>
+        <tr><td>output_format</td><td>png · jpeg · webp</td><td>WebP para la web; PNG solo con transparencia.</td></tr>
+        <tr><td>output_compression</td><td>0 a 100</td><td>70 con webp: una fracción del peso, sin que se note.</td></tr>
+        <tr><td>moderation</td><td>auto · low</td><td>Dejar en auto: el contenido lo carga un negocio.</td></tr>
+        <tr><td>stream · partial_images</td><td>true/false · 0 a 3</td><td>La imagen aparece mientras se genera: el «generando…» deja de ser una rueda.</td></tr>
+        <tr class="dim"><td>user</td><td>id libre</td><td>El id del negocio, para verlo también por cuenta en OpenAI.</td></tr>
+      </tbody>
+    </table>
+    <table>
+      <thead><tr><th>Editar (además)</th><th>Valores</th><th>Para qué</th></tr></thead>
+      <tbody>
+        <tr><td>image[]</td><td>1 a 16 fotos · png, jpg, webp</td><td>Una foto: ambientar, extender, recolorear. Varias: componerlas.</td></tr>
+        <tr><td>mask</td><td>PNG del mismo tamaño; lo transparente se repinta</td><td>Cambiar el fondo o la pared sin tocar a la persona. Guía, no restringe (lámina 8).</td></tr>
+        <tr><td>size</td><td>1024² · 1024 × 1536 · 1536 × 1024 · auto</td><td>Solo fijos: se recorta después.</td></tr>
+        <tr class="dim"><td>input_fidelity</td><td>—</td><td>No lo acepta: siempre alta fidelidad.</td></tr>
+        <tr class="dim"><td>quality · n · background · output_*</td><td>igual que generar</td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="caption"><b>Fuente</b> referencia de la API de OpenAI, 7 sep 2026 · los ejemplos de las próximas láminas usan exactamente estas variables</p>
+</section>
+
+<!-- 04 · size -->
+<section class="slide tint">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">04 / 14</span></div>
+  <div class="head">
+    <p class="kicker">Variable · <code>size</code></p>
+    <h2>Cada superficie de Ágora tiene su medida, y <b>salen sin recorte</b>.</h2>
+    <p class="cap">Tres reglas: lados múltiplos de 16, entre 655.360 y 8,3 millones de píxeles, no más alargado que 3:1. Las cinco medidas que usamos salen exactas.</p>
+  </div>
+  <div class="stage">
+    <div class="grid" style="grid-template-columns:1fr 1fr 0.62fr;flex:1.3">
+      <figure class="cell "><img src="assets/size-1024.jpg" alt="1024 × 1024" style=""><figcaption><b>1024 × 1024</b><span>portada de servicio · 1:1</span></figcaption></figure>
+      <figure class="cell "><img src="assets/size-1088x1360.jpg" alt="1088 × 1360" style=""><figcaption><b>1088 × 1360</b><span>feed de Instagram · 4:5</span></figcaption></figure>
+      <figure class="cell "><img src="assets/size-1088x1936.jpg" alt="1088 × 1936" style=""><figcaption><b>1088 × 1936</b><span>historia · 9:16</span></figcaption></figure>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:1.2vh">
+      <figure class="cell "><img src="assets/size-1920x640.jpg" alt="1920 × 640" style=""><figcaption><b>1920 × 640</b><span>portada de la vidriera en escritorio · 3:1, el máximo</span></figcaption></figure>
+      <figure class="cell "><img src="assets/size-1200x624.jpg" alt="1200 × 624" style=""><figcaption><b>1200 × 624</b><span>cabecera de WhatsApp · 1,91:1</span></figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- 05 · quality -->
+<section class="slide">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">05 / 14</span></div>
+  <div class="head">
+    <p class="kicker">Variable · <code>quality</code></p>
+    <h2>Mismo prompt, tres calidades: <b>low gana</b> en casi todo lo nuestro.</h2>
+    <p class="cap">El fondo de marca de Color &amp; Style. La diferencia de calidad no se ve en una placa de Instagram; la de costo y tiempo, sí.</p>
+  </div>
+  <div class="stage">
+    <div class="grid" style="grid-template-columns:repeat(3,1fr);flex:1.3">
+      <figure class="cell lead"><img src="assets/q-low.jpg" alt="low" style=""><figcaption><b>low</b><span>US$0,005 · 20 s</span></figcaption></figure>
+      <figure class="cell "><img src="assets/q-medium.jpg" alt="medium" style=""><figcaption><b>medium</b><span>US$0,042 · 37 s</span></figcaption></figure>
+      <figure class="cell "><img src="assets/q-high.jpg" alt="high" style=""><figcaption><b>high</b><span>US$0,17 · 96 s</span></figcaption></figure>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:12px">
+      <div class="card"><h3>low</h3><p>Fondos, portadas, banners, arte de tarjetas: <b>todo lo que se cachea</b> y todo lo que lleva texto encima. 30 veces más barato que high.</p></div>
+      <div class="card"><h3>medium</h3><p>Fotos: ambientar, extender, recolorear. Ahí el detalle sí se nota, y son <b>por uso</b>, no por negocio.</p></div>
+      <div class="card"><h3>high</h3><p>Casi nunca. 100 segundos de espera y US$0,17 por algo que a este tamaño no se distingue.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 · n -->
+<section class="slide tint">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">06 / 14</span></div>
+  <div class="head">
+    <p class="kicker">Variable · <code>n</code></p>
+    <h2>Tres variantes en <b>una sola llamada</b>: el carrusel, o el «elegí una».</h2>
+    <p class="cap">Un prompt, <code>n=3</code>, 26 s · US$0,018 en total. Salen del mismo mundo visual — sirven como las tres placas de un carrusel, o como las tres opciones que el builder le muestra al negocio antes de escribir encima.</p>
+  </div>
+  <div class="stage">
+    <div class="grid" style="grid-template-columns:repeat(3,1fr);flex:1.3">
+      <figure class="cell "><img src="assets/n-1.jpg" alt="variante 1" style=""><figcaption><b>variante 1</b><span>1088 × 1360</span></figcaption></figure>
+      <figure class="cell "><img src="assets/n-2.jpg" alt="variante 2" style=""><figcaption><b>variante 2</b></figcaption></figure>
+      <figure class="cell "><img src="assets/n-3.jpg" alt="variante 3" style=""><figcaption><b>variante 3</b></figcaption></figure>
+    </div>
+    <ul class="obs" style="flex:1;margin-top:0"><li class="ok"><i>✓</i><span><b>Las tres comparten el mundo visual</b> — seda, piedra, un jarrón con ramas secas — sin repetirse. Sirven de carrusel tal cual.</span></li>
+<li class="ok"><i>✓</i><span>Las tres dejaron el centro vacío para la capa de texto, como pedía el prompt.</span></li>
+<li class="warn"><i>!</i><span>Cuesta tres veces una llamada de <code>n=1</code>: no hay descuento por lote. Para el «elegí una» conviene <code>n=3</code> en low; para el carrusel definitivo, regenerar solo la que no gustó.</span></li></ul>
+  </div>
+</section>
+
+<!-- 07 · background + format -->
+<section class="slide">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">07 / 14</span></div>
+  <div class="head">
+    <p class="kicker">Variables · <code>background</code> · <code>output_format</code> · <code>output_compression</code></p>
+    <h2>Assets con transparencia para <b>componer sobre la plantilla</b>, y archivos que pesan lo que deben.</h2>
+  </div>
+  <div class="stage">
+    <div class="grid" style="grid-template-columns:0.8fr 1fr;flex:1.2;align-items:start">
+      <figure class="cell checker"><img src="assets/ornamento.png" alt="background=transparent" style=""><figcaption><b>background=transparent</b><span>un ornamento en el marrón de la marca, PNG con alfa · 34 s · US$0,006</span></figcaption></figure>
+      <figure class="cell "><img src="assets/ornamento-placa.jpg" alt="compuesto sobre la placa híbrida" style=""><figcaption><b>compuesto sobre la placa híbrida</b><span>capa intermedia: fondo IA + ornamento IA + texto HTML</span></figcaption></figure>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:12px">
+      <figure class="cell "><img src="assets/webp-70.jpg" alt="output_format=webp · compression=70" style="max-width:260px"><figcaption><b>output_format=webp · compression=70</b><span>77 KB — el mismo tipo de fondo en PNG pesa 1.950 KB</span></figcaption></figure>
+      <ul class="obs" style="margin-top:0"><li class="ok"><i>✓</i><span><b>WebP a 70 pesa 25 veces menos que el PNG</b> y en una placa de Instagram no se nota. Es el formato para todo lo que va a S3 y a la web.</span></li>
+<li class="ok"><i>✓</i><span>El ornamento salió con alfa real, sin halo: se apoya sobre cualquier fondo. Un asset así se genera una vez por negocio y se reutiliza en todas las plantillas.</span></li>
+<li class="warn"><i>!</i><span><code>background=transparent</code> obliga a PNG o WebP; con JPEG la API lo rechaza.</span></li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- 08 · edits -->
+<section class="slide tint">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">08 / 14</span></div>
+  <div class="head">
+    <p class="kicker">Editar · <code>image[]</code> · <code>mask</code></p>
+    <h2>Con la foto real del negocio: <b>una, varias, o solo un pedazo</b>.</h2>
+    <p class="cap">Las tres formas de edición con las portadas reales de Color &amp; Style. En las tres, la persona queda como estaba.</p>
+  </div>
+  <div class="grid" style="grid-template-columns:0.9fr 0.9fr 0.55fr 0.9fr 1.5fr;align-items:end">
+    <figure class="cell orig"><img src="assets/orig.jpg" alt="Original" style=""><figcaption><b>Original</b><span>portada real 1:1</span></figcaption></figure>
+    <figure class="cell "><img src="assets/probador.jpg" alt="image · «pelo cobrizo»" style=""><figcaption><b>image · «pelo cobrizo»</b><span>«¿Cómo me quedaría?» · 43 s · US$0,061</span></figcaption></figure>
+    <figure class="cell orig checker"><img src="assets/mask.png" alt="mask" style=""><figcaption><b>mask</b><span>lo transparente se repinta</span></figcaption></figure>
+    <figure class="cell "><img src="assets/inpaint.jpg" alt="image + mask" style=""><figcaption><b>image + mask</b><span>solo cambia la franja superior · 53 s · US$0,061</span></figcaption></figure>
+    <figure class="cell "><img src="assets/collage.jpg" alt="image[] · dos fotos" style=""><figcaption><b>image[] · dos fotos</b><span>las dos portadas reales en una escena · 44 s · US$0,062</span></figcaption></figure>
+  </div>
+  <ul class="obs"><li class="ok"><i>✓</i><span><b>Recolorear el pelo no tocó nada más</b>: misma pose, misma capa, mismas manos con la tijera y el secador, mismo fondo rosa. Es el «¿cómo me quedaría?» funcionando con una foto real.</span></li>
+<li class="warn"><i>!</i><span><b>La máscara guió pero no restringió</b>: pidió repintar solo la franja superior y el modelo puso la pared con el estante ahí, pero también cambió el fondo rosa de abajo a beige. La persona quedó intacta. Si el pedido es «solo esta zona», hay que recomponer el resto desde la foto original.</span></li>
+<li class="ok"><i>✓</i><span>Con dos fotos armó el díptico sin deformar a nadie — las dos portadas reales en una sola pieza para el feed.</span></li></ul>
+</section>
+
+<!-- 09 · prompt -->
+<section class="slide">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">09 / 14</span></div>
+  <div class="head">
+    <p class="kicker">Variable · <code>prompt</code></p>
+    <h2>El prompt que funciona tiene <b>cinco partes</b>, y el dato del negocio va en cada una.</h2>
+  </div>
+  <div class="stage">
+    <div class="prompt" style="flex:1.3;font-size:12px"><em># 1 · qué es y para quién</em>
+Square cover image for the service 'nail capping with semi-permanent polish' of Meraki Nails, a premium nail studio.
+<em># 2 · la paleta, en hex, del brand kit</em>
+Use exactly this brand palette: base #F0F9FF, mid-tones #DCEBF5 and #9FBBD0, accent #5E7E9A, darkest tone #0C4A6E.
+<em># 3 · composición, luz y espacio para el texto</em>
+Editorial close-up of manicured hands with glossy pale-blue nails on a soft blue linen surface, soft daylight, shallow depth of field, calm and clean.
+<em># 4 · prohibiciones</em>
+<s>Absolutely no text, letters, numbers, logos or watermarks.</s></div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:12px">
+      <div class="card"><h3>1 · Qué es y para quién</h3><p>El tipo de pieza y el <b>rubro real</b> del negocio (sale de su categoría). «Square cover image for the service X of Y, a nail studio».</p></div>
+      <div class="card"><h3>2 · La paleta, en hex</h3><p>Base, medios tonos, acento y el tono más oscuro, <b>del brand kit</b>. Los seis modelos la respetaron en el PoC.</p></div>
+      <div class="card"><h3>3 · Composición y espacio</h3><p>Qué hay en la imagen, la luz, y <b>dónde queda vacío</b> para la capa de texto. Sin esto el fondo se llena.</p></div>
+      <div class="card warn"><h3>4 · Prohibiciones · 5 · Texto</h3><p>«No text» siempre que el texto lo pone la plantilla. Y si el modelo tiene que escribir: <b>rotular en español</b> — «Service: / Price:» aparecen literales en la imagen.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 · casos vidriera -->
+<section class="slide tint">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">10 / 14</span></div>
+  <div class="head">
+    <p class="kicker">Casos de uso · vidriera y marketplace</p>
+    <h2>El hueco más grande no está en Instagram: <b>38 % de los servicios activos no tienen foto</b>.</h2>
+  </div>
+  <div class="stats">
+    <div class="stat"><span class="v"><b>11.926</b></span><span class="l">servicios activos con la portada por defecto · 1.335 de los 1.954 negocios vigentes</span></div>
+    <div class="stat"><span class="v"><b>1.234</b></span><span class="l">vidrieras sin foto de portada · 1.553 sin avatar</span></div>
+    <div class="stat"><span class="v"><b>US$60</b></span><span class="l">costaría generar las 11.926 portadas, una vez, en low</span></div>
+  </div>
+  <div class="grid" style="grid-template-columns:0.7fr 1fr 1fr 1fr 2.2fr;align-items:end">
+    <figure class="cell orig"><img src="assets/default-cover.jpg" alt="Hoy" style=""><figcaption><b>Hoy</b><span>la portada por defecto de Ágora</span></figcaption></figure>
+    <figure class="cell "><img src="assets/portada-meraki.jpg" alt="Meraki Nails" style=""><figcaption><b>Meraki Nails</b><span>«Kapping + semipermanente» · 19 s · US$0,006</span></figcaption></figure>
+    <figure class="cell "><img src="assets/portada-melody.jpg" alt="Melody Espinosa Studio" style=""><figcaption><b>Melody Espinosa Studio</b><span>«Lifting y tinte híbrido» · 21 s · US$0,006</span></figcaption></figure>
+    <figure class="cell "><img src="assets/portada-azahara.jpg" alt="Azahara" style=""><figcaption><b>Azahara</b><span>«Limpieza facial profunda» · 23 s · US$0,006</span></figcaption></figure>
+    <figure class="cell "><img src="assets/size-1920x640.jpg" alt="Portada de la vidriera · Melody" style=""><figcaption><b>Portada de la vidriera · Melody</b><span>hoy no tiene · 1920 × 640 · 27 s · US$0,003</span></figcaption></figure>
+  </div>
+  <ul class="obs"><li class="ok"><i>✓</i><span><b>Tres rubros, tres paletas, un mismo prompt</b>: el azul de Meraki, el azul noche y dorado de Melody, el crema y dorado de Azahara. La paleta del brand kit se respeta sola.</span></li>
+<li class="ok"><i>✓</i><span>Son imágenes ilustrativas, no el trabajo real del negocio: se rotulan así y el negocio las reemplaza cuando sube una foto propia.</span></li>
+<li class="warn"><i>!</i><span>En el banner de Melody el modelo sumó un rostro que el prompt no pedía (pedía seda abstracta). Para portadas de vidriera conviene prohibir personas explícitamente, o aceptarlas a propósito.</span></li></ul>
+</section>
+
+<!-- 11 · casos redes -->
+<section class="slide">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">11 / 14</span></div>
+  <div class="head">
+    <p class="kicker">Casos de uso · Redes</p>
+    <h2>El fondo lo genera el modelo; <b>el dato lo escribe Ágora</b>.</h2>
+    <p class="cap">La agenda, los precios y las ofertas ya están cargados — lo que ningún competidor tiene. El modelo pone el mundo visual, la plantilla el número exacto, y con los permisos nuevos se publica.</p>
+  </div>
+  <div class="grid tall">
+    <figure class="cell "><img src="assets/lista-precios.jpg" alt="Lista de precios · data viva" style=""><figcaption><b>Lista de precios · data viva</b><span>tres servicios reales sobre la variante 1 del carrusel · el precio nunca pasa por el modelo</span></figcaption></figure>
+    <figure class="cell "><img src="assets/n-2.jpg" alt="Carrusel" style=""><figcaption><b>Carrusel</b><span>tres placas coherentes en una llamada</span></figcaption></figure>
+    <figure class="cell "><img src="assets/foto-ambientada.jpg" alt="Foto ambientada" style=""><figcaption><b>Foto ambientada</b><span>la portada real extendida a 4:5 · 16 s · US$0,013</span></figcaption></figure>
+    <figure class="cell "><img src="assets/size-1088x1936.jpg" alt="Historia 9:16" style=""><figcaption><b>Historia 9:16</b><span>1088 × 1936, zonas seguras</span></figcaption></figure>
+  </div>
+  <ul class="obs"><li class="ok"><i>✓</i><span><b>La lista de precios es data de prod</b>: tres servicios reales de Color &amp; Style con su precio y duración, escritos por la plantilla sobre la variante 1 del carrusel. Cero dígitos pasaron por el modelo.</span></li>
+<li class="ok"><i>✓</i><span>Fondo cacheado + capa HTML = <b>placas ilimitadas a costo cero</b>: turnos libres, ofertas, nuevo servicio, nuevo profesional.</span></li>
+<li class="warn"><i>!</i><span>La foto ambientada y la historia vienen del PoC anterior; el salón de la foto es inventado y va con vista previa.</span></li></ul>
+</section>
+
+<!-- 12 · casos cliente -->
+<section class="slide tint">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">12 / 14</span></div>
+  <div class="head">
+    <p class="kicker">Casos de uso · para el cliente del negocio</p>
+    <h2>Lo que llega al celular del cliente, <b>con la marca del negocio</b>.</h2>
+  </div>
+  <div class="grid" style="grid-template-columns:1.5fr 1.25fr 0.8fr;align-items:end">
+    <figure class="cell "><img src="assets/giftcard.jpg" alt="Tarjeta de regalo personalizada" style=""><figcaption><b>Tarjeta de regalo personalizada</b><span>arte generado una vez · nombre y monto por plantilla (ejemplo) · 25 s · US$0,005</span></figcaption></figure>
+    <figure class="cell "><img src="assets/wa-header.jpg" alt="Cabecera de WhatsApp" style=""><figcaption><b>Cabecera de WhatsApp</b><span>confirmación con marca · 1200 × 624 · template de Meta con imagen · 15 s · US$0,003</span></figcaption></figure>
+    <figure class="cell "><img src="assets/probador.jpg" alt="«¿Cómo me quedaría?»" style=""><figcaption><b>«¿Cómo me quedaría?»</b><span>sobre la foto de la clienta · el único caso por cliente, no por negocio</span></figcaption></figure>
+  </div>
+  <ul class="obs"><li class="ok"><i>✓</i><span><b>El arte se genera una vez</b>; el nombre y el monto los pone la plantilla al momento de regalar — el mismo diseño sirve para todas las tarjetas del negocio.</span></li>
+<li class="ok"><i>✓</i><span>La cabecera de WhatsApp es un template de Meta con imagen: se aprueba una vez para todos los negocios y cada uno lleva la suya.</span></li>
+<li class="warn"><i>!</i><span>«¿Cómo me quedaría?» es el único caso <b>por cliente</b>: un negocio activo puede disparar cientos por mes. Ahí sí va un tope o un pack — y consentimiento sobre la foto de la persona.</span></li></ul>
+</section>
+
+<!-- 13 · costos -->
+<section class="slide">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">13 / 14</span></div>
+  <div class="head">
+    <p class="kicker">Qué cuesta cada caso</p>
+    <h2>Dos economías: lo que se genera <b>una vez</b> y lo que se genera <b>por uso</b>.</h2>
+  </div>
+  <table>
+    <thead><tr><th>Caso</th><th>Variables que importan</th><th>Calidad</th><th>Por imagen</th><th>Frecuencia</th><th>Toda la base</th></tr></thead>
+    <tbody>
+      <tr><td>Portada de servicio</td><td>size 1024² · prompt con rubro + paleta</td><td>low</td><td class="num">US$0,006</td><td>una vez por servicio</td><td class="num">US$60 · 11.926 portadas</td></tr>
+      <tr><td>Portada de vidriera</td><td>size 1920 × 640 · espacio a la izquierda</td><td>low</td><td class="num">US$0,003</td><td>una vez por negocio</td><td class="num">US$7 · 1.234 vidrieras</td></tr>
+      <tr><td>Fondo de placa · carrusel</td><td>n=3 · size 1088 × 1360</td><td>low</td><td class="num">US$0,006</td><td>una vez, cacheado; regenerar a pedido</td><td class="num">US$10 · 1.954 negocios × 1</td></tr>
+      <tr><td>Placa con data viva</td><td>fondo cacheado + capa HTML</td><td>—</td><td class="num">US$0</td><td>ilimitado</td><td class="num">US$0</td></tr>
+      <tr><td>Arte de tarjeta de regalo · WhatsApp</td><td>size 1536 × 1024 · 1200 × 624</td><td>low</td><td class="num">US$0,005</td><td>una vez por negocio</td><td class="num">US$20 · dos artes por negocio</td></tr>
+      <tr><td>Foto ambientada · mejora de fotos</td><td>edits · image · mask</td><td>medium</td><td class="num">US$0,061</td><td>por foto, con vista previa</td><td class="num">por uso</td></tr>
+      <tr><td>«¿Cómo me quedaría?»</td><td>edits · image · la foto del cliente</td><td>medium</td><td class="num">US$0,061</td><td><b>por cliente</b></td><td class="num">el único que pide un pack</td></tr>
+    </tbody>
+  </table>
+  <p class="caption"><b>Lectura</b> generar todo lo que falta en la plataforma, una vez, cuesta menos de US$100 · lo que escala con el uso es la edición de fotos, y eso es lo que se mide</p>
+</section>
+
+<!-- 14 · cierre -->
+<section class="slide ink center">
+  <div class="chrome"><span class="wordmark"><span class="dot"></span>Ágora</span><span class="num">14 / 14</span></div>
+  <p class="kicker">GPT Image 2 en Ágora</p>
+  <h1 style="max-width:20ch">Cinco variables, <b>una paleta</b>, y la data que ya tenemos.</h1>
+  <p class="sub">Todo lo de este manual salió de la base de producción: brand kit, servicios, precios y fotos de cuatro negocios reales. El modelo pone el mundo visual; Ágora pone el dato, la marca y la publicación.</p>
+  <span class="badge"><span class="g"></span>www.agora.red · manual interno · septiembre 2026</span>
+</section>
+
+</body>
+</html>

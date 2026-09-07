@@ -6,6 +6,16 @@
     {
       "type": "proposal",
       "typeLabel": "Proposal",
+      "title": "GPT Image 2 en Ágora",
+      "description": "Manual del modelo: cada variable con su imagen y los casos de uso generados con la paleta, las fuentes y los servicios reales de cuatro negocios.",
+      "detail": "14 slides · manual + casos de uso",
+      "date": "SEP 2026",
+      "href": "./gpt-image-2-manual-2026-09/index.html",
+      "slug": "gpt-image-2-manual-2026-09"
+    },
+    {
+      "type": "proposal",
+      "typeLabel": "Proposal",
       "title": "Redes con IA · del visual a Instagram",
       "description": "La IA genera el fondo, Ágora escribe el precio y lo publica en el Instagram del profesional. PoC con 27 imágenes reales, seis modelos y una escalera de 21 precios.",
       "detail": "14 slides · PoC + propuesta",
