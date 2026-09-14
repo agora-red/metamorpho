@@ -1,0 +1,3026 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Campos y Ficha del cliente · Prototipo — Ágora</title>
+    <link rel="icon" href="assets/agora-iso.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        /* Tokens reales de Flash (src/styles/_tailwind.css) */
+        --paper: #EFF3F9;
+        --card: #FFFFFF;
+        --ink: #0F172A;
+        --ink-soft: #475569;   /* 7.5:1 sobre blanco */
+        --ink-mid: #64748B;    /* 4.76:1 — gris mínimo para texto */
+        --hair: rgba(15, 23, 42, 0.08);
+        --hair-strong: rgba(15, 23, 42, 0.14);
+        --brand: #0072FB;
+        --brand-deep: #005CD4;
+        --brand-wash: rgba(0, 114, 251, 0.07);
+        --brand-wash-strong: rgba(0, 114, 251, 0.13);
+        --success: #10B981;
+        --success-text: #047857;
+        --success-wash: rgba(16, 185, 129, 0.10);
+        --coral: #FF4658;
+        --coral-text: #991B1B;
+        --coral-wash: rgba(255, 70, 88, 0.09);
+        --warn-text: #92600A;
+        --warn-wash: rgba(245, 158, 11, 0.13);
+        --violet: #7C5CFF;
+        --violet-text: #5B3FD6;
+        --violet-wash: rgba(124, 92, 255, 0.10);
+
+        --sans: 'Montserrat', system-ui, -apple-system, sans-serif;
+        --mono: 'Space Mono', ui-monospace, Menlo, monospace;
+        --ease: cubic-bezier(.22, 1, .36, 1);
+        --r-sm: 10px; --r-md: 12px; --r-lg: 16px; --r-xl: 22px;
+        --r-btn: 14px;   /* la acción, más blanda que la ranura */
+
+        /* ── Sistema de campos ──────────────────────────────────────────────
+           Tres estados, tres materiales, una sola gramática:
+             dormido  = lavado del ink (no un gris fijo: toma la temperatura del fondo)
+             acá estás = blanco + borde ink   (foco)
+             elegiste  = blanco + borde brand (selección)
+           El borde existe SIEMPRE, transparente en reposo: cambiar de estado no
+           mueve un pixel. */
+        --field: rgba(15, 23, 42, 0.055);
+        --field-hi: rgba(15, 23, 42, 0.085);
+        --field-err: rgba(255, 70, 88, 0.075);
+        --field-line: 1.5px;
+        --r-field: 10px;
+        /* Sombras anchas y bajas: elevan sin dibujar un contorno. */
+        --sh-xs: 0 1px 2px rgba(15,23,42,.04), 0 6px 18px -12px rgba(15,23,42,.10);
+        --sh-sm: 0 2px 4px rgba(15,23,42,.04), 0 10px 26px -14px rgba(15,23,42,.16);
+        --sh-md: 0 4px 10px -4px rgba(15,23,42,.06), 0 18px 40px -18px rgba(15,23,42,.20);
+        --sh-lg: 0 8px 20px -8px rgba(15,23,42,.10), 0 32px 70px -28px rgba(15,23,42,.34);
+        --ring: 0 0 0 3px var(--brand-wash-strong);
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
+      body {
+        background: var(--paper); color: var(--ink); font-family: var(--sans);
+        font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased;
+      }
+      button, input, select, textarea { font-family: var(--sans); }
+      button { cursor: pointer; }
+      .mono { font-family: var(--mono); }
+      svg { display: block; }
+      :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; border-radius: 8px; }
+      .inp:focus-visible, .opt:focus-visible { outline: none; }
+      h1, h2, h3, h4 { margin: 0; letter-spacing: -0.015em; }
+
+      /* ══════════ Barra de prototipo ══════════ */
+      .meta {
+        position: sticky; top: 0; z-index: 60;
+        background: #0F172A; color: #E2E8F0;
+        display: flex; align-items: center; gap: 14px; padding: 0 20px; height: 46px;
+      }
+      .meta img { height: 21px; }
+      .meta .tag {
+        font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: .12em;
+        background: var(--brand); color: #fff; padding: 3px 8px; border-radius: 999px;
+      }
+      .meta .note { color: #94A3B8; font-size: 11px; margin-left: auto; }
+      .tabs { display: flex; gap: 2px; margin-left: 6px; height: 100%; }
+      .tabs button {
+        border: none; background: transparent; color: #94A3B8; font-size: 12px; font-weight: 600;
+        padding: 0 13px; height: 100%; border-bottom: 2px solid transparent;
+        transition: color 150ms var(--ease), border-color 150ms var(--ease);
+      }
+      .tabs button:hover { color: #E2E8F0; }
+      .tabs button.on { color: #fff; border-bottom-color: var(--brand); }
+      @media (max-width: 900px) {
+        .meta { gap: 9px; padding: 0 12px; }
+        .meta .note { display: none; }
+        .tabs { overflow-x: auto; scrollbar-width: none; margin-left: 0; }
+        .tabs::-webkit-scrollbar { display: none; }
+        .tabs button { padding: 0 10px; font-size: 11.5px; white-space: nowrap; }
+      }
+
+      /* ══════════ Layout ══════════ */
+      .wrap { max-width: 1180px; margin: 0 auto; padding: 26px 22px 90px; }
+      .wrap.wide { max-width: 1320px; }
+      .pane { display: none; }
+      .pane.on { display: block; animation: fade 260ms var(--ease); }
+      @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+      .kicker {
+        font-family: var(--mono); font-size: 9.5px; font-weight: 700; letter-spacing: .16em;
+        text-transform: uppercase; color: var(--ink-mid);
+      }
+      .h1 { font-size: 27px; font-weight: 800; line-height: 1.15; margin: 7px 0 8px; }
+      .h1 em { font-style: normal; font-weight: 500; color: var(--ink-soft); }
+      .lede { font-size: 14px; color: var(--ink-soft); max-width: 74ch; }
+      .h2 { font-size: 18px; font-weight: 700; margin: 0 0 4px; }
+      .sub { font-size: 12.5px; color: var(--ink-mid); }
+      .sec { margin-top: 34px; }
+      .sec > header { margin-bottom: 14px; }
+
+      .card {
+        background: var(--card); border: none; border-radius: var(--r-lg);
+        box-shadow: var(--sh-xs); padding: 19px 20px;
+      }
+      .grid { display: grid; gap: 14px; }
+      .g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      @media (max-width: 900px) { .g2, .g3, .g4 { grid-template-columns: 1fr; } }
+
+      .chip {
+        display: inline-flex; align-items: center; gap: 5px; border-radius: 999px;
+        padding: 3.5px 10px; font-size: 11.5px; font-weight: 600; letter-spacing: -.005em;
+        border: 1.5px solid transparent; white-space: nowrap; line-height: 1.35;
+      }
+      .chip.neutral { background: var(--field); color: var(--ink-soft); }
+      .chip.brand   { background: var(--brand-wash-strong); color: var(--brand-deep); }
+      .chip.ok      { background: var(--success-wash); color: var(--success-text); }
+      .chip.warn    { background: var(--warn-wash); color: var(--warn-text); }
+      .chip.bad     { background: var(--coral-wash); color: var(--coral-text); }
+      .chip.violet  { background: var(--violet-wash); color: var(--violet-text); }
+      .chip.line    { background: var(--field); color: var(--ink-soft); }
+
+      .stat { background: var(--card); border: none; border-radius: var(--r-lg); box-shadow: var(--sh-xs); padding: 17px 18px; }
+      .stat .n { font-family: var(--mono); font-size: 27px; font-weight: 700; letter-spacing: -.03em; line-height: 1.1; }
+      .stat .n small { font-size: 15px; font-weight: 700; }
+      .stat .l { font-size: 12px; color: var(--ink-soft); margin-top: 5px; font-weight: 600; }
+      .stat .d { font-size: 11px; color: var(--ink-mid); margin-top: 3px; }
+      .stat.bad .n { color: var(--coral-text); }
+      .stat.warn .n { color: var(--warn-text); }
+      .stat.ok .n { color: var(--success-text); }
+
+      table.t { width: 100%; border-collapse: collapse; font-size: 13px; }
+      table.t th {
+        text-align: left; font-size: 10.5px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase;
+        color: var(--ink-mid); padding: 0 11px 9px; border-bottom: 1px solid var(--hair);
+      }
+      table.t td { padding: 11px; border-bottom: 1px solid var(--hair); vertical-align: top; font-size: 13px; }
+      table.t tr:last-child td { border-bottom: none; }
+      table.t td.num, table.t th.num { text-align: right; font-family: var(--mono); font-size: 12px; }
+      .bar { height: 7px; border-radius: 999px; background: rgba(15,23,42,.07); overflow: hidden; }
+      .bar span { display: block; height: 100%; border-radius: 999px; background: var(--brand); }
+
+      .callout {
+        border-left: 3px solid var(--brand); background: var(--brand-wash); border-radius: 0 var(--r-md) var(--r-md) 0;
+        padding: 13px 15px; font-size: 12.5px; color: var(--ink-soft);
+      }
+      .callout.bad { border-left-color: var(--coral); background: var(--coral-wash); }
+      .callout strong { color: var(--ink); }
+      code.k { font-family: var(--mono); font-size: 11.5px; background: rgba(15,23,42,.055); padding: 1.5px 5px; border-radius: 5px; color: var(--ink-soft); }
+    </style>
+  </head>
+  <body>
+    <div class="meta">
+      <img src="assets/agora-iso.png" alt="Ágora" />
+      <span class="tag">PROTOTIPO</span>
+      <nav class="tabs" id="tabs">
+        <button data-t="dx" class="on">Diagnóstico</button>
+        <button data-t="campos">Flash · Campos</button>
+        <button data-t="ficha">Flash · Ficha</button>
+        <button data-t="tabla">Flash · Tabla</button>
+        <button data-t="reserva">Flash · Reserva</button>
+        <button data-t="manual">Flash · Reserva manual</button>
+        <button data-t="checkout">Checkout</button>
+        <button data-t="modelo">Modelo y migración</button>
+      </nav>
+      <span class="note">Datos reales de producción · 4-sep-2026</span>
+    </div>
+
+    <!-- ═══════════════════════════ DIAGNÓSTICO ═══════════════════════════ -->
+    <section class="pane on" id="pane-dx">
+      <div class="wrap">
+        <p class="kicker">Estado actual</p>
+        <h1 class="h1">Tres sistemas <em>que le piden lo mismo al mismo cliente.</em></h1>
+        <p class="lede">
+          Hoy un negocio puede pedirle un dato a la misma persona por tres caminos distintos, ninguno se entera del otro, y
+          ninguno se acuerda de lo que ya le preguntó la vez pasada. Esto es lo que muestra la base.
+        </p>
+
+        <div class="grid g4 sec">
+          <div class="stat bad">
+            <div class="n">55,2<small>%</small></div>
+            <div class="l">de las respuestas son re-preguntas</div>
+            <div class="d">Más de la mitad de las respuestas de los últimos 12 meses eran datos que esa persona ya había dado en ese negocio.</div>
+          </div>
+          <div class="stat bad">
+            <div class="n">65<small>%</small></div>
+            <div class="l">de las preguntas son copia-pega</div>
+            <div class="d">Dos de cada tres preguntas de servicio son la misma pregunta repetida en otro servicio del mismo negocio.</div>
+          </div>
+          <div class="stat warn">
+            <div class="n">54<small>%</small></div>
+            <div class="l">no son preguntas de la visita</div>
+            <div class="d">Son datos fijos de la persona: nacimiento, documento, contacto, salud, consentimientos.</div>
+          </div>
+          <div class="stat warn">
+            <div class="n">1 de 5</div>
+            <div class="l">pide el teléfono dos veces</div>
+            <div class="d">Toggle del vendor + pregunta personalizada, en la misma pantalla de checkout. Con la fecha de nacimiento pasa lo mismo.</div>
+          </div>
+        </div>
+
+        <div class="sec">
+          <header>
+            <h2 class="h2">Los tres sistemas</h2>
+            <p class="sub">Ninguno se comunica con los otros. El del medio es el que está en producción.</p>
+          </header>
+          <div class="card" style="padding: 6px 8px 4px">
+            <table class="t">
+              <thead>
+                <tr>
+                  <th style="width: 20%">Sistema</th><th style="width: 20%">Dónde se define</th>
+                  <th style="width: 32%">Qué permite</th><th style="width: 28%">Uso real en producción</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>A · Toggles del vendor</strong><br /><code class="k">is_user_dob_required</code></td>
+                  <td>Configuración del negocio</td>
+                  <td>Dos campos fijos y nada más: teléfono y fecha de nacimiento. Todo o nada, para todos los servicios.</td>
+                  <td><strong>3 de cada 4</strong> negocios piden el teléfono<br /><strong>menos del 5%</strong>, la fecha de nacimiento</td>
+                </tr>
+                <tr>
+                  <td><strong>B · Preguntas personalizadas</strong><br /><code class="k">custom_questions</code></td>
+                  <td>Adentro del editor de cada servicio, evento, curso o descargable</td>
+                  <td>Máximo 5, <strong>solo texto libre</strong>, sin tipo, sin validación, sin reutilización entre servicios, sin memoria del cliente.</td>
+                  <td>En uso hoy en <strong>cientos de negocios</strong><br />con años de respuestas acumuladas</td>
+                </tr>
+                <tr>
+                  <td><strong>C · Ficha de cliente</strong><br /><code class="k">client_form_*</code> · beta</td>
+                  <td><code class="k">/fichas</code> — plantillas atadas a servicios</td>
+                  <td>Tipos, versionado inmutable, dato fijo vs dato de visita, fotos privadas, autoría y revisiones. Bien construida.</td>
+                  <td>Un puñado de negocios<br /><span class="chip neutral">sin llegar a producción</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="sec">
+          <header>
+            <h2 class="h2">Qué preguntan realmente los negocios</h2>
+            <p class="sub">Clasificación de las preguntas de servicio por lo que piden.</p>
+          </header>
+          <div class="grid g2">
+            <div class="card">
+              <table class="t" id="bucketTable"></table>
+            </div>
+            <div class="card">
+              <h3 style="font-size: 13.5px; font-weight: 700; margin-bottom: 4px">Las 8 preguntas más repetidas</h3>
+              <p class="sub" style="margin-bottom: 12px">Las seis primeras son datos que la persona no cambia nunca.</p>
+              <table class="t" id="topTable"></table>
+            </div>
+          </div>
+          <div class="callout bad" style="margin-top: 14px">
+            <strong>El dato que ordena todo:</strong> en <strong>6 de cada 10</strong> pares cliente-pregunta que se
+            repitieron, la persona escribió <strong>siempre exactamente lo mismo</strong>.
+            No es que el dato cambie: es que nadie lo guardó.
+          </div>
+        </div>
+
+        <div class="sec">
+          <header>
+            <h2 class="h2">Los seis problemas</h2>
+          </header>
+          <div class="grid g3" id="problemGrid"></div>
+        </div>
+      </div>
+    </section>
+
+    <style>
+      /* ══════════ Shell de Flash ══════════ */
+      .flash { display: flex; min-height: calc(100vh - 46px); }
+      .rail {
+        width: 206px; flex-shrink: 0; background: #F3F7FC; border-right: 1px solid var(--hair);
+        padding: 18px 12px; position: sticky; top: 46px; height: calc(100vh - 46px);
+      }
+      .rail .grp { font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: .14em;
+        text-transform: uppercase; color: var(--ink-mid); padding: 14px 10px 6px; }
+      .rail .item {
+        display: flex; align-items: center; gap: 9px; padding: 7.5px 10px; border-radius: var(--r-sm);
+        font-size: 12.5px; font-weight: 600; color: var(--ink-soft); margin-bottom: 1px;
+      }
+      .rail .item .ic { width: 15px; text-align: center; opacity: .6; font-size: 12px; }
+      .rail .item.on { background: #fff; color: var(--brand-deep); box-shadow: var(--sh-xs); }
+      .rail .item.on .ic { opacity: 1; }
+      .rail .item.new { color: var(--ink-mid); }
+      .rail .item.new::after { content: 'nuevo'; margin-left: auto; font-family: var(--mono); font-size: 8px;
+        font-weight: 700; letter-spacing: .08em; background: var(--brand); color: #fff; padding: 2px 5px; border-radius: 999px; }
+      .main { flex: 1; min-width: 0; padding: 26px 30px 90px; }
+      @media (max-width: 900px) { .rail { display: none; } .main { padding: 20px 16px 80px; } }
+      @media (max-width: 780px) {
+        .phead { flex-direction: column; gap: 12px; }
+        .phead > .btn, .phead > .seg { align-self: flex-start; }
+        .phead > .btn.phead-cta { width: 100%; align-self: stretch; }
+        .phead h1 { font-size: 21px; }
+        .h1 { font-size: 22px; }
+        .wrap { padding: 20px 16px 80px; }
+        .seg { flex-wrap: wrap; }
+        .cols { grid-template-columns: 1fr; }
+        .side { position: static; }
+      }
+
+      .phead { display: flex; align-items: flex-start; gap: 20px; margin-bottom: 22px; }
+      .phead .t { flex: 1; min-width: 0; }
+      .phead h1 { font-size: 25px; font-weight: 800; margin: 6px 0 7px; }
+      .phead h1 strong { font-weight: 800; }
+      .phead h1 span { font-weight: 500; color: var(--ink-soft); }
+      .phead p { font-size: 13px; color: var(--ink-soft); max-width: 68ch; margin: 0; }
+
+      .btn {
+        display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+        border-radius: var(--r-btn); border: var(--field-line) solid transparent; background: var(--field);
+        color: var(--ink); font-size: 13px; font-weight: 600; padding: 9px 16px;
+        transition: background 140ms var(--ease), border-color 140ms var(--ease), transform 140ms var(--ease);
+        white-space: nowrap;
+      }
+      .btn svg { width: 12px; height: 12px; flex-shrink: 0; }
+      .btn:hover { background: var(--field-hi); }
+      .btn:active { transform: translateY(1px); }
+      .btn.primary { background: var(--brand); border-color: var(--brand); color: #fff; box-shadow: 0 6px 18px -8px rgba(0,114,251,.55); }
+      .btn.primary:hover { background: var(--brand-deep); border-color: var(--brand-deep); }
+      .btn.ghost { border-color: transparent; background: transparent; color: var(--brand-deep); }
+      .btn.ghost:hover { background: var(--brand-wash); }
+      .btn.sm { padding: 7px 12px; font-size: 12.5px; border-radius: var(--r-md); }
+      .btn.danger { color: var(--coral-text); background: var(--coral-wash); }
+      .btn.danger:hover { background: rgba(255,70,88,.16); }
+      .btn:disabled { opacity: .45; cursor: not-allowed; }
+
+      .toolbar { display: flex; align-items: center; gap: 9px; margin-bottom: 16px; flex-wrap: wrap; }
+      .search {
+        flex: 1; min-width: 190px; max-width: 420px; display: flex; align-items: center; gap: 9px;
+        background: var(--field); border: var(--field-line) solid transparent; border-radius: var(--r-field);
+        padding: 9px 13px; transition: background 200ms var(--ease), border-color 200ms var(--ease);
+      }
+      .search:focus-within { background: #fff; border-color: var(--ink); }
+      .search input { border: none; outline: none; flex: 1; font-size: 14px; background: transparent; color: var(--ink); }
+      .search input::placeholder { color: var(--ink-mid); }
+      .search .ic { color: var(--ink-mid); font-size: 12px; }
+      .seg { display: inline-flex; background: var(--field); border-radius: var(--r-btn); padding: 3px; }
+      .seg button {
+        border: none; background: transparent; color: var(--ink-mid); font-size: 12.5px; font-weight: 600;
+        padding: 7px 14px; border-radius: 11px; transition: background 180ms var(--ease), color 180ms var(--ease);
+      }
+      .seg button.on { background: #fff; color: var(--ink); box-shadow: var(--sh-xs); }
+
+      /* ══════════ Lista de campos ══════════ */
+      .cols { display: grid; grid-template-columns: minmax(0, 1fr) 306px; gap: 20px; align-items: start; }
+      @media (max-width: 1180px) { .cols { grid-template-columns: 1fr; } }
+
+      .sectionhead {
+        display: flex; align-items: center; gap: 9px; margin: 22px 0 8px; padding: 0 2px;
+      }
+      .sectionhead:first-child { margin-top: 0; }
+      .sectionhead h3 { font-size: 12px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-soft); }
+      .sectionhead .ln { flex: 1; height: 1px; background: var(--hair-strong); }
+      .sectionhead .cnt { font-family: var(--mono); font-size: 10.5px; color: var(--ink-mid); }
+
+      .frow {
+        display: flex; align-items: center; gap: 12px; background: #fff; border: 1.5px solid transparent;
+        border-radius: var(--r-md); padding: 12px 14px; margin-bottom: 7px; cursor: pointer;
+        box-shadow: var(--sh-xs);
+        transition: border-color 180ms var(--ease), box-shadow 180ms var(--ease), transform 180ms var(--ease);
+      }
+      .frow:hover { box-shadow: var(--sh-sm); transform: translateY(-1px); }
+      .frow.sel { border-color: var(--brand); box-shadow: var(--sh-sm); }
+      .frow.off { opacity: .55; }
+      .frow .drag { color: #CBD5E1; font-size: 13px; cursor: grab; }
+      .frow .body { flex: 1; min-width: 0; }
+      .frow .name { font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; letter-spacing: -.01em; }
+      .frow .name .lock { font-size: 10px; color: var(--ink-mid); }
+      .frow .meta2 { font-size: 12.5px; color: var(--ink-mid); margin-top: 3px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+      .frow .chips { display: flex; gap: 5px; flex-wrap: wrap; justify-content: flex-end; max-width: 300px; }
+      .frow .where { font-size: 12px; color: var(--ink-mid); text-align: right; min-width: 100px; font-weight: 600; }
+      @media (max-width: 760px) { .frow .chips, .frow .where { display: none; } }
+
+      /* ══════════ Panel de fricción ══════════ */
+      .side { position: sticky; top: 66px; display: flex; flex-direction: column; gap: 12px; }
+      .side .card { padding: 15px 16px; }
+      .side h4 { font-size: 12.5px; font-weight: 800; margin-bottom: 2px; }
+      .side .sub { font-size: 11.5px; }
+      .meter { display: flex; gap: 3px; margin: 11px 0 8px; }
+      .meter i { flex: 1; height: 6px; border-radius: 2px; background: rgba(15,23,42,.09); }
+      .meter i.on { background: var(--success); }
+      .meter i.on.mid { background: var(--warn-text); }
+      .meter i.on.hi { background: var(--coral); }
+      .ministat { display: flex; align-items: baseline; gap: 7px; padding: 7px 0; border-bottom: 1px dashed var(--hair-strong); }
+      .ministat:last-child { border-bottom: none; }
+      .ministat .n { font-family: var(--mono); font-size: 17px; font-weight: 700; }
+      .ministat .l { font-size: 11.5px; color: var(--ink-soft); }
+
+      /* ══════════ Drawer editor ══════════ */
+      .scrim { position: fixed; inset: 0; background: rgba(15,23,42,.42); backdrop-filter: blur(2px); z-index: 70;
+        opacity: 0; pointer-events: none; transition: opacity 220ms var(--ease); }
+      .scrim.on { opacity: 1; pointer-events: auto; }
+      .drawer {
+        position: fixed; top: 0; right: 0; height: 100vh; width: 500px; max-width: 96vw; background: #fff;
+        z-index: 80; box-shadow: var(--sh-lg); display: flex; flex-direction: column;
+        transform: translateX(102%); transition: transform 300ms var(--ease);
+      }
+      .drawer.on { transform: none; }
+      .drawer header {
+        padding: 17px 20px 14px; border-bottom: 1px solid var(--hair); display: flex; align-items: flex-start; gap: 12px;
+      }
+      .drawer header h3 { font-size: 17px; font-weight: 800; letter-spacing: -.015em; }
+      .drawer header p { font-size: 12.5px; color: var(--ink-mid); margin: 3px 0 0; }
+      .drawer .x { margin-left: auto; border: none; background: var(--field); width: 30px; height: 30px;
+        border-radius: 10px; color: var(--ink-soft); font-size: 14px; line-height: 1; transition: background 180ms var(--ease); }
+      .drawer .x:hover { background: var(--field-hi); }
+      .drawer .scroll { flex: 1; overflow-y: auto; padding: 18px 20px 26px; }
+      .drawer footer {
+        padding: 13px 20px; border-top: 1px solid var(--hair); display: flex; gap: 9px; align-items: center;
+        background: #fff;
+      }
+
+      .fld { margin-bottom: 17px; }
+      .fld > label { display: block; font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 6px; letter-spacing: -.005em; }
+      .fld .hint { font-size: 11px; color: var(--ink-mid); margin-top: 5px; line-height: 1.5; }
+      .inp {
+        width: 100%; border: var(--field-line) solid transparent; border-radius: var(--r-field);
+        padding: 9px 12px; font-size: 14px; line-height: 1.4; color: var(--ink);
+        background-color: var(--field); outline: none; font-family: var(--sans);
+        transition: background-color 200ms var(--ease), border-color 200ms var(--ease);
+      }
+      .inp::placeholder { color: var(--ink-mid); }
+      .inp:hover:not(:focus):not(:disabled) { background-color: var(--field-hi); }
+      .inp:focus { background-color: #fff; border-color: var(--ink); }
+      .inp:disabled { opacity: .55; cursor: not-allowed; }
+      .inp.err { background-color: var(--field-err); border-color: rgba(255, 70, 88, .45); }
+      .inp.err:focus { background-color: #fff; border-color: var(--coral); }
+      textarea.inp { resize: vertical; min-height: 68px; }
+      /* El select no se disfraza de input: lleva su chevron y nada más. */
+      select.inp {
+        appearance: none; -webkit-appearance: none; padding-right: 34px; cursor: pointer;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%2364748B' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='m4 6.5 4 4 4-4'/></svg>");
+        background-repeat: no-repeat; background-position: right 11px center; background-size: 13px;
+      }
+      .errmsg { font-size: 11px; color: var(--coral-text); font-weight: 600; margin-top: 5px; display: flex; gap: 5px; align-items: flex-start; }
+
+      .pick { display: grid; gap: 7px; }
+      .pick.two { grid-template-columns: 1fr 1fr; }
+      .pick.three { grid-template-columns: repeat(3, 1fr); }
+      .opt {
+        border: var(--field-line) solid transparent; border-radius: var(--r-field); padding: 10px 12px;
+        background: var(--field); text-align: left;
+        transition: background 200ms var(--ease), border-color 200ms var(--ease);
+      }
+      .opt:hover:not(.on) { background: var(--field-hi); }
+      .opt.on { background: #fff; border-color: var(--brand); }
+      .opt .ot { font-size: 12.5px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+      .opt .od { font-size: 10.5px; color: var(--ink-mid); margin-top: 3px; line-height: 1.45; }
+      .opt.on .ot { color: var(--brand-deep); }
+
+      .sw { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0; }
+      .sw .txt { font-size: 12.5px; font-weight: 600; }
+      .sw .txt small { display: block; font-weight: 500; font-size: 11px; color: var(--ink-mid); margin-top: 2px; }
+      .toggle { width: 38px; height: 22px; border-radius: 999px; background: rgba(15,23,42,.16); border: none;
+        position: relative; flex-shrink: 0; transition: background 160ms var(--ease); }
+      .toggle::after { content: ''; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; border-radius: 50%;
+        background: #fff; box-shadow: var(--sh-xs); transition: transform 180ms var(--ease); }
+      .toggle.on { background: var(--brand); }
+      .toggle.on::after { transform: translateX(16px); }
+
+      .svcbox { border: var(--field-line) solid transparent; border-radius: var(--r-field); overflow: hidden; background: var(--field); }
+      .svcbox .sh { padding: 8px 11px; border-bottom: 1px solid rgba(15,23,42,.07); display: flex; align-items: center; gap: 8px; }
+      .svcbox .sh input { border: none; outline: none; background: transparent; font-size: 12px; flex: 1; }
+      .svclist { max-height: 194px; overflow-y: auto; }
+      .svcrow { display: flex; align-items: center; gap: 9px; padding: 7px 11px; font-size: 12.5px; border-bottom: 1px solid rgba(15,23,42,.05); }
+      .svcrow:last-child { border-bottom: none; }
+      .svcrow:hover { background: rgba(255,255,255,.7); }
+      .cb { width: 16px; height: 16px; border-radius: 5px; border: 1.5px solid var(--hair-strong); background: #fff;
+        flex-shrink: 0; display: grid; place-items: center; color: #fff; font-size: 9px; }
+      .cb.on { background: var(--brand); border-color: var(--brand); }
+      .svcrow .cat { margin-left: auto; font-size: 10.5px; color: var(--ink-mid); }
+
+      .preview {
+        border: var(--field-line) dashed rgba(15,23,42,.14); border-radius: var(--r-field); padding: 13px; background: var(--field);
+      }
+      .preview .pl { font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: .12em;
+        text-transform: uppercase; color: var(--ink-mid); margin-bottom: 9px; }
+    </style>
+
+    <!-- ═══════════════════════════ FLASH · CAMPOS ═══════════════════════════ -->
+    <section class="pane" id="pane-campos">
+      <div class="flash">
+        <aside class="rail">
+          <div class="grp">Operación</div>
+          <div class="item"><span class="ic">▤</span> Agenda</div>
+          <div class="item"><span class="ic">◍</span> Actividad</div>
+          <div class="item"><span class="ic">◈</span> Cobros</div>
+          <div class="grp">Mi negocio</div>
+          <div class="item"><span class="ic">✂</span> Servicios</div>
+          <div class="item"><span class="ic">◉</span> Clientes</div>
+          <div class="item on"><span class="ic">☰</span> Datos de clientes</div>
+          <div class="item"><span class="ic">✦</span> Productos</div>
+          <div class="grp">Crecimiento</div>
+          <div class="item"><span class="ic">↗</span> Analítica</div>
+          <div class="item"><span class="ic">✉</span> Campañas</div>
+        </aside>
+
+        <div class="main">
+          <div class="phead">
+            <div class="t">
+              <p class="kicker">Mi negocio</p>
+              <h1>Datos de <strong>clientes.</strong></h1>
+              <p>
+                Todo lo que le pedís a alguien para atenderlo, en un solo lugar. Definís el campo una vez y elegís en qué
+                servicios se pide.
+              </p>
+            </div>
+            <button class="btn primary phead-cta" onclick="openField(null)">＋ Nuevo campo</button>
+          </div>
+
+          <div class="toolbar">
+            <div class="search">
+              <span class="ic">⌕</span>
+              <input id="qSearch" placeholder="Buscar un campo…" oninput="renderFields()" />
+            </div>
+          </div>
+
+          <div class="cols">
+            <div id="fieldList"></div>
+            <aside class="side">
+              <div class="card">
+                <h4>Qué ve tu cliente al reservar</h4>
+                <p class="sub">Simulá un servicio y contá los campos.</p>
+                <select class="inp" id="frictionSvc" style="margin: 11px 0 3px" onchange="renderFriction()"></select>
+                <div id="frictionBody"></div>
+                <button class="btn sm" style="width: 100%; margin-top: 11px" onclick="go('checkout')">Ver el checkout →</button>
+              </div>
+              <div class="card" id="migrateBanner">
+                <h4>Tus preguntas de siempre</h4>
+                <p class="sub" style="margin-top: 3px">
+                  Tenés <strong>47 preguntas</strong> cargadas en 22 servicios. Son <strong>9 preguntas distintas</strong>
+                  repetidas: las unificamos en campos y conservamos las 1.284 respuestas que ya recibiste.
+                </p>
+                <button class="btn sm" style="width: 100%; margin-top: 11px" onclick="openMigrate()">Revisar y unificar</button>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Drawer: editor de campo -->
+    <div class="scrim" id="scrim" onclick="closeAll()"></div>
+    <aside class="drawer" id="drawer" aria-hidden="true">
+      <header>
+        <div>
+          <h3 id="drawerTitle">Campo</h3>
+          <p id="drawerSub">Definilo una vez, usalo en todos los servicios que quieras.</p>
+        </div>
+        <button class="x" onclick="closeAll()" aria-label="Cerrar">✕</button>
+      </header>
+      <div class="scroll" id="drawerBody"></div>
+      <footer>
+        <button class="btn danger sm" id="drawerArchive" onclick="archiveField()">Archivar</button>
+        <span style="flex: 1"></span>
+        <button class="btn" onclick="closeAll()">Cancelar</button>
+        <button class="btn primary" onclick="saveField()">Guardar campo</button>
+      </footer>
+    </aside>
+
+    <!-- Modal: unificador de preguntas -->
+    <style>
+      .modal {
+        position: fixed; top: 50%; left: 50%; transform: translate(-50%, -48%) scale(.98); z-index: 80;
+        width: 900px; max-width: 94vw; max-height: 88vh; background: #fff; border-radius: var(--r-xl);
+        box-shadow: var(--sh-lg); display: flex; flex-direction: column; opacity: 0; pointer-events: none;
+        transition: opacity 220ms var(--ease), transform 260ms var(--ease);
+      }
+      .modal.on { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
+      .modal header { padding: 20px 24px 15px; border-bottom: 1px solid var(--hair); }
+      .modal header h3 { font-size: 19px; font-weight: 800; letter-spacing: -.015em; }
+      .modal header p { font-size: 13.5px; color: var(--ink-soft); margin: 6px 0 0; max-width: 72ch; line-height: 1.6; }
+      .modal .scroll { flex: 1; overflow-y: auto; padding: 6px 24px 18px; }
+      .modal footer { padding: 14px 24px; border-top: 1px solid var(--hair); display: flex; gap: 9px; align-items: center; }
+      .mrow { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--hair); }
+      .mrow:last-child { border-bottom: none; }
+      .mrow .q { flex: 1; min-width: 0; }
+      .mrow .q .txt { font-size: 12.5px; font-weight: 600; }
+      .mrow .q .src { font-size: 11px; color: var(--ink-mid); margin-top: 2px; }
+      .mrow .arrow { color: var(--ink-mid); font-size: 14px; }
+      .mrow .res { width: 300px; }
+      .mrow .res .rn { font-size: 12.5px; font-weight: 700; }
+      .mrow .res .rc { display: flex; gap: 4px; margin-top: 4px; flex-wrap: wrap; }
+      @media (max-width: 760px) { .mrow { flex-wrap: wrap; } .mrow .res { width: 100%; } }
+    </style>
+    <div class="modal" id="migrateModal" aria-hidden="true">
+      <header>
+        <h3>Unificar tus preguntas actuales</h3>
+        <p>
+          Agrupamos las preguntas repetidas de tus servicios y les propusimos un tipo. Revisá antes de aplicar: nada se pierde
+          — las respuestas viejas quedan enganchadas al campo nuevo y siguen apareciendo en el historial de cada cliente.
+        </p>
+      </header>
+      <div class="scroll" id="migrateBody"></div>
+      <footer>
+        <span class="sub" id="migrateCount"></span>
+        <span style="flex: 1"></span>
+        <button class="btn" onclick="closeAll()">Ahora no</button>
+        <button class="btn primary" onclick="applyMigrate()">Unificar en 9 campos</button>
+      </footer>
+    </div>
+
+    <!-- ═══════════════════════════ FLASH · FICHA DEL CLIENTE ═══════════════════════════ -->
+    <style>
+      .clienthead { display: flex; align-items: center; gap: 15px; margin-bottom: 16px; }
+      .avatar { width: 52px; height: 52px; border-radius: 50%; background: var(--brand-wash-strong); color: var(--brand-deep);
+        display: grid; place-items: center; font-size: 17px; font-weight: 800; flex-shrink: 0; }
+      .clienthead h2 { font-size: 20px; font-weight: 800; }
+      .clienthead .m { font-size: 12px; color: var(--ink-mid); margin-top: 2px; display: flex; gap: 10px; flex-wrap: wrap; }
+
+      /* Stats strip — los mismos chits del perfil de cliente de Flash */
+      .chits { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 13px; margin-bottom: 18px; }
+      @media (max-width: 760px) { .chits { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+      .chit {
+        position: relative; display: flex; flex-direction: column; gap: 6px; padding: 15px 17px 17px;
+        border-radius: var(--r-lg); border: none; background: #fff;
+        box-shadow: var(--sh-xs); overflow: hidden;
+        transition: transform 250ms var(--ease), box-shadow 250ms var(--ease);
+      }
+      .chit:hover { transform: translateY(-2px); box-shadow: var(--sh-md); }
+      .chit::before {
+        content: ''; position: absolute; top: 0; left: 14px; height: 2px; width: 28px; border-radius: 999px;
+        background: var(--brand); opacity: .9; box-shadow: 0 0 12px rgba(0,114,251,.55);
+      }
+      .chit[data-accent='mint']::before  { background: var(--success); box-shadow: 0 0 12px rgba(16,185,129,.55); }
+      .chit[data-accent='coral']::before { background: var(--coral);   box-shadow: 0 0 12px rgba(255,70,88,.55); }
+      .chit[data-accent='sun']::before   { background: #F59E0B;        box-shadow: 0 0 12px rgba(245,158,11,.55); }
+      .chit .l { font-size: 10px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-whisper, #94A3B8); }
+      .chit .v { font-family: var(--mono); font-size: 23px; line-height: 1.05; letter-spacing: -.02em; font-weight: 700; color: var(--ink); }
+
+      .cardhead { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 11px; }
+      .cardhead .k { font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: .16em;
+        text-transform: uppercase; color: var(--ink-mid); }
+      .cardhead h3 { font-size: 15px; font-weight: 800; margin-top: 2px; }
+      .cardhead p { font-size: 12px; color: var(--ink-mid); margin: 3px 0 0; }
+
+      /* Dato de lectura: etiqueta arriba, valor abajo. Misma forma que el campo
+         editable — leer y editar no deberían ser dos layouts distintos. Sin líneas:
+         el aire separa mejor que un hairline por fila. */
+      .cells { display: grid; gap: 15px 22px; }
+      .cells.two { grid-template-columns: 1fr 1fr; }
+      @media (max-width: 560px) { .cells.two { grid-template-columns: 1fr; } }
+      .cell .k { display: block; font-size: 11.5px; font-weight: 600; color: var(--ink-mid); margin-bottom: 3px; }
+      .cell .v { font-size: 14px; color: var(--ink); display: flex; align-items: center; gap: 7px;
+        flex-wrap: wrap; line-height: 1.35; }
+      .cell .v.empty { color: var(--ink-mid); font-style: italic; font-size: 13px; }
+
+      /* Contacto: una losa por canal, con su acción adentro. */
+      .cslab {
+        display: flex; align-items: center; gap: 12px; background: var(--field); border-radius: var(--r-field);
+        padding: 9px 11px 9px 13px; margin-bottom: 7px; transition: background 200ms var(--ease);
+      }
+      .cslab:hover { background: var(--field-hi); }
+      .cslab .t { flex: 1; min-width: 0; }
+      .cslab .t .k { display: block; font-size: 10.5px; font-weight: 600; color: var(--ink-mid); margin-bottom: 1px; }
+      .cslab .t .v { font-size: 14px; font-weight: 600; color: var(--ink); overflow: hidden;
+        text-overflow: ellipsis; white-space: nowrap; }
+      .cslab .t .v .miss { font-weight: 500; font-style: italic; color: var(--ink-mid); font-size: 13px; }
+      .cslab .acts { display: flex; gap: 5px; flex-shrink: 0; }
+      .cslab .cbtn { background: #fff; border-color: transparent; }
+      .cslab .cbtn:hover { border-color: var(--brand); }
+
+      /* "Cómo viene" — la ficha viva de Flash. El borde aurora es el del
+         componente real (conic-gradient de 1px que gira), no una decoración nueva. */
+      @property --fv-ang { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+      @keyframes fv-aurora-spin { to { --fv-ang: 360deg; } }
+      .aurora {
+        position: relative; border-radius: 11px; padding: 1px;
+        background: conic-gradient(from var(--fv-ang) at 50% 50%, #0072fb, #7c3aed, #ff4658, #0072fb);
+        animation: fv-aurora-spin 9s linear infinite;
+      }
+      .aurora .core { border-radius: 10px; background: #fff; overflow: hidden; }
+      .aurora .in {
+        display: flex; align-items: flex-start; gap: 8px; border-radius: 10px; padding: 8px 11px;
+        background: rgba(15, 23, 42, .04); font-size: 12.5px; font-weight: 500; color: var(--ink);
+      }
+      .aurora .in .ic { font-size: 11px; color: var(--ink-mid); margin-top: 2px; flex-shrink: 0; }
+      .aurora .in p { margin: 0; line-height: 1.45; }
+      @media (prefers-reduced-motion: reduce) { .aurora { animation: none; } }
+      .lastline { font-size: 12px; color: var(--ink-soft); margin: 10px 0 0; line-height: 1.6; }
+      .lastline .kk {
+        font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: .14em;
+        text-transform: uppercase; color: var(--ink-mid); margin-right: 7px;
+      }
+      .lastline .dt { color: var(--ink-mid); font-variant-numeric: tabular-nums; }
+      .sigs { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 9px; }
+
+      /* Contacto: parte de la ficha, con su acción al lado */
+      .crow { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--hair); }
+      .crow .k { font-size: 12px; color: var(--ink-mid); font-weight: 600; width: 168px; flex-shrink: 0; }
+      .crow .v { font-size: 13px; font-weight: 600; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .crow .v .miss { font-weight: 500; font-style: italic; color: var(--ink-mid); }
+      .crow .acts { display: flex; gap: 6px; flex-shrink: 0; }
+      .cbtn {
+        display: inline-flex; align-items: center; gap: 5px; border: 1.5px solid transparent; background: var(--field);
+        border-radius: 999px; padding: 6px 12px; font-size: 12.5px; font-weight: 600; color: var(--ink-soft);
+        transition: border-color 140ms var(--ease), color 140ms var(--ease), background 140ms var(--ease);
+      }
+      .cbtn:hover { color: var(--brand-deep); background: var(--brand-wash-strong); }
+      .cbtn.wa:hover { color: #0F7A3D; background: rgba(37, 211, 102, .16); }
+      .cbtn.ico { width: 30px; height: 30px; padding: 0; justify-content: center; border-radius: 9px; }
+      .cbtn svg { width: 14px; height: 14px; }
+
+      /* La ficha en dos columnas: lo personal a la izquierda, el resto a la derecha */
+      .fgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 30px; align-items: start; }
+      .fgrid > div:last-child { border-left: 1px solid var(--hair); padding-left: 30px; }
+      .fgrid .dl { grid-template-columns: 124px 1fr; }
+      .fgrid .crow .k { width: 96px; }
+      .ghead {
+        font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+        color: var(--ink-mid); margin: 0 0 6px; padding-top: 2px;
+      }
+      .ghead + .ghead, .fgrid .dl + .ghead { margin-top: 20px; }
+      @media (max-width: 900px) {
+        .fgrid { grid-template-columns: 1fr; gap: 0; }
+        .fgrid > div:last-child { border-left: none; padding-left: 0; border-top: 1px solid var(--hair); margin-top: 20px; padding-top: 18px; }
+        .fgrid .dl { grid-template-columns: 1fr; }
+        .fgrid .crow .k { width: auto; }
+      }
+      @media (max-width: 620px) {
+        .crow { flex-wrap: wrap; gap: 6px; }
+        .crow .k { width: auto; }
+        .crow .v { flex: 1 0 100%; }
+        .crow .acts { width: 100%; }
+      }
+
+      /* Etiquetas del cliente */
+      .tagsrow { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; padding: 0 0 13px; border-bottom: 1px solid var(--hair); margin-bottom: 4px; }
+      .tagsrow > .k { font-size: 12px; color: var(--ink-mid); font-weight: 600; width: 168px; flex-shrink: 0; }
+      @media (max-width: 620px) { .tagsrow > .k { width: auto; } }
+      .tag {
+        display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; padding: 5px 11px;
+        font-size: 12px; font-weight: 600; background: var(--field); border: 1.5px solid transparent; color: var(--ink-soft);
+      }
+      .tag .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; opacity: .85; }
+      .tag .x { border: none; background: transparent; color: var(--ink-mid); font-size: 11px; padding: 0 0 0 2px; line-height: 1; }
+      .tag .x:hover { color: var(--coral-text); }
+      .tag.auto { background: rgba(15,23,42,.04); color: var(--ink-soft); }
+      .tag.auto .mk { font-size: 9px; color: var(--ink-mid); }
+      .tag.derived { background: transparent; border-style: dashed; border-color: rgba(124,92,255,.45); color: var(--violet-text); }
+      .tagadd { border: 1.5px dashed rgba(15,23,42,.16); background: transparent; border-radius: 999px; padding: 5px 12px;
+        font-size: 12px; font-weight: 600; color: var(--ink-mid); transition: background 180ms var(--ease), color 180ms var(--ease); }
+      .tagadd:hover { border-style: solid; border-color: transparent; color: var(--brand-deep); background: var(--brand-wash-strong); }
+
+      /* Notas privadas, ya adentro de la ficha */
+      .notesblock { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--hair); }
+      .notesblock .nh { display: flex; align-items: center; gap: 9px; margin-bottom: 9px; flex-wrap: wrap; }
+      .notesblock .nh h4 { font-size: 13px; font-weight: 800; }
+      .notesblock .nh p { font-size: 11.5px; color: var(--ink-mid); margin: 0; }
+      .notebox { border: var(--field-line) solid transparent; border-radius: var(--r-field); background: var(--field);
+        padding: 13px 15px; font-size: 13.5px; line-height: 1.6; color: var(--ink); }
+      .notebox .sig { display: block; margin-top: 10px; font-size: 11px; color: var(--ink-mid); }
+
+      /* Historial de actividad */
+      .tlfilter { display: flex; align-items: center; gap: 9px; margin: 22px 0 12px; flex-wrap: wrap; }
+      /* Una línea de tiempo, no ocho cards apiladas: el riel y el aire ordenan,
+         el recuadro sobra. El punto lleva el color del tipo de movimiento. */
+      .tl { position: relative; padding-left: 26px; }
+      .tl::before { content: ''; position: absolute; left: 4px; top: 7px; bottom: 8px; width: 1px; background: var(--hair-strong); }
+      .tlrow { position: relative; padding-bottom: 22px; color: var(--ink-whisper, #94A3B8); }
+      .tlrow:last-child { padding-bottom: 2px; }
+      .tlrow .dot {
+        position: absolute; left: -26px; top: 4px; width: 9px; height: 9px; border-radius: 50%;
+        background: currentColor; box-shadow: 0 0 0 3.5px var(--paper); font-size: 0; overflow: hidden;
+      }
+      .tlrow[data-k='visit']  { color: var(--success); }
+      .tlrow[data-k='change'] { color: #F59E0B; }
+      .tlrow[data-k='cancel'] { color: var(--coral); }
+      .tlrow[data-k='note']   { color: var(--violet); }
+      .tlcard { border: none; background: transparent; padding: 0; }
+      .tlh { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+      .tlh .d { font-family: var(--mono); font-size: 10px; font-weight: 700; color: var(--ink-mid);
+        letter-spacing: .05em; text-transform: uppercase; }
+      .tlh .t { font-size: 14px; font-weight: 700; color: var(--ink); letter-spacing: -.01em; }
+      .tlh .by { font-size: 11.5px; color: var(--ink-mid); }
+      .tlb { display: grid; grid-template-columns: max-content 1fr; gap: 3px 16px; font-size: 13px;
+        margin-top: 7px; color: var(--ink); }
+      .tlb .k { color: var(--ink-mid); font-size: 12.5px; }
+      .tlb .miss { color: var(--ink-mid); font-style: italic; }
+      @media (max-width: 620px) { .tlb { grid-template-columns: 1fr; gap: 0; } .tlb .k { margin-top: 6px; } }
+      .tlnote, .tlrev {
+        margin-top: 9px; border-left: 2px solid currentColor; padding: 1px 0 1px 12px;
+        font-size: 13px; line-height: 1.55; color: var(--ink-soft);
+      }
+      .tlnote b { color: var(--ink); font-weight: 700; }
+      .tlrev { color: var(--ink-soft); border-left-color: #E8940C; }
+      .stars { color: #E8940C; letter-spacing: 1.5px; font-size: 11.5px; margin-right: 4px; }
+      .photos { display: flex; gap: 6px; margin-top: 10px; }
+      .photos i { width: 42px; height: 42px; border-radius: 9px; background: rgba(15,23,42,.07); display: grid;
+        place-items: center; color: var(--ink-mid); font-size: 13px; font-style: normal; }
+    </style>
+    <section class="pane" id="pane-ficha">
+      <div class="flash">
+        <aside class="rail">
+          <div class="grp">Operación</div>
+          <div class="item"><span class="ic">▤</span> Agenda</div>
+          <div class="item"><span class="ic">◍</span> Actividad</div>
+          <div class="item"><span class="ic">◈</span> Cobros</div>
+          <div class="grp">Mi negocio</div>
+          <div class="item"><span class="ic">✂</span> Servicios</div>
+          <div class="item on"><span class="ic">◉</span> Clientes</div>
+          <div class="item"><span class="ic">☰</span> Datos de clientes</div>
+          <div class="item"><span class="ic">✦</span> Productos</div>
+        </aside>
+        <div class="main">
+          <div class="clienthead">
+            <div class="avatar">MP</div>
+            <div style="flex: 1; min-width: 0">
+              <h2>Micaela Paz</h2>
+              <div class="m"><span>Cliente desde marzo de 2025</span></div>
+            </div>
+            <button class="btn sm" onclick="toast('Vuelve a la base de clientes.')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5.5 8.5 12l6.5 6.5"/></svg> Volver a clientes</button>
+            <button class="btn sm primary" onclick="toast('Abre el alta de reserva con Micaela ya cargada.')">＋ Ingresar reserva</button>
+          </div>
+
+          <div class="chits" aria-label="Resumen del cliente">
+            <div class="chit" data-accent="mint"><span class="l">Primera visita</span><span class="v">12 mar 25</span></div>
+            <div class="chit" data-accent="brand"><span class="l">Última visita</span><span class="v">28 ago 26</span></div>
+            <div class="chit" data-accent="coral"><span class="l">Total de visitas</span><span class="v">14</span></div>
+            <div class="chit" data-accent="sun"><span class="l">Total gastado</span><span class="v">$ 486.300</span></div>
+          </div>
+
+          <div>
+            <div class="card" style="margin-bottom: 14px">
+              <div class="cardhead" style="margin-bottom: 10px">
+                <div style="flex: 1">
+                  <p class="k">Perfil</p>
+                  <h3>Cómo viene</h3>
+                  <p>El hábito y las señales que salen solas de sus reservas. No se carga a mano.</p>
+                </div>
+              </div>
+              <div class="aurora">
+                <div class="core">
+                  <div class="in">
+                    <span class="ic">↻</span>
+                    <p>Casi siempre <strong>Pestañas · Volumen ruso</strong> con Flor</p>
+                  </div>
+                </div>
+              </div>
+              <p class="lastline">
+                <span class="kk">Última</span><strong>Pestañas · Volumen ruso</strong> con Flor
+                <span class="dt">· 28 ago</span>
+              </p>
+              <div class="sigs">
+                <span class="chip neutral">A la tarde</span>
+                <span class="chip neutral">Cada ~4 semanas</span>
+                <span class="chip ok">Nunca faltó</span>
+              </div>
+            </div>
+
+            <div class="card" style="margin-bottom: 14px">
+              <div class="cardhead">
+                <div style="flex: 1">
+                  <p class="k">Perfil</p>
+                  <h3>Su ficha</h3>
+                  <p>Todo lo de la persona en un solo lugar. Lo de cada visita está en el historial.</p>
+                </div>
+                <span class="chip warn">1 a confirmar</span>
+              </div>
+
+              <div class="tagsrow">
+                <span class="k">Etiquetas</span>
+                <span class="tag auto" style="color: var(--success-text)"><span class="dot"></span>Frecuente<span class="mk">auto</span></span>
+                <span class="tag auto" style="color: var(--warn-text)"><span class="dot"></span>Cumple este mes<span class="mk">auto</span></span>
+                <span class="tag" style="color: var(--violet-text)"><span class="dot"></span>VIP<button class="x" onclick="toast('Etiqueta quitada.')">✕</button></span>
+                <span class="tag" style="color: var(--brand-deep)"><span class="dot"></span>Puntual<button class="x" onclick="toast('Etiqueta quitada.')">✕</button></span>
+                <span class="tag derived" title="Sale de un campo de la ficha"><span class="dot"></span>Instagram<span class="mk">↳ ¿Cómo nos conoció?</span></span>
+                <button class="tagadd" onclick="toast('Se abre el selector de etiquetas del negocio.')">＋ Etiqueta</button>
+              </div>
+
+              <div class="fgrid">
+                <div>
+                  <p class="ghead">Contacto</p>
+                  <div class="cslab">
+                    <span class="t"><span class="k">Teléfono</span><span class="v">+54 9 11 5544-2211</span></span>
+                    <span class="acts">
+                      <button class="cbtn ico wa" title="Escribir por WhatsApp" aria-label="Escribir por WhatsApp" onclick="toast('Abre el chat de WhatsApp con Micaela.')"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.47-2.4-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.44-.53.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.03 1.02-1.03 2.48s1.06 2.87 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.7.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.42-.08-.12-.28-.2-.57-.34M12.05 21.8h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26A9.89 9.89 0 0 1 18.94 5.1a9.83 9.83 0 0 1 2.9 7 9.89 9.89 0 0 1-9.79 9.7"/></svg></button>
+                      <button class="cbtn ico" title="Copiar el número" aria-label="Copiar el número" onclick="toast('Número copiado.')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8.8" y="8.8" width="12.4" height="12.4" rx="2.6"/><path d="M5.2 15.2h-.6a2 2 0 0 1-2-2V4.8a2 2 0 0 1 2-2H13a2 2 0 0 1 2 2v.6"/></svg></button>
+                    </span>
+                  </div>
+                  <div class="cslab">
+                    <span class="t"><span class="k">Email</span><span class="v">mica.paz@gmail.com</span></span>
+                    <span class="acts">
+                      <button class="cbtn ico" title="Escribir un mail" aria-label="Escribir un mail" onclick="toast('Abre tu cliente de mail con la dirección cargada.')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.6" y="4.8" width="18.8" height="14.4" rx="2.6"/><path d="m3.4 7.4 8.6 5.8 8.6-5.8"/></svg></button>
+                      <button class="cbtn ico" title="Copiar el mail" aria-label="Copiar el mail" onclick="toast('Mail copiado.')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8.8" y="8.8" width="12.4" height="12.4" rx="2.6"/><path d="M5.2 15.2h-.6a2 2 0 0 1-2-2V4.8a2 2 0 0 1 2-2H13a2 2 0 0 1 2 2v.6"/></svg></button>
+                    </span>
+                  </div>
+                  <div class="cslab">
+                    <span class="t"><span class="k">Instagram</span><span class="v"><span class="miss">Sin cargar</span></span></span>
+                    <span class="acts">
+                      <button class="cbtn" onclick="toast('Se agrega el usuario de Instagram a su ficha.')">Agregar</button>
+                    </span>
+                  </div>
+
+                  <p class="ghead" style="margin-top: 22px">Datos personales</p>
+                  <div class="cells two">
+                    <div class="cell">
+                      <span class="k">Fecha de nacimiento</span>
+                      <span class="v">14/03/1994</span>
+                    </div>
+                    <div class="cell">
+                      <span class="k">Documento</span>
+                      <span class="v">38.441.902 <span class="chip line">DNI</span></span>
+                    </div>
+                    <div class="cell" style="grid-column: 1 / -1">
+                      <span class="k">¿Cómo nos conoció?</span>
+                      <span class="v">Instagram <span class="chip violet">etiqueta la ficha</span></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <p class="ghead">Salud y consentimientos</p>
+                  <div class="cells">
+                    <div class="cell">
+                      <span class="k">¿Alergias o medicación?</span>
+                      <span class="v">Ninguna</span>
+                    </div>
+                    <div class="cell">
+                      <span class="k">Tipo de piel</span>
+                      <span class="v">Mixta <span class="chip warn">a confirmar</span></span>
+                    </div>
+                    <div class="cell">
+                      <span class="k">Autorización de fotos</span>
+                      <span class="v">Sí, el 08/04/2026 <span class="chip ok">consentimiento v2</span></span>
+                    </div>
+                  </div>
+
+                  <p class="ghead" style="margin-top: 22px">Uso interno</p>
+                  <div class="cells">
+                    <div class="cell">
+                      <span class="k">Obra social</span>
+                      <span class="v">OSDE 210</span>
+                    </div>
+                  </div>
+
+                  <div class="notesblock">
+                    <div class="nh">
+                      <div style="flex: 1">
+                        <h4>Notas privadas</h4>
+                        <p>Solo lo ven vos y tu equipo.</p>
+                      </div>
+                      <button class="btn sm" onclick="toast('Se abre el editor de la nota, igual que hoy.')">✎ Editar</button>
+                    </div>
+                    <div class="notebox">
+                      Prefiere turnos después de las 14. Viene siempre con la hermana, dejarles las dos camillas del fondo.
+                      No le gusta el ruido del secador — ponerle música.
+                      <span class="sig">Última edición: Flor · 12-ago-2026</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+              <div class="tlfilter">
+                <h3 class="h2" style="font-size: 15px">Historial de actividad</h3>
+                <span class="chip neutral" id="tlCount"></span>
+                <span style="flex: 1"></span>
+                <div class="seg" id="tlSeg">
+                  <button class="on" data-k="all" onclick="setTl('all')">Todo</button>
+                  <button data-k="visit" onclick="setTl('visit')">Visitas</button>
+                  <button data-k="change" onclick="setTl('change')">Cambios</button>
+                  <button data-k="note" onclick="setTl('note')">Notas y reseñas</button>
+                </div>
+              </div>
+              <div class="tl" id="tlList"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════ FLASH · TABLA DE CLIENTES ═══════════════════════════ -->
+    <style>
+      .views { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+      .view {
+        border: 1.5px solid transparent; background: var(--field); border-radius: 999px; padding: 7px 14px;
+        font-size: 12.5px; font-weight: 600; color: var(--ink-soft); display: inline-flex; align-items: center; gap: 8px;
+        transition: background 180ms var(--ease), border-color 180ms var(--ease), color 180ms var(--ease);
+      }
+      .view .c { font-family: var(--mono); font-size: 11px; color: var(--ink-mid); font-weight: 700; }
+      .view:hover:not(.on) { background: var(--field-hi); }
+      .view.on { border-color: var(--brand); background: #fff; color: var(--brand-deep); }
+      .view.on .c { color: var(--brand-deep); }
+      .view.alert { color: var(--warn-text); background: var(--warn-wash); }
+      .view.alert.on { background: #fff; border-color: #F59E0B; }
+
+      .tbar { position: relative; display: flex; align-items: center; gap: 9px; margin-bottom: 12px; flex-wrap: wrap; }
+      .pop {
+        position: absolute; top: calc(100% + 8px); right: 0; z-index: 40; width: 380px; max-width: 94vw;
+        background: #fff; border: none; border-radius: var(--r-lg); box-shadow: var(--sh-lg);
+        padding: 17px 18px; max-height: 470px; overflow-y: auto;
+      }
+      .pop h5 { font-size: 14px; font-weight: 800; margin-bottom: 3px; letter-spacing: -.01em; }
+      .pop p.sub { font-size: 12.5px; margin-bottom: 13px; line-height: 1.55; }
+      .pop .grp { font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: .13em;
+        text-transform: uppercase; color: var(--ink-mid); margin: 13px 0 6px; }
+      .pop .grp:first-of-type { margin-top: 0; }
+      .prow { display: flex; align-items: center; gap: 10px; padding: 7px 0; font-size: 13.5px; cursor: pointer; }
+      .prow.off { opacity: .55; }
+      .prow .why { margin-left: auto; font-size: 11.5px; color: var(--ink-mid); text-align: right; max-width: 152px; }
+
+      .tbl { background: #fff; border: none; border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--sh-xs); }
+      .tbl .th, .tbl .tr { display: grid; align-items: center; gap: 13px; padding: 10px 15px; }
+      .tbl .th {
+        background: transparent; border-bottom: 1px solid var(--hair); font-size: 10.5px; font-weight: 700;
+        letter-spacing: .09em; text-transform: uppercase; color: var(--ink-mid); padding-top: 14px; padding-bottom: 11px;
+      }
+      .tbl .th .ex { color: var(--violet-text); }
+      .tbl .tr { border-bottom: 1px solid var(--hair); font-size: 13.5px; padding-top: 12px; padding-bottom: 12px; }
+      .tbl .tr:last-child { border-bottom: none; }
+      .tbl .tr:hover { background: rgba(15,23,42,.022); }
+      .cli { display: flex; align-items: center; gap: 9px; min-width: 0; }
+      .cli .av { width: 30px; height: 30px; border-radius: 50%; background: var(--brand-wash-strong); color: var(--brand-deep);
+        display: grid; place-items: center; font-size: 10.5px; font-weight: 800; flex-shrink: 0; }
+      .cli .nm { font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .cli .sb { font-size: 12px; color: var(--ink-mid); }
+      .tcell { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .tcell.ex { color: var(--violet-text); font-weight: 600; }
+      .tcell.miss { color: var(--ink-whisper, #94A3B8); font-style: italic; }
+      .rowacts { display: flex; gap: 5px; justify-content: flex-end; }
+      .iconbtn { width: 28px; height: 28px; border-radius: 9px; border: 1.5px solid transparent; background: var(--field);
+        color: var(--ink-mid); font-size: 11px; display: grid; place-items: center; transition: background 180ms var(--ease), color 180ms var(--ease); }
+      .iconbtn:hover { background: var(--field-hi); color: var(--brand-deep); }
+      .bulk {
+        display: flex; align-items: center; gap: 11px; background: var(--warn-wash); border: none;
+        border-radius: var(--r-md); padding: 12px 15px; margin-bottom: 11px; font-size: 13.5px; color: var(--warn-text);
+      }
+      @media (max-width: 1100px) {
+        .tbl { overflow-x: auto; }
+        .tbl .th, .tbl .tr { min-width: 940px; }
+      }
+    </style>
+    <section class="pane" id="pane-tabla">
+      <div class="flash">
+        <aside class="rail">
+          <div class="grp">Operación</div>
+          <div class="item"><span class="ic">▤</span> Agenda</div>
+          <div class="item"><span class="ic">◍</span> Actividad</div>
+          <div class="item"><span class="ic">◈</span> Cobros</div>
+          <div class="grp">Mi negocio</div>
+          <div class="item"><span class="ic">✂</span> Servicios</div>
+          <div class="item on"><span class="ic">◉</span> Clientes</div>
+          <div class="item"><span class="ic">☰</span> Datos de clientes</div>
+        </aside>
+        <div class="main">
+          <div class="phead">
+            <div class="t">
+              <p class="kicker">Mi negocio</p>
+              <h1>Clientes.</h1>
+              <p>
+                La tabla no crece sola. Un campo nuevo <strong>no</strong> agrega una columna: se puede filtrar por él sin
+                mostrarlo, y el negocio elige cuáles quiere ver.
+              </p>
+            </div>
+            <button class="btn sm">Exportar</button>
+          </div>
+
+          <div class="views" id="views"></div>
+
+          <div class="tbar">
+            <div class="search" style="flex: 1; min-width: 180px">
+              <span class="ic">⌕</span><input placeholder="Buscar un cliente…" disabled />
+            </div>
+            <button class="btn sm" id="btnFilt" onclick="togglePop('filt')">Filtros <span id="filtN"></span></button>
+            <button class="btn sm" id="btnCols" onclick="togglePop('cols')">Columnas <span id="colsN"></span></button>
+            <div class="pop" id="popCols" hidden></div>
+            <div class="pop" id="popFilt" hidden></div>
+          </div>
+
+          <div id="bulkBar"></div>
+          <div class="tbl" id="tbl"></div>
+          <p class="sub" style="margin-top: 9px" id="tblCount"></p>
+
+          <div class="sec">
+            <header>
+              <h2 class="h2">Dónde vive cada cosa</h2>
+              <p class="sub">La regla es una sola: <strong>filtrar no obliga a mostrar</strong>. Por eso la tabla puede quedarse corta aunque la ficha tenga 20 campos.</p>
+            </header>
+            <div class="grid g3" id="layers"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════ FLASH · SIDE-MENU DE LA RESERVA ═══════════════════════════ -->
+    <style>
+      .sm-wrap { display: grid; grid-template-columns: minmax(0, 1fr) 482px; gap: 26px; align-items: start; }
+      @media (max-width: 1120px) { .sm-wrap { grid-template-columns: minmax(0, 1fr); } }
+      .sidemenu {
+        background: #fff; border-radius: var(--r-xl); box-shadow: var(--sh-lg); overflow: hidden;
+        position: sticky; top: 66px; max-height: calc(100vh - 92px); display: flex; flex-direction: column;
+      }
+      .sm-head { padding: 16px 18px 14px; border-bottom: 1px solid var(--hair); display: flex; align-items: flex-start; gap: 10px; }
+      .sm-head .when { font-size: 15px; font-weight: 800; letter-spacing: -.015em; }
+      .sm-head .sub2 { font-size: 12.5px; color: var(--ink-mid); margin-top: 2px; }
+      .sm-body { overflow-y: auto; padding: 0 18px 22px; }
+      .sm-sec { padding: 16px 0; border-bottom: 1px solid var(--hair); }
+      .sm-sec:last-child { border-bottom: none; }
+      .sm-sec > .kk {
+        font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
+        color: var(--ink-mid); margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
+      }
+      .sm-sec > .kk .sp { flex: 1; }
+      /* El aviso que no puede estar en una lista. */
+      .sm-alert {
+        display: flex; gap: 9px; align-items: flex-start; background: var(--coral-wash); border-radius: var(--r-field);
+        padding: 11px 13px; font-size: 13px; color: var(--coral-text); line-height: 1.5; margin: 14px 0 0;
+      }
+      .sm-alert b { font-weight: 800; }
+      .sm-cli { display: flex; align-items: center; gap: 11px; }
+      .sm-cli .av { width: 36px; height: 36px; border-radius: 50%; background: var(--brand-wash-strong);
+        color: var(--brand-deep); display: grid; place-items: center; font-size: 12px; font-weight: 800; flex-shrink: 0; }
+      .sm-cli .nm { font-size: 14.5px; font-weight: 700; letter-spacing: -.01em; }
+      .sm-cli .mt { font-size: 12px; color: var(--ink-mid); }
+      .sm-pins { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 11px; }
+      .sm-read { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; font-size: 13.5px; }
+      .sm-read .k { color: var(--ink-mid); font-size: 13px; }
+      .sm-money { display: flex; align-items: center; justify-content: space-between; font-size: 13.5px; padding: 3px 0; }
+      .sm-money .tot { font-weight: 800; }
+      .sm-field { margin-bottom: 13px; }
+      .sm-field:last-child { margin-bottom: 0; }
+      .sm-field > label { display: block; font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 5px; }
+      .agenda-mock { background: #fff; border-radius: var(--r-lg); box-shadow: var(--sh-xs); overflow: hidden; }
+      .agenda-mock .ah { padding: 13px 16px; border-bottom: 1px solid var(--hair); font-size: 13px; font-weight: 700; }
+      .agenda-mock .slot { display: flex; gap: 12px; padding: 9px 16px; border-bottom: 1px solid var(--hair); font-size: 12.5px; }
+      .agenda-mock .slot .h { font-family: var(--mono); font-size: 11px; color: var(--ink-mid); width: 44px; flex-shrink: 0; }
+      .agenda-mock .slot .ev { flex: 1; border-radius: 8px; padding: 7px 10px; background: var(--field); }
+      .agenda-mock .slot .ev.on { background: var(--brand-wash-strong); color: var(--brand-deep); font-weight: 700; }
+      .agenda-mock .slot .ev.free { background: transparent; color: var(--ink-whisper, #94A3B8); font-style: italic; }
+    </style>
+    <section class="pane" id="pane-reserva">
+      <div class="wrap wide">
+        <div class="phead" style="max-width: 1240px">
+          <div class="t">
+            <p class="kicker">Agenda · detalle del turno</p>
+            <h1 style="font-size: 25px; font-weight: 800; margin: 6px 0 7px">El side-menu <span style="font-weight:500;color:var(--ink-soft)">hereda la misma partición.</span></h1>
+            <p style="font-size: 14px; color: var(--ink-soft); max-width: 72ch">
+              Hoy las respuestas del cliente y la ficha de la visita están en el mismo panel pero separadas por todo el
+              bloque de plata. No es un descuido: cada una llegó ahí por una razón distinta. El pool las reconcilia sin
+              romper ninguna de las dos.
+            </p>
+          </div>
+        </div>
+
+        <div class="sm-wrap">
+          <div>
+            <div class="agenda-mock" style="margin-bottom: 16px">
+              <div class="ah">Viernes 12 de septiembre · Flor</div>
+              <div class="slot"><span class="h">14:00</span><span class="ev">Perfilado de cejas · Sol R.</span></div>
+              <div class="slot"><span class="h">15:30</span><span class="ev on">Pestañas · Volumen ruso · Micaela P.</span></div>
+              <div class="slot"><span class="h">17:00</span><span class="ev free">libre</span></div>
+              <div class="slot"><span class="h">17:30</span><span class="ev">Kapping · Rocío B.</span></div>
+            </div>
+            <div class="grid g2" id="smLayers"></div>
+          </div>
+
+          <aside class="sidemenu">
+            <div class="sm-head">
+              <div style="flex: 1">
+                <div class="when">vie 12 sep · 15:30 – 17:00</div>
+                <div class="sub2">Pestañas · Volumen ruso · con Flor</div>
+              </div>
+              <span class="chip ok">Confirmada</span>
+            </div>
+            <div class="sm-body">
+              <div class="sm-sec">
+                <div class="kk">Cliente<span class="sp"></span></div>
+                <div class="sm-cli">
+                  <span class="av">MP</span>
+                  <span style="flex: 1; min-width: 0">
+                    <div class="nm">Micaela Paz</div>
+                    <div class="mt">14 visitas · cliente desde mar-2025</div>
+                  </span>
+                  <button class="btn sm" onclick="go('ficha')">Ver ficha</button>
+                </div>
+                <div class="sm-pins" id="smPins"></div>
+                <div class="sm-alert">
+                  <span>⚠</span>
+                  <span><b>Alergia al tinte común</b> — quedó anotado en la visita del 3-jul y contradice lo que declaró en su ficha. Confirmalo antes de aplicar.</span>
+                </div>
+              </div>
+
+              <div class="sm-sec">
+                <div class="kk">Lo que respondió Micaela<span class="sp"></span>
+                  <button class="btn sm" onclick="toast('Se abre en edición: corregir lo que respondió el cliente es deliberado.')">✎</button>
+                </div>
+                <div class="sm-read">
+                  <span class="k">¿Venís con trabajo de otro salón?</span><span>No</span>
+                  <span class="k">¿Algo que quieras contarnos?</span><span>Vengo de un viaje, tengo las pestañas muy resecas.</span>
+                </div>
+              </div>
+
+              <div class="sm-sec">
+                <div class="kk">Reserva</div>
+                <div class="sm-read">
+                  <span class="k">Servicio</span><span>Pestañas · Volumen ruso</span>
+                  <span class="k">Profesional</span><span>Flor</span>
+                  <span class="k">Duración</span><span>90 min</span>
+                </div>
+              </div>
+
+              <div class="sm-sec">
+                <div class="kk">Pago</div>
+                <div class="sm-money"><span style="color: var(--ink-mid)">Seña pagada · Mercado Pago</span><span>$ 12.600</span></div>
+                <div class="sm-money"><span style="color: var(--ink-mid)">Saldo a cobrar</span><span>$ 29.400</span></div>
+                <div class="sm-money tot" style="border-top: 1px solid var(--hair); margin-top: 7px; padding-top: 9px">
+                  <span>Total</span><span>$ 42.000</span>
+                </div>
+                <button class="btn sm primary" style="width: 100%; margin-top: 11px">Cobrar el saldo</button>
+              </div>
+
+              <div class="sm-sec" id="smVisit"></div>
+
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════ FLASH · RESERVA MANUAL ═══════════════════════════ -->
+    <style>
+      .wizard { max-width: 720px; }
+      .steps { display: flex; align-items: center; gap: 7px; margin-bottom: 20px; }
+      .steps .s { display: flex; align-items: center; gap: 7px; font-size: 11.5px; font-weight: 700; color: var(--ink-mid); }
+      .steps .s .n { width: 20px; height: 20px; border-radius: 50%; background: rgba(15,23,42,.07); display: grid;
+        place-items: center; font-family: var(--mono); font-size: 10px; }
+      .steps .s.done .n { background: var(--success-wash); color: var(--success-text); }
+      .steps .s.on { color: var(--ink); }
+      .steps .s.on .n { background: var(--brand); color: #fff; }
+      .steps .ln { flex: 1; height: 1px; background: var(--hair-strong); }
+      .known { display: flex; flex-wrap: wrap; gap: 6px; }
+      .known .k {
+        display: inline-flex; align-items: center; gap: 6px; background: var(--field); border: 1.5px solid transparent;
+        border-radius: 999px; padding: 6px 12px; font-size: 12.5px;
+      }
+      .known .k b { font-weight: 700; }
+      .known .k span { color: var(--ink-mid); }
+      .askrow { display: flex; align-items: flex-start; gap: 10px; padding: 11px 0; border-bottom: 1px solid var(--hair); }
+      .askrow:last-child { border-bottom: none; }
+      .askrow .lb { width: 178px; flex-shrink: 0; font-size: 12.5px; font-weight: 600; padding-top: 8px; }
+      .askrow .lb small { display: block; font-weight: 500; color: var(--ink-mid); font-size: 10.5px; margin-top: 1px; }
+      .askrow .in { flex: 1; min-width: 0; }
+      @media (max-width: 640px) { .askrow { flex-direction: column; gap: 4px; } .askrow .lb { width: auto; padding-top: 0; } }
+    </style>
+    <section class="pane" id="pane-manual">
+      <div class="flash">
+        <aside class="rail">
+          <div class="grp">Operación</div>
+          <div class="item on"><span class="ic">▤</span> Agenda</div>
+          <div class="item"><span class="ic">◍</span> Actividad</div>
+          <div class="item"><span class="ic">◈</span> Cobros</div>
+          <div class="grp">Mi negocio</div>
+          <div class="item"><span class="ic">✂</span> Servicios</div>
+          <div class="item"><span class="ic">◉</span> Clientes</div>
+          <div class="item"><span class="ic">☰</span> Datos de clientes</div>
+        </aside>
+        <div class="main">
+          <div class="phead">
+            <div class="t">
+              <p class="kicker">Agenda · Nueva reserva</p>
+              <h1>Cargar un turno <span>a mano.</span></h1>
+              <p>
+                El caso más frecuente y el peor atendido hoy: el cliente está al teléfono o en el mostrador. El objetivo es
+                <strong>no frenar a quien está atendiendo</strong> y aun así no perder el dato.
+              </p>
+            </div>
+            <div class="seg">
+              <button class="on" id="mkKnown" onclick="setManual('known')">Cliente que ya vino</button>
+              <button id="mkNew" onclick="setManual('new')">Cliente nuevo</button>
+            </div>
+          </div>
+
+          <div class="wizard">
+            <div class="steps">
+              <div class="s done"><span class="n">✓</span> Servicio</div><div class="ln"></div>
+              <div class="s done"><span class="n">✓</span> Día y hora</div><div class="ln"></div>
+              <div class="s on"><span class="n">3</span> Cliente</div><div class="ln"></div>
+              <div class="s"><span class="n">4</span> Pago</div>
+            </div>
+
+            <div class="card" style="margin-bottom: 13px">
+              <div style="display: flex; align-items: center; gap: 11px; margin-bottom: 13px">
+                <div class="avatar" style="width: 40px; height: 40px; font-size: 14px" id="mAvatar">MP</div>
+                <div style="flex: 1">
+                  <div style="font-size: 14px; font-weight: 700" id="mName">Micaela Paz</div>
+                  <div class="sub" id="mMeta">mica.paz@gmail.com · +54 9 11 5544-2211 · 14 visitas</div>
+                </div>
+                <button class="btn sm">Cambiar</button>
+              </div>
+              <div style="font-size: 12px; color: var(--ink-soft); background: #F6F9FD; border-radius: var(--r-md); padding: 10px 12px">
+                <strong>Pestañas · Volumen ruso</strong> · vie 12 sep, 15:30 · con Flor · $ 42.000
+              </div>
+            </div>
+
+            <div class="card" id="manualForm"></div>
+
+            <div style="display: flex; align-items: center; gap: 11px; margin-top: 15px; flex-wrap: wrap">
+              <button class="btn primary">Crear reserva</button>
+              <button class="btn">Volver</button>
+              <span class="sub" id="manualNote" style="flex: 1; min-width: 200px"></span>
+            </div>
+          </div>
+
+          <div class="sec" style="max-width: 720px">
+            <header><h2 class="h2">Las reglas de este paso</h2></header>
+            <div class="card">
+              <ul style="margin: 0; padding-left: 18px; font-size: 12.5px; color: var(--ink-soft); line-height: 1.75">
+                <li><strong>Nada bloquea la creación del turno.</strong> Un obligatorio vacío no frena a quien atiende: queda como pendiente en la tarjeta de la reserva y en el resumen del día.</li>
+                <li><strong>Lo que ya sabemos no se vuelve a pedir</strong>, se muestra en lectura. Editarlo es deliberado y queda registrado quién lo cambió.</li>
+                <li><strong>Los datos sensibles no se dictan por teléfono.</strong> Lo que no se puede o no conviene preguntar en el momento queda pendiente y se completa cuando el cliente llega.</li>
+                <li><strong>Los campos del equipo no se piden acá.</strong> "Curvatura", "fórmula aplicada" o las fotos aparecen en la ficha de la visita el día del turno, no cuando se agenda.</li>
+                <li><strong>Queda la autoría.</strong> Un dato cargado por el mostrador se guarda como <code class="k">equipo</code>; si después el cliente lo corrige desde su link, gana el suyo y queda la revisión.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════ CHECKOUT (NIGHTWING) ═══════════════════════════ -->
+    <style>
+      .ckwrap { display: grid; grid-template-columns: 404px minmax(0, 1fr); gap: 32px; align-items: start; }
+      @media (max-width: 1000px) { .ckwrap { grid-template-columns: minmax(0, 1fr); } .phone { position: static; padding: 9px; border-radius: 28px; } .phone .screen { height: 640px; } }
+      .phone {
+        width: 404px; max-width: 100%; border-radius: 34px; background: #1E293B; padding: 11px;
+        box-shadow: var(--sh-lg); position: sticky; top: 66px;
+      }
+      .phone .screen { background: #F7F5F2; border-radius: 25px; overflow: hidden; height: 716px; overflow-y: auto; }
+      .phone .notch { height: 20px; display: grid; place-items: center; }
+      .phone .notch i { display: block; width: 74px; height: 4px; border-radius: 999px; background: rgba(255,255,255,.28); }
+      /* Paleta del storefront (Nightwing) — no es la de Flash */
+      .nw { --s: #FFFFFF; --ink0: #2C2825; --ink1: #5C564E; --ink2: #8C867D; --hair0: #E8E4DF; --well: #F5F2EE;
+        font-size: 14px; color: var(--ink0); padding: 15px 13px 28px; }
+      .nw .vend { display: flex; align-items: center; gap: 9px; margin-bottom: 13px; }
+      .nw .vend .lg { width: 34px; height: 34px; border-radius: 50%; background: #2C2825; color: #fff;
+        display: grid; place-items: center; font-size: 12px; font-weight: 800; }
+      .nw .vend .nm { font-size: 13.5px; font-weight: 700; }
+      .nw .vend .sm2 { font-size: 10.5px; color: var(--ink2); }
+      .nw .blk { background: var(--s); border: none; border-radius: 16px; padding: 15px 14px; margin-bottom: 11px;
+        box-shadow: 0 1px 2px rgba(44,40,37,.03), 0 8px 22px -14px rgba(44,40,37,.14); }
+      .nw .blk > .kk { font-size: 10.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+        color: var(--ink2); margin-bottom: 11px; }
+      .nw .blk h4 { font-size: 14px; font-weight: 700; margin: 0 0 2px; }
+      .nw .row2 { display: flex; align-items: center; justify-content: space-between; gap: 9px; font-size: 13.5px; padding: 4px 0; }
+      .nw .row2 .k { color: var(--ink1); }
+      .nw .tot { display: flex; align-items: baseline; justify-content: space-between; border-top: 1px solid var(--hair0);
+        margin-top: 8px; padding-top: 8px; font-weight: 800; font-size: 14px; }
+      .nw label.l { display: block; font-size: 13px; font-weight: 600; color: var(--ink0); margin-bottom: 5px; letter-spacing: -.005em; }
+      .nw label.l .req { font-size: 9px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--ink2); margin-left: 6px; }
+      .nw .help { font-size: 11px; color: var(--ink2); margin: -2px 0 6px; line-height: 1.45; }
+      /* 16px no es capricho: abajo de eso iOS hace zoom al enfocar y saca al cliente del checkout. */
+      .nw input.i, .nw select.i, .nw textarea.i {
+        width: 100%; border: 1.5px solid transparent; border-radius: 10px; padding: 11px 12px; font-size: 16px;
+        line-height: 1.35; background-color: rgba(44, 40, 37, .06); color: var(--ink0); outline: none;
+        font-family: inherit; transition: background-color 200ms var(--ease), border-color 200ms var(--ease);
+      }
+      .nw input.i::placeholder, .nw textarea.i::placeholder { color: var(--ink2); }
+      .nw select.i {
+        appearance: none; -webkit-appearance: none; padding-right: 34px; cursor: pointer;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23A09A92' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='m4 6.5 4 4 4-4'/></svg>");
+        background-repeat: no-repeat; background-position: right 12px center; background-size: 13px;
+      }
+      .nw input.i:hover:not(:focus), .nw textarea.i:hover:not(:focus) { background-color: rgba(44, 40, 37, .09); }
+      .nw input.i:focus, .nw select.i:focus, .nw textarea.i:focus { background-color: #fff; border-color: var(--ink0); }
+      .nw input.i.bad, .nw select.i.bad, .nw textarea.i.bad { background-color: rgba(192, 57, 43, .07); border-color: rgba(192, 57, 43, .45); }
+      .nw input.i.bad:focus, .nw textarea.i.bad:focus { background-color: #fff; border-color: #C0392B; }
+      .nw .e { font-size: 12px; color: #A93226; font-weight: 600; margin-top: 5px; display: flex; gap: 5px; line-height: 1.4; }
+      .nw .f { margin-bottom: 12px; }
+      .nw .f:last-child { margin-bottom: 0; }
+      .nw .known2 {
+        display: flex; align-items: center; gap: 8px; background: rgba(44,40,37,.05); border-radius: 10px;
+        padding: 10px 12px; font-size: 13px; color: var(--ink1); margin-bottom: 7px;
+      }
+      .nw .known2 b { color: var(--ink0); font-weight: 700; }
+      .nw .known2 button { margin-left: auto; border: none; background: transparent; color: var(--ink1);
+        font-size: 12px; font-weight: 600; text-decoration: underline; padding: 0; white-space: nowrap; }
+      .nw .pills { display: flex; gap: 6px; flex-wrap: wrap; }
+      .nw .pill { border: 1.5px solid transparent; background: rgba(44,40,37,.06); border-radius: 999px; padding: 8px 15px;
+        font-size: 13.5px; font-weight: 600; color: var(--ink1); transition: background 200ms var(--ease), border-color 200ms var(--ease); }
+      .nw .pill:hover:not(.on) { background: rgba(44,40,37,.1); }
+      .nw .pill.on { border-color: var(--ink0); background: #fff; color: var(--ink0); }
+      .nw .consent { display: flex; gap: 9px; align-items: flex-start; background: rgba(44,40,37,.05); border: 1.5px solid transparent; border-radius: 10px; padding: 12px; cursor: pointer; transition: background 200ms var(--ease); }
+      .nw .consent:hover { background: rgba(44,40,37,.08); }
+      .nw .consent .box { width: 18px; height: 18px; border-radius: 5px; border: 1.5px solid var(--ink2); background: #fff;
+        flex-shrink: 0; display: grid; place-items: center; color: #fff; font-size: 10px; margin-top: 1px; }
+      .nw .consent .box.on { background: #2C2825; border-color: #2C2825; }
+      .nw .consent .tx { font-size: 12.5px; color: var(--ink1); line-height: 1.55; }
+      .nw .consent .tx .more { color: var(--ink0); font-weight: 700; text-decoration: underline; cursor: pointer; }
+      .nw .cta { width: 100%; border: none; border-radius: 15px; background: #2C2825; color: #fff; font-size: 15px;
+        font-weight: 700; padding: 15px; margin-top: 6px; letter-spacing: -.01em; }
+      .nw .cta.off { background: #C9C3BB; }
+      .nw .ctan { text-align: center; font-size: 12px; color: var(--ink2); margin-top: 9px; line-height: 1.5; }
+      .nw .prog { display: flex; align-items: center; gap: 9px; font-size: 12px; color: var(--ink1); margin-bottom: 11px; }
+      .nw .prog .b { flex: 1; height: 4px; border-radius: 999px; background: var(--hair0); overflow: hidden; }
+      .nw .prog .b i { display: block; height: 100%; background: #2C2825; border-radius: 999px; transition: width 260ms var(--ease); }
+    </style>
+    <section class="pane" id="pane-checkout">
+      <div class="wrap wide">
+        <div class="phead" style="max-width: 1240px">
+          <div class="t">
+            <p class="kicker">Storefront · checkout</p>
+            <h1 style="font-size: 25px; font-weight: 800; margin: 6px 0 7px">Un solo bloque, <span style="font-weight:500;color:var(--ink-soft)">y lo más corto posible.</span></h1>
+            <p style="font-size: 13px; color: var(--ink-soft); max-width: 70ch">
+              Hoy el checkout muestra dos secciones que piden lo mismo. Acá hay una sola, ordenada por secciones del negocio,
+              con los datos que ya conocemos resueltos y validación en el momento. Probá los dos casos y escribí mal a propósito.
+            </p>
+          </div>
+          <div class="seg">
+            <button id="ckNew" class="on" onclick="setCk('new')">Cliente nuevo</button>
+            <button id="ckBack" onclick="setCk('back')">Cliente que vuelve</button>
+          </div>
+        </div>
+
+        <div class="ckwrap">
+          <div class="phone">
+            <div class="notch"><i></i></div>
+            <div class="screen"><div class="nw" id="ckBody"></div></div>
+          </div>
+          <div>
+            <div class="card" style="margin-bottom: 14px">
+              <h3 class="h2" style="font-size: 15px">Antes / después</h3>
+              <p class="sub" style="margin-bottom: 12px">Mismo negocio, mismo cliente, mismo servicio.</p>
+              <table class="t">
+                <thead><tr><th>Hoy</th><th>Propuesta</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td>Dos bloques: "Preguntas adicionales" (texto plano) y "Antes de tu visita" (ficha).</td>
+                    <td>Un bloque con las secciones que definió el negocio.</td>
+                  </tr>
+                  <tr>
+                    <td>El teléfono se pide dos veces: una por el toggle del negocio, otra como pregunta.</td>
+                    <td>Un solo campo de teléfono, que es el campo del sistema.</td>
+                  </tr>
+                  <tr>
+                    <td>Fecha de nacimiento como texto libre: llega "14/3/94", "14-03-1994", "marzo del 94".</td>
+                    <td>Campo de fecha con máscara y validación de rango.</td>
+                  </tr>
+                  <tr>
+                    <td>La política de cancelación va como pregunta obligatoria y el cliente escribe "si".</td>
+                    <td>Consentimiento explícito, guardado con fecha y versión del texto.</td>
+                  </tr>
+                  <tr>
+                    <td>Al cliente que vuelve se le vuelve a preguntar todo.</td>
+                    <td>Ve solo lo que falta o lo que corresponde confirmar. En este ejemplo: <strong>9 campos → 4</strong>, y 3 de esos 4 son de esta visita, no de su ficha.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="card">
+              <h3 class="h2" style="font-size: 15px">Validaciones que corren acá</h3>
+              <p class="sub" style="margin-bottom: 11px">Todo se revalida en el servidor: el checkout no es la autoridad.</p>
+              <div id="ckRules" style="font-size: 12px; color: var(--ink-soft); line-height: 1.7"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════ MODELO Y MIGRACIÓN ═══════════════════════════ -->
+    <style>
+      .schema { font-family: var(--mono); font-size: 11.5px; line-height: 1.85; background: #0F172A; color: #E2E8F0;
+        border-radius: var(--r-lg); padding: 18px 20px; overflow-x: auto; white-space: pre; }
+      .schema .tb { color: #7DD3FC; font-weight: 700; }
+      .schema .cm { color: #64748B; }
+      .schema .hl { color: #FDE68A; }
+      .phase { display: flex; gap: 13px; padding: 13px 0; border-bottom: 1px solid var(--hair); }
+      .phase:last-child { border-bottom: none; }
+      .phase .n { width: 25px; height: 25px; border-radius: 50%; background: var(--brand-wash-strong); color: var(--brand-deep);
+        display: grid; place-items: center; font-family: var(--mono); font-size: 11px; font-weight: 700; flex-shrink: 0; }
+      .phase .c { flex: 1; }
+      .phase .c h5 { font-size: 13px; font-weight: 700; margin: 0 0 3px; }
+      .phase .c p { font-size: 12px; color: var(--ink-soft); margin: 0; }
+    </style>
+    <section class="pane" id="pane-modelo">
+      <div class="wrap">
+        <p class="kicker">Cómo se construye</p>
+        <h1 class="h1">Un pool de campos, <em>dos lugares donde vive el dato.</em></h1>
+        <p class="lede">
+          Un solo concepto — el <strong>campo</strong> — definido una vez por negocio. Cada campo responde cuatro preguntas,
+          y esas cuatro respuestas gobiernan todo lo demás: dónde aparece, si bloquea, si se guarda, si se vuelve a pedir.
+        </p>
+
+        <div class="sec">
+          <header><h2 class="h2">Las cuatro decisiones de un campo</h2></header>
+          <div class="card" style="padding: 6px 8px 4px">
+            <table class="t">
+              <thead><tr><th style="width:22%">Decisión</th><th style="width:36%">Opciones</th><th>Qué gobierna</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>Dónde se guarda</strong></td>
+                  <td><span class="chip violet">Ficha del cliente</span> <span class="chip neutral">Cada visita</span></td>
+                  <td>Si el valor es de la persona (uno por cliente, se actualiza) o del turno (uno por reserva, arma el historial).</td>
+                </tr>
+                <tr>
+                  <td><strong>Quién lo completa</strong></td>
+                  <td><span class="chip brand">Cliente al reservar</span> <span class="chip neutral">Equipo</span> <span class="chip line">Los dos</span></td>
+                  <td>Si aparece en el checkout, en el panel, o en ambos. Un campo del equipo <strong>nunca</strong> bloquea una reserva.</td>
+                </tr>
+                <tr>
+                  <td><strong>Al volver a reservar</strong><br /><span class="sub">solo campos de ficha</span></td>
+                  <td><span class="chip ok">No volver a pedirlo</span> <span class="chip warn">Mostrar para confirmar</span> <span class="chip neutral">Pedirlo si está vacío</span> <span class="chip line">Cada N meses</span></td>
+                  <td><strong>Si una reserva nueva puede sobreescribir lo guardado.</strong> Es la decisión que hoy no existe en ninguno de los tres sistemas.</td>
+                </tr>
+                <tr>
+                  <td><strong>Dónde se pide</strong></td>
+                  <td><span class="chip line">Todos los servicios</span> <span class="chip line">Servicios elegidos</span> <span class="chip line">Nunca en el checkout</span></td>
+                  <td>La asignación N:M. Hoy <code class="k">client_form_template_services</code> tiene <code class="k">UNIQUE(service_id)</code>: un servicio, una plantilla.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="sec">
+          <header>
+            <h2 class="h2">Modelo de datos</h2>
+            <p class="sub">Reaprovecha las tablas de la beta. Desaparecen las plantillas y sus versiones; el snapshot vive en la reserva.</p>
+          </header>
+          <div class="schema">
+<span class="cm">-- EL POOL: la central de campos del negocio</span>
+<span class="tb">vendor_client_field_sections</span>  id, vendor_id, name, order
+<span class="tb">vendor_client_fields</span>          id, vendor_id, key, label, help_text, type, options, validation,
+                              <span class="hl">storage</span>(profile|visit), <span class="hl">filled_by</span>(client|team|both), is_required,
+                              <span class="hl">refresh_policy</span>(once|confirm|if_empty|every_n_months) + refresh_months,
+                              section_id, order, <span class="hl">system_key</span>, status(active|archived)
+
+<span class="cm">-- LA ASIGNACIÓN: N:M, y por fin también a eventos, cursos y descargables</span>
+<span class="tb">vendor_client_field_targets</span>   field_id, service_id | unique_event_id | online_course_id | digital_content_id
+                              <span class="cm">(o field.applies_to_all = true)</span>
+
+<span class="cm">-- EL DATO DE LA PERSONA (hoy client_form_client_answers)</span>
+<span class="tb">client_profile_values</span>         vendor_id, user_id, field_id, value, answered_by, answered_by_vendor_id,
+                              source_record_id, confirmed_at, needs_confirmation
+                              <span class="hl">UNIQUE (vendor_id, user_id, field_id)</span>
+
+<span class="cm">-- EL DATO DE LA VISITA (hoy client_form_records / _answers)</span>
+<span class="tb">client_visit_records</span>          vendor_id, booking_id, user_id, status, source, <span class="hl">fields_snapshot jsonb</span>
+                              <span class="hl">UNIQUE (booking_id)</span>   <span class="cm">← una ficha por reserva, no una por plantilla</span>
+<span class="tb">client_visit_values</span>           record_id, field_id, value, answered_by, answered_by_vendor_id
+
+<span class="cm">-- Los datos de ficha se PISAN: no hay tabla de revisiones. Lo único que se versiona es el</span>
+<span class="cm">-- consentimiento (queda el texto y la fecha aceptados). Fotos: client_form_attachments (S3 privado).</span>
+          </div>
+        </div>
+
+        <div class="sec">
+          <header>
+            <h2 class="h2">Tipos de campo</h2>
+            <p class="sub">Los 7 que ya existen más 6 nuevos. Los dos últimos resuelven las 218 políticas que hoy entran como preguntas obligatorias.</p>
+          </header>
+          <div class="grid g2">
+            <div class="card">
+              <p class="kicker" style="margin-bottom: 9px">Ya existen</p>
+              <div style="display: flex; gap: 5px; flex-wrap: wrap">
+                <span class="chip line">Texto corto</span><span class="chip line">Texto largo</span><span class="chip line">Número</span>
+                <span class="chip line">Fecha</span><span class="chip line">Selección única</span><span class="chip line">Sí / No</span>
+                <span class="chip line">Foto</span>
+              </div>
+            </div>
+            <div class="card">
+              <p class="kicker" style="margin-bottom: 9px">Nuevos</p>
+              <div style="display: flex; gap: 5px; flex-wrap: wrap">
+                <span class="chip brand">Teléfono</span><span class="chip brand">Email</span><span class="chip brand">Documento</span>
+                <span class="chip brand">Selección múltiple</span><span class="chip violet">Consentimiento</span><span class="chip violet">Aviso</span>
+              </div>
+              <p class="sub" style="margin-top: 9px">
+                <strong>Consentimiento</strong>: texto largo + aceptación, guardada con fecha y versión del texto.
+                <strong>Aviso</strong>: información sin respuesta, para lo que hoy se cuela como pregunta obligatoria.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="sec">
+          <header>
+            <h2 class="h2">Campos del sistema</h2>
+          </header>
+          <div class="callout">
+            <strong>Nombre, Email, Teléfono, Fecha de nacimiento y Documento aparecen en el pool con candado.</strong>
+            Se prenden, se marcan obligatorios y se les cambia el texto de ayuda, pero no se duplican: escriben en
+            <code class="k">users</code> / <code class="k">vendor_clients_base</code>. Esto absorbe los dos toggles del vendor
+            (<code class="k">is_user_dob_required</code>, <code class="k">is_user_phone_required</code>) y <strong>una
+            de cada cuatro preguntas</strong>, que hoy pide por texto libre algo que ya tiene columna en la base.
+          </div>
+        </div>
+
+        <div class="sec">
+          <header>
+            <h2 class="h2">Migración · dos pistas, un solo riesgo</h2>
+            <p class="sub">
+              La beta se reescribe (un puñado de negocios: no hay install base que proteger). Todo el riesgo real está
+              del otro lado, en los cientos de negocios que hoy dependen de <code class="k">custom_questions</code>.
+            </p>
+          </header>
+
+          <div class="grid g2" style="align-items:start">
+            <div class="card">
+              <div style="display:flex;align-items:center;gap:9px;margin-bottom:4px">
+                <h3 style="font-size:14px;font-weight:800">Pista A · Reescribir la beta</h3>
+                <span class="chip ok">sin riesgo</span>
+              </div>
+              <p class="sub" style="margin-bottom:10px">Nada de dual-write ni capa de compatibilidad: se reemplaza y listo.</p>
+              <div class="phase">
+                <span class="n">1</span>
+                <div class="c">
+                  <h5>Tablas del pool y campos del sistema</h5>
+                  <p>Aditivo. Los toggles <code class="k">is_user_*_required</code> se leen como campos del sistema activados.</p>
+                </div>
+              </div>
+              <div class="phase">
+                <span class="n">2</span>
+                <div class="c">
+                  <h5>Reshape de <code class="k">client_form_*</code></h5>
+                  <p><code class="k">client_form_records</code> pierde <code class="k">template_id</code> / <code class="k">template_version_id</code> y gana <code class="k">fields_snapshot</code>. Las tablas de respuestas ganan <code class="k">field_id</code>. Se dropean <code class="k">_templates</code>, <code class="k">_template_versions</code> y <code class="k">_template_services</code>. Las 4 fichas y los 3 datos fijos existentes se portan en la misma migración.</p>
+                </div>
+              </div>
+              <div class="phase">
+                <span class="n">3</span>
+                <div class="c">
+                  <h5>API y panel, reemplazo directo</h5>
+                  <p><code class="k">/client_forms/templates*</code> → <code class="k">/client_fields</code>, sin convivencia. En Flash cae el <code class="k">TemplateEditor</code> (755 líneas) y entra la central; <code class="k">RecordDialog</code>, <code class="k">ClientDataDialog</code>, <code class="k">CompareDialog</code>, <code class="k">FieldInput</code> y <code class="k">PhotoViewer</code> se conservan casi tal cual.</p>
+                </div>
+              </div>
+              <div class="phase">
+                <span class="n">4</span>
+                <div class="c">
+                  <h5>Contrato de checkout <span class="chip warn">ojo con el orden</span></h5>
+                  <p><code class="k">CheckoutClientFormSchema</code> cambia de forma. Es <code class="k">.strict()</code> en las dos puntas y Nightwing revalida con su copia vendorizada: <strong>va Nightwing primero, Cyclone después</strong> — el mismo rollout que ya está documentado en el contrato para los campos opcionales. Al revés, una clave nueva rompe el parse del checkout deployado.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div style="display:flex;align-items:center;gap:9px;margin-bottom:4px">
+                <h3 style="font-size:14px;font-weight:800">Pista B · Las preguntas de verdad</h3>
+                <span class="chip bad">acá está el riesgo</span>
+              </div>
+              <p class="sub" style="margin-bottom:10px">Negocios que hoy funcionan. Nada se apaga hasta que su reemplazo anda.</p>
+              <div class="phase">
+                <span class="n">5</span>
+                <div class="c">
+                  <h5>Cubrir eventos, cursos y descargables <span class="chip warn">antes que nada</span></h5>
+                  <p>La ficha solo corre sobre <code class="k">EVENT_INSTANCE</code>; las preguntas cubren 1.100 en eventos, 84 en descargables y 2 en cursos. Si esto no está primero, unificar es una regresión.</p>
+                </div>
+              </div>
+              <div class="phase">
+                <span class="n">6</span>
+                <div class="c">
+                  <h5>El unificador, con revisión humana</h5>
+                  <p>Por negocio: agrupar por texto normalizado, proponer tipo y destino, y que el negocio apruebe. Las preguntas se reducen a cerca de un tercio. <strong>No se aplica a ciegas.</strong></p>
+                </div>
+              </div>
+              <div class="phase">
+                <span class="n">7</span>
+                <div class="c">
+                  <h5>Traer el historial</h5>
+                  <p><code class="k">reply_questions</code> → <code class="k">client_visit_values</code> contra el campo unificado. Las respuestas pasan a verse agrupadas por persona, no sueltas por reserva.</p>
+                </div>
+              </div>
+              <div class="phase">
+                <span class="n">8</span>
+                <div class="c">
+                  <h5>Un solo bloque y apagar la escritura vieja</h5>
+                  <p>Por cohorte, con el mismo mecanismo de beta que ya existe. <code class="k">custom_questions</code> queda como lectura histórica.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sec">
+          <header><h2 class="h2">Qué se reaprovecha de lo ya construido</h2></header>
+          <div class="grid g2">
+            <div class="card">
+              <p class="kicker" style="margin-bottom: 9px">Se queda como está</p>
+              <ul style="margin: 0; padding-left: 17px; font-size: 12.5px; color: var(--ink-soft); line-height: 1.7">
+                <li>Fotos privadas en S3 con URL firmada de vida corta</li>
+                <li>Promoción del dato al confirmarse la reserva (no antes)</li>
+                <li>Idempotencia por <code class="k">UNIQUE</code> contra webhooks y reintentos</li>
+                <li>El probe en vivo del checkout con el contacto tipeado (<code class="k">useCheckoutClientForms</code>)</li>
+                <li>La siembra con <code class="k">needs_confirmation</code> al cambiar el alcance de un campo</li>
+                <li><code class="k">validateAnswerValue</code> como validación server-side</li>
+              </ul>
+            </div>
+            <div class="card">
+              <p class="kicker" style="margin-bottom: 9px">Se reemplaza</p>
+              <ul style="margin: 0; padding-left: 17px; font-size: 12.5px; color: var(--ink-soft); line-height: 1.7">
+                <li>Plantillas y versionado inmutable → snapshot en la reserva</li>
+                <li>Revisiones por cada corrección → el dato nuevo pisa al anterior</li>
+                <li><code class="k">UNIQUE(service_id)</code> → asignación N:M</li>
+                <li>Una ficha por plantilla → una ficha por reserva</li>
+                <li>El editor de preguntas adentro de cada servicio → la central</li>
+                <li>Los dos toggles del vendor → campos del sistema</li>
+                <li>Texto libre sin tipo → 13 tipos con validación</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      /* ═══════════════════ Datos del negocio de ejemplo ═══════════════════ */
+      const SERVICES = [
+        { id: 1, n: 'Pestañas · Volumen ruso', c: 'Pestañas' },
+        { id: 2, n: 'Pestañas · Pelo a pelo', c: 'Pestañas' },
+        { id: 3, n: 'Perfilado de cejas', c: 'Cejas' },
+        { id: 4, n: 'Laminado de cejas', c: 'Cejas' },
+        { id: 5, n: 'Manicura semipermanente', c: 'Uñas' },
+        { id: 6, n: 'Kapping', c: 'Uñas' },
+        { id: 7, n: 'Pedicura', c: 'Uñas' },
+        { id: 8, n: 'Depilación láser · piernas', c: 'Depilación' },
+        { id: 9, n: 'Depilación láser · axilas', c: 'Depilación' },
+        { id: 10, n: 'Limpieza facial profunda', c: 'Facial' }
+      ];
+
+      /* ═══ Documento por país ═══
+         Ágora opera en Argentina, Uruguay, Chile y México:
+         el documento no es un texto libre, cambia de nombre, de largo y de validación en cada uno.
+         El campo hereda el país del negocio y, si atiende extranjeros, se le pide el país al cliente. */
+      const VENDOR_COUNTRY = 'Argentina';
+      const DOC_TYPES = {
+        dni_ar:   { label: 'DNI', country: 'Argentina', ph: '12345678', len: '7 u 8 dígitos', dv: null, hint: '7 u 8 números, sin puntos' },
+        ci_uy:    { label: 'Cédula de identidad', country: 'Uruguay', ph: '1.234.567-2', len: '8 dígitos (7 + verificador)', dv: 'módulo 10 ponderado', hint: '8 números, el último es el verificador' },
+        rut_cl:   { label: 'RUT', country: 'Chile', ph: '12.345.678-5', len: '7 u 8 dígitos + verificador', dv: 'módulo 11 (0-9 o K)', hint: 'con dígito verificador (0-9 o K)' },
+        curp_mx:  { label: 'CURP', country: 'México', ph: 'GOMC950115HDFRRL09', len: '18 caracteres alfanuméricos', dv: null, hint: '18 caracteres' },
+        passport: { label: 'Pasaporte', country: null, ph: 'AB123456', len: '6 a 9 letras y números', dv: null, hint: '6 a 9 letras y números' }
+      };
+      const DOC_BY_COUNTRY = { Argentina: 'dni_ar', Uruguay: 'ci_uy', Chile: 'rut_cl', 'México': 'curp_mx' };
+      const DOC_COUNTRIES = ['Argentina', 'Uruguay', 'Chile', 'México', 'Otro país'];
+      /* Se elige el PAÍS, no el tipo: el país trae su documento, su largo y su validación.
+         'auto' = el del negocio, así el campo lo sigue si el negocio se muda. */
+      const resolveDocCountry = (f) => (!f.docCountry || f.docCountry === 'auto' ? VENDOR_COUNTRY : f.docCountry);
+      const resolveDoc = (f) => DOC_BY_COUNTRY[resolveDocCountry(f)] || 'passport';
+      const docLabel = (f) => DOC_TYPES[resolveDoc(f)].label;
+      /* En el checkout manda el país que eligió el cliente, si el campo lo permite. */
+      const docKindFor = (f) => (f.docForeign && state.ckDoc ? DOC_BY_COUNTRY[state.ckDoc] || 'passport' : resolveDoc(f));
+
+      /* Dígitos verificadores reales: módulo 11 para el RUT chileno, módulo 10 ponderado
+         para la cédula uruguaya. Sin esto, "documento" es un campo de texto con otro nombre. */
+      const dvRut = (body) => {
+        let sum = 0, mul = 2;
+        for (let i = body.length - 1; i >= 0; i--) { sum += Number(body[i]) * mul; mul = mul === 7 ? 2 : mul + 1; }
+        const r = 11 - (sum % 11);
+        return r === 11 ? '0' : r === 10 ? 'K' : String(r);
+      };
+      const dvCi = (body) => {
+        const w = [2, 9, 8, 7, 6, 3, 4];
+        let sum = 0;
+        for (let i = 0; i < 7; i++) sum += Number(body[i]) * w[i];
+        return String((10 - (sum % 10)) % 10);
+      };
+      function validateDoc(f, raw) {
+        const kind = docKindFor(f);
+        const v = String(raw).replace(/[.\s-]/g, '').toUpperCase();
+        if (kind === 'dni_ar') return /^\d{7,8}$/.test(v) ? '' : 'El DNI son 7 u 8 números, sin puntos.';
+        if (kind === 'ci_uy') {
+          if (!/^\d{8}$/.test(v)) return 'La cédula son 8 números, con el verificador incluido.';
+          return dvCi(v.slice(0, 7)) === v[7] ? '' : 'Revisá la cédula: el dígito verificador no cierra.';
+        }
+        if (kind === 'rut_cl') {
+          if (!/^\d{7,8}[0-9K]$/.test(v)) return 'El RUT va con su dígito verificador, por ejemplo 12.345.678-5.';
+          return dvRut(v.slice(0, -1)) === v.slice(-1) ? '' : 'Revisá el RUT: el dígito verificador no cierra.';
+        }
+        if (kind === 'curp_mx') {
+          return /^[A-Z]{4}\d{6}[HM][A-Z]{5}[A-Z0-9]\d$/.test(v) ? '' : 'La CURP son 18 caracteres, por ejemplo GOMC950115HDFRRL09.';
+        }
+        return /^[A-Z0-9]{6,9}$/.test(v) ? '' : 'El pasaporte son 6 a 9 letras y números.';
+      }
+
+      const SECTIONS = [
+        { id: 's1', n: 'Datos personales' },
+        { id: 's2', n: 'Salud y consentimientos' },
+        { id: 's3', n: 'La visita' },
+        { id: 's4', n: 'Uso interno' }
+      ];
+
+      const TYPES = [
+        { v: 'short_text', l: 'Texto corto' }, { v: 'long_text', l: 'Texto largo' },
+        { v: 'number', l: 'Número' }, { v: 'date', l: 'Fecha' },
+        { v: 'phone', l: 'Teléfono' }, { v: 'email', l: 'Email' },
+        { v: 'document', l: 'Documento' }, { v: 'single_choice', l: 'Selección única' },
+        { v: 'multi_choice', l: 'Selección múltiple' }, { v: 'boolean', l: 'Sí / No' },
+        { v: 'consent', l: 'Consentimiento' }, { v: 'notice', l: 'Aviso (sin respuesta)' },
+        { v: 'photo', l: 'Foto' }
+      ];
+      const typeLabel = (t) => (TYPES.find((x) => x.v === t) || { l: t }).l;
+
+      /* Un campo no es "obligatorio sí/no": puede directamente no pedirse.
+         Nombre y Email son la identidad de la reserva — esos no se apagan. */
+      const ALWAYS_ON = ['first_name', 'email'];
+      const askOf = (f) => (f.off ? 'off' : f.req ? 'required' : 'optional');
+      const ASK_LABEL = { off: 'No se pide', optional: 'Opcional', required: 'Obligatorio' };
+
+      /* storage: profile = ficha del cliente · visit = cada visita
+         filled: client | team | both
+         policy: once | confirm | if_empty | every_n (solo profile)
+         all: true = todos los servicios · svc: [ids] */
+      let FIELDS = [
+        { id: 1, s: 's1', label: 'Nombre y apellido', type: 'short_text', storage: 'profile', filled: 'client', req: true, policy: 'once', all: true, svc: [], sys: 'first_name', answers: 3120 },
+        { id: 2, s: 's1', label: 'Email', type: 'email', storage: 'profile', filled: 'client', req: true, policy: 'once', all: true, svc: [], sys: 'email', answers: 3120 },
+        { id: 3, s: 's1', label: 'Teléfono', type: 'phone', storage: 'profile', filled: 'client', req: true, policy: 'confirm', all: true, svc: [], sys: 'phone', answers: 3006 },
+        { id: 4, s: 's1', label: 'Fecha de nacimiento', type: 'date', storage: 'profile', filled: 'client', req: true, policy: 'once', all: true, svc: [], sys: 'dob', help: 'Para saludarte y para los descuentos de cumpleaños.', answers: 2841 },
+        { id: 5, s: 's1', label: 'Documento', type: 'document', storage: 'profile', filled: 'client', req: true, policy: 'once', all: false, svc: [1, 8, 9], docCountry: 'auto', docForeign: true, help: 'Lo necesitamos para el consentimiento del tratamiento.', answers: 402 },
+        { id: 6, s: 's1', label: '¿Cómo nos conociste?', type: 'single_choice', opts: ['Instagram', 'Google', 'Me la recomendaron', 'Pasé por la puerta'], storage: 'profile', filled: 'client', req: false, policy: 'once', all: true, svc: [], tagify: true, answers: 1877 },
+        { id: 7, s: 's2', label: '¿Alergias o medicación?', type: 'long_text', storage: 'profile', filled: 'both', req: true, policy: 'every_n', months: 12, all: true, svc: [], pin: true, help: 'Contanos cualquier cosa que debamos tener en cuenta antes de atenderte.', answers: 2640 },
+        { id: 8, s: 's2', label: 'Tipo de piel', type: 'single_choice', opts: ['Seca', 'Mixta', 'Grasa', 'Sensible'], storage: 'profile', filled: 'both', req: false, policy: 'confirm', all: false, svc: [10, 3, 4], answers: 610 },
+        { id: 9, s: 's2', label: 'Autorización de fotos', type: 'consent', storage: 'profile', filled: 'client', req: true, policy: 'every_n', months: 24, all: true, svc: [], text: 'Autorizo el uso de fotos y videos de mi tratamiento con fines de difusión en redes. Puedo pedir que no se me etiquete o que no se publique el material en cualquier momento.', answers: 2410 },
+        { id: 10, s: 's2', label: 'Política de cancelación', type: 'notice', storage: 'visit', filled: 'client', req: false, policy: 'once', all: true, svc: [], text: 'Podés cancelar hasta 24 h antes sin costo. Después de ese plazo, la seña no se devuelve. La tolerancia es de 15 minutos.', answers: 0 },
+        { id: 11, s: 's3', label: '¿Venís con trabajo de otro salón?', type: 'boolean', storage: 'visit', filled: 'client', req: true, policy: 'once', all: false, svc: [1, 2, 5, 6], help: 'Si venís con service de otra colega, reservamos más tiempo para la remoción.', answers: 1204 },
+        { id: 12, s: 's3', label: '¿Algo que quieras contarnos antes del turno?', type: 'long_text', storage: 'visit', filled: 'client', req: false, policy: 'once', all: true, svc: [], answers: 1990 },
+        { id: 13, s: 's3', label: 'Curvatura y espesor', type: 'single_choice', opts: ['CC · 0.05', 'CC · 0.07', 'D · 0.07', 'L · 0.10', 'M · mixto'], storage: 'visit', filled: 'team', req: true, policy: 'once', all: false, svc: [1, 2], answers: 908 },
+        { id: 14, s: 's3', label: 'Fotos del trabajo', type: 'photo', storage: 'visit', filled: 'team', req: false, policy: 'once', all: false, svc: [1, 2, 3, 4], answers: 1450 },
+        { id: 15, s: 's3', label: 'Nota de la visita', type: 'long_text', storage: 'visit', filled: 'team', req: false, policy: 'once', all: true, svc: [], sys: 'booking_notes', help: 'Lo que pasó en este turno. Es la nota de la reserva de siempre, ahora como un campo más.', answers: 2103 },
+        { id: 16, s: 's4', label: 'Obra social', type: 'short_text', storage: 'profile', filled: 'team', req: false, policy: 'if_empty', all: true, svc: [], pin: true, answers: 88 },
+        { id: 17, s: 's4', label: 'Notas privadas', type: 'long_text', storage: 'profile', filled: 'team', req: false, policy: 'if_empty', all: true, svc: [], sys: 'notes', help: 'Preferencias, observaciones, lo que quieras recordar. Nunca se le muestra al cliente.', answers: 1640 }
+      ];
+
+      /* Lo que ya sabemos de Micaela, el cliente que vuelve */
+      const KNOWN = { 1: 'Micaela Paz', 2: 'mica.paz@gmail.com', 3: '+54 9 11 5544-2211', 4: '14/03/1994', 6: 'Instagram', 7: 'Ninguna', 8: 'Mixta', 9: 'aceptado 08/04/2026' };
+
+      let state = { sel: null, ck: 'new', manual: 'known', ckVals: {}, ckErr: {}, ckTouched: {}, ckDoc: VENDOR_COUNTRY };
+
+      /* ═══════════════════ Navegación ═══════════════════ */
+      const go = (t) => {
+        document.querySelectorAll('.pane').forEach((p) => p.classList.toggle('on', p.id === 'pane-' + t));
+        document.querySelectorAll('#tabs button').forEach((b) => b.classList.toggle('on', b.dataset.t === t));
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
+      document.querySelectorAll('#tabs button').forEach((b) => (b.onclick = () => go(b.dataset.t)));
+
+      /* ═══════════════════ Tab diagnóstico ═══════════════════ */
+      const BUCKETS = [
+        ['Fecha de nacimiento / edad', 18.7], ['Contacto (teléfono, WhatsApp, IG, mail)', 12.7],
+        ['Salud / antecedentes / alergias', 10.6], ['Documento (DNI, CUIL, pasaporte)', 5.4],
+        ['Consentimiento o aviso legal', 3.3], ['Dirección', 2.3],
+        ['Cómo nos conociste', 1.1], ['Pregunta real de la visita', 45.9]
+      ];
+      const TOPQ = ['fecha de nacimiento', 'dni', 'fecha de cumpleaños', 'edad', 'whatsapp',
+        'número de teléfono', 'usuario de instagram', 'nombre y apellido'];
+      const PROBLEMS = [
+        ['El admin no tiene un lugar', 'Las preguntas viven adentro del editor de cada servicio, la ficha en <code class="k">/fichas</code> y los toggles en configuración. Para saber qué le estás pidiendo a tus clientes hay que abrir 41 servicios de a uno.'],
+        ['El editor pelea con vos', 'Estado <code class="k">isSave</code> por pregunta, tilde para guardar, lápiz para editar, y no podés agregar una nueva mientras otra está abierta. Máximo 5, solo texto.'],
+        ['El cliente ve lo mismo dos veces', '"Preguntas adicionales" y "Antes de tu visita" aparecen una abajo de la otra en el mismo checkout, pidiendo cosas del mismo tipo.'],
+        ['La ficha se modela al revés', '<code class="k">UNIQUE(service_id)</code>: un servicio, una plantilla. Si dos servicios comparten 4 campos de 5, hay que mantener dos plantillas en paralelo.'],
+        ['La reserva manual no captura nada', 'El wizard pide cliente, servicio y horario. Ni preguntas ni ficha: nace vacía y alguien tiene que acordarse después.'],
+        ['La ficha no cubre todo', 'Solo corre sobre reservas de servicio. Las preguntas cubren además 1.100 en eventos, 84 en descargables y 2 en cursos.']
+      ];
+      (function renderDx() {
+        const max = Math.max(...BUCKETS.map((b) => b[1]));
+        document.getElementById('bucketTable').innerHTML =
+          '<thead><tr><th>Qué se pregunta</th><th style="width:42%"></th></tr></thead><tbody>' +
+          BUCKETS.map(
+            (b, i) =>
+              `<tr><td>${b[0]}${i === 7 ? ' <span class="chip ok">lo único que es una pregunta</span>' : ''}</td>
+               <td><div class="bar"><span style="width:${(b[1] / max) * 100}%;background:${i === 7 ? 'var(--success)' : 'var(--coral)'}"></span></div>
+                   <div style="font-family:var(--mono);font-size:10.5px;color:var(--ink-mid);margin-top:4px">${String(b[1]).replace('.', ',')}%</div></td></tr>`
+          ).join('') + '</tbody>';
+        document.getElementById('topTable').innerHTML =
+          '<thead><tr><th>Pregunta</th><th></th></tr></thead><tbody>' +
+          TOPQ.map(
+            (q, i) =>
+              `<tr><td>${q}</td><td style="text-align:right">${i < 6 ? '<span class="chip warn">dato fijo</span>' : ''}</td></tr>`
+          ).join('') + '</tbody>';
+        document.getElementById('problemGrid').innerHTML = PROBLEMS.map(
+          (p, i) =>
+            `<div class="card"><div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px">
+               <span class="mono" style="font-size:11px;font-weight:700;color:var(--coral-text)">0${i + 1}</span>
+               <h4 style="font-size:13.5px;font-weight:700">${p[0]}</h4></div>
+             <p style="font-size:12px;color:var(--ink-soft);margin:0">${p[1]}</p></div>`
+        ).join('');
+      })();
+
+      /* ═══════════════════ Lista de campos ═══════════════════ */
+      const storageChip = (f) =>
+        f.storage === 'profile'
+          ? '<span class="chip violet">ficha</span>'
+          : '<span class="chip neutral">cada visita</span>';
+      const filledChip = (f) =>
+        f.filled === 'client'
+          ? '<span class="chip brand">cliente</span>'
+          : f.filled === 'team'
+          ? '<span class="chip line">equipo</span>'
+          : '<span class="chip line">cliente + equipo</span>';
+      const policyLabel = (f) =>
+        f.storage !== 'profile'
+          ? '—'
+          : f.policy === 'once'
+          ? 'No se vuelve a pedir'
+          : f.policy === 'confirm'
+          ? 'Se muestra para confirmar'
+          : f.policy === 'if_empty'
+          ? 'Solo si está vacío'
+          : `Se repregunta cada ${f.months} meses`;
+      const svcCount = (f) => (f.all ? SERVICES.length : f.svc.length);
+      const svcLabel = (f) => (f.all ? 'Todos los servicios' : `${f.svc.length} servicio${f.svc.length === 1 ? '' : 's'}`);
+
+      function passFilter(f) {
+        const q = (document.getElementById('qSearch').value || '').toLowerCase().trim();
+        return !q || f.label.toLowerCase().includes(q);
+      }
+
+      function renderFields() {
+        const host = document.getElementById('fieldList');
+        let html = '';
+        SECTIONS.forEach((sec) => {
+          const rows = FIELDS.filter((f) => f.s === sec.id && passFilter(f));
+          if (!rows.length) return;
+          html += `<div class="sectionhead"><h3>${sec.n}</h3><div class="ln"></div><span class="cnt">${rows.length}</span></div>`;
+          rows.forEach((f) => {
+            html += `<div class="frow ${state.sel === f.id ? 'sel' : ''} ${f.off || f.filled === 'team' ? 'off' : ''}" onclick="openField(${f.id})">
+              <span class="drag">⣿</span>
+              <div class="body">
+                <div class="name">${f.label} ${f.sys ? '<span class="lock" title="Campo del sistema">🔒</span>' : ''}
+                  ${f.off ? '<span class="chip neutral">no se pide</span>' : f.req ? '<span class="chip bad">obligatorio</span>' : ''}
+                  ${f.pin ? '<span class="chip warn">destacado</span>' : ''}</div>
+                <div class="meta2"><span>${typeLabel(f.type)}${f.type === 'document' ? ' · ' + docLabel(f) : ''}</span></div>
+              </div>
+              <div class="chips">${storageChip(f)}${filledChip(f)}</div>
+              <div class="where">${f.off ? '—' : svcLabel(f)}</div>
+            </div>`;
+          });
+        });
+        host.innerHTML = html || '<div class="card" style="text-align:center;color:var(--ink-mid)">Ningún campo coincide.</div>';
+      }
+
+      /* ═══════════════════ Fricción del checkout ═══════════════════ */
+      const fieldsForService = (sid) =>
+        FIELDS.filter((f) => !f.off && (f.all || f.svc.includes(sid)) && f.filled !== 'team');
+
+      function checkoutFields(sid, mode) {
+        return fieldsForService(sid).filter((f) => {
+          if (f.type === 'notice') return true;
+          if (mode === 'new') return true;
+          if (f.storage === 'visit') return true;
+          const known = KNOWN[f.id] !== undefined;
+          if (!known) return true;
+          if (f.policy === 'once') return false;
+          if (f.policy === 'if_empty') return false;
+          if (f.policy === 'confirm') return true;
+          if (f.policy === 'every_n') return f.id === 7; // vencido en el ejemplo
+          return true;
+        });
+      }
+
+      function renderFriction() {
+        const sid = Number(document.getElementById('frictionSvc').value);
+        const nueva = checkoutFields(sid, 'new').filter((f) => f.type !== 'notice').length;
+        const vuelve = checkoutFields(sid, 'back').filter((f) => f.type !== 'notice').length;
+        const tone = nueva <= 5 ? '' : nueva <= 8 ? 'mid' : 'hi';
+        document.getElementById('frictionBody').innerHTML =
+          `<div class="meter">${Array.from({ length: 12 }, (_, i) => `<i class="${i < nueva ? 'on ' + tone : ''}"></i>`).join('')}</div>
+           <div class="ministat"><span class="n">${nueva}</span><span class="l">campos ve un cliente nuevo</span></div>
+           <div class="ministat"><span class="n" style="color:var(--success-text)">${vuelve}</span><span class="l">ve uno que ya vino</span></div>
+           <p class="sub" style="margin-top:9px;font-size:11px">${
+             nueva <= 5
+               ? 'Buen largo. Cada campo extra en el checkout cuesta conversión.'
+               : nueva <= 8
+               ? 'Se está poniendo largo. Fijate si alguno puede ser del equipo o pedirse después.'
+               : 'Demasiado. Pasá a "equipo" lo que no necesites antes de que llegue.'
+           }</p>`;
+      }
+      document.getElementById('frictionSvc').innerHTML = SERVICES.map((s) => `<option value="${s.id}">${s.n}</option>`).join('');
+
+      /* ═══════════════════ Editor de campo (drawer) ═══════════════════ */
+      let draft = null;
+      const esc = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+      const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '');
+      const isChoice = (t) => t === 'single_choice' || t === 'multi_choice';
+      const isText = (t) => t === 'consent' || t === 'notice';
+
+      function openField(id) {
+        const f = id ? FIELDS.find((x) => x.id === id) : null;
+        draft = f
+          ? JSON.parse(JSON.stringify(f))
+          : { id: null, s: 's1', label: '', type: 'short_text', storage: 'profile', filled: 'client', req: false, policy: 'once', all: false, svc: [], answers: 0 };
+        state.sel = id;
+        document.getElementById('drawerTitle').textContent = f ? f.label : 'Nuevo campo';
+        document.getElementById('drawerSub').textContent = f
+          ? `${f.answers ? f.answers.toLocaleString('es-AR') + ' respuestas guardadas' : 'Sin respuestas todavía'}${f.sys ? ' · campo del sistema' : ''}`
+          : 'Definilo una vez y elegí en qué servicios se pide.';
+        document.getElementById('drawerArchive').style.display = f ? '' : 'none';
+        document.getElementById('drawer').classList.add('on');
+        document.getElementById('scrim').classList.add('on');
+        renderDrawer();
+        renderFields();
+      }
+
+      function closeAll() {
+        document.getElementById('drawer').classList.remove('on');
+        document.getElementById('migrateModal').classList.remove('on');
+        document.getElementById('scrim').classList.remove('on');
+        state.sel = null;
+        renderFields();
+      }
+
+      const setDraft = (k, v) => { draft[k] = v; renderDrawer(); };
+      const togglePin = () => {
+        if (!draft.pin && FIELDS.filter((f) => f.pin && f.id !== draft.id).length >= 2)
+          return toast('Ya tenés 2 campos destacados. Sacá uno para destacar este: más de dos y deja de ser un destaque.');
+        draft.pin = !draft.pin;
+        renderDrawer();
+      };
+      const setAsk = (v) => {
+        if (v === 'off' && ALWAYS_ON.includes(draft.sys)) return;
+        draft.off = v === 'off';
+        if (v !== 'off') draft.req = v === 'required';
+        renderDrawer();
+      };
+      const toggleSvc = (id) => {
+        draft.svc = draft.svc.includes(id) ? draft.svc.filter((x) => x !== id) : [...draft.svc, id];
+        renderDrawer();
+      };
+
+      function drawerWarnings() {
+        const w = [];
+        if (draft.off)
+          w.push(['warn', 'Mientras esté apagado no aparece en ningún formulario. Los valores que ya tengas guardados siguen visibles en la ficha de cada cliente.']);
+        if (draft.off && draft.sys === 'phone')
+          w.push(['ok', 'Sin teléfono, el email queda como único canal para avisarle de un cambio o una cancelación.']);
+        if (draft.req && draft.filled === 'team')
+          w.push(['warn', 'Un campo del equipo nunca frena una reserva. Marcarlo obligatorio solo lo deja como pendiente en el panel.']);
+        if (draft.answers > 0 && draft.type !== (FIELDS.find((x) => x.id === draft.id) || {}).type)
+          w.push(['bad', 'Este campo ya tiene respuestas: no se puede cambiar el tipo. Creá uno nuevo y archivá este.']);
+        const orig = FIELDS.find((x) => x.id === draft.id);
+        if (orig && orig.storage === 'visit' && draft.storage === 'profile' && draft.answers > 0)
+          w.push(['warn', `Pasás ${draft.answers.toLocaleString('es-AR')} respuestas de visita a la ficha. Se guarda el último valor de cada cliente marcado "a confirmar": el panel lo avisa y el checkout se lo vuelve a preguntar una vez.`]);
+        if (draft.storage === 'profile' && draft.filled === 'client' && draft.policy === 'confirm')
+          w.push(['ok', 'Se le muestra ya cargado. Si lo corrige, el dato nuevo pisa al anterior en su ficha.']);
+        if (draft.type === 'notice')
+          w.push(['ok', 'Un aviso no pide respuesta: se muestra y listo. Es lo correcto para políticas de cancelación.']);
+        return w;
+      }
+
+      function previewInput() {
+        if (draft.off)
+          return '<div style="font-size:12.5px;color:var(--ink-mid);font-style:italic">Este campo no se pide: no aparece en el checkout ni en la carga manual.</div>';
+        const t = draft.type;
+        const lbl = esc(t === 'document' && draft.label ? `${draft.label} (${DOC_TYPES[resolveDoc(draft)].label})` : draft.label || 'Etiqueta del campo');
+        const req = draft.req ? '<span style="font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-mid);margin-left:5px">Obligatorio</span>' : '';
+        const head = `<div style="font-size:11.5px;font-weight:600;color:var(--ink-soft);margin-bottom:5px">${lbl}${req}</div>` +
+          (draft.help ? `<div style="font-size:10.5px;color:var(--ink-mid);margin:-2px 0 5px">${esc(draft.help)}</div>` : '');
+        const box = (inner) => `<div style="border:1px solid var(--hair-strong);border-radius:10px;padding:9px 11px;font-size:12.5px;color:var(--ink-mid);background:#fff">${inner}</div>`;
+        if (t === 'notice') return `<div style="background:#fff;border:1px solid var(--hair-strong);border-radius:10px;padding:11px;font-size:11.5px;color:var(--ink-soft);line-height:1.5">${esc(draft.text || 'Texto del aviso…')}</div>`;
+        if (t === 'consent')
+          return `<div style="display:flex;gap:9px;align-items:flex-start;background:#fff;border:1px solid var(--hair-strong);border-radius:10px;padding:11px">
+            <span style="width:17px;height:17px;border-radius:5px;border:1.5px solid var(--ink-mid);flex-shrink:0"></span>
+            <span style="font-size:11px;color:var(--ink-soft);line-height:1.5">${esc((draft.text || 'Texto del consentimiento…').slice(0, 130))}…</span></div>`;
+        if (isChoice(t))
+          return head + `<div style="display:flex;gap:5px;flex-wrap:wrap">${(draft.opts || ['Opción 1', 'Opción 2']).map((o) => `<span class="chip line">${esc(o)}</span>`).join('')}</div>`;
+        if (t === 'boolean') return head + `<div style="display:flex;gap:5px"><span class="chip line">Sí</span><span class="chip line">No</span></div>`;
+        if (t === 'photo') return head + box('▣ Subir foto · solo el equipo');
+        if (t === 'date') return head + box('dd / mm / aaaa');
+        if (t === 'phone') return head + box('🇦🇷 +54 9 …');
+        if (t === 'long_text') return head + box('Respuesta larga…<br /><br />');
+        if (t === 'document') return head + box(esc(DOC_TYPES[resolveDoc(draft)].ph));
+        if (t === 'number') return head + box('0');
+        if (t === 'email') return head + box('nombre@mail.com');
+        return head + box('Respuesta');
+      }
+
+      function renderDrawer() {
+        const locked = !!draft.sys;
+        const err = draft._err || {};
+        const w = drawerWarnings();
+        const svcAll = draft.all;
+        document.getElementById('drawerBody').innerHTML = `
+          <div class="fld">
+            <label>Qué le preguntás</label>
+            <input class="inp ${err.label ? 'err' : ''}" id="dLabel" value="${esc(draft.label)}" ${locked ? 'disabled' : ''}
+              placeholder="Ej: ¿Alergias o medicación?" oninput="draft.label=this.value;delete draft._err;updPrev()" />
+            ${err.label ? `<div class="errmsg">▲ ${err.label}</div>` : ''}
+            ${locked ? '<div class="hint">Campo del sistema: el nombre y el tipo no se cambian porque escribe en el perfil de la persona. Sí podés cambiar el texto de ayuda, cómo se pide — o no pedirlo — y en qué servicios.</div>' : ''}
+          </div>
+
+          <div class="fld">
+            <label>Texto de ayuda <span style="font-weight:500;color:var(--ink-mid)">· opcional</span></label>
+            <input class="inp" value="${esc(draft.help || '')}" placeholder="Por qué se lo pedís" oninput="draft.help=this.value;updPrev()" />
+          </div>
+
+          ${locked ? '' : `
+          <div class="fld">
+            <label>Tipo de respuesta</label>
+            <select class="inp" onchange="setDraft('type', this.value)" ${draft.answers > 0 ? 'disabled' : ''}>
+              ${TYPES.map((t) => `<option value="${t.v}" ${draft.type === t.v ? 'selected' : ''}>${t.l}</option>`).join('')}
+            </select>
+            ${draft.answers > 0 ? '<div class="hint">Bloqueado: ya tiene respuestas guardadas. Para cambiar el tipo hay que crear un campo nuevo y archivar este.</div>' : ''}
+          </div>`}
+
+          ${isChoice(draft.type) ? `
+          <div class="fld">
+            <label>Opciones <span style="font-weight:500;color:var(--ink-mid)">· una por línea, mínimo 2</span></label>
+            <textarea class="inp ${err.opts ? 'err' : ''}" rows="4" oninput="draft.opts=this.value.split('\\n').map(s=>s.trim()).filter(Boolean);delete draft._err;updPrev()">${esc((draft.opts || []).join('\n'))}</textarea>
+            ${err.opts ? `<div class="errmsg">▲ ${err.opts}</div>` : ''}
+            <div class="hint">Las opciones ya usadas no se borran, se ocultan: el historial tiene que seguir leyéndose.</div>
+          </div>` : ''}
+
+          ${draft.type === 'document' ? `
+          <div class="fld">
+            <label>País del documento</label>
+            <select class="inp" id="docCountrySel" onchange="setDraft('docCountry', this.value)">
+              <option value="auto" ${!draft.docCountry || draft.docCountry === 'auto' ? 'selected' : ''}>El de tu negocio — ${VENDOR_COUNTRY}</option>
+              ${DOC_COUNTRIES.map((c) => `<option value="${c}" ${draft.docCountry === c ? 'selected' : ''}>${c}</option>`).join('')}
+            </select>
+            <div class="hint">Cambiar el país cambia todo lo demás: qué documento se pide, cómo se llama, cuántos dígitos tiene y cómo se valida. Dejalo en "el de tu negocio" y el campo sigue al país solo si algún día te mudás.</div>
+          </div>
+          <div class="preview" style="margin: -4px 0 17px">
+            <div class="pl">Lo que trae ${esc(resolveDocCountry(draft))}</div>
+            <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:5px">
+              <span style="font-size:13.5px;font-weight:800">${esc(DOC_TYPES[resolveDoc(draft)].label)}</span>
+              <span class="chip line">${esc(DOC_TYPES[resolveDoc(draft)].len)}</span>
+              ${DOC_TYPES[resolveDoc(draft)].dv
+                ? `<span class="chip ok">verificador ${esc(DOC_TYPES[resolveDoc(draft)].dv)}</span>`
+                : '<span class="chip neutral">sin verificador</span>'}
+            </div>
+            <div style="font-size:11px;color:var(--ink-mid)">Se le pide así: <span class="mono">${esc(DOC_TYPES[resolveDoc(draft)].ph)}</span></div>
+          </div>
+          <div class="sw">
+            <div class="txt">Atiendo extranjeros<small>Le agrega al cliente un selector de país en el checkout: el documento y su validación cambian con lo que elija. Si es un país que no manejamos, se le pide el pasaporte.</small></div>
+            <button class="toggle ${draft.docForeign ? 'on' : ''}" onclick="setDraft('docForeign', ${!draft.docForeign})" aria-label="Atiendo extranjeros"></button>
+          </div>` : ''}
+
+          ${isChoice(draft.type) ? `
+          <div class="sw" style="border-top: 1px solid var(--hair); margin-top: -4px; padding-top: 14px">
+            <div class="txt">Etiquetar al cliente con la respuesta<small>Cada opción se convierte en una etiqueta del cliente: sirve para filtrar la base y armar campañas sin tocar nada a mano.</small></div>
+            <button class="toggle ${draft.tagify ? 'on' : ''}" onclick="setDraft('tagify', ${!draft.tagify})" aria-label="Etiquetar con la respuesta"></button>
+          </div>
+          ${draft.tagify ? `<div class="preview" style="margin-bottom:17px">
+            <div class="pl">Etiquetas que va a manejar este campo</div>
+            <div style="display:flex;gap:5px;flex-wrap:wrap">
+              ${(draft.opts || []).map((o) => `<span class="tag derived"><span class="dot"></span>${esc(o)}</span>`).join('') || '<span class="sub">Cargá las opciones primero.</span>'}
+            </div>
+            <p class="hint" style="margin-top:8px">Se ponen y se sacan solas cuando cambia la respuesta. El equipo no las puede quitar a mano — para eso están las etiquetas manuales.</p>
+          </div>` : ''}` : ''}
+
+          ${isText(draft.type) ? `
+          <div class="fld">
+            <label>${draft.type === 'consent' ? 'Texto que acepta la persona' : 'Texto del aviso'}</label>
+            <textarea class="inp ${err.text ? 'err' : ''}" rows="4" oninput="draft.text=this.value;delete draft._err;updPrev()">${esc(draft.text || '')}</textarea>
+            ${err.text ? `<div class="errmsg">▲ ${err.text}</div>` : ''}
+            ${draft.type === 'consent' ? '<div class="hint">Se guarda con la fecha y la versión del texto. Si después lo cambiás, a quien ya lo aceptó se le pide de nuevo.</div>' : ''}
+          </div>` : ''}
+
+          <div class="fld">
+            <label>Dónde se guarda la respuesta</label>
+            <div class="pick two">
+              <button class="opt ${draft.storage === 'profile' ? 'on' : ''}" onclick="setDraft('storage','profile')">
+                <div class="ot">👤 Ficha del cliente</div>
+                <div class="od">Un valor por persona. Se pide una vez y queda: alergias, documento, tipo de piel.</div>
+              </button>
+              <button class="opt ${draft.storage === 'visit' ? 'on' : ''}" onclick="setDraft('storage','visit')">
+                <div class="ot">📅 Cada visita</div>
+                <div class="od">Un valor por reserva. Arma el historial comparable: fórmula, retención, fotos.</div>
+              </button>
+            </div>
+          </div>
+
+          <div class="fld">
+            <label>Quién lo completa</label>
+            <div class="pick three">
+              ${[['client', 'Cliente', 'Al reservar'], ['team', 'Equipo', 'Desde el panel'], ['both', 'Los dos', 'Responde y el equipo corrige']]
+                .map(([v, t, d]) => `<button class="opt ${draft.filled === v ? 'on' : ''}" onclick="setDraft('filled','${v}')"><div class="ot">${t}</div><div class="od">${d}</div></button>`)
+                .join('')}
+            </div>
+          </div>
+
+          <div class="fld">
+            <label>Cómo se pide</label>
+            <div class="pick three">
+              ${['off', 'optional', 'required'].map((v) => {
+                const blocked = v === 'off' && ALWAYS_ON.includes(draft.sys);
+                return `<button class="opt ${askOf(draft) === v ? 'on' : ''}" ${blocked ? 'disabled style="opacity:.4;cursor:not-allowed"' : `onclick="setAsk('${v}')"`}>
+                  <div class="ot">${ASK_LABEL[v]}</div>
+                </button>`;
+              }).join('')}
+            </div>
+            <div class="hint">${
+              askOf(draft) === 'off'
+                ? 'No se pide en ningún lado: ni en el checkout, ni cuando cargás un turno a mano. Lo que ya tengas guardado de tus clientes se conserva.'
+                : askOf(draft) === 'optional'
+                ? 'Se pide, pero si lo dejan vacío la reserva igual se confirma.'
+                : draft.filled === 'team'
+                ? 'Queda como pendiente en el panel. Un campo del equipo nunca frena una reserva.'
+                : 'Sin esto no se puede confirmar la reserva.'
+            }${ALWAYS_ON.includes(draft.sys) ? ' <strong>Este no se puede apagar</strong>: es con lo que identificamos al cliente y le mandamos la confirmación.' : ''}</div>
+          </div>
+
+          ${draft.storage === 'profile' && !draft.off ? `
+          <div class="sw">
+            <div class="txt">Destacarlo en la reserva<small>Aparece arriba de todo en el detalle del turno, junto al nombre del cliente. Para lo que el equipo tiene que ver sin abrir nada. Hasta 2.</small></div>
+            <button class="toggle ${draft.pin ? 'on' : ''}" onclick="togglePin()" aria-label="Destacar en la reserva"></button>
+          </div>
+
+          <div class="fld" style="margin-top:14px">
+            <label>Al volver a reservar</label>
+            <div class="pick">
+              ${[
+                ['once', 'No volver a pedirlo', 'Se pide una vez y nunca más. Para lo que no cambia: documento, fecha de nacimiento.'],
+                ['confirm', 'Mostrarlo para confirmar', 'Aparece ya cargado. Si lo corrige, el dato nuevo pisa al anterior.'],
+                ['if_empty', 'Pedirlo solo si está vacío', 'Si alguna vez lo respondió, no se lo mostramos más.'],
+                ['every_n', 'Volver a pedirlo cada tanto', 'Para lo que caduca: declaraciones de salud, consentimientos.']
+              ].map(([v, t, d]) => `<button class="opt ${draft.policy === v ? 'on' : ''}" onclick="setDraft('policy','${v}')"><div class="ot">${t}</div><div class="od">${d}</div></button>`).join('')}
+            </div>
+            ${draft.policy === 'every_n' ? `
+            <div style="display:flex;align-items:center;gap:8px;margin-top:9px">
+              <span style="font-size:12px;color:var(--ink-soft)">Volver a pedirlo cada</span>
+              <input class="inp" type="number" min="1" max="60" style="width:74px" value="${draft.months || 12}" oninput="draft.months=Number(this.value)" />
+              <span style="font-size:12px;color:var(--ink-soft)">meses</span>
+            </div>` : ''}
+          </div>` : `
+          <div class="callout" style="margin:6px 0 17px;font-size:11.5px">
+            Los campos de visita <strong>nunca pisan la ficha</strong>: cada reserva guarda su propio valor y el historial queda comparable.
+          </div>`}
+
+          ${draft.off ? '' : `
+          <div class="fld">
+            <label>Dónde se pide</label>
+            <div class="pick two" style="margin-bottom:9px">
+              <button class="opt ${svcAll ? 'on' : ''}" onclick="setDraft('all', true)"><div class="ot">Todos los servicios</div><div class="od">Y los que crees más adelante.</div></button>
+              <button class="opt ${!svcAll ? 'on' : ''}" onclick="setDraft('all', false)"><div class="ot">Servicios elegidos</div><div class="od">${draft.svc.length} seleccionado${draft.svc.length === 1 ? '' : 's'}</div></button>
+            </div>
+            ${svcAll ? '' : `
+            <div class="svcbox">
+              <div class="sh"><span style="color:var(--ink-mid);font-size:11px">⌕</span><input placeholder="Buscar servicio…" oninput="filterSvcList(this.value)" /></div>
+              <div class="svclist" id="svcList">
+                ${SERVICES.map((s) => `<label class="svcrow" data-n="${norm(s.n + s.c)}" onclick="event.preventDefault();toggleSvc(${s.id})">
+                  <span class="cb ${draft.svc.includes(s.id) ? 'on' : ''}">✓</span> ${s.n}<span class="cat">${s.c}</span></label>`).join('')}
+              </div>
+            </div>
+            ${err.svc ? `<div class="errmsg">▲ ${err.svc}</div>` : ''}`}
+          </div>`}
+
+          ${w.length ? `<div style="display:flex;flex-direction:column;gap:7px;margin-bottom:17px">
+            ${w.map(([tone, t]) => `<div class="callout ${tone === 'bad' ? 'bad' : ''}" style="font-size:11.5px;${tone === 'ok' ? 'border-left-color:var(--success);background:var(--success-wash)' : tone === 'warn' ? 'border-left-color:var(--warning,#F59E0B);background:var(--warn-wash)' : ''}">${t}</div>`).join('')}
+          </div>` : ''}
+
+          <div class="preview" id="prevBox">
+            <div class="pl">${draft.off ? 'Apagado' : `Así lo ve ${draft.filled === 'team' ? 'tu equipo en el panel' : 'tu cliente al reservar'}`}</div>
+            ${previewInput()}
+          </div>`;
+      }
+
+      const updPrev = () => {
+        const p = document.getElementById('prevBox');
+        if (p) p.innerHTML = `<div class="pl">${draft.off ? 'Apagado' : `Así lo ve ${draft.filled === 'team' ? 'tu equipo en el panel' : 'tu cliente al reservar'}`}</div>${previewInput()}`;
+      };
+      const filterSvcList = (q) => {
+        const n = norm(q);
+        document.querySelectorAll('#svcList .svcrow').forEach((r) => (r.style.display = r.dataset.n.includes(n) ? '' : 'none'));
+      };
+
+      function saveField() {
+        const e = {};
+        const label = (draft.label || '').trim();
+        if (label.length < 2) e.label = 'Poné al menos 2 caracteres.';
+        else if (label.length > 80) e.label = 'Máximo 80 caracteres.';
+        else {
+          const dup = FIELDS.find((f) => f.id !== draft.id && norm(f.label) === norm(label));
+          if (dup) e.label = `Ya tenés un campo así: "${dup.label}". Usá ese en vez de crear otro.`;
+        }
+        if (isChoice(draft.type) && (draft.opts || []).length < 2) e.opts = 'Necesita al menos 2 opciones.';
+        if (isChoice(draft.type) && new Set((draft.opts || []).map(norm)).size !== (draft.opts || []).length)
+          e.opts = 'Hay opciones repetidas.';
+        if (isText(draft.type) && (draft.text || '').trim().length < 20) e.text = 'El texto tiene que tener al menos 20 caracteres.';
+        if (!draft.all && draft.svc.length === 0 && !draft.off)
+          e.svc = 'Elegí al menos un servicio, o marcá "Todos los servicios".';
+        // Un negocio sin ningún canal de contacto no puede avisar de un cambio.
+        if (draft.off && draft.sys === 'phone') {
+          const mail = FIELDS.find((f) => f.sys === 'email');
+          if (mail && mail.off) e.ask = 'No podés apagar el teléfono si tampoco pedís el email: te quedás sin forma de avisarle al cliente.';
+        }
+        if (Object.keys(e).length) {
+          draft._err = e;
+          renderDrawer();
+          if (e.ask) toast(e.ask);
+          const first = document.querySelector('.inp.err');
+          if (first) first.focus();
+          return;
+        }
+        draft.label = label;
+        if (draft.type === 'consent') { draft.req = true; draft.filled = 'client'; }
+        if (draft.type === 'notice') { draft.req = false; }
+        delete draft._err;
+        if (draft.id) FIELDS = FIELDS.map((f) => (f.id === draft.id ? draft : f));
+        else { draft.id = Math.max(...FIELDS.map((f) => f.id)) + 1; FIELDS.push(draft); }
+        closeAll();
+        renderFields();
+        renderFriction();
+        renderCheckout();
+        renderSideMenu();
+        toast(`Campo guardado. Se pide en ${draft.all ? 'todos los servicios' : draft.svc.length + ' servicio' + (draft.svc.length === 1 ? '' : 's')}.`);
+      }
+
+      function archiveField() {
+        if (draft.answers > 0) {
+          if (!confirm(`"${draft.label}" tiene ${draft.answers.toLocaleString('es-AR')} respuestas guardadas.\n\nNo se borra: se archiva. Deja de pedirse en las próximas reservas y lo ya respondido se sigue viendo en la ficha de cada cliente.\n\n¿Archivar?`)) return;
+        }
+        FIELDS = FIELDS.filter((f) => f.id !== draft.id);
+        closeAll();
+        renderFields(); renderFriction(); renderCheckout();
+        toast('Campo archivado. Lo ya respondido se conserva.');
+      }
+
+      /* ═══════════════════ Toast ═══════════════════ */
+      function toast(msg) {
+        let t = document.getElementById('toast');
+        if (!t) {
+          t = document.createElement('div');
+          t.id = 'toast';
+          t.style.cssText = 'position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(14px);background:#0F172A;color:#fff;padding:11px 17px;border-radius:12px;font-size:12.5px;font-weight:600;z-index:99;box-shadow:var(--sh-lg);opacity:0;transition:opacity 220ms var(--ease),transform 220ms var(--ease);max-width:88vw;text-align:center';
+          document.body.appendChild(t);
+        }
+        t.textContent = msg;
+        requestAnimationFrame(() => { t.style.opacity = '1'; t.style.transform = 'translateX(-50%) translateY(0)'; });
+        clearTimeout(t._h);
+        t._h = setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translateX(-50%) translateY(14px)'; }, 2600);
+      }
+
+      /* ═══════════════════ Unificador de preguntas ═══════════════════ */
+      const MIGRATE = [
+        { q: ['fecha de nacimiento', 'fecha de nac', 'Fecha de Nacimiento'], svc: 12, ans: 431, to: 'Fecha de nacimiento', chips: ['sistema', 'Fecha', 'ficha', 'no se vuelve a pedir'] },
+        { q: ['dni', 'DNI', 'dni o cuil'], svc: 6, ans: 188, to: 'Documento', chips: ['sistema', 'Documento', 'ficha', 'no se vuelve a pedir'] },
+        { q: ['telefono', 'whatsapp', 'número de contacto'], svc: 9, ans: 297, to: 'Teléfono', chips: ['sistema', 'ya lo pedís', 'se elimina el duplicado'] },
+        { q: ['alergias?', '¿tenés alguna alergia o tomás medicación?'], svc: 8, ans: 244, to: '¿Alergias o medicación?', chips: ['Texto largo', 'ficha', 'cada 12 meses'] },
+        { q: ['¿venís con service de otro salón?', 'trabajo previo de otra colega?'], svc: 4, ans: 61, to: '¿Venís con trabajo de otro salón?', chips: ['Sí / No', 'cada visita'] },
+        { q: ['acepto la política de cancelación', 'tolerancia 15 min - acepta?'], svc: 3, ans: 33, to: 'Política de cancelación', chips: ['Aviso', 'sin respuesta'] },
+        { q: ['¿autorizás el uso de fotos?'], svc: 5, ans: 12, to: 'Autorización de fotos', chips: ['Consentimiento', 'ficha', 'cada 24 meses'] },
+        { q: ['como nos conociste'], svc: 2, ans: 9, to: '¿Cómo nos conociste?', chips: ['Selección única', 'ficha', 'una sola vez'] },
+        { q: ['algo que quieras contarnos?'], svc: 3, ans: 9, to: '¿Algo que quieras contarnos antes del turno?', chips: ['Texto largo', 'cada visita'] }
+      ];
+      function openMigrate() {
+        document.getElementById('migrateBody').innerHTML = MIGRATE.map(
+          (m) => `<div class="mrow">
+            <div class="q">
+              <div class="txt">${m.q.map((x) => `"${esc(x)}"`).join(' · ')}</div>
+              <div class="src">${m.q.length} variante${m.q.length === 1 ? '' : 's'} en ${m.svc} servicios · ${m.ans} respuestas</div>
+            </div>
+            <span class="arrow">→</span>
+            <div class="res">
+              <div class="rn">${esc(m.to)}</div>
+              <div class="rc">${m.chips.map((c) => `<span class="chip ${c === 'sistema' ? 'brand' : c === 'ficha' ? 'violet' : 'line'}">${c}</span>`).join('')}</div>
+            </div>
+          </div>`
+        ).join('');
+        document.getElementById('migrateCount').textContent = `47 preguntas · 1.284 respuestas · nada se borra`;
+        document.getElementById('migrateModal').classList.add('on');
+        document.getElementById('scrim').classList.add('on');
+      }
+      function applyMigrate() {
+        closeAll();
+        document.getElementById('migrateBanner').innerHTML =
+          '<h4>Listo</h4><p class="sub" style="margin-top:3px">47 preguntas unificadas en 9 campos. Las 1.284 respuestas quedaron enganchadas y ya se ven en el historial de cada cliente.</p>';
+        toast('47 preguntas unificadas en 9 campos.');
+      }
+
+      /* ═══════════════════ Historial de actividad ═══════════════════ */
+      /* Una sola línea de tiempo: las visitas (con lo que cargó el equipo, la nota y
+         la reseña) conviven con todo lo demás que le pasó a la reserva. */
+      const ACTIVITY = [
+        {
+          k: 'visit', icon: '✓', d: '28 AGO 2026', t: 'Pestañas · Volumen ruso', by: 'con Flor',
+          rows: [['Retención previa', '75% a las 3 semanas'], ['Curvatura y espesor', 'CC · 0.07'],
+                 ['Nota de la visita', 'Ojo derecho más caído, compensar con mapping.']],
+          photos: 2,
+          review: { stars: 5, text: 'Quedó impecable, como siempre. Ya reservé la próxima.' }
+        },
+        {
+          k: 'change', icon: '↻', d: '20 AGO 2026', t: 'Reagendó su turno', by: 'lo hizo Micaela',
+          detail: 'De mié 20 ago 11:00 a vie 28 ago 15:30, desde el link de la reserva. Sin costo: avisó con 8 días.'
+        },
+        {
+          k: 'note', icon: '✎', d: '12 AGO 2026', t: 'Nota privada', by: 'Flor',
+          note: 'Prefiere turnos después de las 14. Viene con la hermana, dejarles las dos camillas del fondo.'
+        },
+        {
+          k: 'visit', icon: '✓', d: '31 JUL 2026', t: 'Pestañas · Volumen ruso', by: 'con Flor',
+          rows: [['Retención previa', '80% a las 3 semanas'], ['Curvatura y espesor', null]]
+        },
+        {
+          k: 'cancel', icon: '✕', d: '18 JUL 2026', t: 'Canceló · Perfilado de cejas', by: 'lo hizo Micaela',
+          detail: 'Canceló 3 h antes del turno. La seña de $ 4.200 no se devolvió (política: 24 h).'
+        },
+        {
+          k: 'visit', icon: '✓', d: '03 JUL 2026', t: 'Perfilado de cejas', by: 'con Naty',
+          rows: [['Nota de la visita', 'Henna tono medio. Alergia al tinte común.']],
+          review: { stars: 4, text: 'Muy bien, aunque esperé 15 minutos.' }
+        },
+        {
+          k: 'change', icon: '★', d: '08 ABR 2026', t: 'Aceptó la autorización de fotos', by: 'en el checkout',
+          detail: 'Consentimiento v2, guardado con la fecha y el texto que aceptó.'
+        },
+        {
+          k: 'visit', icon: '✓', d: '12 MAR 2025', t: 'Manicura semipermanente · primera visita', by: 'con Naty',
+          rows: [['¿Cómo nos conoció?', 'Instagram']]
+        }
+      ];
+      let tlFilter = 'all';
+      const setTl = (k) => {
+        tlFilter = k;
+        document.querySelectorAll('#tlSeg button').forEach((b) => b.classList.toggle('on', b.dataset.k === k));
+        renderTl();
+      };
+      function renderTl() {
+        const rows = ACTIVITY.filter((a) => {
+          if (tlFilter === 'all') return true;
+          if (tlFilter === 'visit') return a.k === 'visit';
+          if (tlFilter === 'change') return a.k === 'change' || a.k === 'cancel';
+          return a.k === 'note' || !!a.review;
+        });
+        document.getElementById('tlCount').textContent =
+          tlFilter === 'all' ? `${ACTIVITY.length} movimientos` : `${rows.length} de ${ACTIVITY.length}`;
+        document.getElementById('tlList').innerHTML = rows
+          .map((a) => `<div class="tlrow" data-k="${a.k}">
+            <i class="dot">${a.icon}</i>
+            <div class="tlcard">
+              <div class="tlh">
+                <span class="d">${a.d}</span>
+                <span class="t">${esc(a.t)}</span>
+                <span class="by">${esc(a.by)}</span>
+              </div>
+              ${a.detail ? `<p style="font-size:13px;color:var(--ink-soft);margin:6px 0 0;line-height:1.55;max-width:74ch">${esc(a.detail)}</p>` : ''}
+              ${a.rows ? `<div class="tlb">${a.rows.map(([k, v]) =>
+                  `<span class="k">${esc(k)}</span><span class="${v ? '' : 'miss'}">${v ? esc(v) : 'sin cargar'}</span>`
+                ).join('')}</div>` : ''}
+              ${a.photos ? `<div class="photos">${'<i>▣</i>'.repeat(a.photos)}<i>＋</i></div>` : ''}
+              ${a.note ? `<div class="tlnote"><b>Nota:</b> ${esc(a.note)}</div>` : ''}
+              ${a.review ? `<div class="tlrev"><span class="stars">${'★'.repeat(a.review.stars)}${'☆'.repeat(5 - a.review.stars)}</span>
+                 &nbsp;“${esc(a.review.text)}”</div>` : ''}
+            </div>
+          </div>`)
+          .join('');
+      }
+
+      /* ═══════════════════ Tabla de clientes ═══════════════════ */
+      /* La pregunta de fondo: 20 campos en la ficha no pueden ser 20 columnas.
+         La separación es filtrar ≠ mostrar. Un campo siempre filtra; ocupar una
+         columna es una decisión del negocio, y se guarda con la vista. */
+      const CLIENTS = [
+        { ini: 'MP', n: 'Micaela Paz', mail: 'mica.paz@gmail.com', est: ['ok', 'Frecuente'], last: '28 ago 26',
+          cumple: '14/03', tags: ['VIP', 'Puntual'], ingreso: '$ 486.300',
+          f: { 4: '14/03/1994', 5: '38.441.902', 6: 'Instagram', 7: 'Ninguna', 8: 'Mixta', 9: 'Sí · 08/04/26', 16: 'OSDE 210' } },
+        { ini: 'CG', n: 'Carla Giménez', mail: 'carla.g@gmail.com', est: ['brand', 'Nueva'], last: '02 sep 26',
+          cumple: '—', tags: [], ingreso: '$ 42.000',
+          f: { 8: 'Sensible' } },
+        { ini: 'SR', n: 'Sol Ramírez', mail: 'sol.rmz@gmail.com', est: ['ok', 'Frecuente'], last: '21 ago 26',
+          cumple: '09/09', tags: ['Puntual'], ingreso: '$ 312.500',
+          f: { 4: '09/09/1991', 5: '40.112.883', 6: 'Me la recomendaron', 7: 'Alergia al látex', 8: 'Sensible', 9: 'Sí · 12/01/26' } },
+        { ini: 'JD', n: 'Julián Duarte', mail: 'j.duarte@gmail.com', est: ['warn', 'En riesgo'], last: '14 may 26',
+          cumple: '27/11', tags: [], ingreso: '$ 88.400',
+          f: { 4: '27/11/1988', 5: '35.904.217', 6: 'Google', 8: 'Grasa' } },
+        { ini: 'VL', n: 'Vale Lonardi', mail: 'vale.lonardi@gmail.com', est: ['bad', 'Ausente'], last: '03 dic 25',
+          cumple: '02/03', tags: ['Ausente sin aviso'], ingreso: '$ 61.000',
+          f: { 4: '02/03/1996', 6: 'Instagram', 8: 'Mixta' } },
+        { ini: 'RB', n: 'Rocío Benítez', mail: 'ro.benitez@gmail.com', est: ['ok', 'Frecuente'], last: '30 ago 26',
+          cumple: '18/09', tags: ['VIP'], ingreso: '$ 527.900',
+          f: { 4: '18/09/1993', 5: '37.220.145', 6: 'Instagram', 7: 'Toma anticoagulantes', 8: 'Seca', 9: 'Sí · 22/02/26', 16: 'Swiss Medical' } }
+      ];
+      /* Un campo es "columnable" si tiene UN valor por persona y ese valor entra en una celda. */
+      const COLUMNABLE = ['short_text', 'number', 'date', 'single_choice', 'multi_choice', 'boolean', 'document', 'email', 'phone', 'consent'];
+      const colEligible = (f) => !f.off && f.storage === 'profile' && COLUMNABLE.includes(f.type);
+      const colReason = (f) =>
+        f.storage === 'visit' ? 'es de cada visita: hay muchos valores, no uno'
+          : f.type === 'long_text' ? 'texto largo: no entra en una celda'
+          : f.type === 'photo' ? 'son fotos'
+          : f.type === 'notice' ? 'es un aviso, no tiene respuesta'
+          : '';
+      /* Requerido de ficha sin responder = a quién hay que perseguir. */
+      const ROW_SYS = ['first_name', 'email', 'phone']; // ya se ven en la fila
+      const missingFor = (c) =>
+        FIELDS.filter(
+          (f) => !f.off && f.storage === 'profile' && f.req && f.filled !== 'team' &&
+            !ROW_SYS.includes(f.sys) && !c.f[f.id]
+        ).length;
+
+      let tState = { view: 'all', cols: [8], filt: {} };
+      const VIEWS = [
+        { k: 'all', l: 'Todos' }, { k: 'nuevo', l: 'Nuevos' }, { k: 'frecuente', l: 'Frecuentes' },
+        { k: 'riesgo', l: 'En riesgo' }, { k: 'ausente', l: 'Ausentes' },
+        { k: 'incompleta', l: 'Ficha incompleta', alert: true }
+      ];
+      const EST_OF = { nueva: 'nuevo', frecuente: 'frecuente', 'en riesgo': 'riesgo', ausente: 'ausente' };
+      const inView = (c) => {
+        if (tState.view === 'all') return true;
+        if (tState.view === 'incompleta') return missingFor(c) > 0;
+        return EST_OF[c.est[1].toLowerCase()] === tState.view;
+      };
+      const passFilt = (c) => {
+        const { piel, foto, incompleta } = tState.filt;
+        if (piel && piel.length && !piel.includes(c.f[8])) return false;
+        if (foto === 'si' && !c.f[9]) return false;
+        if (foto === 'no' && c.f[9]) return false;
+        if (incompleta && missingFor(c) === 0) return false;
+        return true;
+      };
+      const filtCount = () =>
+        (tState.filt.piel?.length ? 1 : 0) + (tState.filt.foto ? 1 : 0) + (tState.filt.incompleta ? 1 : 0);
+
+      const togglePop = (k) => {
+        const other = k === 'cols' ? 'filt' : 'cols';
+        document.getElementById('pop' + other[0].toUpperCase() + other.slice(1)).hidden = true;
+        const el = document.getElementById('pop' + k[0].toUpperCase() + k.slice(1));
+        el.hidden = !el.hidden;
+        if (!el.hidden) (k === 'cols' ? renderColPop : renderFiltPop)();
+      };
+      const closePops = () => {
+        document.getElementById('popCols').hidden = true;
+        document.getElementById('popFilt').hidden = true;
+      };
+      const toggleCol = (id) => {
+        if (tState.cols.includes(id)) tState.cols = tState.cols.filter((x) => x !== id);
+        else if (tState.cols.length >= 3) return toast('Hasta 3 columnas extra: más que eso y la tabla deja de leerse.');
+        else tState.cols.push(id);
+        renderColPop();
+        renderTable();
+      };
+      const setFilt = (k, v) => { tState.filt[k] = v; renderFiltPop(); renderTable(); };
+      const togglePiel = (o) => {
+        const cur = tState.filt.piel || [];
+        setFilt('piel', cur.includes(o) ? cur.filter((x) => x !== o) : [...cur, o]);
+      };
+      const setView = (k) => { tState.view = k; closePops(); renderViews(); renderTable(); };
+
+      function renderViews() {
+        document.getElementById('views').innerHTML = VIEWS.map((v) => {
+          const n = CLIENTS.filter((c) => {
+            const saved = tState.view; tState.view = v.k; const r = inView(c); tState.view = saved; return r;
+          }).length;
+          return `<button class="view ${v.alert ? 'alert' : ''} ${tState.view === v.k ? 'on' : ''}" onclick="setView('${v.k}')">
+            ${v.l}<span class="c">${n}</span></button>`;
+        }).join('');
+      }
+
+      function renderColPop() {
+        const ok = FIELDS.filter(colEligible);
+        const no = FIELDS.filter((f) => !colEligible(f) && colReason(f));
+        document.getElementById('popCols').innerHTML = `
+          <h5>Columnas de la tabla</h5>
+          <p class="sub">Las seis de siempre no se tocan. Podés sumar hasta 3 campos de la ficha, y queda guardado en esta vista.</p>
+          <div class="grp">Se pueden mostrar</div>
+          ${ok.map((f) => `<label class="prow" onclick="event.preventDefault();toggleCol(${f.id})">
+              <span class="cb ${tState.cols.includes(f.id) ? 'on' : ''}">✓</span> ${esc(f.label)}
+              <span class="why">${typeLabel(f.type)}</span></label>`).join('')}
+          <div class="grp">No entran en una tabla</div>
+          ${no.map((f) => `<div class="prow off"><span class="cb"></span> ${esc(f.label)}
+              <span class="why">${colReason(f)}</span></div>`).join('')}
+          <p class="hint" style="margin-top:11px">Los de cada visita se pueden mostrar como <strong>último valor</strong>, pero es otra columna y otra pregunta: acá van solo los datos de la persona.</p>`;
+        document.getElementById('colsN').textContent = tState.cols.length ? `· ${tState.cols.length}` : '';
+      }
+
+      function renderFiltPop() {
+        const piel = FIELDS.find((f) => f.id === 8);
+        document.getElementById('popFilt').innerHTML = `
+          <h5>Filtros de ficha</h5>
+          <p class="sub">Todos los campos filtran, estén o no en la tabla. El control lo define el tipo.</p>
+          <div class="grp">${esc(piel.label)} · selección única</div>
+          <div style="display:flex;gap:5px;flex-wrap:wrap">
+            ${(piel.opts || []).map((o) => `<button class="chip ${(tState.filt.piel || []).includes(o) ? 'brand' : 'line'}" onclick="togglePiel('${o}')">${o}</button>`).join('')}
+          </div>
+          <div class="grp">Autorización de fotos · consentimiento</div>
+          <div style="display:flex;gap:5px;flex-wrap:wrap">
+            ${[['', 'Todos'], ['si', 'Aceptado'], ['no', 'Sin aceptar']].map(([v, l]) =>
+              `<button class="chip ${(tState.filt.foto || '') === v ? 'brand' : 'line'}" onclick="setFilt('foto','${v}')">${l}</button>`).join('')}
+          </div>
+          <div class="grp">Transversal</div>
+          <label class="prow" onclick="event.preventDefault();setFilt('incompleta', !tState.filt.incompleta)">
+            <span class="cb ${tState.filt.incompleta ? 'on' : ''}">✓</span> Le falta algún dato obligatorio
+          </label>
+          <div class="grp">Qué control recibe cada tipo</div>
+          <div style="font-size:11px;color:var(--ink-soft);line-height:1.8">
+            <div><strong>Selección</strong> — las opciones, multi-select</div>
+            <div><strong>Sí / No</strong> — sí · no · sin responder</div>
+            <div><strong>Fecha</strong> — rango, y "vence en los próximos N días"</div>
+            <div><strong>Número</strong> — rango</div>
+            <div><strong>Documento, texto, email</strong> — tiene dato · vacío · contiene</div>
+            <div><strong>Consentimiento</strong> — aceptado · sin aceptar · vencido</div>
+            <div><strong>Todos</strong> — además, "sin responder"</div>
+          </div>`;
+        document.getElementById('filtN').textContent = filtCount() ? `· ${filtCount()}` : '';
+      }
+
+      function renderTable() {
+        const rows = CLIENTS.filter((c) => inView(c) && passFilt(c));
+        const extra = tState.cols.map((id) => FIELDS.find((f) => f.id === id)).filter(Boolean);
+        const grid = `2fr 0.9fr 1fr 0.8fr 1.1fr ${extra.map(() => '1fr').join(' ')} 0.9fr 74px`;
+        const head = `<div class="th" style="grid-template-columns:${grid}">
+            <span>Cliente</span><span>Estado</span><span>Última visita</span><span>Cumple</span><span>Tags</span>
+            ${extra.map((f) => `<span class="ex">${esc(f.label)}</span>`).join('')}
+            <span style="text-align:right">Ingreso</span><span></span></div>`;
+        const body = rows.map((c) => {
+          const falta = missingFor(c);
+          return `<div class="tr" style="grid-template-columns:${grid}">
+            <div class="cli">
+              <span class="av">${c.ini}</span>
+              <span style="min-width:0">
+                <div class="nm">${esc(c.n)}</div>
+                <div class="sb">${esc(c.mail)}</div>
+              </span>
+            </div>
+            <div><span class="chip ${c.est[0]}">${c.est[1]}</span>${falta ? ` <span class="chip warn" title="Datos obligatorios sin responder">faltan ${falta}</span>` : ''}</div>
+            <div class="tcell">${c.last}</div>
+            <div class="tcell mono" style="font-size:11.5px">${c.cumple}</div>
+            <div class="tcell">${c.tags.length ? c.tags.map((t) => `<span class="chip line">${t}</span>`).join(' ') : '<span class="miss">—</span>'}</div>
+            ${extra.map((f) => `<div class="tcell ${c.f[f.id] ? 'ex' : 'miss'}">${c.f[f.id] ? esc(c.f[f.id]) : 'sin responder'}</div>`).join('')}
+            <div class="tcell mono" style="text-align:right;font-size:11.5px">${c.ingreso}</div>
+            <div class="rowacts">
+              <button class="iconbtn" onclick="toast('Abre el chat de WhatsApp.')">✆</button>
+              <button class="iconbtn" onclick="go('ficha')">▤</button>
+            </div>
+          </div>`;
+        }).join('');
+        document.getElementById('tbl').innerHTML = head + (body || '<div style="padding:34px;text-align:center;color:var(--ink-mid);font-size:12.5px">Ningún cliente entra en este corte.</div>');
+        document.getElementById('tblCount').textContent =
+          `${rows.length} de ${CLIENTS.length} clientes${extra.length ? ` · ${extra.length} columna${extra.length === 1 ? '' : 's'} de ficha` : ''}`;
+        const conFalta = rows.filter((c) => missingFor(c) > 0).length;
+        document.getElementById('bulkBar').innerHTML =
+          (tState.view === 'incompleta' || tState.filt.incompleta) && conFalta
+            ? `<div class="bulk">
+                 <strong>${conFalta} cliente${conFalta === 1 ? '' : 's'}</strong> con datos obligatorios sin responder.
+                 <span style="flex:1"></span>
+                 <button class="btn sm" onclick="toast('Quedan marcados para completar en su próxima visita.')">Marcarlos para completar</button>
+               </div>`
+            : '';
+        document.getElementById('colsN').textContent = tState.cols.length ? `· ${tState.cols.length}` : '';
+        document.getElementById('filtN').textContent = filtCount() ? `· ${filtCount()}` : '';
+      }
+
+      const LAYERS = [
+        ['La tabla', 'Seis columnas fijas + hasta 3 campos que elige el negocio, guardadas con la vista. Un campo nuevo del pool <strong>no</strong> aparece solo.', 'brand'],
+        ['Los filtros', 'Todos los campos filtran, estén o no en la tabla. El tipo del campo define el control. Un corte se guarda como segmento y alimenta campañas.', 'violet'],
+        ['La ficha del cliente', 'Todo lo demás: texto largo, fotos, consentimientos e historial. Se abre con un click en la fila, sin sacarte de la lista.', 'neutral'],
+        ['La agenda', 'Hasta 2 campos marcados como "destacar" aparecen en la tarjeta del turno. Para lo que el equipo tiene que ver sin abrir nada: alergias, obra social.', 'warn'],
+        ['El export', 'El CSV se lleva todo, siempre. Ahí no hay costo de ruido y es el espejo del importador que ya existe.', 'ok'],
+        ['Lo que NO hacemos', 'Agregar una columna por cada campo, ni esconder un campo de los filtros porque no está en la tabla. Son dos decisiones distintas.', 'bad']
+      ];
+      document.getElementById('layers').innerHTML = LAYERS.map(
+        ([t, d, tone]) => `<div class="card"><div style="margin-bottom:6px"><span class="chip ${tone}">${t}</span></div>
+          <p style="font-size:12px;color:var(--ink-soft);margin:0">${d}</p></div>`
+      ).join('');
+
+      /* ═══════════════════ Side-menu de la reserva ═══════════════════ */
+      /* Los datos destacados de la ficha viajan al detalle del turno: es lo que el
+         equipo mira con el cliente enfrente, sin abrir otra pantalla. */
+      const PIN_VALUES = { 7: 'Sin alergias declaradas', 16: 'OSDE 210' };
+      function renderSideMenu() {
+        const pins = FIELDS.filter((f) => f.pin && !f.off);
+        document.getElementById('smPins').innerHTML = pins.length
+          ? pins.map((f) => `<span class="chip line" title="Destacado de la ficha">${esc(f.label.replace(/^¿|\?$/g, ''))}: <strong style="font-weight:800">${esc(PIN_VALUES[f.id] || '—')}</strong></span>`).join('')
+          : '<span class="sub" style="font-size:12px">Ningún campo destacado. Se marcan desde Datos de clientes.</span>';
+
+        /* Lo del equipo va DESPUÉS del cobro: se completa durante la visita y no
+           puede empujar la plata abajo del fold. La regla ya existía; ahora la
+           respeta el modelo, no un acomodo manual. */
+        const team = FIELDS.filter((f) => f.storage === 'visit' && f.filled === 'team' && !f.off && (f.all || f.svc.includes(1)));
+        const falta = team.filter((f) => f.req).length;
+        document.getElementById('smVisit').innerHTML = `
+          <div class="kk">Para completar de esta visita<span class="sp"></span>
+            ${falta ? `<span class="chip warn">falta ${falta}</span>` : ''}
+          </div>
+          ${team.map((f) => `<div class="sm-field">
+            <label>${esc(f.label)}${f.req ? '' : ' <span style="font-weight:500;color:var(--ink-mid)">· opcional</span>'}</label>
+            ${f.type === 'single_choice'
+              ? `<select class="inp"><option value="">Elegir…</option>${(f.opts || []).map((o) => `<option>${esc(o)}</option>`).join('')}</select>`
+              : f.type === 'photo'
+              ? '<div class="photos"><i>＋</i></div>'
+              : f.type === 'long_text'
+              ? `<textarea class="inp" rows="2" placeholder="Lo que quieras dejar anotado de este turno…">${f.sys === 'booking_notes' ? 'Pidió que le avisemos si se libera algo más temprano.' : ''}</textarea>`
+              : '<input class="inp" placeholder="Respuesta" />'}
+          </div>`).join('')}
+          <p class="hint" style="margin-top:10px">Se guarda solo. Estos campos arman el historial comparable entre visitas.</p>`;
+      }
+
+      const SM_LAYERS = [
+        ['Lo que estaba mal', 'Las respuestas del cliente ("Preguntas") arriba, y la ficha de la visita abajo de todo — separadas por el resumen de la transacción, el cobro y la devolución. Dos mitades de lo mismo en extremos opuestos del panel.', 'bad'],
+        ['Por qué pasó', 'Cada una llegó por su lado y con su razón: las preguntas son parte de la reserva, y la ficha se bajó a propósito para que el cobro no quede abajo del fold. Ninguna decisión estaba mal sola.', 'neutral'],
+        ['Cómo lo resuelve el pool', 'La partición correcta no es "preguntas vs ficha", es <strong>antes de atender vs durante la visita</strong>. Y eso ya está modelado: <code class="k">filled_by: client</code> arriba, <code class="k">filled_by: team</code> abajo del cobro. La regla del fold se respeta sola.', 'brand'],
+        ['Lo destacado, arriba', 'Hasta 2 campos de la ficha marcados como "destacar" viajan al detalle del turno, junto al nombre. Lo que el equipo tiene que ver con el cliente enfrente, sin abrir otra pantalla.', 'warn'],
+        ['Las alertas no son una fila más', 'Una contradicción entre la ficha y el historial —declaró "sin alergias" pero quedó anotada una alergia— sube al encabezado. En una lista de ocho datos, eso se pierde.', 'bad'],
+        ['Eran tres notas, quedan dos', 'Había "Observaciones de la visita" (campo del pool) y "Nota de esta reserva" (<code class="k">bookings.notes</code>) una abajo de la otra: la misma cosa con dos nombres. Ahora es <strong>una sola</strong> — la nota de la reserva pasó a ser el campo del sistema <code class="k">Nota de la visita</code>. La distinción que sí importa es otra: <strong>nota del cliente</strong> (permanente, "prefiere turnos después de las 14") contra <strong>nota de la visita</strong> (de este turno).', 'violet']
+      ];
+      document.getElementById('smLayers').innerHTML = SM_LAYERS.map(
+        ([t, d, tone]) => `<div class="card"><div style="margin-bottom:7px"><span class="chip ${tone}">${t}</span></div>
+          <p style="font-size:13px;color:var(--ink-soft);margin:0;line-height:1.6">${d}</p></div>`
+      ).join('');
+
+      /* ═══════════════════ Reserva manual ═══════════════════ */
+      const setManual = (m) => {
+        state.manual = m;
+        document.getElementById('mkKnown').classList.toggle('on', m === 'known');
+        document.getElementById('mkNew').classList.toggle('on', m === 'new');
+        renderManual();
+      };
+      function renderManual() {
+        const known = state.manual === 'known';
+        document.getElementById('mAvatar').textContent = known ? 'MP' : '＋';
+        document.getElementById('mName').textContent = known ? 'Micaela Paz' : 'Carla Giménez';
+        document.getElementById('mMeta').textContent = known
+          ? 'mica.paz@gmail.com · +54 9 11 5544-2211 · 14 visitas'
+          : '+54 9 11 6612-8890 · cliente nuevo, cargado recién';
+
+        const knownChips = known
+          ? [['Fecha de nacimiento', '14/03/1994'], ['Documento', '38.441.902'], ['Alergias o medicación', 'Ninguna'], ['Tipo de piel', 'Mixta'], ['Autorización de fotos', 'aceptada']]
+          : [];
+        const pend = known
+          ? [
+              { id: 11, label: '¿Venís con trabajo de otro salón?', sub: 'De esta visita · obligatorio', type: 'boolean' },
+              { id: 6, label: '¿Cómo nos conociste?', sub: 'De su ficha · opcional', type: 'single_choice', opts: ['Instagram', 'Google', 'Me la recomendaron', 'Pasé por la puerta'] }
+            ]
+          : [
+              { id: 4, label: 'Fecha de nacimiento', sub: 'De su ficha · obligatorio', type: 'date' },
+              { id: 7, label: '¿Alergias o medicación?', sub: 'De su ficha · obligatorio', type: 'long_text' },
+              { id: 11, label: '¿Venís con trabajo de otro salón?', sub: 'De esta visita · obligatorio', type: 'boolean' },
+              { id: 9, label: 'Autorización de fotos', sub: 'De su ficha · obligatorio', type: 'consent', blocked: true }
+            ];
+
+        document.getElementById('manualForm').innerHTML = `
+          ${knownChips.length ? `
+            <div style="display:flex;align-items:center;gap:9px;margin-bottom:9px">
+              <h3 style="font-size:13.5px;font-weight:700">Lo que ya sabemos</h3>
+              <span class="chip ok">no se vuelve a preguntar</span>
+            </div>
+            <div class="known" style="margin-bottom:17px">
+              ${knownChips.map(([k, v]) => `<span class="k"><span>${k}:</span><b>${v}</b></span>`).join('')}
+              <button class="btn sm ghost">Editar la ficha</button>
+            </div>` : `
+            <div class="callout" style="margin-bottom:15px;font-size:12px">
+              <strong>Cliente nuevo.</strong> Le pedimos lo mínimo para agendar. Todo lo demás se le puede pedir por link — no hace falta que se lo dicte por teléfono.
+            </div>`}
+
+          <div style="display:flex;align-items:center;gap:9px;margin-bottom:4px">
+            <h3 style="font-size:13.5px;font-weight:700">Lo que falta</h3>
+            <span class="chip neutral">${pend.length} campo${pend.length === 1 ? '' : 's'}</span>
+          </div>
+
+          <div>${pend.map((p) => manualRow(p)).join('')}</div>`;
+
+        document.getElementById('manualNote').innerHTML = known
+          ? 'Falta 1 dato obligatorio. <strong>No frena la reserva</strong>: queda como pendiente en la tarjeta del turno.'
+          : 'Faltan 3 obligatorios y 1 consentimiento. <strong>No frena la reserva</strong>: quedan como pendientes y se le pueden pedir por link.';
+      }
+      function manualRow(p) {
+        let input = '';
+        if (p.type === 'boolean') input = `<div class="pick two" style="max-width:240px"><button class="opt" onclick="this.parentNode.querySelectorAll('.opt').forEach(o=>o.classList.remove('on'));this.classList.add('on')"><div class="ot">Sí</div></button><button class="opt" onclick="this.parentNode.querySelectorAll('.opt').forEach(o=>o.classList.remove('on'));this.classList.add('on')"><div class="ot">No</div></button></div>`;
+        else if (p.type === 'single_choice') input = `<select class="inp"><option value="">Elegir…</option>${p.opts.map((o) => `<option>${o}</option>`).join('')}</select>`;
+        else if (p.type === 'date') input = `<input class="inp" placeholder="dd/mm/aaaa" maxlength="10" />`;
+        else if (p.type === 'long_text') input = `<textarea class="inp" rows="2" placeholder="Alergias, medicación, embarazo…"></textarea>`;
+        else if (p.type === 'consent')
+          input = `<div class="callout bad" style="font-size:12.5px">
+            <strong>Un consentimiento no lo puede aceptar el equipo.</strong> Lo tiene que aceptar el cliente: queda pendiente y se le muestra cuando llega.</div>`;
+        return `<div class="askrow"><div class="lb">${p.label}<small>${p.sub}</small></div><div class="in">${input}</div></div>`;
+      }
+
+      /* ═══════════════════ Checkout ═══════════════════ */
+      const CK_SERVICE = 1;
+      /* Lo que el cliente ya respondió llega precargado: confirmar es un vistazo, no volver a tipear. */
+      const seedKnown = () => {
+        if (state.ck !== 'back') return;
+        checkoutFields(CK_SERVICE, 'back').forEach((f) => {
+          if (KNOWN[f.id] !== undefined && f.type !== 'consent') state.ckVals[f.id] = KNOWN[f.id];
+        });
+      };
+      const setCk = (m) => {
+        state.ck = m; state.ckVals = {}; state.ckErr = {}; state.ckTouched = {};
+        seedKnown();
+        document.getElementById('ckNew').classList.toggle('on', m === 'new');
+        document.getElementById('ckBack').classList.toggle('on', m === 'back');
+        renderCheckout();
+      };
+
+      function validate(f, raw) {
+        const v = (raw == null ? '' : String(raw)).trim();
+        if (!v) return f.req ? 'Este dato es obligatorio.' : '';
+        switch (f.type) {
+          case 'date': {
+            if (!/^\d{2}\/\d{2}\/\d{4}$/.test(v)) return 'Escribila como dd/mm/aaaa.';
+            const [d, m, y] = v.split('/').map(Number);
+            const dt = new Date(y, m - 1, d);
+            if (dt.getDate() !== d || dt.getMonth() !== m - 1 || dt.getFullYear() !== y) return 'Esa fecha no existe.';
+            if (dt > new Date()) return 'No puede ser una fecha futura.';
+            if (y < 1900) return 'Revisá el año.';
+            if (new Date().getFullYear() - y > 120) return 'Revisá el año.';
+            return '';
+          }
+          case 'phone':
+            if (v.replace(/\D/g, '').length < 10) return 'Falta el código de área o algún dígito.';
+            return '';
+          case 'email': {
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) return 'Revisá el mail: falta el @ o el dominio.';
+            const typo = { 'gmial.com': 'gmail.com', 'gmai.com': 'gmail.com', 'hotmial.com': 'hotmail.com', 'yahho.com': 'yahoo.com' };
+            const dom = v.split('@')[1].toLowerCase();
+            if (typo[dom]) return `¿Quisiste decir @${typo[dom]}?`;
+            return '';
+          }
+          case 'document':
+            return validateDoc(f, v);
+          case 'number':
+            if (isNaN(Number(v.replace(',', '.')))) return 'Tiene que ser un número.';
+            return '';
+          case 'long_text':
+            if (v.length > 5000) return 'Máximo 5.000 caracteres.';
+            return '';
+          case 'short_text':
+            if (v.length > 500) return 'Máximo 500 caracteres.';
+            return '';
+          case 'consent':
+            return v === 'true' ? '' : 'Necesitamos tu autorización para poder atenderte.';
+          default:
+            return '';
+        }
+      }
+
+      const ckSet = (id, v) => {
+        state.ckVals[id] = v;
+        if (state.ckTouched[id]) {
+          const f = FIELDS.find((x) => x.id === Number(id));
+          state.ckErr[id] = validate(f, v);
+        }
+        renderCheckout(true);
+      };
+      /* Cambiar el país cambia qué documento se pide: lo tipeado deja de valer. */
+      const ckSetDocCountry = (c, id) => {
+        state.ckDoc = c;  // 'Otro país' no tiene documento propio → pasaporte
+        state.ckVals[id] = '';
+        delete state.ckErr[id];
+        delete state.ckTouched[id];
+        renderCheckout();
+      };
+      const ckBlur = (id) => {
+        state.ckTouched[id] = true;
+        const f = FIELDS.find((x) => x.id === Number(id));
+        state.ckErr[id] = validate(f, state.ckVals[id]);
+        renderCheckout(true);
+      };
+      const maskDate = (el, id) => {
+        const d = el.value.replace(/\D/g, '').slice(0, 8);
+        el.value = d.length <= 2 ? d : d.length <= 4 ? `${d.slice(0, 2)}/${d.slice(2)}` : `${d.slice(0, 2)}/${d.slice(2, 4)}/${d.slice(4)}`;
+        ckSet(id, el.value);
+      };
+
+      function ckField(f) {
+        const id = f.id;
+        const v = state.ckVals[id] == null ? '' : state.ckVals[id];
+        const err = state.ckTouched[id] ? state.ckErr[id] : '';
+        const bad = err ? 'bad' : '';
+        const prefilled = state.ck === 'back' && KNOWN[id] !== undefined && f.storage === 'profile';
+        const doc = f.type === 'document' ? DOC_TYPES[docKindFor(f)] : null;
+        const shownLabel = doc ? doc.label : f.label;
+        const lab = `<label class="l">${esc(shownLabel)}<span class="req">${f.req ? 'Obligatorio' : 'Opcional'}</span></label>` +
+          (doc ? `<div class="help">${esc(doc.hint)}</div>` : '') +
+          (prefilled ? '<div class="help" style="color:var(--ink1)">Lo tenías cargado. Confirmalo o corregilo — se actualiza en tu ficha.</div>' : '') +
+          (f.help ? `<div class="help">${esc(f.help)}</div>` : '');
+        let inner = '';
+        if (f.type === 'notice')
+          return `<div class="f"><div style="background:var(--well);border-radius:11px;padding:11px;font-size:11px;color:var(--ink1);line-height:1.5"><b style="color:var(--ink0)">${esc(f.label)}</b><br />${esc(f.text)}</div></div>`;
+        if (f.type === 'consent')
+          return `<div class="f"><div class="consent" onclick="ckSet(${id}, '${v === 'true' ? 'false' : 'true'}');state.ckTouched[${id}]=true;ckBlur(${id})">
+              <span class="box ${v === 'true' ? 'on' : ''}">✓</span>
+              <span class="tx">${esc(f.text)}</span></div>
+            ${err ? `<div class="e">▲ ${err}</div>` : ''}</div>`;
+        if (f.type === 'boolean')
+          inner = `<div class="pills">
+            <button class="pill ${v === 'true' ? 'on' : ''}" onclick="ckSet(${id},'true');ckBlur(${id})">Sí</button>
+            <button class="pill ${v === 'false' ? 'on' : ''}" onclick="ckSet(${id},'false');ckBlur(${id})">No</button></div>`;
+        else if (isChoice(f.type))
+          inner = `<select class="i ${bad}" data-fid="${id}" onchange="ckSet(${id},this.value);ckBlur(${id})">
+            <option value="">Elegir…</option>${(f.opts || []).map((o) => `<option ${v === o ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select>`;
+        else if (f.type === 'long_text')
+          inner = `<textarea class="i ${bad}" data-fid="${id}" rows="2" onblur="ckBlur(${id})" oninput="ckSet(${id},this.value)">${esc(v)}</textarea>`;
+        else if (f.type === 'date')
+          inner = `<input class="i ${bad}" data-fid="${id}" inputmode="numeric" placeholder="dd/mm/aaaa" maxlength="10" value="${esc(v)}" oninput="maskDate(this,${id})" onblur="ckBlur(${id})" />`;
+        else if (f.type === 'phone')
+          inner = `<input class="i ${bad}" data-fid="${id}" inputmode="tel" placeholder="+54 9 11 …" value="${esc(v)}" oninput="ckSet(${id},this.value)" onblur="ckBlur(${id})" />`;
+        else if (f.type === 'document')
+          inner = `${f.docForeign ? `<select class="i" style="margin-bottom:6px" onchange="ckSetDocCountry(this.value, ${id})">
+              ${DOC_COUNTRIES.map((c) => `<option ${state.ckDoc === c ? 'selected' : ''}>${c}</option>`).join('')}
+            </select>` : ''}
+            <input class="i ${bad}" data-fid="${id}" inputmode="${docKindFor(f) === 'curp_mx' || docKindFor(f) === 'passport' ? 'text' : 'numeric'}"
+              placeholder="${esc(doc.ph)}" value="${esc(v)}" oninput="ckSet(${id},this.value)" onblur="ckBlur(${id})" />`;
+        else
+          inner = `<input class="i ${bad}" data-fid="${id}" inputmode="${f.type === 'email' ? 'email' : f.type === 'number' ? 'numeric' : 'text'}"
+            placeholder="${f.type === 'email' ? 'nombre@mail.com' : 'Respuesta'}"
+            value="${esc(v)}" oninput="ckSet(${id},this.value)" onblur="ckBlur(${id})" />`;
+        return `<div class="f">${lab}${inner}${err ? `<div class="e">▲ ${err}</div>` : ''}</div>`;
+      }
+
+      function renderCheckout(keepFocus) {
+        const active = document.activeElement;
+        const focusId = active && active.closest && active.closest('.nw') ? active.getAttribute('data-fid') : null;
+        const mode = state.ck;
+        const fields = checkoutFields(CK_SERVICE, mode);
+        const asked = fields.filter((f) => f.type !== 'notice');
+        const reqs = asked.filter((f) => f.req);
+        const done = reqs.filter((f) => !validate(f, state.ckVals[f.id])).length;
+        const pending = reqs.length - done;
+
+        const bySec = SECTIONS.map((s) => ({ s, list: asked.filter((f) => f.s === s.id && !f.sys) })).filter((x) => x.list.length);
+        const sysFields = asked.filter((f) => f.sys);
+        const notices = fields.filter((f) => f.type === 'notice');
+
+        const knownStrip = mode === 'back'
+          ? `<div class="blk">
+              <div class="kk">Tus datos</div>
+              <div class="known2"><b>Micaela Paz</b><span>· mica.paz@gmail.com</span><button onclick="setCk('new')">No soy yo</button></div>
+              <div class="known2" style="margin-bottom:0"><span>Teléfono</span><b>+54 9 11 5544-2211</b><button onclick="toast('Se abre el campo para corregirlo.')">Cambiar</button></div>
+             </div>`
+          : `<div class="blk">
+              <div class="kk">Tus datos</div>
+              ${sysFields.map(ckField).join('')}
+             </div>`;
+
+        document.getElementById('ckBody').innerHTML = `
+          <div class="vend">
+            <span class="lg">SF</span>
+            <div><div class="nm">Studio Flor</div><div class="sm2">www.agora.red/studioflor</div></div>
+          </div>
+
+          <div class="blk">
+            <div class="row2"><span class="k">Pestañas · Volumen ruso</span><b>$ 42.000</b></div>
+            <div class="row2"><span class="k">vie 12 sep · 15:30 · con Flor</span></div>
+            <div class="tot"><span>Seña para reservar</span><span>$ 12.600</span></div>
+          </div>
+
+          ${knownStrip}
+
+          ${bySec.map((g) => `
+            <div class="blk">
+              <div class="kk">${g.s.n}</div>
+              ${g.list.map(ckField).join('')}
+            </div>`).join('')}
+
+          ${notices.map(ckField).join('')}
+
+          <div class="prog">
+            <span>${pending === 0 ? 'Todo listo' : `Faltan ${pending} de ${reqs.length}`}</span>
+            <span class="b"><i style="width:${reqs.length ? (done / reqs.length) * 100 : 100}%"></i></span>
+          </div>
+          <button class="cta ${pending ? 'off' : ''}" onclick="ckSubmit()">Reservar y señar $ 12.600</button>
+          <div class="ctan">${mode === 'back'
+            ? 'Ya nos diste el resto de tus datos: no te los volvemos a pedir.'
+            : 'Lo que no cambia queda guardado para la próxima vez.'}</div>`;
+
+        if (keepFocus && focusId) {
+          const el = document.querySelector(`.nw [data-fid="${focusId}"]`);
+          if (el) { el.focus(); const n = el.value ? el.value.length : 0; try { el.setSelectionRange(n, n); } catch (e) {} }
+        }
+      }
+
+      function ckSubmit() {
+        const fields = checkoutFields(CK_SERVICE, state.ck).filter((f) => f.type !== 'notice');
+        let firstBad = null;
+        fields.forEach((f) => {
+          state.ckTouched[f.id] = true;
+          state.ckErr[f.id] = validate(f, state.ckVals[f.id]);
+          if (state.ckErr[f.id] && !firstBad) firstBad = f;
+        });
+        renderCheckout();
+        if (firstBad) {
+          toast(`Falta "${firstBad.label}".`);
+          const el = document.querySelector('.nw .i.bad, .nw .consent');
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return;
+        }
+        toast('Reserva confirmada. Lo de su ficha ya quedó guardado para la próxima.');
+      }
+
+      const CK_RULES = [
+        ['Obligatorio vacío', 'Error al salir del campo y al enviar, con foco y scroll al primero que falta.'],
+        ['Fecha', 'Máscara <code class="k">dd/mm/aaaa</code>, fecha que exista, no futura, año ≥ 1900 y edad ≤ 120.'],
+        ['Teléfono', 'País + <code class="k">libphonenumber</code>, se guarda en E.164.'],
+        ['Email', 'Formato, y sugerencia cuando el dominio es un typo conocido (<code class="k">gmial</code> → <code class="k">gmail</code>).'],
+        ['Documento', 'Cambia con el país: <strong>DNI</strong> (AR, 7-8 dígitos), <strong>cédula</strong> (UY, con verificador módulo 10), <strong>RUT</strong> (CL, con verificador módulo 11) y <strong>CURP</strong> (MX, 18 caracteres). Si el negocio atiende extranjeros, el cliente elige el país y se le pide el pasaporte cuando no hay uno propio.'],
+        ['Selección', 'El valor tiene que estar entre las opciones vigentes; las opciones ocultas siguen leyéndose en el historial.'],
+        ['Consentimiento', 'Tildado explícito. Se guarda con fecha y versión del texto aceptado — y <strong>el equipo no lo puede aceptar por el cliente</strong>.'],
+        ['Texto', 'Contador a partir del 80% del máximo (500 / 5.000).'],
+        ['Campos del equipo', 'Nunca bloquean: no aparecen en el checkout.'],
+        ['Dato ya respondido', 'No se pide ni bloquea, aunque sea obligatorio.'],
+        ['Cambio de contacto', 'Si cambia el mail o el teléfono por uno desconocido, los campos vuelven a aparecer con lo ya tipeado intacto.'],
+        ['Servidor', 'Todo se revalida en cyclone: el checkout no es la autoridad. El probe en vivo tiene rate limit.']
+      ];
+      document.getElementById('ckRules').innerHTML = CK_RULES.map(
+        (r) => `<div style="display:flex;gap:9px;padding:5px 0;border-bottom:1px solid var(--hair)"><b style="min-width:126px;font-size:11.5px">${r[0]}</b><span>${r[1]}</span></div>`
+      ).join('');
+
+      /* ═══════════════════ Init ═══════════════════ */
+      renderFields();
+      renderFriction();
+      renderManual();
+      renderSideMenu();
+      renderTl();
+      renderViews();
+      renderTable();
+      renderColPop();
+      renderFiltPop();
+      seedKnown();
+      renderCheckout();
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+    </script>
+  </body>
+</html>

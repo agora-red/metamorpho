@@ -4,6 +4,16 @@
   "updated_at": "2026-09-07",
   "outputs": [
     {
+      "type": "prototype",
+      "typeLabel": "Prototype",
+      "title": "Campos y Ficha del cliente",
+      "description": "Tres sistemas distintos le piden datos al mismo cliente y ninguno se entera del otro. El diagnóstico y el prototipo de la solución unificada: un pool de campos que se asigna por servicio, con tres formas de pedirse, documento resuelto por país y política de actualización por campo — atravesando la ficha, la tabla de clientes, el detalle del turno, la carga manual y el checkout.",
+      "detail": "8 pestañas · prototipo navegable",
+      "date": "SEP 2026",
+      "href": "./ficha-campos-prototype-2026-09/index.html",
+      "slug": "ficha-campos-prototype-2026-09"
+    },
+    {
       "type": "proposal",
       "typeLabel": "Proposal",
       "title": "GPT Image 2 en Ágora",
