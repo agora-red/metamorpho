@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Landings por rubro · Propuesta · Ágora</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --frost-primary:#0072FB;--frost-primary-hover:#005CD4;--frost-primary-soft:#EEF6FF;--frost-primary-wash:rgba(0,114,251,0.08);
+  --frost-accent:#FF4658;--frost-accent-soft:#FFE3E6;--frost-accent-wash:rgba(255,70,88,0.08);
+  --frost-success:#10B981;--frost-success-soft:#A9FFE7;--frost-warning:#F59E0B;--frost-warning-soft:#FFE77B;
+  --frost-ink:#0F172A;--frost-ink-soft:#3A3A3A;--frost-muted:#868686;--frost-faint:#B5B5B5;
+  --frost-surface:#FFFFFF;--frost-surface-muted:#EFF3F9;--frost-border:#E2E8F0;--frost-border-soft:#F2F2F2;
+  --ink-on-dark:rgba(255,255,255,0.72);--hair-on-dark:rgba(255,255,255,0.14);
+  --r-sm:6px;--r-item:10px;--r-btn:12px;--r-card:20px;--r-shell:28px;--r-chip:999px;
+  --sh-xs:0 1px 2px rgba(15,23,42,0.04);--sh-sm:0 4px 12px -4px rgba(15,23,42,0.10);--sh-md:0 10px 30px -12px rgba(15,23,42,0.15);
+  --sans:'Montserrat',system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);font-weight:500;font-size:15px;line-height:1.6;color:var(--frost-ink);background:var(--frost-surface);font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+a{color:var(--frost-primary);text-decoration:none}
+a:hover{text-decoration:underline}
+code{font-family:var(--sans);font-weight:600;font-size:.92em;background:var(--frost-surface-muted);padding:2px 7px;border-radius:var(--r-sm);word-break:break-word}
+
+.chrome{position:sticky;top:0;z-index:10;background:rgba(255,255,255,0.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--frost-border)}
+.chrome .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:16px}
+.chrome nav{display:flex;gap:22px;font-size:12.5px}
+.chrome nav a{color:var(--frost-muted)}
+.chrome nav a:hover{color:var(--frost-ink);text-decoration:none}
+.tag{font-size:10.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--frost-muted)}
+
+.kicker{font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--frost-primary);margin-bottom:14px}
+h1{font-weight:200;font-size:clamp(38px,6.2vw,68px);line-height:1.04;letter-spacing:-.025em}
+h1 b{font-weight:500}
+h2{font-weight:300;font-size:clamp(26px,3.6vw,38px);line-height:1.15;letter-spacing:-.015em;margin-bottom:14px}
+h2 b{font-weight:500}
+h3{font-weight:600;font-size:15px;margin-bottom:6px}
+.lead{font-size:17px;font-weight:300;color:var(--frost-ink-soft);max-width:720px;line-height:1.55}
+section{padding:88px 0}
+section.alt{background:var(--frost-surface-muted)}
+.head{margin-bottom:40px}
+.note{font-size:12.5px;color:var(--frost-muted);margin-top:18px;max-width:760px}
+
+.hero{padding:96px 0 72px}
+.hero .lead{margin-top:26px;font-size:19px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:56px}
+.stat{border:1px solid var(--frost-border);border-radius:var(--r-card);padding:22px;background:var(--frost-surface);box-shadow:var(--sh-xs)}
+.stat .n{font-weight:200;font-size:44px;line-height:1;letter-spacing:-.03em}
+.stat .l{font-size:12.5px;color:var(--frost-muted);margin-top:10px;line-height:1.4}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-card);padding:26px;box-shadow:var(--sh-sm)}
+.card p,.card li{font-size:13.5px;color:var(--frost-ink-soft)}
+.card ul{list-style:none;display:grid;gap:9px;margin-top:12px}
+.card li{padding-left:18px;position:relative}
+.card li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--frost-primary)}
+.card.no li::before{background:var(--frost-faint)}
+.cardlabel{font-size:10.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--frost-muted);margin-bottom:12px}
+
+/* barras */
+.bars{display:grid;gap:9px}
+.bar{display:grid;grid-template-columns:190px 1fr 56px;align-items:center;gap:14px;font-size:13px}
+.bar .t{color:var(--frost-ink-soft)}
+.bar .track{height:12px;border-radius:var(--r-chip);background:var(--frost-border-soft);overflow:hidden}
+.bar .fill{height:100%;border-radius:var(--r-chip);background:var(--frost-primary)}
+.bar .fill.soft{background:var(--frost-faint)}
+.bar .fill.over{background:var(--frost-accent)}
+.bar .v{text-align:right;font-weight:600}
+.limit{position:relative}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--frost-muted);margin-top:16px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+
+/* tabla */
+.tablewrap{overflow-x:auto;border:1px solid var(--frost-border);border-radius:var(--r-card);background:var(--frost-surface);box-shadow:var(--sh-sm)}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:13px}
+th{font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--frost-muted);text-align:left;padding:16px 18px;border-bottom:1px solid var(--frost-border);background:var(--frost-surface)}
+td{padding:15px 18px;border-bottom:1px solid var(--frost-border-soft);vertical-align:top;color:var(--frost-ink-soft)}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:600;color:var(--frost-ink);white-space:nowrap}
+
+/* anatomía */
+.anatomy{display:grid;gap:10px;counter-reset:b}
+.block{display:grid;grid-template-columns:44px 230px 110px 1fr;gap:16px;align-items:center;background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-btn);padding:16px 20px;counter-increment:b}
+.block::before{content:counter(b,decimal-leading-zero);font-weight:200;font-size:22px;color:var(--frost-faint)}
+.block .name{font-weight:600;font-size:14px}
+.block .what{font-size:13px;color:var(--frost-ink-soft)}
+.block.key{border-color:var(--frost-primary);box-shadow:0 0 0 3px var(--frost-primary-wash)}
+.pill{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:var(--r-chip);text-align:center;white-space:nowrap}
+.pill.var{background:var(--frost-primary-soft);color:var(--frost-primary-hover)}
+.pill.fix{background:var(--frost-surface-muted);color:var(--frost-muted)}
+.pill.data{background:var(--frost-ink);color:var(--frost-surface)}
+
+/* rubro en números */
+.numeros{background:var(--frost-ink);color:var(--frost-surface);border-radius:var(--r-shell);padding:36px}
+.numeros .cardlabel{color:var(--ink-on-dark)}
+.numeros h3{font-weight:300;font-size:24px;margin-bottom:24px}
+.ngrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.ncell{border:1px solid var(--hair-on-dark);border-radius:var(--r-btn);padding:18px}
+.ncell .k{font-size:12px;color:var(--ink-on-dark);line-height:1.4}
+.ncell .skel{height:26px;width:62%;border-radius:var(--r-sm);background:var(--hair-on-dark);margin-bottom:12px}
+.numeros .note{color:var(--ink-on-dark)}
+
+/* url */
+.urls{display:grid;gap:8px}
+.url{display:grid;grid-template-columns:minmax(260px,1fr) 1.1fr 1fr;gap:16px;align-items:center;padding:14px 18px;background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-btn);font-size:13px}
+.url .u{font-weight:600}
+.url .u span{color:var(--frost-faint);font-weight:500}
+.url .c{color:var(--frost-ink-soft)}
+.url .w{color:var(--frost-muted);font-size:12.5px}
+.url.pilot{border-color:var(--frost-primary);box-shadow:0 0 0 3px var(--frost-primary-wash)}
+.url.pilot .w{color:var(--frost-primary-hover);font-weight:600}
+
+/* pasos */
+.steps{display:grid;grid-template-columns:repeat(7,1fr);gap:10px}
+.step{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-btn);padding:18px 14px;box-shadow:var(--sh-xs)}
+.step .i{font-weight:200;font-size:28px;color:var(--frost-primary);line-height:1}
+.step h3{font-size:13.5px;margin-top:12px}
+.step p{font-size:12px;color:var(--frost-muted);line-height:1.45}
+.step.gate{background:var(--frost-ink);border-color:var(--frost-ink)}
+.step.gate h3{color:var(--frost-surface)}
+.step.gate p{color:var(--ink-on-dark)}
+
+.gates{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.gate-c{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-btn);padding:18px}
+.gate-c p{font-size:12.5px;color:var(--frost-muted);line-height:1.5}
+.gate-c h3{font-size:13.5px}
+
+.photo{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.photo .card{padding:22px}
+.photo .rank{font-weight:200;font-size:36px;line-height:1;color:var(--frost-primary);margin-bottom:14px}
+.photo .card.last .rank{color:var(--frost-faint)}
+
+.phases{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.phase{border-top:3px solid var(--frost-primary);background:var(--frost-surface);border-radius:0 0 var(--r-btn) var(--r-btn);padding:22px 20px;box-shadow:var(--sh-sm)}
+.phase .when{font-size:10.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--frost-muted);margin-bottom:10px}
+.phase p{font-size:13px;color:var(--frost-ink-soft)}
+.phase.later{border-top-color:var(--frost-faint)}
+
+.closing{background:var(--frost-ink);color:var(--frost-surface)}
+.closing h2{color:var(--frost-surface)}
+.closing .lead{color:var(--ink-on-dark)}
+.todo{display:grid;gap:10px;margin-top:36px}
+.todo div{border:1px solid var(--hair-on-dark);border-radius:var(--r-btn);padding:16px 20px;font-size:13.5px;color:var(--ink-on-dark)}
+.todo b{color:var(--frost-surface);font-weight:600}
+footer{padding:28px 0;font-size:12px;color:var(--frost-muted);border-top:1px solid var(--frost-border)}
+
+@media (max-width:900px){
+  section{padding:64px 0}
+  .chrome nav{display:none}
+  .stats,.phases,.photo{grid-template-columns:1fr 1fr}
+  .grid2,.grid3,.gates,.ngrid{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr 1fr}
+  .block{grid-template-columns:36px 1fr auto;row-gap:6px}
+  .block .what{grid-column:2 / -1}
+  .url{grid-template-columns:1fr;gap:4px}
+  .bar{grid-template-columns:120px 1fr 44px;gap:10px;font-size:12px}
+}
+@media (max-width:520px){
+  .wrap{padding:0 18px}
+  .stats,.phases,.photo,.steps{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header class="chrome">
+  <div class="wrap">
+    <svg width="110" height="26" viewBox="0 0 153 36" xmlns="http://www.w3.org/2000/svg" aria-label="Ágora">
+      <path d="M41.3822 30.3938L38.187 35.7712L3.11719 35.8491L17.5348 10.9106L20.6466 16.2974L15.7314 24.9347L12.625 30.3938H41.3822Z" fill="#E2E8F0"/>
+      <path d="M17.5351 10.9106L20.6469 16.2974L16.7342 23.0921L12.1689 20.1848L17.5351 10.9106Z" fill="url(#p0)" fill-opacity="0.7"/>
+      <path d="M20.6467 16.2973L17.5349 10.9106L3.11731 35.8491L0 30.3938L17.5349 0L31.8745 24.9385H25.6399L20.6467 16.2973Z" fill="#0072FF"/>
+      <path d="M31.8543 24.9244L25.6302 24.9316L21.7061 18.1387L26.5114 15.6305L31.8543 24.9244Z" fill="url(#p1)" fill-opacity="0.7"/>
+      <path d="M23.8473 0L41.3822 30.3938H12.625L15.7314 24.9346L15.7384 24.9385H25.6398H31.8744L17.5348 0H23.8473Z" fill="#FF4658"/>
+      <path d="M12.625 30.3937L15.7289 24.9387L23.7202 24.9194L23.4706 30.3746L12.625 30.3937Z" fill="url(#p2)" fill-opacity="0.7"/>
+      <path d="M76.7893 7.41158V4.76367H69.5647V7.41158H76.7893ZM72.2126 26.6334C74.4029 26.6334 76.3316 25.7835 77.6065 24.2797V26.3065H81.2351V10.1249H77.6065V12.1844C76.3316 10.6806 74.4029 9.79797 72.2126 9.79797C67.7668 9.79797 64.7266 13.5573 64.7266 18.232C64.7266 22.8741 67.7668 26.6334 72.2126 26.6334ZM73.1279 23.1356C70.382 23.1356 68.4206 21.0761 68.4206 18.232C68.4206 15.388 70.382 13.2958 73.1279 13.2958C75.7105 13.2958 77.6065 15.388 77.6065 18.232C77.6065 21.1088 75.6778 23.1356 73.1279 23.1356ZM92.2844 31.112C96.9264 31.112 100.718 28.2679 100.718 22.6125V10.1249H97.2533V12.5439C96.4034 10.9421 94.2131 9.79797 91.7614 9.79797C87.2828 9.79797 84.3407 13.2958 84.3407 17.6436C84.3407 21.9914 87.2828 25.4566 91.7614 25.4566C94.7035 25.4566 96.4361 23.9855 97.0899 22.6779V22.8087C97.0899 26.1104 95.39 28.3333 91.9248 28.3333C90.2576 28.3333 88.3616 27.7776 87.0867 26.6661L85.681 28.9544C87.1847 30.2947 89.5058 31.112 92.2844 31.112ZM92.5459 22.2856C89.9961 22.2856 88.0347 20.3242 88.0347 17.6436C88.0347 14.963 89.9961 12.9689 92.5459 12.9689C95.0958 12.9689 97.0899 14.9303 97.0899 17.5129C97.0899 20.3242 95.1612 22.2856 92.5459 22.2856ZM112.422 26.6334C117.194 26.6334 121.019 22.9067 121.019 18.232C121.019 13.5247 117.194 9.79797 112.422 9.79797C107.649 9.79797 103.824 13.5247 103.824 18.232C103.824 22.9067 107.649 26.6334 112.422 26.6334ZM112.422 23.1356C109.643 23.1356 107.518 21.0434 107.518 18.232C107.518 15.388 109.643 13.2958 112.422 13.2958C115.2 13.2958 117.325 15.388 117.325 18.232C117.325 21.0434 115.2 23.1356 112.422 23.1356ZM127.753 26.3065V19.7031C127.753 15.4534 130.042 13.7535 133.605 13.7535V9.79797C130.14 9.79797 128.374 11.694 127.753 13.3285V10.1249H124.125V26.3065H127.753ZM143.118 26.6334C145.308 26.6334 147.237 25.7835 148.512 24.2797V26.3065H152.14V10.1249H148.512V12.1844C147.237 10.6806 145.308 9.79797 143.118 9.79797C138.672 9.79797 135.632 13.5573 135.632 18.232C135.632 22.8741 138.672 26.6334 143.118 26.6334ZM144.033 23.1356C141.287 23.1356 139.326 21.0761 139.326 18.232C139.326 15.388 141.287 13.2958 144.033 13.2958C146.616 13.2958 148.512 15.388 148.512 18.232C148.512 21.1088 146.583 23.1356 144.033 23.1356Z" fill="#0F172A"/>
+      <rect x="52.7876" y="3.5874" width="0.683334" height="28.5292" fill="#E2E8F0"/>
+      <defs>
+        <linearGradient id="p0" x1="18.8455" y1="15.9076" x2="12.5252" y2="18.5424" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
+        <linearGradient id="p1" x1="26.8652" y1="23.5719" x2="27.7524" y2="16.7522" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
+        <linearGradient id="p2" x1="16.3401" y1="26.6997" x2="21.8393" y2="30.8946" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
+      </defs>
+    </svg>
+    <nav>
+      <a href="#hoy">Hoy</a>
+      <a href="#competidores">Competidores</a>
+      <a href="#pagina">La página</a>
+      <a href="#rubros">Rubros</a>
+      <a href="#skill">El skill</a>
+      <a href="#plan">Plan</a>
+    </nav>
+    <span class="tag">Propuesta · Sep 2026</span>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="kicker">Landings por rubro</div>
+    <h1>Una plantilla, nueve rubros<br>y <b>un dato que nadie más tiene.</b></h1>
+    <p class="lead">Páginas como «software para barberías» en agora.red, armadas por un skill que escribe el contenido, consigue las fotos y no deja publicar nada que no pase los chequeos de SEO. Esta es la forma de hacerlo que mejor nos deja parados frente a Google y frente a los competidores.</p>
+    <div class="stats">
+      <div class="stat"><div class="n">0</div><div class="l">landings por rubro para captar negocios existen hoy</div></div>
+      <div class="stat"><div class="n">14</div><div class="l">competidores relevados leyendo el HTML real de sus páginas</div></div>
+      <div class="stat"><div class="n">0 / 7</div><div class="l">consultas de Argentina probadas donde aparece Ágora</div></div>
+      <div class="stat"><div class="n">9</div><div class="l">páginas en la primera tanda, con un piloto de 2</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="hoy">
+  <div class="wrap">
+    <div class="head">
+      <div class="kicker">Punto de partida</div>
+      <h2>No arrancamos de cero: <b>falta la página, no las piezas.</b></h2>
+      <p class="lead">El único sitio donde pueden vivir es agora.red. El panel de profesionales está cerrado a buscadores y el marketplace habla al cliente final.</p>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div class="cardlabel">Ya lo tenemos</div>
+        <ul>
+          <li>Los 15 rubros canónicos en la base (<code>categories</code>, nivel 2) y qué negocio pertenece a cada uno.</li>
+          <li>El motor de páginas del marketplace: preguntas frecuentes con datos reales y <code>noindex</code> automático cuando hay poco contenido.</li>
+          <li>El skill <code>vendor-landing</code>, que ya recorre datos → diseño → capturas → deploy.</li>
+          <li>El comando <code>seo-audit</code> con sus herramientas de análisis, y el script de Lighthouse.</li>
+          <li>El benchmark por rubro de Pulse y la prueba de concepto de imagen con IA.</li>
+          <li>La medición del embudo de <code>/comenzar</code>, reusable para atribuir registros.</li>
+        </ul>
+      </div>
+      <div class="card no">
+        <div class="cardlabel">No existe</div>
+        <ul>
+          <li>Ninguna landing por rubro, ningún blog, ningún gestor de contenido.</li>
+          <li>Chequeos automáticos de título, datos estructurados o sitemap antes de publicar.</li>
+          <li>Un banco de fotos por rubro.</li>
+          <li>Una lista única de rubros: cada sitio la vuelve a escribir a mano.</li>
+          <li>La home casi no manda texto en el HTML del servidor. Las páginas nuevas tienen que hacerlo.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="fuerza">
+  <div class="wrap">
+    <div class="head">
+      <div class="kicker">Dónde somos fuertes</div>
+      <h2>Nuestra base está en <b>pestañas, cejas y uñas.</b></h2>
+      <p class="lead">Negocios con al menos una reserva en los últimos 30 días, por rubro. Un negocio puede figurar en más de uno.</p>
+    </div>
+    <div class="bars">
+      <div class="bar"><span class="t">Pestañas</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="v">898</span></div>
+      <div class="bar"><span class="t">Cejas</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="v">898</span></div>
+      <div class="bar"><span class="t">Uñas</span><div class="track"><div class="fill" style="width:84.2%"></div></div><span class="v">756</span></div>
+      <div class="bar"><span class="t">Tratamientos faciales</span><div class="track"><div class="fill" style="width:58.1%"></div></div><span class="v">522</span></div>
+      <div class="bar"><span class="t">Depilación</span><div class="track"><div class="fill" style="width:50.8%"></div></div><span class="v">456</span></div>
+      <div class="bar"><span class="t">Peluquería</span><div class="track"><div class="fill" style="width:46.4%"></div></div><span class="v">417</span></div>
+      <div class="bar"><span class="t">Tratamientos corporales</span><div class="track"><div class="fill" style="width:34%"></div></div><span class="v">305</span></div>
+      <div class="bar"><span class="t">Maquillaje</span><div class="track"><div class="fill" style="width:24.3%"></div></div><span class="v">218</span></div>
+      <div class="bar"><span class="t">Masajes</span><div class="track"><div class="fill" style="width:23.8%"></div></div><span class="v">214</span></div>
+      <div class="bar"><span class="t">Barbería</span><div class="track"><div class="fill" style="width:16.1%"></div></div><span class="v">145</span></div>
+      <div class="bar"><span class="t">Podología</span><div class="track"><div class="fill" style="width:14.5%"></div></div><span class="v">130</span></div>
+      <div class="bar"><span class="t">Dermatología</span><div class="track"><div class="fill" style="width:11.1%"></div></div><span class="v">100</span></div>
+    </div>
+    <p class="note">Base de producción, 21/9/2026. En pestañas, cejas y uñas los competidores tienen sus páginas más flojas: de los 14, sólo Koibox tiene una de cejas y pestañas. Peluquería y barbería son las consultas más peleadas.</p>
+  </div>
+</section>
+
+<section class="alt" id="competidores">
+  <div class="wrap">
+    <div class="head">
+      <div class="kicker">Cómo lo resuelven los demás</div>
+      <h2>Todos usan lo mismo: <b>un molde fijo con huecos por rubro.</b></h2>
+      <p class="lead">El título arranca con la búsqueda exacta, la marca va al final. Lo que cambia de un rubro a otro son cinco o seis piezas.</p>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Competidor</th><th>Escala</th><th>Qué hace bien</th><th>Dónde se le ven las costuras</th></tr></thead>
+        <tbody>
+          <tr><td>Fresha</td><td>12 rubros, 39 idiomas, 5 artículos por rubro</td><td>Página larga (~3.300 palabras) con los tipos de negocio dentro del rubro y preguntas propias</td><td>El mismo testimonio y las mismas cifras en varios rubros; páginas sin traducir que Google puede indexar vacías</td></tr>
+          <tr><td>AgendaPro</td><td>~49 rubros en 7 países (572 páginas)</td><td>Búsqueda exacta en título y encabezado, datos estructurados completos, versión por país</td><td>Voseo y tuteo mezclados; la página argentina apunta a la mexicana; testimonios de masajista en la página de tatuadores; un contador que muestra «0 %»</td></tr>
+          <tr><td>Booksy</td><td>10 rubros (3 en español)</td><td>Video-testimonios de clientes reales del rubro</td><td>En España, nombres locales con fotos de barberos de Estados Unidos</td></tr>
+          <tr><td>GlossGenius</td><td>19 rubros</td><td>Capturas con un negocio ficticio del rubro, precios y comparativa con competidores en la misma página</td><td>Preguntas frecuentes sin marcar para Google</td></tr>
+          <tr><td>Turnito</td><td>10 rubros en 8 países</td><td>El mejor texto rioplatense: seña, MercadoPago, «un corte de 30 minutos o un alisado de 2 horas»</td><td>76% de texto idéntico entre rubros y 89% entre Argentina y Uruguay</td></tr>
+          <tr><td>TuTurno</td><td>1 rubro</td><td>Capturas reales del producto con «corte de pelo» y seña</td><td>Sin datos estructurados</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid2" style="margin-top:28px">
+      <div class="card">
+        <div class="cardlabel">Texto idéntico entre dos rubros del mismo sitio</div>
+        <div class="bars" style="margin-top:18px">
+          <div class="bar"><span class="t">AgendaPro</span><div class="track"><div class="fill soft" style="width:25%"></div></div><span class="v">25%</span></div>
+          <div class="bar"><span class="t">Booksy</span><div class="track"><div class="fill soft" style="width:23%"></div></div><span class="v">23%</span></div>
+          <div class="bar"><span class="t">GlossGenius</span><div class="track"><div class="fill soft" style="width:27%"></div></div><span class="v">27%</span></div>
+          <div class="bar"><span class="t">Vagaro</span><div class="track"><div class="fill soft" style="width:33%"></div></div><span class="v">33%</span></div>
+          <div class="bar"><span class="t">Fresha</span><div class="track"><div class="fill soft" style="width:37%"></div></div><span class="v">37%</span></div>
+          <div class="bar"><span class="t">Square</span><div class="track"><div class="fill soft" style="width:43%"></div></div><span class="v">43%</span></div>
+          <div class="bar"><span class="t">Turnito</span><div class="track"><div class="fill over" style="width:76%"></div></div><span class="v">76%</span></div>
+          <div class="bar"><span class="t"><b>Nuestro tope</b></span><div class="track"><div class="fill" style="width:40%"></div></div><span class="v">40%</span></div>
+        </div>
+        <p class="note">Los que rankean bien están entre 25% y 40%. La medida subestima el parecido: una línea con sólo el rubro cambiado cuenta como distinta.</p>
+      </div>
+      <div class="card">
+        <div class="cardlabel">El hueco</div>
+        <h3 style="font-size:22px;font-weight:300;line-height:1.25;margin:6px 0 14px">Ninguno de los 14 publica datos propios del rubro.</h3>
+        <p>Todos muestran la cifra global de la marca: «450.000 profesionales», «135.000 profesionales». Nadie dice qué servicio es el más reservado en una barbería, cuánto dura, ni cuánto baja el ausentismo cuando se cobra seña.</p>
+        <p style="margin-top:12px">Nosotros sí lo tenemos, y es exactamente lo que Google pide para que una página hecha en serie no cuente como relleno: información que no se consigue en otro lado.</p>
+        <p style="margin-top:12px">Además la competencia local tiene SEO técnico pobre: títulos con tildes rotas, páginas sin datos estructurados.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pagina">
+  <div class="wrap">
+    <div class="head">
+      <div class="kicker">La página</div>
+      <h2>Diez bloques. <b>Seis cambian con el rubro.</b></h2>
+      <p class="lead">Una sola plantilla renderizada en el servidor y un archivo de datos por rubro. El skill escribe datos, no páginas: así no repetimos la deuda de las landings hechas a mano.</p>
+    </div>
+    <div class="anatomy">
+      <div class="block"><div class="name">Encabezado</div><span class="pill var">Por rubro</span><div class="what">«Software para barberías» al inicio del título y del encabezado principal. Foto real del rubro. Botón de registro.</div></div>
+      <div class="block key"><div class="name">El rubro en números</div><span class="pill data">De la base</span><div class="what">El bloque que nadie más tiene. Cifras del rubro en Ágora, con fecha, refrescadas cada mes.</div></div>
+      <div class="block"><div class="name">Tipos de negocio</div><span class="pill var">Por rubro</span><div class="what">A domicilio, box alquilado, salón con equipo, varias sedes. Cada uno con lo que le resuelve Ágora.</div></div>
+      <div class="block"><div class="name">Funciones</div><span class="pill var">Por rubro</span><div class="what">Las mismas funciones, en otro orden y con otro ejemplo. Barbería: comisiones y productos primero. Estética: ficha del cliente primero.</div></div>
+      <div class="block"><div class="name">Capturas del producto</div><span class="pill var">Por rubro</span><div class="what">La agenda y la vidriera con servicios, precios y duraciones del rubro. Nunca la misma captura genérica en todas.</div></div>
+      <div class="block"><div class="name">Negocios reales</div><span class="pill var">Por rubro</span><div class="what">Testimonios de clientes del rubro, con nombre, local y permiso. Si no hay, el bloque no aparece.</div></div>
+      <div class="block"><div class="name">Precios</div><span class="pill fix">Fijo</span><div class="what">Los planes, en la misma página. Sólo tres competidores los muestran.</div></div>
+      <div class="block"><div class="name">Preguntas frecuentes</div><span class="pill var">Por rubro</span><div class="what">Entre 6 y 12, con el vocabulario del rubro: seña, recordatorios por WhatsApp, ausencias, MercadoPago.</div></div>
+      <div class="block"><div class="name">Otros rubros</div><span class="pill fix">Fijo</span><div class="what">Enlaces a las páginas hermanas y a la página índice. Es lo que reparte autoridad entre todas.</div></div>
+      <div class="block"><div class="name">Cierre</div><span class="pill fix">Fijo</span><div class="what">Registro con el rubro ya elegido, para medir cuántos negocios trae cada página.</div></div>
+    </div>
+
+    <div class="numeros" style="margin-top:36px">
+      <div class="cardlabel">Bloque 02 · forma del contenido</div>
+      <h3>El rubro en números</h3>
+      <div class="ngrid">
+        <div class="ncell"><div class="skel"></div><div class="k">Negocios del rubro que reservaron con Ágora en el último mes</div></div>
+        <div class="ncell"><div class="skel"></div><div class="k">Los servicios más reservados del rubro</div></div>
+        <div class="ncell"><div class="skel"></div><div class="k">Duración y precio medianos de esos servicios</div></div>
+        <div class="ncell"><div class="skel"></div><div class="k">Reservas que entran fuera del horario de atención</div></div>
+        <div class="ncell"><div class="skel"></div><div class="k">Ausencias con seña y sin seña</div></div>
+        <div class="ncell"><div class="skel"></div><div class="k">Días y horas con más reservas</div></div>
+      </div>
+      <p class="note">Los valores los calcula el skill al generar cada página; acá no hay ninguno a propósito. Cada dato exige un mínimo de negocios detrás: si no alcanza, no se muestra.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="rubros">
+  <div class="wrap">
+    <div class="head">
+      <div class="kicker">Direcciones y rubros</div>
+      <h2>Nueve páginas, <b>una búsqueda principal cada una.</b></h2>
+      <p class="lead">Todo cuelga de <code>agora.red/software</code>, que funciona como índice. Los rubros que la gente busca con la misma palabra van juntos para que no compitan entre sí.</p>
+    </div>
+    <div class="urls">
+      <div class="url pilot"><div class="u"><span>/software/</span>pestanas-y-cejas</div><div class="c">Pestañas + Cejas</div><div class="w">Piloto · nuestra base más grande</div></div>
+      <div class="url pilot"><div class="u"><span>/software/</span>peluquerias</div><div class="c">Peluquería</div><div class="w">Piloto · la búsqueda más grande</div></div>
+      <div class="url"><div class="u"><span>/software/</span>unas</div><div class="c">Uñas y manicuría</div><div class="w">Base grande, competencia floja</div></div>
+      <div class="url"><div class="u"><span>/software/</span>barberias</div><div class="c">Barbería</div><div class="w">Búsqueda grande y peleada</div></div>
+      <div class="url"><div class="u"><span>/software/</span>centros-de-estetica</div><div class="c">Faciales + corporales + dermatología estética</div><div class="w">Las landings locales ya rankean acá</div></div>
+      <div class="url"><div class="u"><span>/software/</span>depilacion</div><div class="c">Depilación</div><div class="w">Base grande</div></div>
+      <div class="url"><div class="u"><span>/software/</span>masajes</div><div class="c">Masajes y spa</div><div class="w">—</div></div>
+      <div class="url"><div class="u"><span>/software/</span>podologia</div><div class="c">Podología</div><div class="w">Nicho casi sin competencia</div></div>
+      <div class="url"><div class="u"><span>/software/</span>maquillaje</div><div class="c">Maquillaje</div><div class="w">—</div></div>
+    </div>
+    <div class="grid3" style="margin-top:28px">
+      <div class="card"><h3>Sin páginas por ciudad</h3><p>Ningún competidor serio las hace. Es el ejemplo que Google usa para describir páginas de relleno.</p></div>
+      <div class="card"><h3>Argentina primero</h3><p>Otro país sólo cuando la página cambie de verdad: moneda, medios de cobro, vocabulario y testimonios. Turnito repite el 89% entre Argentina y Uruguay.</p></div>
+      <div class="card"><h3>Vocabulario por país</h3><p>Argentina y Uruguay: turnos, seña, voseo. México y España: citas. El skill lleva un glosario y lo verifica.</p></div>
+    </div>
+    <p class="note">Las direcciones están libres: ningún negocio usa <code>software</code> como nombre de usuario (verificado en la base).</p>
+  </div>
+</section>
+
+<section id="fotos">
+  <div class="wrap">
+    <div class="head">
+      <div class="kicker">Fotos</div>
+      <h2>Lo más creíble es <b>el producto mostrando el rubro.</b></h2>
+      <p class="lead">En orden de preferencia. El skill baja un escalón sólo cuando el anterior no alcanza.</p>
+    </div>
+    <div class="photo">
+      <div class="card"><div class="rank">1</div><h3>Capturas reales con datos del rubro</h3><p>Una cuenta de demostración por rubro, con sus servicios, precios y duraciones. El skill las captura en computadora y teléfono.</p></div>
+      <div class="card"><div class="rank">2</div><h3>Fotos de clientes reales</h3><p>Del rubro, con permiso explícito. Salen de Embajadores y de las vidrieras.</p></div>
+      <div class="card"><div class="rank">3</div><h3>Banco con licencia</h3><p>Sólo como relleno, nunca en el encabezado.</p></div>
+      <div class="card last"><div class="rank">4</div><h3>Imagen generada</h3><p>Únicamente para fondos. Nunca personas ni producto, y el texto siempre en una capa aparte.</p></div>
+    </div>
+    <p class="note">Todas en WebP, con peso máximo, dimensiones declaradas y texto alternativo que describa la foto. Se alojan en el CDN, no dentro del repositorio.</p>
+  </div>
+</section>
+
+<section class="alt" id="skill">
+  <div class="wrap">
+    <div class="head">
+      <div class="kicker">El skill · rubro-landing</div>
+      <h2>Siete pasos. <b>El quinto puede frenar todo.</b></h2>
+      <p class="lead">Se corre una vez por rubro para crear la página y una vez por mes para refrescar los números.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="i">1</div><h3>Brief</h3><p>Búsqueda principal y secundarias, quién rankea, glosario del país.</p></div>
+      <div class="step"><div class="i">2</div><h3>Datos</h3><p>Consultas de sólo lectura. Cada cifra queda con fecha y tamaño de muestra.</p></div>
+      <div class="step"><div class="i">3</div><h3>Contenido</h3><p>Escribe el archivo del rubro. Toda cifra apunta a un dato del paso 2.</p></div>
+      <div class="step"><div class="i">4</div><h3>Fotos</h3><p>Capturas, selección y optimización.</p></div>
+      <div class="step gate"><div class="i">5</div><h3>Chequeos</h3><p>Once controles. Si uno falla, la página no sale.</p></div>
+      <div class="step"><div class="i">6</div><h3>Publicación</h3><p>Sitemap propio, aviso a buscadores e inspección en Search Console.</p></div>
+      <div class="step"><div class="i">7</div><h3>Seguimiento</h3><p>A 30, 60 y 90 días: indexación, impresiones y registros.</p></div>
+    </div>
+
+    <h3 style="margin:44px 0 16px;font-size:17px;font-weight:500">Los once chequeos del paso 5</h3>
+    <div class="gates">
+      <div class="gate-c"><h3>Texto sin JavaScript</h3><p>El contenido principal está en la respuesta del servidor. Nada de contadores que arrancan en cero.</p></div>
+      <div class="gate-c"><h3>Título y descripción</h3><p>Hasta 60 y entre 120 y 160 caracteres, búsqueda al inicio, tildes reales, sin «| Ágora» duplicado.</p></div>
+      <div class="gate-c"><h3>Un solo encabezado principal</h3><p>Con la búsqueda del rubro.</p></div>
+      <div class="gate-c"><h3>Dirección canónica</h3><p>Apunta a sí misma. Si hay versión por país, el enlace es recíproco.</p></div>
+      <div class="gate-c"><h3>Datos estructurados</h3><p>Software, oferta, preguntas frecuentes y migas. Las preguntas marcadas son las que se ven. Sin puntaje de estrellas salvo fuente real.</p></div>
+      <div class="gate-c"><h3>Parecido con las hermanas</h3><p>Hasta 40% de texto idéntico con cada una.</p></div>
+      <div class="gate-c"><h3>Trazabilidad</h3><p>Toda cifra existe en los datos del paso 2. Todo testimonio corresponde a un negocio real de ese rubro.</p></div>
+      <div class="gate-c"><h3>Glosario</h3><p>Voseo consistente, «turnos» y «seña», sin jerga ni abreviaturas.</p></div>
+      <div class="gate-c"><h3>Imágenes</h3><p>Formato, peso, dimensiones, texto alternativo y precarga de la foto principal.</p></div>
+      <div class="gate-c"><h3>Velocidad</h3><p>Presupuesto de Lighthouse y métricas de experiencia de Google.</p></div>
+      <div class="gate-c"><h3>Enlaces internos</h3><p>Entra desde el índice y el pie del sitio; enlaza al menos a tres hermanas.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="riesgo">
+  <div class="wrap">
+    <div class="head">
+      <div class="kicker">El riesgo</div>
+      <h2>agora.red también es <b>el dominio de las vidrieras.</b></h2>
+      <p class="lead">Google no prohíbe el contenido hecho con IA. Penaliza muchas páginas sin valor propio y páginas casi iguales por región. Un lote malo no sólo no rankea: puede arrastrar las páginas de los clientes.</p>
+    </div>
+    <div class="grid3">
+      <div class="card"><h3>Lote chico</h3><p>Dos páginas de piloto, después siete más. No cincuenta de una.</p></div>
+      <div class="card"><h3>Sitemap aparte</h3><p>Para medir este conjunto por separado y poder retirarlo sin tocar el resto.</p></div>
+      <div class="card"><h3>Poda</h3><p>Lo que no esté indexado a los 60–90 días se corrige o se saca del índice.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="plan">
+  <div class="wrap">
+    <div class="head">
+      <div class="kicker">Plan</div>
+      <h2>Primero probar que funciona, <b>después escalar.</b></h2>
+    </div>
+    <div class="phases">
+      <div class="phase"><div class="when">Etapa 1</div><h3>Cimientos</h3><p>La plantilla en el servidor, el formato del archivo por rubro, el script de chequeos y la lista única de rubros.</p></div>
+      <div class="phase"><div class="when">Etapa 2</div><h3>Piloto</h3><p>Pestañas y cejas + peluquerías, con la página índice. Medición de registros por página.</p></div>
+      <div class="phase"><div class="when">Etapa 3</div><h3>Primera tanda</h3><p>Las otras siete, si el piloto indexa y trae registros. Refresco mensual de los números.</p></div>
+      <div class="phase later"><div class="when">Después</div><h3>Segundo nivel</h3><p>Un artículo comparativo por rubro («mejores apps de turnos para…»), que en Argentina rankea mejor que la landing, y páginas «Ágora vs…».</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="closing">
+  <div class="wrap">
+    <div class="kicker">Antes de construir</div>
+    <h2>Tres cosas que <b>todavía no sabemos.</b></h2>
+    <p class="lead">La propuesta se sostiene sin ellas, pero definen la búsqueda principal de cada página y el contenido del piloto.</p>
+    <div class="todo">
+      <div><b>Cuánto se busca cada cosa.</b> No hay datos públicos de volumen. Hace falta Keyword Planner o reconectar Search Console, que no respondió durante esta investigación.</div>
+      <div><b>Quién rankea de verdad en Google Argentina.</b> Lo relevado sale de un buscador alternativo con región Argentina; Google bloqueó la consulta automática.</div>
+      <div><b>Qué negocios prestan testimonio y fotos</b> en cada uno de los dos rubros del piloto.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">Ágora · Design Studio · 21/9/2026 · Fuente: relevamiento del HTML de 14 competidores, base de producción e inventario de los cuatro repositorios. Detalle en <code>cyclone/docs/investigacion-landings-por-rubro-2026-09-21.md</code>.</div>
+</footer>
+
+</body>
+</html>

@@ -1,8 +1,18 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
   "version": 1,
-  "updated_at": "2026-09-07",
+  "updated_at": "2026-09-21",
   "outputs": [
+    {
+      "type": "proposal",
+      "typeLabel": "Proposal",
+      "title": "Landings por rubro",
+      "description": "Cómo armar páginas «software para…» en agora.red con un skill que escribe contenido, consigue fotos y frena lo que no pasa los chequeos de SEO. Una plantilla, nueve rubros y datos propios por página.",
+      "detail": "proposal · 14 competidores relevados · anatomía de 10 bloques · skill de 7 pasos con 11 chequeos · plan en 3 etapas",
+      "date": "SEP 2026",
+      "href": "./landings-por-rubro-2026-09/index.html",
+      "slug": "landings-por-rubro-2026-09"
+    },
     {
       "type": "prototype",
       "typeLabel": "Prototype",
