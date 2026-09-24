@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bocetos · Placeholders y tutoriales de activación</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500;1,600;1,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand: #0072FB; --brand-deep: #005CD4; --brand-bright: #3D8BFB;
+    --brand-wash: rgba(0, 114, 251, .08); --brand-wash-strong: rgba(0, 114, 251, .12);
+    --ink: #0F172A; --ink-mid: #475569; --ink-soft: #64748B; --ink-faint: #94A3B8;
+    --paper: #EFF3F9; --card: #FFFFFF;
+    --hair: rgba(15, 23, 42, .08); --hair-strong: rgba(15, 23, 42, .15);
+    --ok: #0E9F6E; --ok-wash: rgba(14, 159, 110, .10); --bad: #DC2626; --bad-wash: rgba(220, 38, 38, .08);
+    --star: #F59E0B; --flag: #B45309; --flag-wash: #FEF3C7;
+    --shadow-xs: 0 1px 2px rgba(15, 23, 42, .04);
+    --shadow-md: 0 10px 30px -12px rgba(15, 23, 42, .15);
+    --shadow-lg: 0 20px 50px -20px rgba(15, 23, 42, .25);
+    --r-card: 20px; --r-btn: 12px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { font-family: 'Montserrat', system-ui, sans-serif; background: #DDE3EC; color: var(--ink); -webkit-font-smoothing: antialiased; }
+  button { font-family: inherit; cursor: pointer; }
+  svg { display: block; }
+
+  /* ---------- Toolbar del boceto ---------- */
+  .toolbar { position: sticky; top: 0; z-index: 50; background: #0F172A; color: #fff; padding: 12px 20px; display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: center; }
+  .toolbar .brand { font-weight: 800; font-size: 13px; letter-spacing: .02em; margin-right: 6px; }
+  .toolbar .brand small { display: block; font-weight: 500; font-size: 10.5px; color: #94A3B8; letter-spacing: 0; }
+  .group { display: flex; align-items: center; gap: 8px; }
+  .group > label { font-size: 9.5px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: #94A3B8; }
+  .seg { display: inline-flex; background: rgba(255,255,255,.08); border-radius: 10px; padding: 3px; gap: 2px; }
+  .seg button { border: 0; background: transparent; color: #CBD5E1; font-size: 12px; font-weight: 600; padding: 7px 12px; border-radius: 8px; }
+  .seg button[aria-pressed="true"] { background: #fff; color: var(--ink); }
+  .toolbar .switch { display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: #CBD5E1; cursor: pointer; user-select: none; }
+
+  .wrap { padding: 22px 20px 60px; }
+  .wrap-frame { position: relative; margin: 0 auto; max-width: 1180px; transition: max-width .25s ease; }
+  .wrap-frame.mobile { max-width: 390px; }
+  .frame { background: var(--paper); border-radius: 22px; box-shadow: var(--shadow-lg); height: min(82vh, 900px); overflow: auto; container-type: inline-size; container-name: stage; }
+  .page { padding: 26px 28px 40px; }
+
+  /* ---------- Componentes Flash ---------- */
+  .crumb { display: flex; gap: 8px; align-items: center; margin-bottom: 18px; }
+  .kicker { font-size: 10.5px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-faint); }
+  .kicker.blue { color: var(--brand); }
+  .panel { background: var(--card); border: 1px solid var(--hair-strong); border-radius: var(--r-card); box-shadow: var(--shadow-xs); }
+  .chip { display: inline-flex; align-items: center; gap: 6px; font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 5px 10px; border-radius: 999px; background: rgba(100,116,139,.14); color: var(--ink-soft); white-space: nowrap; }
+  .chip::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; opacity: .8; }
+  .chip.ok { background: var(--ok-wash); color: var(--ok); }
+  .chip.blue { background: var(--brand-wash); color: var(--brand-deep); }
+  .chip.warn { background: var(--flag-wash); color: var(--flag); }
+  .chip.plain::before { display: none; }
+
+  .cta { border: 0; color: #fff; font-weight: 700; font-size: 13.5px; letter-spacing: .01em; padding: 14px 22px; border-radius: var(--r-btn); background: linear-gradient(180deg, var(--brand-bright), var(--brand)); box-shadow: 0 8px 20px -8px rgba(0, 114, 251, .6); transition: transform .12s ease, box-shadow .12s ease, opacity .12s; }
+  .cta:hover { transform: translateY(-1px); box-shadow: 0 12px 24px -8px rgba(0, 114, 251, .65); }
+  .cta[disabled] { opacity: .45; cursor: not-allowed; transform: none; box-shadow: none; }
+  .btn-ghost { border: 1px solid var(--hair-strong); background: #fff; color: var(--ink); font-weight: 600; font-size: 13px; padding: 13px 18px; border-radius: var(--r-btn); }
+  .btn-ghost:hover { background: #F8FAFC; }
+  .link { border: 0; background: none; color: var(--brand); font-weight: 600; font-size: 13px; padding: 0; }
+  .link:hover { text-decoration: underline; }
+
+  /* ---------- Placeholder ---------- */
+  .hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 32px; padding: 40px 40px 36px; background: radial-gradient(800px 320px at 85% 0%, rgba(0,114,251,.06), transparent 60%), var(--card); }
+  .hero .status-row { display: flex; gap: 10px; align-items: center; margin-bottom: 20px; flex-wrap: wrap; }
+  h1.headline { font-size: 38px; line-height: 1.08; font-weight: 800; letter-spacing: -.02em; margin: 0 0 16px; }
+  h1.headline em { font-style: italic; font-weight: 600; background: linear-gradient(135deg, var(--brand), var(--brand-deep)); -webkit-background-clip: text; background-clip: text; color: transparent; padding-right: .05em; }
+  .lede { font-size: 14.5px; line-height: 1.6; color: var(--ink-mid); margin: 0 0 20px; max-width: 48ch; }
+  ul.checks { list-style: none; padding: 0; margin: 0 0 22px; display: grid; gap: 10px; }
+  ul.checks li { display: flex; gap: 10px; font-size: 13.5px; line-height: 1.45; color: var(--ink-mid); }
+  ul.checks li svg { flex: none; width: 16px; height: 16px; margin-top: 2px; color: var(--brand); }
+  .cost { border: 1px solid var(--hair-strong); border-radius: 14px; padding: 12px 14px; margin-bottom: 22px; background: #FBFCFE; display: grid; gap: 8px; max-width: 470px; }
+  .cost-row { display: flex; align-items: center; gap: 10px; font-size: 12.5px; color: var(--ink-mid); line-height: 1.4; }
+  .cost-row .chip { flex: none; min-width: 92px; justify-content: center; }
+  .cost-row b { color: var(--ink); font-weight: 700; }
+  .actions { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .hero-visual { position: relative; display: flex; align-items: center; justify-content: center; min-height: 340px; }
+
+  /* Visuales del cliente */
+  .stack { position: relative; width: 100%; max-width: 400px; }
+  .ejemplo { position: absolute; top: -12px; right: 6px; z-index: 3; font-size: 9.5px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-faint); background: #fff; border: 1px solid var(--hair-strong); padding: 3px 8px; border-radius: 999px; }
+  .req-card { background: #fff; border: 1px solid var(--hair-strong); border-radius: 24px; padding: 22px 22px 24px; box-shadow: var(--shadow-md); }
+  .req-card .biz { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+  .req-card .biz b { font-size: 13.5px; }
+  .req-card h4 { font-size: 20px; font-weight: 700; margin: 16px 0 4px; letter-spacing: -.01em; }
+  .req-card p { margin: 0 0 14px; font-size: 12px; color: var(--ink-soft); line-height: 1.5; }
+  .stars { display: flex; gap: 8px; margin-bottom: 16px; }
+  .star-btn { width: 40px; height: 40px; border-radius: 10px; background: #F1F4F9; border: 1px solid var(--hair); display: grid; place-items: center; }
+  .star-btn svg { width: 20px; height: 20px; color: var(--star); fill: var(--star); }
+  .mini-cta { display: inline-block; background: var(--brand); color: #fff; font-weight: 700; font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; padding: 11px 16px; border-radius: 8px; }
+  .rev-card { background: #fff; border: 1px solid var(--hair-strong); border-radius: 18px; padding: 14px 16px; box-shadow: var(--shadow-md); margin: -22px 0 0 34px; position: relative; }
+  .rev-head { display: flex; gap: 10px; align-items: center; margin-bottom: 8px; }
+  .avatar { width: 34px; height: 34px; border-radius: 50%; background: var(--brand-wash); color: var(--brand-deep); display: grid; place-items: center; font-weight: 700; font-size: 13px; }
+  .rev-head b { font-size: 13px; display: block; }
+  .rev-head small { font-size: 11px; color: var(--ink-faint); }
+  .mini-stars { display: inline-flex; gap: 1px; margin-left: 6px; vertical-align: -2px; }
+  .mini-stars svg { width: 12px; height: 12px; color: var(--star); fill: var(--star); }
+  .rev-card p { margin: 0 0 8px; font-size: 12.5px; line-height: 1.5; color: var(--ink); }
+  .verified { font-size: 10.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--brand-deep); display: inline-flex; gap: 6px; align-items: center; }
+  .verified svg { width: 11px; height: 11px; }
+
+  .gcard { border-radius: 22px; padding: 22px; color: #fff; position: relative; overflow: hidden; background: linear-gradient(135deg, #0A5FD9 0%, #0072FB 55%, #4FA0FF 100%); box-shadow: var(--shadow-md); aspect-ratio: 1.62; display: flex; flex-direction: column; justify-content: space-between; }
+  .gcard::after { content: ''; position: absolute; right: -60px; top: -60px; width: 220px; height: 220px; border-radius: 50%; background: rgba(255,255,255,.12); }
+  .gcard::before { content: ''; position: absolute; right: 30px; bottom: -80px; width: 180px; height: 180px; border-radius: 50%; background: rgba(255,255,255,.08); }
+  .gcard .top { display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1; font-size: 12px; font-weight: 700; letter-spacing: .04em; }
+  .gcard .top svg { width: 24px; height: 24px; }
+  .gcard .mid { position: relative; z-index: 1; }
+  .gcard .mid small { display: block; font-size: 11px; opacity: .8; font-weight: 500; margin-bottom: 4px; }
+  .gcard .mid b { font-size: 21px; font-weight: 700; letter-spacing: -.01em; display: block; }
+  .gcard .amount { font-size: 30px; font-weight: 800; letter-spacing: -.02em; margin-top: 4px; }
+  .gcard .bottom { position: relative; z-index: 1; display: flex; justify-content: space-between; font-size: 10.5px; opacity: .9; font-weight: 600; }
+  .mail-snip { background: #fff; border: 1px solid var(--hair-strong); border-radius: 16px; padding: 14px 16px; box-shadow: var(--shadow-md); margin: -26px 0 0 40px; position: relative; font-size: 12px; color: var(--ink-mid); line-height: 1.5; }
+  .mail-snip .from { font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; font-weight: 700; color: var(--ink-faint); margin-bottom: 6px; display: flex; gap: 6px; align-items: center; }
+  .mail-snip .from svg { width: 13px; height: 13px; }
+  .mail-snip b { color: var(--ink); }
+  .mail-snip .code { font-family: ui-monospace, Menlo, monospace; background: var(--brand-wash); color: var(--brand-deep); padding: 2px 7px; border-radius: 6px; font-weight: 700; font-size: 11.5px; }
+
+  .slots { background: #fff; border: 1px solid var(--hair-strong); border-radius: 22px; box-shadow: var(--shadow-md); padding: 18px; width: 100%; max-width: 400px; position: relative; }
+  .slots .sh { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
+  .slots .sh b { font-size: 14px; }
+  .slots .sub { font-size: 11.5px; color: var(--ink-soft); margin-bottom: 14px; }
+  .slot { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border: 1px solid var(--hair-strong); border-radius: 12px; margin-bottom: 8px; background: #fff; }
+  .slot .t { font-weight: 700; font-size: 14px; }
+  .slot .p { text-align: right; font-size: 13px; font-weight: 700; }
+  .slot .p s { color: var(--ink-faint); font-weight: 500; font-size: 11.5px; margin-right: 6px; }
+  .slot.disc { border-color: rgba(0,114,251,.35); background: linear-gradient(90deg, var(--brand-wash), #fff 70%); }
+  .off { display: inline-block; font-size: 10.5px; font-weight: 800; letter-spacing: .04em; padding: 3px 7px; border-radius: 6px; background: var(--brand); color: #fff; margin-left: 8px; vertical-align: 1px; }
+  .week { background: #fff; border: 1px solid var(--hair-strong); border-radius: 20px; box-shadow: var(--shadow-md); padding: 16px 16px 12px; width: 100%; max-width: 400px; position: relative; }
+  .week .grid { display: grid; grid-template-columns: 34px repeat(7, 1fr); gap: 4px; align-items: center; }
+  .week .dl { font-size: 10px; font-weight: 700; letter-spacing: .06em; text-align: center; color: var(--ink-soft); text-transform: uppercase; padding-bottom: 4px; }
+  .week .hl { font-size: 10px; color: var(--ink-faint); font-weight: 600; text-align: right; padding-right: 4px; }
+  .week .c { height: 20px; border-radius: 5px; background: #F1F4F9; }
+  .week .c.on { background: var(--brand); box-shadow: 0 2px 6px -2px rgba(0,114,251,.6); }
+  .week .legend { display: flex; gap: 8px; align-items: center; font-size: 11.5px; color: var(--ink-mid); margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--hair); flex-wrap: wrap; }
+  .rule-chip { display: inline-flex; gap: 6px; align-items: center; background: var(--brand-wash); color: var(--brand-deep); font-weight: 700; font-size: 11.5px; padding: 5px 9px; border-radius: 8px; }
+
+  ol.moments { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; width: 100%; max-width: 420px; }
+  ol.moments li { display: grid; grid-template-columns: 34px 1fr; gap: 14px; position: relative; padding-bottom: 20px; }
+  ol.moments li:last-child { padding-bottom: 0; }
+  ol.moments li:not(:last-child)::before { content: ''; position: absolute; left: 16px; top: 34px; bottom: 2px; width: 2px; background: var(--brand-wash-strong); }
+  ol.moments .dot { width: 34px; height: 34px; border-radius: 50%; background: #fff; border: 2px solid var(--brand); color: var(--brand); display: grid; place-items: center; font-weight: 800; font-size: 13px; }
+  ol.moments .k { font-size: 10.5px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--brand); margin-bottom: 3px; }
+  ol.moments .t { font-weight: 700; font-size: 14.5px; margin-bottom: 3px; }
+  ol.moments .d { font-size: 12.5px; color: var(--ink-mid); line-height: 1.5; }
+
+  .rows { background: #fff; border: 1px solid var(--hair-strong); border-radius: 18px; box-shadow: var(--shadow-md); width: 100%; max-width: 420px; overflow: hidden; }
+  .row { display: flex; gap: 12px; padding: 14px 16px; align-items: flex-start; }
+  .row + .row { border-top: 1px solid var(--hair); }
+  .row .ic { flex: none; width: 34px; height: 34px; border-radius: 10px; background: var(--brand-wash); color: var(--brand); display: grid; place-items: center; }
+  .row .ic svg { width: 17px; height: 17px; }
+  .row .ic.wa { background: rgba(37, 211, 102, .14); color: #16A34A; }
+  .row b { font-size: 13.5px; }
+  .row .desc { font-size: 12px; color: var(--ink-mid); line-height: 1.45; margin-top: 3px; }
+  .row .head { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .price-tag { margin: 10px 16px 16px; border: 1px dashed rgba(0,114,251,.45); border-radius: 12px; padding: 12px 14px; background: var(--brand-wash); display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .price-tag b { font-size: 18px; letter-spacing: -.01em; }
+  .price-tag small { display: block; font-size: 11.5px; color: var(--ink-mid); font-weight: 500; margin-top: 2px; }
+
+  .picker { display: grid; gap: 10px; width: 100%; }
+  .opt { text-align: left; border: 1px solid var(--hair-strong); background: #fff; border-radius: 16px; padding: 14px; display: grid; grid-template-columns: 40px 1fr; gap: 12px; }
+  .opt:hover:not(.locked) { border-color: var(--brand); }
+  .opt.sel { border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-wash-strong); }
+  .opt.locked { cursor: default; }
+  .opt .ic { width: 40px; height: 40px; border-radius: 12px; background: var(--brand-wash); display: grid; place-items: center; font-weight: 800; color: var(--brand); font-size: 17px; }
+  .opt .ic svg { width: 18px; height: 18px; color: var(--star); fill: var(--star); }
+  .opt b { font-size: 13.5px; display: block; margin-bottom: 3px; }
+  .opt span { font-size: 12px; color: var(--ink-mid); line-height: 1.45; display: block; }
+  .opt .need { color: var(--brand); font-weight: 600; margin-top: 4px; }
+  .picker-foot { font-size: 11.5px; color: var(--ink-soft); }
+
+  .todo { display: grid; gap: 10px; width: 100%; max-width: 430px; }
+  .todo .it { display: grid; grid-template-columns: 30px 1fr auto; gap: 12px; align-items: center; background: #fff; border: 1px solid var(--hair-strong); border-radius: 14px; padding: 12px 14px; box-shadow: var(--shadow-xs); }
+  .todo .n { width: 30px; height: 30px; border-radius: 50%; background: var(--brand-wash); color: var(--brand-deep); font-weight: 800; font-size: 13px; display: grid; place-items: center; }
+  .todo b { font-size: 13.5px; display: block; }
+  .todo span.d { font-size: 12px; color: var(--ink-mid); line-height: 1.4; display: block; margin-top: 2px; }
+  .note-box { border-radius: 12px; padding: 11px 13px; font-size: 12px; line-height: 1.5; color: var(--ink-mid); background: #fff; border: 1px solid var(--hair-strong); }
+
+  /* ---------- Modal tutorial ---------- */
+  .overlay { position: absolute; inset: 0; border-radius: 22px; background: rgba(15, 23, 42, .5); display: none; align-items: center; justify-content: center; padding: 22px; z-index: 20; backdrop-filter: blur(3px); }
+  .overlay.open { display: flex; }
+  .sheet { background: #fff; width: 100%; max-width: 920px; max-height: 100%; border-radius: 26px; box-shadow: var(--shadow-lg); display: flex; flex-direction: column; overflow: hidden; }
+  .sheet-head { padding: 20px 26px 0; display: flex; align-items: center; gap: 16px; }
+  .progress { flex: 1; display: flex; gap: 6px; }
+  .progress i { flex: 1; height: 4px; border-radius: 4px; background: var(--hair-strong); }
+  .progress i.done { background: var(--brand); }
+  .x { border: 0; background: #F1F4F9; width: 34px; height: 34px; border-radius: 50%; color: var(--ink-mid); font-size: 16px; font-weight: 700; }
+  .x:hover { background: #E2E8F0; }
+  .sheet-body { padding: 26px 30px 8px; overflow: auto; flex: 1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 30px; align-items: center; }
+  .sheet-body .copy h2 { font-size: 27px; line-height: 1.15; letter-spacing: -.02em; font-weight: 800; margin: 8px 0 12px; }
+  .sheet-body .copy p { font-size: 14px; line-height: 1.6; color: var(--ink-mid); margin: 0 0 12px; }
+  .sheet-body .copy .story { border-left: 3px solid var(--brand); padding: 2px 0 2px 14px; color: var(--ink); font-size: 14px; }
+  .sheet-body .copy .micro { font-size: 12.5px; color: var(--ink-soft); display: flex; gap: 8px; align-items: center; }
+  .vis { background: linear-gradient(180deg, #F5F8FC, #EEF3FA); border-radius: 20px; padding: 30px 20px 26px; display: flex; justify-content: center; align-items: center; min-height: 300px; position: relative; }
+  .sheet-foot { padding: 16px 26px 22px; display: flex; align-items: center; justify-content: space-between; gap: 12px; border-top: 1px solid var(--hair); margin-top: 18px; }
+  .sheet-foot .left, .sheet-foot .right { display: flex; gap: 12px; align-items: center; }
+  .rubro-tag { display: inline-flex; gap: 6px; align-items: center; font-size: 10.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); background: #F1F4F9; padding: 5px 9px; border-radius: 999px; }
+
+  /* ---------- Notas de diseño ---------- */
+  .flag { display: inline-flex; align-items: center; gap: 5px; background: var(--flag-wash); color: var(--flag); border: 1px dashed #F59E0B; border-radius: 8px; font-size: 10.5px; font-weight: 700; padding: 3px 7px; line-height: 1.3; }
+  .dn-box { margin-top: 14px; padding: 12px 14px; border-radius: 12px; background: #FFFBEB; border: 1px dashed #F59E0B; display: grid; gap: 7px; }
+  .dn-box .ttl { font-size: 9.5px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--flag); }
+  .dn-box p { margin: 0 !important; font-size: 11.5px !important; line-height: 1.45 !important; color: #78350F !important; }
+  .dn-box p b { color: #451A03; }
+  .buds { display: flex; flex-wrap: wrap; gap: 5px; }
+  .bud { font-size: 10.5px; font-weight: 700; padding: 2px 7px; border-radius: 6px; background: var(--ok-wash); color: var(--ok); }
+  .bud.over { background: var(--bad-wash); color: var(--bad); }
+  body.hide-flags .dn { display: none !important; }
+
+  .toast { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%) translateY(20px); background: #0F172A; color: #fff; padding: 12px 18px; border-radius: 12px; font-size: 13px; font-weight: 600; opacity: 0; pointer-events: none; transition: all .25s; z-index: 100; max-width: 90vw; }
+  .toast.show { opacity: 1; transform: translateX(-50%); }
+
+  /* ---------- Vista Criterios ---------- */
+  .crit h2 { font-size: 26px; letter-spacing: -.02em; margin: 6px 0 6px; }
+  .crit h3 { font-size: 15px; margin: 0 0 10px; letter-spacing: -.01em; }
+  .crit .panel { padding: 22px 24px; margin-bottom: 16px; }
+  .crit p { font-size: 13.5px; line-height: 1.6; color: var(--ink-mid); margin: 0 0 10px; }
+  .crit .formula { font-family: ui-monospace, Menlo, monospace; font-size: 13px; background: #0F172A; color: #E2E8F0; padding: 14px 16px; border-radius: 12px; line-height: 1.7; margin: 10px 0 14px; overflow-x: auto; }
+  .crit table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  .crit th { text-align: left; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-faint); font-weight: 700; padding: 8px 10px; border-bottom: 1px solid var(--hair-strong); }
+  .crit td { padding: 10px; border-bottom: 1px solid var(--hair); vertical-align: top; color: var(--ink-mid); line-height: 1.5; }
+  .crit td b { color: var(--ink); }
+  .crit .no { color: var(--bad); font-weight: 600; }
+  .crit .yes { color: var(--ok); font-weight: 600; }
+  .tscroll { overflow-x: auto; }
+  .crit table.wide { min-width: 720px; }
+  .lintline { font-size: 12.5px; color: var(--ink-mid); padding: 4px 0; }
+  .lintline.bad { color: var(--bad); }
+
+  @container stage (max-width: 760px) {
+    .page { padding: 18px 14px 30px; }
+    .hero { grid-template-columns: 1fr; padding: 24px 20px; gap: 24px; }
+    h1.headline { font-size: 28px; }
+    .hero-visual { min-height: 0; }
+    .overlay { padding: 0; align-items: flex-end; border-radius: 22px; }
+    .sheet { border-radius: 24px 24px 0 0; max-height: 94%; }
+    .sheet-head { padding: 16px 18px 0; }
+    .sheet-body { grid-template-columns: 1fr; padding: 18px 18px 4px; gap: 18px; }
+    .sheet-body .copy h2 { font-size: 22px; }
+    .vis { min-height: 0; padding: 26px 12px 18px; }
+    .sheet-foot { padding: 14px 18px 18px; margin-top: 12px; }
+    .rubro-tag { display: none; }
+  }
+  @media (max-width: 720px) {
+    .toolbar { padding: 10px 12px; gap: 8px 14px; }
+    .wrap { padding: 12px 8px 40px; }
+    .frame { height: 78vh; }
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="brand">Bocetos · Placeholder + Tutorial<small>Estado OFF y primera activación · Flash</small></div>
+  <div class="group"><label>Feature</label>
+    <div class="seg" id="seg-feature">
+      <button data-v="resenas">Reseñas</button>
+      <button data-v="gift">Gift Cards</button>
+      <button data-v="dinamicos">Precios dinámicos</button>
+      <button data-v="catalogo">Catálogo de productos</button>
+    </div>
+  </div>
+  <div class="group"><label>Rubro</label>
+    <div class="seg" id="seg-rubro">
+      <button data-v="none">Sin rubro</button>
+      <button data-v="salon">Salón de belleza</button>
+      <button data-v="barber">Barbería</button>
+    </div>
+  </div>
+  <div class="group"><label>Vista</label>
+    <div class="seg" id="seg-view">
+      <button data-v="placeholder">Placeholder</button>
+      <button data-v="tutorial">Tutorial</button>
+      <button data-v="criterios">Criterios</button>
+    </div>
+  </div>
+  <div class="group"><label>Ancho</label>
+    <div class="seg" id="seg-width">
+      <button data-v="desktop">Escritorio</button>
+      <button data-v="mobile">Mobile</button>
+    </div>
+  </div>
+  <label class="switch"><input type="checkbox" id="chk-flags" checked> Notas de diseño</label>
+</div>
+
+<div class="wrap">
+  <div class="wrap-frame" id="wrapframe">
+    <div class="frame" id="frame"><div class="page" id="page"></div></div>
+    <div class="overlay" id="overlay" aria-hidden="true"></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* =========================================================
+   Iconos
+   ========================================================= */
+const I = {
+  check: '<svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3.2L13 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  star: '<svg viewBox="0 0 16 16"><path d="M8 1.3l2.1 4.5 4.9.6-3.6 3.4.9 4.9L8 12.2 3.7 14.7l.9-4.9L1 6.4l4.9-.6z"/></svg>',
+  mail: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="1.5" y="3" width="13" height="10" rx="2"/><path d="M2 4.5l6 4.5 6-4.5"/></svg>',
+  wa: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M8 1.6a6.4 6.4 0 00-5.5 9.7L1.6 14.4l3.2-.9A6.4 6.4 0 108 1.6z"/><path d="M5.8 5.6c.2 2 1.9 3.8 4 4.1l.9-.9-1.4-.9-.6.5c-.8-.3-1.5-1-1.8-1.8l.5-.6-.9-1.4z" fill="currentColor" stroke="none"/></svg>',
+  gift: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v8h14v-8M12 8v12M12 8S10.5 3 8 3.5 6 7 8.5 8M12 8s1.5-5 4-4.5S18 7 15.5 8"/></svg>',
+  bolt: '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M9 1L3 9h4l-1 6 7-8H9z"/></svg>',
+  arrow: '<svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>',
+  coin: '<svg viewBox="0 0 16 16"><text x="8" y="12" text-anchor="middle" font-size="12" font-weight="800" fill="currentColor">$</text></svg>',
+  power: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2v5M4.5 4.5a5 5 0 107 0"/></svg>'
+};
+const stars = (n = 5) => Array.from({ length: n }, () => I.star).join('');
+
+/* =========================================================
+   Helpers
+   ========================================================= */
+const $ = (s, r = document) => r.querySelector(s);
+const fmt = n => '$' + n.toLocaleString('es-AR');
+const words = t => (String(t || '').replace(/<[^>]+>/g, ' ').split(/\s+/).filter(w => /[\p{L}\p{N}]/u.test(w))).length;
+const DAYS = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'];
+const DAY_L = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
+const daysText = d => d.length === 1 ? DAYS[d[0]] : (d.length > 2 && d[d.length - 1] - d[0] === d.length - 1)
+  ? `de ${DAYS[d[0]]} a ${DAYS[d[d.length - 1]]}` : d.map(i => DAYS[i]).join(' y ');
+const RUBRO = {
+  none:   { label: 'Sin rubro',        noun: 'tu negocio',  tag: 'Ejemplo neutro' },
+  salon:  { label: 'Salón de belleza', noun: 'tu salón',    tag: 'Ejemplo: salón de belleza' },
+  barber: { label: 'Barbería',         noun: 'tu barbería', tag: 'Ejemplo: barbería' }
+};
+
+/* =========================================================
+   Presupuestos y lint (criterios estrictos, ver CRITERIOS.md)
+   ========================================================= */
+const BUDGET = {
+  PH: { headline: 12, lede: 40, bullet: 15, bullets: 3 },
+  R1: { title: 8, lede: 25, moment: 20, moments: 3 },
+  R2: { title: 10, story: 45 },
+  R3: { title: 8, lede: 25, row: 20 },
+  R4: { title: 8, lede: 25, item: 25, items: 3 }
+};
+const BAN = [
+  [/storefront/i, 'storefront → «tu página»'], [/\btienda\b/i, '«tienda» → «tu página»'], [/membres[ií]a/i, 'membresías → «planes mensuales»'],
+  [/checkout/i, 'checkout (jerga)'], [/\bslots?\b/i, 'slot (jerga)'], [/canje|canjea/i, 'canje (jerga)'], [/onboarding/i, 'onboarding (jerga)'],
+  [/\bfeature/i, 'feature (jerga)'], [/dashboard/i, 'dashboard (jerga)'], [/\busuarios?\b/i, 'usuario → «cliente» / «negocio»'],
+  [/\bf[aá]cil(es|mente)?\b/i, 'adjetivo vacío: fácil'], [/\bsimple(s|mente)?\b/i, 'adjetivo vacío: simple'], [/potente|incre[ií]ble|revolucion/i, 'adjetivo vacío'],
+  [/aprovech[aá]/i, '«aprovechá» (vago)'], [/optimiz[aá]/i, '«optimizá» (vago)'], [/!/, 'signo de exclamación'], [/\bOjo\b/, 'muletilla «Ojo»'],
+  [/Ten[eé] en cuenta/i, 'muletilla «Tené en cuenta»'], [/\bAgora\b/, '«Ágora» va con tilde'], [/add-on/i, 'add-on (jerga)'],
+  [/\btoc[aá]\s+(una|1|\d)\s+estrellas?/i, 'sujeto explícito: «El cliente toca una calificación»'],
+  [/no consume nada/i, 'negación de relleno: «No consume nada»'], [/\bes gratis\b/i, 'negación de relleno: «Es gratis…»'],
+  [/sin pack, sale por correo/i, 'plan B innecesario: «Sin pack, sale por correo»'], [/irreversible/i, 'irreversible: verificar que no haya salida']
+];
+const lintText = t => BAN.filter(([re]) => re.test(String(t || '').replace(/<[^>]+>/g, ' '))).map(([, m]) => m);
+
+/* =========================================================
+   Visuales
+   ========================================================= */
+const moments = items => `<ol class="moments">${items.map((m, i) =>
+  `<li><span class="dot">${i + 1}</span><div><div class="k">${m.k}</div><div class="t">${m.t}</div><div class="d">${m.d}</div></div></li>`).join('')}</ol>`;
+const checks = arr => `<ul class="checks">${arr.map(t => `<li>${I.check}<span>${t}</span></li>`).join('')}</ul>`;
+const ej = '<span class="ejemplo">Ejemplo</span>';
+
+const requestCard = d => `
+  <div class="stack">${ej}
+    <div class="req-card">
+      <div class="biz"><b>${d.biz}</b><span class="kicker" style="font-size:9.5px">Tu opinión</span></div>
+      <h4>¿Cómo estuvo tu visita?</h4>
+      <p>${d.hello}, gracias por venir. Tu opinión ayuda al equipo.</p>
+      <div class="stars">${Array.from({ length: 5 }, () => `<span class="star-btn">${I.star}</span>`).join('')}</div>
+      <span class="mini-cta">Calificar mi visita</span>
+    </div>
+    <div class="rev-card">
+      <div class="rev-head"><span class="avatar">${d.ini}</span>
+        <div><b>${d.name}<span class="mini-stars">${stars()}</span></b><small>${d.service} · hace 2 horas</small></div></div>
+      <p>${d.text}</p>
+      <span class="verified">${I.check} Verificada</span>
+    </div>
+  </div>`;
+
+const giftVisual = d => `
+  <div class="stack">${ej}
+    <div class="gcard">
+      <div class="top"><span>${d.biz}</span>${I.gift}</div>
+      <div class="mid"><small>${d.scope}</small><b>${d.title}</b><div class="amount">${fmt(d.value)}</div></div>
+      <div class="bottom"><span>Vence 12 meses desde la compra</span><span>Código por mail</span></div>
+    </div>
+    <div class="mail-snip">
+      <div class="from">${I.mail} Para ${d.to}</div>
+      <b>${d.from} te regaló una tarjeta de ${d.biz}.</b> Usá el código <span class="code">AGR-7K2Q-9XPM</span> al reservar.
+    </div>
+  </div>`;
+
+const slotsVisual = d => {
+  const hrs = [d.s - 1, d.s, d.s + 1, d.e];
+  const disc = Math.round(d.price * (1 - d.pct / 100));
+  return `<div class="slots">${ej}
+    <div class="sh"><b>${d.svc}</b><span class="kicker blue" style="font-size:9.5px">${DAYS[d.days[0]]}</span></div>
+    <div class="sub">Horarios disponibles</div>
+    ${hrs.map((h, i) => (i === 1 || i === 2)
+      ? `<div class="slot disc"><span class="t">${h}:00<span class="off">${d.pct}% OFF</span></span><span class="p"><s>${fmt(d.price)}</s>${fmt(disc)}</span></div>`
+      : `<div class="slot"><span class="t">${h}:00</span><span class="p">${fmt(d.price)}</span></div>`).join('')}
+  </div>`;
+};
+
+const productVisual = d => `<div class="slots">${ej}
+  <div class="sh"><b>Tu reserva</b><span class="kicker blue" style="font-size:9.5px">Sumá productos</span></div>
+  <div class="sub">Los retirás durante tu sesión</div>
+  <div class="slot"><span class="t">${d.svc}</span><span class="p">${fmt(d.svcPrice)}</span></div>
+  <div class="slot disc"><span class="t">${d.prod}<span class="off">Sumado</span></span><span class="p">${fmt(d.prodPrice)}</span></div>
+  <div class="slot" style="border-style:dashed"><span class="t">Total</span><span class="p">${fmt(d.svcPrice + d.prodPrice)}</span></div>
+</div>`;
+
+const weekVisual = d => {
+  const hours = [9, 10, 11, 12, 13, 14, 15, 16];
+  let cells = '<span></span>' + DAY_L.map(l => `<span class="dl">${l}</span>`).join('');
+  hours.forEach(h => {
+    cells += `<span class="hl">${h}:00</span>`;
+    for (let i = 0; i < 7; i++) cells += `<span class="c${d.days.includes(i) && h >= d.s && h < d.e ? ' on' : ''}"></span>`;
+  });
+  return `<div class="week">${ej}<div class="grid">${cells}</div>
+    <div class="legend"><span class="rule-chip">${I.bolt.replace('<svg', '<svg width="11" height="11"')} −${d.pct}%</span>
+      <span>${d.svc} · ${daysText(d.days)} de ${d.s} a ${d.e} hs</span></div></div>`;
+};
+
+const rowsVisual = (rows, price) => `<div class="rows">
+  ${rows.map(r => `<div class="row"><span class="ic${r.wa ? ' wa' : ''}">${r.wa ? I.wa : (r.icon || I.mail)}</span><div>
+      <div class="head"><b>${r.b}</b><span class="chip ${r.chip[0]}">${r.chip[1]}</span></div><div class="desc">${r.d}</div></div></div>`).join('')}
+  ${price ? `<div class="price-tag"><div><b>${price.amount}</b><small>${price.unit}</small></div>${price.cta ? `<button class="btn-ghost" style="padding:9px 12px;font-size:12px">${price.cta}</button>` : ''}</div>` : ''}
+</div>`;
+
+const todoVisual = (items, note) => `<div class="todo">
+  ${items.map((it, i) => { const c = Array.isArray(it.chip) ? it.chip : it.chip[state.mp];
+    return `<div class="it"><span class="n">${i + 1}</span><div><b>${it.b}</b><span class="d">${it.d}</span>${it.link && state.mp === 'pending' ? `<button class="link" data-connect style="margin-top:6px;font-size:12px">${it.link}</button>` : ''}</div><span class="chip ${c[0]}">${c[1]}</span></div>`; }).join('')}
+  ${note ? `<div class="note-box">${note}</div>` : ''}
+</div>`;
+
+/* =========================================================
+   Datos de ejemplo por rubro (todo lo que cambia entre rubros)
+   ========================================================= */
+const RES = {
+  none:   { biz: 'Tu negocio', name: 'Ana P.', ini: 'A', service: 'Servicio', hello: 'Hola Ana',
+            text: 'Salí feliz. La atención fue excelente y ya reservé de nuevo.',
+            story: 'Un cliente termina su turno a las 16:00. A las 18:00 le llega un pedido con el nombre de tu negocio. El cliente califica con 5 estrellas y su reseña queda en tu página, con el sello «Verificada».',
+            title: 'Así llega la reseña de un turno', name2: 'tu negocio' },
+  salon:  { biz: 'Estudio Aura', name: 'Valentina R.', ini: 'V', service: 'Corte + Color', hello: 'Hola Valentina',
+            text: 'Salí feliz. Me explicaron cómo mantener el color en casa y volví a reservar antes de irme.',
+            story: 'Valentina termina su Corte + Color a las 16:00. A las 18:00 le llega un pedido con el nombre de tu salón. Valentina califica con 5 estrellas y su reseña queda en tu página, con el sello «Verificada».',
+            title: 'Así llega la reseña de un Corte + Color', name2: 'Estudio Aura' },
+  barber: { biz: 'Barbería Norte', name: 'Tomás G.', ini: 'T', service: 'Corte + Barba', hello: 'Hola Tomás',
+            text: 'Salí con el degradé y la barba perfilada. Prolijo como siempre, ya tengo el próximo turno.',
+            story: 'Tomás termina su Corte + Barba a las 19:00. A las 21:00 le llega un pedido con el nombre de tu barbería. Tomás califica con 5 estrellas y su reseña queda en tu página, con el sello «Verificada».',
+            title: 'Así llega la reseña de un Corte + Barba', name2: 'Barbería Norte' }
+};
+const GIFT = {
+  none:   { biz: 'Tu negocio', title: 'Tarjeta de regalo', scope: 'Monto fijo', value: 20000, to: 'Lucía', from: 'Martín',
+            ttl: 'Un regalo de cumpleaños',
+            story: 'Martín compra en tu página una tarjeta de $20.000 para el cumpleaños de Lucía. A Lucía le llega un mail con el código. Reserva su turno online y lo pone al pagar. Vos cobraste antes de atender.' },
+  salon:  { biz: 'Estudio Aura', title: 'Color + brushing', scope: 'Servicios específicos', value: 45000, to: 'Mamá', from: 'Sofía',
+            ttl: '«Color + brushing» para el Día de la Madre',
+            story: 'Sofía compra en tu página una tarjeta de «Color + brushing» para el Día de la Madre. A su mamá le llega un mail con el código. Reserva su turno online y lo pone al pagar. Vos cobraste antes de atender.' },
+  barber: { biz: 'Barbería Norte', title: 'Corte + barba', scope: 'Servicios específicos', value: 18000, to: 'Papá', from: 'Nicolás',
+            ttl: '«Corte + barba» para el Día del Padre',
+            story: 'Nicolás compra en tu página una tarjeta de «Corte + barba» para el Día del Padre. A su papá le llega un mail con el código. Reserva su turno online y lo pone al pagar. Vos cobraste antes de atender.' }
+};
+const DYN = {
+  none:   { svc: 'Servicio', price: 10000, pct: 20, days: [1], s: 9, e: 13,
+            ttl: 'Servicio con −20% los martes a la mañana',
+            story: 'Los martes a la mañana tenés pocos turnos. Creás una regla: Servicio, martes de 9 a 13 hs, −20%. Tus clientes ven el aviso «20% OFF» y reservan un horario que antes quedaba libre.' },
+  salon:  { svc: 'Color y Manicura', price: 38000, pct: 20, days: [1, 2], s: 10, e: 14,
+            ttl: 'Color y Manicura, martes y miércoles a la mañana',
+            story: 'Los martes y miércoles a la mañana tu salón tiene huecos. Creás una regla: Color y Manicura, martes y miércoles de 10 a 14 hs, −20%. Tus clientas ven «20% OFF» y el Color pasa de $38.000 a $30.400 solo en esa franja.' },
+  barber: { svc: 'Corte', price: 12000, pct: 15, days: [0, 1, 2, 3], s: 11, e: 15,
+            ttl: 'Corte de lunes a jueves a la siesta',
+            story: 'De lunes a jueves a la siesta, tu barbería tiene huecos. Creás una regla: Corte, de lunes a jueves de 11 a 15 hs, −15%. Tus clientes ven «15% OFF» y el Corte pasa de $12.000 a $10.200 solo en esa franja.' }
+};
+
+const PROD = {
+  none:   { svc: 'Servicio', svcPrice: 10000, prod: 'Producto', prodPrice: 5000,
+            ttl: 'Un producto sumado a un turno',
+            story: 'Un cliente reserva un turno y suma un producto de tu página. Paga todo junto. En la sesión se lo entregás y lo marcás como entregado.' },
+  salon:  { svc: 'Corte + Color', svcPrice: 48000, prod: 'Shampoo para pelo teñido', prodPrice: 14500,
+            ttl: 'Un shampoo sumado a un Corte + Color',
+            story: 'Valentina reserva un Corte + Color y suma el shampoo para pelo teñido. Paga todo junto. En la sesión se lo entregás y lo marcás como entregado.' },
+  barber: { svc: 'Corte + Barba', svcPrice: 16000, prod: 'Cera para peinar', prodPrice: 9800,
+            ttl: 'Una cera sumada a un Corte + Barba',
+            story: 'Tomás reserva un Corte + Barba y suma la cera para peinar. Paga todo junto. En la sesión se la entregás y la marcás como entregada.' }
+};
+
+/* =========================================================
+   FEATURES
+   Paso = { role, kicker, title, lede?, story?, micro?, visual, final?, why, src }
+   role: R1 Cómo funciona · R2 Caso práctico · R3 Costo y consumo · R4 Para activar
+   ========================================================= */
+const FEATURES = {
+
+  /* ---------------- RESEÑAS · 4 pasos ---------------- */
+  resenas: {
+    name: 'Reseñas', cta: 'Activar reseñas',
+    formula: 'Costo o consumo: sí (WhatsApp descuenta mensajes del pack) · Decisión previa: sí (dónde viven) → 2 + 1 + 1 = 4',
+    placeholder(r) {
+      const d = RES[r];
+      return {
+        chip: 'Apagadas', kicker: 'Reseñas verificadas',
+        headline: 'Pedí la reseña mientras la visita <em>todavía se siente.</em>',
+        lede: 'Dos horas después de cada turno, le enviamos al cliente un pedido corto. El cliente toca una calificación y deja su reseña, que queda en tu página, en Google o en las dos. Solo quien tuvo turno puede dejarla.',
+        bullets: ['Se pide sola. Vos leés, respondés y elegís qué mostrar.', 'Con 3 estrellas o menos, el cliente puede contártelo en privado.'],
+        cost: [{ chip: ['ok', 'Sin costo'], b: 'Por correo.', t: '' }, { chip: ['', 'Usa mensajes'], b: 'Por WhatsApp,', t: 'si lo tenés prendido.' }],
+        visual: requestCard(d),
+        notes: ['<b>Copy:</b> reutiliza ReviewsLanding.tsx. La viñeta del canal pasó a la línea de costo y se recortó al presupuesto. El detalle del consumo vive en el paso 3 del tutorial.']
+      };
+    },
+    steps(r) {
+      const d = RES[r], rn = RUBRO[r].noun;
+      return [
+        { role: 'R1', kicker: 'Cómo funciona', title: 'Del turno a la reseña, en tres momentos',
+          lede: 'Solo te puede calificar quien tuvo un turno con vos.',
+          visual: { type: 'moments', items: [
+            { k: 'Termina el turno', t: 'La visita se registra sola', d: 'Cada reserva confirmada cuyo turno ya pasó puede dejar una reseña. Una por visita, sin importar cuántos servicios tuvo.' },
+            { k: 'Dos horas después', t: 'Le pedimos la reseña', d: 'Un mensaje corto con un link personal, en nombre de tu negocio. Máximo uno cada 30 días por cliente.' },
+            { k: 'Cuando responde', t: 'Queda donde elegiste', d: 'Entra a tu bandeja y se publica en tu página, en Google o en las dos.' }] },
+          why: 'Mecanismo completo en 3 momentos. Sin costo, sin canal, sin excepciones (la nota privada con 3★ ya está en el placeholder).',
+          src: 'Reutiliza ReviewsLanding.tsx (STEPS) recortado a ≤20 palabras por momento; bajada de la novedad in-app «resenas-verificadas».' },
+        { role: 'R2', kicker: r === 'none' ? 'Un caso práctico' : `Un caso para ${rn}`, title: d.title, story: d.story,
+          visual: { type: 'html', html: requestCard(d) },
+          why: 'Convierte el mecanismo en un caso propio. Mismos 3 momentos, solo cambian nombre, servicio y horas.',
+          src: 'Nuevo. Reutiliza los datos de la vista previa de ReviewsLanding (Valentina, Corte + Color).' },
+        { role: 'R3', kicker: 'Costo y consumo', title: 'Por dónde sale y qué usa cada canal',
+          lede: 'Activar reseñas no activa WhatsApp: lo prendés vos en Mensajes automáticos.',
+          visual: { type: 'rows',
+            rows: [{ b: 'Correo', chip: ['ok', 'Sin costo'], d: 'Sale a todo cliente con correo.' },
+                   { b: 'WhatsApp', wa: true, chip: ['', 'Usa mensajes'], d: 'Si lo prendés en Mensajes automáticos, cada pedido descuenta un mensaje de tu pack.' }] },
+          why: 'Existe porque el pedido por WhatsApp consume un recurso medido (el pack de mensajes), aunque la feature sea gratis. Verificado en código: el pedido de reseña por WhatsApp (wa_ei_review_request) se cuenta en el uso del pack. Sin monto: no hay nada que vender acá.',
+          src: 'Filas basadas en ChannelRows.tsx, reescritas para aclarar el consumo.' },
+        { role: 'R4', kicker: 'Para activarlas', title: '¿Dónde querés que vivan tus reseñas?',
+          lede: 'Se elige acá y se puede cambiar después. No sale ningún pedido hasta que actives.',
+          visual: { type: 'picker' }, final: { cta: 'Activar reseñas', needsPick: true },
+          why: 'Existe porque hay una decisión que define el resultado (destino). Elegirla ES la activación.',
+          src: 'Reutiliza textualmente ReviewsLanding.tsx y DestinationPicker.' }
+      ];
+    }
+  },
+
+  /* ---------------- GIFT CARDS · 3 pasos ---------------- */
+  gift: {
+    name: 'Gift Cards', cta: 'Crear mi primera tarjeta',
+    formula: 'Costo o consumo: no · Requisito previo: sí (Mercado Pago conectado) → 2 + 0 + 1 = 3',
+    placeholder(r) {
+      const d = GIFT[r];
+      return {
+        chip: 'Sin tarjetas', kicker: 'Tarjetas de regalo',
+        headline: 'Que tus clientes regalen <em>un turno con vos.</em>',
+        lede: 'Tus clientes compran una tarjeta desde tu página y se la mandan a quien quieran. Vos cobrás por adelantado; quien la recibe reserva con vos y la usa al pagar.',
+        bullets: ['Ideales para cumpleaños, Día de la Madre o Navidad.', 'Quien la recibe puede ser alguien nuevo en tu negocio.', 'Vos elegís si vale un monto o servicios específicos, y si vence.'],
+        cost: [{ chip: ['ok', 'Sin costo'], b: 'Ágora no cobra', t: 'por las tarjetas.' }, { chip: ['', 'Mercado Pago'], b: 'Se cobra con Mercado Pago,', t: 'que aplica su comisión.' }],
+        visual: giftVisual(d),
+        notes: ['<b>Copy:</b> las viñetas 1 y 2 salen del empty state actual de GiftCards.tsx («Ideales para cumpleaños… traen gente nueva»). Titular y bajada son nuevos.',
+                '<b>Titular:</b> el actual es «Empezá a vender Tarjetas de Regalo». El propuesto dice el resultado, no la acción.']
+      };
+    },
+    steps(r) {
+      const d = GIFT[r], rn = RUBRO[r].noun;
+      return [
+        { role: 'R1', kicker: 'Cómo funciona', title: 'De la compra al turno reservado',
+          lede: 'Creás la tarjeta una sola vez.',
+          visual: { type: 'moments', items: [
+            { k: 'Vos', t: 'Creás la tarjeta', d: 'Elegís si vale un monto o servicios específicos, y si vence.' },
+            { k: 'Tu cliente', t: 'La compra en tu página', d: 'Paga con Mercado Pago y elige quién la recibe. A esa persona le llega un mail con el código.' },
+            { k: 'Quien la recibe', t: 'La usa al reservar', d: 'Pone el código al pagar su reserva online. Si la reserva supera el saldo, paga la diferencia.' }] },
+          why: 'Mecanismo en 3 momentos. El límite «solo se usa en la reserva online» está dicho en positivo en el momento 3, no como aviso aparte.',
+          src: 'Nuevo. Frase de la diferencia tomada de la página de la persona que recibe la tarjeta (nightwing).' },
+        { role: 'R2', kicker: r === 'none' ? 'Un caso práctico' : `Un caso para ${rn}`, title: d.ttl, story: d.story,
+          visual: { type: 'html', html: giftVisual(d) },
+          why: 'Mismos 3 momentos con datos propios del rubro. La fecha (Día de la Madre / del Padre) da el motivo de compra.',
+          src: 'Nuevo. Las fechas salen del empty state actual.',
+          flags: ['Montos de ejemplo'] },
+        { role: 'R4', kicker: 'Para activar', title: 'Para vender, conectá Mercado Pago',
+          lede: 'Podés crear la tarjeta ya. Tus clientes la ven en tu página cuando conectes Mercado Pago.',
+          visual: { type: 'todo',
+            items: [{ b: 'Conectá Mercado Pago', d: 'Las tarjetas solo se cobran con Mercado Pago. Sin cuenta conectada, no aparecen en tu página.', link: 'Conectar ahora',
+                      chip: { pending: ['warn plain', 'Pendiente'], ok: ['ok plain', 'Conectado'] } }],
+            note: 'Ágora no cobra por las tarjetas. Mercado Pago aplica su comisión en cada cobro.' },
+          final: { cta: 'Crear mi primera tarjeta', needs: 'mp' },
+          why: 'Existe porque hay un requisito para vender (Mercado Pago). El botón principal siempre crea la tarjeta: verificado que crearla no exige Mercado Pago (sin conectar, se crea pero no aparece en tu página) y decisión del producto. «Conectar ahora» es una acción secundaria. NO están el tipo/monto ni el vencimiento: una tarjeta vendida no se edita, pero se puede pausar y crear otra (lo dice el propio producto), así que no es irreversible. La comisión de Mercado Pago es de un tercero y va como nota.',
+          src: 'Reutiliza la alerta de GiftCards.tsx («Las tarjetas de regalo solo se pueden cobrar con Mercado Pago…») recortada.',
+          flags: [] }
+      ];
+    }
+  },
+
+  /* ---------------- CATÁLOGO DE PRODUCTOS · 3 pasos ---------------- */
+  catalogo: {
+    name: 'Catálogo de productos', section: 'Catálogo', cta: 'Activar catálogo',
+    formula: 'Costo o consumo: sí (cargo fijo mensual) · Decisión o requisito previo: no (no encontré ninguno) → 2 + 1 + 0 = 3',
+    placeholder(r) {
+      const d = PROD[r];
+      return {
+        chip: 'Sin activar', kicker: 'Catálogo de productos',
+        headline: 'Vendé tus productos <em>junto a cada turno.</em>',
+        lede: 'Cargás tus productos con precio y stock. Tus clientes los suman a su reserva desde tu página y se los entregás en la sesión o cuando pasan a retirarlos.',
+        bullets: ['El producto se suma al pago de la reserva.', 'Controlá unidades y evitá sobreventas.', 'Ocultás un producto, o todo el catálogo, cuando quieras.'],
+        cost: [{ chip: ['', 'Cargo mensual'], b: 'Tiene un cargo fijo.', t: '' }],
+        visual: productVisual(d),
+        notes: ['<b>Copy:</b> reutiliza el onboarding actual (CatalogProductsOnboarding.tsx: «Stock centralizado», «Controlá unidades y evitá sobreventas»). Se cambió «tienda online» por «tu página» y se corrigió la expectativa: hoy el texto sugiere un e-commerce con envíos, pero el producto se vende junto con un turno y se entrega en la sesión o en el retiro.',
+                '<b>Verificado en origin/main</b> (Flash 082894e · nightwing main · cyclone develop): el botón del producto dice «Reservá un turno», la entrega es «En sesión o retiro», y el producto se suma al pago de la reserva (add-booking-products.service.ts).'],
+        flags: ['Hoy /productos redirige a un onboarding de página completa (Conocé · Detalle · Listo) en /facturacion/catalogo-onboarding. Este boceto propone placeholder en el lugar + tutorial en modal: hay que decidir si lo reemplaza.',
+                'Ágora UP y Car incluyen el catálogo sin cargo y lo tienen activo: no ven este estado apagado']
+      };
+    },
+    steps(r) {
+      const d = PROD[r], rn = RUBRO[r].noun;
+      return [
+        { role: 'R1', kicker: 'Cómo funciona', title: 'Del producto a la entrega, en tres momentos',
+          lede: 'Se venden junto con un turno: el cliente los suma a su reserva.',
+          visual: { type: 'moments', items: [
+            { k: 'Vos', t: 'Cargás tus productos', d: 'Cada uno lleva su precio y su stock. Los activos se ven en tu página.' },
+            { k: 'Tu cliente', t: 'Lo suma a su reserva', d: 'Elige el producto al reservar un turno y lo paga junto con la reserva.' },
+            { k: 'En la sesión', t: 'Le entregás el producto', d: 'Queda en «Pendientes de entregar» hasta que lo entregás, en la sesión o cuando pasa a retirarlo.' }] },
+          why: 'Mecanismo en 3 momentos con el actor de cada uno. Corrige de entrada la expectativa que crea «tienda online»: los productos se venden junto con un turno y se entregan en la sesión o en el retiro. Sin costos ni excepciones.',
+          src: 'Basado en el onboarding actual (CatalogProductsOnboarding.tsx) corregido, y en PendingDeliveries.tsx para el momento 3.' },
+        { role: 'R2', kicker: r === 'none' ? 'Un caso práctico' : `Un caso para ${rn}`, title: d.ttl, story: d.story,
+          visual: { type: 'html', html: productVisual(d) },
+          why: 'Mismos 3 momentos con datos del rubro. El caso muestra el producto como complemento del turno, que es como se vende de verdad.',
+          src: 'Nuevo. «Sumá productos» y «Los retirás durante tu sesión» salen de ProductsAddon.tsx (nightwing).',
+          flags: ['Nombres, productos y montos de ejemplo'] },
+        { role: 'R3', kicker: 'Costo y consumo', title: 'Un cargo fijo mensual',
+          lede: 'Es un cargo fijo por mes, sin importar cuántos productos vendas.',
+          visual: { type: 'rows',
+            rows: [{ b: 'Facturación', icon: I.coin, chip: ['', 'Mensual'], d: 'Se suma a tu próxima factura.' },
+                   { b: 'Si lo cancelás', icon: I.power, chip: ['ok', 'Cancelable'], d: 'Dejás de pagar y tus productos dejan de verse en tu página. Los que cargaste se conservan.' }],
+            price: { amount: '$5.000 por mes', unit: 'Cargo fijo · valor de ejemplo' } },
+          final: { cta: 'Activar catálogo' },
+          why: 'Existe porque hay costo: el catálogo es un add-on con cargo fijo mensual (consumption-calculator.ts, plan.ts). Activar equivale a contratarlo, por eso el monto está a la vista en el último paso. No hay paso «Para activar»: no encontré ningún requisito ni decisión previa.',
+          src: 'Reutiliza «Se incluye en tu próxima factura» y «Cancelable en cualquier momento» de CatalogProductsOnboarding.tsx, y el aviso de baja de CatalogProductsAddOn.tsx («los productos cargados se conservan»).',
+          flags: ['Monto de ejemplo. Flash lo calcula por país (getPricesByCountry): 5.000 en Argentina y Chile, 200 en Uruguay y México, sin cargo en Bolivia'] }
+      ];
+    }
+  },
+
+  /* ---------------- PRECIOS DINÁMICOS · 2 pasos ---------------- */
+  dinamicos: {
+    name: 'Precios dinámicos', cta: 'Activar Precios dinámicos',
+    formula: 'Costo o consumo: no · Decisión previa: no (el asistente de 3 pasos ya es la configuración) → 2 + 0 + 0 = 2',
+    placeholder(r) {
+      const d = DYN[r];
+      return {
+        chip: 'Apagados', kicker: 'Marketing y comunicación',
+        headline: 'Llená los huecos de tu agenda con <em>descuentos automáticos.</em>',
+        lede: 'Aplicá descuentos en los días y horarios de menos demanda. Elegís qué servicios, qué franja horaria y cuánto descuento, y lo aplicamos de cara a tus clientes.',
+        bullets: ['Tus clientes ven el aviso «20% OFF» en tu página.', 'Fuera de esa franja, el precio no cambia.', 'Lo pausás o editás cuando quieras.'],
+        cost: [{ chip: ['ok', 'Incluido'], b: 'Va con tu plan.', t: '' }],
+        visual: slotsVisual(d),
+        notes: ['<b>Copy:</b> bajada y viñetas reutilizan el texto de DynamicPricingEmptyState.tsx («locked to JP\'s exact wording»).'],
+        flags: ['Cambio a validar con JP: hoy el titular es solo «Precios dinámicos.». Se propone uno de resultado con su mismo vocabulario.', 'Confirmar «incluido en tu plan»: sale de un comentario en Billing.tsx, no de un chequeo en backend']
+      };
+    },
+    steps(r) {
+      const d = DYN[r], rn = RUBRO[r].noun;
+      return [
+        { role: 'R1', kicker: 'Cómo funciona', title: 'De la agenda vacía a la reserva',
+          lede: 'Se aplica solo, en los horarios que elijas.',
+          visual: { type: 'moments', items: [
+            { k: 'Vos', t: 'Creás una regla', d: 'Elegís qué servicios, qué franja horaria y cuánto descuento.' },
+            { k: 'Tu cliente', t: 'Ve el descuento', d: 'El aviso de descuento aparece en tu página, en cada horario de esa franja.' },
+            { k: 'Al reservar', t: 'Paga con descuento', d: 'Reserva ese horario y paga el precio con descuento. Fuera de la franja, el precio no cambia.' }] },
+          why: 'Mecanismo en 3 momentos. Dice «descuento» y no «precio dinámico» para no crear la expectativa de recargos (hoy solo existen descuentos).',
+          src: 'Reutiliza el vocabulario de JP (DynamicPricingEmptyState.tsx). Estructura en 3 momentos nueva.' },
+        { role: 'R2', kicker: r === 'none' ? 'Un caso práctico' : `Un caso para ${rn}`, title: d.ttl, story: d.story,
+          micro: 'Lo configurás en 3 pasos y lo pausás o editás cuando quieras.',
+          visual: { type: 'html', html: weekVisual(d) }, final: { cta: 'Activar Precios dinámicos' },
+          why: 'Último paso: no hay costo ni decisión previa, así que el CTA vive acá. «Activar» abre el asistente de 3 pasos (profesionales, servicios, normas), que ya es la configuración. Duplicarlo en el tutorial sería repetir.',
+          src: 'Caso sin rubro basado en el ejemplo de JP; los casos de salón y barbería son nuevos. Microcopy textual de JP.',
+          flags: ['Montos de ejemplo'] }
+      ];
+    }
+  }
+};
+
+/* =========================================================
+   Lint + presupuestos
+   ========================================================= */
+function stepTexts(s) {
+  const out = [['título', s.title], ['bajada', s.lede], ['historia', s.story], ['microcopy', s.micro]];
+  const v = s.visual || {};
+  (v.items || []).forEach((m, i) => { out.push([`ítem ${i + 1}`, [m.k, m.t, m.b, m.d].filter(Boolean).join(' ')]); });
+  (v.rows || []).forEach((m, i) => out.push([`fila ${i + 1}`, m.d]));
+  if (v.note) out.push(['nota', v.note]);
+  return out.filter(([, t]) => t);
+}
+function stepBudget(s) {
+  const B = BUDGET[s.role], v = s.visual || {}, res = [];
+  const add = (label, n, max) => res.push({ label, n, max, over: n > max });
+  add('título', words(s.title), B.title);
+  if (B.lede && s.lede) add('bajada', words(s.lede), B.lede);
+  if (B.story && s.story) add('historia', words(s.story), B.story);
+  if (s.role === 'R1') { add('momentos', (v.items || []).length, B.moments); (v.items || []).forEach((m, i) => add(`momento ${i + 1}`, words(m.d), B.moment)); }
+  if (s.role === 'R3') (v.rows || []).forEach((m, i) => add(`fila ${i + 1}`, words(m.d), B.row));
+  if (s.role === 'R4') { add('ítems', (v.items || []).length || (v.type === 'picker' ? 3 : 0), B.items); (v.items || []).forEach((m, i) => add(`ítem ${i + 1}`, words(m.d), B.item)); }
+  return res;
+}
+function placeholderBudget(p) {
+  const B = BUDGET.PH, res = [];
+  const add = (label, n, max) => res.push({ label, n, max, over: n > max });
+  add('titular', words(p.headline), B.headline); add('bajada', words(p.lede), B.lede);
+  add('viñetas', p.bullets.length, B.bullets); p.bullets.forEach((b, i) => add(`viñeta ${i + 1}`, words(b), B.bullet));
+  return res;
+}
+function fullLint() {
+  const lines = []; let texts = 0, viol = 0, over = 0;
+  Object.entries(FEATURES).forEach(([fk, F]) => Object.keys(RUBRO).forEach(rk => {
+    const p = F.placeholder(rk);
+    const ptexts = [['titular', p.headline], ['bajada', p.lede], ...p.bullets.map((b, i) => ['viñeta ' + (i + 1), b]), ...p.cost.map((c, i) => ['costo ' + (i + 1), c.b + ' ' + c.t])];
+    ptexts.forEach(([w, t]) => { texts++; lintText(t).forEach(m => { viol++; lines.push(`${F.name} · ${RUBRO[rk].label} · placeholder · ${w}: ${m}`); }); });
+    placeholderBudget(p).forEach(b => { if (b.over) { over++; lines.push(`${F.name} · ${RUBRO[rk].label} · placeholder · ${b.label}: ${b.n}/${b.max} palabras`); } });
+    [F.cta, ...F.steps(rk).flatMap(s => s.final ? [s.final.cta, s.final.ctaPending].filter(Boolean) : [])].forEach(c => {
+      if (c.length > 25) { over++; lines.push(`${F.name} · ${RUBRO[rk].label} · CTA «${c}»: ${c.length}/25 caracteres`); }
+    });
+    F.steps(rk).forEach((s, i) => {
+      stepTexts(s).forEach(([w, t]) => { texts++; lintText(t).forEach(m => { viol++; lines.push(`${F.name} · ${RUBRO[rk].label} · paso ${i + 1} · ${w}: ${m}`); }); });
+      stepBudget(s).forEach(b => { if (b.over) { over++; lines.push(`${F.name} · ${RUBRO[rk].label} · paso ${i + 1} · ${b.label}: ${b.n}/${b.max}`); } });
+    });
+  }));
+  return { lines, texts, viol, over };
+}
+const budChips = list => `<div class="buds">${list.map(b => `<span class="bud${b.over ? ' over' : ''}">${b.label} ${b.n}/${b.max}</span>`).join('')}</div>`;
+
+/* =========================================================
+   Estado + render
+   ========================================================= */
+const state = { feature: 'resenas', rubro: 'none', view: 'placeholder', width: 'desktop', step: 0, pick: null, mp: 'pending' };
+function readHash() {
+  const [f, r, v, w] = (location.hash || '').replace('#', '').split('/');
+  if (FEATURES[f]) state.feature = f;
+  if (RUBRO[r]) state.rubro = r;
+  if (['tutorial', 'placeholder', 'criterios'].includes(v)) state.view = v;
+  if (w === 'mobile') state.width = 'mobile';
+}
+function writeHash() { history.replaceState(null, '', `#${state.feature}/${state.rubro}/${state.view}/${state.width}`); }
+
+function renderPlaceholder() {
+  const F = FEATURES[state.feature], p = F.placeholder(state.rubro), bud = placeholderBudget(p);
+  return `
+    <div class="crumb"><span class="kicker">${F.section || 'Marketing y comunicación'}</span><span class="kicker">/</span><span class="kicker blue">${F.name}</span></div>
+    <section class="panel hero">
+      <div class="hero-copy">
+        <div class="status-row"><span class="chip">${p.chip}</span><span class="kicker">${p.kicker}</span></div>
+        <h1 class="headline">${p.headline}</h1>
+        <p class="lede">${p.lede}</p>
+        ${checks(p.bullets)}
+        <div class="cost">${p.cost.map(c => `<div class="cost-row"><span class="chip ${c.chip[0]}">${c.chip[1]}</span><span><b>${c.b}</b> ${c.t}</span></div>`).join('')}</div>
+        <div class="actions"><button class="cta" data-open>${F.cta}</button></div>
+      </div>
+      <div class="hero-visual">${p.visual}</div>
+    </section>
+    <div class="dn-box dn"><span class="ttl">Notas de diseño · placeholder</span>
+      ${(p.notes || []).map(n => `<p>${n}</p>`).join('')}
+      ${(p.flags || []).map(f => `<p><span class="flag">⚑ ${f}</span></p>`).join('')}
+      ${budChips(bud)}
+      <p><b>Tutorial:</b> ${F.steps(state.rubro).length} pasos. ${F.formula}.</p>
+    </div>`;
+}
+
+function pickerHtml() {
+  const o = (id, ic, t, d, need) => `<button class="opt${state.pick === id ? ' sel' : ''}${need ? ' locked' : ''}" data-pick="${need ? '' : id}">
+      <span class="ic">${ic}</span><span><b>${t}</b><span>${d}</span>${need ? '<span class="need">Conectá tu Perfil de Google para elegirlo</span>' : ''}</span></button>`;
+  return `<div class="picker">
+    ${o('agora', I.star, 'En Ágora', 'Reseñas verificadas en tu página: solo quien tuvo turno puede dejarla. Con 3 estrellas o menos, el cliente puede mandarte una nota privada.', false)}
+    ${o('google', '<b style="font-size:17px">G</b>', 'En Google', 'El pedido lleva a tu ficha de Google Maps. Sus reseñas también se muestran en tu página.', true)}
+    ${o('both', '<span style="font-size:13px;display:flex;gap:3px;align-items:center">' + I.star.replace('<svg', '<svg width="12" height="12"') + '<b>G</b></span>', 'En los dos', 'El cliente califica en Ágora y, si quedó contento, lo invitamos a repetir la reseña en Google.', true)}
+    <div class="picker-foot">Elegí una opción para activar. Si un día las apagás, nada se borra.</div>
+  </div>`;
+}
+function visualHtml(s) {
+  const v = s.visual;
+  if (v.type === 'moments') return moments(v.items);
+  if (v.type === 'rows') return rowsVisual(v.rows, v.price);
+  if (v.type === 'todo') return todoVisual(v.items, v.note);
+  if (v.type === 'picker') return pickerHtml();
+  return v.html;
+}
+const ROLE_LABEL = { R1: 'Cómo funciona', R2: 'Caso práctico', R3: 'Costo y consumo', R4: 'Para activar' };
+
+function renderSheet() {
+  const F = FEATURES[state.feature], steps = F.steps(state.rubro);
+  const s = steps[state.step], n = steps.length, last = state.step === n - 1;
+  const canActivate = !(s.final && s.final.needsPick) || !!state.pick;
+  const mpToggle = (s.final && s.final.needs === 'mp')
+    ? `<p><b>Probar estado de Mercado Pago:</b> <button class="btn-ghost" data-mp="pending" style="padding:4px 9px;font-size:11px${state.mp === 'pending' ? ';border-color:#F59E0B' : ''}">Sin conectar</button> <button class="btn-ghost" data-mp="ok" style="padding:4px 9px;font-size:11px${state.mp === 'ok' ? ';border-color:#F59E0B' : ''}">Conectado</button></p>` : '';
+  const lint = stepTexts(s).flatMap(([w, t]) => lintText(t).map(m => `${w}: ${m}`));
+  return `<div class="sheet" role="dialog" aria-modal="true" aria-label="Tutorial de ${F.name}">
+    <div class="sheet-head">
+      <div class="progress">${steps.map((_, i) => `<i class="${i <= state.step ? 'done' : ''}"></i>`).join('')}</div>
+      <button class="x" data-close aria-label="Cerrar">✕</button>
+    </div>
+    <div class="sheet-body">
+      <div class="copy">
+        <span class="kicker blue">Paso ${state.step + 1} de ${n} · ${s.kicker}</span>
+        <h2>${s.title}</h2>
+        ${s.lede ? `<p>${s.lede}</p>` : ''}
+        ${s.story ? `<p class="story">${s.story}</p>` : ''}
+        ${s.micro ? `<p class="micro">${I.arrow} ${s.micro}</p>` : ''}
+        <div class="dn-box dn"><span class="ttl">Criterio · ${s.role} ${ROLE_LABEL[s.role]}</span>
+          <p><b>Por qué está:</b> ${s.why}</p>
+          <p><b>Copy:</b> ${s.src}</p>
+          ${mpToggle}
+          ${(s.flags || []).map(f => `<p><span class="flag">⚑ ${f}</span></p>`).join('')}
+          ${budChips(stepBudget(s))}
+          <p>${lint.length ? `<span class="flag">✕ Lint: ${lint.join(' · ')}</span>` : '<span class="bud">Lint OK · sin palabras prohibidas</span>'}</p>
+        </div>
+      </div>
+      <div class="vis">${visualHtml(s)}</div>
+    </div>
+    <div class="sheet-foot">
+      <div class="left">
+        <button class="btn-ghost" data-back ${state.step === 0 ? 'style="visibility:hidden"' : ''}>Atrás</button>
+        <span class="rubro-tag">${RUBRO[state.rubro].tag}</span>
+      </div>
+      <div class="right">
+        ${last ? '' : '<button class="link" data-close style="color:var(--ink-soft)">Saltar</button>'}
+        ${last ? `<button class="cta" data-activate ${canActivate ? '' : 'disabled'}>${s.final.cta}</button>` : '<button class="cta" data-next>Siguiente</button>'}
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderCriterios() {
+  const L = fullLint();
+  const feats = Object.values(FEATURES).map(F => `<tr><td><b>${F.name}</b></td><td>${F.formula.split('→')[0].trim()}</td><td><b>${F.steps('none').length}</b></td></tr>`).join('');
+  return `<div class="crit">
+    <div class="crumb"><span class="kicker">Boceto</span><span class="kicker">/</span><span class="kicker blue">Criterios</span></div>
+    <h2>Qué va en cada paso, y por qué</h2>
+    <p>Contrato completo en <b>CRITERIOS.md</b>. Cada texto de este boceto se valida contra estos criterios con un lint automático.</p>
+
+    <div class="panel"><h3>1 · Cuántos pasos tiene el tutorial</h3>
+      <div class="formula">pasos = 2<br>      + 1  si hay costo, o consume un recurso medido → «Costo y consumo»<br>      + 1  si hay algo que decidir o tener antes de activar → «Para activar»<br>rango 2–4 · ninguna otra cosa agrega pasos</div>
+      <div class="tscroll"><table><tr><th>Feature</th><th>Condiciones</th><th>Pasos</th></tr>${feats}</table></div>
+      <p style="margin-top:12px">Orden fijo: <b>Cómo funciona → Caso práctico → Costo y consumo → Para activar</b>. El costo y el consumo van antes de activar. El CTA principal vive en el último paso que exista.</p>
+    </div>
+
+    <div class="panel"><h3>2 · Contrato por paso</h3>
+      <div class="tscroll"><table class="wide">
+        <tr><th>Paso</th><th>Existe si</th><th>Va</th><th>No va</th><th>Presupuesto</th></tr>
+        <tr><td><b>Cómo funciona</b></td><td class="yes">Siempre · primero</td><td>El mecanismo de punta a punta en 3 momentos (un actor + una acción cada uno) y el resultado que el negocio ve.</td><td class="no">Costos, requisitos, excepciones, límites, configuración, ejemplos con datos.</td><td>Título ≤8 · bajada ≤25 · 3 momentos ≤20</td></tr>
+        <tr><td><b>Caso práctico</b></td><td class="yes">Siempre · segundo</td><td>Un caso que recorre los mismos momentos con datos concretos (persona, servicio, hora o monto).</td><td class="no">Conceptos nuevos, promesas o métricas de resultado, testimonios inventados, cifras sin marcar «Ejemplo».</td><td>Título ≤10 · historia ≤45</td></tr>
+        <tr><td><b>Costo y consumo</b></td><td>Solo si hay costo, o si consume un recurso medido (ej.: mensajes del pack)</td><td>Qué no tiene costo · qué se paga o se consume · unidad (y monto, solo si es plata). Plan B por falta del recurso solo si cambia la decisión. CTA a contratar solo si hay algo que contratar.</td><td class="no">Beneficios y persuasión. Comisiones de terceros que ya se asumen en todo cobro (van como nota en «Para activar»).</td><td>Título ≤8 · bajada ≤25 · filas ≤20</td></tr>
+        <tr><td><b>Para activar</b></td><td>Solo si hay algo que decidir o tener</td><td>Requisitos que bloquean y decisiones que definen el resultado. Restricciones solo si son irreversibles de verdad (sin salida). Con estado.</td><td class="no">Cómo funciona (es el paso 1). Ajustes que se pueden cambiar después. Restricciones con salida (ej.: pausar la tarjeta y crear otra). <b>CTA:</b> es el de activar. Solo se reemplaza si el requisito impide activar (ej.: Reseñas en Google exige perfil conectado → «Conectar Google»). Si no impide activar (Mercado Pago en Gift Cards), el CTA sigue siendo el de activar y el requisito lleva una acción secundaria.</td><td>Título ≤8 · bajada ≤25 · ≤3 ítems ≤25</td></tr>
+      </table></div>
+      <p style="margin-top:12px"><b>Pruebas de calidad:</b> (1) el paso 1 se entiende sin el 2; (2) cambiar el rubro cambia solo datos, nunca la mecánica; (3) cada dato vive en un solo paso; (4) cada acción descripta existe hoy en el producto.</p>
+    </div>
+
+    <div class="panel"><h3>3 · Placeholder vs. tutorial</h3>
+      <p><b>Placeholder = por qué</b> (valor). <b>Tutorial = cómo</b> (mecanismo y decisión). Ninguna frase se repite entre los dos.</p>
+      <div class="tscroll"><table class="wide"><tr><th>Placeholder</th><th>Regla</th><th>Presupuesto</th></tr>
+        <tr><td>Titular</td><td>El resultado para el negocio, con una frase enfatizada. Nunca solo el nombre de la feature.</td><td>≤12 palabras</td></tr>
+        <tr><td>Bajada</td><td>El mecanismo en una oración + qué hace el cliente.</td><td>≤40</td></tr>
+        <tr><td>Viñetas</td><td>2–3. Un beneficio distinto o un hecho de control cada una.</td><td>≤15 c/u</td></tr>
+        <tr><td>Costo</td><td>Una línea por costo con chip (Incluido / Con pack / Sin costo). Sin detalle: el detalle va en «Costo y consumo».</td><td>1 línea</td></tr>
+        <tr><td>CTA</td><td>Verbo + objeto, idéntico al CTA del último paso del tutorial.</td><td>≤25 caracteres</td></tr>
+      </table></div>
+    </div>
+
+    <div class="panel"><h3>4 · Limitaciones («Qué NO hace»)</h3>
+      <p>Entran al tutorial solo si (a) <b>bloquean la activación</b> → «Para activar», o (b) <b>corrigen una expectativa que el paso 1 crearía</b> → se dicen en positivo dentro del paso 1 («La usa al reservar online», no «no se puede usar en el mostrador»). Todo lo demás va al Centro de Ayuda.</p>
+    </div>
+
+    <div class="panel"><h3>5 · Qué caso se muestra en «Caso práctico»</h3>
+      <p><b>Sin rubro</b> → caso neutro (un cliente, un servicio). Es el default. <b>Con rubro</b> → caso del rubro con más servicios cargados en el negocio; si hay empate, el primero cargado. Se escribe un caso por grupo (Salón: Peluquería, Uñas, Pestañas, Cejas…; Barbería). Rubro sin caso escrito → neutro. Nunca se genera un caso en el momento.</p>
+    </div>
+
+    <div class="panel"><h3>6 · Wording (de launch-copy)</h3>
+      <div class="tscroll"><table class="wide"><tr><th>Regla</th><th>Sí</th><th>No</th></tr>
+        <tr><td>Voseo argentino</td><td class="yes">Elegís, subí</td><td class="no">Eliges, sube</td></tr>
+        <tr><td>Ágora con tilde</td><td class="yes">Ágora</td><td class="no">Agora (salvo URLs)</td></tr>
+        <tr><td>Tu página</td><td class="yes">aparece en tu página</td><td class="no">storefront, tienda</td></tr>
+        <tr><td>Planes mensuales</td><td class="yes">planes mensuales</td><td class="no">membresías</td></tr>
+        <tr><td>Concreto</td><td class="yes">Elegís qué servicios, qué franja y cuánto descuento</td><td class="no">Aprovechá las nuevas opciones</td></tr>
+        <tr><td>Sin jerga</td><td class="yes">turno, reserva, horario</td><td class="no">checkout, slot, canje, onboarding, dashboard, feature, usuario</td></tr>
+        <tr><td>Sin relleno</td><td class="yes">—</td><td class="no">fácil, simple, potente, «Ojo:», «Tené en cuenta», exclamaciones</td></tr>
+        <tr><td>Sujeto explícito</td><td class="yes">El cliente toca una calificación y deja su reseña</td><td class="no">«Tocá una estrella» (se lee como orden al negocio)</td></tr>
+        <tr><td>Sin negaciones de relleno</td><td class="yes">Sale a todo cliente con correo.</td><td class="no">«…No consume nada.» · «Es gratis; …»</td></tr>
+        <tr><td>Sin planes B innecesarios</td><td class="yes">(se omite)</td><td class="no">«Sin pack, sale por correo.» salvo que cambie la decisión</td></tr>
+      </table></div>
+      <p style="margin-top:12px"><b>Copy existente primero:</b> se reutiliza el de Flash (ReviewsLanding, novedad in-app, empty states, texto de JP). Lo nuevo se marca en las notas de cada paso.</p>
+    </div>
+
+    <div class="panel"><h3>7 · Lint automático</h3>
+      <p>${L.texts} textos revisados en 3 features × 3 rubros (placeholder y todos los pasos).</p>
+      ${L.lines.length ? L.lines.map(l => `<div class="lintline bad">✕ ${l}</div>`).join('') : '<div class="lintline"><span class="bud">0 palabras prohibidas · 0 presupuestos excedidos</span></div>'}
+    </div>
+  </div>`;
+}
+
+function render() {
+  $('#page').innerHTML = state.view === 'criterios' ? renderCriterios() : renderPlaceholder();
+  const ov = $('#overlay');
+  if (state.view === 'tutorial') { ov.innerHTML = renderSheet(); ov.classList.add('open'); ov.setAttribute('aria-hidden', 'false'); }
+  else { ov.classList.remove('open'); ov.setAttribute('aria-hidden', 'true'); ov.innerHTML = ''; }
+  $('#wrapframe').classList.toggle('mobile', state.width === 'mobile');
+  ['feature', 'rubro', 'view', 'width'].forEach(k =>
+    document.querySelectorAll(`#seg-${k} button`).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === state[k]))));
+  writeHash();
+}
+function toast(msg) {
+  const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+['feature', 'rubro', 'view', 'width'].forEach(k =>
+  $('#seg-' + k).addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    state[k] = b.dataset.v;
+    if (k === 'feature' || k === 'rubro') { state.step = 0; if (k === 'feature') state.pick = null; }
+    if (k === 'view' && b.dataset.v === 'tutorial') state.step = 0;
+    render();
+  }));
+$('#chk-flags').addEventListener('change', e => document.body.classList.toggle('hide-flags', !e.target.checked));
+
+document.addEventListener('click', e => {
+  const t = e.target;
+  if (t.closest('[data-open]')) { state.view = 'tutorial'; state.step = 0; render(); return; }
+  if (t.closest('[data-close]')) { state.view = 'placeholder'; render(); return; }
+  if (t.closest('[data-next]')) { state.step++; render(); return; }
+  if (t.closest('[data-back]')) { state.step = Math.max(0, state.step - 1); render(); return; }
+  const pk = t.closest('[data-pick]');
+  if (pk) { if (pk.dataset.pick) { state.pick = pk.dataset.pick; render(); } return; }
+  const mpb = t.closest('[data-mp]');
+  if (mpb) { state.mp = mpb.dataset.mp; render(); return; }
+  if (t.closest('[data-connect]')) { toast('Boceto: abre Ajustes > Medios de cobro para conectar Mercado Pago'); return; }
+  if (t.closest('[data-activate]')) { toast('Boceto: acá se activaría la feature y se cerraría el tutorial'); return; }
+  if (t.id === 'overlay') { state.view = 'placeholder'; render(); }
+});
+document.addEventListener('keydown', e => {
+  if (state.view !== 'tutorial') return;
+  const n = FEATURES[state.feature].steps(state.rubro).length;
+  if (e.key === 'Escape') { state.view = 'placeholder'; render(); }
+  if (e.key === 'ArrowRight' && state.step < n - 1) { state.step++; render(); }
+  if (e.key === 'ArrowLeft' && state.step > 0) { state.step--; render(); }
+});
+
+readHash();
+render();
+</script>
+</body>
+</html>
