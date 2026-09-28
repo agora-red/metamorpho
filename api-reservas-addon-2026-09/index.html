@@ -7,406 +7,109 @@
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,500;0,600;0,700;1,600;1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --frost-primary:#0072FB;--frost-primary-hover:#005CD4;--frost-primary-soft:#EEF6FF;--frost-primary-wash:rgba(0,114,251,0.08);
+  --frost-primary:#0072FB;--frost-primary-hover:#005CD4;--frost-primary-soft:#EEF6FF;
   --frost-accent:#FF4658;--frost-accent-soft:#FFE3E6;--frost-accent-ink:#B4232F;
-  --frost-success:#10B981;--frost-success-soft:#DDFBF1;--frost-success-ink:#047857;
-  --frost-warning:#F59E0B;--frost-warning-soft:#FFF4CC;--frost-warning-ink:#92400E;
-  --frost-ink:#0F172A;--frost-ink-soft:#3A3A3A;--frost-ink-mid:#64748B;--frost-muted:#868686;--frost-faint:#B5B5B5;
+  --frost-success:#10B981;
+  --frost-warning-soft:#FFF4CC;--frost-warning-ink:#92400E;
+  --frost-ink:#0F172A;--frost-ink-soft:#3A3A3A;--frost-ink-mid:#64748B;--frost-muted:#868686;
   --frost-surface:#FFFFFF;--frost-surface-muted:#EFF3F9;--frost-border:#E2E8F0;--frost-border-soft:#F2F2F2;
-  --on-dark:rgba(255,255,255,0.72);--hair-dark:rgba(255,255,255,0.14);--code-key:#7CB6FF;
-  --r-sm:6px;--r-item:10px;--r-btn:12px;--r-card:18px;--r-lg:20px;--r-shell:28px;--r-chip:999px;
-  --sh-xs:0 1px 2px rgba(15,23,42,0.04);--sh-sm:0 4px 12px -4px rgba(15,23,42,0.10);--sh-md:0 10px 30px -12px rgba(15,23,42,0.15);--sh-lg:0 30px 60px -30px rgba(15,23,42,0.35);
-  --sh-glow:0 4px 18px -2px rgba(0,114,251,0.30);
-  --grad-primary:linear-gradient(180deg,#0A7BFF 0%,#005CD4 100%);
+  --r-sm:6px;--r-card:18px;
+  --sh-sm:0 4px 12px -4px rgba(15,23,42,0.10);
   --sans:'Montserrat',system-ui,-apple-system,sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
 body{font-family:var(--sans);font-weight:500;font-size:15px;line-height:1.55;color:var(--frost-ink);background:var(--frost-surface);font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
-.wrap{max-width:1120px;margin:0 auto;padding:0 28px}
-a{color:var(--frost-primary);text-decoration:none}
-button{font-family:inherit}
-:focus-visible{outline:2px solid var(--frost-primary);outline-offset:3px;border-radius:var(--r-sm)}
+.wrap{max-width:980px;margin:0 auto;padding:0 28px}
 svg.i{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 
-/* chrome */
-.chrome{position:sticky;top:0;z-index:20;background:rgba(255,255,255,0.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--frost-border)}
-.chrome .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:16px}
-.chrome nav{display:flex;gap:22px;font-size:12.5px}
-.chrome nav a{color:var(--frost-muted)}
-.chrome nav a:hover{color:var(--frost-ink)}
-.tag{font-size:10.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--frost-muted);white-space:nowrap}
+.chrome{border-bottom:1px solid var(--frost-border)}
+.chrome .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.tag{font-size:10.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--frost-muted)}
 
-/* type */
-.kicker{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--frost-primary);margin-bottom:14px}
-.kicker::before{content:"";width:22px;height:1px;background:currentColor}
-.t-xl{font-weight:200;font-size:clamp(40px,6.4vw,74px);line-height:1.02;letter-spacing:-.03em}
-.t-l{font-weight:200;font-size:clamp(28px,3.8vw,42px);line-height:1.1;letter-spacing:-.02em}
-.t-xl b,.t-l b{font-weight:700}
+.hero{padding:64px 0 48px}
+.kicker{font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--frost-primary);margin-bottom:14px}
+h1{font-weight:200;font-size:clamp(40px,6vw,64px);line-height:1.04;letter-spacing:-.03em}
+h1 b{font-weight:700}
 .dot{color:var(--frost-accent)}
-.sub{font-size:16px;font-weight:300;color:var(--frost-ink-soft);max-width:560px;margin-top:14px}
-.cap{font-size:12px;color:var(--frost-muted)}
-.sec{padding:96px 0}
-.sec.alt{background:var(--frost-surface-muted)}
-.sec-head{margin-bottom:44px;display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap}
+.lead{font-size:18px;font-weight:300;color:var(--frost-ink-soft);max-width:680px;margin-top:18px}
+.lead b{font-weight:600;color:var(--frost-ink)}
 
-/* pills */
-.pill{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:var(--r-chip);white-space:nowrap}
-.pill.no{background:var(--frost-accent-soft);color:var(--frost-accent-ink)}
-.pill.part{background:var(--frost-warning-soft);color:var(--frost-warning-ink)}
-.pill.ok{background:var(--frost-success-soft);color:var(--frost-success-ink)}
-.pill.int{background:var(--frost-surface-muted);color:var(--frost-ink-mid)}
-.pill.live::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--frost-success)}
+.sec{padding:48px 0;border-top:1px solid var(--frost-border)}
+.sec h2{font-weight:300;font-size:30px;letter-spacing:-.02em;line-height:1.15;margin-bottom:24px}
+.sec h2 b{font-weight:700}
+.num{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--frost-ink);color:#fff;font-size:13px;font-weight:600;margin-right:12px;vertical-align:5px}
 
-/* ===== HERO ===== */
-.hero{padding:84px 0 88px;background:radial-gradient(1200px 500px at 85% -10%,rgba(0,114,251,0.10),transparent 60%),radial-gradient(700px 400px at 100% 100%,rgba(255,70,88,0.06),transparent 60%)}
-.hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center}
-.ask{display:inline-flex;gap:12px;align-items:flex-start;margin-top:32px;padding:14px 18px;border-radius:var(--r-card);background:var(--frost-surface);border:1px solid var(--frost-border);box-shadow:var(--sh-sm);max-width:520px}
-.ask .av{width:34px;height:34px;border-radius:50%;background:var(--frost-ink);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:600;flex:none}
-.ask p{font-size:13.5px;font-style:italic;color:var(--frost-ink)}
-.ask span{display:block;font-size:11.5px;color:var(--frost-muted);font-style:normal;margin-top:4px}
-.nums{display:flex;gap:28px;margin-top:40px;flex-wrap:wrap}
-.nums div{font-size:12px;color:var(--frost-muted);line-height:1.35;max-width:132px}
-.nums b{display:block;font-weight:200;font-size:40px;color:var(--frost-ink);letter-spacing:-.03em;line-height:1;margin-bottom:6px}
+.provide{display:grid;grid-template-columns:1.35fr 1fr;gap:16px}
+.box{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-card);box-shadow:var(--sh-sm);padding:8px 22px}
+.box .h{font-size:10.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--frost-muted);padding:16px 0 8px}
+.act{display:grid;grid-template-columns:70px 1fr;gap:12px;align-items:baseline;padding:11px 0;border-top:1px solid var(--frost-border-soft)}
+.m{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-align:center;padding:4px 0;border-radius:var(--r-sm)}
+.m.get{background:var(--frost-primary-soft);color:var(--frost-primary-hover)}
+.m.post{background:var(--frost-ink);color:#fff}
+.act b{font-size:14px;font-weight:600;display:block}
+.act span{font-size:12.5px;color:var(--frost-ink-mid)}
+.stack{display:grid;gap:16px;align-content:start}
+.ev{display:flex;gap:10px;align-items:center;padding:10px 0;border-top:1px solid var(--frost-border-soft);font-size:14px;font-weight:600}
+.ev svg{color:var(--frost-success)}
+.box p.s{font-size:12.5px;color:var(--frost-ink-mid);padding:4px 0 16px}
+.acc{list-style:none}
+.acc li{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--frost-border-soft);font-size:13.5px}
+.acc li:last-child{padding-bottom:16px}
+.acc li svg{color:var(--frost-primary);margin-top:2px}
 
-/* hero exchange */
-.xchg{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-shell);box-shadow:var(--sh-lg);padding:22px}
-.xchg-top{display:flex;justify-content:space-between;align-items:center;padding:4px 6px 16px;border-bottom:1px solid var(--frost-border-soft);margin-bottom:16px}
-.xchg-top b{font-size:13px;font-weight:600}
-.lane-lbl{display:grid;grid-template-columns:1fr 1fr;font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--frost-muted);margin-bottom:10px}
-.lane-lbl span:last-child{text-align:right}
-.msg{display:flex;flex-direction:column;max-width:78%;margin-bottom:12px;opacity:0;transform:translateY(8px);animation:in .5s ease forwards}
-.msg .bub{padding:11px 14px;border-radius:16px;font-size:13.5px;line-height:1.4}
-.msg .call{font-size:10.5px;font-weight:600;letter-spacing:.06em;color:var(--frost-muted);margin-top:5px}
-.msg.sys{align-self:flex-start}
-.msg.sys .bub{background:var(--frost-surface-muted);border-bottom-left-radius:4px}
-.msg.ag{margin-left:auto;align-items:flex-end}
-.msg.ag .bub{background:var(--grad-primary);color:#fff;border-bottom-right-radius:4px;box-shadow:var(--sh-glow)}
-.msg.ag .call{color:var(--frost-primary-hover)}
-.slots{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
-.slots span{background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.35);padding:3px 9px;border-radius:var(--r-chip);font-size:12px;font-weight:600}
-.slots span.pick{background:#fff;color:var(--frost-primary-hover)}
-.msg.ok .bub{background:var(--frost-success-soft);color:var(--frost-success-ink);box-shadow:none;display:flex;gap:8px;align-items:center;font-weight:600}
-.msg.ok .call{color:var(--frost-success-ink)}
-.msg:nth-child(3){animation-delay:.2s}.msg:nth-child(4){animation-delay:1s}.msg:nth-child(5){animation-delay:1.8s}.msg:nth-child(6){animation-delay:2.6s}.msg:nth-child(7){animation-delay:3.4s}
-@keyframes in{to{opacity:1;transform:none}}
+.caps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.cap{background:var(--frost-surface-muted);border-radius:var(--r-card);padding:20px 20px 18px}
+.cap .n{white-space:nowrap;font-weight:200;font-size:44px;line-height:1;letter-spacing:-.03em}
+.cap .n small{font-size:15px;font-weight:500;color:var(--frost-ink-mid);letter-spacing:0;margin-left:4px}
+.cap .l{font-size:13px;color:var(--frost-ink-soft);margin-top:8px}
+.over{margin-top:12px;display:flex;gap:12px;align-items:center;background:var(--frost-accent-soft);color:var(--frost-accent-ink);border-radius:var(--r-card);padding:14px 18px;font-size:13.5px;font-weight:600}
+.rules{margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:0 28px}
+.rule{display:flex;gap:12px;align-items:flex-start;padding:13px 0;border-top:1px solid var(--frost-border-soft);font-size:14px}
+.rule svg{color:var(--frost-primary);margin-top:2px}
+.rule b{font-weight:600}
+.rule span{display:block;font-size:12.5px;color:var(--frost-ink-mid);margin-top:2px}
 
-/* ===== HOY ===== */
-.today{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
-.tile{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-card);padding:18px 16px;display:flex;flex-direction:column;gap:14px;min-height:150px;box-shadow:var(--sh-xs)}
-.tile .ic{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--frost-surface-muted);color:var(--frost-ink-mid)}
-.tile h4{font-size:13.5px;font-weight:600;line-height:1.3}
-.tile .pill{margin-top:auto;align-self:flex-start}
-.tile.x{background:repeating-linear-gradient(135deg,var(--frost-surface) 0 10px,#FBFCFE 10px 20px)}
-.wall{margin-top:18px;display:flex;gap:10px;align-items:center;font-size:12.5px;color:var(--frost-ink-mid)}
+.not{display:grid;grid-template-columns:1fr 1fr;gap:0 28px}
+.not > div{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px solid var(--frost-border-soft);font-size:14px}
+.not svg{color:var(--frost-accent);margin-top:2px}
+.not span{display:block;font-size:12.5px;color:var(--frost-ink-mid)}
 
-/* ===== FLUJO ===== */
-.flow{display:grid;grid-template-columns:320px 1fr;gap:40px;align-items:start}
-.steps{list-style:none;display:grid;gap:8px;position:sticky;top:96px}
-.step{display:grid;grid-template-columns:40px 1fr;gap:14px;align-items:start;padding:16px;border-radius:var(--r-card);border:1px solid transparent;background:none;text-align:left;cursor:pointer;width:100%;color:inherit;position:relative;transition:background .2s,border-color .2s}
-.step .n{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;border:1.5px solid var(--frost-border);font-weight:600;font-size:14px;color:var(--frost-muted);background:var(--frost-surface);transition:all .2s}
-.step h4{font-size:15px;font-weight:600;margin-top:2px}
-.step p{font-size:12.5px;color:var(--frost-muted);margin-top:2px}
-.step .bar{grid-column:2;height:3px;border-radius:3px;background:var(--frost-border);margin-top:10px;overflow:hidden;display:none}
-.step .bar i{display:block;height:100%;width:0;background:var(--frost-primary)}
-.step:hover{background:rgba(255,255,255,0.6)}
-.step.on{background:var(--frost-surface);border-color:var(--frost-border);box-shadow:var(--sh-sm)}
-.step.on .n{background:var(--grad-primary);border-color:transparent;color:#fff;box-shadow:var(--sh-glow)}
-.step.on .bar{display:block}
-.step.on.auto .bar i{animation:fill 5s linear forwards}
-.step.done .n{color:var(--frost-primary);border-color:var(--frost-primary)}
-@keyframes fill{to{width:100%}}
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.hw{border:1px solid var(--frost-border);border-radius:var(--r-card);padding:20px}
+.hw .k{font-size:10.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--frost-muted);margin-bottom:8px}
+.hw b{font-size:17px;font-weight:600;display:block;margin-bottom:6px}
+.hw p{font-size:13px;color:var(--frost-ink-mid)}
 
-.stage{position:relative}
-.win{background:var(--frost-surface);border-radius:var(--r-lg);box-shadow:var(--sh-lg);border:1px solid var(--frost-border);overflow:hidden}
-.win-bar{display:flex;align-items:center;gap:8px;padding:10px 14px;background:#F8FAFC;border-bottom:1px solid var(--frost-border)}
-.win-bar i{width:9px;height:9px;border-radius:50%;background:var(--frost-border)}
-.win-bar span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;margin-left:10px;font-size:11.5px;color:var(--frost-muted);background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-chip);padding:3px 12px}
-.mock{display:none;background:var(--frost-surface-muted);min-height:520px}
-.mock.on{display:block;animation:in .35s ease}
-.propuesta{position:absolute;top:-12px;right:18px;z-index:2}
-.propuesta .pill{background:var(--frost-ink);color:#fff}
+.dec{display:grid;gap:10px}
+.dq{display:flex;gap:14px;align-items:flex-start;background:var(--frost-warning-soft);border-radius:var(--r-card);padding:16px 18px}
+.dq svg{color:var(--frost-warning-ink);margin-top:2px}
+.dq b{font-size:14px;font-weight:600;display:block}
+.dq span{font-size:13px;color:var(--frost-warning-ink)}
 
-/* Flash: wizard header (OnboardingShared) */
-.oh{display:flex;align-items:center;justify-content:space-between;background:var(--frost-surface);padding:14px 24px;border-bottom:1px solid var(--frost-border)}
-.oh .l{display:flex;align-items:center;gap:14px;font-size:12.5px;font-weight:600;color:var(--frost-ink-mid)}
-.oh .r{display:flex;align-items:center;gap:14px;font-size:12px;font-weight:600;color:var(--frost-ink-mid)}
-.segs{display:flex;gap:4px}
-.segs i{width:30px;height:3px;border-radius:3px;background:var(--frost-border)}
-.segs i.f{background:var(--frost-primary)}
-.ob{max-width:500px;margin:0 auto;padding:34px 24px 28px}
-.ob h3{font-weight:300;font-size:26px;letter-spacing:-.01em;line-height:1.15}
-.ob .d{font-size:13.5px;color:var(--frost-ink-mid);margin-top:8px}
-.fc{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-card);box-shadow:var(--sh-sm);padding:6px 18px;margin-top:22px}
-.frow{display:flex;gap:14px;align-items:center;padding:13px 0;border-bottom:1px solid var(--frost-border-soft)}
-.frow:last-child{border-bottom:0}
-.frow .ic{width:38px;height:38px;border-radius:50%;background:var(--frost-primary-soft);color:var(--frost-primary);display:grid;place-items:center;flex:none}
-.frow b{display:block;font-size:13.5px;font-weight:600}
-.frow span{font-size:12px;color:var(--frost-ink-mid)}
-.cbtn{margin-top:22px;width:100%;border:0;border-radius:var(--r-btn);background:var(--grad-primary);color:#fff;font-weight:600;font-size:14.5px;padding:14px;display:flex;gap:8px;justify-content:center;align-items:center;box-shadow:var(--sh-glow)}
-.ccap{text-align:center;margin-top:10px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--frost-ink-mid)}
-.lbl{font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--frost-ink-mid);margin:18px 0 8px}
-.inp{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-btn);padding:12px 14px;font-size:13.5px;display:flex;justify-content:space-between;align-items:center;gap:10px}
-.inp.focus{border-color:var(--frost-primary);box-shadow:0 0 0 3px var(--frost-primary-wash)}
-.segctl{display:grid;grid-template-columns:1fr 1fr;background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-btn);padding:4px;gap:4px}
-.segctl span{text-align:center;padding:9px;border-radius:9px;font-size:12.5px;font-weight:600;color:var(--frost-ink-mid)}
-.segctl span.on{background:var(--frost-primary-soft);color:var(--frost-primary-hover)}
-.key{font-weight:600;letter-spacing:.02em;font-size:13px}
-.key em{font-style:normal;color:var(--frost-faint)}
-.mini{border:1px solid var(--frost-border);background:var(--frost-surface);border-radius:10px;padding:6px 12px;font-size:12px;font-weight:600;color:var(--frost-ink);display:inline-flex;gap:6px;align-items:center}
-.warn{margin-top:10px;display:flex;gap:10px;align-items:center;background:var(--frost-warning-soft);color:var(--frost-warning-ink);border-radius:var(--r-btn);padding:10px 12px;font-size:12.5px;font-weight:600}
-.checks{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.chk{display:flex;gap:10px;align-items:center;background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-btn);padding:10px 12px;font-size:12.5px;font-weight:600}
-.chk i{width:18px;height:18px;border-radius:5px;background:var(--frost-primary);display:grid;place-items:center;color:#fff;flex:none}
-.test{display:flex;gap:10px;align-items:center;margin-top:14px;flex-wrap:wrap}
-.okchip{display:inline-flex;gap:6px;align-items:center;background:var(--frost-success-soft);color:var(--frost-success-ink);font-size:12px;font-weight:600;padding:6px 12px;border-radius:var(--r-chip)}
-
-/* Flash: page (ajustes) */
-.pg{padding:28px 30px}
-.pg h3{font-weight:300;font-size:34px;letter-spacing:-.03em;line-height:1}
-.pg h3 b{font-weight:700}
-.pg .d{font-size:13px;color:var(--frost-ink-mid);margin-top:6px}
-.ss{margin-top:22px;background:linear-gradient(135deg,rgba(255,255,255,0.97),rgba(255,255,255,0.88));border:1px solid var(--frost-border);border-radius:var(--r-lg);box-shadow:var(--sh-sm)}
-.ss-h{display:flex;gap:14px;align-items:flex-start;padding:18px 20px;border-bottom:1px solid var(--frost-border)}
-.ss-h .ic{width:38px;height:38px;border-radius:12px;background:var(--frost-surface);box-shadow:var(--sh-sm);display:grid;place-items:center;color:var(--frost-primary);flex:none}
-.ss-h .k{font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#94A3B8}
-.ss-h b{display:block;font-size:15px;font-weight:600}
-.ss-h span{font-size:12.5px;color:var(--frost-ink-mid)}
-.ss-h .pill{margin-left:auto}
-.ss-b{display:grid;grid-template-columns:.8fr 1.4fr;gap:0}
-.usage{padding:18px 20px;border-right:1px solid var(--frost-border-soft);display:grid;gap:16px;align-content:start}
-.meter .top{display:flex;justify-content:space-between;font-size:12.5px;color:var(--frost-ink-soft);margin-bottom:7px}
-.meter .top b{font-weight:600;color:var(--frost-ink)}
-.meter .track{height:8px;border-radius:8px;background:var(--frost-border);overflow:hidden}
-.meter .track i{display:block;height:100%;border-radius:8px;background:var(--frost-primary)}
-.log{padding:14px 20px}
-.log .lbl{margin:4px 0 6px}
-.lrow{display:grid;grid-template-columns:44px 1fr auto;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--frost-border-soft);font-size:12.5px}
-.lrow:last-child{border-bottom:0}
-.lrow time{color:var(--frost-muted);font-size:11.5px}
-.lrow b{font-weight:600}
-.lrow small{display:block;color:var(--frost-muted);font-size:11px}
-.src{font-size:10px;font-weight:600;letter-spacing:.08em;padding:3px 8px;border-radius:var(--r-chip);background:var(--frost-primary-soft);color:var(--frost-primary-hover);white-space:nowrap}
-.src.g{background:var(--frost-success-soft);color:var(--frost-success-ink)}
-.src.r{background:var(--frost-accent-soft);color:var(--frost-accent-ink)}
-
-/* ===== DIAGRAMA ===== */
-.dia{display:grid;grid-template-columns:200px 1fr 260px 1fr 200px;align-items:center;gap:0}
-.node{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-lg);padding:22px 18px;text-align:center;box-shadow:var(--sh-sm)}
-.node .ic{width:52px;height:52px;border-radius:16px;margin:0 auto 12px;display:grid;place-items:center;background:var(--frost-surface-muted);color:var(--frost-ink)}
-.node .ic svg.i{width:24px;height:24px}
-.node b{display:block;font-size:14px;font-weight:600}
-.node span{display:block;font-size:11.5px;line-height:1.4;margin-top:4px;color:var(--frost-muted)}
-.node.ag .ic{background:var(--frost-primary-soft);color:var(--frost-primary)}
-.wire{position:relative;height:120px}
-.lane{position:absolute;left:10px;right:10px;height:2px}
-.lane.fwd{top:38px;background:var(--frost-primary)}
-.lane.back{bottom:38px;background:repeating-linear-gradient(90deg,var(--frost-success) 0 6px,transparent 6px 11px)}
-.lane.fwd::after{content:"";position:absolute;right:-2px;top:-4px;border:5px solid transparent;border-left:7px solid var(--frost-primary);border-right:0}
-.lane.back::after{content:"";position:absolute;left:-2px;top:-4px;border:5px solid transparent;border-right:7px solid var(--frost-success);border-left:0}
-.lane b{position:absolute;left:50%;transform:translateX(-50%);font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
-.lane.fwd b{top:-22px;color:var(--frost-primary-hover)}
-.lane.back b{top:10px;color:var(--frost-success-ink)}
-.pk{position:absolute;top:-4px;width:10px;height:10px;border-radius:50%;left:0}
-.lane.fwd .pk{background:var(--frost-primary);box-shadow:0 0 0 4px var(--frost-primary-wash);animation:go 2.6s linear infinite}
-.lane.back .pk{background:var(--frost-success);box-shadow:0 0 0 4px rgba(16,185,129,0.15);animation:back 2.6s linear infinite 1.3s;left:auto;right:0}
-@keyframes go{0%{left:0;opacity:0}10%{opacity:1}90%{opacity:1}100%{left:calc(100% - 10px);opacity:0}}
-@keyframes back{0%{right:0;opacity:0}10%{opacity:1}90%{opacity:1}100%{right:calc(100% - 10px);opacity:0}}
-.gate{background:var(--frost-ink);border-radius:var(--r-shell);padding:20px 18px;color:#fff;box-shadow:var(--sh-lg)}
-.gate .k{font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--code-key);margin-bottom:12px;text-align:center}
-.gate ul{list-style:none;display:grid;gap:7px}
-.gate li{display:flex;gap:10px;align-items:center;font-size:12.5px;font-weight:500;border:1px solid var(--hair-dark);border-radius:var(--r-item);padding:8px 10px}
-.gate li i{width:18px;height:18px;border-radius:50%;background:rgba(16,185,129,0.18);color:#6EE7B7;display:grid;place-items:center;flex:none}
-.gate li i svg{width:11px;height:11px;stroke-width:2.6}
-
-/* ===== LÍMITES ===== */
-.lim{display:grid;grid-template-columns:1.1fr 1fr;gap:28px;align-items:start}
-.gauges{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-lg);box-shadow:var(--sh-md);padding:26px}
-.gauges h4{font-size:15px;font-weight:600;display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
-.g{margin-bottom:22px}
-.g .top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
-.g .top span{font-size:13px;color:var(--frost-ink-soft)}
-.g .top b{font-size:22px;font-weight:300;letter-spacing:-.02em}
-.g .top b small{font-size:12px;color:var(--frost-muted);font-weight:500}
-.g .track{height:12px;border-radius:12px;background:var(--frost-border);position:relative}
-.g .track i{position:absolute;inset:0 auto 0 0;border-radius:12px;background:var(--frost-primary)}
-.g .track i.full{background:var(--frost-accent)}
-.g .cap{margin-top:6px}
-.toast{display:flex;gap:12px;align-items:flex-start;background:var(--frost-accent-soft);border-radius:var(--r-card);padding:14px 16px;color:var(--frost-accent-ink)}
-.toast b{display:block;font-size:13px;font-weight:600}
-.toast span{font-size:12px}
-.rules{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.rule{display:flex;gap:12px;align-items:center;background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-card);padding:14px;box-shadow:var(--sh-xs)}
-.rule .ic{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--frost-primary-soft);color:var(--frost-primary);flex:none}
-.rule b{font-size:13px;font-weight:600;line-height:1.3}
-.rule small{display:block;font-size:11.5px;color:var(--frost-muted);font-weight:500}
-.rule.core{border-color:var(--frost-primary);box-shadow:0 0 0 3px var(--frost-primary-wash)}
-
-/* ===== MERCADO ===== */
-.mk{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.panel{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-lg);padding:24px;box-shadow:var(--sh-sm)}
-.panel h4{font-size:14px;font-weight:600}
-.panel .cap{margin-top:2px;margin-bottom:22px}
-.hb{display:grid;grid-template-columns:118px 1fr;gap:10px;align-items:center;margin-bottom:12px;font-size:12.5px}
-.hb .nm{color:var(--frost-ink-soft);text-align:right}
-.hb .tr{position:relative;height:22px}
-.hb .tr i{position:absolute;left:0;top:0;bottom:0;border-radius:0 4px 4px 0;background:var(--frost-faint)}
-.hb .tr span{position:absolute;top:2px;font-size:12px;font-weight:600;color:var(--frost-ink);padding-left:8px;white-space:nowrap}
-.hb.us .nm{color:var(--frost-primary-hover);font-weight:600}
-.hb.us .tr i{background:var(--frost-primary)}
-.hb[title]{cursor:default}
-.hb:hover .tr i{filter:brightness(.92)}
-.axis{display:grid;grid-template-columns:118px 1fr;gap:10px;font-size:10.5px;color:var(--frost-muted)}
-.axis div:last-child{display:flex;justify-content:space-between;border-top:1px solid var(--frost-border);padding-top:6px}
-.ladder{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.rung{border-radius:var(--r-card);padding:14px;background:var(--frost-surface-muted);display:flex;flex-direction:column;gap:6px;min-height:200px}
-.rung h5{font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--frost-ink-mid);margin-bottom:6px}
-.co{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:10px;padding:7px 10px;font-size:12.5px;font-weight:600}
-.co small{display:block;font-weight:500;font-size:11px;color:var(--frost-muted)}
-.co.us{background:var(--frost-primary);border-color:var(--frost-primary);color:#fff;box-shadow:var(--sh-glow)}
-.co.us small{color:rgba(255,255,255,0.8)}
-.price{margin-top:20px}
-.pscale{position:relative;height:96px;margin:6px 8px 0}
-.pscale .ln{position:absolute;left:0;right:0;top:54px;height:2px;background:var(--frost-border)}
-.pscale .band{position:absolute;top:44px;height:22px;border-radius:var(--r-chip);background:var(--frost-primary);box-shadow:var(--sh-glow)}
-.pscale .pt{position:absolute;top:48px;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:var(--frost-surface);border:3px solid var(--frost-ink-mid)}
-.pscale .pl{position:absolute;font-size:11.5px;font-weight:600;white-space:nowrap;transform:translateX(-50%);color:var(--frost-ink-soft);text-align:center;line-height:1.25}
-.pscale .pl small{display:block;font-weight:500;color:var(--frost-muted);font-size:10.5px}
-.pscale .up{top:0}
-.pscale .dn{top:72px}
-.pscale .us{color:var(--frost-primary-hover)}
-.plist{display:none;gap:6px;margin-top:4px}
-.plist div{display:flex;justify-content:space-between;font-size:12.5px;padding:8px 12px;border-radius:var(--r-item);background:var(--frost-surface-muted);color:var(--frost-ink-soft)}
-.plist div b{font-weight:600;color:var(--frost-ink)}
-.plist div.us{background:var(--frost-primary);color:#fff}
-.plist div.us b{color:#fff}
-.pticks{display:flex;justify-content:space-between;font-size:10.5px;color:var(--frost-muted);margin:0 8px}
-
-/* ===== FASES ===== */
-.tl{display:grid;grid-template-columns:1fr 170px 1fr 60px 1fr;align-items:stretch}
-.ph{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-lg);padding:22px;box-shadow:var(--sh-sm)}
-.ph .k{font-size:10.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--frost-primary);margin-bottom:10px}
-.ph h4{font-size:17px;font-weight:600;margin-bottom:12px}
-.ph .chips{display:flex;flex-wrap:wrap;gap:6px}
-.ph .chips span{font-size:11.5px;font-weight:600;padding:5px 10px;border-radius:var(--r-chip);background:var(--frost-surface-muted);color:var(--frost-ink-soft)}
-.ph.later{background:transparent;box-shadow:none;border-style:dashed}
-.ph.later .k{color:var(--frost-muted)}
-.jn{display:flex;align-items:center;justify-content:center;position:relative}
-.jn::before{content:"";position:absolute;left:0;right:0;top:50%;height:2px;background:var(--frost-border)}
-.diamond{position:relative;width:150px;text-align:center}
-.diamond i{display:block;width:34px;height:34px;margin:0 auto 8px;transform:rotate(45deg);background:var(--frost-ink);border-radius:6px}
-.diamond span{display:block;font-size:10.5px;font-weight:600;line-height:1.3;color:var(--frost-ink);background:var(--frost-surface-muted);padding:2px}
-
-/* ===== DECISIONES ===== */
-.closing{background:var(--frost-ink);color:#fff}
-.closing .kicker{color:var(--code-key)}
-.closing .t-l{color:#fff}
-.dec{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:40px}
-.dq{border:1px solid var(--hair-dark);border-radius:var(--r-lg);padding:20px 18px;display:flex;flex-direction:column;gap:12px;min-height:170px}
-.dq .ic{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:rgba(124,182,255,0.12);color:var(--code-key)}
-.dq b{font-size:14px;font-weight:600;line-height:1.3}
-.dq > span:last-child{font-size:12px;color:var(--on-dark);margin-top:auto}
-.dq.first{border-color:var(--code-key);background:rgba(124,182,255,0.06)}
-.ficha{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
-.ficha span{font-size:11.5px;font-weight:600;color:var(--on-dark);border:1px solid var(--hair-dark);border-radius:var(--r-chip);padding:6px 12px}
-.ficha span b{color:#fff;font-weight:600}
-.alc-cta{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;margin-top:-40px;background:var(--frost-ink);color:#fff;border-radius:var(--r-lg);padding:20px 24px;box-shadow:var(--sh-lg);text-decoration:none}
-.alc-cta .ic{width:44px;height:44px;border-radius:14px;background:rgba(124,182,255,0.14);color:var(--code-key);display:grid;place-items:center}
-.alc-cta b{display:block;font-size:16px;font-weight:600}
-.alc-cta small{font-size:12.5px;color:var(--on-dark)}
-.alc-cta .go{display:inline-flex;gap:8px;align-items:center;font-size:13px;font-weight:600;background:var(--grad-primary);padding:10px 16px;border-radius:var(--r-btn);white-space:nowrap}
-.alc-cta:hover .go{box-shadow:var(--sh-glow)}
-@media (max-width:640px){.alc-cta{grid-template-columns:auto 1fr;margin-top:-24px}.alc-cta .go{grid-column:1 / -1;justify-content:center}}
-footer{padding:28px 0;font-size:12px;color:var(--frost-muted);border-top:1px solid var(--frost-border)}
+footer{padding:28px 0 40px;font-size:12px;color:var(--frost-muted);border-top:1px solid var(--frost-border)}
 footer code{font-family:var(--sans);font-weight:600;background:var(--frost-surface-muted);padding:1px 6px;border-radius:var(--r-sm)}
 
-/* ===== RESPONSIVE ===== */
-@media (max-width:1000px){
-  .chrome nav{display:none}
-  .hero-grid,.flow,.lim,.mk{grid-template-columns:1fr}
-  .steps{position:static;grid-template-columns:1fr 1fr}
-  .today{grid-template-columns:repeat(3,1fr)}
-  .dia{grid-template-columns:1fr;justify-items:stretch}
-  .wire{height:84px;width:100%}
-  .wire .lane{left:auto;right:auto;top:6px;bottom:6px;width:2px;height:auto}
-  .wire .lane.fwd{left:calc(50% - 30px)}
-  .wire .lane.back{left:calc(50% + 30px);right:auto;background:repeating-linear-gradient(180deg,var(--frost-success) 0 6px,transparent 6px 11px)}
-  .wire .lane.fwd::after{right:auto;left:-4px;top:auto;bottom:-2px;border:5px solid transparent;border-top:7px solid var(--frost-primary);border-bottom:0}
-  .wire .lane.back::after{left:-4px;top:-2px;border:5px solid transparent;border-bottom:7px solid var(--frost-success);border-top:0}
-  .wire .lane b{top:50%!important;transform:translateY(-50%);left:auto}
-  .wire .lane.fwd b{right:14px}
-  .wire .lane.back b{left:14px}
-  .wire .pk{display:none}
-  .wire .lane b{white-space:normal;width:120px;letter-spacing:.1em;line-height:1.3}
-  .wire .lane.fwd b{text-align:right}
-  .jn:empty{height:36px}
-  .tl{grid-template-columns:1fr;gap:0}
-  .jn{height:90px}
-  .jn::before{left:50%;right:auto;top:0;bottom:0;width:2px;height:auto}
-  .dec{grid-template-columns:1fr 1fr}
-}
-@media (max-width:640px){
+@media (max-width:760px){
   .wrap{padding:0 16px}
-  .sec{padding:64px 0}
-  .steps{grid-template-columns:1fr}
-  .today{grid-template-columns:1fr 1fr}
-  .rules,.checks{grid-template-columns:1fr}
-  .ss-b{grid-template-columns:1fr}
-  .usage{border-right:0;border-bottom:1px solid var(--frost-border-soft)}
-  .oh .r > span{display:none}
-  .ob h3{font-size:22px}
-  .ladder{grid-template-columns:1fr}
-  .rung{min-height:0}
-  .dec{grid-template-columns:1fr}
-  .hb{grid-template-columns:92px 1fr}
-  .axis{grid-template-columns:92px 1fr}
-  .nums{gap:24px}
-  .pscale{display:none}
-  .plist{display:grid}
-  .mock{min-height:0}
-  .pg{padding:22px 16px}
-  .pg h3{font-size:28px}
-}
-@media (prefers-reduced-motion:reduce){
-  .msg{animation:none;opacity:1;transform:none}
-  .pk{display:none}
-  .mock.on{animation:none}
-  .step.on.auto .bar i{animation:none;width:100%}
-  html{scroll-behavior:auto}
+  .hero{padding:44px 0 36px}
+  .provide,.rules,.not,.how{grid-template-columns:1fr}
+  .caps{grid-template-columns:1fr 1fr}
+  .cap .n{font-size:30px}
+  .sec h2{font-size:25px}
 }
 </style>
 </head>
 <body>
-
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></symbol>
-  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
-  <symbol id="i-swap" viewBox="0 0 24 24"><path d="M7 7h12l-3-3M17 17H5l3 3"/></symbol>
-  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/></symbol>
-  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3M15 8l2 2"/></symbol>
-  <symbol id="i-plug" viewBox="0 0 24 24"><path d="M9 7V3M15 7V3M6 7h12v4a6 6 0 0 1-12 0zM12 17v4"/></symbol>
-  <symbol id="i-g" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 12h6a6 6 0 1 1-2-4.5"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
-  <symbol id="i-bot" viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="12" rx="4"/><path d="M12 4v4M9 14h.01M15 14h.01"/></symbol>
-  <symbol id="i-store" viewBox="0 0 24 24"><path d="M4 10l1.5-5h13L20 10M4 10v9h16v-9M4 10h16M9 19v-5h6v5"/></symbol>
-  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.5 8-8 9-4.5-1-8-4.5-8-9V6z"/></symbol>
-  <symbol id="i-rules" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></symbol>
-  <symbol id="i-card" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18M7 15h4"/></symbol>
-  <symbol id="i-gauge" viewBox="0 0 24 24"><path d="M4 18a8 8 0 1 1 16 0"/><path d="M12 18l4-6"/></symbol>
-  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="3"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
-  <symbol id="i-hist" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
-  <symbol id="i-off" viewBox="0 0 24 24"><path d="M12 3v8"/><path d="M6.5 7a8 8 0 1 0 11 0"/></symbol>
-  <symbol id="i-once" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M10 9l2-1v8"/></symbol>
-  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
-  <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></symbol>
-  <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17h.01"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3M15 8l2 2"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/></symbol>
+  <symbol id="i-stop" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/></symbol>
   <symbol id="i-q" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5M12 17h.01"/></symbol>
-  <symbol id="i-money" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="3"/><circle cx="12" cy="12" r="2.5"/></symbol>
-  <symbol id="i-help" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 16 0v4a2 2 0 0 1-2 2h-1v-6h3M4 12v4a2 2 0 0 0 2 2h1v-6H4"/></symbol>
-  <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></symbol>
 </svg>
 
 <header class="chrome">
@@ -426,393 +129,116 @@ footer code{font-family:var(--sans);font-weight:600;background:var(--frost-surfa
         <linearGradient id="p2" x1="16.3401" y1="26.6997" x2="21.8393" y2="30.8946" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
       </defs>
     </svg>
-    <nav aria-label="Secciones">
-      <a href="#hoy">Hoy</a>
-      <a href="#flujo">Cómo se conecta</a>
-      <a href="#dentro">Por dentro</a>
-      <a href="#limites">Límites</a>
-      <a href="#mercado">Mercado</a>
-      <a href="#fases">Fases</a>
-      <a href="alcance.html">Alcance</a>
-    </nav>
     <span class="tag">Propuesta · Sep 2026</span>
   </div>
 </header>
 
 <main>
-<!-- HERO -->
 <section class="hero">
-  <div class="wrap hero-grid">
-    <div>
-      <div class="kicker">Add-on de integraciones</div>
-      <h1 class="t-xl">Tu agenda, <b>conectada</b><span class="dot">.</span></h1>
-      <p class="sub">El sistema del negocio consulta horarios y reserva, mueve o cancela turnos en Ágora. Con límites claros.</p>
-      <div class="ask">
-        <div class="av">NB</div>
-        <p>«¿Ágora tiene API o webhook para consultar disponibilidad y crear, cancelar o reprogramar reservas?»<span>Una barbería cliente · 28/9</span></p>
-      </div>
-      <div class="nums">
-        <div><b>4</b>pedidos de API en 2026</div>
-        <div><b>40</b>negocios con más de 300 reservas por mes</div>
-        <div><b>0</b>reservas entran hoy por API</div>
-      </div>
-    </div>
-
-    <div class="xchg" aria-label="Ejemplo de una reserva hecha desde otro sistema">
-      <div class="xchg-top"><b>Una reserva, de punta a punta</b><span class="pill int">Ejemplo</span></div>
-      <div class="lane-lbl"><span>Sistema del negocio</span><span>Ágora</span></div>
-      <div class="msg sys"><div class="bub">¿Qué horarios hay mañana para <b>Corte y barba</b>?</div><div class="call">Consulta de horarios</div></div>
-      <div class="msg ag"><div class="bub">Hay tres libres con Tomás
-        <div class="slots"><span>17:00</span><span class="pick">18:00</span><span>19:30</span></div></div><div class="call">Horarios reales de la agenda</div></div>
-      <div class="msg sys"><div class="bub">Reservá las 18:00 para Lucas.</div><div class="call">Crear reserva</div></div>
-      <div class="msg ag ok"><div class="bub"><svg class="i"><use href="#i-check"/></svg>Reservada · mañana 18:00</div><div class="call">Mismas reglas que la vidriera</div></div>
-      <div class="msg sys"><div class="bub">Aviso recibido: <b>reserva creada</b>.</div><div class="call">Ágora avisa cada cambio</div></div>
-    </div>
+  <div class="wrap">
+    <div class="kicker">Propuesta · Add-on</div>
+    <h1>API de <b>reservas</b><span class="dot">.</span></h1>
+    <p class="lead">El sistema del negocio (su bot de WhatsApp, su recepción o su software) <b>consulta horarios y crea, reprograma o cancela turnos</b> en Ágora, y Ágora le <b>avisa cada cambio</b>. Se activa por negocio y se cobra aparte.</p>
   </div>
 </section>
 
-<!-- HOY -->
-<section class="sec alt" id="hoy">
+<section class="sec">
   <div class="wrap">
-    <div class="sec-head">
-      <div>
-        <div class="kicker">Qué hay hoy</div>
-        <h2 class="t-l">Hoy esa puerta <b>no existe.</b></h2>
+    <h2><span class="num">1</span>Qué <b>proveemos.</b></h2>
+    <div class="provide">
+      <div class="box">
+        <div class="h">Acciones</div>
+        <div class="act"><span class="m get">Leer</span><div><b>Sucursales, profesionales y servicios</b><span>Con duración, precio y si piden seña</span></div></div>
+        <div class="act"><span class="m get">Leer</span><div><b>Horarios libres</b><span>Por servicio, profesional o «cualquiera» y sucursal</span></div></div>
+        <div class="act"><span class="m get">Leer</span><div><b>Reservas del negocio</b><span>De todos los canales, también las cargadas a mano</span></div></div>
+        <div class="act"><span class="m post">Escribir</span><div><b>Crear una reserva</b><span>Uno o más servicios en la misma visita</span></div></div>
+        <div class="act"><span class="m post">Escribir</span><div><b>Reprogramar una reserva</b><span>Otro horario u otro profesional</span></div></div>
+        <div class="act"><span class="m post">Escribir</span><div><b>Cancelar una reserva</b><span>Con la política de cancelación del servicio</span></div></div>
       </div>
-      <p class="cap">Verificado en el código de producción, 28/9/2026</p>
-    </div>
-    <div class="today">
-      <div class="tile"><div class="ic"><svg class="i"><use href="#i-cal"/></svg></div><h4>Consultar horarios</h4><span class="pill part">Parcial</span></div>
-      <div class="tile"><div class="ic"><svg class="i"><use href="#i-plus"/></svg></div><h4>Crear reservas</h4><span class="pill part">Parcial</span></div>
-      <div class="tile x"><div class="ic"><svg class="i"><use href="#i-swap"/></svg></div><h4>Cancelar y reprogramar</h4><span class="pill no">No</span></div>
-      <div class="tile x"><div class="ic"><svg class="i"><use href="#i-bell"/></svg></div><h4>Avisos a otro sistema</h4><span class="pill no">No</span></div>
-      <div class="tile x"><div class="ic"><svg class="i"><use href="#i-key"/></svg></div><h4>Claves por negocio</h4><span class="pill no">No</span></div>
-      <div class="tile"><div class="ic"><svg class="i"><use href="#i-g"/></svg></div><h4>Reserve with Google</h4><span class="pill ok">Solo redirección</span></div>
-    </div>
-    <p class="wall"><svg class="i"><use href="#i-warn"/></svg>La vidriera usa rutas internas: sin contrato, sin saber quién llama y sin topes por negocio.</p>
-  </div>
-</section>
-
-<!-- FLUJO -->
-<section class="sec" id="flujo">
-  <div class="wrap">
-    <div class="sec-head">
-      <div>
-        <div class="kicker">Cómo se conecta</div>
-        <h2 class="t-l">Cuatro pasos, <b>todo desde Flash.</b></h2>
-      </div>
-      <p class="cap">Pantallas propuestas con los componentes actuales de Flash</p>
-    </div>
-
-    <div class="flow">
-      <ol class="steps" role="tablist" aria-label="Pasos de conexión">
-        <li><button class="step on" role="tab" aria-selected="true" data-i="0"><span class="n">1</span><span><h4>Activá el add-on</h4><p>Desde Facturación, como el agente de voz</p></span><span class="bar"><i></i></span></button></li>
-        <li><button class="step" role="tab" aria-selected="false" data-i="1"><span class="n">2</span><span><h4>Creá una clave</h4><p>Solo lectura, o lectura y escritura</p></span><span class="bar"><i></i></span></button></li>
-        <li><button class="step" role="tab" aria-selected="false" data-i="2"><span class="n">3</span><span><h4>Conectá tu sistema</h4><p>Dónde avisamos y un aviso de prueba</p></span><span class="bar"><i></i></span></button></li>
-        <li><button class="step" role="tab" aria-selected="false" data-i="3"><span class="n">4</span><span><h4>Mirá qué pasa</h4><p>Uso del día e historial de cada acción</p></span><span class="bar"><i></i></span></button></li>
-      </ol>
-
-      <div class="stage">
-        <div class="propuesta"><span class="pill">Propuesta</span></div>
-        <div class="win">
-          <div class="win-bar"><i></i><i></i><i></i><span id="url">pro.agora.red/facturacion/api-onboarding</span></div>
-
-          <!-- 1 -->
-          <div class="mock on" data-i="0" data-url="pro.agora.red/facturacion/api-onboarding">
-            <div class="oh">
-              <div class="l"><svg class="i"><use href="#i-back"/></svg>Volver</div>
-              <div class="r"><span>Paso 1 de 3 · Activar</span><div class="segs"><i class="f"></i><i></i><i></i></div></div>
-            </div>
-            <div class="ob">
-              <h3>Paso 01 · Conectá tu sistema a Ágora</h3>
-              <p class="d">Tu sistema consulta horarios y reserva. Ágora le avisa cada cambio.</p>
-              <div class="fc">
-                <div class="frow"><span class="ic"><svg class="i"><use href="#i-cal"/></svg></span><div><b>Horarios reales</b><span>Los mismos que ve tu cliente en la vidriera</span></div></div>
-                <div class="frow"><span class="ic"><svg class="i"><use href="#i-plus"/></svg></span><div><b>Reservar, mover y cancelar</b><span>Desde tu bot, tu recepción o tu sistema</span></div></div>
-                <div class="frow"><span class="ic"><svg class="i"><use href="#i-bell"/></svg></span><div><b>Avisos al instante</b><span>Cuando alguien reserva por cualquier canal</span></div></div>
-              </div>
-              <div class="cbtn">Continuar <svg class="i"><use href="#i-arrow"/></svg></div>
-              <p class="ccap">Sin costo durante el piloto</p>
-            </div>
-          </div>
-
-          <!-- 2 -->
-          <div class="mock" data-i="1" data-url="pro.agora.red/facturacion/api-onboarding">
-            <div class="oh">
-              <div class="l"><svg class="i"><use href="#i-back"/></svg>Volver</div>
-              <div class="r"><span>Paso 2 de 3 · Tu clave</span><div class="segs"><i class="f"></i><i class="f"></i><i></i></div></div>
-            </div>
-            <div class="ob">
-              <h3>Paso 02 · Creá tu clave</h3>
-              <p class="d">Es la llave de tu sistema. Podés tener hasta dos.</p>
-              <div class="lbl">Nombre</div>
-              <div class="inp">Bot de WhatsApp</div>
-              <div class="lbl">Qué puede hacer</div>
-              <div class="segctl"><span>Solo consultar</span><span class="on">Consultar y reservar</span></div>
-              <div class="lbl">Tu clave</div>
-              <div class="inp focus"><span class="key">agora_live_7Hq2<em>••••••••••</em>f9Ka</span><span class="mini"><svg class="i" style="width:14px;height:14px"><use href="#i-copy"/></svg>Copiar</span></div>
-              <div class="warn"><svg class="i"><use href="#i-warn"/></svg>Guardala ahora: no la vamos a volver a mostrar.</div>
-              <div class="cbtn">Continuar <svg class="i"><use href="#i-arrow"/></svg></div>
-            </div>
-          </div>
-
-          <!-- 3 -->
-          <div class="mock" data-i="2" data-url="pro.agora.red/facturacion/api-onboarding">
-            <div class="oh">
-              <div class="l"><svg class="i"><use href="#i-back"/></svg>Volver</div>
-              <div class="r"><span>Paso 3 de 3 · Avisos</span><div class="segs"><i class="f"></i><i class="f"></i><i class="f"></i></div></div>
-            </div>
-            <div class="ob">
-              <h3>Paso 03 · ¿A dónde te avisamos?</h3>
-              <p class="d">Ágora le avisa a tu sistema cada vez que algo cambia.</p>
-              <div class="lbl">Dirección de tu sistema</div>
-              <div class="inp focus">https://mi-sistema.com/avisos-agora</div>
-              <div class="lbl">Avisarme cuando una reserva…</div>
-              <div class="checks">
-                <div class="chk"><i><svg class="i" style="width:12px;height:12px;stroke-width:3"><use href="#i-check"/></svg></i>se crea</div>
-                <div class="chk"><i><svg class="i" style="width:12px;height:12px;stroke-width:3"><use href="#i-check"/></svg></i>se confirma</div>
-                <div class="chk"><i><svg class="i" style="width:12px;height:12px;stroke-width:3"><use href="#i-check"/></svg></i>se reprograma</div>
-                <div class="chk"><i><svg class="i" style="width:12px;height:12px;stroke-width:3"><use href="#i-check"/></svg></i>se cancela</div>
-              </div>
-              <div class="test"><span class="mini">Enviar aviso de prueba</span><span class="okchip"><svg class="i" style="width:14px;height:14px"><use href="#i-check"/></svg>Tu sistema lo recibió</span></div>
-              <div class="cbtn">Terminar <svg class="i"><use href="#i-arrow"/></svg></div>
-            </div>
-          </div>
-
-          <!-- 4 -->
-          <div class="mock" data-i="3" data-url="pro.agora.red/ajustes/integraciones">
-            <div class="pg">
-              <h3>Tus <b>integraciones.</b></h3>
-              <p class="d">Los sistemas conectados a tu agenda.</p>
-              <div class="ss">
-                <div class="ss-h">
-                  <span class="ic"><svg class="i"><use href="#i-plug"/></svg></span>
-                  <div><div class="k">Integración</div><b>API de Ágora</b><span>2 claves · avisos a mi-sistema.com</span></div>
-                  <span class="pill ok live">Conectado</span>
-                </div>
-                <div class="ss-b">
-                  <div class="usage">
-                    <div class="lbl" style="margin:0">Uso de hoy</div>
-                    <div class="meter"><div class="top"><span>Consultas</span><b>1.240 / 5.000</b></div><div class="track"><i style="width:25%"></i></div></div>
-                    <div class="meter"><div class="top"><span>Reservas creadas</span><b>38 / 100</b></div><div class="track"><i style="width:38%"></i></div></div>
-                    <div class="meter"><div class="top"><span>Avisos entregados</span><b>52 / 52</b></div><div class="track"><i style="width:100%;background:var(--frost-success)"></i></div></div>
-                  </div>
-                  <div class="log">
-                    <div class="lbl">Historial</div>
-                    <div class="lrow"><time>18:42</time><div><b>Reserva creada</b><small>Corte y barba · Lucas · 18:00</small></div><span class="src">Bot</span></div>
-                    <div class="lrow"><time>18:42</time><div><b>Aviso entregado</b><small>Reserva creada</small></div><span class="src g">Recibido</span></div>
-                    <div class="lrow"><time>18:41</time><div><b>Consulta de horarios</b><small>Mañana · Corte y barba</small></div><span class="src">Bot</span></div>
-                    <div class="lrow"><time>17:05</time><div><b>Reserva cancelada</b><small>Barba · Martín · 19:30</small></div><span class="src">Recepción</span></div>
-                    <div class="lrow"><time>16:58</time><div><b>Reserva rechazada</b><small>El horario estaba bloqueado</small></div><span class="src r">Regla</span></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+      <div class="stack">
+        <div class="box">
+          <div class="h">Avisos a su sistema</div>
+          <div class="ev"><svg class="i"><use href="#i-bell"/></svg>Reserva creada</div>
+          <div class="ev"><svg class="i"><use href="#i-bell"/></svg>Reserva confirmada</div>
+          <div class="ev"><svg class="i"><use href="#i-bell"/></svg>Reserva reprogramada</div>
+          <div class="ev"><svg class="i"><use href="#i-bell"/></svg>Reserva cancelada</div>
+          <p class="s">Firmados y con reintentos. Salen sin importar por qué canal entró la reserva.</p>
+        </div>
+        <div class="box">
+          <div class="h">Acceso</div>
+          <ul class="acc">
+            <li><svg class="i"><use href="#i-key"/></svg>Hasta 2 claves por negocio, creadas por el dueño en Flash</li>
+            <li><svg class="i"><use href="#i-key"/></svg>Cada clave: solo lectura, o lectura y escritura</li>
+            <li><svg class="i"><use href="#i-key"/></svg>Se revocan al instante</li>
+          </ul>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- POR DENTRO -->
-<section class="sec alt" id="dentro">
+<section class="sec">
   <div class="wrap">
-    <div class="sec-head">
-      <div>
-        <div class="kicker">Por dentro</div>
-        <h2 class="t-l">Todo pasa por <b>el mismo control.</b></h2>
-      </div>
-      <p class="cap">La API no puede hacer nada que la vidriera no pueda hacer</p>
+    <h2><span class="num">2</span>Los <b>límites.</b></h2>
+    <div class="caps">
+      <div class="cap"><div class="n">60<small>/ min</small></div><div class="l">Consultas por negocio</div></div>
+      <div class="cap"><div class="n">5.000<small>/ día</small></div><div class="l">Consultas por negocio</div></div>
+      <div class="cap"><div class="n">31<small>días</small></div><div class="l">Máximo de horarios por consulta</div></div>
+      <div class="cap"><div class="n">10<small>/ min</small></div><div class="l">Reservas creadas por negocio</div></div>
+      <div class="cap"><div class="n">100<small>/ día</small></div><div class="l">Reservas creadas por negocio</div></div>
+      <div class="cap"><div class="n">2</div><div class="l">Claves activas por negocio</div></div>
     </div>
-    <div class="dia">
-      <div class="node"><div class="ic"><svg class="i"><use href="#i-bot"/></svg></div><b>Sistema del negocio</b><span>Bot, recepción, software propio</span></div>
-      <div class="wire" aria-hidden="true">
-        <div class="lane fwd"><b>Consultas y reservas</b><span class="pk"></span></div>
-        <div class="lane back"><b>Avisos firmados</b><span class="pk"></span></div>
-      </div>
-      <div class="gate">
-        <div class="k">Cada pedido se revisa</div>
-        <ul>
-          <li><i><svg class="i"><use href="#i-check"/></svg></i>Clave válida y activa</li>
-          <li><i><svg class="i"><use href="#i-check"/></svg></i>Solo su negocio</li>
-          <li><i><svg class="i"><use href="#i-check"/></svg></i>Reglas de la agenda</li>
-          <li><i><svg class="i"><use href="#i-check"/></svg></i>Seña cobrada</li>
-          <li><i><svg class="i"><use href="#i-check"/></svg></i>Dentro del tope</li>
-          <li><i><svg class="i"><use href="#i-check"/></svg></i>Sin duplicados</li>
-        </ul>
-      </div>
-      <div class="wire" aria-hidden="true">
-        <div class="lane fwd"><b>Reserva</b><span class="pk"></span></div>
-        <div class="lane back"><b>Cambios</b><span class="pk"></span></div>
-      </div>
-      <div class="node ag"><div class="ic"><svg class="i"><use href="#i-cal"/></svg></div><b>Agenda de Ágora</b><span>La misma de la vidriera, Instagram y Google</span></div>
+    <div class="over"><svg class="i"><use href="#i-stop"/></svg>Al pasar un tope, la API rechaza el pedido hasta que se libera. No se cobra extra.</div>
+    <div class="rules">
+      <div class="rule"><svg class="i"><use href="#i-check"/></svg><div><b>Solo su negocio</b><span>Una clave no ve ni toca datos de otro negocio</span></div></div>
+      <div class="rule"><svg class="i"><use href="#i-check"/></svg><div><b>Las mismas reglas que la vidriera</b><span>Horarios, bloqueos, anticipación y profesionales asignados</span></div></div>
+      <div class="rule"><svg class="i"><use href="#i-check"/></svg><div><b>La seña se cobra</b><span>Si el servicio pide seña, la reserva queda pendiente y se devuelve el link de pago</span></div></div>
+      <div class="rule"><svg class="i"><use href="#i-check"/></svg><div><b>Sin reservas duplicadas</b><span>Si el sistema reintenta el mismo pedido, no se reserva dos veces</span></div></div>
+      <div class="rule"><svg class="i"><use href="#i-check"/></svg><div><b>Cliente con nombre y email</b><span>Obligatorios para reservar</span></div></div>
+      <div class="rule"><svg class="i"><use href="#i-check"/></svg><div><b>Origen «API»</b><span>Cada reserva queda marcada con la clave que la hizo</span></div></div>
     </div>
   </div>
 </section>
 
-<!-- ALCANCE CTA -->
-<section class="sec" style="padding:0 0 8px">
+<section class="sec">
   <div class="wrap">
-    <a href="alcance.html" class="alc-cta">
-      <span class="ic"><svg class="i"><use href="#i-plug"/></svg></span>
-      <span><b>¿Sucursales, equipo, clases, packs?</b><small>El alcance completo: qué expone la API, cada tipo de clave y todos los casos.</small></span>
-      <span class="go">Ver el alcance <svg class="i"><use href="#i-arrow"/></svg></span>
-    </a>
-  </div>
-</section>
-
-<!-- LÍMITES -->
-<section class="sec" id="limites">
-  <div class="wrap">
-    <div class="sec-head">
-      <div>
-        <div class="kicker">La pregunta de JP</div>
-        <h2 class="t-l">Cómo lo limitamos: <b>topes que se ven.</b></h2>
-      </div>
-      <p class="cap">Valores iniciales tomados del mercado · ajustables por negocio</p>
-    </div>
-    <div class="lim">
-      <div class="gauges">
-        <h4>Topes por negocio <span class="pill int">Ejemplo de un día</span></h4>
-        <div class="g"><div class="top"><span>Consultas por minuto</span><b>12 <small>/ 60</small></b></div><div class="track"><i style="width:20%"></i></div></div>
-        <div class="g"><div class="top"><span>Consultas por día</span><b>1.240 <small>/ 5.000</small></b></div><div class="track"><i style="width:24.8%"></i></div></div>
-        <div class="g"><div class="top"><span>Reservas creadas por minuto</span><b>2 <small>/ 10</small></b></div><div class="track"><i style="width:20%"></i></div></div>
-        <div class="g"><div class="top"><span>Reservas creadas por día</span><b>100 <small>/ 100</small></b></div><div class="track"><i class="full" style="width:100%"></i></div></div>
-        <div class="toast"><svg class="i"><use href="#i-off"/></svg><div><b>Tu sistema llegó al tope de reservas de hoy.</b><span>Puede volver a reservar a las 00:00. Las consultas siguen funcionando.</span></div></div>
-      </div>
-      <div class="rules">
-        <div class="rule core"><span class="ic"><svg class="i"><use href="#i-shield"/></svg></span><b>Solo su negocio<small>Ni un dato de otro</small></b></div>
-        <div class="rule core"><span class="ic"><svg class="i"><use href="#i-rules"/></svg></span><b>Reglas de la vidriera<small>Anticipación, bloqueos, profesional</small></b></div>
-        <div class="rule core"><span class="ic"><svg class="i"><use href="#i-card"/></svg></span><b>La seña se cobra<small>Devuelve el link de pago</small></b></div>
-        <div class="rule"><span class="ic"><svg class="i"><use href="#i-gauge"/></svg></span><b>Topes de consultas<small>60 por minuto · 5.000 por día</small></b></div>
-        <div class="rule"><span class="ic"><svg class="i"><use href="#i-cal"/></svg></span><b>Topes de reservas<small>10 por minuto · 100 por día</small></b></div>
-        <div class="rule"><span class="ic"><svg class="i"><use href="#i-once"/></svg></span><b>Sin duplicados<small>Un reintento no reserva dos veces</small></b></div>
-        <div class="rule"><span class="ic"><svg class="i"><use href="#i-hist"/></svg></span><b>Historial visible<small>Qué clave hizo qué y cuándo</small></b></div>
-        <div class="rule"><span class="ic"><svg class="i"><use href="#i-off"/></svg></span><b>Se apaga al instante<small>Revocar clave · avisos que fallan</small></b></div>
-      </div>
+    <h2><span class="num">3</span>Qué <b>no incluye.</b></h2>
+    <div class="not">
+      <div><svg class="i"><use href="#i-x"/></svg><div>Editar servicios, precios, horarios o equipo<span>Eso sigue en Flash</span></div></div>
+      <div><svg class="i"><use href="#i-x"/></svg><div>Caja, cobros y finanzas</div></div>
+      <div><svg class="i"><use href="#i-x"/></svg><div>Cupones, gift cards, packs y planes mensuales<span>Más adelante, si hay demanda</span></div></div>
+      <div><svg class="i"><use href="#i-x"/></svg><div>Eventos, clases con cupo y cursos<span>Más adelante, si hay demanda</span></div></div>
+      <div><svg class="i"><use href="#i-x"/></svg><div>Armar la integración<span>La hace el desarrollador o proveedor del negocio</span></div></div>
+      <div><svg class="i"><use href="#i-x"/></svg><div>Acceso al MCP interno del equipo</div></div>
     </div>
   </div>
 </section>
 
-<!-- MERCADO -->
-<section class="sec alt" id="mercado">
+<section class="sec">
   <div class="wrap">
-    <div class="sec-head">
-      <div>
-        <div class="kicker">Qué hace la competencia</div>
-        <h2 class="t-l">La cobran <b>y la limitan.</b></h2>
-      </div>
-      <p class="cap">Documentación oficial de cada competidor, 28/9/2026</p>
-    </div>
-    <div class="mk">
-      <div class="panel">
-        <h4>Dónde está la API</h4>
-        <p class="cap">Casi nadie la regala: está en un plan superior o se cobra aparte</p>
-        <div class="ladder">
-          <div class="rung"><h5>Cerrada</h5><div class="co">Fresha<small>Solo socios</small></div><div class="co">Booksy<small>Solo socios</small></div><div class="co">Treatwell<small>Solo socios</small></div></div>
-          <div class="rung"><h5>Plan superior</h5><div class="co">AgendaPro<small>Plan Pro</small></div><div class="co">Square<small>Plus · USD 49</small></div><div class="co">Acuity<small>Premium</small></div><div class="co">Calendly<small>Planes pagos</small></div></div>
-          <div class="rung"><h5>Aparte o por uso</h5><div class="co">Vagaro<small>USD 10 + uso</small></div><div class="co">Mindbody<small>Por llamada</small></div><div class="co us">Ágora<small>Add-on propuesto</small></div></div>
-        </div>
-        <div class="price">
-          <h4>Precio de referencia</h4>
-          <p class="cap" style="margin-bottom:8px">USD por mes, por negocio o local</p>
-          <div class="pscale" role="img" aria-label="Escala de precios: Vagaro 10 dólares más uso, Ágora propuesto entre 10 y 30, Acuity y Square Plus 49, AgendaPro cerca de 59, Square Premium 149">
-            <div class="ln"></div>
-            <div class="band" style="left:6.67%;width:13.33%"></div>
-            <div class="pl up us" style="left:13.3%">Ágora<small>10–30</small></div>
-            <div class="pt" style="left:32.7%"></div><div class="pl dn" style="left:32.7%">Acuity · Square Plus<small>49</small></div>
-            <div class="pt" style="left:39.3%"></div><div class="pl up" style="left:42%">AgendaPro<small>~59</small></div>
-            <div class="pt" style="left:6.67%"></div><div class="pl dn" style="left:6.67%">Vagaro<small>10 + uso</small></div>
-            <div class="pt" style="left:99.3%"></div><div class="pl up" style="left:92%">Square Premium<small>149</small></div>
-          </div>
-          <div class="plist"><div><span>Vagaro</span><b>10 + uso</b></div><div class="us"><span>Ágora (propuesta)</span><b>10–30</b></div><div><span>Acuity · Square Plus</span><b>49</b></div><div><span>AgendaPro</span><b>~59</b></div><div><span>Square Premium</span><b>149</b></div></div>
-        </div>
-      </div>
-      <div class="panel">
-        <h4>Consultas por minuto que permiten</h4>
-        <p class="cap">Por negocio o por usuario, según cada documentación</p>
-        <div class="hb us" title="Ágora (propuesta): 60 por minuto"><div class="nm">Ágora</div><div class="tr"><i style="width:12%"></i><span style="left:12%">60</span></div></div>
-        <div class="hb" title="Zenoti: 60 por minuto por organización"><div class="nm">Zenoti</div><div class="tr"><i style="width:12%"></i><span style="left:12%">60</span></div></div>
-        <div class="hb" title="AgendaPro: 70 por minuto y 10.000 por día"><div class="nm">AgendaPro</div><div class="tr"><i style="width:14%"></i><span style="left:14%">70</span></div></div>
-        <div class="hb" title="Cal.com: 120 por minuto con clave"><div class="nm">Cal.com</div><div class="tr"><i style="width:24%"></i><span style="left:24%">120</span></div></div>
-        <div class="hb" title="Calendly: 500 por minuto en planes pagos"><div class="nm">Calendly</div><div class="tr"><i style="width:100%"></i><span style="right:6px;color:#fff">500</span></div></div>
-        <div class="axis"><div></div><div><span>0</span><span>250</span><span>500</span></div></div>
-        <div class="toast" style="margin-top:26px;background:var(--frost-primary-soft);color:var(--frost-primary-hover)"><svg class="i"><use href="#i-hist"/></svg><div><b>Lo que nadie muestra: el historial.</b><span>Ver qué hizo cada clave solo existe en Calendly Enterprise. Para Ágora es un diferencial.</span></div></div>
-      </div>
+    <h2><span class="num">4</span>Cómo se <b>activa.</b></h2>
+    <div class="how">
+      <div class="hw"><div class="k">Activación</div><b>Desde Flash</b><p>El dueño activa el add-on, crea la clave y carga la dirección para los avisos.</p></div>
+      <div class="hw"><div class="k">Precio</div><b>A definir</b><p>Mensual, en la factura del plan. Referencia de mercado: USD 10 a 30 por mes.</p></div>
+      <div class="hw"><div class="k">Piloto</div><b>La barbería que lo pidió</b><p>Sin cargo, hasta confirmar que funciona sin incidentes.</p></div>
     </div>
   </div>
 </section>
 
-<!-- FASES -->
-<section class="sec" id="fases">
+<section class="sec">
   <div class="wrap">
-    <div class="sec-head">
-      <div>
-        <div class="kicker">Fases</div>
-        <h2 class="t-l">Primero un piloto <b>con quien lo pidió.</b></h2>
-      </div>
-      <p class="cap">No se arma una plataforma sin usuarios</p>
-    </div>
-    <div class="tl">
-      <div class="ph"><div class="k">Fase 1 · Piloto</div><h4>Un negocio, sin cobro</h4><div class="chips"><span>La barbería</span><span>Claves a mano</span><span>7 rutas</span><span>4 avisos</span><span>8 límites</span></div></div>
-      <div class="jn"><div class="diamond"><i></i><span>4 semanas sin incidentes + un segundo interesado</span></div></div>
-      <div class="ph"><div class="k">Fase 2 · Autoservicio</div><h4>A la venta en Flash</h4><div class="chips"><span>Pasos 1 a 4</span><span>Cobro en el plan</span><span>Clave de prueba</span><span>Los 40 de más volumen</span></div></div>
-      <div class="jn"></div>
-      <div class="ph later"><div class="k">Fase 3 · Después</div><h4>Recetas y asistentes</h4><div class="chips"><span>Make · n8n</span><span>Asistentes de IA</span><span>Reserve with Google completo</span></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- DECISIONES -->
-<section class="sec closing">
-  <div class="wrap">
-    <div class="kicker">Para decidir con JP</div>
-    <h2 class="t-l">Cinco decisiones <b>antes de construir.</b></h2>
+    <h2><span class="num">5</span>Para <b>decidir.</b></h2>
     <div class="dec">
-      <div class="dq first"><span class="ic"><svg class="i"><use href="#i-q"/></svg></span><b>¿Qué quiere conectar la barbería?</b><span>Si solo necesita enterarse, alcanza con los avisos</span></div>
-      <div class="dq"><span class="ic"><svg class="i"><use href="#i-money"/></svg></span><b>Precio y planes</b><span>Rango sugerido: USD 10 a 30 sobre Professional</span></div>
-      <div class="dq"><span class="ic"><svg class="i"><use href="#i-card"/></svg></span><b>Seña por API</b><span>¿Solo link de pago, o también «paga en el local»?</span></div>
-      <div class="dq"><span class="ic"><svg class="i"><use href="#i-help"/></svg></span><b>Soporte</b><span>¿Quién atiende a los desarrolladores?</span></div>
-      <div class="dq"><span class="ic"><svg class="i"><use href="#i-help"/></svg></span><b>Cliente solo con teléfono</b><span>Un bot de WhatsApp no tiene el email. Ver alcance</span></div>
-    </div>
-    <div class="ficha">
-      <span>Categoría <b>Integración</b></span><span>Área <b>Booking</b></span><span>Impacto <b>Medio</b></span><span>Esfuerzo <b>Medio</b></span><span>Prioridad <b>6 / 10</b></span><span>Amplía la propuesta 11 del 19/9 (Make y n8n)</span>
+      <div class="dq"><svg class="i"><use href="#i-q"/></svg><div><b>Precio del add-on</b><span>Y si se ofrece en todos los planes o solo en algunos</span></div></div>
+      <div class="dq"><svg class="i"><use href="#i-q"/></svg><div><b>¿Alcanza con el teléfono del cliente?</b><span>Un bot de WhatsApp tiene el teléfono, no el email. Hoy Ágora exige email</span></div></div>
+      <div class="dq"><svg class="i"><use href="#i-q"/></svg><div><b>¿Se puede reservar sin seña por API?</b><span>Por ejemplo, «paga en el local» cuando el negocio lo habilita</span></div></div>
     </div>
   </div>
 </section>
 </main>
 
 <footer>
-  <div class="wrap">Ágora · Design Studio · 28/9/2026 · Fuentes: código de producción, base de producción (solo lectura, 90 días), Slack 2026 y documentación oficial de 15 competidores. Detalle en <code>cyclone/docs/research-api-publica-reservas-2026-09.md</code>.</div>
+  <div class="wrap">Ágora · 28/9/2026 · Pedido de una barbería cliente en #brainstorming. Detalle técnico en <code>cyclone/docs/research-api-publica-reservas-2026-09.md</code>.</div>
 </footer>
-
-<script>
-(function(){
-  var steps=[].slice.call(document.querySelectorAll('.step'));
-  var mocks=[].slice.call(document.querySelectorAll('.mock'));
-  var url=document.getElementById('url');
-  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var auto=!reduce, timer=null, cur=0;
-  function show(i){
-    cur=i;
-    steps.forEach(function(s,k){
-      s.classList.toggle('on',k===i);s.classList.toggle('done',k<i);
-      s.setAttribute('aria-selected',k===i?'true':'false');
-      s.classList.remove('auto');
-    });
-    mocks.forEach(function(m,k){m.classList.toggle('on',k===i)});
-    url.textContent=mocks[i].getAttribute('data-url');
-    if(auto){void steps[i].offsetWidth;steps[i].classList.add('auto');clearTimeout(timer);timer=setTimeout(function(){show((cur+1)%steps.length)},5000);}
-  }
-  steps.forEach(function(s,k){s.addEventListener('click',function(){auto=false;clearTimeout(timer);show(k)})});
-  var q=new URLSearchParams(location.search).get('step');
-  if(q!==null){auto=false;show(Math.max(0,Math.min(3,+q)));return;}
-  if(auto&&'IntersectionObserver' in window){
-    var started=false;
-    new IntersectionObserver(function(e){if(e[0].isIntersecting&&!started){started=true;show(0)}},{threshold:.35}).observe(document.getElementById('flujo'));
-  }
-})();
-</script>
 </body>
 </html>
