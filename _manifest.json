@@ -8,7 +8,7 @@
       "typeLabel": "Proposal",
       "title": "API de reservas · add-on",
       "description": "Qué proveemos (leer horarios y reservas; crear, reprogramar y cancelar; avisos), los límites con números, qué no incluye y cómo se activa.",
-      "detail": "1 página · límites explícitos",
+      "detail": "Propuesta + referencia interactiva de la API",
       "date": "SEP 2026",
       "href": "./api-reservas-addon-2026-09/index.html",
       "slug": "api-reservas-addon-2026-09"

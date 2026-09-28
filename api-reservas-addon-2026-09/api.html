@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>API de reservas · Referencia · Ágora</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --frost-primary:#0072FB;--frost-primary-hover:#005CD4;--frost-primary-soft:#EEF6FF;
+  --frost-accent:#FF4658;--frost-accent-soft:#FFE3E6;--frost-accent-ink:#B4232F;
+  --frost-success:#10B981;--frost-success-soft:#DDFBF1;--frost-success-ink:#047857;
+  --frost-warning-soft:#FFF4CC;--frost-warning-ink:#92400E;
+  --frost-ink:#0F172A;--frost-ink-soft:#3A3A3A;--frost-ink-mid:#64748B;--frost-muted:#868686;
+  --frost-surface:#FFFFFF;--frost-surface-muted:#EFF3F9;--frost-border:#E2E8F0;--frost-border-soft:#F2F2F2;
+  --code-bg:#0B1220;--code-panel:#111A2E;--code-line:rgba(255,255,255,0.08);--code-text:#E2E8F0;--code-dim:#7C8BA5;--code-key:#7CB6FF;--code-str:#6EE7B7;--code-num:#FBBF77;--code-bool:#F9A8D4;
+  --r-sm:6px;--r-btn:10px;--r-card:16px;
+  --sans:'Montserrat',system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:var(--sans);font-weight:500;font-size:14px;line-height:1.55;color:var(--frost-ink);background:var(--frost-surface);font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--frost-primary);outline-offset:2px;border-radius:var(--r-sm)}
+
+.top{height:58px;border-bottom:1px solid var(--frost-border);display:flex;align-items:center;justify-content:space-between;padding:0 20px;position:sticky;top:0;background:#fff;z-index:5}
+.top .l{display:flex;align-items:center;gap:14px}
+.top .sep{width:1px;height:22px;background:var(--frost-border)}
+.top .t{font-size:13px;font-weight:600}
+.top .t span{color:var(--frost-muted);font-weight:500}
+.top a.back{font-size:12.5px;font-weight:600;color:var(--frost-ink-mid);text-decoration:none}
+.top a.back:hover{color:var(--frost-primary)}
+.base{font-size:12px;color:var(--frost-ink-mid);background:var(--frost-surface-muted);border-radius:999px;padding:4px 12px;font-weight:600}
+
+.app{display:grid;grid-template-columns:250px 1fr;min-height:calc(100vh - 58px)}
+.side{border-right:1px solid var(--frost-border);padding:18px 12px;position:sticky;top:58px;height:calc(100vh - 58px);overflow:auto;background:#FBFCFE}
+.grp{font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--frost-muted);padding:14px 10px 6px}
+.nav{display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;text-align:left;padding:8px 10px;border-radius:var(--r-btn);font-size:13px;font-weight:500;color:var(--frost-ink-soft)}
+.nav:hover{background:var(--frost-surface-muted)}
+.nav.on{background:var(--frost-primary-soft);color:var(--frost-primary-hover);font-weight:600}
+.mt{font-size:9.5px;font-weight:700;letter-spacing:.06em;width:38px;text-align:center;padding:3px 0;border-radius:5px;flex:none}
+.mt.GET{background:#E0EDFF;color:var(--frost-primary-hover)}
+.mt.POST{background:var(--frost-ink);color:#fff}
+.mt.EVT{background:var(--frost-success-soft);color:var(--frost-success-ink)}
+.mt.DOC{background:var(--frost-surface-muted);color:var(--frost-ink-mid)}
+
+.main{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr)}
+.doc{padding:34px 36px 60px}
+.code{background:var(--code-bg);padding:28px 26px 60px;color:var(--code-text)}
+.code-sticky{position:sticky;top:86px;display:grid;gap:16px}
+
+.ep{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.ep .mt{width:auto;padding:4px 10px;font-size:11px}
+.ep .path{font-size:15px;font-weight:600;word-break:break-all}
+.ep .path i{font-style:normal;color:var(--frost-primary)}
+h1{font-weight:300;font-size:30px;letter-spacing:-.02em;line-height:1.15}
+h1 b{font-weight:700}
+.desc{font-size:14px;color:var(--frost-ink-soft);margin-top:10px;max-width:560px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.chip{display:inline-flex;gap:6px;align-items:center;font-size:11.5px;font-weight:600;padding:5px 10px;border-radius:999px;background:var(--frost-surface-muted);color:var(--frost-ink-mid)}
+.chip.w{background:var(--frost-ink);color:#fff}
+.chip.lim{background:var(--frost-warning-soft);color:var(--frost-warning-ink)}
+h3{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--frost-muted);margin:30px 0 4px;padding-bottom:10px;border-bottom:1px solid var(--frost-border)}
+.prm{display:grid;grid-template-columns:170px 1fr;gap:14px;padding:12px 0;border-bottom:1px solid var(--frost-border-soft)}
+.prm .n{font-size:13px;font-weight:600;word-break:break-all}
+.prm .n small{display:block;font-size:11px;font-weight:500;color:var(--frost-muted);margin-top:2px}
+.prm .n em{display:block;font-style:normal;font-size:10px;font-weight:700;letter-spacing:.06em;color:var(--frost-accent-ink);margin-top:3px}
+.prm .d{font-size:13px;color:var(--frost-ink-soft)}
+.prm .d code,.desc code,.note code{font-family:var(--sans);font-size:12px;font-weight:600;background:var(--frost-surface-muted);padding:1px 6px;border-radius:5px;color:var(--frost-ink)}
+.err{display:grid;grid-template-columns:52px 1fr;gap:12px;padding:10px 0;border-bottom:1px solid var(--frost-border-soft);align-items:baseline}
+.err .c{font-size:12px;font-weight:700;color:var(--frost-accent-ink);background:var(--frost-accent-soft);border-radius:5px;text-align:center;padding:2px 0}
+.err b{font-size:13px;font-weight:600}
+.err span{display:block;font-size:12.5px;color:var(--frost-ink-mid)}
+.note{margin-top:18px;display:block;background:var(--frost-primary-soft);color:var(--frost-primary-hover);border-radius:var(--r-card);padding:12px 14px;font-size:12.5px;font-weight:500}
+
+.pane{background:var(--code-panel);border:1px solid var(--code-line);border-radius:var(--r-card);overflow:hidden}
+.pane-h{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;border-bottom:1px solid var(--code-line)}
+.tabs{display:flex;gap:4px;flex-wrap:wrap}
+.tab{border:0;background:none;color:var(--code-dim);font-size:11.5px;font-weight:600;padding:5px 10px;border-radius:7px}
+.tab:hover{color:var(--code-text)}
+.tab.on{background:rgba(255,255,255,0.08);color:#fff}
+.tab .st{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px;vertical-align:1px}
+.copy{border:1px solid var(--code-line);background:none;color:var(--code-dim);font-size:11px;font-weight:600;padding:4px 10px;border-radius:7px}
+.copy:hover{color:#fff}
+pre{margin:0;padding:16px 18px;font-family:var(--sans);font-size:12.5px;line-height:1.7;white-space:pre;overflow:auto;max-height:560px;color:var(--code-text)}
+.tk{color:var(--code-key)}.ts{color:var(--code-str)}.tn{color:var(--code-num)}.tb{color:var(--code-bool)}.td{color:var(--code-dim)}.tm{color:#fff;font-weight:700}.th{color:#C4B5FD}
+
+.hide-lg{display:none}
+@media (max-width:1100px){
+  .main{grid-template-columns:1fr}
+  .code{padding:22px 16px 40px}
+  .code-sticky{position:static}
+}
+@media (max-width:760px){
+  .app{grid-template-columns:1fr}
+  .side{position:static;height:auto;border-right:0;border-bottom:1px solid var(--frost-border);display:flex;gap:6px;overflow-x:auto;padding:10px 12px;white-space:nowrap}
+  .grp{display:none}
+  .nav{width:auto;flex:none;padding:7px 10px}
+  .doc{padding:24px 16px 36px}
+  .prm{grid-template-columns:1fr;gap:4px}
+  .top .t span,.base{display:none}
+  h1{font-size:25px}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="l">
+    <svg width="92" height="22" viewBox="0 0 153 36" xmlns="http://www.w3.org/2000/svg" aria-label="Ágora">
+      <path d="M41.3822 30.3938L38.187 35.7712L3.11719 35.8491L17.5348 10.9106L20.6466 16.2974L15.7314 24.9347L12.625 30.3938H41.3822Z" fill="#E2E8F0"/>
+      <path d="M17.5351 10.9106L20.6469 16.2974L16.7342 23.0921L12.1689 20.1848L17.5351 10.9106Z" fill="url(#p0)" fill-opacity="0.7"/>
+      <path d="M20.6467 16.2973L17.5349 10.9106L3.11731 35.8491L0 30.3938L17.5349 0L31.8745 24.9385H25.6399L20.6467 16.2973Z" fill="#0072FF"/>
+      <path d="M31.8543 24.9244L25.6302 24.9316L21.7061 18.1387L26.5114 15.6305L31.8543 24.9244Z" fill="url(#p1)" fill-opacity="0.7"/>
+      <path d="M23.8473 0L41.3822 30.3938H12.625L15.7314 24.9346L15.7384 24.9385H25.6398H31.8744L17.5348 0H23.8473Z" fill="#FF4658"/>
+      <path d="M12.625 30.3937L15.7289 24.9387L23.7202 24.9194L23.4706 30.3746L12.625 30.3937Z" fill="url(#p2)" fill-opacity="0.7"/>
+      <path d="M76.7893 7.41158V4.76367H69.5647V7.41158H76.7893ZM72.2126 26.6334C74.4029 26.6334 76.3316 25.7835 77.6065 24.2797V26.3065H81.2351V10.1249H77.6065V12.1844C76.3316 10.6806 74.4029 9.79797 72.2126 9.79797C67.7668 9.79797 64.7266 13.5573 64.7266 18.232C64.7266 22.8741 67.7668 26.6334 72.2126 26.6334ZM73.1279 23.1356C70.382 23.1356 68.4206 21.0761 68.4206 18.232C68.4206 15.388 70.382 13.2958 73.1279 13.2958C75.7105 13.2958 77.6065 15.388 77.6065 18.232C77.6065 21.1088 75.6778 23.1356 73.1279 23.1356ZM92.2844 31.112C96.9264 31.112 100.718 28.2679 100.718 22.6125V10.1249H97.2533V12.5439C96.4034 10.9421 94.2131 9.79797 91.7614 9.79797C87.2828 9.79797 84.3407 13.2958 84.3407 17.6436C84.3407 21.9914 87.2828 25.4566 91.7614 25.4566C94.7035 25.4566 96.4361 23.9855 97.0899 22.6779V22.8087C97.0899 26.1104 95.39 28.3333 91.9248 28.3333C90.2576 28.3333 88.3616 27.7776 87.0867 26.6661L85.681 28.9544C87.1847 30.2947 89.5058 31.112 92.2844 31.112ZM92.5459 22.2856C89.9961 22.2856 88.0347 20.3242 88.0347 17.6436C88.0347 14.963 89.9961 12.9689 92.5459 12.9689C95.0958 12.9689 97.0899 14.9303 97.0899 17.5129C97.0899 20.3242 95.1612 22.2856 92.5459 22.2856ZM112.422 26.6334C117.194 26.6334 121.019 22.9067 121.019 18.232C121.019 13.5247 117.194 9.79797 112.422 9.79797C107.649 9.79797 103.824 13.5247 103.824 18.232C103.824 22.9067 107.649 26.6334 112.422 26.6334ZM112.422 23.1356C109.643 23.1356 107.518 21.0434 107.518 18.232C107.518 15.388 109.643 13.2958 112.422 13.2958C115.2 13.2958 117.325 15.388 117.325 18.232C117.325 21.0434 115.2 23.1356 112.422 23.1356ZM127.753 26.3065V19.7031C127.753 15.4534 130.042 13.7535 133.605 13.7535V9.79797C130.14 9.79797 128.374 11.694 127.753 13.3285V10.1249H124.125V26.3065H127.753ZM143.118 26.6334C145.308 26.6334 147.237 25.7835 148.512 24.2797V26.3065H152.14V10.1249H148.512V12.1844C147.237 10.6806 145.308 9.79797 143.118 9.79797C138.672 9.79797 135.632 13.5573 135.632 18.232C135.632 22.8741 138.672 26.6334 143.118 26.6334ZM144.033 23.1356C141.287 23.1356 139.326 21.0761 139.326 18.232C139.326 15.388 141.287 13.2958 144.033 13.2958C146.616 13.2958 148.512 15.388 148.512 18.232C148.512 21.1088 146.583 23.1356 144.033 23.1356Z" fill="#0F172A"/>
+      <rect x="52.7876" y="3.5874" width="0.683334" height="28.5292" fill="#E2E8F0"/>
+      <defs>
+        <linearGradient id="p0" x1="18.8455" y1="15.9076" x2="12.5252" y2="18.5424" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
+        <linearGradient id="p1" x1="26.8652" y1="23.5719" x2="27.7524" y2="16.7522" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
+        <linearGradient id="p2" x1="16.3401" y1="26.6997" x2="21.8393" y2="30.8946" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
+      </defs>
+    </svg>
+    <span class="sep"></span>
+    <span class="t">API de reservas <span>· referencia · propuesta</span></span>
+  </div>
+  <div class="l"><span class="base">https://cyclone.agora.red/public/v1</span><a class="back" href="index.html">← Propuesta</a></div>
+</header>
+
+<div class="app">
+  <nav class="side" id="side" aria-label="Rutas de la API"></nav>
+  <main class="main">
+    <article class="doc" id="doc"></article>
+    <aside class="code"><div class="code-sticky" id="code"></div></aside>
+  </main>
+</div>
+
+<script>
+var KEY='agora_live_7Hq2••••f9Ka';
+var BASE='https://cyclone.agora.red/public/v1';
+var MONEY=function(a){return {amount:a,currency:'ARS'}};
+
+var booking={
+  id:'bkg_8Kq2mXa1',status:'confirmed',location_id:'loc_Palermo01',
+  start_at:'2026-10-02T18:00:00-03:00',end_at:'2026-10-02T19:00:00-03:00',
+  items:[
+    {service_id:'svc_Corte001',service_name:'Corte',professional_id:'pro_Tomas01',professional_name:'Tomás',start_at:'2026-10-02T18:00:00-03:00',end_at:'2026-10-02T18:40:00-03:00',price:MONEY(14000)},
+    {service_id:'svc_Barba001',service_name:'Barba',professional_id:'pro_Tomas01',professional_name:'Tomás',start_at:'2026-10-02T18:40:00-03:00',end_at:'2026-10-02T19:00:00-03:00',price:MONEY(7000)}
+  ],
+  client:{name:'Lucas Gómez',email:'lucas@ejemplo.com',phone:'+5491155550000'},
+  total:MONEY(21000),
+  deposit:{required:false},
+  address:'Av. Santa Fe 3200, Palermo, CABA',
+  source:'api',created_by_key:'key_Bot01',
+  created_at:'2026-09-28T20:15:04-03:00',updated_at:'2026-09-28T20:15:04-03:00'
+};
+function clone(o){return JSON.parse(JSON.stringify(o))}
+var pending=clone(booking);pending.status='awaiting_payment';pending.deposit={required:true,amount:5000,currency:'ARS',paid:false,payment_url:'https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=…',expires_at:'2026-09-28T20:25:04-03:00'};
+var resch=clone(booking);resch.start_at='2026-10-03T11:00:00-03:00';resch.end_at='2026-10-03T12:00:00-03:00';resch.items[0].start_at='2026-10-03T11:00:00-03:00';resch.items[0].end_at='2026-10-03T11:40:00-03:00';resch.items[1].start_at='2026-10-03T11:40:00-03:00';resch.items[1].end_at='2026-10-03T12:00:00-03:00';resch.items.forEach(function(i){i.professional_id='pro_Lu000001';i.professional_name='Lu'});resch.updated_at='2026-09-29T09:02:11-03:00';
+var canc=clone(booking);canc.status='canceled';canc.canceled_at='2026-09-29T09:30:00-03:00';canc.cancellation={reason:'El cliente avisó por WhatsApp',refund:MONEY(0),within_policy:true};canc.updated_at=canc.canceled_at;
+
+var ERR={
+  401:['invalid_key','La clave no existe o fue revocada'],
+  403:['write_not_allowed','La clave es de solo lectura'],
+  '403b':['addon_inactive','El negocio no tiene el add-on activo'],
+  404:['not_found','No existe en este negocio'],
+  '409':['idempotency_conflict','Misma Idempotency-Key con otro body'],
+  '422a':['slot_unavailable','Ese horario ya no está libre'],
+  '422b':['outside_booking_window','Fuera de la anticipación o del máximo a futuro'],
+  '422c':['email_required','Falta el email del cliente'],
+  '422d':['location_required','«Cualquier profesional» con 2 o más sucursales'],
+  '422e':['professional_not_offered','El profesional no hace ese servicio'],
+  '422f':['outside_cancellation_policy','Fuera de la ventana de cancelación del servicio'],
+  '429':['rate_limited','Superó 60 por minuto o 5.000 por día'],
+  '429b':['booking_limit_reached','Superó 10 reservas por minuto o 100 por día']
+};
+function errs(list){return list.map(function(k){var c=String(k).replace(/[a-z]$/,'');return {code:c,id:ERR[k][0],text:ERR[k][1]}})}
+
+var EP=[
+ {g:'Empezar',id:'intro',m:'DOC',name:'Autenticación',title:'Autenticación y <b>límites</b>',
+  desc:'Todas las llamadas llevan la clave del negocio en <code>Authorization</code>. La crea el dueño en Flash; puede ser de solo lectura o de lectura y escritura.',
+  params:[['Authorization','header','Obligatorio','<code>Bearer agora_live_…</code>'],['Idempotency-Key','header','En cada POST','Un UUID por intento. Si se repite con el mismo body, devuelve la misma respuesta sin reservar dos veces.']],
+  extra:'<h3>Límites por negocio</h3><div class="prm"><div class="n">Consultas</div><div class="d">60 por minuto · 5.000 por día</div></div><div class="prm"><div class="n">Reservas creadas</div><div class="d">10 por minuto · 100 por día</div></div><div class="prm"><div class="n">Horarios</div><div class="d">Hasta 31 días por consulta</div></div><div class="prm"><div class="n">Claves</div><div class="d">2 activas</div></div><div class="note">Cada respuesta trae <code>X-RateLimit-Remaining</code>. Al pasar un tope responde 429 con <code>Retry-After</code>. No se cobra extra.</div>',
+  req:'curl '+BASE+'/locations \\\n  -H "Authorization: Bearer '+KEY+'"',
+  res:[{s:200,h:'HTTP/1.1 200 OK\nX-RateLimit-Limit: 60\nX-RateLimit-Remaining: 59\nX-Daily-Limit-Remaining: 4999'},{s:429,body:{error:{code:'rate_limited',message:'Superaste 60 consultas por minuto.',retry_after:12}},h:'HTTP/1.1 429 Too Many Requests\nRetry-After: 12'}],
+  errors:['401','403b','429']},
+
+ {g:'Catálogo',id:'locations',m:'GET',path:'/locations',name:'Sucursales',title:'Listar <b>sucursales</b>',
+  desc:'Las sucursales del negocio. Si hay una sola, no hace falta mandarla en las demás llamadas.',
+  params:[],
+  req:'curl '+BASE+'/locations \\\n  -H "Authorization: Bearer '+KEY+'"',
+  res:[{s:200,body:{data:[{id:'loc_Palermo01',name:'Palermo',address:'Av. Santa Fe 3200, Palermo, CABA',timezone:'America/Argentina/Buenos_Aires',phone:'+541148000000'},{id:'loc_Belgrano1',name:'Belgrano',address:'Cabildo 1800, Belgrano, CABA',timezone:'America/Argentina/Buenos_Aires',phone:null}]}}],
+  errors:['401']},
+
+ {g:'Catálogo',id:'professionals',m:'GET',path:'/professionals',name:'Profesionales',title:'Listar <b>profesionales</b>',
+  desc:'Los profesionales que atienden, con su sucursal y los servicios que hacen.',
+  params:[['location_id','query','Opcional','Filtra por sucursal']],
+  req:'curl -G '+BASE+'/professionals \\\n  -H "Authorization: Bearer '+KEY+'" \\\n  -d location_id=loc_Palermo01',
+  res:[{s:200,body:{data:[{id:'pro_Tomas01',name:'Tomás',location_ids:['loc_Palermo01'],service_ids:['svc_Corte001','svc_Barba001']},{id:'pro_Lu000001',name:'Lu',location_ids:['loc_Palermo01'],service_ids:['svc_Corte001']}]}}],
+  errors:['401']},
+
+ {g:'Catálogo',id:'services',m:'GET',path:'/services',name:'Servicios',title:'Listar <b>servicios</b>',
+  desc:'Servicios reservables con duración, precio (por profesional si cambia), seña y política de cancelación.',
+  params:[['location_id','query','Opcional','Solo los que se ofrecen en esa sucursal'],['professional_id','query','Opcional','Solo los que hace ese profesional']],
+  req:'curl -G '+BASE+'/services \\\n  -H "Authorization: Bearer '+KEY+'" \\\n  -d location_id=loc_Palermo01',
+  res:[{s:200,body:{data:[{id:'svc_Corte001',name:'Corte',duration_minutes:40,price:MONEY(14000),prices_by_professional:[{professional_id:'pro_Lu000001',price:MONEY(12000)}],deposit:{required:true,amount:5000},cancellation_policy:{min_hours_before:24,refund_percentage:100},questions:[{id:'q_1',label:'¿Primera vez?',required:false}]},{id:'svc_Barba001',name:'Barba',duration_minutes:20,price:MONEY(7000),deposit:{required:false},cancellation_policy:{min_hours_before:12,refund_percentage:100}}]}}],
+  errors:['401']},
+
+ {g:'Horarios',id:'availability',m:'GET',path:'/availability',name:'Horarios libres',title:'Consultar <b>horarios libres</b>',
+  desc:'Horarios reales para uno o más servicios seguidos. Aplica las mismas reglas que la vidriera: horarios del profesional, bloqueos, anticipación mínima y máximo a futuro.',
+  params:[['service_ids','query','Obligatorio','Uno o más, separados por coma. Varios = servicios seguidos en la misma visita'],['from · to','query','Obligatorio','Fechas <code>AAAA-MM-DD</code>. Máximo 31 días'],['professional_id','query','Opcional','Un profesional, o <code>any</code> (por defecto)'],['location_id','query','A veces','Obligatorio solo con <code>any</code> en negocios de 2 o más sucursales']],
+  req:'curl -G '+BASE+'/availability \\\n  -H "Authorization: Bearer '+KEY+'" \\\n  -d service_ids=svc_Corte001,svc_Barba001 \\\n  -d from=2026-10-02 \\\n  -d to=2026-10-02 \\\n  -d professional_id=any \\\n  -d location_id=loc_Palermo01',
+  res:[{s:200,body:{data:[{start_at:'2026-10-02T17:00:00-03:00',end_at:'2026-10-02T18:00:00-03:00',location_id:'loc_Palermo01',items:[{service_id:'svc_Corte001',professional_id:'pro_Lu000001'},{service_id:'svc_Barba001',professional_id:'pro_Tomas01'}]},{start_at:'2026-10-02T18:00:00-03:00',end_at:'2026-10-02T19:00:00-03:00',location_id:'loc_Palermo01',items:[{service_id:'svc_Corte001',professional_id:'pro_Tomas01'},{service_id:'svc_Barba001',professional_id:'pro_Tomas01'}]}]}},{s:422,body:{error:{code:'location_required',message:'El negocio tiene 2 sucursales: indicá location_id cuando pedís cualquier profesional.'}}}],
+  errors:['401','422d','429']},
+
+ {g:'Reservas',id:'create',m:'POST',path:'/bookings',name:'Crear reserva',title:'Crear una <b>reserva</b>',write:true,
+  desc:'Una reserva es una visita con uno o más servicios. Si el servicio pide seña, queda <code>awaiting_payment</code> con el link de pago y vence si no se paga.',
+  params:[['start_at','body','Obligatorio','Inicio de la visita, ISO 8601 con zona horaria'],['items[]','body','Obligatorio','<code>service_id</code> y <code>professional_id</code> (o <code>any</code>). Van seguidos, en ese orden'],['client','body','Obligatorio','<code>name</code> y <code>email</code> obligatorios; <code>phone</code> opcional'],['location_id','body','A veces','Solo con <code>any</code> en negocios de 2 o más sucursales'],['answers[]','body','Opcional','Respuestas a las preguntas del servicio'],['notes','body','Opcional','Nota para el negocio']],
+  req:'curl -X POST '+BASE+'/bookings \\\n  -H "Authorization: Bearer '+KEY+'" \\\n  -H "Idempotency-Key: 5f1c9a2e-7b1d-4c1a-9e0f-2b6f3d9a1c77" \\\n  -H "Content-Type: application/json" \\\n  -d @body.json',
+  body:{start_at:'2026-10-02T18:00:00-03:00',items:[{service_id:'svc_Corte001',professional_id:'pro_Tomas01'},{service_id:'svc_Barba001',professional_id:'pro_Tomas01'}],client:{name:'Lucas Gómez',email:'lucas@ejemplo.com',phone:'+5491155550000'},answers:[{question_id:'q_1',value:'Sí'}],notes:'Reservó por el bot de WhatsApp'},
+  res:[{s:201,label:'201 Confirmada',body:booking},{s:201,label:'201 Con seña',body:pending},{s:422,body:{error:{code:'slot_unavailable',message:'Ese horario ya no está libre.'}}},{s:429,body:{error:{code:'booking_limit_reached',message:'El negocio llegó a 100 reservas creadas hoy.',retry_after:14400}}}],
+  errors:['401','403','409','422a','422b','422c','422d','422e','429b']},
+
+ {g:'Reservas',id:'list',m:'GET',path:'/bookings',name:'Listar reservas',title:'Listar <b>reservas</b>',
+  desc:'Reservas del negocio de todos los canales (vidriera, Instagram, WhatsApp, cargadas a mano y API). Paginado.',
+  params:[['from · to','query','Opcional','Por fecha del turno'],['updated_since','query','Opcional','Solo las que cambiaron después de esa fecha. Útil para sincronizar'],['status','query','Opcional','<code>confirmed</code>, <code>awaiting_payment</code>, <code>canceled</code>'],['location_id · professional_id','query','Opcional','Filtros'],['cursor','query','Opcional','Siguiente página']],
+  req:'curl -G '+BASE+'/bookings \\\n  -H "Authorization: Bearer '+KEY+'" \\\n  -d from=2026-10-01 \\\n  -d to=2026-10-07 \\\n  -d status=confirmed',
+  res:[{s:200,body:{data:[booking],next_cursor:'cur_Yz81'}}],
+  errors:['401','429']},
+
+ {g:'Reservas',id:'get',m:'GET',path:'/bookings/{id}',name:'Ver reserva',title:'Ver una <b>reserva</b>',
+  desc:'El estado actual de una reserva.',
+  params:[['id','path','Obligatorio','El id de la reserva']],
+  req:'curl '+BASE+'/bookings/bkg_8Kq2mXa1 \\\n  -H "Authorization: Bearer '+KEY+'"',
+  res:[{s:200,body:booking},{s:404,body:{error:{code:'not_found',message:'No existe una reserva con ese id en este negocio.'}}}],
+  errors:['401','404']},
+
+ {g:'Reservas',id:'reschedule',m:'POST',path:'/bookings/{id}/reschedule',name:'Reprogramar',title:'Reprogramar una <b>reserva</b>',write:true,
+  desc:'Mueve la visita a otro horario, y opcionalmente a otro profesional. Aplica las mismas reglas que crear.',
+  params:[['id','path','Obligatorio','El id de la reserva'],['start_at','body','Obligatorio','Nuevo inicio'],['professional_id','body','Opcional','Otro profesional para todos los servicios']],
+  req:'curl -X POST '+BASE+'/bookings/bkg_8Kq2mXa1/reschedule \\\n  -H "Authorization: Bearer '+KEY+'" \\\n  -H "Idempotency-Key: 0b7e…" \\\n  -H "Content-Type: application/json" \\\n  -d @body.json',
+  body:{start_at:'2026-10-03T11:00:00-03:00',professional_id:'pro_Lu000001'},
+  res:[{s:200,body:resch},{s:422,body:{error:{code:'slot_unavailable',message:'Ese horario ya no está libre.'}}}],
+  errors:['401','403','404','422a','422b','422e']},
+
+ {g:'Reservas',id:'cancel',m:'POST',path:'/bookings/{id}/cancel',name:'Cancelar',title:'Cancelar una <b>reserva</b>',write:true,
+  desc:'Cancela la visita aplicando la política del servicio: dentro de la ventana devuelve la seña según el porcentaje configurado.',
+  params:[['id','path','Obligatorio','El id de la reserva'],['reason','body','Opcional','Motivo, queda en el historial'],['confirm_without_refund','body','Opcional','<code>true</code> para cancelar igual fuera de la ventana, sin devolver la seña']],
+  req:'curl -X POST '+BASE+'/bookings/bkg_8Kq2mXa1/cancel \\\n  -H "Authorization: Bearer '+KEY+'" \\\n  -H "Idempotency-Key: 9d3a…" \\\n  -H "Content-Type: application/json" \\\n  -d @body.json',
+  body:{reason:'El cliente avisó por WhatsApp'},
+  res:[{s:200,body:canc},{s:422,body:{error:{code:'outside_cancellation_policy',message:'Faltan menos de 24 h: la seña no se devuelve. Mandá confirm_without_refund: true para cancelar igual.'}}}],
+  errors:['401','403','404','422f']},
+
+ {g:'Avisos',id:'webhooks',m:'EVT',path:'booking.created · confirmed · rescheduled · canceled',name:'Avisos',title:'Avisos a <b>tu sistema</b>',
+  desc:'Ágora hace un POST a la dirección que cargó el dueño cada vez que una reserva cambia, sin importar por qué canal entró. Responder 2xx en menos de 10 s; si no, se reintenta durante 24 h y, si sigue fallando, se pausa.',
+  params:[['booking.created','evento','','Reserva nueva, de cualquier canal'],['booking.confirmed','evento','','Confirmada (por ejemplo, al pagarse la seña)'],['booking.rescheduled','evento','','Cambió horario o profesional'],['booking.canceled','evento','','Cancelada por el cliente, el negocio o la API']],
+  extra:'<h3>Verificar la firma</h3><div class="prm"><div class="n">webhook-id</div><div class="d">Id único del aviso; sirve para no procesarlo dos veces</div></div><div class="prm"><div class="n">webhook-timestamp</div><div class="d">Segundos Unix. Rechazar si tiene más de 5 minutos</div></div><div class="prm"><div class="n">webhook-signature</div><div class="d">HMAC-SHA256 de <code>id.timestamp.body</code> con el secreto que muestra Flash</div></div>',
+  req:'POST https://mi-sistema.com/avisos-agora\nwebhook-id: evt_2Lk9Qw\nwebhook-timestamp: 1790633704\nwebhook-signature: v1,K5oZfzN95Z9UVu1EsfQmfVNQhnkZ2pj9o9NDN/H/pI4=\nContent-Type: application/json',
+  body:{id:'evt_2Lk9Qw',type:'booking.created',created_at:'2026-09-28T20:15:04-03:00',data:booking},
+  bodyLabel:'Body del aviso',
+  res:[{s:200,h:'HTTP/1.1 200 OK',note:'Tu sistema responde 2xx y listo.'}],
+  errors:[]},
+
+ {g:'Avisos',id:'errors',m:'DOC',name:'Errores',title:'<b>Errores</b>',
+  desc:'Todos los errores tienen la misma forma: un <code>code</code> estable para programar y un <code>message</code> para mostrar.',
+  params:[],
+  req:'',
+  res:[{s:422,body:{error:{code:'slot_unavailable',message:'Ese horario ya no está libre.'}}}],
+  errors:['401','403','403b','404','409','422a','422b','422c','422d','422e','422f','429','429b']}
+];
+
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function hl(obj){
+  var j=JSON.stringify(obj,null,2),out='',last=0,re=/("(?:\\.|[^"\\])*")(\s*:)?|(-?\d+(?:\.\d+)?)|\b(true|false|null)\b/g,m;
+  while((m=re.exec(j))){
+    out+=esc(j.slice(last,m.index));
+    if(m[1])out+=m[2]?'<span class="tk">'+esc(m[1])+'</span>'+m[2]:'<span class="ts">'+esc(m[1])+'</span>';
+    else if(m[3])out+='<span class="tn">'+m[3]+'</span>';
+    else out+='<span class="tb">'+m[4]+'</span>';
+    last=re.lastIndex;
+  }
+  return out+esc(j.slice(last));
+}
+function hlCurl(s){
+  var out='',last=0,re=/("[^"]*")|^(curl|POST)\b|(-X POST|-G|-H|-d)(?= )|^([a-z-]+:)/gm,m;
+  while((m=re.exec(s))){
+    out+=esc(s.slice(last,m.index));
+    if(m[1])out+='<span class="ts">'+esc(m[1])+'</span>';
+    else if(m[2])out+='<span class="tm">'+m[2]+'</span>';
+    else if(m[3])out+='<span class="td">'+m[3]+'</span>';
+    else out+='<span class="th">'+esc(m[4])+'</span>';
+    last=re.lastIndex;
+  }
+  return out+esc(s.slice(last));
+}
+function stColor(s){return s<300?'var(--frost-success)':s<500&&s!==429?'#F59E0B':'var(--frost-accent)'}
+
+var side=document.getElementById('side'),doc=document.getElementById('doc'),code=document.getElementById('code');
+var lastG='';
+EP.forEach(function(e,i){
+  if(e.g!==lastG){var g=document.createElement('div');g.className='grp';g.textContent=e.g;side.appendChild(g);lastG=e.g}
+  var b=document.createElement('button');b.className='nav';b.dataset.i=i;
+  b.innerHTML='<span class="mt '+e.m+'">'+(e.m==='EVT'?'AVISO':e.m==='DOC'?'INFO':e.m)+'</span>'+e.name;
+  b.onclick=function(){show(i,true)};side.appendChild(b);
+});
+
+function pane(title,tabs){
+  var id='p'+Math.random().toString(36).slice(2,7);
+  var h='<div class="pane"><div class="pane-h"><div class="tabs">';
+  tabs.forEach(function(t,k){h+='<button class="tab'+(k?'':' on')+'" data-p="'+id+'" data-k="'+k+'">'+(t.dot?'<span class="st" style="background:'+t.dot+'"></span>':'')+t.label+'</button>'});
+  h+='</div><button class="copy" data-p="'+id+'">Copiar</button></div>';
+  tabs.forEach(function(t,k){h+='<pre data-p="'+id+'" data-k="'+k+'"'+(k?' hidden':'')+'>'+t.html+'</pre>'});
+  return h+'</div>';
+}
+
+function show(i,push){
+  var e=EP[i];
+  [].forEach.call(side.querySelectorAll('.nav'),function(n){n.classList.toggle('on',+n.dataset.i===i)});
+  var h='';
+  if(e.path){h+='<div class="ep"><span class="mt '+e.m+'">'+(e.m==='EVT'?'AVISO':e.m)+'</span><span class="path">'+esc(e.path).replace(/\{id\}/g,'<i>{id}</i>')+'</span></div>'}
+  h+='<h1>'+e.title+'</h1><p class="desc">'+e.desc+'</p><div class="chips">';
+  if(e.write)h+='<span class="chip w">Requiere clave de lectura y escritura</span>';
+  else if(e.m==='GET')h+='<span class="chip">Cualquier clave</span>';
+  if(e.id==='create')h+='<span class="chip lim">10 por minuto · 100 por día</span>';
+  else if(e.m==='GET'||e.m==='POST')h+='<span class="chip lim">Cuenta para 60 / min · 5.000 / día</span>';
+  h+='</div>';
+  if(e.params.length){
+    h+='<h3>'+(e.m==='EVT'?'Eventos':'Parámetros')+'</h3>';
+    e.params.forEach(function(p){h+='<div class="prm"><div class="n">'+p[0]+(p[2]==='Obligatorio'?'<em>OBLIGATORIO</em>':'')+'<small>'+p[1]+(p[2]&&p[2]!=='Obligatorio'?' · '+p[2].charAt(0).toLowerCase()+p[2].slice(1):'')+'</small></div><div class="d">'+p[3]+'</div></div>'});
+  }
+  if(e.extra)h+=e.extra;
+  var er=errs(e.errors);
+  if(er.length){h+='<h3>Errores posibles</h3>';er.forEach(function(x){h+='<div class="err"><span class="c">'+x.code+'</span><div><b>'+x.id+'</b><span>'+x.text+'</span></div></div>'})}
+  doc.innerHTML=h;
+
+  var c='';
+  if(e.req){
+    var t=[{label:e.m==='EVT'?'Request de Ágora':'Request',html:hlCurl(e.req)}];
+    if(e.body)t.push({label:e.bodyLabel||'Body',html:hl(e.body)});
+    c+=pane('req',t);
+    if(e.body){ /* show body tab first for POSTs */ }
+  }
+  var rt=e.res.map(function(r){return {label:r.label||String(r.s),dot:stColor(r.s),html:(r.h?'<span class="td">'+esc(r.h)+'</span>\n\n':'')+(r.body?hl(r.body):'')+(r.note?'<span class="td">'+esc(r.note)+'</span>':'')}});
+  c+=pane('res',rt);
+  code.innerHTML=c;
+  if(e.body){var tb=code.querySelectorAll('.pane')[0].querySelectorAll('.tab');if(tb[1])tb[1].click()}
+  if(push)history.replaceState(null,'','#'+e.id);
+  if(push&&window.innerWidth<=1100)doc.scrollIntoView({behavior:'smooth'});
+}
+code.addEventListener('click',function(ev){
+  var t=ev.target.closest('.tab');
+  if(t){var p=t.dataset.p;[].forEach.call(code.querySelectorAll('.tab[data-p="'+p+'"]'),function(x){x.classList.toggle('on',x===t)});[].forEach.call(code.querySelectorAll('pre[data-p="'+p+'"]'),function(x){x.hidden=x.dataset.k!==t.dataset.k});return}
+  var cp=ev.target.closest('.copy');
+  if(cp){var pre=code.querySelector('pre[data-p="'+cp.dataset.p+'"]:not([hidden])');try{navigator.clipboard.writeText(pre.innerText);cp.textContent='Copiado';setTimeout(function(){cp.textContent='Copiar'},1200)}catch(e){}}
+});
+var start=Math.max(0,EP.findIndex(function(e){return '#'+e.id===location.hash}));
+show(start===0&&!location.hash?EP.findIndex(function(e){return e.id==='create'}):start,false);
+</script>
+</body>
+</html>
