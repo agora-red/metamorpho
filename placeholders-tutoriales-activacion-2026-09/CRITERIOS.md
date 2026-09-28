@@ -94,8 +94,13 @@ Todo lo demás va al artículo del Centro de Ayuda («Limitaciones actuales»).
 
 ## 5 · Wording (de `launch-copy`)
 
+**Principio general: usabilidad del profesional, no marketing.** Todo el copy describe qué hay en ese lugar o qué puede hacer el negocio ahí — no invita ni entusiasma. Esto vale tanto para el cuerpo del texto como para rótulos de navegación (tabs, pasos de un stepper, kickers). Un rótulo de paso dice qué contiene el paso, no lo vende.
+
+- **Ejemplo del propio Flash:** varios onboardings (`CatalogProductsOnboarding.tsx`, `RevenueShareOnboarding.tsx`, la novedad `datos-de-clientes`) usan un primer paso con `id: 'intro'` rotulado «Conocé». Es una invitación de marketing, no describe el contenido. **La skill usa «Intro»** cuando propone o referencia un stepper de este tipo.
+
 | Regla | Sí | No |
 |---|---|---|
+| Rótulo de paso = contenido, no invitación | «Intro», «Detalle», «Listo» | «Conocé» (marketing, no dice qué hay) |
 | Voseo argentino | «Subí», «elegís» | «Sube», «eliges» |
 | Ágora con tilde | «Ágora» | «Agora» (salvo en URLs: agora.red) |
 | Tu página | «aparece en tu página» | storefront, «tienda», «Mi tienda» |

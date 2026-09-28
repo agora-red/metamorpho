@@ -346,7 +346,8 @@ const BAN = [
   [/Ten[eé] en cuenta/i, 'muletilla «Tené en cuenta»'], [/\bAgora\b/, '«Ágora» va con tilde'], [/add-on/i, 'add-on (jerga)'],
   [/\btoc[aá]\s+(una|1|\d)\s+estrellas?/i, 'sujeto explícito: «El cliente toca una calificación»'],
   [/no consume nada/i, 'negación de relleno: «No consume nada»'], [/\bes gratis\b/i, 'negación de relleno: «Es gratis…»'],
-  [/sin pack, sale por correo/i, 'plan B innecesario: «Sin pack, sale por correo»'], [/irreversible/i, 'irreversible: verificar que no haya salida']
+  [/sin pack, sale por correo/i, 'plan B innecesario: «Sin pack, sale por correo»'], [/irreversible/i, 'irreversible: verificar que no haya salida'],
+  [/\bconoc[eé]\b/i, '«Conocé» (rótulo de invitación) → «Intro» (rótulo de contenido)']
 ];
 const lintText = t => BAN.filter(([re]) => re.test(String(t || '').replace(/<[^>]+>/g, ' '))).map(([, m]) => m);
 
@@ -546,19 +547,19 @@ const FEATURES = {
       const d = GIFT[r];
       return {
         chip: 'Sin tarjetas', kicker: 'Tarjetas de regalo',
-        headline: 'Que tus clientes regalen <em>un turno con vos.</em>',
+        headline: 'Vendé tarjetas de regalo que se usan <em>al reservar.</em>',
         lede: 'Tus clientes compran una tarjeta desde tu página y se la mandan a quien quieran. Vos cobrás por adelantado; quien la recibe reserva con vos y la usa al pagar.',
         bullets: ['Ideales para cumpleaños, Día de la Madre o Navidad.', 'Quien la recibe puede ser alguien nuevo en tu negocio.', 'Vos elegís si vale un monto o servicios específicos, y si vence.'],
         cost: [{ chip: ['ok', 'Sin costo'], b: 'Ágora no cobra', t: 'por las tarjetas.' }, { chip: ['', 'Mercado Pago'], b: 'Se cobra con Mercado Pago,', t: 'que aplica su comisión.' }],
         visual: giftVisual(d),
         notes: ['<b>Copy:</b> las viñetas 1 y 2 salen del empty state actual de GiftCards.tsx («Ideales para cumpleaños… traen gente nueva»). Titular y bajada son nuevos.',
-                '<b>Titular:</b> el actual es «Empezá a vender Tarjetas de Regalo». El propuesto dice el resultado, no la acción.']
+                '<b>Titular:</b> el actual es «Empezá a vender Tarjetas de Regalo». El propuesto describe la acción y el mecanismo: vender tarjetas que se usan al reservar, sin apelar al costado emotivo del regalo.']
       };
     },
     steps(r) {
       const d = GIFT[r], rn = RUBRO[r].noun;
       return [
-        { role: 'R1', kicker: 'Cómo funciona', title: 'De la compra al turno reservado',
+        { role: 'R1', kicker: 'Cómo funciona', title: 'De la compra al turno, en tres momentos',
           lede: 'Creás la tarjeta una sola vez.',
           visual: { type: 'moments', items: [
             { k: 'Vos', t: 'Creás la tarjeta', d: 'Elegís si vale un monto o servicios específicos, y si vence.' },
@@ -654,7 +655,7 @@ const FEATURES = {
     steps(r) {
       const d = DYN[r], rn = RUBRO[r].noun;
       return [
-        { role: 'R1', kicker: 'Cómo funciona', title: 'De la agenda vacía a la reserva',
+        { role: 'R1', kicker: 'Cómo funciona', title: 'De la regla al turno, en tres momentos',
           lede: 'Se aplica solo, en los horarios que elijas.',
           visual: { type: 'moments', items: [
             { k: 'Vos', t: 'Creás una regla', d: 'Elegís qué servicios, qué franja horaria y cuánto descuento.' },
