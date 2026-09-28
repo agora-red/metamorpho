@@ -8,7 +8,7 @@
       "typeLabel": "Proposal",
       "title": "API de reservas · add-on",
       "description": "Un negocio pidió que su sistema consulte horarios y cree, mueva o cancele turnos. El recorrido de conexión en Flash en cuatro pasos, el control por el que pasa cada pedido y los topes que responden «cómo lo limitamos».",
-      "detail": "4 pantallas de Flash · diagrama · 8 límites · 15 competidores",
+      "detail": "Propuesta + alcance · 4 pantallas de Flash · multi-sucursal · todos los casos",
       "date": "SEP 2026",
       "href": "./api-reservas-addon-2026-09/index.html",
       "slug": "api-reservas-addon-2026-09"
