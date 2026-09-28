@@ -6,9 +6,9 @@
     {
       "type": "proposal",
       "typeLabel": "Proposal",
-      "title": "API de reservas · add-on",
-      "description": "Qué proveemos (leer horarios y reservas; crear, reprogramar y cancelar; avisos), los límites con números, qué no incluye y cómo se activa.",
-      "detail": "Propuesta + referencia interactiva de la API",
+      "title": "Conectá tu sistema · add-on",
+      "description": "Para que el bot, la recepción o el sistema de un negocio vea horarios y reserve, mueva o cancele turnos en Ágora. Qué hace, límites, qué no hace y cómo se activa, en lenguaje simple, con ejemplos.",
+      "detail": "Propuesta + cómo funciona, con ejemplos",
       "date": "SEP 2026",
       "href": "./api-reservas-addon-2026-09/index.html",
       "slug": "api-reservas-addon-2026-09"
