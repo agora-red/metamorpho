@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>API de reservas · Propuesta · Ágora</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --frost-primary:#0072FB;--frost-primary-hover:#005CD4;--frost-primary-soft:#EEF6FF;--frost-primary-wash:rgba(0,114,251,0.08);
+  --frost-accent:#FF4658;--frost-accent-soft:#FFE3E6;--frost-accent-wash:rgba(255,70,88,0.08);
+  --frost-success:#10B981;--frost-success-soft:#A9FFE7;--frost-success-ink:#047857;--frost-warning:#F59E0B;--frost-warning-soft:#FFE77B;--frost-warning-ink:#92400E;
+  --frost-ink:#0F172A;--frost-ink-soft:#3A3A3A;--frost-muted:#868686;--frost-faint:#B5B5B5;
+  --frost-surface:#FFFFFF;--frost-surface-muted:#EFF3F9;--frost-border:#E2E8F0;--frost-border-soft:#F2F2F2;
+  --ink-on-dark:rgba(255,255,255,0.72);--hair-on-dark:rgba(255,255,255,0.14);--code-key:#7CB6FF;
+  --r-sm:6px;--r-item:10px;--r-btn:12px;--r-card:20px;--r-shell:28px;--r-chip:999px;
+  --sh-xs:0 1px 2px rgba(15,23,42,0.04);--sh-sm:0 4px 12px -4px rgba(15,23,42,0.10);--sh-md:0 10px 30px -12px rgba(15,23,42,0.15);
+  --sans:'Montserrat',system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);font-weight:500;font-size:15px;line-height:1.6;color:var(--frost-ink);background:var(--frost-surface);font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+a{color:var(--frost-primary);text-decoration:none}
+code{font-family:var(--sans);font-weight:600;font-size:.92em;background:var(--frost-surface-muted);padding:2px 7px;border-radius:var(--r-sm);word-break:break-word}
+
+.chrome{position:sticky;top:0;z-index:10;background:rgba(255,255,255,0.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--frost-border)}
+.chrome .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:16px}
+.chrome nav{display:flex;gap:22px;font-size:12.5px}
+.chrome nav a{color:var(--frost-muted)}
+.chrome nav a:hover{color:var(--frost-ink)}
+.tag{font-size:10.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--frost-muted);white-space:nowrap}
+
+.kicker{font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--frost-primary);margin-bottom:14px}
+h1{font-weight:200;font-size:clamp(38px,6.2vw,66px);line-height:1.05;letter-spacing:-.025em}
+h1 b,h2 b{font-weight:500}
+h2{font-weight:300;font-size:clamp(26px,3.6vw,38px);line-height:1.15;letter-spacing:-.015em;margin-bottom:14px}
+h3{font-weight:600;font-size:15px;margin-bottom:6px}
+.lead{font-size:17px;font-weight:300;color:var(--frost-ink-soft);max-width:740px;line-height:1.55}
+section{padding:88px 0}
+section.alt{background:var(--frost-surface-muted)}
+.head{margin-bottom:40px}
+.note{font-size:12.5px;color:var(--frost-muted);margin-top:18px;max-width:780px}
+
+/* hero */
+.hero{padding:92px 0 72px}
+.hero .lead{margin-top:26px;font-size:19px}
+.ask{margin-top:40px;border-left:3px solid var(--frost-primary);background:var(--frost-primary-soft);border-radius:0 var(--r-btn) var(--r-btn) 0;padding:20px 24px;max-width:780px}
+.ask p{font-size:16px;font-weight:300;font-style:italic;color:var(--frost-ink)}
+.ask span{display:block;margin-top:10px;font-size:12px;color:var(--frost-muted);font-style:normal}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:48px}
+.stat{border:1px solid var(--frost-border);border-radius:var(--r-card);padding:22px;background:var(--frost-surface);box-shadow:var(--sh-xs)}
+.stat .n{font-weight:200;font-size:44px;line-height:1;letter-spacing:-.03em}
+.stat .l{font-size:12.5px;color:var(--frost-muted);margin-top:10px;line-height:1.4}
+
+/* tablas */
+.tablewrap{overflow-x:auto;border:1px solid var(--frost-border);border-radius:var(--r-card);background:var(--frost-surface);box-shadow:var(--sh-sm)}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:13px}
+th{font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--frost-muted);text-align:left;padding:16px 18px;border-bottom:1px solid var(--frost-border)}
+td{padding:15px 18px;border-bottom:1px solid var(--frost-border-soft);vertical-align:top;color:var(--frost-ink-soft)}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:600;color:var(--frost-ink);white-space:nowrap}
+.pill{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:var(--r-chip);white-space:nowrap}
+.pill.no{background:var(--frost-accent-soft);color:#B4232F}
+.pill.part{background:var(--frost-warning-soft);color:var(--frost-warning-ink)}
+.pill.ok{background:var(--frost-success-soft);color:var(--frost-success-ink)}
+.pill.int{background:var(--frost-surface-muted);color:var(--frost-ink-soft)}
+
+/* cards */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-card);padding:26px;box-shadow:var(--sh-sm)}
+.card p,.card li{font-size:13.5px;color:var(--frost-ink-soft)}
+.card ul{list-style:none;display:grid;gap:9px;margin-top:12px}
+.card li{padding-left:18px;position:relative}
+.card li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--frost-primary)}
+.card.muted li::before{background:var(--frost-faint)}
+.cardlabel{font-size:10.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--frost-muted);margin-bottom:12px}
+.num{font-weight:200;font-size:34px;line-height:1;color:var(--frost-primary);margin-bottom:14px}
+.takeaways{margin-top:22px}
+
+/* propuesta: endpoints */
+.api{display:grid;grid-template-columns:1fr 1.15fr;gap:16px;margin-top:16px;align-items:start}
+.codebox{background:var(--frost-ink);border-radius:var(--r-card);padding:26px;color:var(--frost-surface);overflow-x:auto}
+.codebox .cardlabel{color:var(--ink-on-dark)}
+.ep{display:grid;grid-template-columns:52px 1fr;gap:10px;font-size:13px;padding:8px 0;border-bottom:1px solid var(--hair-on-dark)}
+.ep:last-of-type{border-bottom:0}
+.ep .m{font-weight:600;font-size:10.5px;letter-spacing:.1em;color:var(--code-key);padding-top:2px}
+.ep .p{font-weight:600;color:var(--frost-surface);word-break:break-word}
+.ep .d{grid-column:2;font-size:12px;color:var(--ink-on-dark);margin-top:-4px}
+.events{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.events span{font-size:12px;font-weight:600;border:1px solid var(--hair-on-dark);border-radius:var(--r-chip);padding:5px 12px;color:var(--frost-surface)}
+
+/* límites */
+.guards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.guard{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-card);padding:22px;box-shadow:var(--sh-xs);display:flex;flex-direction:column}
+.guard .i{font-weight:200;font-size:26px;line-height:1;color:var(--frost-faint);margin-bottom:14px}
+.guard h3{font-size:14px}
+.guard p{font-size:12.8px;color:var(--frost-ink-soft);line-height:1.5}
+.guard .v{margin-top:auto;padding-top:14px;font-size:11.5px;font-weight:600;color:var(--frost-primary-hover)}
+.guard.key{border-color:var(--frost-primary);box-shadow:0 0 0 3px var(--frost-primary-wash)}
+.guard.key .i{color:var(--frost-primary)}
+
+/* base técnica */
+.build .card h3{margin-bottom:2px}
+.row{display:grid;grid-template-columns:1fr;gap:2px;padding:12px 0;border-bottom:1px solid var(--frost-border-soft)}
+.row:last-child{border-bottom:0}
+.row b{font-size:13.5px;font-weight:600}
+.row span{font-size:12.5px;color:var(--frost-muted)}
+
+/* fases */
+.phases{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;align-items:stretch}
+.phase{border-top:3px solid var(--frost-primary);background:var(--frost-surface);border-radius:0 0 var(--r-btn) var(--r-btn);padding:22px 20px;box-shadow:var(--sh-sm)}
+.phase .when{font-size:10.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--frost-muted);margin-bottom:10px}
+.phase p,.phase li{font-size:13px;color:var(--frost-ink-soft)}
+.phase ul{list-style:none;display:grid;gap:6px;margin-top:10px}
+.phase li{padding-left:14px;position:relative}
+.phase li::before{content:"";position:absolute;left:0;top:9px;width:5px;height:5px;border-radius:50%;background:var(--frost-primary)}
+.phase.later{border-top-color:var(--frost-faint)}
+.phase.later li::before{background:var(--frost-faint)}
+.gatebar{margin-top:12px;background:var(--frost-ink);color:var(--frost-surface);border-radius:var(--r-btn);padding:16px 20px;font-size:13.5px}
+.gatebar b{font-weight:600}
+.gatebar span{color:var(--ink-on-dark)}
+
+/* precio */
+.price{display:flex;flex-direction:column;gap:4px;margin:6px 0 8px}
+.price .big{font-weight:200;font-size:36px;white-space:nowrap;letter-spacing:-.02em;line-height:1}
+.price .unit{font-size:13px;color:var(--frost-muted)}
+.scale{display:grid;gap:8px;margin-top:14px}
+.scale div{display:grid;grid-template-columns:1fr auto;gap:12px;font-size:12.8px;color:var(--frost-ink-soft);padding:9px 12px;border-radius:var(--r-item);background:var(--frost-surface-muted)}
+.scale div b{font-weight:600;color:var(--frost-ink)}
+.scale div.us{background:var(--frost-primary-soft)}
+.scale div.us b{color:var(--frost-primary-hover)}
+
+/* ficha */
+.ficha{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:28px}
+.ficha > div{border:1px solid var(--hair-on-dark);border-radius:var(--r-btn);padding:14px 16px}
+.ficha .k{font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-on-dark)}
+.ficha .val{font-size:14px;font-weight:500;color:var(--frost-surface);margin-top:4px}
+
+.closing{background:var(--frost-ink);color:var(--frost-surface)}
+.closing h2{color:var(--frost-surface)}
+.closing .lead{color:var(--ink-on-dark)}
+.closing .kicker{color:var(--code-key)}
+.todo{display:grid;gap:10px;margin-top:36px;counter-reset:q}
+.todo div{border:1px solid var(--hair-on-dark);border-radius:var(--r-btn);padding:16px 20px 16px 58px;font-size:13.5px;color:var(--ink-on-dark);position:relative;counter-increment:q}
+.todo div::before{content:counter(q);position:absolute;left:20px;top:13px;font-weight:200;font-size:22px;color:var(--code-key)}
+.todo b{color:var(--frost-surface);font-weight:600}
+.closing .note{color:var(--ink-on-dark)}
+footer{padding:28px 0;font-size:12px;color:var(--frost-muted);border-top:1px solid var(--frost-border)}
+
+@media (max-width:900px){
+  section{padding:64px 0}
+  .chrome nav{display:none}
+  .stats,.guards,.ficha{grid-template-columns:1fr 1fr}
+  .grid2,.grid3,.api,.phases{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+  .wrap{padding:0 16px}
+  .stats,.guards{grid-template-columns:1fr}
+  .stat .n{font-size:38px}
+}
+</style>
+</head>
+<body>
+
+<header class="chrome">
+  <div class="wrap">
+    <svg width="110" height="26" viewBox="0 0 153 36" xmlns="http://www.w3.org/2000/svg" aria-label="Ágora">
+      <path d="M41.3822 30.3938L38.187 35.7712L3.11719 35.8491L17.5348 10.9106L20.6466 16.2974L15.7314 24.9347L12.625 30.3938H41.3822Z" fill="#E2E8F0"/>
+      <path d="M17.5351 10.9106L20.6469 16.2974L16.7342 23.0921L12.1689 20.1848L17.5351 10.9106Z" fill="url(#p0)" fill-opacity="0.7"/>
+      <path d="M20.6467 16.2973L17.5349 10.9106L3.11731 35.8491L0 30.3938L17.5349 0L31.8745 24.9385H25.6399L20.6467 16.2973Z" fill="#0072FF"/>
+      <path d="M31.8543 24.9244L25.6302 24.9316L21.7061 18.1387L26.5114 15.6305L31.8543 24.9244Z" fill="url(#p1)" fill-opacity="0.7"/>
+      <path d="M23.8473 0L41.3822 30.3938H12.625L15.7314 24.9346L15.7384 24.9385H25.6398H31.8744L17.5348 0H23.8473Z" fill="#FF4658"/>
+      <path d="M12.625 30.3937L15.7289 24.9387L23.7202 24.9194L23.4706 30.3746L12.625 30.3937Z" fill="url(#p2)" fill-opacity="0.7"/>
+      <path d="M76.7893 7.41158V4.76367H69.5647V7.41158H76.7893ZM72.2126 26.6334C74.4029 26.6334 76.3316 25.7835 77.6065 24.2797V26.3065H81.2351V10.1249H77.6065V12.1844C76.3316 10.6806 74.4029 9.79797 72.2126 9.79797C67.7668 9.79797 64.7266 13.5573 64.7266 18.232C64.7266 22.8741 67.7668 26.6334 72.2126 26.6334ZM73.1279 23.1356C70.382 23.1356 68.4206 21.0761 68.4206 18.232C68.4206 15.388 70.382 13.2958 73.1279 13.2958C75.7105 13.2958 77.6065 15.388 77.6065 18.232C77.6065 21.1088 75.6778 23.1356 73.1279 23.1356ZM92.2844 31.112C96.9264 31.112 100.718 28.2679 100.718 22.6125V10.1249H97.2533V12.5439C96.4034 10.9421 94.2131 9.79797 91.7614 9.79797C87.2828 9.79797 84.3407 13.2958 84.3407 17.6436C84.3407 21.9914 87.2828 25.4566 91.7614 25.4566C94.7035 25.4566 96.4361 23.9855 97.0899 22.6779V22.8087C97.0899 26.1104 95.39 28.3333 91.9248 28.3333C90.2576 28.3333 88.3616 27.7776 87.0867 26.6661L85.681 28.9544C87.1847 30.2947 89.5058 31.112 92.2844 31.112ZM92.5459 22.2856C89.9961 22.2856 88.0347 20.3242 88.0347 17.6436C88.0347 14.963 89.9961 12.9689 92.5459 12.9689C95.0958 12.9689 97.0899 14.9303 97.0899 17.5129C97.0899 20.3242 95.1612 22.2856 92.5459 22.2856ZM112.422 26.6334C117.194 26.6334 121.019 22.9067 121.019 18.232C121.019 13.5247 117.194 9.79797 112.422 9.79797C107.649 9.79797 103.824 13.5247 103.824 18.232C103.824 22.9067 107.649 26.6334 112.422 26.6334ZM112.422 23.1356C109.643 23.1356 107.518 21.0434 107.518 18.232C107.518 15.388 109.643 13.2958 112.422 13.2958C115.2 13.2958 117.325 15.388 117.325 18.232C117.325 21.0434 115.2 23.1356 112.422 23.1356ZM127.753 26.3065V19.7031C127.753 15.4534 130.042 13.7535 133.605 13.7535V9.79797C130.14 9.79797 128.374 11.694 127.753 13.3285V10.1249H124.125V26.3065H127.753ZM143.118 26.6334C145.308 26.6334 147.237 25.7835 148.512 24.2797V26.3065H152.14V10.1249H148.512V12.1844C147.237 10.6806 145.308 9.79797 143.118 9.79797C138.672 9.79797 135.632 13.5573 135.632 18.232C135.632 22.8741 138.672 26.6334 143.118 26.6334ZM144.033 23.1356C141.287 23.1356 139.326 21.0761 139.326 18.232C139.326 15.388 141.287 13.2958 144.033 13.2958C146.616 13.2958 148.512 15.388 148.512 18.232C148.512 21.1088 146.583 23.1356 144.033 23.1356Z" fill="#0F172A"/>
+      <rect x="52.7876" y="3.5874" width="0.683334" height="28.5292" fill="#E2E8F0"/>
+      <defs>
+        <linearGradient id="p0" x1="18.8455" y1="15.9076" x2="12.5252" y2="18.5424" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
+        <linearGradient id="p1" x1="26.8652" y1="23.5719" x2="27.7524" y2="16.7522" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
+        <linearGradient id="p2" x1="16.3401" y1="26.6997" x2="21.8393" y2="30.8946" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
+      </defs>
+    </svg>
+    <nav>
+      <a href="#hoy">Hoy</a>
+      <a href="#mercado">Mercado</a>
+      <a href="#propuesta">Propuesta</a>
+      <a href="#limites">Límites</a>
+      <a href="#addon">Add-on</a>
+      <a href="#fases">Fases</a>
+    </nav>
+    <span class="tag">Propuesta · Sep 2026</span>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="kicker">Propuesta · Add-on de integraciones</div>
+    <h1>La agenda de Ágora, <b>conectada</b> al sistema del negocio.</h1>
+    <p class="lead">Un negocio quiere que su propio sistema consulte horarios y cree, cancele o reprograme turnos en Ágora sin intervención manual. Hoy no se puede. Esta propuesta define el add-on que lo resuelve y los límites que lo mantienen sano.</p>
+    <div class="ask">
+      <p>«¿Ágora cuenta con API, webhook o alguna integración que permita a un sistema externo consultar disponibilidad y crear/cancelar/reprogramar reservas automáticamente?»</p>
+      <span>Pregunta de una barbería cliente · 28/9/2026</span>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="n">4</div><div class="l">negocios pidieron una API o webhooks en 2026 (mayo, agosto dos veces y septiembre)</div></div>
+      <div class="stat"><div class="n">40</div><div class="l">negocios con más de 300 reservas por mes: los que más ganan automatizando</div></div>
+      <div class="stat"><div class="n">~557</div><div class="l">reservas por mes del negocio que lo pidió, con dos profesionales</div></div>
+      <div class="stat"><div class="n">0</div><div class="l">reservas entran hoy desde un sistema externo: el canal no existe</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="hoy">
+  <div class="wrap">
+    <div class="head">
+      <div class="kicker">Qué hay hoy</div>
+      <h2>Hoy la respuesta honesta es <b>no.</b></h2>
+      <p class="lead">Algunas piezas existen para la vidriera, pero nada identifica, limita ni avisa a un sistema externo.</p>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Pieza</th><th>Estado</th><th>Detalle</th></tr></thead>
+        <tbody>
+          <tr><td>Consultar disponibilidad</td><td><span class="pill part">Parcial</span></td><td>La vidriera usa rutas públicas, pero son internas: sin contrato, con identificadores internos y pueden cambiar sin aviso.</td></tr>
+          <tr><td>Crear una reserva</td><td><span class="pill part">Parcial</span></td><td>Se puede reservar como invitado, pero el turno queda pendiente y retenido por unos minutos, y si el servicio pide seña hay que pasar por Mercado Pago o Stripe.</td></tr>
+          <tr><td>Cancelar y reprogramar</td><td><span class="pill no">No</span></td><td>Piden la sesión del cliente o el link del mail. Un sistema externo no tiene cómo identificarse.</td></tr>
+          <tr><td>Avisos a otro sistema</td><td><span class="pill no">No</span></td><td>Ágora no avisa a terceros cuando un turno se crea o se cancela. Solo recibe avisos: pagos, WhatsApp.</td></tr>
+          <tr><td>Claves por negocio</td><td><span class="pill no">No</span></td><td>No existen claves de API. Nada identifica ni pone tope a quien integra.</td></tr>
+          <tr><td>MCP de Ágora</td><td><span class="pill int">Interno</span></td><td>Es la herramienta administrativa del equipo. No está pensada para clientes y no se expone.</td></tr>
+          <tr><td>Reserve with Google</td><td><span class="pill ok">En producción</span></td><td>Redirect desde el 1/6: Google lleva al cliente a la vidriera. No hay Booking Server, así que Google no reserva por API.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Que la vidriera use rutas públicas no las convierte en una API: no hay contrato, ni identificación de quien llama, ni límites por negocio. Verificado contra <code>origin/develop</code> el 28/9/2026.</p>
+  </div>
+</section>
+
+<section id="mercado">
+  <div class="wrap">
+    <div class="head">
+      <div class="kicker">Qué hace la competencia</div>
+      <h2>Los que la tienen, <b>la cobran y la limitan.</b></h2>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Competidor</th><th>Crea y mueve reservas</th><th>Webhooks</th><th>Dónde está</th><th>Límites</th></tr></thead>
+        <tbody>
+          <tr><td>AgendaPro</td><td>Sí</td><td>Sí, firmados</td><td>Plan Pro</td><td>70 por minuto · 10.000 por día · hasta 2 claves</td></tr>
+          <tr><td>Calendly</td><td>Sí, en plan pago</td><td>Sí, en plan pago</td><td>Standard en adelante</td><td>Reservas creadas: 10 por minuto, 50 por hora, 100 por día</td></tr>
+          <tr><td>Square Appointments</td><td>Sí, en Plus y Premium</td><td>Sí</td><td>USD 49 a 149 por mes por local</td><td>Clave obligatoria para no duplicar reservas</td></tr>
+          <tr><td>Cal.com</td><td>Sí</td><td>Sí</td><td>Todos los planes</td><td>120 por minuto · claves de prueba y reales</td></tr>
+          <tr><td>Mindbody · Vagaro</td><td>Sí</td><td>Sí</td><td>Cobro por uso, ~USD 0,002 por llamada</td><td>Entre 1.000 y 5.000 llamadas incluidas</td></tr>
+          <tr><td>Fresha · Booksy</td><td>Solo socios</td><td>Solo socios</td><td>Cerrado al negocio</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="grid3 takeaways">
+      <div class="card"><div class="cardlabel">Patrón 1</div><h3>Leer es barato, escribir se cobra</h3><p>Calendly y Square dejan consultar en cualquier plan, pero crear o cancelar reservas exige pagar.</p></div>
+      <div class="card"><div class="cardlabel">Patrón 2</div><h3>Todos ponen tope y cortan</h3><p>Entre 60 y 120 consultas por minuto por negocio. Al pasarse, se corta: la tendencia es no cobrar el exceso.</p></div>
+      <div class="card"><div class="cardlabel">Oportunidad</div><h3>Nadie muestra el historial</h3><p>Ver qué hizo cada clave solo aparece en Calendly Enterprise. Para Ágora es un diferencial y, además, la respuesta a «cómo lo controlamos».</p></div>
+    </div>
+    <p class="note">Fuentes: documentación oficial de desarrolladores y páginas de precios de cada competidor, consultadas el 28/9/2026. Los datos de Mindbody y Vagaro vienen de fuentes secundarias.</p>
+  </div>
+</section>
+
+<section class="alt" id="propuesta">
+  <div class="wrap">
+    <div class="head">
+      <div class="kicker">La propuesta</div>
+      <h2>API de Ágora: <b>tres piezas.</b></h2>
+      <p class="lead">Un contrato público y estable, separado de las rutas internas de la vidriera, que se activa por negocio.</p>
+    </div>
+    <div class="grid3">
+      <div class="card"><div class="num">01</div><h3>Claves por negocio</h3><p>Hasta dos claves activas, de solo lectura o de lectura y escritura. Se ven una sola vez al crearlas y se revocan al instante.</p></div>
+      <div class="card"><div class="num">02</div><h3>Consultas y acciones</h3><p>Servicios, profesionales y horarios libres. Crear, reprogramar y cancelar reservas, y consultar su estado.</p></div>
+      <div class="card"><div class="num">03</div><h3>Avisos (webhooks)</h3><p>Ágora avisa al sistema del negocio cuando una reserva se crea, se confirma, se reprograma o se cancela. Cada aviso va firmado y se reintenta si falla.</p></div>
+    </div>
+    <div class="api">
+      <div class="card">
+        <div class="cardlabel">Qué resuelve para el negocio</div>
+        <ul>
+          <li>Su bot de WhatsApp o su recepción ofrecen horarios reales y reservan sin cargar nada a mano.</li>
+          <li>Si el cliente cancela o reprograma en otro sistema, la agenda de Ágora se actualiza sola.</li>
+          <li>Cuando alguien reserva por la vidriera, Instagram o Google, su sistema se entera al instante.</li>
+          <li>Las reservas que entran por la API quedan marcadas con su origen y se ven separadas en las métricas.</li>
+        </ul>
+      </div>
+      <div class="codebox">
+        <div class="cardlabel">Contrato v1 · borrador</div>
+        <div class="ep"><span class="m">GET</span><span class="p">/public/v1/services</span><span class="d">Servicios con duración, precio y seña</span></div>
+        <div class="ep"><span class="m">GET</span><span class="p">/public/v1/staff</span><span class="d">Profesionales y qué servicios hace cada uno</span></div>
+        <div class="ep"><span class="m">GET</span><span class="p">/public/v1/availability</span><span class="d">Horarios libres por servicio, profesional y fecha</span></div>
+        <div class="ep"><span class="m">POST</span><span class="p">/public/v1/bookings</span><span class="d">Crear reserva · clave única obligatoria para no duplicar</span></div>
+        <div class="ep"><span class="m">POST</span><span class="p">/public/v1/bookings/{id}/reschedule</span><span class="d">Reprogramar</span></div>
+        <div class="ep"><span class="m">POST</span><span class="p">/public/v1/bookings/{id}/cancel</span><span class="d">Cancelar</span></div>
+        <div class="ep"><span class="m">GET</span><span class="p">/public/v1/bookings/{id}</span><span class="d">Estado de una reserva</span></div>
+        <div class="events"><span>booking.created</span><span>booking.confirmed</span><span>booking.rescheduled</span><span>booking.canceled</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="limites">
+  <div class="wrap">
+    <div class="head">
+      <div class="kicker">La pregunta de JP</div>
+      <h2>Cómo lo limitamos para que <b>se use sanamente.</b></h2>
+      <p class="lead">Ocho reglas. Las primeras tres son de fondo: la API no puede hacer nada que la vidriera no pueda hacer.</p>
+    </div>
+    <div class="guards">
+      <div class="guard key"><div class="i">01</div><h3>Solo su negocio</h3><p>La clave está atada a un negocio y a sus profesionales. No ve ni toca nada más.</p><div class="v">Mismo control de permisos que ya valida cada cambio</div></div>
+      <div class="guard key"><div class="i">02</div><h3>Las mismas reglas que la vidriera</h3><p>Anticipación mínima, tiempo entre turnos, horarios bloqueados y profesional asignado al servicio. Sin atajos.</p><div class="v">Pasa por el mismo camino de reserva</div></div>
+      <div class="guard key"><div class="i">03</div><h3>La seña se respeta</h3><p>Si el servicio pide seña, la reserva queda pendiente y la API devuelve el link de pago. Nunca confirma sin cobrar.</p><div class="v">Igual que una reserva por la vidriera</div></div>
+      <div class="guard"><div class="i">04</div><h3>Tope de consultas</h3><p>60 por minuto y 5.000 por día por negocio. Al pasarse, se corta con un aviso de reintento, sin cobro extra.</p><div class="v">En la línea de AgendaPro y Zenoti</div></div>
+      <div class="guard"><div class="i">05</div><h3>Tope de reservas</h3><p>Aparte del anterior: hasta 10 reservas creadas por minuto y 100 por día. Una integración rota no puede llenar la agenda.</p><div class="v">Mismo criterio que Calendly</div></div>
+      <div class="guard"><div class="i">06</div><h3>Sin duplicados</h3><p>Cada reserva lleva una clave única. Si el sistema reintenta, la reserva no se crea dos veces.</p><div class="v">Ya funciona en las reservas de hoy</div></div>
+      <div class="guard"><div class="i">07</div><h3>Todo queda registrado</h3><p>Cada acción por API se ve en un historial en Flash, con qué clave la hizo y cuándo.</p><div class="v">Diferencial frente a la competencia</div></div>
+      <div class="guard"><div class="i">08</div><h3>Se puede apagar</h3><p>El negocio revoca una clave al instante y Ágora puede pausarla. Los avisos que fallan seguido se apagan solos.</p><div class="v">Como hace AgendaPro con sus webhooks</div></div>
+    </div>
+    <p class="note">Los números son valores iniciales tomados del mercado y se pueden subir por negocio a pedido. El MCP interno del equipo no forma parte del add-on.</p>
+  </div>
+</section>
+
+<section class="alt" id="addon">
+  <div class="wrap">
+    <div class="head">
+      <div class="kicker">Empaquetado</div>
+      <h2>Es un <b>add-on,</b> no una función del plan.</h2>
+      <p class="lead">Lo usa una minoría con volumen alto y le genera trabajo de soporte a Ágora. Como el agente de voz, se activa aparte y se cobra en la misma factura del plan.</p>
+    </div>
+    <div class="grid3">
+      <div class="card">
+        <div class="cardlabel">Incluye</div>
+        <ul>
+          <li>Hasta dos claves y el contrato v1 completo</li>
+          <li>Los cuatro avisos de reservas</li>
+          <li>Historial de uso en Flash</li>
+          <li>Documentación en una sola página</li>
+        </ul>
+      </div>
+      <div class="card muted">
+        <div class="cardlabel">No incluye</div>
+        <ul>
+          <li>Armar la integración del negocio: la hace su desarrollador o su proveedor</li>
+          <li>Un editor de automatizaciones dentro de Ágora</li>
+          <li>El MCP interno del equipo</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="cardlabel">Precio · a definir</div>
+        <div class="price"><span class="big">USD 10–30</span><span class="unit">por mes, rango sugerido</span></div>
+        <div class="scale">
+          <div><span>Vagaro, solo webhooks</span><b>USD 10 + uso</b></div>
+          <div><span>Plan con API: AgendaPro, Acuity</span><b>USD 49–59</b></div>
+          <div><span>Square Appointments Plus</span><b>USD 49</b></div>
+          <div class="us"><span>Add-on de Ágora</span><b>por debajo</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="build">
+  <div class="wrap">
+    <div class="head">
+      <div class="kicker">Cómo se construye</div>
+      <h2>Más de la mitad <b>ya existe.</b></h2>
+      <p class="lead">Los controles que hacen falta ya están en producción para otras funciones. Lo nuevo es la puerta de entrada.</p>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div class="cardlabel">Se reutiliza</div>
+        <div class="row"><b>Control de permisos por negocio</b><span>Ya valida que cada cambio sea sobre un recurso del negocio</span></div>
+        <div class="row"><b>Reservas sin duplicados</b><span>La clave única de reintento ya se aplica a crear y reprogramar</span></div>
+        <div class="row"><b>Envíos con reintentos</b><span>La cola que manda conversiones a Meta es el molde de los avisos</span></div>
+        <div class="row"><b>Un único punto de confirmación</b><span>Todas las reservas confirman por el mismo lugar: ahí sale el aviso</span></div>
+        <div class="row"><b>Add-on con activación y cobro</b><span>El mismo esquema del agente de voz</span></div>
+      </div>
+      <div class="card">
+        <div class="cardlabel">A construir</div>
+        <div class="row"><b>Claves</b><span>Guardadas cifradas, con permisos de lectura o escritura y revocación</span></div>
+        <div class="row"><b>Rutas públicas versionadas</b><span>Con identificadores estables, separadas de las internas</span></div>
+        <div class="row"><b>Eventos de reserva y envío firmado</b><span>Creada, confirmada, reprogramada y cancelada</span></div>
+        <div class="row"><b>Topes por clave</b><span>Por negocio y por clave, compartidos entre todos los servidores</span></div>
+        <div class="row"><b>Pantalla en Flash</b><span>Claves, avisos e historial de uso</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="fases">
+  <div class="wrap">
+    <div class="head">
+      <div class="kicker">Fases</div>
+      <h2>Primero un piloto <b>con quien lo pidió.</b></h2>
+      <p class="lead">La investigación de integraciones del 19/9 recomendaba no armar una plataforma sin usuarios. Por eso el piloto va con el negocio que lo pidió.</p>
+    </div>
+    <div class="phases">
+      <div class="phase">
+        <div class="when">Fase 1 · Piloto</div>
+        <h3>Un negocio, a mano</h3>
+        <ul>
+          <li>Antes de construir, preguntarle qué sistema quiere conectar</li>
+          <li>Claves creadas por el equipo</li>
+          <li>Contrato v1, los cuatro avisos y los ocho límites</li>
+          <li>Documentación en una página</li>
+          <li>Sin cobro, activado por negocio</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="when">Fase 2 · Autoservicio</div>
+        <h3>El add-on a la venta</h3>
+        <ul>
+          <li>Pantalla en Flash: claves, avisos e historial</li>
+          <li>Activación y cobro en la factura del plan</li>
+          <li>Clave de prueba que no toca la agenda real</li>
+          <li>Ofrecerlo a los 40 negocios de más volumen</li>
+        </ul>
+      </div>
+      <div class="phase later">
+        <div class="when">Fase 3 · Después</div>
+        <h3>Recetas y asistentes</h3>
+        <ul>
+          <li>Recetas listas para Make y n8n</li>
+          <li>Evaluar un conector para asistentes de IA con permisos del negocio</li>
+          <li>Reserve with Google End-to-End, que usaría el mismo contrato</li>
+        </ul>
+      </div>
+    </div>
+    <div class="gatebar"><b>Condición para pasar a la fase 2:</b> <span>el piloto crea reservas reales por la API durante cuatro semanas sin incidentes, y aparece un segundo negocio interesado.</span></div>
+  </div>
+</section>
+
+<section class="closing">
+  <div class="wrap">
+    <div class="kicker">Para decidir con JP</div>
+    <h2>Cinco decisiones <b>antes de construir.</b></h2>
+    <div class="todo">
+      <div><b>Qué sistema quiere conectar la barbería.</b> Si solo necesita enterarse de las reservas, alcanza con los avisos. Si necesita reservar desde afuera, hace falta la escritura.</div>
+      <div><b>Precio del add-on y en qué planes se ofrece.</b> El rango sugerido es de USD 10 a 30 por mes, sobre el plan Professional.</div>
+      <div><b>Seña por API.</b> ¿Solo el link de pago, o también «paga en el local» si el negocio lo habilita a propósito?</div>
+      <div><b>Soporte.</b> ¿Quién responde las preguntas de los desarrolladores que integran, y con qué tiempo de respuesta?</div>
+      <div><b>Topes a medida.</b> ¿Se suben por negocio a pedido, o se vende un segundo escalón?</div>
+    </div>
+    <div class="ficha">
+      <div><div class="k">Categoría</div><div class="val">Integración</div></div>
+      <div><div class="k">Área</div><div class="val">Booking</div></div>
+      <div><div class="k">Impacto · Esfuerzo</div><div class="val">Medio · Medio</div></div>
+      <div><div class="k">Prioridad</div><div class="val">6 de 10</div></div>
+    </div>
+    <p class="note">Amplía la propuesta 11 (Make y n8n) de la investigación de integraciones del 19/9. Aquella empezaba por los avisos y la lectura; este pedido suma crear, cancelar y reprogramar.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">Ágora · Design Studio · 28/9/2026 · Fuentes: código de <code>origin/develop</code>, base de producción (solo lectura, 90 días), Slack 2026 y documentación oficial de 15 competidores. Detalle en <code>cyclone/docs/research-api-publica-reservas-2026-09.md</code>.</div>
+</footer>
+
+</body>
+</html>

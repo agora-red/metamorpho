@@ -1,0 +1,4 @@
+{"ts":"2026-09-28T15:40:00Z","instruction":"self-review: ficha con cajas anidadas","diff_summary":".ficha div → .ficha > div","source":"self-review"}
+{"ts":"2026-09-28T15:40:00Z","instruction":"self-review: precio USD 10–30 partido en dos líneas","diff_summary":".price en columna, .big 36px nowrap","source":"self-review"}
+{"ts":"2026-09-28T15:40:00Z","instruction":"self-review: tarjeta 'Qué resuelve' estirada con hueco","diff_summary":".api align-items:start","source":"self-review"}
+{"ts":"2026-09-28T15:50:00Z","instruction":"quitar detalles de seguridad antes de publicar en Metamorpho (público)","diff_summary":"MCP sin auth y topes por IP en memoria → redacción neutra","source":"pre-publish"}

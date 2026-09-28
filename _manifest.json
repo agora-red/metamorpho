@@ -4,6 +4,16 @@
   "updated_at": "2026-09-28",
   "outputs": [
     {
+      "type": "proposal",
+      "typeLabel": "Proposal",
+      "title": "API de reservas · add-on",
+      "description": "Un negocio pidió que su propio sistema consulte horarios y cree, cancele o reprograme turnos. Qué hay hoy, qué hace la competencia y el add-on con ocho límites para que se use sanamente.",
+      "detail": "8 secciones · 15 competidores · piloto en 3 fases",
+      "date": "SEP 2026",
+      "href": "./api-reservas-addon-2026-09/index.html",
+      "slug": "api-reservas-addon-2026-09"
+    },
+    {
       "type": "prototype",
       "typeLabel": "Prototype",
       "title": "Placeholders y tutoriales de activación",
