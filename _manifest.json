@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
   "version": 1,
-  "updated_at": "2026-09-28",
+  "updated_at": "2026-09-30",
   "outputs": [
     {
       "type": "proposal",
@@ -17,8 +17,8 @@
       "type": "prototype",
       "typeLabel": "Prototype",
       "title": "Placeholders y tutoriales de activación",
-      "description": "Cuando una feature está apagada, el negocio ve un placeholder con el valor y el costo; al activarla por primera vez, un tutorial de 2 a 4 pasos. Bocetos de Reseñas, Gift Cards, Precios dinámicos y Catálogo de productos, con caso práctico neutro, de salón y de barbería.",
-      "detail": "4 features · 12 casos · criterios por paso y chequeo automático de copy",
+      "description": "Placeholder (patrón real EmptyState) + tutorial de 3 pasos (Intro · Cómo funciona · Listo), calcado del kit real de Novedades de Flash. 6 features: Reseñas, Gift Cards, Precios dinámicos, Catálogo, Fichas y preguntas y Ofertas — dos de ellas con texto casi verbatim de anuncios in-app ya shippeados.",
+      "detail": "6 features · 18 pantallas de tutorial · caso neutro, salón y barbería por feature",
       "date": "SEP 2026",
       "href": "./placeholders-tutoriales-activacion-2026-09/index.html",
       "slug": "placeholders-tutoriales-activacion-2026-09"
