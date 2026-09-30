@@ -1,7 +1,5 @@
 # Placeholder + Tutorial de primera activación · Criterios
 
-> **Superseded 2026-09-30.** Descubrimos que Ágora ya tiene un kit de Novedades real en producción (`flash/src/features/announcements/kit/`) con un patrón fijo de 3 pasos (Conocé → Cómo funciona → Listo) y placeholders con la forma de `EmptyState` (sin mockup, sin costo). Esto reemplaza la fórmula de pasos variable y la regla «Conocé→Intro» de este documento. La fuente de verdad actual es `.claude/skills/feature-placeholder-tutorial/SKILL.md` y `feedback-log.md` §15. Este archivo queda como registro histórico de cómo llegamos ahí — las reglas de wording (§5, sujeto explícito, sin negaciones de relleno, etc.) siguen vigentes.
-
 Contrato para decidir **qué va y por qué** en cada pieza. Sale de las reglas de wording de `launch-copy` (skill de `/feature-launch`) y del copy que ya está en producción. Los bocetos (`index.html`) se validan contra estos criterios con un lint automático (presupuestos de palabras + palabras prohibidas).
 
 ## 0 · Principios
