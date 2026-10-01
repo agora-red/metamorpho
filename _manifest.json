@@ -6,6 +6,16 @@
     {
       "type": "proposal",
       "typeLabel": "Proposal",
+      "title": "Marketing PRO+",
+      "description": "Propuesta de adicional para detectar oportunidades, preparar campañas y recuperar clientes. Precio, límites y piloto sujetos a validación.",
+      "detail": "Una página · alcance, precio propuesto y decisiones",
+      "date": "OCT 2026",
+      "href": "./marketing-pro-plus-2026-10/index.html",
+      "slug": "marketing-pro-plus-2026-10"
+    },
+    {
+      "type": "proposal",
+      "typeLabel": "Proposal",
       "title": "Conectá tu sistema · add-on",
       "description": "Para que el bot, la recepción o el sistema de un negocio vea horarios y reserve, mueva o cancele turnos en Ágora. Qué hace, límites, qué no hace y cómo se activa, en lenguaje simple, con ejemplos.",
       "detail": "Propuesta + cómo funciona, con ejemplos",
