@@ -6,22 +6,22 @@
     {
       "type": "proposal",
       "typeLabel": "Proposal",
+      "title": "Conexiones Ágora · adicional",
+      "description": "Propuesta para conectar la agenda con asistentes, automatizaciones y sistemas propios. Alcance, límites diarios y precio de 20.000 pesos mensuales por negocio a validar.",
+      "detail": "Tres casos visuales · explorador de rutas, body y respuestas",
+      "date": "OCT 2026",
+      "href": "./api-reservas-addon-2026-09/index.html",
+      "slug": "api-reservas-addon-2026-09"
+    },
+    {
+      "type": "proposal",
+      "typeLabel": "Proposal",
       "title": "Marketing PRO+",
       "description": "Seis módulos conectados: oportunidades, clientes, acciones y resultados. Explicación interactiva del propósito y uso de cada uno.",
       "detail": "Lectura conectada · Clientes y acciones sin desvíos · Recetas flexibles y WhatsApp fijo · Resultados del conjunto.",
       "date": "OCT 2026",
       "href": "./marketing-pro-plus-2026-10/index.html",
       "slug": "marketing-pro-plus-2026-10"
-    },
-    {
-      "type": "proposal",
-      "typeLabel": "Proposal",
-      "title": "Conectá tu sistema · add-on",
-      "description": "Para que el bot, la recepción o el sistema de un negocio vea horarios y reserve, mueva o cancele turnos en Ágora. Qué hace, límites, qué no hace y cómo se activa, en lenguaje simple, con ejemplos.",
-      "detail": "Propuesta + cómo funciona, con ejemplos",
-      "date": "SEP 2026",
-      "href": "./api-reservas-addon-2026-09/index.html",
-      "slug": "api-reservas-addon-2026-09"
     },
     {
       "type": "prototype",
