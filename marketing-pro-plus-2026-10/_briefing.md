@@ -27,3 +27,10 @@ La vista Hoy / Propuesta usa la estructura de Inicio y Clientes observada en Fla
 Interacciones: campañas preparadas desde Pulse; objetivo y canal editables; vista previa del mensaje; revisión y envío simulado; selección y búsqueda de clientes elegibles; recetas configurables y activación de ejemplo; exclusión por próxima reserva; selector de resultados; biblioteca comercial y operativa; reinicio de la demo. No hay conexiones a APIs ni envíos. Los ejemplos viven en memoria de la página y se reinician al recargar.
 
 Diseño responsive revisado en 390 y 1280 px. Los precios siguen siendo hipótesis pendientes de validación. La publicación pública de funciones sin lanzar permanece pendiente de confirmación.
+
+## Revisión de diseño solicitada con frontend-design
+Se revisaron las tres imágenes de referencia aportadas por el usuario para Pulse, en escritorio, móvil y comparación con Analítica. Se recupera la composición: conclusión de semana, evolución de doce semanas, origen de reservas, mapa horario, acciones, novedades, encuesta y ediciones semanales y mensuales. Los números son ejemplos ficticios y no estadísticas internas.
+
+Dirección visual: Montserrat, Frost claro, azul para acciones y progreso, verde para resultados de acciones completadas. Pulse mantiene la jerarquía de la referencia; Campañas incorpora un recorrido guiado, Clientes segmentos y fichas de ejemplo, Automatizaciones condiciones visibles, Resultados estados de reserva y Plantillas una vista previa del mensaje. Se agregó modo ampliado de la experiencia.
+
+Interacciones adicionales verificadas: puntos semanales, fuentes de reservas, franjas horarias, encuesta local, historial mensual/semanal, explicación Pulse/Analítica, asistente de tres pasos para campañas, programación simulada, validación de mensaje vacío, ficha de cliente, activación y pausa de reglas. Ninguna acción contacta clientes o guarda datos en servidores.
