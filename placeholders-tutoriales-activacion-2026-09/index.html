@@ -1,12 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bocetos de activación</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,500;1,600&display=swap" rel="stylesheet">
 <style>
-  /* Layout: barra de control (nuestra, de revisión) arriba de un lienzo con dos vistas —
-     la página real (placeholder, patrón EmptyState) y el modal del tutorial real (Riel +
-     Titulo + mock + pie pegajoso), calcado del kit de Novedades de Flash (ofertas,
-     datos-de-clientes) que Isabella ya envió a producción. */
+  /* Layout: barra de control (nuestra, de revisión) arriba de una página de 1 sola tarjeta
+     (placeholder) con un modal de 3 pasos superpuesto (tutorial) — calco de los dos bocetos
+     de referencia que el usuario aprobó (Ofertas, Fichas y preguntas), que a su vez calcan el
+     kit real de Novedades de Flash. El mismo mock ("Así lo ve tu cliente") se reutiliza sin
+     cambios entre el placeholder y el primer paso del tutorial: un solo visual por feature. */
   :root {
     --frost-primary: #0072FB; --frost-primary-hover: #005CD4; --frost-primary-soft: #EEF6FF; --frost-primary-wash: rgba(0,114,251,.08);
     --frost-success: #10B981; --frost-success-soft: #D8FCEF;
@@ -20,7 +26,7 @@
   /* Sólo modo claro: el producto real no tiene tema oscuro y uno acá daría una referencia
      visual falsa de lo que este boceto describe. */
   * { box-sizing: border-box; }
-  body { margin: 0; background: var(--frost-surface-muted); color: var(--frost-ink); font-family: var(--sans); font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased; }
+  body { margin: 0; background: linear-gradient(180deg,#EEF3FB 0%,#E4ECFA 100%); color: var(--frost-ink); font-family: var(--sans); font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased; }
   button { font-family: inherit; cursor: pointer; }
   svg { display: block; }
   img { max-width: 100%; }
@@ -37,105 +43,35 @@
 
   .stage { padding: 26px 14px 50px; min-height: calc(100vh - 46px); display: flex; align-items: flex-start; justify-content: center; }
 
-  /* ---------- Placeholder: calco del componente real EmptyState (kicker+headline+hint+cta,
-     sin mockup — así son Offers/GiftCards/DynamicPricing reales) ---------- */
-  .ph-page { width: 100%; max-width: 640px; }
-  .crumb { display: flex; gap: 7px; align-items: center; margin-bottom: 14px; flex-wrap: wrap; }
-  .kicker { font-size: 10px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--frost-faint); }
-  .kicker.blue { color: var(--frost-primary); }
-  .empty { background: var(--frost-surface); border: 1px solid var(--frost-border); border-radius: var(--r-card); box-shadow: 0 10px 28px -18px rgba(15,23,42,.18); padding: 44px 36px; text-align: center; }
-  .empty .ic { width: 52px; height: 52px; border-radius: 16px; background: var(--frost-primary-wash); color: var(--frost-primary); display: grid; place-items: center; margin: 0 auto 18px; }
-  .empty .ic svg { width: 24px; height: 24px; }
-  .empty .k { font-size: 10.5px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; color: var(--frost-faint); margin-bottom: 10px; }
-  .empty h1 { font-size: 24px; line-height: 1.25; font-weight: 700; letter-spacing: -.01em; margin: 0 0 12px; text-wrap: balance; }
-  .empty h1 strong { font-weight: 700; }
-  .empty p.hint { font-size: 13.5px; line-height: 1.6; color: var(--frost-muted); max-width: 48ch; margin: 0 auto 22px; }
-  .empty .extra { font-size: 12px; color: var(--frost-muted); max-width: 46ch; margin: -10px auto 20px; line-height: 1.5; }
-  .cta { border: 0; color: #fff; font-weight: 700; font-size: 13.5px; padding: 13px 24px; border-radius: var(--r-btn); background: var(--frost-primary); box-shadow: 0 4px 16px -4px rgba(0,114,251,.4); }
-  .cta:hover { background: var(--frost-primary-hover); }
-  .flags { margin-top: 14px; display: grid; gap: 6px; }
-  .flag { display: inline-flex; align-items: flex-start; gap: 5px; background: var(--frost-warning-soft); color: #92610A; border: 1px dashed var(--frost-warning); border-radius: 8px; font-size: 10.5px; font-weight: 600; padding: 5px 8px; line-height: 1.4; text-align: left; }
-  body.hide-flags .flags { display: none !important; }
-
-  /* ---------- Placeholder rico: hero de 2 columnas (versión anterior, preferida) ---------- */
-  .hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 30px; padding: 36px; background: var(--frost-surface); border: 1px solid var(--frost-border); border-radius: var(--r-card); box-shadow: 0 10px 28px -18px rgba(15,23,42,.18); }
-  .status-row { display: flex; gap: 10px; align-items: center; margin-bottom: 18px; flex-wrap: wrap; }
-  .hero .chip { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; padding: 5px 10px; border-radius: 999px; background: var(--frost-surface-muted); color: var(--frost-muted); }
-  .hero .chip.ok { background: var(--frost-success-soft); color: #0A7A54; }
-  .lede { font-size: 13.5px; line-height: 1.6; color: var(--frost-muted); margin: 0 0 18px; max-width: 46ch; }
-  ul.checks { list-style: none; padding: 0; margin: 0 0 20px; display: grid; gap: 9px; }
-  ul.checks li { display: flex; gap: 9px; font-size: 13px; line-height: 1.45; color: var(--frost-muted); }
-  ul.checks li svg { flex: none; width: 15px; height: 15px; margin-top: 2px; color: var(--frost-primary); }
-  .costbox { border: 1px solid var(--frost-border); border-radius: 14px; padding: 11px 13px; margin-bottom: 20px; background: var(--frost-surface-muted); display: grid; gap: 7px; max-width: 440px; }
-  .costbox .cost-row { display: flex; align-items: center; gap: 9px; font-size: 12px; color: var(--frost-muted); }
-  .costbox .chip { flex: none; }
-  .costbox b { color: var(--frost-ink); font-weight: 700; }
-  .hero-visual { display: flex; align-items: center; justify-content: center; min-width: 0; }
-
-  .stack { position: relative; width: 100%; max-width: 340px; }
-  .req-card { background: var(--frost-surface); border: 1px solid var(--frost-border); border-radius: 20px; padding: 18px 19px 20px; box-shadow: 0 10px 24px -14px rgba(15,23,42,.18); }
-  .req-card .biz { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
-  .req-card .biz b { font-size: 12.5px; }
-  .req-card h4 { font-size: 17px; font-weight: 700; margin: 13px 0 4px; letter-spacing: -.01em; }
-  .req-card p { margin: 0 0 12px; font-size: 11.5px; color: var(--frost-ink-soft); line-height: 1.5; }
-  .stars-row { display: flex; gap: 7px; margin-bottom: 14px; }
-  .star-btn { width: 34px; height: 34px; border-radius: 9px; background: var(--frost-surface-muted); border: 1px solid var(--frost-border-soft); display: grid; place-items: center; }
-  .star-btn svg { width: 16px; height: 16px; color: var(--frost-warning); fill: var(--frost-warning); }
-  .mini-cta { display: inline-block; background: var(--frost-primary); color: #fff; font-weight: 700; font-size: 10px; letter-spacing: .06em; text-transform: uppercase; padding: 10px 14px; border-radius: 8px; }
-  .rev-card { background: var(--frost-surface); border: 1px solid var(--frost-border); border-radius: 16px; padding: 12px 14px; box-shadow: 0 10px 24px -14px rgba(15,23,42,.18); margin: -20px 0 0 28px; position: relative; }
-  .rev-head { display: flex; gap: 9px; align-items: center; margin-bottom: 7px; }
-  .avatar { width: 30px; height: 30px; border-radius: 50%; background: var(--frost-primary-wash); color: var(--frost-primary-hover); display: grid; place-items: center; font-weight: 700; font-size: 12px; }
-  .rev-head b { font-size: 12px; display: block; }
-  .rev-head small { font-size: 10px; color: var(--frost-faint); }
-  .mini-stars { display: inline-flex; gap: 1px; margin-left: 5px; vertical-align: -2px; }
-  .mini-stars svg { width: 11px; height: 11px; color: var(--frost-warning); fill: var(--frost-warning); }
-  .rev-card p { margin: 0 0 7px; font-size: 11.5px; line-height: 1.5; color: var(--frost-ink); }
-  .verified { font-size: 10px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--frost-primary-hover); display: inline-flex; gap: 5px; align-items: center; }
-  .verified svg { width: 10px; height: 10px; }
-
-  .gcard { border-radius: 20px; padding: 20px; color: #fff; position: relative; overflow: hidden; background: linear-gradient(135deg, #0A5FD9 0%, #0072FB 55%, #4FA0FF 100%); box-shadow: 0 10px 24px -14px rgba(15,23,42,.3); aspect-ratio: 1.62; display: flex; flex-direction: column; justify-content: space-between; max-width: 340px; }
-  .gcard::after { content: ''; position: absolute; right: -60px; top: -60px; width: 200px; height: 200px; border-radius: 50%; background: rgba(255,255,255,.12); }
-  .gcard::before { content: ''; position: absolute; right: 30px; bottom: -80px; width: 170px; height: 170px; border-radius: 50%; background: rgba(255,255,255,.08); }
-  .gcard .top { display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1; font-size: 11px; font-weight: 700; letter-spacing: .04em; }
-  .gcard .top svg { width: 20px; height: 20px; }
-  .gcard .mid { position: relative; z-index: 1; }
-  .gcard .mid small { display: block; font-size: 10px; opacity: .8; font-weight: 500; margin-bottom: 3px; }
-  .gcard .mid b { font-size: 18px; font-weight: 700; letter-spacing: -.01em; display: block; }
-  .gcard .amount { font-size: 26px; font-weight: 800; letter-spacing: -.02em; margin-top: 3px; }
-  .gcard .bottom { position: relative; z-index: 1; display: flex; justify-content: space-between; font-size: 9.5px; opacity: .9; font-weight: 600; }
-  .mail-snip { background: var(--frost-surface); border: 1px solid var(--frost-border); border-radius: 14px; padding: 12px 14px; box-shadow: 0 10px 24px -14px rgba(15,23,42,.18); margin: -22px 0 0 34px; position: relative; font-size: 11px; color: var(--frost-muted); line-height: 1.5; max-width: 340px; }
-  .mail-snip .from { font-size: 10px; letter-spacing: .07em; text-transform: uppercase; font-weight: 700; color: var(--frost-faint); margin-bottom: 5px; display: flex; gap: 5px; align-items: center; }
-  .mail-snip .from svg { width: 12px; height: 12px; }
-  .mail-snip b { color: var(--frost-ink); }
-  .mail-snip .code { font-family: ui-monospace, Menlo, monospace; background: var(--frost-primary-wash); color: var(--frost-primary-hover); padding: 2px 6px; border-radius: 5px; font-weight: 700; font-size: 10.5px; }
-
-  .slots { background: var(--frost-surface); border: 1px solid var(--frost-border); border-radius: 20px; box-shadow: 0 10px 24px -14px rgba(15,23,42,.18); padding: 17px; width: 100%; max-width: 360px; }
-  .slots .sh { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
-  .slots .sh b { font-size: 13px; }
-  .slots .sub { font-size: 11px; color: var(--frost-ink-soft); margin-bottom: 13px; }
-  .slot { display: flex; align-items: center; justify-content: space-between; padding: 11px 13px; border: 1px solid var(--frost-border); border-radius: 11px; margin-bottom: 7px; background: var(--frost-surface); }
-  .slot .t { font-weight: 700; font-size: 13px; }
-  .slot .p { text-align: right; font-size: 12px; font-weight: 700; }
-  .slot .p s { color: var(--frost-faint); font-weight: 500; font-size: 11px; margin-right: 5px; }
-  .slot.disc { border-color: rgba(0,114,251,.35); background: linear-gradient(90deg, var(--frost-primary-wash), var(--frost-surface) 70%); }
-  .off { display: inline-block; font-size: 10px; font-weight: 800; letter-spacing: .03em; padding: 3px 6px; border-radius: 6px; background: var(--frost-primary); color: #fff; margin-left: 7px; vertical-align: 1px; }
-
-  /* ---------- Modal del tutorial: calco 1:1 del kit real ---------- */
-  .stagewrap-modal { width: 100%; max-width: 560px; background: var(--frost-surface); border-radius: var(--r-card); box-shadow: var(--sh-md); padding: 30px 32px 26px; position: relative; }
-  .modal-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 8px; }
-  .stepper { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
-  .step-dot { display: flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 600; color: var(--frost-faint); }
-  .step-dot .circle { width: 19px; height: 19px; border-radius: 50%; background: var(--frost-border-soft); color: var(--frost-faint); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; }
-  .step-dot.done .circle, .step-dot.active .circle { background: var(--frost-primary); color: #fff; }
-  .step-dot.active, .step-dot.done { color: var(--frost-ink); }
-  .step-sep { width: 20px; height: 1.5px; background: var(--frost-border); }
-  .step-sep.done { background: var(--frost-primary); }
-  .modal-tag { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--frost-faint); }
-
-  h1.headline { font-size: 26px; font-weight: 700; line-height: 1.22; margin: 0 0 9px; letter-spacing: -.01em; text-wrap: balance; }
+  h1.headline { font-size: 28px; font-weight: 700; line-height: 1.2; margin: 0 0 10px; letter-spacing: -.01em; text-wrap: balance; }
   h1.headline em { font-style: italic; font-weight: 600; color: var(--frost-primary); }
   p.dek { font-size: 13.5px; color: var(--frost-muted); line-height: 1.55; margin: 0 0 22px; max-width: 50ch; }
 
+  /* ---------- Placeholder: una tarjeta, dos columnas (1.55fr texto / 1fr ejemplo) ---------- */
+  .page-card { width: 100%; max-width: 900px; background: var(--frost-surface); border-radius: var(--r-card); box-shadow: var(--sh-md); padding: 38px 42px; }
+  .tag-pill { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--frost-muted); background: var(--frost-surface-muted); padding: 5px 12px; border-radius: var(--r-chip); margin-bottom: 16px; }
+  .ph-grid { display: grid; grid-template-columns: 1.55fr 1fr; gap: 40px; align-items: start; }
+  @media (max-width: 720px) { .ph-grid { grid-template-columns: 1fr; } .ph-right { order: 2; } }
+
+  .check-list { list-style: none; margin: 0 0 20px; padding: 0; }
+  .check-list li { display: flex; align-items: flex-start; gap: 9px; font-size: 12.5px; color: var(--frost-ink-soft); line-height: 1.5; margin-bottom: 9px; }
+  .check-list svg { width: 15px; height: 15px; color: var(--frost-primary); flex-shrink: 0; margin-top: 2px; }
+
+  .cost-bar { display: flex; align-items: center; gap: 11px; background: var(--frost-surface-muted); border-radius: var(--r-item); padding: 13px 16px; margin-bottom: 10px; }
+  .cost-bar:last-of-type { margin-bottom: 24px; }
+  .cost-pill { font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 4px 10px; border-radius: var(--r-chip); flex-shrink: 0; }
+  .cost-pill.ok { color: var(--frost-success); background: var(--frost-success-soft); }
+  .cost-pill.warn { color: #92610A; background: var(--frost-warning-soft); }
+  .cost-bar .cost-text { font-size: 12.5px; font-weight: 600; color: var(--frost-ink); }
+
+  .ph-right { padding-top: 4px; }
+  .example-tag { display: block; text-align: right; font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--frost-faint); margin-bottom: 10px; }
+
+  .btn-next, .cta { display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 700; color: #fff; background: var(--frost-primary); border: none; border-radius: var(--r-btn); padding: 12px 22px; cursor: pointer; box-shadow: 0 4px 16px -4px rgba(0,114,251,.4); transition: background .15s ease; }
+  .btn-next:hover, .cta:hover { background: var(--frost-primary-hover); }
+  .btn-next svg, .cta svg { width: 14px; height: 14px; }
+
+  /* ---------- Mock compartido: "Así lo ve tu cliente" (igual en placeholder y en Intro) ---------- */
   .mock-kicker { font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--frost-faint); margin-bottom: 12px; text-align: center; }
   .mock { max-width: 360px; margin: 0 auto; background: var(--frost-surface); border: 1px solid var(--frost-border); border-radius: var(--r-item); padding: 19px 20px; box-shadow: 0 10px 24px -14px rgba(15,23,42,.18); }
   .mock .m-title { font-size: 13.5px; font-weight: 700; margin-bottom: 2px; }
@@ -162,11 +98,6 @@
   .format-item .fi-icon { width: 32px; height: 32px; border-radius: var(--r-sm); background: var(--frost-primary-soft); color: var(--frost-primary); display: flex; align-items: center; justify-content: center; }
   .format-item .fi-icon svg { width: 15px; height: 15px; }
   .format-item .fi-label { font-size: 11px; font-weight: 600; color: var(--frost-ink); line-height: 1.25; }
-  .format-item .fi-note { font-size: 9.5px; color: var(--frost-faint); margin-top: -2px; }
-
-  .diff-note { display: flex; align-items: flex-start; gap: 9px; font-size: 12px; color: var(--frost-ink-soft); line-height: 1.5; background: var(--frost-surface-muted); border-radius: var(--r-item); padding: 12px 14px; margin-bottom: 6px; }
-  .diff-note svg { width: 15px; height: 15px; color: var(--frost-primary); flex-shrink: 0; margin-top: 1px; }
-  .diff-note b { color: var(--frost-ink); }
 
   .type-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
   @media (max-width: 520px) { .type-grid { grid-template-columns: 1fr; } }
@@ -178,43 +109,53 @@
   .type-card .t-desc { font-size: 11.5px; color: var(--frost-muted); line-height: 1.5; }
   .type-card .t-example { font-size: 11px; color: var(--frost-ink-soft); font-style: italic; margin-top: 7px; }
 
+  /* ---------- Modal del tutorial ---------- */
+  .stagewrap-modal { width: 100%; max-width: 560px; background: var(--frost-surface); border-radius: var(--r-card); box-shadow: var(--sh-md); padding: 30px 32px 26px; position: relative; }
+  .modal-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 8px; }
+  .stepper { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+  .step-dot { display: flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 600; color: var(--frost-faint); }
+  .step-dot .circle { width: 19px; height: 19px; border-radius: 50%; background: var(--frost-border-soft); color: var(--frost-faint); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; }
+  .step-dot.done .circle, .step-dot.active .circle { background: var(--frost-primary); color: #fff; }
+  .step-dot.active, .step-dot.done { color: var(--frost-ink); }
+  .step-sep { width: 20px; height: 1.5px; background: var(--frost-border); }
+  .step-sep.done { background: var(--frost-primary); }
+  .modal-tag { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--frost-faint); }
+
   .modal-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 6px; gap: 10px; flex-wrap: wrap; }
   .btn-back { display: flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--frost-muted); background: none; border: none; cursor: pointer; padding: 8px 4px; }
-  .btn-next { display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 700; color: #fff; background: var(--frost-primary); border: none; border-radius: var(--r-btn); padding: 11px 20px; cursor: pointer; box-shadow: 0 4px 16px -4px rgba(0,114,251,.4); }
-  .btn-next:hover { background: var(--frost-primary-hover); }
-  .btn-next svg, .btn-back svg { width: 13px; height: 13px; }
+  .btn-back svg { width: 13px; height: 13px; }
 
   .done-wrap { text-align: center; padding: 16px 6px 4px; }
   .done-icon { width: 62px; height: 62px; border-radius: 50%; background: var(--frost-primary-soft); color: var(--frost-primary); display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; }
   .done-icon svg { width: 27px; height: 27px; }
-  .done-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--frost-primary); margin-bottom: 9px; }
   .done-title { font-size: 22px; font-weight: 700; margin: 0 0 9px; }
   .done-title em { font-style: italic; font-weight: 600; color: var(--frost-primary); }
   .done-dek { font-size: 13.5px; color: var(--frost-muted); line-height: 1.55; max-width: 40ch; margin: 0 auto 22px; }
   .done-cta { display: inline-flex; align-items: center; gap: 7px; font-size: 13.5px; font-weight: 700; color: #fff; background: var(--frost-primary); border: none; border-radius: var(--r-btn); padding: 12px 24px; cursor: pointer; box-shadow: 0 4px 16px -4px rgba(0,114,251,.4); margin-bottom: 12px; }
   .done-secondary { font-size: 12px; color: var(--frost-muted); background: none; border: none; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
 
+  /* ---------- Notas de diseño (nuestras, no son parte del producto) ---------- */
   .dn-box { margin-top: 16px; padding: 11px 13px; border-radius: 12px; background: #FFFBEB; border: 1px dashed var(--frost-warning); display: grid; gap: 6px; max-width: 560px; }
+  .dn-box.wide { max-width: 100%; }
   .dn-box .ttl { font-size: 9px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: #92610A; }
   .dn-box p { margin: 0 !important; font-size: 11px !important; line-height: 1.45 !important; color: #78350F !important; }
   .dn-box p b { color: #451A03; }
   body.hide-flags .dn { display: none !important; }
   .rubro-tag { display: inline-flex; gap: 6px; align-items: center; font-size: 9.5px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--frost-muted); background: var(--frost-surface-muted); padding: 4px 8px; border-radius: 999px; }
 
-  @media (max-width: 760px) {
-    .hero { grid-template-columns: 1fr; padding: 22px 20px; gap: 22px; }
-  }
   @media (max-width: 640px) {
     .toolbar { padding: 8px 10px; }
     .stage { padding: 16px 10px 40px; }
     .stagewrap-modal { padding: 22px 18px 20px; }
-    h1.headline { font-size: 21px; }
-    .empty { padding: 30px 20px; }
+    .page-card { padding: 26px 20px; }
+    h1.headline { font-size: 22px; }
   }
 </style>
+</head>
+<body>
 
 <div class="toolbar">
-  <div class="brand">Bocetos de activación<small>Placeholder + tutorial · calco del kit de Novedades</small></div>
+  <div class="brand">Bocetos de activación<small>Placeholder + tutorial · calco de los bocetos aprobados</small></div>
   <div class="grp"><label>Feature</label>
     <div class="seg" id="seg-feature">
       <button data-v="resenas">Reseñas</button>
@@ -248,112 +189,31 @@ const I = {
   check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>',
   arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
   back: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>',
-  info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>',
   star: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1z"/></svg>',
-  gift: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v8h14v-8M12 8v12M12 8S10.5 3 8 3.5 6 7 8.5 8M12 8s1.5-5 4-4.5S18 7 15.5 8"/></svg>',
-  bolt: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg>',
-  box: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></svg>',
+  home: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg>',
   card: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/></svg>',
-  bull: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11v2a1 1 0 001 1h2l4 4V6L6 10H4a1 1 0 00-1 1z"/><path d="M15 8a5 5 0 010 8M18 5a9 9 0 010 14"/></svg>',
+  gift: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v8h14v-8M12 8v12M12 8S10.5 3 8 3.5 6 7 8.5 8M12 8s1.5-5 4-4.5S18 7 15.5 8"/></svg>',
   clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
   cal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>',
+  bolt: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg>',
+  box: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></svg>',
   font: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 20L10 4h4l4 16M7.5 14h9"/></svg>',
   dot: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/></svg>',
   toggle: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="10" rx="5"/><circle cx="16" cy="12" r="3" fill="currentColor" stroke="none"/></svg>',
-  shop: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l1-5h16l1 5M4 9v11h16V9M4 9a2 2 0 004 0 2 2 0 004 0 2 2 0 004 0 2 2 0 004 0"/></svg>',
-  home: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg>',
-  profile: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg>',
-  repeat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 2l4 4-4 4M3 12v-2a4 4 0 014-4h14M7 22l-4-4 4-4M21 12v2a4 4 0 01-4 4H3"/></svg>',
   image: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.7" fill="currentColor" stroke="none"/><path d="M4 17l5-5 3.5 3.5L16 12l4.5 5"/></svg>',
-  mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M3 6.5l9 6.5 9-6.5"/></svg>'
-};
-const stars = (n = 5) => Array.from({ length: n }, () => I.star.replace('<svg', '<svg width="12" height="12"')).join('');
-const ej = '<span style="position:absolute;top:-10px;right:4px;font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--frost-faint);background:var(--frost-surface);border:1px solid var(--frost-border);padding:2px 7px;border-radius:999px">Ejemplo</span>';
-const checksList = arr => `<ul class="checks">${arr.map(t => `<li>${I.check}<span>${t}</span></li>`).join('')}</ul>`;
-
-/* ---------- Visuales ricos del placeholder (versión anterior, preferida) ---------- */
-const requestCard = d => `
-  <div class="stack">${ej}
-    <div class="req-card">
-      <div class="biz"><b>${d.biz}</b><span class="kicker" style="font-size:9px">Tu opinión</span></div>
-      <h4>¿Cómo estuvo tu visita?</h4>
-      <p>${d.hello}, gracias por venir. Tu opinión ayuda al equipo.</p>
-      <div class="stars-row">${Array.from({ length: 5 }, () => `<span class="star-btn">${I.star}</span>`).join('')}</div>
-      <span class="mini-cta">Calificar mi visita</span>
-    </div>
-    <div class="rev-card">
-      <div class="rev-head"><span class="avatar">${d.ini}</span>
-        <div><b>${d.name}<span class="mini-stars">${stars()}</span></b><small>${d.service} · hace 2 horas</small></div></div>
-      <p>${d.text}</p>
-      <span class="verified">${I.check.replace('<svg', '<svg width="10" height="10"')} Verificada</span>
-    </div>
-  </div>`;
-
-const giftVisual = d => `
-  <div class="stack">${ej}
-    <div class="gcard">
-      <div class="top"><span>${d.biz}</span>${I.gift}</div>
-      <div class="mid"><small>${d.scope}</small><b>${d.title}</b><div class="amount">${fmt(d.value)}</div></div>
-      <div class="bottom"><span>Vence 12 meses desde la compra</span><span>Código por mail</span></div>
-    </div>
-    <div class="mail-snip">
-      <div class="from">${I.mail} Para ${d.to}</div>
-      <b>${d.from} te regaló una tarjeta de ${d.biz}.</b> Usá el código <span class="code">AGR-7K2Q-9XPM</span> al reservar.
-    </div>
-  </div>`;
-
-const slotsVisualPH = d => {
-  const hrs = [d.s - 1, d.s, d.s + 1, d.e];
-  const disc = Math.round(d.price * (1 - d.pct / 100));
-  return `<div class="slots" style="position:relative">${ej}
-    <div class="sh"><b>${d.svc}</b><span class="kicker blue" style="font-size:9px">Martes</span></div>
-    <div class="sub">Horarios disponibles</div>
-    ${hrs.map((h, i) => (i === 1 || i === 2)
-      ? `<div class="slot disc"><span class="t">${h}:00<span class="off">${d.pct}% OFF</span></span><span class="p"><s>${fmt(d.price)}</s>${fmt(disc)}</span></div>`
-      : `<div class="slot"><span class="t">${h}:00</span><span class="p">${fmt(d.price)}</span></div>`).join('')}
-  </div>`;
-};
-
-const productVisualPH = d => `<div class="slots" style="position:relative">${ej}
-  <div class="sh"><b>Tu reserva</b><span class="kicker blue" style="font-size:9px">Sumá productos</span></div>
-  <div class="sub">Los retirás durante tu sesión</div>
-  <div class="slot"><span class="t">${d.svc}</span><span class="p">${fmt(d.p)}</span></div>
-  <div class="slot disc"><span class="t">${d.prod}<span class="off">Sumado</span></span><span class="p">${fmt(d.pp)}</span></div>
-  <div class="slot" style="border-style:dashed"><span class="t">Total</span><span class="p">${fmt(d.p + d.pp)}</span></div>
-</div>`;
-
-const offerVisualPH = d => { const price = Math.round(d.p * (1 - d.pct / 100)); return `<div class="slots" style="position:relative">${ej}
-  <div class="sh"><b>Confirmá tu reserva</b><span class="kicker blue" style="font-size:9px">${d.svc}</span></div>
-  <div class="sub">Oferta activa · ${d.pct}% OFF por 48 horas</div>
-  <div class="slot disc"><span class="t">${d.svc}</span><span class="p"><s>${fmt(d.p)}</s>${fmt(price)}</span></div>
-</div>`; };
-
-const fichaVisualPH = d => `<div class="slots" style="position:relative">${ej}
-  <div class="sh"><b>${d.svc}</b><span class="kicker blue" style="font-size:9px">Viernes 14:00 hs</span></div>
-  <div class="sub">Campo que armaste vos ↓</div>
-  <div class="slot" style="display:block"><span class="t" style="display:block;margin-bottom:6px">${d.q}</span><span class="p" style="font-weight:500">${d.a}</span></div>
-</div>`;
-
-/* Datos de ejemplo por rubro, para los visuales del placeholder (mismos valores que en «Conocé»). */
-const RES_PH = {
-  none:   { biz: 'Tu negocio', name: 'Ana P.', ini: 'A', service: 'Servicio', hello: 'Hola Ana', text: 'Salí feliz. La atención fue excelente y ya reservé de nuevo.' },
-  salon:  { biz: 'Estudio Aura', name: 'Valentina R.', ini: 'V', service: 'Corte + Color', hello: 'Hola Valentina', text: 'Salí feliz. Me explicaron cómo mantener el color en casa y volví a reservar antes de irme.' },
-  barber: { biz: 'Barbería Norte', name: 'Tomás G.', ini: 'T', service: 'Corte + Barba', hello: 'Hola Tomás', text: 'Salí con el degradé y la barba perfilada. Prolijo como siempre, ya tengo el próximo turno.' }
-};
-const GIFT_PH = {
-  none:   { biz: 'Tu negocio', title: 'Tarjeta de regalo', scope: 'Monto fijo', value: 20000, to: 'Lucía', from: 'Martín' },
-  salon:  { biz: 'Estudio Aura', title: 'Color + brushing', scope: 'Servicios específicos', value: 45000, to: 'Mamá', from: 'Sofía' },
-  barber: { biz: 'Barbería Norte', title: 'Corte + barba', scope: 'Servicios específicos', value: 18000, to: 'Papá', from: 'Nicolás' }
+  profile: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg>',
+  repeat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 2l4 4-4 4M3 12v-2a4 4 0 014-4h14M7 22l-4-4 4-4M21 12v2a4 4 0 01-4 4H3"/></svg>'
 };
 const RUBRO = { none: { label: 'Sin rubro', noun: 'tu negocio', tag: 'Ejemplo neutro' }, salon: { label: 'Salón', noun: 'tu salón', tag: 'Ejemplo: salón de belleza' }, barber: { label: 'Barbería', noun: 'tu barbería', tag: 'Ejemplo: barbería' } };
 const fmt = n => '$' + n.toLocaleString('es-AR');
 
-/* ---------- Piezas compartidas, calcadas del kit real de Novedades ---------- */
+/* ---------- Piezas compartidas ---------- */
 const titulo = (antes, resaltado, despues = '.') => `<h1 class="headline">${antes} <em>${resaltado}</em>${despues}</h1>`;
 const tituloDone = (antes, resaltado) => `<div class="done-title">${antes} <em>${resaltado}</em>.</div>`;
+const checksList = arr => `<ul class="check-list">${arr.map(t => `<li>${I.check}<span>${t}</span></li>`).join('')}</ul>`;
+const costBars = arr => arr.map(c => `<div class="cost-bar"><span class="cost-pill ${c.ok ? 'ok' : 'warn'}">${c.pill}</span><span class="cost-text">${c.text}</span></div>`).join('');
 
-const mockPrice = ({ kicker = 'Así lo ve tu cliente', title, sub, note, name, old, price }) => `
-  <p class="mock-kicker">${kicker}</p>
+const mockPrice = ({ title, sub, note, name, old, price }) => `
   <div class="mock">
     <div class="m-title">${title}</div>
     <div class="m-sub">${sub}</div>
@@ -362,8 +222,7 @@ const mockPrice = ({ kicker = 'Así lo ve tu cliente', title, sub, note, name, o
     <div class="m-row"><span class="m-row-name">${name}</span><span class="m-row-nums"><span class="m-old">${fmt(old)}</span><span class="m-new">${fmt(price)}</span></span></div>
   </div>`;
 
-const mockPlain = ({ kicker = 'Así lo ve tu cliente', title, sub, note, name, value }) => `
-  <p class="mock-kicker">${kicker}</p>
+const mockPlain = ({ title, sub, note, name, value }) => `
   <div class="mock">
     <div class="m-title">${title}</div>
     <div class="m-sub">${sub}</div>
@@ -372,8 +231,7 @@ const mockPlain = ({ kicker = 'Así lo ve tu cliente', title, sub, note, name, v
     <div class="m-row plain"><span class="m-row-name">${name}</span><span class="m-row-nums"><span class="m-new" style="font-size:13px">${value}</span></span></div>
   </div>`;
 
-const mockCart = ({ kicker = 'Así lo ve tu cliente', title, sub, note, name, price, extra, extraPrice, total }) => `
-  <p class="mock-kicker">${kicker}</p>
+const mockCart = ({ title, sub, note, name, price, extra, extraPrice, total }) => `
   <div class="mock">
     <div class="m-title">${title}</div>
     <div class="m-sub">${sub}</div>
@@ -386,11 +244,20 @@ const mockCart = ({ kicker = 'Así lo ve tu cliente', title, sub, note, name, pr
 
 const caption = html => `<p class="mock-caption">${html}</p>`;
 const grid = (items, cols3) => `<div class="format-grid${cols3 ? ' cols-3' : ''}">${items.map(it =>
-  `<div class="format-item${it.accent ? ' accent' : ''}"><span class="fi-icon">${it.icon}</span><span class="fi-label">${it.label}</span>${it.note ? `<span class="fi-note">${it.note}</span>` : ''}</div>`).join('')}</div>`;
-const callout = html => `<div class="diff-note">${I.info}<span>${html}</span></div>`;
+  `<div class="format-item${it.accent ? ' accent' : ''}"><span class="fi-icon">${it.icon}</span><span class="fi-label">${it.label}</span></div>`).join('')}</div>`;
 const typeGrid = cards => `<div class="type-grid">${cards.map(c => `<div class="type-card${c.accent ? ' accent' : ''}"><span class="t-icon">${c.icon}</span><p class="t-title">${c.title}</p><p class="t-desc">${c.desc}</p><p class="t-example">${c.example}</p></div>`).join('')}</div>`;
 
-/* ---------- Contenido por feature: Conocé / Cómo funciona / Listo, exactamente como el kit real ---------- */
+/* ---------- Contenido por feature ----------
+   Principios de wording sacados de los 2 bocetos de referencia (Ofertas / Fichas y preguntas):
+   - El titular del placeholder NUNCA es el mismo que el de «Intro»: el placeholder nombra la
+     feature desde el negocio; «Intro» se pone del lado del cliente («Tu cliente ve…», «Lo usa…»).
+   - Headlines de «Cómo funciona» son cortos y resueltos («El tiempo lo elegís vos.»), no una
+     descripción narrada.
+   - El costo vive UNA sola vez (en el placeholder); no se repite como aviso en el tutorial.
+   - Sin comparaciones con otra feature salvo que sean imprescindibles para no confundir — eso
+     se nota mostrando el mecanismo propio, no explicándolo contra el de al lado.
+   - Sin bajada de cierre en cada pantalla «porque toca»: sólo cuando agrega un dato nuevo.
+*/
 const FEATURES = {
 
   /* ============ RESEÑAS ============ */
@@ -398,34 +265,31 @@ const FEATURES = {
     tag: 'Reseñas', icon: I.star,
     placeholder(r) {
       return {
-        chip: 'Apagadas', kicker: 'Reseñas verificadas',
         headline: 'Pedí la reseña mientras la visita <em>todavía se siente.</em>',
-        lede: 'Dos horas después de cada turno, le enviamos al cliente un pedido corto. El cliente toca una calificación y deja su reseña, que queda en tu página, en Google o en las dos. Solo quien tuvo turno puede dejarla.',
-        bullets: ['Se pide sola. Vos leés, respondés y elegís qué mostrar.', 'Con 3 estrellas o menos, el cliente puede contártelo en privado.'],
-        cost: [{ chip: ['ok', 'Sin costo'], b: 'Por correo.', t: '' }, { chip: [], b: 'Por WhatsApp,', t: 'si lo tenés prendido (usa mensajes).' }],
+        dek: 'Un mensaje corto, dos horas después de cada turno. Sólo quien tuvo turno puede dejarla.',
+        bullets: ['Se pide sola. Vos leés, respondés y elegís qué mostrar.', 'Con 3 estrellas o menos, el cliente te escribe en privado en vez de publicar.'],
+        costBars: [{ ok: true, pill: 'Sin costo', text: 'Por correo no te cuesta nada.' }, { ok: false, pill: 'Usa mensajes', text: 'Por WhatsApp, cada pedido gasta uno de tu pack.' }],
         cta: 'Activar reseñas',
-        visual: requestCard(RES_PH[r]),
         notes: ['<b>Fuente:</b> titular real de ReviewsLanding.tsx.']
       };
     },
     conoce: r => ({
-      titulo: ['Pedí la reseña mientras la visita', 'todavía se siente'],
-      dek: 'Dos horas después de cada turno, tu cliente recibe un pedido corto. Lo completa con una calificación y su reseña queda en tu página, en Google o en las dos.',
+      titulo: ['Tu cliente la deja con un toque,', 'sin escribir nada'],
+      dek: 'Dos horas después del turno le llega un pedido corto. Toca una calificación y, si quiere, agrega unas palabras.',
       mock: mockPlain({ title: '¿Cómo estuvo tu visita?', sub: RUBRO[r].noun === 'tu negocio' ? 'Servicio · hace 2 horas' : r === 'salon' ? 'Corte + Color · hace 2 horas' : 'Corte + Barba · hace 2 horas', note: 'Reseña verificada · ★★★★★', name: 'Salí feliz, ya reservé de nuevo.', value: '' }),
-      caption: caption('La activás <b>una sola vez</b>. Después, cada turno le pide su reseña solo — nadie tiene que escribir nada.'),
-      src: 'Titular, mecanismo y mock reutilizan ReviewsLanding.tsx y su vista previa real.'
+      src: 'Mecanismo y mock reutilizan ReviewsLanding.tsx y su vista previa real.'
     }),
     comoFunciona: {
-      titulo: ['Vos elegís', 'dónde viven tus reseñas'],
-      dek: 'En tu página, en tu perfil de Google, o en las dos — se puede cambiar cuando quieras.',
+      titulo: ['Vos elegís', 'dónde viven'],
+      dek: 'En tu página, en tu perfil de Google, o en las dos.',
       body: grid([
         { icon: I.star, label: 'En Ágora' },
         { icon: I.home, label: 'En Google' },
-        { icon: I.check, label: 'En las dos', accent: true }
-      ], true) + callout('Por WhatsApp, cada pedido usa un mensaje de tu pack. Por correo no tiene costo.'),
-      src: 'Reutiliza el picker real (Ágora/Google/las dos) de ReviewsLanding.tsx. El costo por WhatsApp está verificado en código (wa_ei_review_request cuenta contra el pack).'
+        { icon: I.check, label: 'En las dos' }
+      ], true),
+      src: 'Reutiliza el picker real (Ágora/Google/las dos) de ReviewsLanding.tsx.'
     },
-    listo: { titulo: ['Ya podés activar', 'tus reseñas'], dek: 'Elegí dónde viven y quedan pidiéndose solas, turno tras turno.', cta: 'Activar reseñas' }
+    listo: { titulo: ['Ya podés activar', 'tus reseñas'], cta: 'Activar reseñas' }
   },
 
   /* ============ GIFT CARDS ============ */
@@ -433,24 +297,22 @@ const FEATURES = {
     tag: 'Tarjetas de regalo', icon: I.gift,
     placeholder(r) {
       return {
-        chip: 'Sin tarjetas', kicker: 'Tarjetas de regalo',
-        headline: 'Vendé tarjetas de regalo que se usan <em>al reservar.</em>',
-        lede: 'Tus clientes compran una tarjeta desde tu página y se la mandan a quien quieran. Vos cobrás por adelantado; quien la recibe reserva con vos y la usa al pagar.',
-        bullets: ['Ideales para cumpleaños, Día de la Madre o Navidad.', 'Quien la recibe puede ser alguien nuevo en tu negocio.', 'Vos elegís si vale un monto o servicios específicos, y si vence.'],
-        cost: [{ chip: ['ok', 'Sin costo'], b: 'Ágora no cobra', t: 'por las tarjetas.' }, { chip: [], b: 'Se cobra con Mercado Pago,', t: 'que aplica su comisión.' }],
+        headline: 'Vendé o regalá tarjetas de regalo que se usan <em>al reservar.</em>',
+        dek: 'Tu cliente la compra desde tu página y se la manda a quien quiera.',
+        bullets: ['Quien la recibe puede ser alguien nuevo en tu negocio.', 'Vos elegís si vale un monto o servicios específicos, y si vence.'],
+        costBars: [{ ok: true, pill: 'Sin costo', text: 'No te cobramos por vender tarjetas — Mercado Pago aplica su comisión habitual.' }],
         cta: 'Crear mi primera tarjeta',
-        visual: giftVisual(GIFT_PH[r]),
-        notes: ['<b>Fuente:</b> el hint real de GiftCards.tsx («Ideales para cumpleaños…») está en la viñeta 1; titular y bajada describen el mecanismo, no la ocasión.']
+        notes: ['<b>Fuente:</b> describe el mecanismo, no la ocasión — el hint real de GiftCards.tsx apela a fechas (cumpleaños, Día de la Madre).',
+                '<b>«O regalá»:</b> verificado en gift_card.controller.ts — POST /me/vendor/gift-cards/direct, «el negocio regala una tarjeta», sin que el cliente la compre.']
       };
     },
     conoce: r => {
       const d = r === 'salon' ? { t: 'Color + brushing', v: 45000 } : r === 'barber' ? { t: 'Corte + barba', v: 18000 } : { t: 'Tarjeta de regalo', v: 20000 };
       return {
-        titulo: ['Vendé tarjetas de regalo que se usan', 'al reservar'],
-        dek: 'Tu cliente la compra desde tu página y se la manda a quien quiera. Esa persona la usa al pagar su reserva.',
+        titulo: ['Tu cliente la usa con un código,', 'al reservar'],
+        dek: 'Quien la recibe pone el código al pagar su turno. Si la reserva vale más, paga la diferencia.',
         mock: mockPlain({ title: d.t, sub: RUBRO[r].noun, note: 'Código enviado por mail', name: 'Valor de la tarjeta', value: fmt(d.v) }),
-        caption: caption('La creás <b>una sola vez</b>. Se vende sola desde tu página, sin que tengas que intervenir.'),
-        src: 'Mecanismo verificado en gift-card-purchase.service.ts. Montos de ejemplo.'
+        src: 'Mecanismo verificado en gift-card-purchase.service.ts y gift-card-redemption.service.ts. Montos de ejemplo.'
       };
     },
     comoFunciona: {
@@ -458,124 +320,116 @@ const FEATURES = {
       dek: 'Un monto fijo o servicios específicos, y si vence o no.',
       body: grid([
         { icon: I.card, label: 'Monto fijo' },
-        { icon: I.gift, label: 'Servicios específicos', accent: true },
+        { icon: I.gift, label: 'Servicios específicos' },
         { icon: I.clock, label: 'Sin vencimiento' },
         { icon: I.cal, label: 'Con fecha límite' }
-      ]) + callout('Para que tus clientes puedan comprarla necesitás <b>Mercado Pago conectado</b> — podés crearla igual y conectarlo después.'),
-      src: 'Tipo y vencimiento son campos reales de gift_card_template.controller.ts. El requisito de Mercado Pago y que no bloquea la creación están verificados en GiftCards.tsx.'
+      ]),
+      src: 'Tipo y vencimiento son campos reales de gift_card_template.controller.ts. Necesita Mercado Pago conectado para vender — podés crearla igual y conectarlo después (GiftCards.tsx).'
     },
-    listo: { titulo: ['Ya podés crear', 'tu primera tarjeta'], dek: 'Elegí el tipo, el monto y publicala en un par de pasos.', cta: 'Crear mi primera tarjeta' }
+    listo: { titulo: ['Ya podés crear', 'tu primera tarjeta'], cta: 'Crear mi primera tarjeta' }
   },
 
   /* ============ PRECIOS DINÁMICOS ============ */
   dinamicos: {
     tag: 'Precios dinámicos', icon: I.bolt,
     placeholder(r) {
-      const d = r === 'salon' ? { svc: 'Color y Manicura', price: 38000, pct: 20, s: 10, e: 14 } : r === 'barber' ? { svc: 'Corte', price: 12000, pct: 15, s: 11, e: 15 } : { svc: 'Corte de pelo', price: 10000, pct: 20, s: 9, e: 13 };
       return {
-        chip: 'Apagados', kicker: 'Marketing y comunicación',
         headline: 'Llená los huecos de tu agenda con <em>descuentos automáticos.</em>',
-        lede: 'Aplicá descuentos en los días y horarios de menos demanda. Elegís qué servicios, qué franja horaria y cuánto descuento, y lo aplicamos de cara a tus clientes.',
-        bullets: ['Tus clientes ven el aviso «20% OFF» en tu página.', 'Fuera de esa franja, el precio no cambia.', 'Lo pausás o editás cuando quieras.'],
-        cost: [{ chip: ['ok', 'Incluido'], b: 'Va con tu plan.', t: '' }],
+        dek: 'Elegís qué servicios, qué día y horario, y cuánto descontás.',
+        bullets: ['Tus clientes ven el precio más bajo apenas entran a esa franja.', 'Fuera del horario que elegiste, el precio no cambia.'],
+        costBars: [{ ok: true, pill: 'Incluido', text: 'Viene con tu plan, sin cargo aparte.' }],
         cta: 'Activar Precios dinámicos',
-        visual: slotsVisualPH(d),
-        notes: ['<b>Fuente:</b> hint real de DynamicPricingEmptyState.tsx.', '<b>Pendiente:</b> «incluido en tu plan» sale de un comentario en Billing.tsx, no de un chequeo en backend.']
+        notes: ['<b>Fuente:</b> mecanismo verificado en dynamic-pricing/resolver.ts.', '<b>Pendiente:</b> «incluido en tu plan» sale de un comentario en Billing.tsx, no de un chequeo en backend.']
       };
     },
     conoce: r => {
-      const d = r === 'salon' ? { svc: 'Color y Manicura', p: 38000, pct: 20 } : r === 'barber' ? { svc: 'Corte', p: 12000, pct: 15 } : { svc: 'Corte de pelo', p: 10000, pct: 20 };
+      const d = r === 'salon' ? { svc: 'Color y Manicura', price: 38000, pct: 20, s: 10, e: 14 } : r === 'barber' ? { svc: 'Corte', price: 12000, pct: 15, s: 11, e: 15 } : { svc: 'Corte de pelo', price: 10000, pct: 20, s: 9, e: 13 };
       return {
-        titulo: ['Descuentos automáticos en las horas de', 'menos demanda'],
-        dek: 'Elegís qué servicios, qué día y horario, y cuánto descontás. Se aplica solo, sin que tu cliente escriba nada.',
-        mock: mockPrice({ title: 'Horarios disponibles', sub: d.svc, note: `Martes 9 a 13 hs · ${d.pct}% OFF`, name: d.svc, old: d.p, price: Math.round(d.p * (1 - d.pct / 100)) }),
-        caption: caption('La armás <b>una sola vez</b>; se repite sola cada semana.'),
+        titulo: ['Tu cliente ve el descuento', 'antes de elegir el horario'],
+        dek: 'Al mirar los horarios disponibles, ya ve cuál tiene el precio más bajo — no hace falta avisarle nada aparte.',
+        mock: mockPrice({ title: 'Horarios disponibles', sub: d.svc, note: `Martes ${d.s} a ${d.e} hs · ${d.pct}% OFF`, name: d.svc, old: d.price, price: Math.round(d.price * (1 - d.pct / 100)) }),
         src: 'Mecanismo y ejemplo verificados contra dynamic-pricing/resolver.ts y DynamicPricingEmptyState.tsx.'
       };
     },
     comoFunciona: {
-      titulo: ['Elegís servicios,', 'día y horario'],
+      titulo: ['Vos elegís', 'cuándo y cuánto'],
       dek: 'Una regla por negocio, con las franjas que necesites.',
       body: grid([
         { icon: I.clock, label: 'Franja horaria' },
         { icon: I.cal, label: 'Día de semana' },
-        { icon: I.bolt, label: '% o monto fijo', accent: true }
-      ], true) + callout('No es lo mismo que <b>Ofertas</b>: esto se repite todas las semanas, sin fecha de cierre.'),
-      src: 'Solo admite descuentos, no recargos, y una regla activa por negocio (dynamic-pricing.repo.ts). La comparación con Ofertas es nueva, simétrica a la que ya hace Ofertas del lado de Precios dinámicos en Offers.tsx.'
+        { icon: I.bolt, label: '% o monto fijo' }
+      ], true),
+      src: 'Solo admite descuentos, no recargos, y una regla activa por negocio (dynamic-pricing.repo.ts).'
     },
-    listo: { titulo: ['Ya podés activar', 'tus descuentos'], dek: 'Elegí servicios, horario y publicalo en 3 pasos.', cta: 'Activar Precios dinámicos' }
+    listo: { titulo: ['Ya podés activar', 'tus descuentos'], cta: 'Activar Precios dinámicos' }
   },
 
   /* ============ CATÁLOGO DE PRODUCTOS ============ */
   catalogo: {
     tag: 'Catálogo', icon: I.box,
     placeholder(r) {
-      const d = r === 'salon' ? { svc: 'Corte + Color', p: 48000, prod: 'Shampoo para pelo teñido', pp: 14500 } : r === 'barber' ? { svc: 'Corte + Barba', p: 16000, prod: 'Cera para peinar', pp: 9800 } : { svc: 'Servicio', p: 10000, prod: 'Producto', pp: 5000 };
       return {
-        chip: 'Sin activar', kicker: 'Catálogo de productos',
         headline: 'Vendé tus productos <em>junto a cada turno.</em>',
-        lede: 'Cargás tus productos con precio y stock. Tus clientes los suman a su reserva desde tu página y se los entregás en la sesión o cuando pasan a retirarlos.',
-        bullets: ['El producto se suma al pago de la reserva.', 'Controlá unidades y evitá sobreventas.', 'Ocultás un producto, o todo el catálogo, cuando quieras.'],
-        cost: [{ chip: [], b: 'Tiene un cargo fijo mensual.', t: '' }],
+        dek: 'Los cargás con precio y stock. Tu cliente los suma a su reserva.',
+        bullets: ['Se entregan en la sesión o cuando pasan a retirarlos.', 'Si un producto se agota, se deja de poder vender online.'],
+        costBars: [{ ok: false, pill: 'Con costo', text: 'Cargo fijo de $5.000 por mes (ejemplo), sin importar cuánto vendas.' }],
         cta: 'Activar catálogo',
-        visual: productVisualPH(d),
-        notes: ['<b>Fuente:</b> corrige la expectativa del onboarding real (CatalogProductsOnboarding.tsx dice «tienda online»); el producto se vende junto con un turno, no por separado.']
+        notes: ['<b>Fuente:</b> «se entrega en la sesión o al retirarlo» corrige la expectativa del onboarding real (CatalogProductsOnboarding.tsx dice «tienda online»); el producto se vende junto con un turno.',
+                '<b>Pendiente:</b> monto de ejemplo — Flash lo calcula por país ($5.000 Argentina/Chile, $200 Uruguay/México, sin cargo en Bolivia).']
       };
     },
     conoce: r => {
       const d = r === 'salon' ? { svc: 'Corte + Color', p: 48000, prod: 'Shampoo para pelo teñido', pp: 14500 } : r === 'barber' ? { svc: 'Corte + Barba', p: 16000, prod: 'Cera para peinar', pp: 9800 } : { svc: 'Servicio', p: 10000, prod: 'Producto', pp: 5000 };
       return {
-        titulo: ['Vendé tus productos junto a', 'cada turno'],
-        dek: 'Los cargás con precio y stock. Tu cliente los suma a su reserva y los paga junto con el turno.',
+        titulo: ['Tu cliente lo suma a su turno,', 'en un paso'],
+        dek: 'Lo elige al reservar y lo paga junto con el turno — nada para coordinar después.',
         mock: mockCart({ title: 'Tu reserva', sub: d.svc, note: 'Producto sumado', name: d.svc, price: d.p, extra: d.prod, extraPrice: d.pp, total: d.p + d.pp }),
-        caption: caption('Los cargás <b>una sola vez</b>; se suman solos a cada reserva.'),
         src: 'Mecanismo verificado en add-booking-products.service.ts. Montos de ejemplo.'
       };
     },
     comoFunciona: {
-      titulo: ['Controlás el stock,', 'sin sobreventa'],
-      dek: 'Si un producto se queda sin stock, no se puede seguir vendiendo online.',
-      body: callout('Tiene un <b>cargo fijo de $5.000 por mes</b>, sin importar cuánto vendas.'),
-      src: 'Control de stock verificado en product.repo.ts: la venta online se bloquea si falta stock, salvo que se registre a mano con sobreventa permitida.',
-      flags: ['Monto de ejemplo. Flash lo calcula por país (getPricesByCountry): $5.000 en Argentina y Chile, $200 en Uruguay y México, sin cargo en Bolivia.']
+      titulo: ['Vos decidís', 'qué se ve'],
+      dek: 'Podés ocultar un producto puntual, o todo el catálogo, sin borrar nada — lo reactivás cuando quieras.',
+      body: grid([
+        { icon: I.box, label: 'Visible en tu página' },
+        { icon: I.card, label: 'Oculto, sin borrarlo' }
+      ], true),
+      src: 'Visibilidad verificada en product-visibility.ts (isProductPublic) y en el toggle real de catálogo (CatalogVisibility.tsx, product_catalog_visible).'
     },
-    listo: { titulo: ['Ya podés activar', 'tu catálogo'], dek: 'Cargá tu primer producto y empezá a venderlo junto a tus turnos.', cta: 'Activar catálogo' }
+    listo: { titulo: ['Ya podés activar', 'tu catálogo'], cta: 'Activar catálogo' }
   },
 
-  /* ============ FICHAS Y PREGUNTAS — sobre el borrador «Tutorial — Fichas y preguntas (Copy)»
-     que reemplaza al real datos-de-clientes/index.tsx (Isabella, 23/9) ============ */
+  /* ============ FICHAS Y PREGUNTAS — sobre el boceto de referencia aprobado
+     (que a su vez adapta el real datos-de-clientes/index.tsx, Isabella 23/9) ============ */
   fichas: {
     tag: 'Fichas y preguntas', icon: I.card,
     placeholder(r) {
-      const q = r === 'salon' ? '¿Tu pelo tiene tinte o decoloración?' : r === 'barber' ? '¿Cómo preferís el degradé?' : '¿Alergias o medicación?';
-      const a = r === 'barber' ? 'Bajo' : 'Ninguna';
-      const svc = r === 'salon' ? 'Corte + Color' : r === 'barber' ? 'Corte + Barba' : 'Manicuría';
       return {
-        chip: 'Por revisar', kicker: 'Fichas y preguntas',
-        headline: 'Toda la info de tu cliente, <em>en un solo lugar.</em>',
-        lede: 'Pedile lo que necesites al reservar — un teléfono, una alergia, cómo se sintió la última vez. Vos elegís qué preguntar, y cada respuesta queda guardada en su ficha.',
-        bullets: ['Vos elegís el tipo de dato, quién lo completa y si se repite.', 'Ya tenés Teléfono y Fecha de nacimiento creados por defecto.'],
-        cost: [{ chip: ['ok', 'Sin costo'], b: 'No tiene costo adicional.', t: '' }],
+        chip: 'Por revisar',
+        headline: 'Sus respuestas, <em>en un mismo lugar.</em>',
+        dek: 'Preguntá lo que te haga falta — queda todo en la ficha del cliente.',
+        bullets: ['Vos elegís el tipo de dato, quién lo completa y si es por única vez o en cada turno.', 'Ya tenés Teléfono y Fecha de nacimiento creados por defecto.'],
+        costBars: [],
         cta: 'Revisar y activar',
-        visual: fichaVisualPH({ svc, q, a }),
-        notes: ['<b>Fuente:</b> titular y bajada del borrador «Tutorial — Fichas y preguntas (Copy)».'],
+        notes: ['<b>Fuente:</b> titular, bajada y viñetas del boceto de referencia aprobado.'],
         flags: ['Casi todo negocio ya tiene esto activo desde el alta (Teléfono y Fecha de nacimiento se crean solos). El estado «por revisar» existe en el código pero hoy es poco frecuente.']
       };
     },
     conoce: r => {
       const q = r === 'salon' ? '¿Tu pelo tiene tinte o decoloración?' : r === 'barber' ? '¿Cómo preferís el degradé?' : '¿Alergias o medicación?';
       const a = r === 'barber' ? 'Bajo' : 'Ninguna';
+      const svc = r === 'salon' ? 'Corte + Color' : r === 'barber' ? 'Corte + Barba' : 'Manicuría';
       return {
-        titulo: ['Toda la info de tu cliente,', 'en un solo lugar'],
-        dek: 'Pedile lo que necesites al reservar — un teléfono, una alergia, cómo se sintió la última vez. Vos elegís qué preguntar, y cada respuesta queda guardada en su ficha.',
-        mock: mockPlain({ title: r === 'salon' ? 'Corte + Color · Viernes 14:00 hs' : r === 'barber' ? 'Corte + Barba · Viernes 14:00 hs' : 'Manicuría · Viernes 14:00 hs', sub: '', note: 'Campo que armaste vos ↓', name: q, value: a }),
+        titulo: ['Preguntale antes de reservar', 'o documentalo luego del turno'],
+        dek: 'Toda la información que necesites de tus clientes, por única vez o en cada turno.',
+        mock: mockPlain({ title: svc, sub: 'Viernes 14:00 hs', note: 'Campo que armaste vos ↓', name: q, value: a }),
         caption: caption('Cada respuesta que te da tu cliente se guarda en <b>su ficha</b> — así vas armando su perfil, reserva tras reserva.'),
-        src: 'Titular, bajada y mock son del borrador «Fichas y preguntas (Copy)».'
+        src: 'Titular, mecanismo y mock son del boceto de referencia aprobado.'
       };
     },
     comoFunciona: {
       titulo: ['Cada pregunta, a', 'tu manera'],
-      dek: 'Elegí cómo se comporta cada pregunta que armes.',
+      dek: 'Vos elegís cómo se comporta cada pregunta que armes.',
       body: typeGrid([
         { icon: I.profile, title: 'Dato fijo del cliente', desc: 'Se guarda una vez en su ficha. La próxima vez que reserve, no se lo volvés a pedir.', example: 'Ej: alergias, teléfono, tipo de piel', accent: true },
         { icon: I.repeat, title: 'Pregunta de cada reserva', desc: 'Se vuelve a preguntar siempre, y arma un historial en la ficha del cliente.', example: 'Ej: «¿cómo te sentís hoy?»' }
@@ -587,51 +441,48 @@ const FEATURES = {
         { icon: I.cal, label: 'Fecha' },
         { icon: I.image, label: 'Imagen' }
       ], true),
-      src: 'Las dos tarjetas y los 6 formatos son del borrador «Fichas y preguntas (Copy)».',
-      flags: ['El borrador omite dos matices reales verificados en el código: el dato fijo se vuelve a pedir «salvo que lo haya dejado vacío» (refresh_policy: if_empty), y la Imagen es «Sólo por reserva» (storageLocked en FieldEditor.tsx). Ninguno de los dos queda contradicho, solo no se muestran acá.']
+      src: 'Las dos tarjetas y los 6 formatos son del boceto de referencia aprobado.',
+      flags: ['Se omiten dos matices reales verificados en el código: el dato fijo se vuelve a pedir «salvo que lo haya dejado vacío» (refresh_policy: if_empty), y la Imagen es «sólo por reserva» (storageLocked en FieldEditor.tsx). Ninguno de los dos queda contradicho, sólo no se muestran acá.']
     },
-    listo: { titulo: ['Ya podés armar tu', 'primera pregunta'], dek: 'Elegí qué necesitás saber de tus clientes y armalo en un par de pasos.', cta: 'Crear un campo', secondary: 'Volver a Fichas y preguntas',
-      flag: 'El borrador dice «Crear mi primer campo». El código real de datos-de-clientes evita la palabra «primer» a propósito: todo negocio ya tiene Teléfono y Fecha de nacimiento sembrados, así que nunca es realmente su «primer» campo. Sacamos «primer» y dejamos «Crear un campo».' }
+    listo: { titulo: ['Ya podés armar tu', 'primera pregunta'], dek: 'Elegí qué necesitás saber de tus clientes y armalo en un par de pasos.', cta: 'Crear mi primera pregunta', secondary: 'Volver a Fichas y preguntas',
+      flag: 'El CTA real de datos-de-clientes dice «Crear un campo» (navega a /datos-clientes/campos/nuevo). Acá usamos «pregunta», siguiendo el boceto de referencia aprobado: todo el resto del tutorial ya habla de «preguntas», nunca de «campos».' }
   },
 
-  /* ============ OFERTAS — el tutorial real que pasaste, con el placeholder real de Offers.tsx ============ */
+  /* ============ OFERTAS — sobre el boceto de referencia aprobado
+     (que a su vez adapta el real announcements/ofertas, Isabella 28/9, OK de JP) ============ */
   ofertas: {
-    tag: 'Ofertas', icon: I.bull,
+    tag: 'Ofertas', icon: I.bolt,
     placeholder(r) {
-      const d = r === 'salon' ? { svc: 'Corte + Color', p: 48000, pct: 20 } : r === 'barber' ? { svc: 'Corte + Barba', p: 16000, pct: 20 } : { svc: 'Clase de manejo', p: 11500, pct: 20 };
       return {
-        chip: 'Sin ofertas', kicker: 'Marketing y comunicación',
-        headline: 'Un descuento con fecha de cierre, <em>sin código de por medio.</em>',
-        lede: 'Elegí qué incluye —servicios, capacitaciones, cursos o descargables—, cuánto bajás el precio y cuánto dura. Tus clientes ven el precio anterior, el nuevo y de dónde sale cada descuento.',
-        bullets: ['Se aplica solo, sin que el cliente escriba ningún código.', 'Convive con tus otros descuentos: cada uno se ve por separado al pagar.'],
-        cost: [{ chip: ['ok', 'Sin costo'], b: 'No tiene costo adicional.', t: '' }],
+        headline: 'Oferta por tiempo limitado, <em>sin código.</em>',
+        dek: 'Elegís qué incluye (servicios, capacitaciones, cursos o descargables), el descuento y el tiempo que dure.',
+        bullets: ['No hace falta que el cliente escriba nada — se aplica solo al pagar.', 'Convive con tus otros descuentos: cada uno aparece por separado.'],
+        costBars: [{ ok: true, pill: 'Sin costo', text: 'No suma nada a tu plan actual.' }],
         cta: 'Crear mi primera oferta',
-        visual: offerVisualPH(d),
-        notes: ['<b>Fuente:</b> texto real y verbatim del EmptyState de Offers.tsx.']
+        notes: ['<b>Fuente:</b> titular, bajada y viñetas del boceto de referencia aprobado (adapta el EmptyState real de Offers.tsx).']
       };
     },
     conoce: r => {
       const d = r === 'salon' ? { svc: 'Corte + Color', p: 48000, pct: 20 } : r === 'barber' ? { svc: 'Corte + Barba', p: 16000, pct: 20 } : { svc: 'Clase de manejo', p: 11500, pct: 20 };
       return {
-        titulo: ['Un descuento con fecha de cierre,', 'sin código de por medio'],
-        dek: 'Publicá una oferta pública en lo que ofrece tu negocio — servicios, capacitaciones, cursos o descargables. Vos elegís el descuento y cuánto dura; se aplica solo en el checkout.',
+        titulo: ['Tu cliente ve el precio con descuento,', 'sin poner un código'],
+        dek: 'Elegís qué incluye, el descuento y el tiempo que dure. Se aplica solo al pagar.',
         mock: mockPrice({ title: 'Confirmá tu reserva', sub: `${d.svc} · Viernes 14:00 hs`, note: `Oferta activa · ${d.pct}% OFF por 48 horas`, name: d.svc, old: d.p, price: Math.round(d.p * (1 - d.pct / 100)) }),
-        caption: caption('Armás la oferta <b>una sola vez</b>. Mientras está activa, todos tus clientes ven el precio con descuento — nadie tiene que escribir nada.'),
-        src: 'Titular, mecanismo y mock son texto y maqueta reales del anuncio in-app «ofertas» (Isabella, 28/9, OK de JP).'
+        src: 'Titular, mecanismo y mock son del boceto de referencia aprobado.'
       };
     },
     comoFunciona: {
-      titulo: ['Desde unas horas, hasta', 'todo un mes'],
-      dek: 'La misma oferta sirve para una urgencia de 24 horas o para acompañar un mes completo de baja demanda — vos elegís cuándo empieza y cuándo termina, una sola vez.',
+      titulo: ['El tiempo lo', 'elegís vos'],
+      dek: 'Descuentos por un par de horas o un mes entero. Vos definís cuándo arranca y cuándo termina.',
       body: grid([
         { icon: I.clock, label: 'Hoy' },
         { icon: I.clock, label: '24 horas' },
         { icon: I.cal, label: 'Una semana' },
         { icon: I.cal, label: 'Un mes' }
-      ]) + callout('No es lo mismo que <b>Precios dinámicos</b>: esto es puntual — la programás una vez, con inicio y fin, y no vuelve a correr sola.'),
-      src: 'Duraciones y diferenciación: texto real del anuncio in-app, verificado contra DURATION_PRESETS (OfferConfigureStep.tsx).'
+      ]),
+      src: 'Duraciones verificadas contra DURATION_PRESETS (OfferConfigureStep.tsx).'
     },
-    listo: { titulo: ['Ya podés armar tu', 'primera oferta'], dek: 'Elegí a qué aplica, cuánto dura, y publicala en un par de pasos.', cta: 'Crear mi primera oferta' }
+    listo: { titulo: ['Ya podés armar tu', 'primera oferta'], cta: 'Crear mi primera oferta' }
   }
 };
 
@@ -640,23 +491,26 @@ const state = { feature: 'ofertas', rubro: 'none', view: 'placeholder', step: 0 
 
 function renderPlaceholder() {
   const F = FEATURES[state.feature], p = F.placeholder(state.rubro);
+  const visual = p.visual || F.conoce(state.rubro).mock;
   return `
-    <div class="ph-page" style="max-width:900px">
-      <div class="crumb"><span class="kicker">${p.kicker}</span><span class="kicker">/</span><span class="kicker blue">${F.tag}</span></div>
-      <section class="hero">
-        <div class="hero-copy">
-          <div class="status-row"><span class="chip">${p.chip}</span></div>
+    <div class="page-card" style="width:100%;max-width:900px">
+      ${p.chip ? `<span class="tag-pill">${p.chip}</span>` : ''}
+      <div class="ph-grid">
+        <div class="ph-left">
           <h1 class="headline">${p.headline}</h1>
-          <p class="lede">${p.lede}</p>
+          <p class="dek">${p.dek}</p>
           ${checksList(p.bullets)}
-          <div class="costbox">${p.cost.map(c => `<div class="cost-row">${c.chip.length ? `<span class="chip ${c.chip[0]}">${c.chip[1]}</span>` : ''}<span><b>${c.b}</b> ${c.t}</span></div>`).join('')}</div>
-          <button class="cta" data-open>${p.cta}</button>
+          ${costBars(p.costBars || [])}
+          <button class="btn-next" data-open>${p.cta}${I.arrow}</button>
         </div>
-        <div class="hero-visual">${p.visual}</div>
-      </section>
+        <div class="ph-right">
+          <span class="example-tag">Ejemplo</span>
+          ${visual}
+        </div>
+      </div>
       <div class="dn-box dn"><span class="ttl">Notas de diseño</span>
         ${(p.notes || []).map(n => `<p>${n}</p>`).join('')}
-        ${(p.flags || []).map(f => `<p><span class="flag">⚑ ${f}</span></p>`).join('')}
+        ${(p.flags || []).map(f => `<p><span style="color:#92610A">⚑ ${f}</span></p>`).join('')}
       </div>
     </div>`;
 }
@@ -671,13 +525,13 @@ function renderModal() {
   const c = F.conoce(r), cf = F.comoFunciona, l = F.listo;
   let body, srcLine, flagLines = [];
   if (paso === 0) {
-    body = `${titulo(c.titulo[0], c.titulo[1])}<p class="dek">${c.dek}</p>${c.mock}${c.caption}`;
+    body = `${titulo(c.titulo[0], c.titulo[1])}<p class="dek">${c.dek}</p><p class="mock-kicker">Así lo ve tu cliente</p>${c.mock}${c.caption || ''}`;
     srcLine = c.src; flagLines = c.flags || [];
   } else if (paso === 1) {
     body = `${titulo(cf.titulo[0], cf.titulo[1])}<p class="dek">${cf.dek}</p>${cf.body}`;
     srcLine = cf.src; flagLines = cf.flags || [];
   } else {
-    body = `<div class="done-wrap"><div class="done-icon">${I.check}</div><p class="done-eyebrow">★ Todo listo ★</p>${tituloDone(l.titulo[0], l.titulo[1])}<p class="done-dek">${l.dek}</p><button class="done-cta" data-close>${l.cta}${I.arrow.replace('<svg', '<svg width="13" height="13"')}</button>${l.secondary ? `<div><button class="done-secondary" data-close>${l.secondary}</button></div>` : ''}</div>`;
+    body = `<div class="done-wrap"><div class="done-icon">${I.check}</div>${tituloDone(l.titulo[0], l.titulo[1])}${l.dek ? `<p class="done-dek">${l.dek}</p>` : ''}<button class="done-cta" data-close>${l.cta}${I.arrow.replace('<svg', '<svg width="13" height="13"')}</button>${l.secondary ? `<div><button class="done-secondary" data-close>${l.secondary}</button></div>` : ''}</div>`;
     srcLine = null; flagLines = l.flag ? [l.flag] : [];
   }
   return `<div class="stagewrap-modal">
@@ -687,7 +541,7 @@ function renderModal() {
       ${paso === 0 ? '<span></span>' : `<button class="btn-back" data-back>${I.back}Anterior</button>`}
       <button class="btn-next" data-next>${paso === 0 ? 'Ver cómo funciona' : 'Empezar'}${I.arrow}</button>
     </div>` : ''}
-    <div class="dn-box dn"><span class="ttl">Notas de diseño</span>
+    <div class="dn-box dn wide"><span class="ttl">Notas de diseño</span>
       ${srcLine ? `<p><b>Fuente:</b> ${srcLine}</p>` : ''}
       ${flagLines.map(f => `<p><span style="color:#92610A">⚑ ${f}</span></p>`).join('')}
       <p><span class="rubro-tag">${RUBRO[r].tag}</span></p>
@@ -696,7 +550,8 @@ function renderModal() {
 }
 
 function render() {
-  $('#stage').innerHTML = state.view === 'placeholder' ? renderPlaceholder() : renderModal();
+  const el = state.view === 'placeholder' ? renderPlaceholder() : `<div style="width:100%;display:flex;justify-content:center"><div id="ov-wrap" style="width:100%;max-width:560px">${renderModal()}</div></div>`;
+  $('#stage').innerHTML = el;
   ['feature', 'rubro', 'view'].forEach(k => document.querySelectorAll(`#seg-${k} button`).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === state[k]))));
 }
 const $ = s => document.querySelector(s);
@@ -718,3 +573,5 @@ document.addEventListener('click', e => {
 });
 render();
 </script>
+</body>
+</html>
