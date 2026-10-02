@@ -405,14 +405,13 @@ const FEATURES = {
     tag: 'Fichas y preguntas', icon: I.card,
     placeholder(r) {
       return {
-        chip: 'Por revisar',
         headline: 'Sus respuestas, <em>en un mismo lugar.</em>',
         dek: 'Preguntá lo que te haga falta — queda todo en la ficha del cliente.',
         bullets: ['Vos elegís el tipo de dato, quién lo completa y si es por única vez o en cada turno.', 'Ya tenés Teléfono y Fecha de nacimiento creados por defecto.'],
         costBars: [],
-        cta: 'Revisar y activar',
+        cta: 'Revisar mis preguntas',
         notes: ['<b>Fuente:</b> titular, bajada y viñetas del boceto de referencia aprobado.'],
-        flags: ['Casi todo negocio ya tiene esto activo desde el alta (Teléfono y Fecha de nacimiento se crean solos). El estado «por revisar» existe en el código pero hoy es poco frecuente.']
+        flags: ['Se sacó el chip "Por revisar" del boceto de referencia: no encontré ningún estado real que respalde "pendiente de revisión" (el status de un campo es solo active/archived — client-fields/types.ts). La mayoría de los negocios ya tiene esto activo desde el alta (Teléfono y Fecha de nacimiento se siembran solos).']
       };
     },
     conoce: r => {
