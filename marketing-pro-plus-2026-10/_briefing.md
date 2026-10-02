@@ -43,3 +43,11 @@ Interacciones adicionales verificadas: puntos semanales, fuentes de reservas, fr
 - Automatizaciones y plantillas forman un recorrido: evento, espera, condiciones, plantilla fija y resultado. La biblioteca muestra la regla vinculada, su espera y su estado, y vuelve a esa misma configuración. No crea otro disparador.
 - Simulación de condiciones: apto, próxima reserva, falta de permiso, invitación repetida y falta de presupuesto. Cambiar la espera pausa la regla en la demo para revisarla.
 - Las plantillas operativas siguen fuera del requisito Marketing PRO+; su escenario vive en Mensajes automáticos. No se implementaron estas propuestas en el producto real.
+
+## Revisión v5 · Lectura y automatizaciones flexibles
+
+Se elimina el switch Hoy en Flash. Su reemplazo es Entender la propuesta: una vista de lectura breve con cinco pasos y accesos a los módulos. La vista histórica Hoy deja de formar parte de la pieza.
+
+Automatizaciones pasa a un constructor: crear desde cero o copiar una receta. Las copias son independientes. Se pueden elegir eventos (atención, primera atención, cumpleaños o entrada a segmento), espera, condiciones por visitas/servicio/etiqueta combinadas con Y/O y una acción (WhatsApp, correo o agregar etiqueta). El alcance se expresa como combinaciones de los bloques disponibles, no como ejecución arbitraria.
+
+La receta contiene configuración editable; la plantilla WA conserva texto fijo y condiciones de uso. Las combinaciones incompatibles se bloquean en la demo, incluido un saludo de cumpleaños diferido. Cada regla tiene nombre, resumen legible, estado y prueba con un cliente ficticio; cambiar una regla activa la vuelve a borrador. No hay persistencia fuera de la sesión ni acciones reales.
