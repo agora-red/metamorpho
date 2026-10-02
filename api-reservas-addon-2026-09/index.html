@@ -1,58 +1,412 @@
-<!doctype html><html lang="es-AR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Conexiones Ágora · Propuesta</title><meta name="description" content="Integraciones propuestas de Ágora para ChatGPT, Zapier, Make y n8n: usos, alcance, precio y publicación."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;500;600&display=swap" rel="stylesheet"><style>:root {
+<!doctype html><html lang="es-AR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Conexiones Ágora · Propuesta</title><meta name="description" content="Propuesta de adicional: tus datos de Ágora en ChatGPT, Zapier, Make, n8n o tu propio sistema. Qué permite, límites, precio y decisiones pendientes."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;500;600&display=swap" rel="stylesheet"><style>:root {
   /* Brand */
-  --frost-primary:        #0072FB;  /* CTAs, focus rings, active kicker */
-  --frost-primary-hover:  #005CD4;  /* Pressed / gradient lower stop */
-  --frost-primary-soft:   #EEF6FF;  /* Pending pill bg, info chip */
-  --frost-primary-wash:   rgba(0,114,251,0.08);  /* Active nav tint, selected row */
-
+  --frost-primary:        #0072FB;
+  --frost-primary-hover:  #005CD4;
+  --frost-primary-soft:   #EEF6FF;
+  --frost-primary-wash:   rgba(0,114,251,0.08);
   /* Severity */
-  --frost-accent:         #FF4658;  /* Destructive, cancellation, due */
+  --frost-accent:         #FF4658;
   --frost-accent-soft:    #FFE3E6;
-  --frost-accent-wash:    rgba(255,70,88,0.08);
-  --frost-success:        #10B981;  /* Paid, active pulse */
+  --frost-success:        #10B981;
   --frost-success-soft:   #A9FFE7;
-  --frost-warning:        #F59E0B;  /* Policy nudges, seña alerts */
-  --frost-warning-soft:   #FFE77B;
-
-  /* Ink (decreasing emphasis) */
-  --frost-ink:       #0F172A;  /* Body, hero titles */
-  --frost-ink-soft:  #3A3A3A;  /* Secondary body */
-  --frost-muted:     #868686;  /* Captions, secondary labels */
-  --frost-faint:     #B5B5B5;  /* Placeholders, kicker, disabled */
-
+  /* Ink */
+  --frost-ink:       #0F172A;
+  --frost-ink-soft:  #3A3A3A;
+  --frost-muted:     #868686;
+  --frost-faint:     #B5B5B5;
   /* Surface / border */
-  --frost-surface:        #FFFFFF;  /* Raised cards */
-  --frost-surface-muted:  #EFF3F9;  /* App background */
-  --frost-border:         #E2E8F0;  /* Default hairline */
-  --frost-border-soft:    #F2F2F2;  /* Row dividers */
-
-  /* Radius ladder */
-  --r-sm:    6px;    /* tiny inputs, kbd chips */
-  --r-item:  10px;   /* list items, dropdown rows */
-  --r-btn:   12px;   /* default — buttons, inputs */
-  --r-card:  20px;   /* glass cards, primary surfaces */
-  --r-shell: 28px;   /* shell wrappers, mobile drawer */
-  --r-chip:  999px;  /* pills, avatars */
-
+  --frost-surface:        #FFFFFF;
+  --frost-surface-muted:  #EFF3F9;
+  --frost-border:         #E2E8F0;
+  --frost-border-soft:    #F2F2F2;
+  /* On dark */
+  --on-dark:        #FFFFFF;
+  --on-dark-soft:   rgba(255,255,255,0.74);
+  --on-dark-line:   rgba(255,255,255,0.16);
+  --on-dark-fill:   rgba(255,255,255,0.06);
+  --frosted-chrome: rgba(255,255,255,0.86);
+  /* Radius */
+  --r-sm: 6px; --r-item: 10px; --r-btn: 12px; --r-card: 20px; --r-shell: 28px; --r-chip: 999px;
   /* Elevation */
-  --sh-xs:      0 1px 2px rgba(15,23,42,0.04);          /* list-row hairline */
-  --sh-sm:      0 4px 12px -4px rgba(15,23,42,0.10);    /* default card rest */
-  --sh-md:      0 10px 30px -12px rgba(15,23,42,0.15);  /* hover / modal */
-  --sh-lg:      0 20px 50px -20px rgba(15,23,42,0.25);  /* popovers */
-  --sh-glow:    0 4px 18px -2px rgba(0,114,251,0.30);   /* primary CTA rest */
-  --sh-glow-lg: 0 8px 30px -4px rgba(0,114,251,0.40);   /* primary CTA hover */
-
-  /* Type */
+  --sh-xs: 0 1px 2px rgba(15,23,42,0.04);
+  --sh-sm: 0 4px 12px -4px rgba(15,23,42,0.10);
+  --sh-md: 0 10px 30px -12px rgba(15,23,42,0.15);
+  --sh-glow: 0 4px 18px -2px rgba(0,114,251,0.30);
+  --sh-glow-lg: 0 8px 30px -4px rgba(0,114,251,0.40);
   --sans: 'Montserrat', system-ui, -apple-system, sans-serif;
 }
-*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:var(--frost-surface);color:var(--frost-ink);font:500 14px/1.6 Montserrat,sans-serif;font-variant-numeric:tabular-nums}button,select{font:inherit}strong,b{font-weight:600}a{color:var(--frost-primary-hover);text-underline-offset:4px}button,summary,a{touch-action:manipulation}:focus-visible{outline:3px solid var(--frost-primary);outline-offset:4px}[hidden]{display:none!important}.wrap{max-width:1200px;padding:0 48px;margin:auto}header{display:flex;align-items:center;gap:28px;padding:24px 0;border-bottom:1px solid var(--frost-border)}header svg{width:122px;height:auto}nav{display:flex;gap:24px;margin-left:auto}nav a{font-size:12px;text-decoration:none;color:var(--frost-ink-soft);min-height:44px;display:flex;align-items:center}header small{font-size:10px;color:var(--frost-ink-soft)}.hero{padding:48px 0 34px}.eyebrow{font-size:12px;color:var(--frost-primary-hover);margin:0 0 16px;font-weight:600}.hero h1{font-size:clamp(40px,5vw,64px);line-height:1.08;font-weight:200;letter-spacing:-.05em;margin:0;max-width:900px}.hero h1 strong{font-weight:500}.dot{color:var(--frost-primary)}.hero-bottom{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:22px}.lead{font-size:15px;max-width:650px;margin:0;color:var(--frost-ink-soft)}.pill{display:inline-flex;padding:6px 12px;background:var(--frost-primary-soft);border-radius:var(--r-chip);font-size:10px;color:var(--frost-primary-hover);white-space:nowrap}.block{padding:30px 0;border-top:1px solid var(--frost-border)}.section-title{display:flex;gap:16px;align-items:baseline;margin-bottom:22px}.section-title>span{font-size:11px;color:var(--frost-primary-hover)}h2{font-weight:300;font-size:30px;letter-spacing:-.035em;line-height:1.2;margin:0}h2 strong{font-weight:500}h3{margin:0;font-weight:600}p{margin:0}.benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:26px}.benefit{display:grid;grid-template-columns:32px 1fr;gap:4px 12px}.benefit svg{width:22px;height:22px;fill:currentColor;color:var(--frost-primary);grid-row:1/3;margin-top:2px}.benefit h3{font-size:14px}.benefit p{font-size:12px;color:var(--frost-ink-soft)}.tabs{display:flex;gap:4px;padding:6px;border-radius:var(--r-card);background:var(--frost-surface-muted)}.tabs button{flex:1;min-height:48px;border:1px solid transparent;background:transparent;border-radius:var(--r-btn);padding:10px;color:var(--frost-ink-soft);font-size:13px;font-weight:600;cursor:pointer}.tabs button[aria-selected=true]{background:var(--frost-surface);border-color:var(--frost-border);color:var(--frost-primary-hover);box-shadow:var(--sh-xs)}.story{border:1px solid var(--frost-border);border-radius:var(--r-card);margin-top:14px;overflow:hidden}.story-head{display:flex;justify-content:space-between;gap:12px;padding:14px 24px;border-bottom:1px solid var(--frost-border);font-size:11px;color:var(--frost-ink-soft)}.story-grid{display:grid;grid-template-columns:1fr 1fr}.story-copy{padding:28px}.story-copy h3{font-size:25px;font-weight:300;line-height:1.25;letter-spacing:-.03em}.story-copy>p{font-size:13px;color:var(--frost-ink-soft);margin-top:12px}.steps{padding:0;list-style:none;counter-reset:step;margin:22px 0 0}.steps li{position:relative;padding-left:38px;font-size:12px;margin:16px 0;counter-increment:step}.steps li::before{content:counter(step);position:absolute;left:0;top:0;width:25px;height:25px;border-radius:50%;background:var(--frost-primary-soft);color:var(--frost-primary-hover);display:grid;place-items:center;font-size:11px}.steps strong{display:block;font-size:13px}.steps p{margin-top:3px;color:var(--frost-ink-soft)}.visual{padding:26px;background:var(--frost-surface-muted);display:flex;flex-direction:column;justify-content:center;min-width:0}.visual-label{font-size:10px;color:var(--frost-ink-soft);display:flex;justify-content:space-between;gap:12px;margin-bottom:22px}.visual-label b{color:var(--frost-primary-hover)}.chat-question{margin:0 0 22px 28px;background:var(--frost-surface);padding:16px;border-radius:20px 20px 4px 20px;font-size:14px}.answer{border-left:3px solid var(--frost-primary);padding-left:16px;font-size:14px}.answer small{display:block;font-size:11px;color:var(--frost-ink-soft);margin-top:8px}.slots{display:flex;gap:8px;margin-top:16px}.slots span{background:var(--frost-surface);padding:8px 16px;border-radius:var(--r-chip);font-size:13px;color:var(--frost-primary-hover)}.node{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-btn);padding:14px 18px}.node small{display:block;font-size:10px;color:var(--frost-primary-hover);margin-bottom:4px}.node strong{font-size:13px}.node p{font-size:12px;color:var(--frost-ink-soft);margin-top:4px}.join{border-left:2px solid var(--frost-primary);height:24px;margin-left:25px}.sheet{margin-top:16px;background:var(--frost-surface);border-radius:var(--r-btn);overflow:hidden}.sheet>p{padding:10px 14px;font-size:11px;font-weight:600}.sheet table{width:100%;border-collapse:collapse;font-size:11px;text-align:left}.sheet th,.sheet td{padding:10px;border-top:1px solid var(--frost-border);font-weight:500}.sheet th{background:var(--frost-primary-soft)}.visual-note{font-size:10px;color:var(--frost-ink-soft);margin-top:16px}.story-foot{padding:13px 24px;border-top:1px solid var(--frost-border);font-size:11px;color:var(--frost-ink-soft)}.quiet{font-size:12px;color:var(--frost-ink-soft);margin-top:16px}.details{border:1px solid var(--frost-border);border-radius:var(--r-btn);margin-top:16px;overflow:hidden}summary{cursor:pointer;padding:14px 18px;font-size:12px;font-weight:600;color:var(--frost-primary-hover);min-height:48px}summary span{font-weight:500;color:var(--frost-ink-soft)}.detail-body{padding:6px 22px 22px}.detail-body p,.detail-body li{font-size:12px;color:var(--frost-ink-soft)}.detail-body p+p{margin-top:12px}.detail-body h3{font-size:14px;margin:22px 0 10px}.detail-body ul{padding-left:18px}.detail-body li+li{margin-top:8px}.data-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.data-grid h3{margin-top:10px}.quota{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}.quota>div{border-left:2px solid var(--frost-border);padding-left:18px}.quota>div:first-child{border-color:var(--frost-primary)}.quota b{display:block;font-size:48px;font-weight:200;line-height:1.15;letter-spacing:-.05em}.quota span{font-size:12px;display:block;margin-top:8px}.exclusions{display:grid;grid-template-columns:1fr 1fr;list-style:none;padding:0;margin:0;gap:12px 28px}.exclusions li{padding-left:18px;position:relative;font-size:12px;color:var(--frost-ink-soft)}.exclusions li::before{content:'−';position:absolute;left:0;color:var(--frost-accent)}.activation{display:grid;grid-template-columns:290px 1fr;gap:32px}.price{border-radius:var(--r-card);background:var(--frost-ink);color:var(--frost-surface);padding:26px;align-self:start}.price small{font-size:11px}.amount{font-size:46px;font-weight:200;line-height:1.4;letter-spacing:-.05em}.price p{font-size:12px}.price .fine{font-size:10px;margin-top:16px}.activate-copy .steps{margin:0}.pilot{font-size:12px;color:var(--frost-ink-soft);padding-top:12px}.questions{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;list-style:none;padding:0;margin:0}.questions li{font-size:13px;padding-left:16px;border-left:2px solid var(--frost-primary)}footer{display:flex;justify-content:space-between;gap:16px;border-top:1px solid var(--frost-border);padding:20px 0;font-size:11px;color:var(--frost-ink-soft)}footer a{min-height:44px;display:flex;align-items:center}footer span{align-self:center}.explorer{border-radius:var(--r-card);overflow:hidden;margin-top:18px;border:1px solid var(--frost-border)}.explorer-top{padding:18px;background:var(--frost-surface-muted)}.picker{display:flex;justify-content:space-between;align-items:center;gap:16px}.picker label{font-size:12px;font-weight:600}.picker select{max-width:70%;min-height:44px;border:1px solid var(--frost-border);border-radius:var(--r-btn);background:var(--frost-surface);padding:8px;font-size:12px}.route{display:flex;align-items:baseline;gap:10px;margin-top:16px;font-size:13px;overflow-wrap:anywhere}.route b{font-size:10px;background:var(--frost-primary);color:var(--frost-surface);padding:4px 8px;border-radius:6px}.route code{font:inherit;min-width:0}.meta{font-size:10px!important;margin-top:8px!important}.code-tabs{display:flex;border-bottom:1px solid var(--frost-border)}.code-tabs button{border:0;border-bottom:2px solid transparent;padding:12px 16px;background:var(--frost-surface);color:var(--frost-ink-soft);font-size:12px;cursor:pointer;min-height:44px}.code-tabs button[aria-selected=true]{border-color:var(--frost-primary);color:var(--frost-primary-hover)}.code-area{background:var(--frost-ink);color:var(--frost-surface);padding:18px;max-height:390px;overflow:auto}.code-area.expanded{max-height:none}.code-toolbar{display:flex;gap:8px;justify-content:flex-end;align-items:center}.code-toolbar small{font-size:10px;margin-right:auto}.code-toolbar button{min-height:44px;background:transparent;border:1px solid var(--frost-muted);border-radius:8px;color:var(--frost-surface);font-size:11px;padding:6px 12px;cursor:pointer}pre{font:500 12px/1.8 Montserrat,sans-serif;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2;margin:12px 0 0}.code-area dl{font-size:12px;margin:12px 0}.code-area dt{font-weight:600;margin-top:16px;overflow-wrap:anywhere}.code-area dd{margin:4px 0;color:var(--frost-border)}.op-note{padding:16px;font-size:12px}.copy-status{font-size:11px;margin-top:10px}.copy-status:empty{display:none}.pub-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.pub-grid h3{margin-top:12px}.pub-grid a{font-size:11px}.proof{padding:14px;border-radius:var(--r-btn);background:var(--frost-primary-soft);margin-top:18px}.text-link{font:inherit;border:0;background:transparent;color:var(--frost-primary-hover);text-decoration:underline;cursor:pointer;padding:0;min-height:44px;font-size:12px}
-@media(max-width:760px){.wrap{padding:0 20px}header{gap:12px;padding:16px 0}header svg{width:100px}header small{margin-left:auto;text-align:right;max-width:130px}nav{display:none}.hero{padding:32px 0 26px}.hero h1{font-size:42px}.hero-bottom{display:block;margin-top:18px}.lead{font-size:14px}.hero .pill{margin-top:18px;white-space:normal}h2{font-size:27px}.block{padding:26px 0}.benefits{grid-template-columns:1fr;gap:18px}.tabs{flex-wrap:wrap}.tabs button{flex:1 1 28%;font-size:12px}.story-grid{grid-template-columns:1fr}.story-head{padding:12px 18px;font-size:10px}.story-copy,.visual{padding:22px}.story-copy h3{font-size:25px}.steps{margin-top:18px}.visual-label{margin-bottom:16px}.story-foot{padding:14px 18px}.quota{gap:12px}.quota>div{padding-left:10px}.quota b{font-size:34px}.quota span{font-size:10px}.exclusions,.questions,.activation,.data-grid,.pub-grid{grid-template-columns:1fr}.questions{gap:16px}.activation{gap:22px}.price{padding:24px}.detail-body{padding:0 16px 18px}.picker{display:block}.picker label{display:block;margin-bottom:8px}.picker select{max-width:none;width:100%}.code-tabs button{flex:1;font-size:10px;padding:12px 5px}.code-area{padding:14px}.code-toolbar{flex-wrap:wrap}.code-toolbar small{flex-basis:100%}.route{font-size:12px}.section-title{gap:12px}.hero h1 br{display:none}footer{font-size:10px}.story-head span:last-child{text-align:right}.pub-grid{gap:8px}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media print{details,nav{display:none}.wrap{padding:0}.block{break-inside:avoid}.tabs{display:none}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+body{margin:0;background:var(--frost-surface);color:var(--frost-ink);font:500 15px/1.6 var(--sans);font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+button,select,input{font:inherit}
+strong,b{font-weight:600}
+p{margin:0}
+h1,h2,h3,h4{margin:0}
+a{color:var(--frost-primary-hover);text-underline-offset:4px}
+:focus-visible{outline:3px solid var(--frost-primary);outline-offset:3px;border-radius:4px}
+[hidden]{display:none!important}
+.wrap{max-width:1200px;padding:0 48px;margin:0 auto}
 
-.access-banner{display:grid;grid-template-columns:1.1fr 1fr;gap:36px;padding:28px 32px;background:var(--frost-primary-soft);border:1px solid var(--frost-border);border-radius:var(--r-card);margin:0 0 32px}.access-label{font-size:10px;color:var(--frost-primary-hover);font-weight:600;display:block;margin-bottom:12px}.access-message h2{font-size:25px;line-height:1.25}.access-message p{font-size:12px;color:var(--frost-ink-soft);max-width:475px;margin:12px 0 2px}.access-message a{min-height:44px;display:inline-flex;align-items:center;gap:18px;font-size:12px;font-weight:600;text-decoration:none}.access-states{align-self:center;display:grid;gap:22px;border-left:1px solid var(--frost-border);padding-left:30px}.access-states>div{display:flex;gap:12px}.access-states strong{display:block;margin-bottom:4px;font-size:13px}.access-states p{font-size:12px;color:var(--frost-ink-soft)}.state-dot{margin-top:6px;width:8px;height:8px;background:var(--frost-accent);border-radius:50%;flex:none}.state-dot.active{background:var(--frost-primary)}.requires-addon{display:inline-block;color:var(--frost-primary-hover);font-weight:600;padding-right:14px;margin-right:12px;border-right:1px solid var(--frost-border)}.api-heading{display:flex;align-items:center;justify-content:space-between;gap:24px}.api-heading .eyebrow{font-size:11px;margin-bottom:10px}.api-intro{font-size:13px;color:var(--frost-ink-soft);margin-top:12px}.api-jump{display:inline-flex;align-items:center;justify-content:center;gap:24px;min-height:48px;padding:12px 20px;border-radius:var(--r-btn);background:var(--frost-primary);color:var(--frost-surface);font-size:12px;font-weight:600;text-decoration:none;white-space:nowrap}.api-summary{display:grid;grid-template-columns:repeat(3,1fr);margin-top:24px;border:1px solid var(--frost-border);border-radius:var(--r-card);overflow:hidden}.api-summary article{padding:24px}.api-summary article+article{border-left:1px solid var(--frost-border)}.api-type{font-size:10px;color:var(--frost-primary-hover);background:var(--frost-primary-soft);padding:5px 9px;border-radius:var(--r-chip);display:inline-block;margin-bottom:14px}.api-summary h3{font-size:16px;letter-spacing:-.02em;margin-bottom:9px}.api-summary p{font-size:12px;color:var(--frost-ink-soft)}.api-scope-note{display:flex;align-items:baseline;gap:28px;justify-content:space-between;margin-top:14px}.api-scope-note>span{font-size:12px;white-space:nowrap}.api-scope-note p{font-size:11px;color:var(--frost-ink-soft);max-width:610px}.api-workbench{display:grid;grid-template-columns:300px minmax(0,1fr);border:1px solid var(--frost-border);border-radius:var(--r-card);overflow:hidden;margin-top:18px}.api-catalog{background:var(--frost-surface-muted);padding:18px;min-width:0;border-right:1px solid var(--frost-border)}.api-catalog>label{font-size:11px;font-weight:600}.api-catalog input{width:100%;font:inherit;font-size:12px;border:1px solid var(--frost-border);border-radius:var(--r-btn);padding:12px;margin-top:8px;min-height:44px;background:var(--frost-surface);color:var(--frost-ink)}.catalog-filters{display:flex;gap:5px;flex-wrap:wrap;margin:12px 0}.catalog-filters button{border:1px solid var(--frost-border);background:var(--frost-surface);border-radius:var(--r-chip);padding:6px 9px;font-size:10px;color:var(--frost-ink-soft);min-height:36px;cursor:pointer}.catalog-filters button[aria-pressed=true]{background:var(--frost-primary);border-color:var(--frost-primary);color:var(--frost-surface)}#catalog-count{font-size:10px;color:var(--frost-ink-soft);margin:12px 0}#catalog-list{max-height:500px;overflow:auto;padding:3px 5px 4px 3px;scrollbar-width:thin}.catalog-group h4{font-size:10px;font-weight:600;margin:16px 0 8px}.catalog-group:first-child h4{margin-top:0}.catalog-item{width:100%;display:block;text-align:left;border:1px solid transparent;background:transparent;border-radius:var(--r-item);padding:9px 10px;margin:3px 0;cursor:pointer;min-height:54px;color:var(--frost-ink)}.catalog-item:hover{background:var(--frost-surface)}.catalog-item[aria-current=true]{background:var(--frost-surface);border-color:var(--frost-primary);box-shadow:var(--sh-xs)}.catalog-item strong{font-size:11px;display:block}.catalog-item small{font-size:9px;display:block;color:var(--frost-ink-soft);overflow-wrap:anywhere;margin-top:4px}.catalog-item small b{color:var(--frost-primary-hover);font-weight:600}.api-workbench .explorer{margin:0;border:0;border-radius:0;min-width:0;align-self:start}.api-workbench .explorer-top{background:var(--frost-surface);border-bottom:1px solid var(--frost-border)}.api-workbench .code-area{min-height:350px;max-height:480px}.api-workbench .code-area.expanded{max-height:none}.api-workbench .op-note{font-size:12px}.api-workbench .code-area pre{font-size:11px}.api-empty{font-size:12px;padding:18px 0}.hero h1{max-width:950px}
-@media(max-width:900px){.api-workbench{grid-template-columns:240px minmax(0,1fr)}.api-scope-note{display:block}.api-scope-note p{margin-top:8px}.access-banner{gap:22px;padding:24px}.access-message h2{font-size:23px}}
-@media(max-width:760px){.access-banner{grid-template-columns:1fr;gap:20px;padding:22px;margin-bottom:26px}.access-states{padding:18px 0 0;border-left:0;border-top:1px solid var(--frost-border);gap:16px}.access-message h2{font-size:24px}.requires-addon{display:block;border:0;margin:0 0 6px;padding:0}.api-heading{display:block}.api-jump{margin-top:18px}.api-summary{grid-template-columns:1fr}.api-summary article{padding:20px}.api-summary article+article{border-left:0;border-top:1px solid var(--frost-border)}.api-summary .api-type{margin-bottom:10px}.api-workbench{grid-template-columns:1fr}.api-catalog{border-right:0;border-bottom:1px solid var(--frost-border);padding:16px}#catalog-list{max-height:240px}.catalog-filters button{min-height:44px}.api-workbench .code-area{min-height:260px;max-height:390px}.hero h1 br{display:block}.hero h1{font-size:39px}.api-scope-note>span{white-space:normal}}
-</style></head><body><div class="wrap"><header><svg width="132" height="31" viewBox="0 0 153 36" xmlns="http://www.w3.org/2000/svg" aria-label="Ágora">
+/* ── Chrome ─────────────────────────────── */
+.chrome{position:sticky;top:0;z-index:10;background:var(--frosted-chrome);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid var(--frost-border)}
+.chrome .wrap{display:flex;align-items:center;gap:28px;height:72px}
+.chrome svg{width:112px;height:auto;flex:none}
+.chrome nav{display:flex;gap:4px;margin-left:auto}
+.chrome nav a{font-size:13px;text-decoration:none;color:var(--frost-ink-soft);padding:10px 12px;border-radius:var(--r-item);min-height:44px;display:flex;align-items:center;white-space:nowrap}
+.chrome nav a:hover{background:var(--frost-primary-wash);color:var(--frost-primary-hover)}
+.status{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:var(--r-chip);background:var(--frost-primary-soft);color:var(--frost-primary-hover);font-size:11px;font-weight:600;white-space:nowrap}
+.status::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--frost-primary)}
+
+/* ── Type helpers ───────────────────────── */
+.kicker{font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--frost-primary-hover);margin-bottom:14px}
+h2{font-weight:300;font-size:clamp(28px,3.2vw,40px);line-height:1.15;letter-spacing:-.035em}
+h2 strong{font-weight:500}
+.sub{font-size:16px;color:var(--frost-ink-soft);max-width:680px;margin-top:14px}
+.section{padding:88px 0;border-top:1px solid var(--frost-border)}
+.section-head{margin-bottom:40px}
+.note{font-size:13px;color:var(--frost-ink-soft)}
+
+/* ── Hero ───────────────────────────────── */
+.hero{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:56px;align-items:center;padding:72px 0 88px}
+.hero h1{font-size:clamp(40px,5.2vw,68px);line-height:1.04;font-weight:200;letter-spacing:-.05em}
+.hero h1 strong{font-weight:500;display:block}
+.hero .lead{font-size:18px;line-height:1.55;color:var(--frost-ink-soft);margin-top:26px;max-width:600px}
+.hero .lead b{color:var(--frost-ink)}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:12px 20px;border-radius:var(--r-btn);font-size:14px;font-weight:600;text-decoration:none;transition:background .15s,box-shadow .15s}
+.btn-primary{background:var(--frost-primary);color:var(--on-dark);box-shadow:var(--sh-glow)}
+.btn-primary:hover{background:var(--frost-primary-hover);box-shadow:var(--sh-glow-lg)}
+.btn-ghost{background:var(--frost-surface);color:var(--frost-ink);border:1px solid var(--frost-border)}
+.btn-ghost:hover{border-color:var(--frost-primary);color:var(--frost-primary-hover)}
+.btn svg{width:16px;height:16px}
+.disclaimer{font-size:12px;color:var(--frost-muted);margin-top:22px;max-width:560px}
+
+.glance{background:var(--frost-surface-muted);border-radius:var(--r-shell);padding:30px 30px 14px}
+.glance h2{font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--frost-ink-soft);margin-bottom:8px}
+.glance dl{margin:0}
+.glance div{display:grid;grid-template-columns:84px 1fr;gap:16px;padding:16px 0;border-top:1px solid var(--frost-border)}
+.glance div:first-child{border-top:0}
+.glance dt{font-size:12px;font-weight:600;color:var(--frost-muted);padding-top:2px}
+.glance dd{margin:0;font-size:14px;line-height:1.5}
+.glance .price-line{font-size:22px;font-weight:500;letter-spacing:-.02em;display:block;line-height:1.2}
+.tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:var(--r-chip);background:var(--frost-surface);color:var(--frost-primary-hover);border:1px solid var(--frost-border);margin-top:6px}
+
+/* ── Capabilities ───────────────────────── */
+.caps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.cap{border:1px solid var(--frost-border);border-radius:var(--r-card);padding:28px;display:flex;flex-direction:column;gap:12px;background:var(--frost-surface);box-shadow:var(--sh-xs)}
+.icon{width:44px;height:44px;border-radius:var(--r-btn);background:var(--frost-primary-soft);color:var(--frost-primary);display:grid;place-items:center;flex:none}
+.icon svg{width:22px;height:22px}
+.cap h3{font-size:18px;font-weight:600;letter-spacing:-.01em;margin-top:6px}
+.cap p{font-size:14px;color:var(--frost-ink-soft)}
+.cap blockquote{margin:6px 0 0;padding:12px 14px;border-radius:var(--r-btn) var(--r-btn) var(--r-btn) var(--r-sm);background:var(--frost-surface-muted);font-size:14px;color:var(--frost-ink)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:8px}
+.chip{font-size:11px;font-weight:600;padding:5px 10px;border-radius:var(--r-chip);border:1px solid var(--frost-border);color:var(--frost-ink-soft);background:var(--frost-surface)}
+
+/* ── Example picker ─────────────────────── */
+.picker-head{display:flex;align-items:end;justify-content:space-between;gap:24px;margin:64px 0 18px}
+.picker-head h3{font-size:22px;font-weight:300;letter-spacing:-.02em}
+.picker-head h3 strong{font-weight:500}
+.picker-head p{font-size:12px;color:var(--frost-muted)}
+.tabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;padding:6px;border-radius:var(--r-card);background:var(--frost-surface-muted)}
+.tabs button{border:1px solid transparent;background:transparent;border-radius:var(--r-btn);padding:12px 14px;text-align:left;cursor:pointer;min-height:64px;color:var(--frost-ink);display:flex;flex-direction:column;justify-content:flex-start}
+.tabs button span{display:block;font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--frost-muted)}
+.tabs button strong{display:block;font-size:13px;line-height:1.3;margin-top:4px}
+.tabs button:hover{background:var(--frost-primary-wash)}
+.tabs button[aria-selected=true]{background:var(--frost-surface);border-color:var(--frost-primary);box-shadow:var(--sh-sm)}
+.tabs button[aria-selected=true] span{color:var(--frost-primary-hover)}
+.story{border:1px solid var(--frost-border);border-radius:var(--r-card);margin-top:14px;overflow:hidden;background:var(--frost-surface)}
+.story-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.story-copy{padding:36px}
+.story-label{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--frost-primary-hover)}
+.story-copy h3{font-size:28px;font-weight:300;line-height:1.2;letter-spacing:-.03em;margin-top:12px}
+.story-copy>p{font-size:15px;color:var(--frost-ink-soft);margin-top:12px}
+.story-copy>.story-label,.story-copy>.steps-label{font-size:11px}
+.steps-label{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--frost-muted);margin-top:28px!important}
+.steps{list-style:none;padding:0;margin:14px 0 0;counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:32px 1fr;gap:2px 14px;align-content:start;padding:12px 0;border-top:1px solid var(--frost-border-soft)}
+.steps li:first-child{border-top:0}
+.steps li::before{content:counter(s);grid-row:1/3;width:28px;height:28px;border-radius:50%;background:var(--frost-primary-soft);color:var(--frost-primary-hover);font-size:12px;font-weight:600;display:grid;place-items:center}
+.steps strong{font-size:14px}
+.steps p{font-size:13px;color:var(--frost-ink-soft)}
+.visual{background:var(--frost-surface-muted);padding:32px;display:flex;flex-direction:column;gap:0}
+.visual>.visual-label{margin-bottom:auto;padding-bottom:20px}
+.visual>:last-child{margin-bottom:auto}
+.visual-label{display:flex;justify-content:space-between;gap:12px;font-size:11px;color:var(--frost-ink-soft)}
+.visual-label b{color:var(--frost-primary-hover);font-weight:600}
+.chat-question{align-self:flex-end;max-width:88%;background:var(--frost-primary);color:var(--on-dark);padding:14px 18px;border-radius:18px 18px 4px 18px;font-size:15px}
+.answer{margin-top:16px;background:var(--frost-surface);border-radius:18px 18px 18px 4px;padding:18px 20px;max-width:92%;box-shadow:var(--sh-xs)}
+.answer strong{font-size:15px}
+.slots{display:flex;gap:8px;margin:12px 0 8px}
+.slots span{padding:8px 16px;border-radius:var(--r-chip);border:1px solid var(--frost-primary);color:var(--frost-primary-hover);font-weight:600;font-size:14px}
+.answer small{font-size:12px;color:var(--frost-ink-soft)}
+.visual-note{font-size:12px;color:var(--frost-ink-soft);margin-top:16px}
+.node{background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-btn);padding:14px 16px;box-shadow:var(--sh-xs)}
+.node small{display:block;font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--frost-primary-hover)}
+.node strong{display:block;font-size:14px;margin-top:4px}
+.node p{font-size:12px;color:var(--frost-ink-soft);margin-top:2px}
+.join{width:2px;height:20px;background:var(--frost-primary);opacity:.35;margin:0 0 0 24px}
+.sheet{margin-top:16px;background:var(--frost-surface);border:1px solid var(--frost-border);border-radius:var(--r-btn);overflow:hidden}
+.sheet p{font-size:11px;font-weight:600;padding:10px 14px;border-bottom:1px solid var(--frost-border);color:var(--frost-ink-soft)}
+.sheet table{width:100%;border-collapse:collapse;font-size:13px}
+.sheet th{text-align:left;font-size:11px;font-weight:600;color:var(--frost-muted);padding:8px 14px;background:var(--frost-border-soft)}
+.sheet td{padding:10px 14px}
+.story-foot{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;padding:18px 36px;border-top:1px solid var(--frost-border);background:var(--frost-surface)}
+.needs-label{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--frost-muted)}
+.needs{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0;padding:0}
+.needs li{font-size:12px;font-weight:500;padding:5px 11px;border-radius:var(--r-chip);border:1px solid var(--frost-border);color:var(--frost-ink-soft)}
+.needs li.req{background:var(--frost-primary-soft);border-color:transparent;color:var(--frost-primary-hover);font-weight:600}
+.story-foot p{font-size:12px;color:var(--frost-ink-soft);flex-basis:100%}
+
+/* ── How it works ───────────────────────── */
+.flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;counter-reset:f}
+.flow li{list-style:none;counter-increment:f;padding:28px;border-radius:var(--r-card);background:var(--frost-surface-muted);position:relative}
+.flow li::before{content:counter(f);display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:var(--frost-primary);color:var(--on-dark);font-weight:600;font-size:14px;margin-bottom:18px}
+.flow li:not(:last-child)::after{content:'';position:absolute;top:46px;right:-20px;width:20px;height:2px;background:var(--frost-primary);opacity:.3}
+.flow{padding:0;margin:0}
+.flow h3{font-size:17px;font-weight:600}
+.flow p{font-size:14px;color:var(--frost-ink-soft);margin-top:8px}
+.rule{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);gap:0;margin-top:20px;border:1px solid var(--frost-border);border-radius:var(--r-card);overflow:hidden}
+.rule>div{padding:24px 28px}
+.rule>div+div{border-left:1px solid var(--frost-border)}
+.rule h3{font-size:18px;font-weight:500;letter-spacing:-.01em;line-height:1.35}
+.state{display:flex;gap:10px;align-items:center;font-size:14px;font-weight:600}
+.state::before{content:'';width:10px;height:10px;border-radius:50%;background:var(--frost-success);flex:none}
+.state.off::before{background:var(--frost-accent)}
+.rule p{font-size:14px;color:var(--frost-ink-soft);margin-top:8px}
+
+.matrix-wrap{margin-top:64px}
+.matrix-wrap>h3,.glossary>h3{font-size:22px;font-weight:300;letter-spacing:-.02em}
+.matrix-wrap>h3 strong,.glossary>h3 strong{font-weight:500}
+.matrix{width:100%;border-collapse:separate;border-spacing:0;margin-top:20px;border:1px solid var(--frost-border);border-radius:var(--r-card);overflow:hidden}
+.matrix th,.matrix td{text-align:left;vertical-align:top;padding:18px 22px;border-top:1px solid var(--frost-border);font-size:14px}
+.matrix thead th{border-top:0;background:var(--frost-surface-muted);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--frost-ink-soft)}
+.matrix tbody th{font-weight:600;width:20%}
+.matrix td{color:var(--frost-ink-soft);width:40%}
+.yes,.no{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;margin-bottom:4px}
+.yes{color:var(--frost-primary-hover)}
+.no{color:var(--frost-muted)}
+.yes svg,.no svg{width:14px;height:14px}
+.matrix-notes{display:flex;flex-wrap:wrap;gap:8px 24px;margin-top:14px}
+.matrix-notes p{font-size:13px;color:var(--frost-ink-soft);display:flex;gap:8px;align-items:baseline}
+.matrix-notes p::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--frost-primary);flex:none;transform:translateY(-2px)}
+
+.glossary{margin-top:64px}
+.glossary dl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:20px 0 0}
+.glossary dl>div{padding:18px 20px;border-radius:var(--r-btn);border:1px solid var(--frost-border)}
+.glossary dt{font-size:14px;font-weight:600}
+.glossary dd{margin:4px 0 0;font-size:13px;color:var(--frost-ink-soft)}
+
+/* ── Limits ─────────────────────────────── */
+.limits{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.limit{padding:28px;border-radius:var(--r-card);border:1px solid var(--frost-border)}
+.limit b{display:block;font-size:clamp(48px,5vw,64px);font-weight:200;line-height:1;letter-spacing:-.05em}
+.limit strong{display:block;font-size:16px;margin-top:14px}
+.limit p{font-size:14px;color:var(--frost-ink-soft);margin-top:6px}
+.calm{margin-top:20px;border-radius:var(--r-card);background:var(--frost-surface-muted);padding:28px}
+.calm>h3{font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--frost-ink-soft)}
+.calm ul{list-style:none;padding:0;margin:16px 0 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.calm li{display:grid;grid-template-columns:28px 1fr;gap:2px 12px;align-content:start}
+.calm li svg{grid-row:1/3;width:24px;height:24px;color:var(--frost-success);margin-top:1px}
+.calm strong{font-size:15px}
+.calm p{font-size:13px;color:var(--frost-ink-soft)}
+.limits-foot{margin-top:16px}
+
+/* ── Exclusions ─────────────────────────── */
+.out{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;list-style:none;margin:0;padding:0}
+.out li{display:grid;grid-template-columns:36px 1fr;gap:2px 14px;align-content:start;padding:22px 24px;border-radius:var(--r-card);border:1px solid var(--frost-border)}
+.out .x{grid-row:1/3;width:32px;height:32px;border-radius:50%;background:var(--frost-surface-muted);color:var(--frost-muted);display:grid;place-items:center}
+.out .x svg{width:16px;height:16px}
+.out strong{font-size:15px}
+.out p{font-size:14px;color:var(--frost-ink-soft);margin-top:2px}
+
+/* ── Price ──────────────────────────────── */
+.pricing{display:grid;grid-template-columns:360px minmax(0,1fr);gap:24px;align-items:stretch}
+.price-card{background:var(--frost-ink);color:var(--on-dark);border-radius:var(--r-shell);padding:34px}
+.price-card small{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--on-dark-soft)}
+.amount{font-size:64px;font-weight:200;letter-spacing:-.05em;line-height:1;margin-top:18px}
+.amount sup{font-size:28px;vertical-align:top;position:relative;top:8px;margin-right:2px;font-weight:300}
+.per{font-size:14px;color:var(--on-dark-soft);margin-top:10px}
+.per b{color:var(--on-dark)}
+.price-card ul{list-style:none;padding:20px 0 0;margin:22px 0 0;border-top:1px solid var(--on-dark-line);display:grid;gap:10px}
+.price-card li{display:flex;gap:10px;font-size:14px}
+.price-card li svg{width:18px;height:18px;color:var(--frost-success);flex:none;margin-top:2px}
+.fine{font-size:12px;color:var(--on-dark-soft);margin-top:22px!important}
+.price-side{display:grid;gap:16px;align-content:start}
+.pilot{border-radius:var(--r-card);background:var(--frost-primary-soft);padding:30px}
+.pilot .kicker{margin-bottom:10px;font-size:11px;color:var(--frost-primary-hover);margin-top:0}
+.pilot h3{font-size:24px;font-weight:300;letter-spacing:-.025em}
+.pilot h3 strong{font-weight:500}
+.pilot p{font-size:15px;color:var(--frost-ink-soft);margin-top:10px;max-width:560px}
+.pilot-flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:18px}
+.pilot-flow span{font-size:12px;font-weight:600;padding:8px 12px;border-radius:var(--r-chip);background:var(--frost-surface);box-shadow:var(--sh-xs)}
+.pilot-flow i{font-style:normal;color:var(--frost-primary)}
+.pending{border-radius:var(--r-card);border:1px solid var(--frost-border);padding:24px 28px}
+.pending h3{font-size:16px;font-weight:600}
+.pending p{font-size:14px;color:var(--frost-ink-soft);margin-top:6px}
+.pending a{display:inline-flex;margin-top:10px;font-size:13px;font-weight:600;min-height:44px;align-items:center}
+
+/* ── Decide ─────────────────────────────── */
+.decide{background:var(--frost-ink);color:var(--on-dark);padding:88px 0}
+.decide .kicker{color:var(--on-dark-soft)}
+.decide h2{color:var(--on-dark)}
+.decide .sub{color:var(--on-dark-soft)}
+.questions{list-style:none;padding:0;margin:40px 0 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;counter-reset:q}
+.questions li{counter-increment:q;border:1px solid var(--on-dark-line);background:var(--on-dark-fill);border-radius:var(--r-card);padding:28px}
+.questions li span{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--on-dark-soft)}
+.questions li span::before{content:counter(q);display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--frost-primary);color:var(--on-dark);letter-spacing:0;font-size:13px}
+.questions p{font-size:19px;font-weight:300;line-height:1.4;margin-top:18px;letter-spacing:-.01em}
+
+/* ── Annex ──────────────────────────────── */
+.annex{background:var(--frost-surface-muted);padding:88px 0}
+.annex .section-head{margin-bottom:32px}
+.api-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.api-summary article{background:var(--frost-surface);border-radius:var(--r-card);padding:26px;box-shadow:var(--sh-xs)}
+.api-summary b{display:block;font-size:44px;font-weight:200;letter-spacing:-.04em;line-height:1}
+.api-summary h3{font-size:15px;margin-top:10px}
+.api-summary p{font-size:13px;color:var(--frost-ink-soft);margin-top:6px}
+.details{border:1px solid var(--frost-border);border-radius:var(--r-btn);margin-top:12px;overflow:hidden;background:var(--frost-surface)}
+.details summary{cursor:pointer;padding:16px 20px;font-size:14px;font-weight:600;color:var(--frost-ink);min-height:56px;display:flex;align-items:center;gap:12px;list-style:none}
+.details summary::-webkit-details-marker{display:none}
+.details summary::before{content:'';width:8px;height:8px;border-right:2px solid var(--frost-primary);border-bottom:2px solid var(--frost-primary);transform:rotate(-45deg);transition:transform .15s;flex:none;margin-right:4px}
+.details[open] summary::before{transform:rotate(45deg)}
+.details summary b{font-weight:600}
+.details summary span{font-weight:500;color:var(--frost-muted);font-size:13px}
+.details summary span::before{content:"· "}
+.details-first{margin-top:28px}
+.detail-body{padding:4px 24px 24px}
+.detail-body p,.detail-body li{font-size:13px;color:var(--frost-ink-soft)}
+.detail-body p+p{margin-top:12px}
+.detail-body h3{font-size:14px;margin:22px 0 8px}
+.detail-body ul{padding-left:18px;margin:0}
+.detail-body li+li{margin-top:8px}
+.pub-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 24px}
+.pub-grid a{font-size:12px;display:inline-flex;min-height:36px;align-items:center}
+
+/* API workbench */
+.api-workbench{display:grid;grid-template-columns:320px minmax(0,1fr);border:1px solid var(--frost-border);border-radius:var(--r-card);overflow:hidden;margin-top:16px}
+.api-catalog{background:var(--frost-surface-muted);padding:18px;min-width:0;border-right:1px solid var(--frost-border)}
+.api-catalog>label{font-size:12px;font-weight:600}
+.api-catalog input{width:100%;font-size:13px;border:1px solid var(--frost-border);border-radius:var(--r-btn);padding:12px;margin-top:8px;min-height:44px;background:var(--frost-surface);color:var(--frost-ink)}
+.catalog-filters{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
+.catalog-filters button{border:1px solid var(--frost-border);background:var(--frost-surface);border-radius:var(--r-chip);padding:6px 10px;font-size:11px;color:var(--frost-ink-soft);min-height:36px;cursor:pointer}
+.catalog-filters button[aria-pressed=true]{background:var(--frost-primary);border-color:var(--frost-primary);color:var(--on-dark)}
+#catalog-count{font-size:11px;color:var(--frost-ink-soft);margin:10px 0}
+#catalog-list{max-height:520px;overflow:auto;padding:3px 5px 4px 3px;scrollbar-width:thin}
+.catalog-group h4{font-size:11px;font-weight:600;margin:16px 0 8px;color:var(--frost-ink-soft)}
+.catalog-group:first-child h4{margin-top:0}
+.catalog-item{width:100%;display:block;text-align:left;border:1px solid transparent;background:transparent;border-radius:var(--r-item);padding:9px 10px;margin:3px 0;cursor:pointer;min-height:54px;color:var(--frost-ink)}
+.catalog-item:hover{background:var(--frost-surface)}
+.catalog-item[aria-current=true]{background:var(--frost-surface);border-color:var(--frost-primary);box-shadow:var(--sh-xs)}
+.catalog-item strong{font-size:12px;display:block}
+.catalog-item small{font-size:10px;display:block;color:var(--frost-ink-soft);overflow-wrap:anywhere;margin-top:4px}
+.catalog-item small b{color:var(--frost-primary-hover);font-weight:600}
+.api-empty{font-size:12px;padding:18px 0}
+.explorer{min-width:0;align-self:start;background:var(--frost-surface)}
+.explorer-top{padding:18px;border-bottom:1px solid var(--frost-border)}
+.op-picker{display:flex;justify-content:space-between;align-items:center;gap:16px}
+.op-picker label{font-size:12px;font-weight:600}
+.op-picker select{max-width:70%;min-height:44px;border:1px solid var(--frost-border);border-radius:var(--r-btn);background:var(--frost-surface);padding:8px;font-size:13px;color:var(--frost-ink)}
+.route{display:flex;align-items:baseline;gap:10px;margin-top:16px;font-size:14px;overflow-wrap:anywhere}
+.route b{font-size:10px;background:var(--frost-primary);color:var(--on-dark);padding:4px 8px;border-radius:var(--r-sm)}
+.route code{font:inherit;min-width:0}
+.meta{font-size:12px;color:var(--frost-ink-soft);margin-top:8px!important}
+.code-tabs{display:flex;border-bottom:1px solid var(--frost-border);overflow-x:auto}
+.code-tabs button{border:0;border-bottom:2px solid transparent;padding:12px 16px;background:var(--frost-surface);color:var(--frost-ink-soft);font-size:13px;cursor:pointer;min-height:44px;white-space:nowrap}
+.code-tabs button[aria-selected=true]{border-color:var(--frost-primary);color:var(--frost-primary-hover);font-weight:600}
+.code-area{background:var(--frost-ink);color:var(--on-dark);padding:18px;min-height:340px;max-height:480px;overflow:auto}
+.code-area.expanded{max-height:none}
+.code-toolbar{display:flex;gap:8px;justify-content:flex-end;align-items:center}
+.code-toolbar small{font-size:11px;margin-right:auto;color:var(--on-dark-soft)}
+.code-toolbar button{min-height:40px;background:transparent;border:1px solid var(--on-dark-line);border-radius:var(--r-item);color:var(--on-dark);font-size:12px;padding:6px 12px;cursor:pointer}
+.code-area pre{font:500 12px/1.8 var(--sans);white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2;margin:12px 0 0}
+.code-area dl{font-size:13px;margin:12px 0}
+.code-area dt{font-weight:600;margin-top:16px;overflow-wrap:anywhere}
+.code-area dd{margin:4px 0;color:var(--on-dark-soft)}
+.op-note{padding:16px 18px;font-size:13px;color:var(--frost-ink-soft)}
+.copy-status{font-size:12px;margin-top:10px}
+.copy-status:empty{display:none}
+
+footer .wrap{display:flex;justify-content:space-between;gap:16px;padding-top:28px;padding-bottom:36px;font-size:12px;color:var(--frost-ink-soft)}
+
+/* ── Responsive ─────────────────────────── */
+@media (max-width:1040px){
+  .chrome nav a{padding:10px 8px;font-size:12px}
+  .hero{grid-template-columns:1fr;gap:40px}
+  .tabs{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .pricing{grid-template-columns:1fr}
+  .api-workbench{grid-template-columns:240px minmax(0,1fr)}
+}
+@media (max-width:760px){
+  .wrap{padding:0 20px}
+  .chrome .wrap{flex-wrap:wrap;height:auto;gap:0 12px;padding-top:12px}
+  .chrome svg{width:96px}
+  .chrome .status{margin-left:auto}
+  .chrome nav{order:3;flex-basis:100%;margin:6px -20px 0;padding:0 14px 4px;overflow-x:auto;scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,#000 82%,transparent);mask-image:linear-gradient(90deg,#000 82%,transparent)}
+  .chrome nav::-webkit-scrollbar{display:none}
+  html{scroll-padding-top:120px}
+  .hero{padding:44px 0 64px}
+  .hero h1{font-size:40px}
+  .hero .lead{font-size:16px;margin-top:20px}
+  .actions .btn{flex:1 1 100%;justify-content:center}
+  .glance{padding:24px 22px 8px;border-radius:var(--r-card)}
+  .glance div{grid-template-columns:1fr;gap:4px}
+  .section,.decide,.annex{padding:64px 0}
+  .section-head{margin-bottom:28px}
+  .sub{font-size:15px}
+  .caps,.flow,.limits,.questions,.api-summary,.glossary dl,.out,.pub-grid{grid-template-columns:1fr}
+  .cap,.flow li,.limit{padding:24px}
+  .flow li:not(:last-child)::after{display:none}
+  .picker-head{display:block;margin-top:48px}
+  .picker-head p{margin-top:6px}
+  .tabs{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tabs button:last-child{grid-column:1/-1}
+  .story-grid{grid-template-columns:1fr}
+  .story-copy{padding:26px 22px}
+  .story-copy h3{font-size:24px}
+  .visual{padding:24px 20px}
+  .story-foot{padding:18px 22px}
+  .rule{grid-template-columns:1fr}
+  .rule>div{padding:22px}
+  .rule>div+div{border-left:0;border-top:1px solid var(--frost-border)}
+  .matrix,.matrix tbody,.matrix tr,.matrix th,.matrix td{display:block;width:auto!important}
+  .matrix thead{display:none}
+  .matrix tbody tr{border-top:1px solid var(--frost-border);padding:6px 0}
+  .matrix tbody tr:first-child{border-top:0}
+  .matrix th,.matrix td{border-top:0;padding:8px 20px}
+  .matrix tbody th{padding-top:16px;font-size:15px}
+  .matrix td:last-child{padding-bottom:16px}
+  .matrix td[data-label]::before{content:attr(data-label);display:block;font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--frost-muted);margin-bottom:2px}
+  .calm ul{grid-template-columns:1fr;gap:16px}
+  .out li{padding:20px}
+  .price-card{padding:28px;border-radius:var(--r-card)}
+  .pilot{padding:24px}
+  .pending{padding:22px}
+  .questions p{font-size:17px}
+  .api-workbench{grid-template-columns:1fr}
+  .api-catalog{border-right:0;border-bottom:1px solid var(--frost-border);padding:16px}
+  #catalog-list{max-height:240px}
+  .catalog-filters button{min-height:44px}
+  .op-picker{display:block}
+  .op-picker select{max-width:100%;width:100%;margin-top:8px}
+  .code-area{min-height:260px;max-height:400px}
+  .detail-body{padding:4px 18px 20px}
+  .details summary{display:grid;grid-template-columns:12px 1fr;column-gap:14px;row-gap:2px;padding:14px 18px}
+  .details summary::before{grid-row:1/3;align-self:center}
+  .details summary span{grid-column:2}
+  .details summary span::before{content:none}
+  .pilot-flow{flex-direction:column;align-items:flex-start;gap:4px}
+  .pilot-flow i{transform:rotate(90deg);margin-left:18px}
+  .glossary dl{gap:0;border-top:1px solid var(--frost-border)}
+  .glossary dl>div{border:0;border-bottom:1px solid var(--frost-border);border-radius:0;padding:14px 0}
+  .api-summary article{display:grid;grid-template-columns:52px 1fr;column-gap:12px;padding:20px}
+  .api-summary b{grid-row:1/3;font-size:36px}
+  .api-summary h3{margin-top:0}
+  .limit b{font-size:48px}
+  footer .wrap{flex-direction:column}
+}
+</style></head><body>
+<header class="chrome"><div class="wrap"><svg width="132" height="31" viewBox="0 0 153 36" xmlns="http://www.w3.org/2000/svg" aria-label="Ágora">
   <path d="M41.3822 30.3938L38.187 35.7712L3.11719 35.8491L17.5348 10.9106L20.6466 16.2974L15.7314 24.9347L12.625 30.3938H41.3822Z" fill="#E2E8F0"/>
   <path d="M17.5351 10.9106L20.6469 16.2974L16.7342 23.0921L12.1689 20.1848L17.5351 10.9106Z" fill="url(#p0)" fill-opacity="0.7"/>
   <path d="M20.6467 16.2973L17.5349 10.9106L3.11731 35.8491L0 30.3938L17.5349 0L31.8745 24.9385H25.6399L20.6467 16.2973Z" fill="#0072FF"/>
@@ -66,31 +420,182 @@
     <linearGradient id="p1" x1="26.8652" y1="23.5719" x2="27.7524" y2="16.7522" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
     <linearGradient id="p2" x1="16.3401" y1="26.6997" x2="21.8393" y2="30.8946" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
   </defs>
-</svg><nav aria-label="En esta propuesta"><a href="#proveemos">Cómo lo usarías</a><a href="#api">La API</a><a href="#limites">Límites</a><a href="#activar">Precio y activación</a></nav><small>Propuesta para el equipo<br>Octubre 2026</small></header><main>
-<div class="hero"><p class="eyebrow">Conexiones Ágora</p><h1>Tu negocio, conectado.<br> <strong>Menos tareas repetidas</strong><span class="dot">.</span></h1><div class="hero-bottom"><p class="lead">Conectá Ágora con ChatGPT, Zapier, Make o n8n. Consultá tus datos y automatizá tareas desde las herramientas que ya usás.</p><span class="pill">Propuesta · Todavía no disponible</span></div></div>
-<aside class="access-banner" aria-labelledby="access-title"><div class="access-message"><span class="access-label">Requisito de uso · Propuesto</span><h2 id="access-title">Los plugins requieren<br><strong>el adicional comprado y activo.</strong></h2><p>Contratás <strong>Conexiones Ágora</strong> desde Ágora. Instalar un plugin o conectar tu cuenta no habilita por sí solo el acceso a tus datos.</p><a href="#activar">Ver precio y activación <span aria-hidden="true">↗</span></a></div><div class="access-states"><div><span class="state-dot active"></span><p><strong>Con el adicional activo</strong>Podés usar los conectores disponibles, según tus permisos y cupos.</p></div><div><span class="state-dot"></span><p><strong>Sin el adicional activo</strong>Los plugins y la API no pueden consultar ni modificar tu negocio. Ágora sigue funcionando.</p></div></div></aside><section class="block" aria-labelledby="proveemos"><div class="section-title"><span>01</span><h2 id="proveemos">Qué te <strong>proveemos.</strong></h2></div><div class="benefits"><article class="benefit"><svg viewBox="0 0 448 512" aria-hidden="true" focusable="false"><path fill="currentColor" d="M128 0c17.7 0 32 14.3 32 32l0 32 128 0 0-32c0-17.7 14.3-32 32-32s32 14.3 32 32l0 32 32 0c35.3 0 64 28.7 64 64l0 288c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 128C0 92.7 28.7 64 64 64l32 0 0-32c0-17.7 14.3-32 32-32zM64 240l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16zm128 0l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0zM64 368l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0zm112 16l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16z"/></svg><h3>Preguntá por tu negocio</h3><p>Agenda, clientes e información de ventas y cobros.</p></article><article class="benefit"><svg viewBox="0 0 448 512" aria-hidden="true" focusable="false"><path fill="currentColor" d="M224 0c-17.7 0-32 14.3-32 32l0 3.2C119 50 64 114.6 64 192l0 21.7c0 48.1-16.4 94.8-46.4 132.4L7.8 358.3C2.7 364.6 0 372.4 0 380.5 0 400.1 15.9 416 35.5 416l376.9 0c19.6 0 35.5-15.9 35.5-35.5 0-8.1-2.7-15.9-7.8-22.2l-9.8-12.2C400.4 308.5 384 261.8 384 213.7l0-21.7c0-77.4-55-142-128-156.8l0-3.2c0-17.7-14.3-32-32-32zM162 464c7.1 27.6 32.2 48 62 48s54.9-20.4 62-48l-124 0z"/></svg><h3>Evitá cargar todo dos veces</h3><p>Mantené clientes y reservas actualizados.</p></article><article class="benefit"><svg viewBox="0 0 448 512" aria-hidden="true" focusable="false"><path fill="currentColor" d="M320 0c17.7 0 32 14.3 32 32l0 32 32 0c35.3 0 64 28.7 64 64l0 288c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 128C0 92.7 28.7 64 64 64l32 0 0-32c0-17.7 14.3-32 32-32s32 14.3 32 32l0 32 128 0 0-32c0-17.7 14.3-32 32-32zm22 161.7c-10.7-7.8-25.7-5.4-33.5 5.3L189.1 331.2 137 279.1c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l72 72c5 5 11.9 7.5 18.8 7s13.4-4.1 17.5-9.8L347.3 195.2c7.8-10.7 5.4-25.7-5.3-33.5z"/></svg><h3>Operá desde otra herramienta</h3><p>Creá, mové o cancelá reservas con tus permisos.</p></article></div>
-<p class="quiet" style="margin:0 0 14px">Integraciones listas para conectar, con ejemplos preparados. Elegí una herramienta para ver cómo la usarías.</p>
-<div class="tabs" role="tablist" aria-label="Herramientas propuestas"><button type="button" role="tab" id="tab-chatgpt" data-provider="chatgpt" aria-controls="story" aria-selected="true" tabindex="0">ChatGPT</button><button type="button" role="tab" id="tab-zapier" data-provider="zapier" aria-controls="story" aria-selected="false" tabindex="-1">Zapier</button><button type="button" role="tab" id="tab-make" data-provider="make" aria-controls="story" aria-selected="false" tabindex="-1">Make</button><button type="button" role="tab" id="tab-n8n" data-provider="n8n" aria-controls="story" aria-selected="false" tabindex="-1">n8n</button><button type="button" role="tab" id="tab-api" data-provider="api" aria-controls="story" aria-selected="false" tabindex="-1">Mi sistema · API</button></div>
-<div class="story" id="story" role="tabpanel" aria-labelledby="tab-chatgpt"><div class="story-head"><span id="story-label"></span><span>Recorrido propuesto · Datos ficticios</span></div><div class="story-grid"><div class="story-copy" id="story-copy"></div><div class="visual" id="visual"></div></div><div class="story-foot" id="story-foot"></div></div>
-<p class="quiet">Vos autorizás qué compartir. Ágora mantiene las integraciones; vos conectás tus cuentas y elegís el destino de los datos.</p>
-<details class="details" id="alcance"><summary>Qué datos y acciones incluye <span>· Alcance propuesto</span></summary><div class="detail-body"><div class="data-grid">
-<div><h3>Agenda y horarios</h3><p>Reservas actuales e históricas, disponibilidad, servicio, profesional, sucursal y estado. Crear, reprogramar y cancelar respetando las reglas del negocio.</p></div>
-<div><h3>Clientes</h3><p>Buscar, crear y actualizar clientes. Nombre, contacto autorizado e historial de visitas. Los permisos de contacto se eligen por separado.</p></div>
-<div><h3>Ventas y cobros</h3><p>Consultar ventas, importes cobrados, señas, devoluciones registradas y saldos pendientes. Filtrar por fecha y sucursal; distinguir lo vendido de lo cobrado.</p></div>
-<div><h3>Cambios automáticos</h3><p>Avisar cuando se crea, confirma, mueve o cancela una reserva; cuando vence, se completa o registra una ausencia; cuando cambia un cliente o se registra un pago o devolución.</p></div></div><p class="proof"><strong>En ChatGPT, empezamos con consultas.</strong> Las automatizaciones y la API sumarían cambios de reservas y clientes. El alcance de cada conector se valida antes de publicarlo.</p><p>Productos y stock, comisiones, planes mensuales y packs quedan para una ampliación. Son capacidades del producto; su conexión externa no forma parte de esta primera propuesta.</p></div></details>
+</svg><nav aria-label="En esta propuesta"><a href="#que-podes-hacer">Qué permite</a><a href="#como-funciona">Cómo funciona</a><a href="#limites">Límites</a><a href="#precio">Precio</a><a href="#decidir">Para decidir</a><a href="#anexo">Anexo técnico</a></nav><span class="status">Propuesta · Oct 2026</span></div></header>
+<main>
+<div class="wrap">
+<section class="hero" aria-labelledby="titulo">
+  <div>
+    <p class="kicker">Conexiones Ágora · Adicional propuesto</p>
+    <h1 id="titulo">Tus datos de Ágora, <strong>en las herramientas que ya usás.</strong></h1>
+    <p class="lead"><b>Conexiones Ágora</b> sería un adicional mensual para consultar la agenda, los clientes y los cobros desde ChatGPT, y para automatizar tareas con Zapier, Make, n8n o un sistema propio.</p>
+    <div class="actions"><a class="btn btn-primary" href="#que-podes-hacer">Ver cómo se usa <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a><a class="btn btn-ghost" href="#decidir">Ir a las 3 decisiones</a></div>
+    <p class="disclaimer">Todavía no existe: es una propuesta para decidir en equipo. Los ejemplos son ilustrativos y usan datos ficticios.</p>
+  </div>
+  <aside class="glance" aria-labelledby="glance-title">
+    <h2 id="glance-title">En 30 segundos</h2>
+    <dl>
+      <div><dt>Qué es</dt><dd>Un adicional que conecta tu cuenta de Ágora con ChatGPT, Zapier, Make, n8n o tu propio sistema.</dd></div>
+      <div><dt>Para qué</dt><dd>Preguntarle a tu negocio con tus palabras y dejar de copiar turnos, clientes y cobros a mano.</dd></div>
+      <div><dt>Cuánto</dt><dd><span class="price-line">$20.000 por mes</span>Por negocio, además del plan.<br><span class="tag">Precio propuesto</span></dd></div>
+      <div><dt>Estado</dt><dd>Propuesta. No está construido ni a la venta.</dd></div>
+    </dl>
+  </aside>
 </section>
-<section class="block api-section" aria-labelledby="api"><div class="api-heading"><div><p class="eyebrow">Alcance para construir</p><h2 id="api">La API, <strong>de un vistazo.</strong></h2><p class="api-intro">El mismo acceso para todos los conectores. Esto es lo que permitiría hacer.</p></div><a class="api-jump" href="#detalle-api">Ver API completa <span aria-hidden="true">↗</span></a></div><div class="api-summary"><article><span class="api-type">Consultar</span><h3>Leé tu negocio.</h3><p>Servicios, profesionales, sucursales, horarios, reservas, clientes, ventas, cobros y resúmenes.</p></article><article><span class="api-type">Modificar</span><h3>Operá con tus permisos.</h3><p>Creá, reprogramá o cancelá reservas. Creá y actualizá clientes. Se respetan las reglas de Ágora.</p></article><article><span class="api-type">Recibir avisos</span><h3>Enterate de cada cambio.</h3><p>Reservas creadas o modificadas, cambios de clientes, pagos confirmados y devoluciones registradas.</p></article></div><div class="api-scope-note"><span><strong>16</strong> operaciones <span aria-hidden="true">·</span> <strong>11</strong> tipos de aviso</span><p>Contrato propuesto, aún no operativo. ChatGPT comienza con consultas. No incluye ejecutar cobros ni devoluciones.</p></div><details class="details" id="detalle-api"><summary>Explorar la API completa <span>· Rutas, parámetros, body, respuestas y errores</span></summary><div class="detail-body"><p>Contrato ilustrativo para construir las integraciones. Los ejemplos no llaman a ningún servidor. Los dominios .example, las credenciales y los datos son ficticios.</p>
-<div class="api-workbench"><aside class="api-catalog" aria-label="Catálogo de operaciones"><label for="api-search">Buscar una acción o ruta</label><input id="api-search" type="search" placeholder="Ej.: clientes, reservas, GET…" autocomplete="off"><div class="catalog-filters" role="group" aria-label="Filtrar catálogo"><button type="button" data-filter="all" aria-pressed="true">Todo</button><button type="button" data-filter="read" aria-pressed="false">Consultar</button><button type="button" data-filter="write" aria-pressed="false">Modificar</button><button type="button" data-filter="event" aria-pressed="false">Avisos</button></div><p id="catalog-count" role="status"></p><div id="catalog-list"></div></aside><div class="explorer"><div class="explorer-top"><div class="picker"><label for="operation">Elegí una operación</label><select id="operation"></select></div><div class="route"><b id="method"></b><code id="route"></code></div><p class="meta" id="permission"></p></div><div class="code-tabs" role="tablist" aria-label="Detalle de la operación"><button type="button" role="tab" data-view="request" id="view-request" aria-selected="true" aria-controls="code-panel" tabindex="0">Solicitud</button><button type="button" role="tab" data-view="fields" id="view-fields" aria-selected="false" aria-controls="code-panel" tabindex="-1">Parámetros</button><button type="button" role="tab" data-view="response" id="view-response" aria-selected="false" aria-controls="code-panel" tabindex="-1">Respuesta</button><button type="button" role="tab" data-view="error" id="view-error" aria-selected="false" aria-controls="code-panel" tabindex="-1">Si falla</button></div><div class="code-area" id="code-panel" role="tabpanel" aria-labelledby="view-request" tabindex="0"><div class="code-toolbar"><small id="code-label"></small><button id="expand" type="button" aria-expanded="false" aria-controls="code-panel">Ver completo</button><button id="copy" type="button">Copiar</button></div><pre id="code"></pre><div id="fields" hidden></div><p id="copy-status" class="copy-status" role="status"></p></div><p class="op-note" id="op-note"></p></div>
-</div><h3>Una base común, cuatro conectores</h3><p>API propuesta <strong>/public/v1</strong>, con OAuth por negocio y permisos separados para catálogo, disponibilidad, reservas, clientes, contactos y finanzas. El plugin de ChatGPT usa un servidor MCP propio para profesionales. La API directa admite credenciales revocables para sistemas propios. El MCP administrativo no se expone.</p>
-<p>Cada operación verifica identidad, negocio, sucursales, permisos, adicional activo y cupo. Los avisos también se detienen al desactivar el adicional. Una clave válida no permite saltar el control comercial. Los tokens se guardan en el gestor de credenciales del proveedor, nunca en el chat ni en una web pública.</p>
-<h3>Reglas que deben mantenerse</h3><ul><li>Crear o mover vuelve a validar disponibilidad; reintentar el mismo pedido no duplica la reserva. Si falla una reprogramación, se conserva el turno anterior.</li><li>Ágora calcula precios y señas. Una reserva con seña queda pendiente hasta verificar el pago; se entrega el enlace de Ágora y el vencimiento. Cancelar no ejecuta un reembolso.</li><li>Fechas con zona horaria; importes enteros en centavos y moneda. Los listados tienen paginación e historial. Los contactos requieren permiso adicional; las fichas sensibles quedan fuera.</li><li>Avisos firmados con ID y versión, reintentos, historial de fallos y recuperación de cambios perdidos. Los conectores actualizan por ID, toleran duplicados y evitan bucles.</li><li>Los conectores registran sus avisos al activar una automatización. El profesional elige un evento de Ágora; no copia una dirección de webhook.</li></ul>
-<h3>Antes de cobrar</h3><p>Probar conexión y revocación; aislamiento entre negocios; adicional vencido; límites; reservas simultáneas; señas y vencimientos; cambios sin pérdida del turno; sincronización sin duplicados; recuperación tras una interrupción. Validar cada recorrido en su plataforma real.</p>
-</div></details></section><section class="block" aria-labelledby="limites"><div class="section-title"><span>02</span><h2 id="limites"><strong>Límites</strong> propuestos.</h2></div><div class="quota"><div><b>5.000</b><span>consultas por día<br>entre todas tus herramientas</span></div><div><b>100</b><span>cambios por día<br>en reservas y clientes</span></div><div><b>1</b><span>negocio por autorización<br>con sus sucursales permitidas</span></div></div><p class="quiet">Una pregunta puede necesitar varias consultas. Si agotás un cupo, ese uso externo se pausa hasta el día siguiente. <strong>Ágora sigue funcionando. Sin cargos automáticos por excederte.</strong></p><details class="details"><summary>Detalle técnico <span>· Cómo se cuentan los usos</span></summary><div class="detail-body"><p>Cada página leída cuenta como consulta; cada cambio exitoso de reserva o cliente, como acción. Reintentos con la misma clave no duplican acciones. Los permisos y cupos se comparten por negocio, no se multiplican por sucursal o herramienta.</p><p>Reinicio a medianoche en la zona horaria de facturación del negocio. Se elimina el tope anterior de dos conexiones; no se promete uso ilimitado. Volumen de avisos, conexiones simultáneas y política de reintentos se dimensionan en el piloto antes de fijar la oferta comercial.</p></div></details></section>
-<section class="block" aria-labelledby="excluye"><div class="section-title"><span>03</span><h2 id="excluye">Qué <strong>no incluye.</strong></h2></div><ul class="exclusions"><li>Las suscripciones o consumos de las herramientas externas.</li><li>Configuración de cuentas ajenas ni desarrollos a medida.</li><li>Cobrar tarjetas, ejecutar devoluciones o compartir fichas sensibles.</li><li>Stock, comisiones, cursos, recurrencias, planes mensuales y packs.</li></ul></section>
-<section class="block" aria-labelledby="activar"><div class="section-title"><span>04</span><h2 id="activar">Cómo se <strong>activa.</strong></h2></div><div class="activation"><aside class="price"><small>Precio mensual propuesto</small><div class="amount">$20.000</div><p>Pesos argentinos · por negocio<br>Adicional a tu plan de Ágora.</p><p class="fine">Requisito para usar los plugins y la API.<br>Impuestos y condiciones por definir.</p></aside><div class="activate-copy"><ol class="steps"><li><strong>Comprás y activás Conexiones en Ágora.</strong><p>El adicional debe estar activo para usar cualquier plugin o la API. Elegís el negocio y los permisos.</p></li><li><strong>Buscás Ágora en tu herramienta.</strong><p>Conectás tu cuenta y autorizás el acceso.</p></li><li><strong>Elegís un ejemplo y lo usás.</strong><p>Hacés una consulta o elegís dónde guardar los datos. Probás el resultado y activás tu automatización.</p></li></ol><p class="pilot"><strong>Piloto propuesto:</strong> actualizar una planilla cuando cambia una reserva, con Zapier. Validar funcionamiento y precio antes de cobrar.</p></div></div><p class="quiet">La publicación en los catálogos requiere aprobación. En n8n también puede hacer falta instalar el nodo verificado. Estas integraciones todavía están por desarrollar.</p>
-<details class="details" id="publicacion"><summary>Detalle técnico <span>· Cómo apareceríamos en cada plataforma</span></summary><div class="detail-body"><div class="pub-grid"><div><h3>ChatGPT · Plugin</h3><p>Servidor MCP con OAuth 2.1; paquete, dominio e identidad verificados. Cuenta ficticia, cinco pruebas positivas, tres negativas y video para revisión. La interfaz visual es opcional.</p><a href="https://developers.openai.com/plugins/deploy/submission">Publicación en OpenAI ↗</a></div><div><h3>Zapier · Integración</h3><p>Conexión, eventos, búsquedas y acciones. API productiva documentada y pruebas reales; revisión y entrada al directorio en beta. Publicación sin tarifa; textos del conector en inglés.</p><a href="https://docs.zapier.com/integrations/publish/public-integration">Publicación en Zapier ↗</a></div><div><h3>Make · Aplicación</h3><p>Conexión OAuth y módulos propios. Invitación para el piloto; pruebas de cada módulo y revisión de Make para llegar al catálogo general.</p><a href="https://developers.make.com/custom-apps-documentation/app-review/overview">Publicación en Make ↗</a></div><div><h3>n8n · Nodo verificado</h3><p>Paquete público con licencia MIT, interfaz y documentación en inglés. Publicación en npm desde GitHub Actions y envío al Creator Portal. Verificación para descubrimiento en Cloud e instalaciones propias habilitadas.</p><a href="https://docs.n8n.io/connect/create-nodes/deploy-your-node/submit-community-nodes.md">Publicación en n8n ↗</a></div></div><h3>El adicional se controla en Ágora</h3><p>El conector puede ser público; acceder al negocio requiere el adicional. En ChatGPT se conecta una cuenta paga existente: no se vende ni promociona la suscripción dentro del plugin y no se cobra un recargo exclusivo por ese canal. <a href="https://developers.openai.com/plugins/plugin-guidelines">Reglas de OpenAI</a>.</p><p>Zapier no permite ejecutar transacciones financieras. Se proponen consultas y avisos sobre cobros, con el pago realizado en Ágora. Las acciones finales y los flujos con seña requieren validación por proveedor. No hay fechas de aprobación garantizadas.</p><p>Ágora mantiene versiones y soporte de sus conectores; el profesional configura sus automatizaciones y cuentas. Conectar servicios no autoriza a acceder a otros negocios. Fuentes oficiales revisadas el 2 de octubre de 2026.</p></div></details></section>
-<section class="block" aria-labelledby="decidir"><div class="section-title"><span>05</span><h2 id="decidir">Para decidir <strong>en equipo.</strong></h2></div><ul class="questions"><li>¿Con qué negocio probamos el recorrido de reserva a planilla?</li><li>¿El valor justifica $20.000 mensuales, además de las otras herramientas?</li><li>¿Los cupos alcanzan para su uso real y nuestros costos?</li></ul></section>
-<noscript><p>Los recorridos y ejemplos de API requieren JavaScript. La propuesta incluye consultas en ChatGPT, automatizaciones con Zapier, Make y n8n y acceso API para sistemas propios.</p></noscript></main><footer><span>Conexiones Ágora · Propuesta, no producto disponible</span><a href="https://www.agora.red">www.agora.red</a></footer></div><script>
+</div>
+
+<section class="section" aria-labelledby="que-podes-hacer"><div class="wrap">
+  <div class="section-head"><p class="kicker">01 · Qué permite</p><h2 id="que-podes-hacer">Tres tareas que hoy <strong>se hacen a mano.</strong></h2><p class="sub">Así se lo contaríamos a un profesional. Cada herramienta vendría con un ejemplo armado: se conecta y se usa.</p></div>
+  <div class="caps">
+    <article class="cap"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 11.5a8 8 0 0 1-11.7 7.1L4 20l1.3-4.4a8 8 0 1 1 15.2-4.1z"/><path d="M9 10.5h6M9 13.5h4"/></svg></span><h3>Preguntarle a tu negocio</h3><p>Agenda, clientes, ventas y cobros, respondidos con tus datos reales.</p><blockquote>“¿Cuánto cobré esta semana?”</blockquote><div class="chips"><span class="chip">ChatGPT</span></div></article>
+    <article class="cap"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11a8 8 0 0 1 14-4.6L20 8.5"/><path d="M20 4v4.5h-4.5"/><path d="M20 13a8 8 0 0 1-14 4.6L4 15.5"/><path d="M4 20v-4.5h4.5"/></svg></span><h3>No cargar todo dos veces</h3><p>Turnos y clientes que pasan solos a tus planillas, formularios y otras herramientas.</p><blockquote>“Cada turno nuevo aparece en mi planilla.”</blockquote><div class="chips"><span class="chip">Zapier</span><span class="chip">Make</span><span class="chip">n8n</span></div></article>
+    <article class="cap"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3v4M15 3v4"/><path d="M7 7h10v4a5 5 0 0 1-10 0V7z"/><path d="M12 16v5"/></svg></span><h3>Operar desde otra herramienta</h3><p>Crear, mover o cancelar reservas desde afuera, respetando las reglas de tu negocio.</p><blockquote>“Mi web reserva directo en mi agenda.”</blockquote><div class="chips"><span class="chip">Zapier</span><span class="chip">Make</span><span class="chip">n8n</span><span class="chip">Tu sistema</span></div></article>
+  </div>
+
+  <div class="picker-head"><h3>Elegí un ejemplo <strong>y miralo paso a paso.</strong></h3><p>Recorrido propuesto · Datos ficticios</p></div>
+  <div class="tabs" role="tablist" aria-label="Ejemplos por herramienta">
+    <button type="button" role="tab" id="tab-chatgpt" data-provider="chatgpt" aria-controls="story" aria-selected="true" tabindex="0"><span>ChatGPT</span><strong>Preguntale a tu negocio</strong></button>
+    <button type="button" role="tab" id="tab-zapier" data-provider="zapier" aria-controls="story" aria-selected="false" tabindex="-1"><span>Zapier</span><strong>Tu agenda en una planilla</strong></button>
+    <button type="button" role="tab" id="tab-make" data-provider="make" aria-controls="story" aria-selected="false" tabindex="-1"><span>Make</span><strong>Clientes desde tu formulario</strong></button>
+    <button type="button" role="tab" id="tab-n8n" data-provider="n8n" aria-controls="story" aria-selected="false" tabindex="-1"><span>n8n</span><strong>El cierre del día, solo</strong></button>
+    <button type="button" role="tab" id="tab-api" data-provider="api" aria-controls="story" aria-selected="false" tabindex="-1"><span>Tu sistema · API</span><strong>Reservas desde tu web</strong></button>
+  </div>
+  <div class="story" id="story" role="tabpanel" aria-labelledby="tab-chatgpt"><div class="story-grid"><div class="story-copy" id="story-copy"></div><div class="visual" id="visual"></div></div><div class="story-foot" id="story-foot"></div></div>
+</div></section>
+
+<section class="section" aria-labelledby="como-funciona"><div class="wrap">
+  <div class="section-head"><p class="kicker">02 · Cómo funciona</p><h2 id="como-funciona">Vos activás, conectás <strong>y elegís qué compartir.</strong></h2><p class="sub">Ágora construye y mantiene las integraciones. Cada negocio decide qué herramientas conecta y qué pueden ver.</p></div>
+  <ol class="flow">
+    <li><h3>Activás Conexiones en Ágora</h3><p>Es el adicional mensual. Sin él, ninguna herramienta puede ver ni tocar tus datos.</p></li>
+    <li><h3>Conectás la herramienta</h3><p>Buscás Ágora dentro de ChatGPT, Zapier, Make o n8n e iniciás sesión con tu cuenta.</p></li>
+    <li><h3>Elegís qué puede ver y hacer</h3><p>Por ejemplo: ver la agenda sí, ver teléfonos no. Podés cambiarlo o desconectar cuando quieras.</p></li>
+  </ol>
+  <div class="rule">
+    <div><h3>Sin el adicional activo, no hay conexión.</h3></div>
+    <div><p class="state">Con Conexiones activo</p><p>Tus herramientas trabajan con los permisos y límites que elegiste.</p></div>
+    <div><p class="state off">Si se da de baja o vence</p><p>Dejan de consultar y modificar tu negocio, y no llegan más avisos. Ágora sigue funcionando como siempre.</p></div>
+  </div>
+
+  <div class="matrix-wrap">
+    <h3>Qué datos se <strong>comparten.</strong></h3>
+    <table class="matrix">
+      <thead><tr><th scope="col">Datos</th><th scope="col">Puede ver</th><th scope="col">Puede cambiar</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Agenda y reservas</th><td data-label="Puede ver"><span class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> Sí</span><br>Reservas actuales e historial, horarios libres, servicios, profesionales y sucursales.</td><td data-label="Puede cambiar"><span class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> Sí</span><br>Crear, mover y cancelar reservas, con las reglas de tu negocio.</td></tr>
+        <tr><th scope="row">Clientes</th><td data-label="Puede ver"><span class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> Sí</span><br>Nombre e historial de visitas. Teléfono y correo, solo con un permiso aparte.</td><td data-label="Puede cambiar"><span class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> Sí</span><br>Crear y actualizar clientes, buscando antes para no duplicarlos.</td></tr>
+        <tr><th scope="row">Ventas y cobros</th><td data-label="Puede ver"><span class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> Sí</span><br>Lo vendido y lo cobrado, señas, saldos y devoluciones registradas.</td><td data-label="Puede cambiar"><span class="no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg> No</span><br>Cobrar y devolver se hace siempre en Ágora.</td></tr>
+        <tr><th scope="row">Avisos</th><td colspan="2" data-label="Te enterás cuando">Tu herramienta se entera sola cuando una reserva se crea, se confirma, se mueve, se cancela, vence, se completa o queda como ausencia; cuando un cliente se crea o cambia; y cuando se registra un pago o una devolución.</td></tr>
+      </tbody>
+    </table>
+    <div class="matrix-notes"><p>En ChatGPT se empieza solo con consultas.</p><p>Las fichas de clientes nunca se comparten.</p></div>
+  </div>
+
+  <div class="glossary">
+    <h3>Palabras que <strong>usamos.</strong></h3>
+    <dl>
+      <div><dt>Adicional</dt><dd>Lo que se suma al plan y se paga aparte.</dd></div>
+      <div><dt>Integración</dt><dd>Ágora dentro de otra herramienta: ChatGPT, Zapier, Make o n8n.</dd></div>
+      <div><dt>API</dt><dd>La puerta para conectar un sistema propio, como tu web.</dd></div>
+      <div><dt>Consulta</dt><dd>Cada vez que una herramienta lee un dato de tu negocio.</dd></div>
+      <div><dt>Cambio</dt><dd>Crear, mover o cancelar una reserva, o crear o editar un cliente.</dd></div>
+      <div><dt>Aviso</dt><dd>Mensaje automático que Ágora manda cuando algo cambia.</dd></div>
+    </dl>
+  </div>
+</div></section>
+
+<section class="section" aria-labelledby="limites"><div class="wrap">
+  <div class="section-head"><p class="kicker">03 · Límites</p><h2 id="limites">Límites diarios, <strong>sin sorpresas.</strong></h2><p class="sub">Son por negocio y se comparten entre todas tus herramientas. Podés conectar las que quieras.</p></div>
+  <div class="limits">
+    <div class="limit"><b>5.000</b><strong>consultas por día</strong><p>Cada vez que una herramienta lee algo. Una pregunta en ChatGPT puede usar varias.</p></div>
+    <div class="limit"><b>100</b><strong>cambios por día</strong><p>Reservas o clientes creados, movidos o cancelados con éxito.</p></div>
+    <div class="limit"><b>1</b><strong>negocio por conexión</strong><p>Con las sucursales que vos autorices.</p></div>
+  </div>
+  <div class="calm">
+    <h3>Si llegás al límite</h3>
+    <ul>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><strong>Se pausa hasta mañana</strong><p>Las herramientas vuelven a funcionar a la medianoche.</p></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><strong>Ágora sigue igual</strong><p>Tu agenda y tus reservas no se frenan.</p></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><strong>Nunca se cobra extra</strong><p>No hay cargos automáticos por pasarte.</p></li>
+    </ul>
+  </div>
+  <p class="note limits-foot">Límites propuestos: se validan en el piloto antes de fijarlos.</p>
+  <details class="details"><summary><b>Cómo se cuentan los usos</b><span>Detalle técnico</span></summary><div class="detail-body"><p>Cada página leída cuenta como consulta; cada cambio exitoso de reserva o cliente, como cambio. Reintentar con la misma clave no duplica cambios. Permisos y límites se comparten por negocio: no se multiplican por sucursal ni por herramienta.</p><p>Se reinician a medianoche en la zona horaria de facturación del negocio. No hay tope de herramientas conectadas, pero tampoco se promete uso ilimitado. Volumen de avisos, conexiones simultáneas y política de reintentos se dimensionan en el piloto, antes de fijar la oferta comercial.</p></div></details>
+</div></section>
+
+<section class="section" aria-labelledby="no-incluye"><div class="wrap">
+  <div class="section-head"><p class="kicker">04 · Qué no incluye</p><h2 id="no-incluye">Lo que queda afuera, <strong>dicho claro.</strong></h2></div>
+  <ul class="out">
+    <li><span class="x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 12h12"/></svg></span><strong>Lo que cobran las otras herramientas</strong><p>ChatGPT, Zapier, Make y n8n tienen sus propios planes. Algunos ejemplos pueden requerir un plan pago.</p></li>
+    <li><span class="x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 12h12"/></svg></span><strong>Configurar tus cuentas o desarrollos a medida</strong><p>Ágora da las integraciones y los ejemplos listos; cada negocio los conecta.</p></li>
+    <li><span class="x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 12h12"/></svg></span><strong>Cobrar, devolver o compartir fichas</strong><p>Los cobros se pueden consultar, pero se hacen en Ágora. Las fichas no se comparten.</p></li>
+    <li><span class="x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 12h12"/></svg></span><strong>Stock, comisiones, cursos, recurrencias, planes mensuales y packs</strong><p>Existen en Ágora, pero su conexión queda para una próxima etapa.</p></li>
+  </ul>
+</div></section>
+
+<section class="section" aria-labelledby="precio"><div class="wrap">
+  <div class="section-head"><p class="kicker">05 · Precio</p><h2 id="precio">Un precio, <strong>todas las herramientas.</strong></h2></div>
+  <div class="pricing">
+    <aside class="price-card" aria-label="Precio propuesto">
+      <small>Precio mensual propuesto</small>
+      <div class="amount"><sup>$</sup>20.000</div>
+      <p class="per"><b>Por negocio</b>, en pesos argentinos. Se suma a tu plan de Ágora.</p>
+      <ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Integraciones con ChatGPT, Zapier, Make y n8n</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>API para sistemas propios</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Ejemplos listos para usar</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Actualizaciones y soporte de las integraciones</li>
+      </ul>
+      <p class="fine">Es el requisito para usar cualquier integración o la API. Impuestos y condiciones por definir.</p>
+    </aside>
+    <div class="price-side">
+      <div class="pilot">
+        <p class="kicker">Piloto propuesto</p>
+        <h3>Una planilla que <strong>se actualiza sola.</strong></h3>
+        <p>Con un negocio real: cuando una reserva cambia de horario, Zapier actualiza su fila en Google Sheets, sin duplicarla.</p>
+        <div class="pilot-flow" aria-label="Recorrido del piloto"><span>Reserva movida en Ágora</span><i aria-hidden="true">→</i><span>Zapier</span><i aria-hidden="true">→</i><span>Misma fila actualizada</span></div>
+        <p>Antes de cobrar, validamos que funcione y que el precio cierre.</p>
+      </div>
+      <div class="pending">
+        <h3>Antes de estar disponible</h3>
+        <p>Hay que construir las integraciones, y cada plataforma tiene que revisarlas y aprobarlas antes de mostrarlas en su catálogo. No hay fechas garantizadas.</p>
+        <a href="#publicacion" data-open="publicacion">Ver qué pide cada plataforma ↓</a>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<section class="decide" aria-labelledby="decidir"><div class="wrap">
+  <p class="kicker">06 · Para decidir</p><h2 id="decidir">Tres preguntas <strong>para cerrar en equipo.</strong></h2>
+  <ol class="questions">
+    <li><span>Piloto</span><p>¿Con qué negocio probamos la planilla que se actualiza sola?</p></li>
+    <li><span>Precio</span><p>¿El valor justifica $20.000 por mes, además de lo que cuestan las otras herramientas?</p></li>
+    <li><span>Límites</span><p>¿Alcanzan 5.000 consultas y 100 cambios por día para el uso real y para nuestros costos?</p></li>
+  </ol>
+</div></section>
+
+<section class="annex" aria-labelledby="anexo"><div class="wrap">
+  <div class="section-head"><p class="kicker">Anexo técnico · Para quien construye</p><h2 id="anexo">La API, <strong>de un vistazo.</strong></h2><p class="sub">Una misma base para todas las integraciones. Es un contrato propuesto: todavía no existe y los ejemplos no llaman a ningún servidor.</p></div>
+  <div class="api-summary">
+    <article><b>11</b><h3>Consultas</h3><p>Cuenta, sucursales, profesionales, servicios, horarios libres, reservas, clientes, ventas, cobros y un resumen.</p></article>
+    <article><b>5</b><h3>Cambios</h3><p>Crear, mover y cancelar reservas. Crear y actualizar clientes. Siempre con las reglas de Ágora.</p></article>
+    <article><b>11</b><h3>Avisos</h3><p>Reservas, clientes, pagos confirmados y devoluciones registradas.</p></article>
+  </div>
+
+  <details class="details details-first" id="detalle-api"><summary><b>Explorar las 16 operaciones y 11 avisos</b><span>Rutas, parámetros, respuestas y errores</span></summary><div class="detail-body"><p>Contrato ilustrativo para construir las integraciones. Los dominios .example, las credenciales y los datos son ficticios.</p>
+  <div class="api-workbench"><aside class="api-catalog" aria-label="Catálogo de operaciones"><label for="api-search">Buscar una acción o ruta</label><input id="api-search" type="search" placeholder="Ej.: clientes, reservas, GET…" autocomplete="off"><div class="catalog-filters" role="group" aria-label="Filtrar catálogo"><button type="button" data-filter="all" aria-pressed="true">Todo</button><button type="button" data-filter="read" aria-pressed="false">Consultar</button><button type="button" data-filter="write" aria-pressed="false">Cambiar</button><button type="button" data-filter="event" aria-pressed="false">Avisos</button></div><p id="catalog-count" role="status"></p><div id="catalog-list"></div></aside><div class="explorer"><div class="explorer-top"><div class="op-picker"><label for="operation">Operación</label><select id="operation"></select></div><div class="route"><b id="method"></b><code id="route"></code></div><p class="meta" id="permission"></p></div><div class="code-tabs" role="tablist" aria-label="Detalle de la operación"><button type="button" role="tab" data-view="request" id="view-request" aria-selected="true" aria-controls="code-panel" tabindex="0">Solicitud</button><button type="button" role="tab" data-view="fields" id="view-fields" aria-selected="false" aria-controls="code-panel" tabindex="-1">Parámetros</button><button type="button" role="tab" data-view="response" id="view-response" aria-selected="false" aria-controls="code-panel" tabindex="-1">Respuesta</button><button type="button" role="tab" data-view="error" id="view-error" aria-selected="false" aria-controls="code-panel" tabindex="-1">Si falla</button></div><div class="code-area" id="code-panel" role="tabpanel" aria-labelledby="view-request" tabindex="0"><div class="code-toolbar"><small id="code-label"></small><button id="expand" type="button" aria-expanded="false" aria-controls="code-panel">Ver completo</button><button id="copy" type="button">Copiar</button></div><pre id="code"></pre><div id="fields" hidden></div><p id="copy-status" class="copy-status" role="status"></p></div><p class="op-note" id="op-note"></p></div></div>
+  </div></details>
+
+  <details class="details"><summary><b>Cómo se protege el acceso</b><span>Una base común para todas las integraciones</span></summary><div class="detail-body"><p>API propuesta <strong>/public/v1</strong>, con OAuth por negocio y permisos separados para catálogo, disponibilidad, reservas, clientes, contactos y finanzas. La integración de ChatGPT usa un servidor MCP propio para profesionales. La API directa admite credenciales revocables para sistemas propios. El MCP administrativo no se expone.</p><p>Cada operación verifica identidad, negocio, sucursales, permisos, adicional activo y límite. Los avisos también se detienen al desactivar el adicional: una clave válida no permite saltar el control comercial. Los tokens se guardan en el gestor de credenciales de cada herramienta, nunca en el chat ni en una web pública.</p></div></details>
+
+  <details class="details"><summary><b>Reglas que deben mantenerse</b><span>Reservas, señas, datos y avisos</span></summary><div class="detail-body"><ul><li>Crear o mover vuelve a validar la disponibilidad; reintentar el mismo pedido no duplica la reserva. Si falla una reprogramación, se conserva el turno anterior.</li><li>Ágora calcula precios y señas. Una reserva con seña queda pendiente hasta verificar el pago; se entrega el link de pago de Ágora y su vencimiento. Cancelar no ejecuta un reembolso.</li><li>Fechas con zona horaria; importes enteros en centavos, con moneda. Los listados tienen paginación e historial. Los contactos requieren un permiso adicional; las fichas quedan afuera.</li><li>Avisos firmados con ID y versión, reintentos, historial de fallos y recuperación de cambios perdidos. Las integraciones actualizan por ID, toleran duplicados y evitan bucles.</li><li>Las integraciones registran sus avisos al activar una automatización: el profesional elige un evento de Ágora, no copia una dirección de webhook.</li></ul></div></details>
+
+  <details class="details"><summary><b>Antes de cobrar</b><span>Lo que hay que probar</span></summary><div class="detail-body"><p>Conexión y revocación; aislamiento entre negocios; adicional vencido; límites; reservas simultáneas; señas y vencimientos; cambios sin perder el turno; sincronización sin duplicados; recuperación tras una interrupción. Cada recorrido se valida en su plataforma real.</p></div></details>
+
+  <details class="details" id="publicacion"><summary><b>Qué pide cada plataforma para publicar</b><span>ChatGPT, Zapier, Make y n8n</span></summary><div class="detail-body"><div class="pub-grid"><div><h3>ChatGPT · Plugin</h3><p>Servidor MCP con OAuth 2.1; paquete, dominio e identidad verificados. Cuenta de prueba ficticia, cinco pruebas positivas, tres negativas y video para la revisión. La interfaz visual es opcional.</p><a href="https://developers.openai.com/plugins/deploy/submission">Publicación en OpenAI ↗</a></div><div><h3>Zapier · Integración</h3><p>Conexión, eventos, búsquedas y acciones. API productiva documentada y pruebas reales; revisión y entrada al directorio en beta. Publicación sin costo; textos de la integración en inglés.</p><a href="https://docs.zapier.com/integrations/publish/public-integration">Publicación en Zapier ↗</a></div><div><h3>Make · Aplicación</h3><p>Conexión OAuth y módulos propios. Invitación para el piloto; pruebas de cada módulo y revisión de Make para llegar al catálogo general.</p><a href="https://developers.make.com/custom-apps-documentation/app-review/overview">Publicación en Make ↗</a></div><div><h3>n8n · Nodo verificado</h3><p>Paquete público con licencia MIT, interfaz y documentación en inglés. Publicación en npm desde GitHub Actions y envío al Creator Portal. La verificación lo hace visible en n8n Cloud y en instalaciones propias habilitadas.</p><a href="https://docs.n8n.io/connect/create-nodes/deploy-your-node/submit-community-nodes.md">Publicación en n8n ↗</a></div></div><h3>El adicional se controla en Ágora</h3><p>La integración puede ser pública; acceder al negocio requiere el adicional. En ChatGPT se conecta una cuenta paga existente: no se vende ni se promociona la suscripción dentro de ChatGPT y no se cobra un recargo exclusivo por ese canal. <a href="https://developers.openai.com/plugins/plugin-guidelines">Reglas de OpenAI</a>.</p><p>Zapier no permite ejecutar transacciones financieras. Se proponen consultas y avisos sobre cobros, con el pago realizado en Ágora. Las acciones finales y los flujos con seña requieren validación de cada plataforma.</p><p>Ágora mantiene versiones y soporte de sus integraciones; cada profesional configura sus automatizaciones y cuentas. Conectar herramientas no da acceso a otros negocios. Fuentes oficiales revisadas el 2 de octubre de 2026.</p></div></details>
+</div></section>
+<noscript><div class="wrap"><p class="note" style="padding:24px 0">Los ejemplos por herramienta y el explorador de la API requieren JavaScript. La propuesta incluye consultas en ChatGPT, automatizaciones con Zapier, Make y n8n, y una API para sistemas propios.</p></div></noscript>
+</main>
+<footer><div class="wrap"><span>Conexiones Ágora · Propuesta, no es un producto disponible · Datos y ejemplos ficticios</span><a href="https://www.agora.red">www.agora.red</a></div></footer>
+<script>
   const booking = { id:'bkg_demo', location_id:'loc_centro', start_at:'2026-10-02T18:00:00-03:00', status:'confirmed', version:3, items:[{service_id:'svc_corte',professional_id:'pro_tomas'}] };
   const scopes = {locations:'catalog:read',professionals:'catalog:read',services:'catalog:read',availability:'availability:read',bookings:'bookings:read',booking:'bookings:read',create:'bookings:write',move:'bookings:write',cancel:'bookings:write'};
   const error = (code,message) => ({error:{code,message}});
@@ -100,7 +605,7 @@
     professionals:{label:'Profesionales',method:'GET',path:'/professionals',query:{location_id:'loc_centro',limit:50},response:{data:[{id:'pro_tomas',name:'Tomás',location_ids:['loc_centro']}],next_cursor:null},fields:[field('location_id','Texto · opcional','Filtra una sucursal autorizada.'),field('limit / cursor','Paginación · opcional','Hasta 100 resultados por página.')],note:'El sistema obtiene los identificadores; el dueño no necesita conocerlos.',errorStatus:404,error:error('not_found','La sucursal no existe o no está dentro del acceso autorizado.')},
     services:{label:'Servicios',method:'GET',path:'/services',query:{location_id:'loc_centro',professional_id:'pro_tomas',limit:50},response:{data:[{id:'svc_corte',name:'Corte',duration_minutes:30,price:{amount:1400000,currency:'ARS'}}],next_cursor:null},fields:[field('location_id','Texto · opcional','Sucursal que ofrece el servicio.'),field('professional_id','Texto · opcional','Profesional para consultar precio y duración.'),field('limit / cursor','Paginación · opcional','Hasta 100 resultados por página.')],note:'Los importes son enteros en la unidad mínima: 1.400.000 centavos son $14.000.',errorStatus:404,error:error('not_found','El profesional no está disponible dentro de esta conexión.')},
     availability:{label:'Horarios libres',method:'GET',path:'/availability',query:{location_id:'loc_centro',service_ids:'svc_corte',professional_id:'pro_tomas',from:'2026-10-02',to:'2026-10-02'},response:{data:[{start_at:'2026-10-02T18:00:00-03:00',end_at:'2026-10-02T18:30:00-03:00',location_id:'loc_centro',items:[{service_id:'svc_corte',professional_id:'pro_tomas'}]},{start_at:'2026-10-02T18:30:00-03:00',end_at:'2026-10-02T19:00:00-03:00',location_id:'loc_centro',items:[{service_id:'svc_corte',professional_id:'pro_tomas'}]}],next_cursor:null},fields:[field('location_id','Texto · obligatorio','Sucursal autorizada.'),field('service_ids','Lista · obligatoria','Servicios en orden, separados por coma.'),field('from / to','Fecha · obligatoria','Fechas locales inclusivas; máximo 31 días.'),field('professional_id','Texto · opcional','Omitilo para consultar cualquier profesional.'),field('limit / cursor','Paginación · opcional','Hasta 100 resultados por página.')],note:'Consultar no bloquea un horario. Ágora lo valida de nuevo al crear la reserva.',errorStatus:422,error:error('invalid_date_range','Consultá un período de hasta 31 días.')},
-    bookings:{label:'Agenda del día',method:'GET',path:'/bookings',query:{from:'2026-10-02',to:'2026-10-02',location_id:'loc_centro',limit:50},response:{data:[booking],next_cursor:null},fields:[field('from / to','Fecha · obligatoria en este caso','Día local de los turnos a consultar.'),field('location_id / professional_id','Texto · opcional','Filtra la agenda dentro de tu acceso.'),field('status','Texto · opcional','Estado de la reserva.'),field('updated_since','Fecha y hora · opcional','Para sincronizar cambios, sin filtrar por día del turno.'),field('limit / cursor','Paginación · opcional','Continuar hasta next_cursor = null.')],note:'Sin contactos personales. Los conectores resuelven los nombres desde el catálogo; los contactos requieren permiso adicional.',errorStatus:429,error:error('daily_read_limit','Se agotó el cupo diario de consultas.')},
+    bookings:{label:'Agenda del día',method:'GET',path:'/bookings',query:{from:'2026-10-02',to:'2026-10-02',location_id:'loc_centro',limit:50},response:{data:[booking],next_cursor:null},fields:[field('from / to','Fecha · obligatoria en este caso','Día local de los turnos a consultar.'),field('location_id / professional_id','Texto · opcional','Filtra la agenda dentro de tu acceso.'),field('status','Texto · opcional','Estado de la reserva.'),field('updated_since','Fecha y hora · opcional','Para sincronizar cambios, sin filtrar por día del turno.'),field('limit / cursor','Paginación · opcional','Continuar hasta next_cursor = null.')],note:'Sin contactos personales. Las integraciones resuelven los nombres desde el catálogo; los contactos requieren permiso adicional.',errorStatus:429,error:error('daily_read_limit','Se agotó el cupo diario de consultas.')},
     booking:{label:'Ver una reserva',method:'GET',path:'/bookings/bkg_demo',response:{data:booking},fields:[field('id','Texto · obligatorio en la ruta','Identificador público de una reserva autorizada.')],note:'Permite consultar el estado actual después de un cambio o un reintento.',errorStatus:404,error:error('not_found','La reserva no existe o no pertenece a tu acceso.')},
     create:{label:'Crear reserva',method:'POST',path:'/bookings',body:{location_id:'loc_centro',start_at:'2026-10-02T18:00:00-03:00',items:[{service_id:'svc_corte',professional_id:'pro_tomas'}],client:{name:'Cliente de ejemplo',email:'cliente@example.com'}},status:201,response:{data:{...booking,status:'awaiting_payment',version:1,payment:{status:'pending',amount:420000,currency:'ARS',payment_url:'https://pagos.example/reserva/bkg_demo',expires_at:'2026-10-01T10:15:00-03:00'}}},fields:[field('location_id','Texto · obligatorio','Sucursal autorizada.'),field('start_at','Fecha y hora · obligatoria','ISO 8601 con zona horaria.'),field('items','Lista · obligatoria','service_id y professional_id de cada servicio.'),field('client','Objeto · obligatorio','name y email; phone es opcional.'),field('Idempotency-Key','Cabecera · obligatoria','Misma clave al reintentar el mismo pedido.')],note:'Ejemplo con seña de $4.200. El pedido ocurre el 1 de octubre a las 10:00; vence a las 10:15. La reserva del día siguiente se confirma al verificar el pago.',errorStatus:409,error:error('slot_unavailable','Ese horario ya no está disponible. Elegí otro.')},
     move:{label:'Mover reserva',method:'POST',path:'/bookings/bkg_demo/reschedule',body:{location_id:'loc_centro',professional_id:'pro_tomas',start_at:'2026-10-02T19:00:00-03:00'},response:{data:{...booking,start_at:'2026-10-02T19:00:00-03:00',version:4}},fields:[field('id','Texto · obligatorio en la ruta','Reserva a reprogramar.'),field('start_at','Fecha y hora · obligatoria','Nuevo horario con zona horaria.'),field('location_id / professional_id','Texto · obligatorio en este ejemplo','Destino de una reserva de un servicio.'),field('items','Lista · para varios servicios','Conservar servicios y orden, con profesionales elegidos.'),field('Idempotency-Key','Cabecera · obligatoria','Misma clave al reintentar el mismo cambio.')],note:'Ejemplo independiente: una reserva ya confirmada pasa de las 18:00 a las 19:00. Si el cambio falla, conserva el horario original.',errorStatus:409,error:error('slot_unavailable','El nuevo horario está ocupado. Tu reserva anterior se conserva.')},
@@ -119,8 +624,8 @@ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'
 const client={id:'cli_demo',name:'Cliente de ejemplo',email:'cliente@example.com',updated_at:'2026-10-02T09:00:00-03:00',version:2};
 Object.assign(scopes,{connection:'profile:read',clients:'clients:read',clientCreate:'clients:write',clientUpdate:'clients:write',sales:'finances:read',payments:'finances:read',summary:'finances:read'});
 Object.assign(fixtures,{
- connection:{label:'Verificar cuenta y adicional',method:'GET',path:'/connection',response:{business:{id:'biz_demo',name:'Salón de ejemplo'},addon:{status:'active'},scopes:['bookings:read'],location_ids:['loc_centro']},fields:[field('Authorization','Cabecera obligatoria','Token emitido para esta conexión; permisos y negocio verificados por Ágora.')],note:'Todos los endpoints comprueban el adicional, no solo esta consulta. Sin sesión válida: 401; sin adicional: 403. No se inicia un cobro desde el conector.',errorStatus:403,error:error('addon_required','Esta cuenta no tiene habilitado el adicional Conexiones.')},
- clients:{label:'Buscar clientes',method:'GET',path:'/clients',query:{query:'Cliente de ejemplo',limit:50},response:{data:[{id:client.id,name:client.name,version:client.version}],next_cursor:null},fields:[field('query','Texto opcional','Nombre o contacto autorizado; no registrar datos de búsqueda en logs públicos.'),field('updated_since / cursor / limit','Filtros opcionales','Cambios desde una fecha; hasta 100 por página.'),field('clients:contact:read','Permiso adicional','Necesario para devolver emails y teléfonos.')],note:'Ejemplo con datos mínimos. La búsqueda no crea clientes. Los conectores deben resolver coincidencias antes de crear uno nuevo.',errorStatus:403,error:error('insufficient_scope','Esta conexión no tiene permiso para consultar clientes.')},
+ connection:{label:'Verificar cuenta y adicional',method:'GET',path:'/connection',response:{business:{id:'biz_demo',name:'Salón de ejemplo'},addon:{status:'active'},scopes:['bookings:read'],location_ids:['loc_centro']},fields:[field('Authorization','Cabecera obligatoria','Token emitido para esta conexión; permisos y negocio verificados por Ágora.')],note:'Todos los endpoints comprueban el adicional, no solo esta consulta. Sin sesión válida: 401; sin adicional: 403. No se inicia un cobro desde la integración.',errorStatus:403,error:error('addon_required','Esta cuenta no tiene habilitado el adicional Conexiones.')},
+ clients:{label:'Buscar clientes',method:'GET',path:'/clients',query:{query:'Cliente de ejemplo',limit:50},response:{data:[{id:client.id,name:client.name,version:client.version}],next_cursor:null},fields:[field('query','Texto opcional','Nombre o contacto autorizado; no registrar datos de búsqueda en logs públicos.'),field('updated_since / cursor / limit','Filtros opcionales','Cambios desde una fecha; hasta 100 por página.'),field('clients:contact:read','Permiso adicional','Necesario para devolver emails y teléfonos.')],note:'Ejemplo con datos mínimos. La búsqueda no crea clientes. Las integraciones deben resolver coincidencias antes de crear uno nuevo.',errorStatus:403,error:error('insufficient_scope','Esta conexión no tiene permiso para consultar clientes.')},
  clientCreate:{label:'Crear cliente',method:'POST',path:'/clients',body:{name:client.name,email:client.email},status:201,response:{data:{...client,version:1}},fields:[field('name','Texto obligatorio','Nombre del cliente.'),field('email / phone','Contacto opcional','Solo el contacto necesario y autorizado.'),field('Idempotency-Key','Cabecera obligatoria','Reutilizar al reintentar la misma creación.')],note:'No sobrescribir una coincidencia de contacto sin resolverla. Crear clientes no autoriza campañas ni mensajes.',errorStatus:409,error:error('client_match_requires_resolution','Ya existe una posible coincidencia. Buscala antes de crear otro cliente.')},
  clientUpdate:{label:'Actualizar cliente',method:'PATCH',path:'/clients/cli_demo',body:{name:'Cliente de ejemplo',expected_version:1},response:{data:{id:client.id,name:client.name,version:2}},fields:[field('id','Ruta obligatoria','Cliente del negocio autorizado.'),field('expected_version','Número obligatorio','Versión leída; evita pisar cambios simultáneos.'),field('name / email / phone','Campos a modificar','Solo enviar los cambios; permisos de contacto cuando corresponda.')],note:'Una actualización no modifica preferencias de marketing ni fichas privadas.',errorStatus:409,error:error('version_conflict','El cliente cambió. Consultá su versión actual antes de reintentar.')},
  sales:{label:'Consultar ventas',method:'GET',path:'/sales',query:{from:'2026-10-02',to:'2026-10-02',location_id:'loc_centro',limit:50},response:{data:[{id:'sale_demo',booking_id:'bkg_demo',total:{amount:1400000,currency:'ARS'},paid:{amount:420000,currency:'ARS'},balance:{amount:980000,currency:'ARS'},status:'partially_paid'}],next_cursor:null},fields:[field('from / to','Fechas obligatorias','Período de la venta, no de la cita.'),field('location_id / cursor / limit','Filtros opcionales','Sucursal autorizada y paginación.')],note:'Ejemplo independiente: venta de $14.000, cobrado $4.200 y saldo $9.800. No confundir ingresos previstos de agenda con cobros.',errorStatus:403,error:error('insufficient_scope','Esta conexión no tiene permiso para consultar ventas.')},
@@ -142,24 +647,24 @@ moreEvent('refunded','payment.refunded',{id:'pay_demo',sale_id:'sale_demo',refun
 const groups={'Cuenta y permisos':['connection'],'Agenda y reservas':['locations','professionals','services','availability','bookings','booking','create','move','cancel'],'Clientes':['clients','clientCreate','clientUpdate'],'Ventas e informes':['sales','payments','summary'],'Avisos automáticos':['created','confirmed','rescheduled','canceled','expired','completed','noshow','clientCreated','clientUpdated','paymentEvent','refunded']};
 $('operation').innerHTML=Object.entries(groups).map(([name,keys])=>'<optgroup label="'+esc(name)+'">'+keys.map(k=>'<option value="'+k+'">'+esc(fixtures[k].label)+'</option>').join('')+'</optgroup>').join('');
 const guides={
-chatgpt:{name:'ChatGPT',title:'Preguntale a tu negocio.',desc:'La conexión permite que ChatGPT consulte tus datos reales de Ágora.',steps:[['Buscás Ágora en ChatGPT','Elegís el plugin de Ágora cuando esté publicado.'],['Conectás tu cuenta','Iniciás sesión en Ágora y autorizás los datos que podrá consultar.'],['Hacés tu pregunta','“¿Qué horarios libres tengo mañana?” o “¿Cuánto cobré esta semana?”.']],foot:'Inicio propuesto: solo consultas. No hace falta crear un GPT ni pegar claves o instrucciones. La disponibilidad depende de la publicación y los permisos de tu cuenta.',operation:'availability'},
-zapier:{name:'Zapier',title:'Tu planilla, siempre al día.',desc:'Cada cambio de una reserva actualiza su fila en Google Sheets.',steps:[['Elegís Ágora y conectás tu cuenta','Usás el ejemplo preparado de reservas a Google Sheets.'],['Elegís la planilla','Conectás Google y seleccionás dónde guardar los turnos.'],['Probás y activás','Una reserva reprogramada actualiza la misma fila, sin duplicarla.']],foot:'Ágora publica el conector y el ejemplo. Vos elegís tu planilla. Zapier puede requerir un plan pago; sus opciones se muestran en inglés.',operation:'rescheduled'},
-make:{name:'Make',title:'Tus clientes, sin doble carga.',desc:'Un formulario puede crear un cliente en Ágora o actualizarlo si ya existe.',steps:[['Abrís el ejemplo en Make','Conectás Ágora y la herramienta de tu formulario.'],['Elegís qué datos guardar','Relacionás nombre, correo y teléfono con los campos de Ágora.'],['Probás y activás','Cada respuesta busca al cliente antes de crear uno nuevo.']],foot:'El conector ofrece las acciones listas. Vos elegís el formulario y sus campos. No se envían mensajes ni campañas por crear el cliente.',operation:'clientCreate'},
-n8n:{name:'n8n',title:'El cierre del día, automático.',desc:'Un flujo consulta los cobros del día y actualiza tu informe en una planilla.',steps:[['Agregás el nodo Ágora','Instalás la integración verificada si tu instancia lo requiere.'],['Conectás y elegís el destino','Autorizás la consulta de cobros y seleccionás tu planilla.'],['Definís el horario y lo activás','El ejemplo corre cada día y actualiza el resumen de esa fecha.']],foot:'El nodo verificado se propone para n8n Cloud e instalaciones propias habilitadas. La conexión se valida en ambos entornos; n8n muestra las opciones en inglés.',operation:'summary'},
-api:{name:'Tu sistema',title:'Reservá desde tu propio sistema.',desc:'También incluimos una API documentada para conectar tu web o programa de recepción.',steps:[['Creás un acceso en Ágora','Elegís el negocio y los permisos de tu sistema.'],['Usás la documentación','Tu sistema consulta horarios y envía el pedido de reserva.'],['Seguís el estado en Ágora','Si hay seña, se entrega el enlace de pago. Se confirma cuando se verifica el cobro.']],foot:'Vía para sistemas propios. La API requiere una integración específica; el desarrollo a medida no está incluido. Los conectores anteriores ya preparan ese acceso.',operation:'create'}
+chatgpt:{name:'ChatGPT',tab:'Preguntale a tu negocio',title:'Preguntale a tu negocio.',desc:'Hacés una pregunta con tus palabras y ChatGPT responde con los datos reales de tu agenda, tus clientes y tus cobros.',steps:[['Buscás Ágora en ChatGPT','Aparece entre las integraciones disponibles, cuando esté publicada.'],['Iniciás sesión con tu cuenta de Ágora','Elegís qué datos puede consultar. No hace falta pegar claves ni instrucciones.'],['Preguntás','“¿Qué horarios libres tengo mañana?” o “¿Cuánto cobré esta semana?”.']],needs:['Conexiones activo','Cuenta de ChatGPT'],foot:'Para empezar, solo consulta: desde ChatGPT no se crean ni se cambian reservas.',operation:'availability'},
+zapier:{name:'Zapier',tab:'Tu agenda en una planilla',title:'Tu agenda, siempre al día en una planilla.',desc:'Cuando una reserva cambia de horario, su fila en Google Sheets se actualiza sola, sin duplicarse.',steps:[['Abrís el ejemplo de Ágora en Zapier','Ya viene armado: reserva que cambia, fila que se actualiza.'],['Conectás Ágora y Google Sheets','Elegís la planilla donde querés ver tus turnos.'],['Probás y lo activás','Movés un turno de prueba y ves cómo cambia la misma fila.']],needs:['Conexiones activo','Cuenta de Zapier (puede requerir plan pago)','Google Sheets'],foot:'Ágora publica la integración y el ejemplo; vos elegís tu planilla. Zapier muestra sus opciones en inglés.',operation:'rescheduled'},
+make:{name:'Make',tab:'Clientes desde tu formulario',title:'Tus clientes, sin cargarlos dos veces.',desc:'Cada persona que completa tu formulario queda guardada en Ágora: si ya era cliente se actualiza, y si es nueva se crea.',steps:[['Abrís el ejemplo de Ágora en Make','Conectás Ágora y la herramienta de tu formulario.'],['Elegís qué datos guardar','Unís nombre, correo y teléfono con los campos de Ágora.'],['Probás y lo activás','Cada respuesta busca primero al cliente, así no se duplica.']],needs:['Conexiones activo','Cuenta de Make','Tu formulario online'],foot:'Guardar un cliente no le envía mensajes ni lo suma a campañas.',operation:'clientCreate'},
+n8n:{name:'n8n',tab:'El cierre del día, solo',title:'El cierre del día, sin hacerlo a mano.',desc:'Todas las noches, un flujo trae lo que cobraste en el día y lo anota en tu planilla de cierre.',steps:[['Agregás Ágora a tu n8n','Si tu n8n lo pide, instalás la integración verificada.'],['Conectás Ágora y tu planilla','Autorizás la consulta de cobros y elegís dónde anotarlos.'],['Elegís el horario y lo activás','Corre todos los días y deja una sola fila por fecha, aunque se repita.']],needs:['Conexiones activo','n8n en la nube o instalado por vos','Google Sheets'],foot:'Solo consulta: no cobra ni devuelve dinero. n8n muestra sus opciones en inglés.',operation:'summary'},
+api:{name:'Tu sistema',tab:'Reservas desde tu web',title:'Reservas desde tu propia web o sistema.',desc:'Si tenés un sistema propio, puede consultar horarios libres y pedir reservas en Ágora, respetando las reglas de tu negocio.',steps:[['Creás un acceso en Ágora','Elegís el negocio y qué puede hacer tu sistema.'],['Tu sistema usa la documentación','Consulta horarios libres y envía el pedido de reserva.'],['Ágora confirma la reserva','Si lleva seña, entrega el link de pago y la confirma cuando el pago se verifica.']],needs:['Conexiones activo','Un sistema propio preparado para conectarse'],foot:'El desarrollo de tu sistema no está incluido. Para las otras herramientas no hace falta programar.',operation:'create'}
 };
 const state={provider:'chatgpt',operation:'availability',view:'request'};
 let catalogFilter='all';
 function node(label,title,desc){return '<div class="node"><small>'+label+'</small><strong>'+title+'</strong>'+(desc?'<p>'+desc+'</p>':'')+'</div>';}
 function visual(k){
  const head='<div class="visual-label"><span>'+esc(guides[k].name)+' + Ágora</span><b>Ejemplo ilustrativo</b></div>';
- if(k==='chatgpt')return head+'<div class="chat-question">¿Qué horarios libres tengo el viernes para un corte con Tomás?</div><div class="answer"><strong>El viernes 2 tenés dos horarios:</strong><div class="slots"><span>18:00</span><span>18:30</span></div><small>Corte · 30 minutos · Sucursal Centro</small></div><p class="visual-note">Respuesta basada en disponibilidad. Consultar no reserva el horario.</p>';
+ if(k==='chatgpt')return head+'<div class="chat-question">¿Qué horarios libres tengo el viernes para un corte con Tomás?</div><div class="answer"><strong>El viernes 2 tenés dos horarios:</strong><div class="slots"><span>18:00</span><span>18:30</span></div><small>Corte · 30 minutos · Sucursal Centro</small></div><p class="visual-note">Consultar un horario no lo reserva.</p>';
  if(k==='zapier')return head+node('Ágora · Booking Rescheduled','La reserva cambió de horario','Corte con Tomás · 18:00 → 19:00')+'<div class="join"></div>'+node('Google Sheets · Update Row','Actualiza la fila de esa reserva')+'<div class="sheet"><p>Mi agenda · Google Sheets</p><table><thead><tr><th>Hora</th><th>Servicio</th><th>Estado</th></tr></thead><tbody><tr><td>19:00</td><td>Corte</td><td>Confirmado</td></tr></tbody></table></div>';
  if(k==='make')return head+node('Tu formulario','Llega un nuevo contacto','Cliente de ejemplo · cliente@example.com')+'<div class="join"></div>'+node('Ágora · Buscar cliente','¿Ya está en tu negocio?','Si existe: actualizar. Si no existe: crear.')+'<div class="join"></div>'+node('Resultado','Un solo registro en Ágora','Con los datos que elegiste compartir.');
  if(k==='n8n')return head+node('Cada día · horario elegido','Consulta los cobros del negocio')+'<div class="join"></div>'+node('Ágora · Get Summary','Obtiene el resumen del día','Solo información; no ejecuta cobros.')+'<div class="sheet"><p>Mi cierre · Google Sheets</p><table><thead><tr><th>Fecha</th><th>Cobrado neto</th></tr></thead><tbody><tr><td>02/10/2026</td><td>$4.200 ARS</td></tr></tbody></table></div><p class="visual-note">Una fila por fecha y sucursal, incluso si el flujo vuelve a ejecutarse.</p>';
- return head+node('Tu recepción','Solicita un corte con Tomás','Viernes 2 · 18:00 · Sucursal Centro')+'<div class="join"></div>'+node('Ágora','Pendiente de seña','Seña: $4.200 ARS · Enlace para pagar')+'<div class="join"></div>'+node('Al verificar el pago','Reserva confirmada','Si vence sin pago, el horario se libera.');
+ return head+node('Tu sistema','Pide un corte con Tomás','Viernes 2 · 18:00 · Sucursal Centro')+'<div class="join"></div>'+node('Ágora','Pendiente de seña','Seña: $4.200 ARS · Link de pago')+'<div class="join"></div>'+node('Al verificar el pago','Reserva confirmada','Si vence sin pago, el horario se libera.');
 }
-function renderGuide(){const g=guides[state.provider];document.querySelectorAll('[data-provider]').forEach(b=>{const on=b.dataset.provider===state.provider;b.setAttribute('aria-selected',on);b.tabIndex=on?0:-1;});$('story').setAttribute('aria-labelledby','tab-'+state.provider);$('story-label').textContent=g.name+' · Así lo usarías';$('story-copy').innerHTML='<h3>'+g.title+'</h3><p>'+g.desc+'</p><ol class="steps">'+g.steps.map(([a,b])=>'<li><strong>'+a+'</strong><p>'+b+'</p></li>').join('')+'</ol>';$('visual').innerHTML=visual(state.provider);$('story-foot').innerHTML='<span class="requires-addon">Requiere Conexiones activo</span>'+esc(g.foot);}
+function renderGuide(){const g=guides[state.provider];document.querySelectorAll('[data-provider]').forEach(b=>{const on=b.dataset.provider===state.provider;b.setAttribute('aria-selected',on);b.tabIndex=on?0:-1;});$('story').setAttribute('aria-labelledby','tab-'+state.provider);$('story-copy').innerHTML='<p class="story-label">Ejemplo con '+esc(g.name)+'</p><h3>'+g.title+'</h3><p>'+g.desc+'</p><p class="steps-label">Cómo lo configurás</p><ol class="steps">'+g.steps.map(([a,b])=>'<li><strong>'+a+'</strong><p>'+b+'</p></li>').join('')+'</ol>';$('visual').innerHTML=visual(state.provider);$('story-foot').innerHTML='<span class="needs-label">Qué necesitás</span><ul class="needs">'+g.needs.map((n,i)=>'<li'+(i===0?' class="req"':'')+'>'+esc(n)+'</li>').join('')+'</ul><p>'+esc(g.foot)+'</p>';}
 function request(f){const q=f.query?'?'+new URLSearchParams(f.query):'';const headers=f.event?{'Content-Type':'application/json','webhook-id':f.body.id,'webhook-timestamp':String(Math.floor(Date.parse(f.body.occurred_at)/1000)),'webhook-signature':'FIRMA_FICTICIA'}:{Authorization:'Bearer TOKEN_DE_EJEMPLO',...(f.body?{'Content-Type':'application/json','Idempotency-Key':'demo-'+state.operation+'-001'}:{})};return f.method+' '+(f.event?'':'/public/v1')+f.path+q+'\n'+Object.entries(headers).map(([k,v])=>k+': '+v).join('\n')+(f.body?'\n\n'+JSON.stringify(f.body,null,2):'\n\nSin body. Los filtros, si existen, van en la URL.');}
 function renderCatalog(){
  const query=$('api-search').value.toLocaleLowerCase('es').normalize('NFD').replace(/[\u0300-\u036f]/g,'');let count=0;
@@ -167,7 +672,7 @@ function renderCatalog(){
  $('catalog-count').textContent=count+' de '+Object.keys(fixtures).length+' entradas';
  document.querySelectorAll('[data-operation]').forEach(b=>b.addEventListener('click',()=>{state.operation=b.dataset.operation;state.view='request';renderOperation();if(innerWidth<=760)document.querySelector('.explorer').scrollIntoView({block:'start',behavior:'smooth'});document.querySelector('[data-operation="'+state.operation+'"]').focus({preventScroll:true});}));
 }
-function renderOperation(){renderCatalog();const f=fixtures[state.operation];$('operation').value=state.operation;$('method').textContent=f.method;$('route').textContent=(f.event?'':'/public/v1')+f.path;$('permission').textContent=f.event?'Ágora → conector · Aviso firmado; no es una orden para crear una reserva.':'Conector → Ágora · Permiso: '+scopes[state.operation];$('op-note').textContent=f.note;document.querySelectorAll('[data-view]').forEach(b=>{const on=b.dataset.view===state.view;b.setAttribute('aria-selected',on);b.tabIndex=on?0:-1;});$('code-panel').setAttribute('aria-labelledby','view-'+state.view);$('code-panel').classList.remove('expanded');$('expand').setAttribute('aria-expanded','false');$('expand').textContent='Ver completo';$('copy-status').textContent='';const fields=state.view==='fields';$('fields').hidden=!fields;$('code').hidden=fields;$('copy').hidden=fields;
+function renderOperation(){renderCatalog();const f=fixtures[state.operation];$('operation').value=state.operation;$('method').textContent=f.method;$('route').textContent=(f.event?'':'/public/v1')+f.path;$('permission').textContent=f.event?'Ágora → integración · Aviso firmado; no es una orden para crear una reserva.':'Integración → Ágora · Permiso: '+scopes[state.operation];$('op-note').textContent=f.note;document.querySelectorAll('[data-view]').forEach(b=>{const on=b.dataset.view===state.view;b.setAttribute('aria-selected',on);b.tabIndex=on?0:-1;});$('code-panel').setAttribute('aria-labelledby','view-'+state.view);$('code-panel').classList.remove('expanded');$('expand').setAttribute('aria-expanded','false');$('expand').textContent='Ver completo';$('copy-status').textContent='';const fields=state.view==='fields';$('fields').hidden=!fields;$('code').hidden=fields;$('copy').hidden=fields;
  if(fields){$('code-label').textContent=f.body?'Campos del body y cabeceras':'Parámetros y permisos';$('fields').innerHTML='<dl>'+f.fields.map(([a,b,c])=>'<dt>'+esc(a)+'</dt><dd>'+esc(b)+'<br>'+esc(c)+'</dd>').join('')+'</dl>';return;}
  let value,label;if(state.view==='request'){value=request(f);label=f.event?'Payload del aviso · JSON':'Solicitud · Ruta, autorización y body';}else if(state.view==='response'){const n=f.status||200;value='HTTP '+n+(n===204?' No Content\n\nSin body; recepción guardada.':'\n\n'+JSON.stringify(f.response,null,2));label='Respuesta de ejemplo';}else{value='HTTP '+f.errorStatus+(f.event?' Service Unavailable\n\nReintentar con el mismo ID de evento.\nPolítica de entrega pendiente antes del piloto.':'\n\n'+JSON.stringify(f.error,null,2));label='Error de ejemplo';}$('code-label').textContent=label;$('code').textContent=value;
 }
@@ -179,10 +684,11 @@ function keys(selector,fn){const list=[...document.querySelectorAll(selector)];l
 keys('[data-provider]',b=>chooseProvider(b.dataset.provider));keys('[data-view]',b=>{state.view=b.dataset.view;renderOperation();});
 $('expand').addEventListener('click',()=>{const on=$('code-panel').classList.toggle('expanded');$('expand').setAttribute('aria-expanded',on);$('expand').textContent=on?'Reducir':'Ver completo';});
 $('copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText($('code').textContent);$('copy-status').textContent='Ejemplo copiado.';}catch{$('copy-status').textContent='Seleccioná el texto para copiarlo.';}});
-function hash(){if(location.hash==='#detalle-api'){$('detalle-api').open=true;$('detalle-api').scrollIntoView();}if(location.hash==='#integradores'){document.getElementById('publicacion').open=true;document.getElementById('publicacion').scrollIntoView();}}
+function hash(){if(location.hash==='#detalle-api'){$('detalle-api').open=true;$('detalle-api').scrollIntoView();}if(location.hash==='#integradores'||location.hash==='#publicacion'){document.getElementById('publicacion').open=true;document.getElementById('publicacion').scrollIntoView();}}
 $('api-search').addEventListener('input',renderCatalog);document.querySelectorAll('[data-filter]').forEach(b=>b.addEventListener('click',()=>{catalogFilter=b.dataset.filter;document.querySelectorAll('[data-filter]').forEach(x=>x.setAttribute('aria-pressed',x===b));renderCatalog();}));
-document.querySelector('.api-jump').addEventListener('click',()=>{$('detalle-api').open=true;});
+document.querySelectorAll('[data-open]').forEach(a=>a.addEventListener('click',()=>{$(a.dataset.open).open=true;}));
 renderGuide();renderOperation();hash();window.addEventListener('hashchange',hash);
 })();
 
-</script></body></html>
+</script>
+</body></html>
