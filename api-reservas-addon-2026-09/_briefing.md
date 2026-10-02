@@ -14,15 +14,16 @@ Propuesta para el equipo de Ágora, escrita para profesionales sin conocimientos
 - Piloto propuesto: reserva reprogramada actualiza su fila en Google Sheets mediante Zapier, sin duplicados.
 
 ## Presentación
-Revisión de UI/UX y wording (2 de octubre de 2026). El recorrido sigue el orden en que lo lee alguien sin contexto:
+Revisión de UI/UX y wording (2 de octubre de 2026), con la API como sección central. El recorrido sigue el orden en que lo lee alguien sin contexto:
 1. **Portada**: qué es en una frase, botón a los ejemplos y a las decisiones, y un resumen «En 30 segundos» (qué es, para qué, cuánto, estado).
-2. **01 · Qué permite**: tres tareas (preguntar, no cargar dos veces, operar desde afuera) y cinco ejemplos nombrados por resultado, no por herramienta. Cada ejemplo muestra cómo se configura, una maqueta ilustrativa y «Qué necesitás».
+2. **01 · Qué permite**: tres tareas (preguntar, no cargar dos veces, operar desde afuera) y cinco ejemplos nombrados por resultado. Cada ejemplo muestra cómo se configura, una maqueta ilustrativa y «Qué necesitás».
 3. **02 · Cómo funciona**: activar → conectar → elegir permisos; la regla del adicional (con / sin); tabla de qué datos se ven y cuáles se cambian; glosario de seis palabras.
-4. **03 · Límites**: 5.000 consultas, 100 cambios, 1 negocio, y qué pasa al llegar al límite.
-5. **04 · Qué no incluye**, con el porqué de cada exclusión.
-6. **05 · Precio**: tarjeta de precio con lo incluido, piloto y lo pendiente para publicar.
-7. **06 · Para decidir**: las tres preguntas, destacadas.
-8. **Anexo técnico** al final y plegado: resumen de la API (11 consultas, 5 cambios, 11 avisos), explorador de 16 operaciones y 11 avisos, protección del acceso, reglas, pruebas antes de cobrar y requisitos de cada plataforma.
+4. **03 · La API**, el corazón de Conexiones: diagrama (tu negocio → API → quién la usa); las 27 acciones en lenguaje llano agrupadas en Consultar (11), Cambiar (5) y Avisar (11), cada una abre su detalle; lo que la API no hace; seis ideas de uso; un ejemplo completo de reserva desde una web en cuatro pasos; seis garantías; y el explorador de cada acción (ruta, parámetros, respuesta y error) visible.
+5. **04 · Límites**: 5.000 consultas, 100 cambios, 1 negocio, y qué pasa al llegar al límite.
+6. **05 · Qué no incluye**, con el porqué de cada exclusión.
+7. **06 · Precio**: tarjeta de precio con lo incluido, piloto y lo pendiente para publicar.
+8. **07 · Para decidir**: las tres preguntas, destacadas.
+9. **Anexo técnico** plegado: protección del acceso, reglas, pruebas antes de cobrar y requisitos de cada plataforma.
 
 Vocabulario unificado: adicional, integración, consulta, cambio, aviso, API. El alcance comercial (precio, límites, operaciones, exclusiones y decisiones) no cambió. Rutas y payloads siguen siendo un contrato propuesto, no endpoints disponibles.
 

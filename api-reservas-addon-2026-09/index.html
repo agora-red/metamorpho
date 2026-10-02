@@ -260,11 +260,73 @@ h2 strong{font-weight:500}
 /* ── Annex ──────────────────────────────── */
 .annex{background:var(--frost-surface-muted);padding:88px 0}
 .annex .section-head{margin-bottom:32px}
-.api-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-.api-summary article{background:var(--frost-surface);border-radius:var(--r-card);padding:26px;box-shadow:var(--sh-xs)}
-.api-summary b{display:block;font-size:44px;font-weight:200;letter-spacing:-.04em;line-height:1}
-.api-summary h3{font-size:15px;margin-top:10px}
-.api-summary p{font-size:13px;color:var(--frost-ink-soft);margin-top:6px}
+/* ── API core ───────────────────────────── */
+.subhead{display:flex;align-items:end;justify-content:space-between;gap:24px;margin:80px 0 20px}
+.subhead h3{font-size:24px;font-weight:300;letter-spacing:-.02em;line-height:1.25}
+.subhead h3 strong{font-weight:500}
+.subhead p{font-size:13px;color:var(--frost-muted);max-width:420px;text-align:right}
+.subhead-stack{display:block}
+.subhead-stack p{text-align:left;max-width:640px;margin-top:6px}
+.hub{display:grid;grid-template-columns:minmax(0,1fr) 56px minmax(0,1.05fr) 56px minmax(0,1fr);align-items:center}
+.hub-label{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--frost-ink-soft);margin-bottom:14px}
+.hub-card{border:1px solid var(--frost-border);border-radius:var(--r-card);padding:24px;background:var(--frost-surface)}
+.hub-card ul{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.hub-data li{display:flex;align-items:center;gap:10px;font-size:14px}
+.hub-data li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--frost-primary);flex:none}
+.hub-tools li{display:flex;flex-direction:column;gap:1px;padding:10px 14px;border-radius:var(--r-item);background:var(--frost-surface-muted);font-size:14px}
+.hub-tools small{font-size:12px;color:var(--frost-muted)}
+.hub-core{background:var(--frost-primary);color:var(--on-dark);border-radius:var(--r-shell);padding:30px;box-shadow:var(--sh-glow-lg)}
+.hub-core .hub-label{color:var(--on-dark-soft);margin-bottom:10px}
+.hub-core code{font:inherit;font-size:13px;font-weight:600;background:var(--on-dark-line);padding:4px 10px;border-radius:var(--r-chip);display:inline-block}
+.hub-core ul{list-style:none;padding:0;margin:18px 0 0}
+.hub-core li{display:flex;align-items:baseline;gap:12px;padding:10px 0;border-top:1px solid var(--on-dark-line);font-size:15px}
+.hub-core li b{font-size:30px;font-weight:200;letter-spacing:-.03em;min-width:40px;line-height:1}
+.hub-core>p{font-size:13px;color:var(--on-dark-soft);margin-top:14px}
+.hub-link{display:flex;align-items:center;height:100%;padding:0 4px}
+.hub-link span{display:block;width:100%;height:2px;background:var(--frost-primary);opacity:.45;position:relative}
+.hub-link span::before,.hub-link span::after{content:'';position:absolute;top:-4px;width:10px;height:10px;border-radius:50%;background:var(--frost-primary)}
+.hub-link span::before{left:-5px}
+.hub-link span::after{right:-5px}
+.verbs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-areas:"consult change notify" "consult nope notify";grid-template-rows:auto 1fr;gap:16px;align-items:start}
+.verb-consult{grid-area:consult}.verb-change{grid-area:change}.verb-notify{grid-area:notify}
+.nope{grid-area:nope;border-radius:var(--r-card);background:var(--frost-surface-muted);padding:22px}
+.nope h4{font-size:15px;font-weight:600}
+.nope ul{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:10px}
+.nope li{display:grid;grid-template-columns:20px 1fr;gap:8px;font-size:13px;color:var(--frost-ink-soft)}
+.nope li svg{width:16px;height:16px;color:var(--frost-muted);margin-top:2px}
+.nope a{display:inline-flex;align-items:center;min-height:44px;font-size:13px;font-weight:600;margin-top:4px}
+.verb{border:1px solid var(--frost-border);border-radius:var(--r-card);overflow:hidden;background:var(--frost-surface)}
+.verb header{display:flex;gap:16px;align-items:center;padding:20px 22px;background:var(--frost-surface-muted);border-bottom:1px solid var(--frost-border)}
+.verb-n{font-size:42px;font-weight:200;letter-spacing:-.04em;line-height:1;min-width:48px}
+.verb h4{font-size:18px;font-weight:600}
+.verb header p{font-size:13px;color:var(--frost-ink-soft);margin-top:2px}
+.verb ul{list-style:none;margin:0;padding:8px}
+.verb li button{width:100%;display:grid;grid-template-columns:1fr;gap:2px;text-align:left;border:0;background:transparent;border-radius:var(--r-item);padding:10px 12px;cursor:pointer;color:var(--frost-ink);font-size:14px;min-height:44px}
+.verb li button small{font-size:11px;font-weight:500;color:var(--frost-muted);overflow-wrap:anywhere}
+.verb li button:hover{background:var(--frost-primary-wash)}
+.verb li button:hover small{color:var(--frost-primary-hover)}
+.verb-foot{font-size:12px;color:var(--frost-ink-soft);padding:14px 22px 18px;border-top:1px solid var(--frost-border-soft)}
+.uses{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.use{border-radius:var(--r-card);padding:24px;background:var(--frost-surface-muted);display:flex;flex-direction:column;gap:8px}
+.use h4{font-size:16px;font-weight:600}
+.use p{font-size:14px;color:var(--frost-ink-soft)}
+.use .chips{align-items:center;padding-top:12px}
+.chip-label{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--frost-muted);margin-right:2px}
+.journey{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;counter-reset:j}
+.journey li{counter-increment:j;border:1px solid var(--frost-border);border-radius:var(--r-card);padding:22px;position:relative;background:var(--frost-surface);display:flex;flex-direction:column;gap:8px}
+.journey li::before{content:counter(j);display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--frost-primary);color:var(--on-dark);font-size:13px;font-weight:600;margin-bottom:6px}
+.journey li:not(:last-child)::after{content:'';position:absolute;top:36px;right:-21px;width:20px;height:2px;background:var(--frost-primary);opacity:.35}
+.journey .call{align-self:flex-start;font:inherit;font-size:11px;font-weight:600;color:var(--frost-primary-hover);background:var(--frost-primary-soft);padding:4px 9px;border-radius:var(--r-sm);overflow-wrap:anywhere}
+.journey h4{font-size:15px;font-weight:600;margin-top:4px}
+.journey p{font-size:13px;color:var(--frost-ink-soft)}
+.try{margin-top:auto;align-self:flex-start;border:0;background:transparent;padding:10px 0 0;min-height:44px;color:var(--frost-primary-hover);font-size:13px;font-weight:600;cursor:pointer}
+.try:hover{text-decoration:underline;text-underline-offset:4px}
+.guarantees{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.guarantee{display:grid;grid-template-columns:44px 1fr;gap:2px 14px;align-content:start;padding:22px;border-radius:var(--r-card);border:1px solid var(--frost-border)}
+.guarantee .icon{grid-row:1/3}
+.guarantee strong{font-size:15px;align-self:end}
+.guarantee p{font-size:13px;color:var(--frost-ink-soft)}
+.explorer-block .api-workbench{margin-top:0}
 .details{border:1px solid var(--frost-border);border-radius:var(--r-btn);margin-top:12px;overflow:hidden;background:var(--frost-surface)}
 .details summary{cursor:pointer;padding:16px 20px;font-size:14px;font-weight:600;color:var(--frost-ink);min-height:56px;display:flex;align-items:center;gap:12px;list-style:none}
 .details summary::-webkit-details-marker{display:none}
@@ -334,6 +396,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;padding-top:28p
   .chrome nav a{padding:10px 8px;font-size:12px}
   .hero{grid-template-columns:1fr;gap:40px}
   .tabs{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .verbs{grid-template-columns:1fr 1fr;grid-template-areas:"consult notify" "change notify" "nope nope";grid-template-rows:auto}
+  .uses,.guarantees{grid-template-columns:1fr 1fr}
+  .journey{grid-template-columns:1fr 1fr}
+  .journey li:nth-child(2)::after{display:none}
+  .hub{grid-template-columns:minmax(0,1fr) 40px minmax(0,1.1fr) 40px minmax(0,1fr)}
   .pricing{grid-template-columns:1fr}
   .api-workbench{grid-template-columns:240px minmax(0,1fr)}
 }
@@ -354,7 +421,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;padding-top:28p
   .section,.decide,.annex{padding:64px 0}
   .section-head{margin-bottom:28px}
   .sub{font-size:15px}
-  .caps,.flow,.limits,.questions,.api-summary,.glossary dl,.out,.pub-grid{grid-template-columns:1fr}
+  .verbs{grid-template-areas:"consult" "change" "notify" "nope"}
+  .caps,.flow,.limits,.questions,.verbs,.uses,.journey,.guarantees,.glossary dl,.out,.pub-grid{grid-template-columns:1fr}
   .cap,.flow li,.limit{padding:24px}
   .flow li:not(:last-child)::after{display:none}
   .picker-head{display:block;margin-top:48px}
@@ -399,9 +467,16 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;padding-top:28p
   .pilot-flow i{transform:rotate(90deg);margin-left:18px}
   .glossary dl{gap:0;border-top:1px solid var(--frost-border)}
   .glossary dl>div{border:0;border-bottom:1px solid var(--frost-border);border-radius:0;padding:14px 0}
-  .api-summary article{display:grid;grid-template-columns:52px 1fr;column-gap:12px;padding:20px}
-  .api-summary b{grid-row:1/3;font-size:36px}
-  .api-summary h3{margin-top:0}
+  .subhead{display:block;margin:56px 0 16px}
+  .subhead p{text-align:left;margin-top:6px}
+  .hub{grid-template-columns:1fr}
+  .hub-link{height:36px;padding:4px 0;justify-content:center}
+  .hub-link span{width:2px;height:100%}
+  .hub-link span::before{left:-4px;top:-5px}
+  .hub-link span::after{left:-4px;right:auto;top:auto;bottom:-5px}
+  .hub-core{padding:26px;border-radius:var(--r-card)}
+  .journey li:not(:last-child)::after{display:none}
+  .use,.guarantee{padding:20px}
   .limit b{font-size:48px}
   footer .wrap{flex-direction:column}
 }
@@ -420,7 +495,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;padding-top:28p
     <linearGradient id="p1" x1="26.8652" y1="23.5719" x2="27.7524" y2="16.7522" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
     <linearGradient id="p2" x1="16.3401" y1="26.6997" x2="21.8393" y2="30.8946" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
   </defs>
-</svg><nav aria-label="En esta propuesta"><a href="#que-podes-hacer">Qué permite</a><a href="#como-funciona">Cómo funciona</a><a href="#limites">Límites</a><a href="#precio">Precio</a><a href="#decidir">Para decidir</a><a href="#anexo">Anexo técnico</a></nav><span class="status">Propuesta · Oct 2026</span></div></header>
+</svg><nav aria-label="En esta propuesta"><a href="#que-podes-hacer">Qué permite</a><a href="#como-funciona">Cómo funciona</a><a href="#la-api">La API</a><a href="#limites">Límites</a><a href="#precio">Precio</a><a href="#decidir">Decisiones</a><a href="#anexo">Anexo</a></nav><span class="status">Propuesta · Oct 2026</span></div></header>
 <main>
 <div class="wrap">
 <section class="hero" aria-labelledby="titulo">
@@ -434,7 +509,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;padding-top:28p
   <aside class="glance" aria-labelledby="glance-title">
     <h2 id="glance-title">En 30 segundos</h2>
     <dl>
-      <div><dt>Qué es</dt><dd>Un adicional que conecta tu cuenta de Ágora con ChatGPT, Zapier, Make, n8n o tu propio sistema.</dd></div>
+      <div><dt>Qué es</dt><dd>Un adicional que abre una API de Ágora para conectar tu cuenta con ChatGPT, Zapier, Make, n8n o tu propio sistema.</dd></div>
       <div><dt>Para qué</dt><dd>Preguntarle a tu negocio con tus palabras y dejar de copiar turnos, clientes y cobros a mano.</dd></div>
       <div><dt>Cuánto</dt><dd><span class="price-line">$20.000 por mes</span>Por negocio, además del plan.<br><span class="tag">Precio propuesto</span></dd></div>
       <div><dt>Estado</dt><dd>Propuesta. No está construido ni a la venta.</dd></div>
@@ -502,8 +577,72 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;padding-top:28p
   </div>
 </div></section>
 
+<section class="section api-core" aria-labelledby="la-api"><div class="wrap">
+  <div class="section-head"><p class="kicker">03 · La API · El corazón de Conexiones</p><h2 id="la-api">Una sola API, <strong>todas las conexiones.</strong></h2><p class="sub">ChatGPT, Zapier, Make y n8n usan la misma API para hablar con Ágora. Y cualquier sistema propio la puede usar directo: tu web, tu app o el sistema de tu recepción.</p></div>
+
+  <div class="hub" role="img" aria-label="Tu negocio en Ágora se conecta con la API de Ágora, y la API con ChatGPT, Zapier, Make, n8n y tu sistema.">
+    <div class="hub-card">
+      <p class="hub-label">Tu negocio en Ágora</p>
+      <ul class="hub-data"><li>Agenda y horarios libres</li><li>Servicios y profesionales</li><li>Sucursales</li><li>Clientes</li><li>Ventas y cobros</li></ul>
+    </div>
+    <div class="hub-link" aria-hidden="true"><span></span></div>
+    <div class="hub-core">
+      <p class="hub-label">API de Ágora</p>
+      <code>/public/v1</code>
+      <ul><li><b>11</b>formas de consultar</li><li><b>5</b>formas de cambiar</li><li><b>11</b>avisos automáticos</li></ul>
+      <p>En cada pedido verifica el adicional, los permisos y los límites.</p>
+    </div>
+    <div class="hub-link" aria-hidden="true"><span></span></div>
+    <div class="hub-card">
+      <p class="hub-label">Quién la usa</p>
+      <ul class="hub-tools"><li><b>ChatGPT</b><small>Preguntas</small></li><li><b>Zapier · Make · n8n</b><small>Automatizaciones</small></li><li><b>Tu sistema</b><small>Web, app o recepción</small></li></ul>
+    </div>
+  </div>
+
+  <div class="subhead"><h3>Qué podés hacer <strong>con la API.</strong></h3><p>Tocá una acción para verla por dentro, más abajo.</p></div>
+  <div class="verbs">
+    <article class="verb verb-consult"><header><span class="verb-n">11</span><div><h4>Consultar</h4><p>Leer los datos de tu negocio.</p></div></header><ul><li><button type="button" data-try="connection"><span>Ver la cuenta y si el adicional está activo</span><small>GET /connection</small></button></li><li><button type="button" data-try="locations"><span>Ver tus sucursales</span><small>GET /locations</small></button></li><li><button type="button" data-try="professionals"><span>Ver tus profesionales</span><small>GET /professionals</small></button></li><li><button type="button" data-try="services"><span>Ver servicios, precios y duraciones</span><small>GET /services</small></button></li><li><button type="button" data-try="availability"><span>Buscar horarios libres</span><small>GET /availability</small></button></li><li><button type="button" data-try="bookings"><span>Ver la agenda de un día o un período</span><small>GET /bookings</small></button></li><li><button type="button" data-try="booking"><span>Ver una reserva</span><small>GET /bookings/{id}</small></button></li><li><button type="button" data-try="clients"><span>Buscar clientes</span><small>GET /clients</small></button></li><li><button type="button" data-try="sales"><span>Ver ventas</span><small>GET /sales</small></button></li><li><button type="button" data-try="payments"><span>Ver cobros y señas</span><small>GET /payments</small></button></li><li><button type="button" data-try="summary"><span>Resumen de ventas y cobros</span><small>GET /reports/summary</small></button></li></ul><p class="verb-foot">Teléfonos y correos de clientes, solo con un permiso aparte.</p></article>
+    <article class="verb verb-change"><header><span class="verb-n">5</span><div><h4>Cambiar</h4><p>Operar tu agenda y tus clientes.</p></div></header><ul><li><button type="button" data-try="create"><span>Crear una reserva</span><small>POST /bookings</small></button></li><li><button type="button" data-try="move"><span>Mover una reserva</span><small>POST /bookings/{id}/reschedule</small></button></li><li><button type="button" data-try="cancel"><span>Cancelar una reserva</span><small>POST /bookings/{id}/cancel</small></button></li><li><button type="button" data-try="clientCreate"><span>Crear un cliente</span><small>POST /clients</small></button></li><li><button type="button" data-try="clientUpdate"><span>Actualizar un cliente</span><small>PATCH /clients/{id}</small></button></li></ul><p class="verb-foot">Siempre con tus reglas: Ágora calcula disponibilidad, precios y señas.</p></article>
+    <article class="verb verb-notify"><header><span class="verb-n">11</span><div><h4>Avisar</h4><p>Ágora te avisa cuando algo cambia.</p></div></header><ul><li><button type="button" data-try="created"><span>Se creó una reserva</span><small>booking.created</small></button></li><li><button type="button" data-try="confirmed"><span>Se confirmó una reserva</span><small>booking.confirmed</small></button></li><li><button type="button" data-try="rescheduled"><span>Se movió una reserva</span><small>booking.rescheduled</small></button></li><li><button type="button" data-try="canceled"><span>Se canceló una reserva</span><small>booking.canceled</small></button></li><li><button type="button" data-try="expired"><span>Venció una reserva sin pagar</span><small>booking.expired</small></button></li><li><button type="button" data-try="completed"><span>Se completó un servicio</span><small>booking.completed</small></button></li><li><button type="button" data-try="noshow"><span>El cliente no vino</span><small>booking.no_show</small></button></li><li><button type="button" data-try="clientCreated"><span>Se creó un cliente</span><small>client.created</small></button></li><li><button type="button" data-try="clientUpdated"><span>Se actualizó un cliente</span><small>client.updated</small></button></li><li><button type="button" data-try="paymentEvent"><span>Se confirmó un pago</span><small>payment.confirmed</small></button></li><li><button type="button" data-try="refunded"><span>Se registró una devolución</span><small>payment.refunded</small></button></li></ul><p class="verb-foot">Llegan solos: tu herramienta no tiene que estar preguntando.</p></article>
+    <aside class="nope"><h4>Lo que la API no hace</h4><ul><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg>Cobrar ni devolver dinero: eso se hace en Ágora.</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg>Compartir fichas de clientes.</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg>Stock, comisiones, cursos, recurrencias, planes mensuales y packs, por ahora.</li></ul><a href="#no-incluye">Ver qué no incluye ↓</a></aside>
+  </div>
+
+  <div class="subhead"><h3>Qué se puede <strong>construir.</strong></h3><p>Ideas de uso con las acciones de arriba.</p></div>
+  <div class="uses">
+    <article class="use"><h4>Reservas desde tu web o app</h4><p>Mostrar horarios libres y reservar sin salir de tu sitio, con seña si corresponde.</p><div class="chips"><span class="chip-label">Usa</span><span class="chip">Horarios libres</span><span class="chip">Crear reserva</span><span class="chip">Aviso de confirmación</span></div></article>
+    <article class="use"><h4>Pantalla de recepción</h4><p>La agenda del día, siempre al día, en la computadora del local.</p><div class="chips"><span class="chip-label">Usa</span><span class="chip">Agenda</span><span class="chip">Avisos de reservas</span></div></article>
+    <article class="use"><h4>Tu agenda en otro sistema</h4><p>Cada reserva nueva, movida o cancelada se copia sola a tu planilla o a tu otro sistema.</p><div class="chips"><span class="chip-label">Usa</span><span class="chip">Avisos de reservas</span><span class="chip">Agenda por cambios</span></div></article>
+    <article class="use"><h4>Clientes desde formularios</h4><p>Lo que entra por tu web o tus campañas llega a tu base de clientes, sin duplicados.</p><div class="chips"><span class="chip-label">Usa</span><span class="chip">Buscar cliente</span><span class="chip">Crear o actualizar</span></div></article>
+    <article class="use"><h4>Cierre y reportes</h4><p>Ventas, cobros y devoluciones del día en tu planilla o en un tablero propio, por sucursal.</p><div class="chips"><span class="chip-label">Usa</span><span class="chip">Resumen</span><span class="chip">Ventas</span><span class="chip">Cobros</span></div></article>
+    <article class="use"><h4>Avisos para tu equipo</h4><p>Cuando se cancela un turno o un cliente no viene, tu equipo se entera en su canal.</p><div class="chips"><span class="chip-label">Usa</span><span class="chip">Aviso de cancelación</span><span class="chip">Aviso de ausencia</span></div></article>
+  </div>
+
+  <div class="subhead"><h3>Un ejemplo completo: <strong>reservar desde tu web.</strong></h3><p>Cuatro pasos, de principio a fin.</p></div>
+  <ol class="journey">
+    <li><code class="call">GET /services</code><h4>Mostrás tus servicios</h4><p>Tu web trae los servicios con precio y duración.</p><button type="button" class="try" data-try="services">Ver por dentro ↓</button></li>
+    <li><code class="call">GET /availability</code><h4>El cliente elige horario</h4><p>Ve los horarios libres del día que eligió. Consultar no reserva.</p><button type="button" class="try" data-try="availability">Ver por dentro ↓</button></li>
+    <li><code class="call">POST /bookings</code><h4>Tu web pide la reserva</h4><p>Ágora vuelve a validar el horario. Si lleva seña, devuelve el link de pago.</p><button type="button" class="try" data-try="create">Ver por dentro ↓</button></li>
+    <li><code class="call">booking.confirmed</code><h4>Ágora avisa que se confirmó</h4><p>Cuando el pago se verifica, tu web se entera sola. Si vence sin pago, el horario se libera.</p><button type="button" class="try" data-try="confirmed">Ver por dentro ↓</button></li>
+  </ol>
+
+  <div class="subhead"><h3>Lo que la API <strong>siempre cuida.</strong></h3></div>
+  <div class="guarantees">
+    <div class="guarantee"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 9h10v10H9z"/><path d="M5 15V5h10"/></svg></span><strong>No duplica</strong><p>Si un pedido se reintenta, no se crean dos reservas ni dos clientes.</p></div>
+    <div class="guarantee"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h10M4 17h7"/><path d="M17 15l2 2 3-4"/></svg></span><strong>Respeta tus reglas</strong><p>Disponibilidad, precios, señas y políticas de cancelación los define Ágora.</p></div>
+    <div class="guarantee"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></svg></span><strong>No se pierde nada</strong><p>Si no se puede mover una reserva, queda el turno original.</p></div>
+    <div class="guarantee"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span><strong>Solo lo que autorizaste</strong><p>Permisos por tipo de dato y por sucursal. Las fichas nunca salen.</p></div>
+    <div class="guarantee"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v8"/><path d="M6.3 7.3a8 8 0 1 0 11.4 0"/></svg></span><strong>Se corta al instante</strong><p>Sin adicional activo, o al desconectar una herramienta, deja de responder y de avisar.</p></div>
+    <div class="guarantee"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg></span><strong>Avisos confiables</strong><p>Firmados, con reintentos y forma de recuperar los que se hayan perdido.</p></div>
+  </div>
+
+  <div class="explorer-block" id="detalle-api">
+    <div class="subhead subhead-stack"><h3>Cada acción, <strong>por dentro.</strong></h3><p>Para quien programa: ruta, parámetros, respuesta y errores. Contrato propuesto: los ejemplos no llaman a ningún servidor y los datos son ficticios.</p></div>
+    <div class="api-workbench"><aside class="api-catalog" aria-label="Catálogo de operaciones"><label for="api-search">Buscar una acción o ruta</label><input id="api-search" type="search" placeholder="Ej.: clientes, reservas, GET…" autocomplete="off"><div class="catalog-filters" role="group" aria-label="Filtrar catálogo"><button type="button" data-filter="all" aria-pressed="true">Todo</button><button type="button" data-filter="read" aria-pressed="false">Consultar</button><button type="button" data-filter="write" aria-pressed="false">Cambiar</button><button type="button" data-filter="event" aria-pressed="false">Avisos</button></div><p id="catalog-count" role="status"></p><div id="catalog-list"></div></aside><div class="explorer"><div class="explorer-top"><div class="op-picker"><label for="operation">Operación</label><select id="operation"></select></div><div class="route"><b id="method"></b><code id="route"></code></div><p class="meta" id="permission"></p></div><div class="code-tabs" role="tablist" aria-label="Detalle de la operación"><button type="button" role="tab" data-view="request" id="view-request" aria-selected="true" aria-controls="code-panel" tabindex="0">Solicitud</button><button type="button" role="tab" data-view="fields" id="view-fields" aria-selected="false" aria-controls="code-panel" tabindex="-1">Parámetros</button><button type="button" role="tab" data-view="response" id="view-response" aria-selected="false" aria-controls="code-panel" tabindex="-1">Respuesta</button><button type="button" role="tab" data-view="error" id="view-error" aria-selected="false" aria-controls="code-panel" tabindex="-1">Si falla</button></div><div class="code-area" id="code-panel" role="tabpanel" aria-labelledby="view-request" tabindex="0"><div class="code-toolbar"><small id="code-label"></small><button id="expand" type="button" aria-expanded="false" aria-controls="code-panel">Ver completo</button><button id="copy" type="button">Copiar</button></div><pre id="code"></pre><div id="fields" hidden></div><p id="copy-status" class="copy-status" role="status"></p></div><p class="op-note" id="op-note"></p></div></div>
+  </div>
+</div></section>
+
 <section class="section" aria-labelledby="limites"><div class="wrap">
-  <div class="section-head"><p class="kicker">03 · Límites</p><h2 id="limites">Límites diarios, <strong>sin sorpresas.</strong></h2><p class="sub">Son por negocio y se comparten entre todas tus herramientas. Podés conectar las que quieras.</p></div>
+  <div class="section-head"><p class="kicker">04 · Límites</p><h2 id="limites">Límites diarios, <strong>sin sorpresas.</strong></h2><p class="sub">Son por negocio y se comparten entre todas tus herramientas. Podés conectar las que quieras.</p></div>
   <div class="limits">
     <div class="limit"><b>5.000</b><strong>consultas por día</strong><p>Cada vez que una herramienta lee algo. Una pregunta en ChatGPT puede usar varias.</p></div>
     <div class="limit"><b>100</b><strong>cambios por día</strong><p>Reservas o clientes creados, movidos o cancelados con éxito.</p></div>
@@ -522,7 +661,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;padding-top:28p
 </div></section>
 
 <section class="section" aria-labelledby="no-incluye"><div class="wrap">
-  <div class="section-head"><p class="kicker">04 · Qué no incluye</p><h2 id="no-incluye">Lo que queda afuera, <strong>dicho claro.</strong></h2></div>
+  <div class="section-head"><p class="kicker">05 · Qué no incluye</p><h2 id="no-incluye">Lo que queda afuera, <strong>dicho claro.</strong></h2></div>
   <ul class="out">
     <li><span class="x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 12h12"/></svg></span><strong>Lo que cobran las otras herramientas</strong><p>ChatGPT, Zapier, Make y n8n tienen sus propios planes. Algunos ejemplos pueden requerir un plan pago.</p></li>
     <li><span class="x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 12h12"/></svg></span><strong>Configurar tus cuentas o desarrollos a medida</strong><p>Ágora da las integraciones y los ejemplos listos; cada negocio los conecta.</p></li>
@@ -532,7 +671,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;padding-top:28p
 </div></section>
 
 <section class="section" aria-labelledby="precio"><div class="wrap">
-  <div class="section-head"><p class="kicker">05 · Precio</p><h2 id="precio">Un precio, <strong>todas las herramientas.</strong></h2></div>
+  <div class="section-head"><p class="kicker">06 · Precio</p><h2 id="precio">Un precio, <strong>todas las herramientas.</strong></h2></div>
   <div class="pricing">
     <aside class="price-card" aria-label="Precio propuesto">
       <small>Precio mensual propuesto</small>
@@ -564,7 +703,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;padding-top:28p
 </div></section>
 
 <section class="decide" aria-labelledby="decidir"><div class="wrap">
-  <p class="kicker">06 · Para decidir</p><h2 id="decidir">Tres preguntas <strong>para cerrar en equipo.</strong></h2>
+  <p class="kicker">07 · Para decidir</p><h2 id="decidir">Tres preguntas <strong>para cerrar en equipo.</strong></h2>
   <ol class="questions">
     <li><span>Piloto</span><p>¿Con qué negocio probamos la planilla que se actualiza sola?</p></li>
     <li><span>Precio</span><p>¿El valor justifica $20.000 por mes, además de lo que cuestan las otras herramientas?</p></li>
@@ -573,16 +712,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;padding-top:28p
 </div></section>
 
 <section class="annex" aria-labelledby="anexo"><div class="wrap">
-  <div class="section-head"><p class="kicker">Anexo técnico · Para quien construye</p><h2 id="anexo">La API, <strong>de un vistazo.</strong></h2><p class="sub">Una misma base para todas las integraciones. Es un contrato propuesto: todavía no existe y los ejemplos no llaman a ningún servidor.</p></div>
-  <div class="api-summary">
-    <article><b>11</b><h3>Consultas</h3><p>Cuenta, sucursales, profesionales, servicios, horarios libres, reservas, clientes, ventas, cobros y un resumen.</p></article>
-    <article><b>5</b><h3>Cambios</h3><p>Crear, mover y cancelar reservas. Crear y actualizar clientes. Siempre con las reglas de Ágora.</p></article>
-    <article><b>11</b><h3>Avisos</h3><p>Reservas, clientes, pagos confirmados y devoluciones registradas.</p></article>
-  </div>
-
-  <details class="details details-first" id="detalle-api"><summary><b>Explorar las 16 operaciones y 11 avisos</b><span>Rutas, parámetros, respuestas y errores</span></summary><div class="detail-body"><p>Contrato ilustrativo para construir las integraciones. Los dominios .example, las credenciales y los datos son ficticios.</p>
-  <div class="api-workbench"><aside class="api-catalog" aria-label="Catálogo de operaciones"><label for="api-search">Buscar una acción o ruta</label><input id="api-search" type="search" placeholder="Ej.: clientes, reservas, GET…" autocomplete="off"><div class="catalog-filters" role="group" aria-label="Filtrar catálogo"><button type="button" data-filter="all" aria-pressed="true">Todo</button><button type="button" data-filter="read" aria-pressed="false">Consultar</button><button type="button" data-filter="write" aria-pressed="false">Cambiar</button><button type="button" data-filter="event" aria-pressed="false">Avisos</button></div><p id="catalog-count" role="status"></p><div id="catalog-list"></div></aside><div class="explorer"><div class="explorer-top"><div class="op-picker"><label for="operation">Operación</label><select id="operation"></select></div><div class="route"><b id="method"></b><code id="route"></code></div><p class="meta" id="permission"></p></div><div class="code-tabs" role="tablist" aria-label="Detalle de la operación"><button type="button" role="tab" data-view="request" id="view-request" aria-selected="true" aria-controls="code-panel" tabindex="0">Solicitud</button><button type="button" role="tab" data-view="fields" id="view-fields" aria-selected="false" aria-controls="code-panel" tabindex="-1">Parámetros</button><button type="button" role="tab" data-view="response" id="view-response" aria-selected="false" aria-controls="code-panel" tabindex="-1">Respuesta</button><button type="button" role="tab" data-view="error" id="view-error" aria-selected="false" aria-controls="code-panel" tabindex="-1">Si falla</button></div><div class="code-area" id="code-panel" role="tabpanel" aria-labelledby="view-request" tabindex="0"><div class="code-toolbar"><small id="code-label"></small><button id="expand" type="button" aria-expanded="false" aria-controls="code-panel">Ver completo</button><button id="copy" type="button">Copiar</button></div><pre id="code"></pre><div id="fields" hidden></div><p id="copy-status" class="copy-status" role="status"></p></div><p class="op-note" id="op-note"></p></div></div>
-  </div></details>
+  <div class="section-head"><p class="kicker">Anexo técnico · Para quien construye</p><h2 id="anexo">Detalles <strong>técnicos.</strong></h2><p class="sub">Seguridad, reglas, pruebas y publicación. Todo es propuesto y se valida antes de cobrar.</p></div>
 
   <details class="details"><summary><b>Cómo se protege el acceso</b><span>Una base común para todas las integraciones</span></summary><div class="detail-body"><p>API propuesta <strong>/public/v1</strong>, con OAuth por negocio y permisos separados para catálogo, disponibilidad, reservas, clientes, contactos y finanzas. La integración de ChatGPT usa un servidor MCP propio para profesionales. La API directa admite credenciales revocables para sistemas propios. El MCP administrativo no se expone.</p><p>Cada operación verifica identidad, negocio, sucursales, permisos, adicional activo y límite. Los avisos también se detienen al desactivar el adicional: una clave válida no permite saltar el control comercial. Los tokens se guardan en el gestor de credenciales de cada herramienta, nunca en el chat ni en una web pública.</p></div></details>
 
@@ -672,7 +802,8 @@ function renderCatalog(){
  $('catalog-count').textContent=count+' de '+Object.keys(fixtures).length+' entradas';
  document.querySelectorAll('[data-operation]').forEach(b=>b.addEventListener('click',()=>{state.operation=b.dataset.operation;state.view='request';renderOperation();if(innerWidth<=760)document.querySelector('.explorer').scrollIntoView({block:'start',behavior:'smooth'});document.querySelector('[data-operation="'+state.operation+'"]').focus({preventScroll:true});}));
 }
-function renderOperation(){renderCatalog();const f=fixtures[state.operation];$('operation').value=state.operation;$('method').textContent=f.method;$('route').textContent=(f.event?'':'/public/v1')+f.path;$('permission').textContent=f.event?'Ágora → integración · Aviso firmado; no es una orden para crear una reserva.':'Integración → Ágora · Permiso: '+scopes[state.operation];$('op-note').textContent=f.note;document.querySelectorAll('[data-view]').forEach(b=>{const on=b.dataset.view===state.view;b.setAttribute('aria-selected',on);b.tabIndex=on?0:-1;});$('code-panel').setAttribute('aria-labelledby','view-'+state.view);$('code-panel').classList.remove('expanded');$('expand').setAttribute('aria-expanded','false');$('expand').textContent='Ver completo';$('copy-status').textContent='';const fields=state.view==='fields';$('fields').hidden=!fields;$('code').hidden=fields;$('copy').hidden=fields;
+function keepVisible(){const cur=document.querySelector('.catalog-item[aria-current="true"]'),l=$('catalog-list');if(!cur||!l)return;const d=cur.getBoundingClientRect().top-l.getBoundingClientRect().top;if(d<0||d>l.clientHeight-60)l.scrollTop+=d-8;}
+function renderOperation(){renderCatalog();keepVisible();const f=fixtures[state.operation];$('operation').value=state.operation;$('method').textContent=f.method;$('route').textContent=(f.event?'':'/public/v1')+f.path;$('permission').textContent=f.event?'Ágora → integración · Aviso firmado; no es una orden para crear una reserva.':'Integración → Ágora · Permiso: '+scopes[state.operation];$('op-note').textContent=f.note;document.querySelectorAll('[data-view]').forEach(b=>{const on=b.dataset.view===state.view;b.setAttribute('aria-selected',on);b.tabIndex=on?0:-1;});$('code-panel').setAttribute('aria-labelledby','view-'+state.view);$('code-panel').classList.remove('expanded');$('expand').setAttribute('aria-expanded','false');$('expand').textContent='Ver completo';$('copy-status').textContent='';const fields=state.view==='fields';$('fields').hidden=!fields;$('code').hidden=fields;$('copy').hidden=fields;
  if(fields){$('code-label').textContent=f.body?'Campos del body y cabeceras':'Parámetros y permisos';$('fields').innerHTML='<dl>'+f.fields.map(([a,b,c])=>'<dt>'+esc(a)+'</dt><dd>'+esc(b)+'<br>'+esc(c)+'</dd>').join('')+'</dl>';return;}
  let value,label;if(state.view==='request'){value=request(f);label=f.event?'Payload del aviso · JSON':'Solicitud · Ruta, autorización y body';}else if(state.view==='response'){const n=f.status||200;value='HTTP '+n+(n===204?' No Content\n\nSin body; recepción guardada.':'\n\n'+JSON.stringify(f.response,null,2));label='Respuesta de ejemplo';}else{value='HTTP '+f.errorStatus+(f.event?' Service Unavailable\n\nReintentar con el mismo ID de evento.\nPolítica de entrega pendiente antes del piloto.':'\n\n'+JSON.stringify(f.error,null,2));label='Error de ejemplo';}$('code-label').textContent=label;$('code').textContent=value;
 }
@@ -687,6 +818,7 @@ $('copy').addEventListener('click',async()=>{try{await navigator.clipboard.write
 function hash(){if(location.hash==='#detalle-api'){$('detalle-api').open=true;$('detalle-api').scrollIntoView();}if(location.hash==='#integradores'||location.hash==='#publicacion'){document.getElementById('publicacion').open=true;document.getElementById('publicacion').scrollIntoView();}}
 $('api-search').addEventListener('input',renderCatalog);document.querySelectorAll('[data-filter]').forEach(b=>b.addEventListener('click',()=>{catalogFilter=b.dataset.filter;document.querySelectorAll('[data-filter]').forEach(x=>x.setAttribute('aria-pressed',x===b));renderCatalog();}));
 document.querySelectorAll('[data-open]').forEach(a=>a.addEventListener('click',()=>{$(a.dataset.open).open=true;}));
+document.querySelectorAll('[data-try]').forEach(b=>b.addEventListener('click',()=>{state.operation=b.dataset.try;state.view='request';renderOperation();$('detalle-api').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});const it=document.querySelector('.catalog-item[data-operation="'+state.operation+'"]');if(it)it.focus({preventScroll:true});}));
 renderGuide();renderOperation();hash();window.addEventListener('hashchange',hash);
 })();
 
