@@ -7,8 +7,8 @@
       "type": "proposal",
       "typeLabel": "Proposal",
       "title": "Conexiones Ágora · adicional",
-      "description": "Propuesta para conectar la agenda con asistentes, automatizaciones y sistemas propios. Alcance, límites diarios y precio de 20.000 pesos mensuales por negocio a validar.",
-      "detail": "Tres casos visuales · explorador de rutas, body y respuestas",
+      "description": "Cómo consultar turnos en ChatGPT, llevar reservas a una planilla o reservar desde otro sistema. Preparación, uso, requisitos y precio propuesto.",
+      "detail": "Tres tareas cotidianas · guía por herramienta · API opcional",
       "date": "OCT 2026",
       "href": "./api-reservas-addon-2026-09/index.html",
       "slug": "api-reservas-addon-2026-09"

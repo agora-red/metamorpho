@@ -28,3 +28,13 @@ Revisión de la ampliación: 52 combinaciones de operación y vista recorridas e
 Se refuerza la jerarquía del título, límites y precio; se incorpora navegación breve y selectores de casos más grandes en móvil. Las vistas del negocio conservan Frost claro y el explorador técnico usa un panel azul oscuro, resaltado de JSON y números de línea que no alteran el contenido copiado.
 
 Validación de esta revisión: capturas finales completas a 1280 y 390 px inspeccionadas; 52 combinaciones en escritorio y 26 recorridos entre 360 y 390 px sin desborde horizontal. JSON válido y copia exacta; expansión del cuerpo completa en móvil. Contraste del código superior a 8,7:1; sin errores JavaScript observados. La validación corresponde al prototipo HTML, no a las conexiones propuestas.
+
+## Reescritura para profesionales — 2 de octubre de 2026
+
+El usuario no entendía cómo usar el adicional ni las diferencias entre proveedores. Se reemplaza la entrada por tecnología por tres tareas cotidianas: preguntar por turnos, llevar reservas a una planilla y reservar desde otro sistema. Cada recorrido explica preparación inicial, uso diario, resultado y requisitos; incluye ChatGPT, otro asistente sujeto a validación, Zapier, Make, n8n y un sistema propio. Las vistas son ilustrativas.
+
+El explorador completo de rutas, body, parámetros, respuestas y errores pasa al Detalle técnico cerrado. Se aclara qué compra el adicional, qué se paga aparte y cómo se cuentan las conexiones; Make más su planilla ocupa una conexión con Ágora. No se afirma compatibilidad operativa ni presencia en directorios.
+
+Verificación: seis recorridos en escritorio; dieciocho comprobaciones entre 360 y 390 px, incluyendo el detalle abierto. Cincuenta y dos combinaciones técnicas sin errores de JSON ni desbordes. Teclado y cierre automático del detalle al cambiar tarea comprobados. Capturas finales a 1280 y 390 px inspeccionadas; corregido espacio del título móvil. Consola sin errores. No se probaron integraciones reales.
+
+Referencias oficiales consultadas el 2 de octubre de 2026: conexión de MCP en ChatGPT (developers.openai.com/plugins/deploy/connect-chatgpt), Catch Hook de Zapier, Webhooks de Make y nodo Webhook de n8n. Los enlaces se incluyen en el detalle del proveedor.
