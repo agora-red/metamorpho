@@ -14,7 +14,7 @@ Propuesta para el equipo de Ágora, escrita para profesionales sin conocimientos
 - Piloto propuesto: reserva reprogramada actualiza su fila en Google Sheets mediante Zapier, sin duplicados.
 
 ## Presentación
-Cinco bloques: qué proveemos, límites, exclusiones, activación y hasta tres decisiones. Cinco recorridos visuales ilustrativos; alcance y detalles técnicos plegados. Explorador de 20 operaciones/avisos con solicitud, parámetros, respuesta y error. Rutas y payloads son un contrato propuesto, no endpoints disponibles.
+Cinco bloques principales: qué proveemos, límites, exclusiones, activación y hasta tres decisiones. Por pedido explícito, una sección adicional resume la API en consultar, modificar y recibir avisos. Cinco recorridos visuales ilustrativos. Catálogo con búsqueda y filtros: 16 operaciones y 11 tipos de aviso; solicitud, parámetros, respuesta y error. El requisito de comprar y mantener activo el adicional se destaca al inicio, en cada recorrido y en la activación. Rutas y payloads son un contrato propuesto, no endpoints disponibles.
 
 Los ejemplos son independientes, ficticios y sin solicitudes externas. No son capturas de Flash ni interfaces oficiales de terceros. La marca usa Montserrat, Frost y el SVG oficial de Ágora.
 
@@ -24,7 +24,7 @@ La presencia en los catálogos requiere desarrollo y revisión de cada plataform
 La API administrativa interna no forma parte de esta propuesta. No incluye procesar tarjetas, ejecutar devoluciones, fichas sensibles, stock, comisiones, cursos, recurrencias, planes mensuales o packs. Algunas de estas capacidades ya existen en Ágora; aquí se delimita exclusivamente su acceso mediante las nuevas integraciones.
 
 ## Evidencia de esta revisión
-255 comprobaciones del prototipo en 1280, 390 y 360 px: cinco recorridos y las cuatro vistas de cada operación; JSON parseable, sin desborde de página ni errores JavaScript. Montserrat cargada. Teclado, copia exacta, expansión y enlaces antiguos comprobados. Capturas completas y vistas por proveedor inspeccionadas; corregido espaciado del título móvil. No se probaron conectores o APIs productivas.
+339 comprobaciones del prototipo en 1280, 390 y 360 px: cinco recorridos y las cuatro vistas de cada operación; JSON parseable, sin desborde de página ni errores JavaScript. Montserrat cargada. Teclado, copia exacta, expansión y enlaces antiguos comprobados. Capturas completas y vistas por proveedor inspeccionadas; corregido espaciado del título móvil. Además, 24 comprobaciones específicas del catálogo: búsqueda sin tildes, filtros, selección, estado vacío, error por adicional inactivo y apertura/reapertura desde el enlace. Capturas del resumen, acceso y catálogo inspeccionadas en escritorio y móvil. No se probaron conectores o APIs productivas.
 
 ## Estado
 Contenido preparado para revisión. No hay conectores implementados ni publicación de esta revisión en GitHub Pages. Por incluir funcionalidades no lanzadas y un precio propuesto, requiere autorización explícita antes del push público. No contiene métricas internas ni datos de clientes. Investigación y capturas quedan fuera del paquete público.
