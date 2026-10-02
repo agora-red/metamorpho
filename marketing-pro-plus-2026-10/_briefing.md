@@ -95,3 +95,15 @@ Pedido: sumar a Marketing PRO+ tres ideas del research del 2/10. Perfil de Googl
 - Datos de ejemplo coherentes entre módulos: 328 reservas en septiembre; 33 por mensajes de Ágora = 14 recordatorios + 19 vinculadas a campañas, automatizaciones y ofertas en Resultados; la oferta de ejemplo es de un martes, para no contradecir el viernes libre de Pulse.
 
 Sin cambios de precio ni de alcance comercial. Datos íntegramente ficticios.
+
+## Revisión v10 · Fidelización, referidos y reservas sin terminar
+
+Pedido: sumar al paquete reservas sin terminar, referidos entre clientes y Fidelización.
+
+- **Fidelización (nuevo módulo).** Mismo club que ya existe en Ágora: puntos por turno completado y por cada $1.000, niveles con descuento permanente, premios canjeables y vencimiento por inactividad. Vista de la tarjeta del cliente que se recalcula con las reglas, y avisos del club (faltan pocos puntos, vencen, subió de nivel). El nivel del club se suma como condición en el constructor de automatizaciones.
+- **Referidos (pestaña de Fidelización).** Cada clienta comparte su link por WhatsApp; la amiga recibe un beneficio en su primera visita y quien recomienda, su premio después de esa visita. Ágora no le escribe a la amiga. Las reservas entran como canal «Referidos» en Canales.
+- **Reservas sin terminar (receta y disparador nuevos).** «Alguien deja una reserva sin terminar → 60 minutos → plantilla Reserva sin terminar». Espera en minutos (15 a 1.440), un solo aviso, solo a quien dejó teléfono y aceptó avisos. Plantilla nueva en la biblioteca (no se usa en campañas) y resultado de ejemplo en Resultados.
+- Datos coherentes: 328 reservas en septiembre; mensajes de Ágora 40 = 14 recordatorios + 26 vinculadas en Resultados; Referidos 5.
+- Documento: paso 3, tabla (fila Fidelización), lectura, mapa y una decisión nueva sobre quienes ya usan el club.
+
+Sin cambios de precio ni de las condiciones comerciales.
