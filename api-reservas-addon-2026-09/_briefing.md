@@ -38,3 +38,11 @@ El explorador completo de rutas, body, parámetros, respuestas y errores pasa al
 Verificación: seis recorridos en escritorio; dieciocho comprobaciones entre 360 y 390 px, incluyendo el detalle abierto. Cincuenta y dos combinaciones técnicas sin errores de JSON ni desbordes. Teclado y cierre automático del detalle al cambiar tarea comprobados. Capturas finales a 1280 y 390 px inspeccionadas; corregido espacio del título móvil. Consola sin errores. No se probaron integraciones reales.
 
 Referencias oficiales consultadas el 2 de octubre de 2026: conexión de MCP en ChatGPT (developers.openai.com/plugins/deploy/connect-chatgpt), Catch Hook de Zapier, Webhooks de Make y nodo Webhook de n8n. Los enlaces se incluyen en el detalle del proveedor.
+
+## Corrección de alcance: autoservicio — 2 de octubre de 2026
+
+El usuario aclara que Ágora no entra en cuentas de clientes ni prepara sus integraciones. El adicional propuesto entrega acceso API, credenciales, documentación y ejemplos/contexto reutilizables. El cliente conecta su herramienta. Esta definición reemplaza las referencias anteriores a configuración asistida y necesidad de un programador.
+
+ChatGPT se presenta mediante GPT Actions, esquema OpenAPI y clave de Ágora en autenticación. El contexto se copia sin secretos; no se afirma que pegar texto en un chat habilite llamadas API. Los otros recorridos siguen el modelo autoservicio. Guías y emisión de credenciales siguen siendo capacidades propuestas, no disponibles.
+
+Verificación: seis recorridos a 1280 y 390 px sin desbordes; botón de contexto copia el texto exacto; detalle API conserva respuesta visible; sin errores de consola. Capturas completas y vista ChatGPT inspeccionadas. Documentación oficial de GPT Actions y autenticación consultada el 2 de octubre de 2026.

@@ -8,7 +8,7 @@
       "typeLabel": "Proposal",
       "title": "Conexiones Ágora · adicional",
       "description": "Cómo consultar turnos en ChatGPT, llevar reservas a una planilla o reservar desde otro sistema. Preparación, uso, requisitos y precio propuesto.",
-      "detail": "Tres tareas cotidianas · guía por herramienta · API opcional",
+      "detail": "Acceso API de autoservicio · credenciales, contexto y ejemplos",
       "date": "OCT 2026",
       "href": "./api-reservas-addon-2026-09/index.html",
       "slug": "api-reservas-addon-2026-09"
