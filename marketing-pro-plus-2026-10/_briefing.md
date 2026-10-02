@@ -83,3 +83,15 @@ Pedido: dar una vuelta de UI/UX y wording para que la propuesta se entienda, sin
 - **Mapa «Cómo se conecta todo»**: campaña y automatización con íconos y separador «o»; en el celular se apilan para no recortarse.
 
 Sin cambios de alcance, precios ni funcionalidades. Datos íntegramente ficticios.
+
+## Revisión v9 · Canales, base contactable y horarios libres
+
+Pedido: sumar a Marketing PRO+ tres ideas del research del 2/10. Perfil de Google e Instagram quedan afuera porque van al plan base.
+
+- **Canales (nuevo módulo).** Reservas por canal (Instagram, tu página, mensajes de Ágora, Google, WhatsApp, marketplace, cargadas a mano) y visitas a tu página, incluidas en todos los planes. PRO+ suma cuántas visitas terminan en reserva, las búsquedas de Google con las que te encontraron (Search Console de agora.red filtrado por la ruta del negocio, sin que conecte nada) y una recomendación semanal. Pulse enlaza desde «De dónde vinieron».
+- **Base lista para campañas (en Clientes).** A cuántos de tus clientes podés escribirles (teléfono, permiso, email, cumpleaños) y cómo completar lo que falta: pedir permiso y cumpleaños al reservar o al confirmar un turno ya agendado. No se usan campañas para pedir permiso.
+- **Horarios libres (nuevo módulo).** Turnos vacíos de la semana, oferta de último momento con descuento y vencimiento, publicación en tu página y aviso a la lista de espera (por orden o a todos). Pulse enlaza desde «Horas libres». Las ofertas aparecen en Resultados como un tipo más.
+- Documento: pasos 1 y 3, tabla «Qué suma a tu plan» (filas Canales y Horarios libres; Clientes con base contactable) y una decisión nueva sobre qué parte de Canales va en todos los planes. Lectura: guías de los dos módulos, mapa con Canales y Horario libre, y el ejemplo «Ocupar horarios» reescrito.
+- Datos de ejemplo coherentes entre módulos: 328 reservas en septiembre; 33 por mensajes de Ágora = 14 recordatorios + 19 vinculadas a campañas, automatizaciones y ofertas en Resultados; la oferta de ejemplo es de un martes, para no contradecir el viernes libre de Pulse.
+
+Sin cambios de precio ni de alcance comercial. Datos íntegramente ficticios.
