@@ -166,3 +166,14 @@ Marketing con el mismo patrón:
 - **Sin PRO+:** botón «Ver sin PRO+» en el ejemplo; lo marcado muestra candado y lleva a «Activá Marketing PRO+» (qué se activa, precio, tres pasos), igual que Finanzas Pro. Lo incluido sigue funcionando.
 - Sin pestañas internas en ningún lado. Plantillas se abre desde Campañas y Automatizaciones.
 - Documento: «Todo tu marketing en un módulo» reemplaza la tabla comparativa con las dos listas (incluido / PRO+). Pasos, guías y mapa de lectura con Segmentos y Resultados como secciones. Decisiones: el módulo Marketing (mudanzas y rutas que redirigen; Tarjetas de regalo a Catálogo y Seguimiento a Ajustes), Analítica y datos de Google, Automatizaciones vs. recordatorio para volver, Horarios libres sobre Ofertas.
+
+
+## Revisión v15 · Con y sin Marketing PRO+, sin duplicar vistas
+
+Pedido: Segmentos duplicaba la vista de Clientes; tiene que quedar resaltadísimo qué cambia con y sin Marketing PRO+ en las vistas afectadas; Pulse es algo nuevo y de PRO+, no se menciona como parte del plan.
+
+- **Sin vistas duplicadas:** se quitó Segmentos y la Analítica de Marketing. Lo de PRO+ aparece dentro de Mi negocio › Clientes y Mi negocio › Analítica (y en Mensajes de reservas), en bloques marcados con la cinta «Marketing PRO+».
+- **Menú:** Marketing › incluido (Mensajes de reservas ◐, Descuentos, Reseñas, Contenido IG) · Marketing PRO+ (Pulse, Campañas, Automatizaciones, Horarios libres, Fidelización, Resultados) · Mi negocio (Clientes ◐, Analítica ◐). Leyenda: punto lleno = sección de PRO+; anillo = vista que ya existe y suma partes de PRO+.
+- **Selector «Con / Sin Marketing PRO+»** en el ejemplo: sin PRO+, las secciones nuevas tienen candado y llevan a la activación; en las vistas afectadas los bloques de PRO+ se reemplazan por un aviso con candado y «Activar Marketing PRO+». Clientes queda con lista, búsqueda y etiquetas; Analítica con ventas, reservas, horas ocupadas y cancelaciones.
+- **Pulse:** sección nueva de PRO+, con cinta. Ya no se presenta como parte del plan. La salida de la tarjeta del Inicio queda solo en la nota interna.
+- **Documento:** listas «Incluido en tu plan» / «Con Marketing PRO+» y tabla «Vistas que ya usás, sin y con Marketing PRO+» (Clientes, Analítica, Mensajes de reservas). Nueve decisiones internas, con Pulse y Clientes como puntos propios.
