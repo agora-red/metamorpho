@@ -1,14 +1,14 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
   "version": 1,
-  "updated_at": "2026-10-01",
+  "updated_at": "2026-10-02",
   "outputs": [
     {
       "type": "proposal",
       "typeLabel": "Proposal",
       "title": "Marketing PRO+",
-      "description": "Marketing PRO+ con Pulse semanal, campañas guiadas, segmentos y automatizaciones. Propuesta visual interactiva.",
-      "detail": "Seis módulos con diseño Frost. Pulse con doce semanas, origen de reservas, mapa horario e historial. Campañas, clientes, reglas, resultados y plantillas WA conectados.",
+      "description": "Marketing PRO+ con Pulse, campañas, Clientes y automatizaciones conectadas a plantillas fijas de WhatsApp.",
+      "detail": "Seis vistas interactivas · Clientes alineado con Flash · Plantillas sin edición libre · Reglas, condiciones y resultados simulados.",
       "date": "OCT 2026",
       "href": "./marketing-pro-plus-2026-10/index.html",
       "slug": "marketing-pro-plus-2026-10"

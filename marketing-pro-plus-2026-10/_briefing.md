@@ -1,5 +1,5 @@
 # Marketing PRO+ · Propuesta visual
-Fecha: 2026-10-01
+Fecha: 2026-10-02
 
 ## Confirmado en el pedido
 Proponer un adicional de marketing similar en facturación a Finanzas Pro. Incluir Pulse, campañas, grupos de clientes y acciones. Las plantillas de WhatsApp operativas son transversales. El usuario pidió una propuesta visual con metamorpho-propuestas.
@@ -22,15 +22,24 @@ Contiene funcionalidades futuras y precios tentativos. Requiere confirmar este c
 ## Ampliación solicitada: experiencia interactiva
 El usuario pidió hacer la pieza interactiva y proponer visualmente cada módulo. Se conserva el slug y los cinco bloques comerciales. El primero incorpora seis vistas conectadas: Pulse, Campañas, Clientes, Automatizaciones, Resultados y Plantillas WA transversales.
 
-La vista Hoy / Propuesta usa la estructura de Inicio y Clientes observada en Flash el 1 de octubre de 2026, redibujada con datos ficticios. No conserva capturas ni datos personales de la referencia.
+La vista Hoy / Propuesta usa la estructura de Clientes observada en Flash el 2 de octubre de 2026, redibujada con datos ficticios. No conserva capturas ni datos personales de la referencia.
 
 Interacciones: campañas preparadas desde Pulse; objetivo y canal editables; vista previa del mensaje; revisión y envío simulado; selección y búsqueda de clientes elegibles; recetas configurables y activación de ejemplo; exclusión por próxima reserva; selector de resultados; biblioteca comercial y operativa; reinicio de la demo. No hay conexiones a APIs ni envíos. Los ejemplos viven en memoria de la página y se reinician al recargar.
 
 Diseño responsive revisado en 390 y 1280 px. Los precios siguen siendo hipótesis pendientes de validación. La publicación pública de funciones sin lanzar permanece pendiente de confirmación.
 
 ## Revisión de diseño solicitada con frontend-design
-Se revisaron las tres imágenes de referencia aportadas por el usuario para Pulse, en escritorio, móvil y comparación con Analítica. Se recupera la composición: conclusión de semana, evolución de doce semanas, origen de reservas, mapa horario, acciones, novedades, encuesta y ediciones semanales y mensuales. Los números son ejemplos ficticios y no estadísticas internas.
+Se revisaron las tres imágenes de referencia aportadas por el usuario para Pulse, en escritorio, móvil y comparación con Analítica. Se recupera la composición: conclusión de semana, evolución de doce semanas, origen de reservas, mapa horario, acciones y ediciones semanales y mensuales (novedades y encuesta retiradas en la revisión del 2/10). Los números son ejemplos ficticios y no estadísticas internas.
 
 Dirección visual: Montserrat, Frost claro, azul para acciones y progreso, verde para resultados de acciones completadas. Pulse mantiene la jerarquía de la referencia; Campañas incorpora un recorrido guiado, Clientes segmentos y fichas de ejemplo, Automatizaciones condiciones visibles, Resultados estados de reserva y Plantillas una vista previa del mensaje. Se agregó modo ampliado de la experiencia.
 
-Interacciones adicionales verificadas: puntos semanales, fuentes de reservas, franjas horarias, encuesta local, historial mensual/semanal, explicación Pulse/Analítica, asistente de tres pasos para campañas, programación simulada, validación de mensaje vacío, ficha de cliente, activación y pausa de reglas. Ninguna acción contacta clientes o guarda datos en servidores.
+Interacciones adicionales verificadas: puntos semanales, fuentes de reservas, franjas horarias, historial mensual/semanal, explicación Pulse/Analítica, asistente de tres pasos para campañas, programación simulada, validación de correo vacío, ficha de cliente, activación y pausa de reglas. Ninguna acción contacta clientes o guarda datos en servidores.
+
+## Revisión del 2 de octubre · alcance y uso
+
+- Pulse se dedica a marketing: se retiran novedades generales de Ágora y encuesta de producto.
+- WhatsApp permite elegir una plantilla y revisar texto fijo; no hay textarea ni edición libre. La edición de correo mantiene su propio contenido al alternar canales. Variables automáticas y estados de aprobación están explícitos; todo el catálogo de la demo es ilustrativo.
+- Clientes conserva título, tabla, etiquetas, cumpleaños, primera y última visita, ingreso total y ficha de la estructura observada en Flash. Se redibuja con seis clientes ficticios. Los segmentos toman la base de Operator; selección para campañas y elegibilidad se identifican como extensión propuesta.
+- Automatizaciones y plantillas forman un recorrido: evento, espera, condiciones, plantilla fija y resultado. La biblioteca muestra la regla vinculada, su espera y su estado, y vuelve a esa misma configuración. No crea otro disparador.
+- Simulación de condiciones: apto, próxima reserva, falta de permiso, invitación repetida y falta de presupuesto. Cambiar la espera pausa la regla en la demo para revisarla.
+- Las plantillas operativas siguen fuera del requisito Marketing PRO+; su escenario vive en Mensajes automáticos. No se implementaron estas propuestas en el producto real.
