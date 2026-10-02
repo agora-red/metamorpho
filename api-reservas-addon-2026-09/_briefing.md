@@ -1,48 +1,30 @@
-# Conexiones Ágora — briefing de la propuesta
+# Conexiones Ágora — propuesta vigente
 
-Actualización: 1 de octubre de 2026.
+Actualización: 2 de octubre de 2026.
 
-- Pedido: aplicar metamorpho-propuestas a fondo a la propuesta existente, manteniendo una página breve y comprensible.
-- Audiencia: equipo de Ágora; lenguaje pensado para profesionales de belleza sin conocimientos técnicos.
-- Objetivo: decidir un adicional de integraciones para agenda y reservas, con precio propuesto de 20.000 pesos argentinos por mes y negocio.
-- Estructura: qué proveemos, límites, qué no incluye, cómo se activa y tres decisiones; detalle técnico plegado.
-- Alcance propuesto: consultas desde asistentes, reservas desde sistemas propios y avisos para automatizaciones. Asistentes inicialmente de solo lectura.
-- Límites propuestos, no configuración vigente: dos conexiones, 5.000 consultas y 100 acciones diarias compartidas por negocio.
-- Pendientes comerciales: precio validado, impuestos, condiciones de cobro, piloto e implementación por terceros. Las suscripciones externas y el trabajo a medida se pagan aparte.
-- Estado: propuesta de producto no disponible. La página no demuestra que las conexiones estén implementadas ni aprobadas por las plataformas.
-- Fuentes: registro vigente de capacidades de Ágora, investigación técnica previa y documentación oficial de OpenAI y Zapier revisada el 1 de octubre de 2026. La investigación y los datos internos no forman parte del paquete público.
-- Privacidad: sin nombres de clientes, métricas internas ni capturas de negocios. Por describir una función no lanzada y un precio propuesto, el push de esta revisión requiere autorización explícita del contenido público.
+## Objetivo y audiencia
+Propuesta para el equipo de Ágora, escrita para profesionales sin conocimientos técnicos. Un adicional transversal de conexiones: integraciones propias en ChatGPT, Zapier, Make y n8n, más API para sistemas propios. Esta definición reemplaza el recorrido anterior de copiar contexto, configurar GPT Actions o usar pedidos HTTP genéricos.
 
-## Validación de la pieza
+## Alcance propuesto
+- Conectar la propia cuenta y autorizar datos. Ágora construye y mantiene conectores reutilizables; cada profesional elige sus destinos y automatizaciones.
+- Agenda, disponibilidad, catálogo, clientes e información de ventas/cobros. Cambios de reservas y clientes desde automatizaciones y API. ChatGPT comienza con consultas.
+- Avisos de cambios, historial, filtros, permisos por negocio y sucursal, revocación y control del adicional desde el servidor.
+- Precio a validar: ARS 20.000 por mes y negocio, adicional al plan. Impuestos y condiciones pendientes. Servicios externos cobrados por cada proveedor.
+- Cupos propuestos: 5.000 consultas y 100 cambios exitosos diarios por negocio, compartidos entre herramientas. Se elimina el tope previo de dos conexiones; capacidad de avisos y conexiones simultáneas pendiente de dimensionar antes de fijar la oferta.
+- Piloto propuesto: reserva reprogramada actualiza su fila en Google Sheets mediante Zapier, sin duplicados.
 
-Revisión visual de capturas a 390 y 1280 px: logo, Montserrat, cinco bloques legibles y sin recortes. Detalle técnico probado en navegador: abre correctamente, fuente cargada y sin desborde horizontal a 390 px. Estas comprobaciones validan el HTML, no un backend productivo.
+## Presentación
+Cinco bloques: qué proveemos, límites, exclusiones, activación y hasta tres decisiones. Cinco recorridos visuales ilustrativos; alcance y detalles técnicos plegados. Explorador de 20 operaciones/avisos con solicitud, parámetros, respuesta y error. Rutas y payloads son un contrato propuesto, no endpoints disponibles.
 
-## Ampliación visual solicitada
+Los ejemplos son independientes, ficticios y sin solicitudes externas. No son capturas de Flash ni interfaces oficiales de terceros. La marca usa Montserrat, Frost y el SVG oficial de Ágora.
 
-El usuario pide propuestas visuales de cada caso y ver la API con ruta, payload y body. Se agregan tres vistas ilustrativas (asistente, automatización y sistema propio) dentro del primer bloque y un explorador del contrato propuesto. Incluye nueve operaciones de API y dos avisos, con solicitud, parámetros, respuesta y error. Los ejemplos son independientes y ficticios; no hacen solicitudes a servidores ni demuestran un backend operativo. Esta ampliación explícita habilita mocks y recorridos visuales para esta pieza.
+## Publicación y requisitos
+La presencia en los catálogos requiere desarrollo y revisión de cada plataforma. Zapier y n8n requieren textos de sus conectores en inglés; el nodo verificado de n8n tiene código público. ChatGPT admite acceso a una cuenta paga existente, sin vender suscripciones dentro del plugin ni recargos exclusivos de ese canal. Las acciones disponibles se validan por proveedor.
 
-Revisión de la ampliación: 52 combinaciones de operación y vista recorridas en escritorio; 26 casos recorridos entre 360 y 390 px sin desborde horizontal. JSON de cuerpos y respuestas validado; copia, expansión y teclado probados. Capturas visuales de los tres casos revisadas, sin errores JavaScript observados. Son verificaciones del prototipo, no de una API productiva.
+La API administrativa interna no forma parte de esta propuesta. No incluye procesar tarjetas, ejecutar devoluciones, fichas sensibles, stock, comisiones, cursos, recurrencias, planes mensuales o packs. Algunas de estas capacidades ya existen en Ágora; aquí se delimita exclusivamente su acceso mediante las nuevas integraciones.
 
-## Pulido visual con frontend-design
+## Evidencia de esta revisión
+255 comprobaciones del prototipo en 1280, 390 y 360 px: cinco recorridos y las cuatro vistas de cada operación; JSON parseable, sin desborde de página ni errores JavaScript. Montserrat cargada. Teclado, copia exacta, expansión y enlaces antiguos comprobados. Capturas completas y vistas por proveedor inspeccionadas; corregido espaciado del título móvil. No se probaron conectores o APIs productivas.
 
-Se refuerza la jerarquía del título, límites y precio; se incorpora navegación breve y selectores de casos más grandes en móvil. Las vistas del negocio conservan Frost claro y el explorador técnico usa un panel azul oscuro, resaltado de JSON y números de línea que no alteran el contenido copiado.
-
-Validación de esta revisión: capturas finales completas a 1280 y 390 px inspeccionadas; 52 combinaciones en escritorio y 26 recorridos entre 360 y 390 px sin desborde horizontal. JSON válido y copia exacta; expansión del cuerpo completa en móvil. Contraste del código superior a 8,7:1; sin errores JavaScript observados. La validación corresponde al prototipo HTML, no a las conexiones propuestas.
-
-## Reescritura para profesionales — 2 de octubre de 2026
-
-El usuario no entendía cómo usar el adicional ni las diferencias entre proveedores. Se reemplaza la entrada por tecnología por tres tareas cotidianas: preguntar por turnos, llevar reservas a una planilla y reservar desde otro sistema. Cada recorrido explica preparación inicial, uso diario, resultado y requisitos; incluye ChatGPT, otro asistente sujeto a validación, Zapier, Make, n8n y un sistema propio. Las vistas son ilustrativas.
-
-El explorador completo de rutas, body, parámetros, respuestas y errores pasa al Detalle técnico cerrado. Se aclara qué compra el adicional, qué se paga aparte y cómo se cuentan las conexiones; Make más su planilla ocupa una conexión con Ágora. No se afirma compatibilidad operativa ni presencia en directorios.
-
-Verificación: seis recorridos en escritorio; dieciocho comprobaciones entre 360 y 390 px, incluyendo el detalle abierto. Cincuenta y dos combinaciones técnicas sin errores de JSON ni desbordes. Teclado y cierre automático del detalle al cambiar tarea comprobados. Capturas finales a 1280 y 390 px inspeccionadas; corregido espacio del título móvil. Consola sin errores. No se probaron integraciones reales.
-
-Referencias oficiales consultadas el 2 de octubre de 2026: conexión de MCP en ChatGPT (developers.openai.com/plugins/deploy/connect-chatgpt), Catch Hook de Zapier, Webhooks de Make y nodo Webhook de n8n. Los enlaces se incluyen en el detalle del proveedor.
-
-## Corrección de alcance: autoservicio — 2 de octubre de 2026
-
-El usuario aclara que Ágora no entra en cuentas de clientes ni prepara sus integraciones. El adicional propuesto entrega acceso API, credenciales, documentación y ejemplos/contexto reutilizables. El cliente conecta su herramienta. Esta definición reemplaza las referencias anteriores a configuración asistida y necesidad de un programador.
-
-ChatGPT se presenta mediante GPT Actions, esquema OpenAPI y clave de Ágora en autenticación. El contexto se copia sin secretos; no se afirma que pegar texto en un chat habilite llamadas API. Los otros recorridos siguen el modelo autoservicio. Guías y emisión de credenciales siguen siendo capacidades propuestas, no disponibles.
-
-Verificación: seis recorridos a 1280 y 390 px sin desbordes; botón de contexto copia el texto exacto; detalle API conserva respuesta visible; sin errores de consola. Capturas completas y vista ChatGPT inspeccionadas. Documentación oficial de GPT Actions y autenticación consultada el 2 de octubre de 2026.
+## Estado
+Contenido preparado para revisión. No hay conectores implementados ni publicación de esta revisión en GitHub Pages. Por incluir funcionalidades no lanzadas y un precio propuesto, requiere autorización explícita antes del push público. No contiene métricas internas ni datos de clientes. Investigación y capturas quedan fuera del paquete público.
