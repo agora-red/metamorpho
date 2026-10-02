@@ -69,3 +69,17 @@ La revisión de comprensión es heurística: queda por contrastar con profesiona
 Se retira la ficha individual de Clientes, incluidos botones y modal; la propuesta no contiene Fichas y preguntas. Clientes se centra en seleccionar personas y preparar acciones. Se conserva el recorrido de campañas, reglas y plantillas fijas.
 
 Se mejora la jerarquía tipográfica, contraste de texto secundario, estados de selección, navegación y tamaño de controles. Lectura tiene un mapa sincronizado con la explicación, pasos más legibles y menos rótulos repetidos. La tabla muestra los motivos de exclusión junto al nombre en móvil. Se simplifican notas internas visibles.
+
+## Revisión v8 · Estructura, wording y comprensión
+
+Pedido: dar una vuelta de UI/UX y wording para que la propuesta se entienda, sin entrar en lo técnico.
+
+- **Orden del documento**: promesa → 01 Cómo funciona (4 pasos visibles, cada uno abre su módulo) → 02 Qué suma a tu plan (tabla Tu plan / Con PRO+) → 03 Probalo en un minuto (instrucciones antes de la demo) → 04 Precio y condiciones → 05 Para decidir. Se retira el desplegable «Qué incluye cada módulo» y las notas sueltas entre secciones.
+- **Dos voces separadas**: todo lo que lee un profesional va en presente y con «vos»; las preguntas abiertas y el piloto pasan a una nota para el equipo, marcada como «no forma parte de la oferta». Lo pendiente se marca con una etiqueta «a definir» en vez de condicionales.
+- **Precio y condiciones** reúne precio, activación en tres pasos (Facturación → tope de envíos → primera campaña), límites redactados como beneficios («Un adicional por negocio», «Sin ruido», «Solo a quien corresponde») y «No incluye».
+- **Ejemplo**: navegación en el orden del recorrido (Pulse, Clientes, Campañas, Automatizaciones, Resultados) y Plantillas de WhatsApp aparte como biblioteca. Botón «Ver cómo se conecta» / «Volver al ejemplo». Sin la abreviatura «WA».
+- **Coherencia de los datos de ejemplo**: Pulse ya no muestra el viernes libre y, a la vez, «Llenar el viernes» como hecho; la tarjeta resuelta pasa a ser la automatización de segunda visita (4 reservas, enlaza a su detalle). Eje del gráfico: «Últimas 12 semanas · julio a septiembre». Clientes aclara «Muestra de 6 clientes».
+- **Wording de módulos**: disparadores en lenguaje simple («Termina una visita», «Es el cumpleaños del cliente»), costo y tope en la revisión de campaña, «Costo de tus envíos · Todavía sin datos» en Resultados, «Reservas · No requieren PRO+» en Plantillas.
+- **Mapa «Cómo se conecta todo»**: campaña y automatización con íconos y separador «o»; en el celular se apilan para no recortarse.
+
+Sin cambios de alcance, precios ni funcionalidades. Datos íntegramente ficticios.
