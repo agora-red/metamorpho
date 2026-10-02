@@ -62,3 +62,10 @@ Resultados reúne campañas, automatizaciones de mensajes y acciones internas. T
 Se simplifican nombres y ayudas: Clientes → Mensaje → Revisión; Cuándo empieza / A quiénes aplica / Qué hace. Las recetas son la entrada principal del constructor. Un segmento prepara una regla y la selección manual de clientes se conserva al cambiar el motivo, reevaluando quién puede recibir. WhatsApp sigue con texto fijo.
 
 La revisión de comprensión es heurística: queda por contrastar con profesionales mediante tareas concretas antes de afirmar facilidad de uso validada. Se probó el prototipo y se revisó el render; no se implementan funciones reales.
+
+
+## Revisión v7 · Limpieza y pulido visual
+
+Se retira la ficha individual de Clientes, incluidos botones y modal; la propuesta no contiene Fichas y preguntas. Clientes se centra en seleccionar personas y preparar acciones. Se conserva el recorrido de campañas, reglas y plantillas fijas.
+
+Se mejora la jerarquía tipográfica, contraste de texto secundario, estados de selección, navegación y tamaño de controles. Lectura tiene un mapa sincronizado con la explicación, pasos más legibles y menos rótulos repetidos. La tabla muestra los motivos de exclusión junto al nombre en móvil. Se simplifican notas internas visibles.
