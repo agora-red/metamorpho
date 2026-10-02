@@ -122,3 +122,14 @@ Pedido: mejorar la UI/UX de la propuesta con la skill frontend-design. La identi
 - **Prototipo:** en Canales, Puntos y Referidos los tres números sueltos pasan a una frase con las cifras en negrita. Menú con estado activo en brand-wash (sin barrita lateral). Transición corta al cambiar de módulo. Piso tipográfico: nada por debajo de 10px (antes había 7–9px) y la mayoría de las etiquetas a 11px.
 - **Accesibilidad:** gris medio a #5B6B80 (4,9:1 sobre el fondo; antes 4,3:1). Turnos llenos en #005CD4 con texto blanco (6:1).
 - Sin franjas laterales de acento (se sacaron de la fuente). Sin cambios de precio, condiciones ni datos del ejemplo.
+
+
+## Revisión v12 · Cinco paquetes y Analítica completa
+
+Pedido: Canales queda corto, tiene que ser analítica en general (de dónde te visitan, canales, edades, todo lo que den Google Analytics y Search Console). Horarios libres pasa a ser parte de Pulse. Menos ítems en el menú: empaquetar donde corresponda.
+
+- **Menú de 9 a 5:** Pulse (Tu semana · Horarios libres), Analítica (Visitas y canales · Resultados), Clientes, Campañas (Campañas · Automatizaciones · Plantillas), Fidelización. Cada paquete con pestañas internas. Los enlaces viejos (#canales, #horarios, #plantillas…) abren el paquete y la pestaña correctos.
+- **Analítica (reemplaza Canales):** relato del mes; de dónde llegan las reservas (incluido en el plan); quiénes te visitan (edad, género, primera vez o ya te conocían, ciudad, dispositivo); qué servicios miran y cuántos reservan, con el caso Alisado (muchas visitas, pocas reservas); cuándo te visitan (pico domingo de 20 a 23 h, con botón a Campañas); de la visita a la reserva (2.140 → 1.050 → 412 → 244, y las 168 sin terminar conectadas con la receta de Resultados); qué buscan en Google. Nota de fuentes al pie.
+- **Datos coherentes:** 2.140 visitas (suma de canales), 244 reservas online, receta de reservas sin terminar con 21 envíos y 7 reservas (igual que Resultados).
+- **Documento:** tabla Qué suma por paquete (6 filas en lugar de 9), pasos de Cómo funciona, mapa y guías de «Ver cómo se conecta» con 5 paquetes, resumen del ejemplo.
+- **Para decidir:** Flash ya tiene una Analítica de ventas y reservas (¿pestaña ahí o dentro de Marketing?); hoy Cyclone solo lee visitas y fuentes de GA4: Search Console no está conectado y edad/género requieren Google signals y revisar la política de privacidad. Precio y consumo se juntaron en una sola decisión.
