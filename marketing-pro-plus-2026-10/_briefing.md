@@ -107,3 +107,18 @@ Pedido: sumar al paquete reservas sin terminar, referidos entre clientes y Fidel
 - Documento: paso 3, tabla (fila Fidelización), lectura, mapa y una decisión nueva sobre quienes ya usan el club.
 
 Sin cambios de precio ni de las condiciones comerciales.
+
+
+## Revisión v11 · Pasada de diseño con frontend-design
+
+Pedido: mejorar la UI/UX de la propuesta con la skill frontend-design. La identidad Frost queda fija (Montserrat, azul Ágora, coral como micro-acento, fondo #EFF3F9); la libertad se usó en layout, jerarquía y texto.
+
+- **Hero con la agenda de la semana.** A la derecha del titular, la agenda de Estudio Brisa del 5 al 10 de octubre: una invitación por WhatsApp a Ana y tres turnos libres que se llenan (Ana, Nati, Vale) con «Volvió con tu invitación». Es el titular hecho imagen. Animación única al cargar (la burbuja y después los turnos); con movimiento reducido se ve llena de entrada.
+- **Barra de secciones fija** (Cómo funciona, Qué suma, Probalo, Precio, Nota interna) con la sección actual resaltada. Reemplaza los números 01–05, que no eran una secuencia.
+- **Títulos de sección** sin número ni palabra resaltada, más grandes (hasta 40px). El énfasis en una palabra queda solo en el h1, como firma de Frost.
+- **Cómo funciona como circuito:** cuatro nodos numerados sobre una línea (acá sí es una secuencia) y un retorno «Y vuelve a empezar: lo que aprendés en Resultados vuelve a Pulse». Sin tarjetas.
+- **Qué suma:** «No incluido» escrito en lugar de «—»; encabezados en minúscula; sin separadores con punto medio.
+- **Precio y condiciones:** las tres tarjetas de condiciones y la lista «No incluye» pasan a dos listas de definición («Cómo se usa» y «No incluye»), sin bordes laterales. Etiquetas en minúscula («a definir»).
+- **Prototipo:** en Canales, Puntos y Referidos los tres números sueltos pasan a una frase con las cifras en negrita. Menú con estado activo en brand-wash (sin barrita lateral). Transición corta al cambiar de módulo. Piso tipográfico: nada por debajo de 10px (antes había 7–9px) y la mayoría de las etiquetas a 11px.
+- **Accesibilidad:** gris medio a #5B6B80 (4,9:1 sobre el fondo; antes 4,3:1). Turnos llenos en #005CD4 con texto blanco (6:1).
+- Sin franjas laterales de acento (se sacaron de la fuente). Sin cambios de precio, condiciones ni datos del ejemplo.
