@@ -133,3 +133,22 @@ Pedido: Canales queda corto, tiene que ser analítica en general (de dónde te v
 - **Datos coherentes:** 2.140 visitas (suma de canales), 244 reservas online, receta de reservas sin terminar con 21 envíos y 7 reservas (igual que Resultados).
 - **Documento:** tabla Qué suma por paquete (6 filas en lugar de 9), pasos de Cómo funciona, mapa y guías de «Ver cómo se conecta» con 5 paquetes, resumen del ejemplo.
 - **Para decidir:** Flash ya tiene una Analítica de ventas y reservas (¿pestaña ahí o dentro de Marketing?); hoy Cyclone solo lee visitas y fuentes de GA4: Search Console no está conectado y edad/género requieren Google signals y revisar la política de privacidad. Precio y consumo se juntaron en una sola decisión.
+
+
+## Revisión v13 · Cada cosa en su lugar de Flash
+
+Pedido: Pulse con dos secciones no tiene sentido; Horarios libres probablemente merece su módulo. Revisar a fondo el empaquetado para que todo tenga sinergia.
+
+Relevamiento de Flash y Cyclone (navegación real): Pulse es una tarjeta en Inicio; Clientes y Analítica están en «Mi negocio»; «Marketing y comunicación» ya tiene Mensajes automáticos (incluye un recordatorio para volver a reservar), Descuentos (códigos, Precios dinámicos, Ofertas beta), Tarjetas de regalo, Fidelización (beta), Contenido IG (ya calcula horarios libres para historias), Seguimiento y Reseñas. No existen: campañas, lista de espera, referidos entre clientes, recuperación de reservas sin terminar, reporte de reservas por canal (el dato existe en bookings.channel) ni pantalla de fuentes de visita (GA4 ya las calcula), ni Search Console.
+
+Criterio: PRO+ no agrega un menú aparte. Potencia cinco lugares que ya existen y suma solo dos secciones nuevas.
+
+- **Inicio › Pulse:** una sola vista, sin pestañas. Cada oportunidad abre la acción que corresponde.
+- **Mi negocio › Clientes:** grupos, base contactable e invitación preparada.
+- **Mi negocio › Analítica:** pestaña Marketing (visitas y canales) y Resultados.
+- **Marketing › Campañas (nueva):** invitaciones puntuales a un grupo.
+- **Marketing › Mensajes automáticos:** pestañas De marketing (automatizaciones y recetas), De tus reservas (lo que ya existe, igual que hoy) y Plantillas. El recordatorio para volver puede pasar a la receta «Invitar a volver».
+- **Marketing › Horarios libres (nueva):** oferta de último momento y lista de espera, con atajos a lo que ya existe: Precios dinámicos si el hueco se repite y Contenido IG para la historia.
+- **Marketing › Fidelización:** club incluido, más referidos entre clientes.
+
+Documento: tabla «Qué suma» con siete filas que dicen dónde vive cada cosa, pasos de Cómo funciona, guías y mapa de lectura con siete lugares, y ocho decisiones internas (se suman Mensajes automáticos y Horarios libres como modelo nuevo sobre Ofertas).
