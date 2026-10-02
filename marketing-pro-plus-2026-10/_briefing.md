@@ -51,3 +51,14 @@ Se elimina el switch Hoy en Flash. Su reemplazo es Entender la propuesta: una vi
 Automatizaciones pasa a un constructor: crear desde cero o copiar una receta. Las copias son independientes. Se pueden elegir eventos (atención, primera atención, cumpleaños o entrada a segmento), espera, condiciones por visitas/servicio/etiqueta combinadas con Y/O y una acción (WhatsApp, correo o agregar etiqueta). El alcance se expresa como combinaciones de los bloques disponibles, no como ejecución arbitraria.
 
 La receta contiene configuración editable; la plantilla WA conserva texto fijo y condiciones de uso. Las combinaciones incompatibles se bloquean en la demo, incluido un saludo de cumpleaños diferido. Cada regla tiene nombre, resumen legible, estado y prueba con un cliente ficticio; cambiar una regla activa la vuelve a borrador. No hay persistencia fuera de la sesión ni acciones reales.
+
+
+## Revisión v6 · Propósito, sinergia y resultados del conjunto
+
+Entender la propuesta ahora explica los seis módulos: qué pregunta resuelve cada uno, por qué existe, cómo usarlo, cómo se conecta y cuál es su límite. El mapa separa campaña puntual de automatización recurrente, con plantillas compartidas y aprendizaje que vuelve a Pulse. Tres casos muestran el recorrido completo: volver, segunda visita y horarios disponibles.
+
+Resultados reúne campañas, automatizaciones de mensajes y acciones internas. Tiene período, filtro por tipo, detalle de envíos/omisiones/reservas/atenciones/cobros y siguiente acción. Las etiquetas no reciben atribución monetaria. Los ejemplos históricos son ficticios; las pruebas creadas en la demo tienen cero ejecuciones reales. Se explica la regla propuesta de atribución y no se calcula retorno sin costos.
+
+Se simplifican nombres y ayudas: Clientes → Mensaje → Revisión; Cuándo empieza / A quiénes aplica / Qué hace. Las recetas son la entrada principal del constructor. Un segmento prepara una regla y la selección manual de clientes se conserva al cambiar el motivo, reevaluando quién puede recibir. WhatsApp sigue con texto fijo.
+
+La revisión de comprensión es heurística: queda por contrastar con profesionales mediante tareas concretas antes de afirmar facilidad de uso validada. Se probó el prototipo y se revisó el render; no se implementan funciones reales.
