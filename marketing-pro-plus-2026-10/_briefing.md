@@ -1,5 +1,22 @@
 # Marketing PRO+ · Propuesta visual
-Fecha: 2026-10-02
+Fecha: 2026-10-02 · Última revisión: 2026-10-03 (v16)
+
+## Estado actual (v16)
+
+**Empaquetado, como Finanzas Pro.** Una sola entrada «Marketing» en el menú de Flash:
+- **Incluido en tu plan** (ya existe y se muda adentro): Mensajes de reservas (antes «Mensajes automáticos»), Descuentos, Reseñas, Contenido IG.
+- **Marketing PRO+** (marcado, con candado y activación si no está contratado): Pulse (nuevo; incluye ofrecer horarios libres), Campañas, Automatizaciones, Fidelización, Resultados.
+- **Vistas que ya existen y suman partes de PRO+, marcadas en la misma vista:** Mi negocio › Clientes (grupos, a quién escribir, invitación), Mi negocio › Analítica (canales, audiencia, recorrido, Google), Mensajes de reservas (receta «Invitar a volver»).
+
+**Horarios libres** no es una sección: la oferta de último momento se arma dentro de Pulse, desde la tarjeta «Horas libres». **La lista de espera queda para una propuesta aparte.**
+
+**Ejemplo interactivo:** selector «Con / Sin Marketing PRO+» que muestra cada vista en los dos estados.
+
+**Precio propuesto:** $14.900 por mes y por negocio, además del plan; WhatsApp aparte por mensaje. Decisiones abiertas en la nota interna de la pieza.
+
+---
+
+## Historial de revisiones
 
 ## Confirmado en el pedido
 Proponer un adicional de marketing similar en facturación a Finanzas Pro. Incluir Pulse, campañas, grupos de clientes y acciones. Las plantillas de WhatsApp operativas son transversales. El usuario pidió una propuesta visual con metamorpho-propuestas.
@@ -177,3 +194,13 @@ Pedido: Segmentos duplicaba la vista de Clientes; tiene que quedar resaltadísim
 - **Selector «Con / Sin Marketing PRO+»** en el ejemplo: sin PRO+, las secciones nuevas tienen candado y llevan a la activación; en las vistas afectadas los bloques de PRO+ se reemplazan por un aviso con candado y «Activar Marketing PRO+». Clientes queda con lista, búsqueda y etiquetas; Analítica con ventas, reservas, horas ocupadas y cancelaciones.
 - **Pulse:** sección nueva de PRO+, con cinta. Ya no se presenta como parte del plan. La salida de la tarjeta del Inicio queda solo en la nota interna.
 - **Documento:** listas «Incluido en tu plan» / «Con Marketing PRO+» y tabla «Vistas que ya usás, sin y con Marketing PRO+» (Clientes, Analítica, Mensajes de reservas). Nueve decisiones internas, con Pulse y Clientes como puntos propios.
+
+
+## Revisión v16 · La oferta de horarios libres vuelve a Pulse, y limpieza
+
+Pedido: quitar Horarios libres como sección; la lista de espera va aparte; la acción sobre los horarios libres va en Pulse. Después, limpieza.
+
+- Sin sección Horarios libres. En Pulse, la tarjeta «Horas libres» trae «Ofrecer estos horarios», que abre la oferta en la misma vista: turno, descuento, hasta cuándo vale, cómo se ve en tu página, publicar o quitar, e invitar también a un grupo. Los enlaces viejos a #horarios abren Pulse con la oferta.
+- Sin lista de espera en ningún lado; queda como decisión para una propuesta aparte.
+- Datos: la oferta de ejemplo vive en tu página (46 vistas, 9 clics, 2 reservas). Esas 2 reservas pasan de «Mensajes de Ágora» (38) a «Tu página» (63); el total de 328 y los 26 vinculados en Resultados no cambian.
+- Limpieza: 223 reglas de CSS sin uso (restos de versiones anteriores) y una función vacía, con 30 capturas comparadas píxel por píxel antes y después (idénticas); copias intermedias y capturas de trabajo borradas (cada versión publicada queda en el historial de git de la galería); briefing con un resumen del estado actual arriba.
