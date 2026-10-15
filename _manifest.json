@@ -1,8 +1,18 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
   "version": 1,
-  "updated_at": "2026-10-09",
+  "updated_at": "2026-10-15",
   "outputs": [
+    {
+      "type": "proposal",
+      "typeLabel": "Proposal",
+      "title": "Nightwing · La próxima experiencia móvil",
+      "description": "Capturas reales y una propuesta navegable para portada, catálogo, reserva, checkout, actividad, cursos y regalos.",
+      "detail": "9 vistas · Antes / propuesta · Componentes, movimiento y estados",
+      "date": "OCT 2026",
+      "href": "./nightwing-mobile-2026-10/index.html",
+      "slug": "nightwing-mobile-2026-10"
+    },
     {
       "type": "prototype",
       "typeLabel": "Prototipo",
