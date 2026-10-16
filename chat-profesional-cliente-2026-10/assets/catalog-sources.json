@@ -1,0 +1,15 @@
+{
+  "revision": 13,
+  "date": "2026-10-16",
+  "services": "Ver service-sources.json; muestra previamente verificada de Hall Salon",
+  "extraTypes": [
+    "course",
+    "product",
+    "pack",
+    "plan",
+    "event",
+    "download"
+  ],
+  "extraContent": "Ejemplos ilustrativos, no ofertas verificadas de Hall Salon. Precios y condiciones ficticios. Sin URLs públicas inventadas.",
+  "productionVerified": false
+}

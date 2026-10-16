@@ -1,0 +1,58 @@
+{
+  "observed_on": "2026-10-16",
+  "source": "https://agora.red/hallsalon/servicios",
+  "scope": "5 ejemplos de 11 servicios observados; propuesta local, no sincronización",
+  "currency": "ARS",
+  "services": [
+    {
+      "name": "Ritual de rizos",
+      "url": "https://agora.red/hallsalon/servicios/ritual-de-rizos",
+      "duration": "Desde 45 minutos",
+      "price": 40000,
+      "price_from": false,
+      "deposit": 12000,
+      "local_image": "assets/service-rizos.webp",
+      "source_image": "https://d3p2i4pt6coq3o.cloudfront.net/services/111132/main_1784686999_500.webp"
+    },
+    {
+      "name": "Tratamiento Reconstructor",
+      "url": "https://agora.red/hallsalon/servicios/tratamiento-reconstructor",
+      "duration": "1 hora",
+      "price": 50000,
+      "price_from": false,
+      "deposit": 10000,
+      "local_image": "assets/service-reconstructor.webp",
+      "source_image": "https://d3p2i4pt6coq3o.cloudfront.net/services/112393/main_1785526859_500.webp"
+    },
+    {
+      "name": "Tratamiento Ultimate",
+      "url": "https://agora.red/hallsalon/servicios/tratamiento-ultimate",
+      "duration": "1 hora",
+      "price": 50000,
+      "price_from": false,
+      "deposit": 15000,
+      "local_image": "assets/service-ultimate.webp",
+      "source_image": "https://d3p2i4pt6coq3o.cloudfront.net/services/112419/main_1785529755_500.webp"
+    },
+    {
+      "name": "Metodo Hall",
+      "url": "https://agora.red/hallsalon/servicios/metodo-hall",
+      "duration": "1 hora 30 minutos",
+      "price": 70000,
+      "price_from": false,
+      "deposit": 14000,
+      "local_image": "assets/service-metodo.webp",
+      "source_image": "https://d3p2i4pt6coq3o.cloudfront.net/services/111130/main_1786714408_500.webp"
+    },
+    {
+      "name": "Corte Cabello Medio",
+      "url": "https://agora.red/hallsalon/servicios/corte-cabello-medio",
+      "duration": "55 minutos",
+      "price": 27000,
+      "price_from": true,
+      "deposit": 13500,
+      "local_image": "assets/service-medio.webp",
+      "source_image": "https://d3p2i4pt6coq3o.cloudfront.net/services/106768/main_1781989255_500.webp"
+    }
+  ]
+}

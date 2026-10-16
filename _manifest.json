@@ -1,8 +1,18 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
   "version": 1,
-  "updated_at": "2026-10-15",
+  "updated_at": "2026-10-16",
   "outputs": [
+    {
+      "type": "proposal",
+      "typeLabel": "Proposal",
+      "title": "Conversaciones por cliente · Flash y Nightwing",
+      "description": "Del primer mensaje a la reserva: chat sin cuenta, recomendaciones del catálogo y herramientas para atender desde Flash.",
+      "detail": "Prototipo interactivo · Hall Salon · Móvil y escritorio · Horarios, fotos y seguimiento",
+      "date": "OCT 2026",
+      "href": "./chat-profesional-cliente-2026-10/index.html",
+      "slug": "chat-profesional-cliente-2026-10"
+    },
     {
       "type": "proposal",
       "typeLabel": "Proposal",
