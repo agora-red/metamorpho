@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kanban de ideas · cómo funciona · Ágora</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --frost-primary:       #0072FB;
+  --frost-primary-hover: #005CD4;
+  --frost-primary-soft:  #EEF6FF;
+  --frost-accent:        #FF4658;
+  --frost-success:       #10B981;
+  --frost-warning:       #F59E0B;
+  --frost-ink:           #0F172A;
+  --frost-ink-soft:      #3A3A3A;
+  --frost-muted:         #64748B;
+  --frost-faint:         #94A3B8;
+  --frost-surface:       #FFFFFF;
+  --frost-surface-muted: #EFF3F9;
+  --frost-border:        #E2E8F0;
+  --frost-border-soft:   #F2F2F2;
+  /* Columnas del tablero, mismos colores que en Multiplex */
+  --st-nueva:       #94A3B8;
+  --st-analisis:    #8B5CF6;
+  --st-priorizada:  #F59E0B;
+  --st-progreso:    #0072FB;
+  --st-lanzada:     #10B981;
+  --slack-bg:       #F8F8F8;
+  --r-sm:    6px;
+  --r-item:  10px;
+  --r-btn:   12px;
+  --r-card:  20px;
+  --r-chip:  999px;
+  --sh-sm:   0 4px 12px -4px rgba(15,23,42,0.10);
+  --sh-md:   0 10px 30px -12px rgba(15,23,42,0.15);
+  --sh-lg:   0 20px 50px -20px rgba(15,23,42,0.25);
+  --sans:    'Montserrat', system-ui, -apple-system, sans-serif;
+  --z: 1;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-snap-type: y mandatory; }
+body { font-family: var(--sans); background: #DCE3ED; color: var(--frost-ink); -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums; }
+.deck { display: flex; flex-direction: column; align-items: center; }
+.frame { height: 100vh; width: 100%; display: flex; align-items: center; justify-content: center; scroll-snap-align: center; }
+.slide { zoom: var(--z); width: 1280px; height: 720px; position: relative; overflow: hidden; background: var(--frost-surface); border-radius: var(--r-card); box-shadow: var(--sh-lg); padding: 56px 64px 48px; display: flex; flex-direction: column; }
+.slide.ink { background: var(--frost-ink); color: #fff; }
+
+.kicker { font-size: 12px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--frost-primary); margin-bottom: 14px; }
+h2 { font-size: 36px; font-weight: 300; letter-spacing: -0.02em; line-height: 1.15; }
+h2 b { font-weight: 600; }
+.lede { font-size: 18px; font-weight: 300; color: var(--frost-ink-soft); line-height: 1.55; margin-top: 12px; max-width: 900px; }
+.lede b { font-weight: 600; color: var(--frost-ink); }
+p, li { font-size: 16px; font-weight: 300; line-height: 1.55; color: var(--frost-ink-soft); }
+b { font-weight: 600; color: var(--frost-ink); }
+code { font-family: var(--sans); font-weight: 600; font-size: 0.92em; background: var(--frost-primary-soft); color: var(--frost-primary-hover); padding: 1px 7px; border-radius: var(--r-sm); white-space: nowrap; }
+.pg { position: absolute; right: 40px; bottom: 26px; font-size: 11px; font-weight: 600; letter-spacing: 0.18em; color: var(--frost-faint); }
+.ink .pg { color: rgba(255,255,255,0.4); }
+.body { flex: 1; min-height: 0; margin-top: 32px; }
+.body.mid { display: flex; flex-direction: column; justify-content: center; margin-top: 0; padding-bottom: 24px; }
+
+/* Portada */
+.cover { justify-content: space-between; padding: 64px 72px; background: var(--frost-surface); }
+.cover h1 { font-size: 76px; font-weight: 200; letter-spacing: -0.035em; line-height: 1.02; }
+.cover h1 b { font-weight: 600; }
+.cover .sub { font-size: 22px; font-weight: 300; color: var(--frost-ink-soft); max-width: 760px; line-height: 1.45; margin-top: 22px; }
+.cover .where { display: flex; gap: 10px; align-items: center; font-size: 14px; font-weight: 500; color: var(--frost-muted); }
+.crumb { background: var(--frost-surface-muted); border-radius: var(--r-chip); padding: 6px 14px; }
+.crumb.on { background: var(--frost-primary); color: #fff; text-decoration: none; }
+.crumb.on:hover { background: var(--frost-primary-hover); }
+.btn-open { display: inline-flex; align-items: center; gap: 8px; margin-top: 28px; background: var(--frost-primary); color: #fff; font-size: 15px; font-weight: 600; text-decoration: none; border-radius: var(--r-btn); padding: 12px 20px; box-shadow: 0 4px 18px -2px rgba(0,114,251,0.30); }
+.demo-note { font-size: 13px; margin-top: 12px; }
+.btn-open:hover { background: var(--frost-primary-hover); }
+.cover-cols { position: absolute; right: 72px; top: 64px; display: flex; gap: 8px; }
+.cover-cols span { width: 14px; height: 120px; border-radius: var(--r-chip); }
+
+/* Qué resuelve */
+.vs { display: grid; grid-template-columns: 1fr 48px 1fr; row-gap: 14px; align-items: stretch; }
+.vs .h { font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--frost-faint); padding: 0 4px 2px; }
+.vs .h.ok { color: var(--frost-primary); }
+.vs .a, .vs .b { border-radius: var(--r-btn); padding: 20px 24px; font-size: 17px; font-weight: 300; line-height: 1.5; }
+.vs .a { background: var(--frost-surface-muted); color: var(--frost-ink-soft); }
+.vs .b { background: var(--frost-primary-soft); color: var(--frost-ink); }
+.vs .arr { display: flex; align-items: center; justify-content: center; color: var(--frost-primary); font-size: 22px; font-weight: 300; }
+
+/* Tres columnas */
+.cols3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; height: 100%; }
+.col { background: var(--frost-surface-muted); border-radius: var(--r-card); padding: 24px 24px 22px; display: flex; flex-direction: column; gap: 12px; }
+.col h3 { font-size: 20px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+.col .ic { width: 36px; height: 36px; border-radius: var(--r-btn); background: var(--frost-surface); display: grid; place-items: center; font-size: 18px; box-shadow: var(--sh-sm); }
+.col .lbl { font-size: 10.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--frost-muted); margin-top: 6px; }
+.col p { font-size: 15px; }
+.col ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.col li { font-size: 14.5px; padding-left: 16px; position: relative; }
+.col li::before { content: ''; position: absolute; left: 2px; top: 9px; width: 5px; height: 5px; border-radius: 50%; background: var(--frost-primary); }
+.col .foot { margin-top: auto; font-size: 13px; color: var(--frost-muted); border-top: 1px solid var(--frost-border); padding-top: 10px; }
+
+/* Slack → tarjeta */
+.flow { display: grid; grid-template-columns: 430px 1fr; gap: 36px; height: 100%; align-items: start; }
+.slack { display: flex; flex-direction: column; gap: 12px; }
+.msg { background: var(--slack-bg); border: 1px solid var(--frost-border); border-radius: var(--r-btn); padding: 14px 16px; }
+.msg .who { font-size: 13px; font-weight: 600; color: var(--frost-ink); display: flex; gap: 8px; align-items: baseline; }
+.msg .who span { font-weight: 500; font-size: 11.5px; color: var(--frost-faint); }
+.msg .tx { font-size: 13.5px; line-height: 1.5; color: var(--frost-ink-soft); margin-top: 4px; }
+.msg .tx b { font-weight: 600; }
+.msg.reply { margin-left: 26px; }
+.msg.bot { margin-left: 26px; background: var(--frost-primary-soft); border-color: transparent; }
+.mention { color: var(--frost-primary-hover); background: rgba(0,114,251,0.10); border-radius: 4px; padding: 0 3px; font-weight: 500; }
+.notes { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+.notes p { font-size: 13.5px; line-height: 1.5; padding-left: 14px; border-left: 2px solid var(--frost-border); }
+.shot { border-radius: 14px; overflow: hidden; box-shadow: var(--sh-lg); background: #0F1322; }
+.shot img { display: block; width: 100%; height: auto; }
+
+/* Tarjeta anotada */
+.anat { display: grid; grid-template-columns: 600px 1fr; gap: 40px; height: 100%; align-items: start; }
+.anat .shot { position: relative; overflow: visible; }
+.anat .shot img { border-radius: 14px; }
+.pin { position: absolute; left: -13px; width: 26px; height: 26px; border-radius: 50%; background: var(--frost-primary); color: #fff; font-size: 12.5px; font-weight: 600; display: grid; place-items: center; box-shadow: 0 0 0 4px #fff; }
+.parts { list-style: none; display: flex; flex-direction: column; gap: 13px; counter-reset: p; }
+.parts li { display: grid; grid-template-columns: 26px 1fr; gap: 12px; font-size: 15px; line-height: 1.45; }
+.parts li::before { counter-increment: p; content: counter(p); width: 26px; height: 26px; border-radius: 50%; background: var(--frost-primary-soft); color: var(--frost-primary); font-size: 12.5px; font-weight: 600; display: grid; place-items: center; }
+
+/* Tablero */
+.board-wrap { display: grid; grid-template-columns: 1fr 360px; gap: 36px; height: 100%; }
+.board-shot { height: 100%; border-radius: 14px; overflow: hidden; box-shadow: var(--sh-lg); background: #0B0E1A; }
+.board-shot img { width: 100%; display: block; }
+.defs { display: flex; flex-direction: column; gap: 14px; }
+.def h4 { font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--frost-muted); margin-bottom: 4px; }
+.def p { font-size: 14.5px; }
+.chipline { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.chip { font-size: 12px; font-weight: 500; border-radius: var(--r-chip); padding: 3px 10px; background: var(--frost-surface-muted); color: var(--frost-ink-soft); }
+.chip.warn { background: #FFF4DB; color: #92400E; }
+.chip.ok { background: #E7FBF3; color: #065F46; }
+
+/* Estados */
+.states { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.st { border-radius: var(--r-btn); background: var(--frost-surface-muted); padding: 16px 16px 16px; border-top: 4px solid var(--c); display: flex; flex-direction: column; gap: 8px; position: relative; }
+.st h4 { font-size: 16px; font-weight: 600; }
+.st .q { font-size: 13.5px; line-height: 1.45; color: var(--frost-ink-soft); font-weight: 300; }
+.st .do { font-size: 13px; line-height: 1.45; color: var(--frost-ink); font-weight: 500; margin-top: auto; padding-top: 8px; border-top: 1px solid var(--frost-border); }
+.auto { position: absolute; top: -12px; right: 12px; font-size: 10.5px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; background: var(--c); color: #fff; border-radius: var(--r-chip); padding: 3px 9px; }
+.closed { display: grid; grid-template-columns: 170px repeat(3, 1fr); gap: 12px; margin-top: 22px; align-items: stretch; }
+.closed .lab { font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--frost-muted); align-self: center; line-height: 1.6; }
+.closed .c { border: 1px solid var(--frost-border); border-radius: var(--r-btn); padding: 14px 16px; }
+.closed .c h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+.closed .c p { font-size: 13.5px; line-height: 1.45; }
+
+/* Repetidas */
+.dup { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; height: 100%; }
+.steps { list-style: none; display: flex; flex-direction: column; gap: 14px; counter-reset: s; }
+.steps li { display: grid; grid-template-columns: 30px 1fr; gap: 14px; font-size: 15.5px; }
+.steps li::before { counter-increment: s; content: counter(s); width: 30px; height: 30px; border-radius: var(--r-btn); background: var(--frost-ink); color: #fff; font-size: 13px; font-weight: 600; display: grid; place-items: center; }
+.verdicts { display: flex; flex-direction: column; gap: 10px; }
+.verdict { display: grid; grid-template-columns: 150px 1fr; gap: 14px; align-items: center; border-radius: var(--r-btn); padding: 14px 16px; background: var(--frost-surface-muted); }
+.verdict .t { font-size: 14px; font-weight: 600; }
+.verdict p { font-size: 13.5px; line-height: 1.45; }
+.verdict.misma { background: #FFF4DB; }
+.example { margin-top: 16px; border: 1px solid var(--frost-border); border-radius: var(--r-btn); padding: 16px 18px; }
+.example .h { font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--frost-muted); margin-bottom: 8px; }
+.example p { font-size: 14px; line-height: 1.5; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 6px 0 10px; }
+.pair div { background: var(--frost-surface-muted); border-radius: var(--r-item); padding: 10px 12px; font-size: 13.5px; font-weight: 500; line-height: 1.4; }
+.pair span { display: block; font-size: 11.5px; font-weight: 500; color: var(--frost-muted); margin-bottom: 2px; }
+
+/* Releases */
+.rel { display: grid; grid-template-columns: 1fr 590px; gap: 40px; align-items: center; }
+.tl { list-style: none; display: flex; flex-direction: column; gap: 0; }
+.tl li { display: grid; grid-template-columns: 34px 1fr; gap: 14px; padding-bottom: 20px; position: relative; }
+.tl li::after { content: ''; position: absolute; left: 16px; top: 34px; bottom: 2px; width: 2px; background: var(--frost-border); }
+.tl li:last-child::after { display: none; }
+.tl .n { width: 34px; height: 34px; border-radius: 50%; background: var(--frost-primary-soft); color: var(--frost-primary); font-weight: 600; font-size: 14px; display: grid; place-items: center; }
+.tl h4 { font-size: 17px; font-weight: 600; margin: 5px 0 4px; }
+.tl p { font-size: 14.5px; }
+.notice { background: var(--slack-bg); border: 1px solid var(--frost-border); border-radius: var(--r-btn); padding: 16px 18px; }
+.notice .who { font-size: 13px; font-weight: 600; display: flex; gap: 8px; align-items: baseline; }
+.notice .who span { font-weight: 500; font-size: 11.5px; color: var(--frost-faint); }
+.notice pre { font-family: var(--sans); white-space: pre-wrap; font-size: 12.5px; line-height: 1.6; color: var(--frost-ink-soft); margin-top: 6px; font-weight: 400; }
+.notice pre a { color: var(--frost-primary-hover); text-decoration: none; }
+.cap { font-size: 12.5px; color: var(--frost-muted); line-height: 1.5; margin-top: 10px; }
+
+/* Rutina */
+.routine { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: stretch; }
+.routine .r { padding: 28px 26px; }
+.r { border-radius: var(--r-card); padding: 22px 22px 20px; background: var(--frost-surface-muted); display: flex; flex-direction: column; gap: 10px; }
+.r .who { font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--frost-primary); }
+.r h4 { font-size: 18px; font-weight: 600; line-height: 1.3; }
+.r ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.r li { font-size: 15.5px; line-height: 1.45; padding-left: 16px; position: relative; }
+.r li::before { content: ''; position: absolute; left: 2px; top: 9px; width: 5px; height: 5px; border-radius: 50%; background: var(--frost-ink); }
+.r li b { font-weight: 600; }
+
+/* Cierre */
+.close-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 40px; }
+.ink h2 { color: #fff; }
+.ink .kicker { color: #7DB5FF; }
+.ink p, .ink li { color: rgba(255,255,255,0.78); }
+.ink b { color: #fff; }
+.ink code { background: rgba(255,255,255,0.10); color: #fff; }
+.box { border: 1px solid rgba(255,255,255,0.14); border-radius: var(--r-card); padding: 24px 26px; }
+.box h4 { font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 12px; }
+.box ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.box li { font-size: 16px; line-height: 1.5; padding-left: 26px; position: relative; }
+.box li::before { content: ''; position: absolute; left: 0; top: 4px; width: 14px; height: 14px; border-radius: 4px; border: 1.5px solid rgba(255,255,255,0.5); }
+.box.go li::before { border: 0; background: var(--frost-primary); border-radius: 50%; width: 9px; height: 9px; top: 8px; left: 3px; }
+.logo-w { position: absolute; left: 64px; bottom: 44px; }
+</style>
+</head>
+<body>
+<div class="deck">
+
+<!-- 1 · Portada -->
+<div class="frame"><section class="slide cover">
+  <svg width="132" height="31" viewBox="0 0 153 36" xmlns="http://www.w3.org/2000/svg" aria-label="Ágora">
+    <path d="M41.3822 30.3938L38.187 35.7712L3.11719 35.8491L17.5348 10.9106L20.6466 16.2974L15.7314 24.9347L12.625 30.3938H41.3822Z" fill="#E2E8F0"/>
+    <path d="M17.5351 10.9106L20.6469 16.2974L16.7342 23.0921L12.1689 20.1848L17.5351 10.9106Z" fill="url(#p0)" fill-opacity="0.7"/>
+    <path d="M20.6467 16.2973L17.5349 10.9106L3.11731 35.8491L0 30.3938L17.5349 0L31.8745 24.9385H25.6399L20.6467 16.2973Z" fill="#0072FF"/>
+    <path d="M31.8543 24.9244L25.6302 24.9316L21.7061 18.1387L26.5114 15.6305L31.8543 24.9244Z" fill="url(#p1)" fill-opacity="0.7"/>
+    <path d="M23.8473 0L41.3822 30.3938H12.625L15.7314 24.9346L15.7384 24.9385H25.6398H31.8744L17.5348 0H23.8473Z" fill="#FF4658"/>
+    <path d="M12.625 30.3937L15.7289 24.9387L23.7202 24.9194L23.4706 30.3746L12.625 30.3937Z" fill="url(#p2)" fill-opacity="0.7"/>
+    <path d="M76.7893 7.41158V4.76367H69.5647V7.41158H76.7893ZM72.2126 26.6334C74.4029 26.6334 76.3316 25.7835 77.6065 24.2797V26.3065H81.2351V10.1249H77.6065V12.1844C76.3316 10.6806 74.4029 9.79797 72.2126 9.79797C67.7668 9.79797 64.7266 13.5573 64.7266 18.232C64.7266 22.8741 67.7668 26.6334 72.2126 26.6334ZM73.1279 23.1356C70.382 23.1356 68.4206 21.0761 68.4206 18.232C68.4206 15.388 70.382 13.2958 73.1279 13.2958C75.7105 13.2958 77.6065 15.388 77.6065 18.232C77.6065 21.1088 75.6778 23.1356 73.1279 23.1356ZM92.2844 31.112C96.9264 31.112 100.718 28.2679 100.718 22.6125V10.1249H97.2533V12.5439C96.4034 10.9421 94.2131 9.79797 91.7614 9.79797C87.2828 9.79797 84.3407 13.2958 84.3407 17.6436C84.3407 21.9914 87.2828 25.4566 91.7614 25.4566C94.7035 25.4566 96.4361 23.9855 97.0899 22.6779V22.8087C97.0899 26.1104 95.39 28.3333 91.9248 28.3333C90.2576 28.3333 88.3616 27.7776 87.0867 26.6661L85.681 28.9544C87.1847 30.2947 89.5058 31.112 92.2844 31.112ZM92.5459 22.2856C89.9961 22.2856 88.0347 20.3242 88.0347 17.6436C88.0347 14.963 89.9961 12.9689 92.5459 12.9689C95.0958 12.9689 97.0899 14.9303 97.0899 17.5129C97.0899 20.3242 95.1612 22.2856 92.5459 22.2856ZM112.422 26.6334C117.194 26.6334 121.019 22.9067 121.019 18.232C121.019 13.5247 117.194 9.79797 112.422 9.79797C107.649 9.79797 103.824 13.5247 103.824 18.232C103.824 22.9067 107.649 26.6334 112.422 26.6334ZM112.422 23.1356C109.643 23.1356 107.518 21.0434 107.518 18.232C107.518 15.388 109.643 13.2958 112.422 13.2958C115.2 13.2958 117.325 15.388 117.325 18.232C117.325 21.0434 115.2 23.1356 112.422 23.1356ZM127.753 26.3065V19.7031C127.753 15.4534 130.042 13.7535 133.605 13.7535V9.79797C130.14 9.79797 128.374 11.694 127.753 13.3285V10.1249H124.125V26.3065H127.753ZM143.118 26.6334C145.308 26.6334 147.237 25.7835 148.512 24.2797V26.3065H152.14V10.1249H148.512V12.1844C147.237 10.6806 145.308 9.79797 143.118 9.79797C138.672 9.79797 135.632 13.5573 135.632 18.232C135.632 22.8741 138.672 26.6334 143.118 26.6334ZM144.033 23.1356C141.287 23.1356 139.326 21.0761 139.326 18.232C139.326 15.388 141.287 13.2958 144.033 13.2958C146.616 13.2958 148.512 15.388 148.512 18.232C148.512 21.1088 146.583 23.1356 144.033 23.1356Z" fill="#0F172A"/>
+    <rect x="52.7876" y="3.5874" width="0.683334" height="28.5292" fill="#E2E8F0"/>
+    <defs>
+      <linearGradient id="p0" x1="18.8455" y1="15.9076" x2="12.5252" y2="18.5424" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
+      <linearGradient id="p1" x1="26.8652" y1="23.5719" x2="27.7524" y2="16.7522" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
+      <linearGradient id="p2" x1="16.3401" y1="26.6997" x2="21.8393" y2="30.8946" gradientUnits="userSpaceOnUse"><stop stop-opacity="0.3"/><stop offset="0.25" stop-opacity="0.14"/><stop offset="0.49" stop-opacity="0.01"/><stop offset="1" stop-opacity="0"/></linearGradient>
+    </defs>
+  </svg>
+  <div class="cover-cols" aria-hidden="true">
+    <span style="background:var(--st-nueva)"></span><span style="background:var(--st-analisis)"></span><span style="background:var(--st-priorizada)"></span><span style="background:var(--st-progreso)"></span><span style="background:var(--st-lanzada)"></span>
+  </div>
+  <div>
+    <div class="kicker">Multiplex · Producto</div>
+    <h1>Kanban <b>de ideas</b></h1>
+    <p class="sub">El lugar donde queda cada idea de producto: de dónde salió, en qué estado está y en qué release terminó.</p>
+  </div>
+  <div class="where"><span class="crumb">Multiplex</span>›<span class="crumb">Producto</span>›<a class="crumb on" href="kanban/" >Kanban de ideas ↗</a><span style="margin-left:10px">Solo Admin</span></div>
+</section></div>
+
+<!-- 2 · Qué resuelve -->
+<div class="frame"><section class="slide">
+  <div class="kicker">Qué resuelve</div>
+  <h2>Las ideas hoy están repartidas <b>y no se cruzan</b></h2>
+  <div class="body mid">
+    <div class="vs">
+      <div class="h">Hoy</div><div></div><div class="h ok">Con el Kanban</div>
+      <div class="a">Una idea se tira en #brainstorming, otra la pide un negocio en el Idea Box, otra queda en una conversación. Cada una vive en su lugar.</div>
+      <div class="arr">→</div>
+      <div class="b"><b>Un tablero, una tarjeta por idea</b>, con el link a donde salió. Si vuelve a aparecer, se suma como mención a la misma tarjeta.</div>
+      <div class="a">Para saber si algo ya se propuso hay que acordarse o buscar en varios lados.</div>
+      <div class="arr">→</div>
+      <div class="b"><b>Cada idea nueva se compara con todas las cargadas</b> y el tablero avisa cuando es la misma.</div>
+      <div class="a">No queda registro de en qué terminó cada idea, y quien la pidió no se entera cuando sale.</div>
+      <div class="arr">→</div>
+      <div class="b"><b>Cada tarjeta tiene un estado.</b> Cuando sale en un release pasa sola a «Lanzada» y se avisa en #anuncios-inapp quién la había pedido.</div>
+    </div>
+  </div>
+  <div class="pg">02</div>
+</section></div>
+
+<!-- 3 · Cómo entra -->
+<div class="frame"><section class="slide">
+  <div class="kicker">Cómo se alimenta</div>
+  <h2>Una idea entra <b>de tres formas</b></h2>
+  <div class="body">
+    <div class="cols3">
+      <div class="col">
+        <h3><span class="ic">💬</span>Slack</h3>
+        <p>Respondé <code>@Multiplex kanban</code> en el hilo del mensaje. La idea es el <b>mensaje de arriba del hilo</b>; lo que escribas después del comando queda como nota.</p>
+        <p>Suelto también sirve: <code>@Multiplex kanban &lt;la idea&gt;</code></p>
+        <div class="lbl">Qué trae</div>
+        <ul><li>Resumen corto escrito por la IA</li><li>Link al hilo y a la propuesta o doc del mensaje</li><li>Quién lo escribió y en qué canal</li></ul>
+        <div class="foot">El bot tiene que estar en el canal: <code>/invite @Multiplex</code></div>
+      </div>
+      <div class="col">
+        <h3><span class="ic">💡</span>Idea Box</h3>
+        <p>Abrí el topic en Multiplex → Idea Box y tocá <b>«Llevar al Kanban»</b>. Si ya está, el botón dice «En Kanban: #N» y te lleva a la tarjeta.</p>
+        <div class="lbl">Qué trae</div>
+        <ul><li>Título, resumen y lo que dijeron los negocios</li><li>Cuántos negocios lo piden y el MRR asociado</li><li>Link al topic</li></ul>
+        <div class="foot">No cambia el topic ni lo que ve el negocio en Flash.</div>
+      </div>
+      <div class="col">
+        <h3><span class="ic">✍️</span>A mano</h3>
+        <p><b>«+ Nueva idea»</b> en el tablero: título, descripción, un link opcional, área, tipo y para quién.</p>
+        <p><b>«✨ Completar con IA»</b> ordena la descripción si quedó vaga.</p>
+        <div class="lbl">Mientras escribís</div>
+        <ul><li>Busca si ya hay una parecida</li><li>Si es la misma, <b>«Sumar como mención»</b> la agrega a esa tarjeta en vez de crear otra</li></ul>
+        <div class="foot">Sirve para lo que llega por Intercom, una llamada o una reunión.</div>
+      </div>
+    </div>
+  </div>
+  <div class="pg">03</div>
+</section></div>
+
+<!-- 4 · De Slack a la tarjeta -->
+<div class="frame"><section class="slide">
+  <div class="kicker">Ejemplo real · #brainstorming</div>
+  <h2>De un mensaje de Slack <b>a una tarjeta</b></h2>
+  <div class="body">
+    <div class="flow">
+      <div class="slack">
+        <div class="msg">
+          <div class="who">Alberto Yanes <span>#brainstorming</span></div>
+          <div class="tx"><b>Idea: Avisar cuando le toca volver</b><br>Cada servicio tiene su tiempo: el service de pestañas a las 3 semanas, la manicura a las 4… Hoy hay 70.053 clientas de 1.592 negocios que hicieron un servicio hace 5 a 13 semanas y no lo volvieron a reservar. …</div>
+        </div>
+        <div class="msg reply">
+          <div class="who">Alguien del equipo <span>en el hilo</span></div>
+          <div class="tx"><span class="mention">@Multiplex</span> kanban</div>
+        </div>
+        <div class="msg bot">
+          <div class="who">Multiplex <span>en el hilo</span></div>
+          <div class="tx">✅ Sumada al Kanban: <b>#20</b> «Avisar cuando le toca volver» → multiplex.agora.red/kanban?card=20</div>
+        </div>
+        <div class="notes">
+          <p>El título se respeta si el mensaje empieza con «Idea:». Si no, lo escribe la IA.</p>
+          <p>Si ya hay una igual, el bot lo dice en la misma respuesta: <span style="white-space:nowrap">«⚠️ Misma idea que #N»</span>.</p>
+          <p>Repetir el comando sobre el mismo mensaje no duplica: contesta con la tarjeta que ya existe.</p>
+        </div>
+      </div>
+      <div class="shot"><img src="assets/tarjeta-20.png" alt="Tarjeta #20 en el Kanban"></div>
+    </div>
+  </div>
+  <div class="pg">04</div>
+</section></div>
+
+<!-- 5 · La tarjeta -->
+<div class="frame"><section class="slide">
+  <div class="kicker">La tarjeta</div>
+  <h2>Corta a propósito: <b>el detalle está a un link</b></h2>
+  <div class="body">
+    <div class="anat">
+      <div class="shot">
+        <img src="assets/tarjeta-20.png" alt="">
+        <span class="pin" style="top:5%">1</span>
+        <span class="pin" style="top:18.5%">2</span>
+        <span class="pin" style="top:31%">3</span>
+        <span class="pin" style="top:46%">4</span>
+        <span class="pin" style="top:58%">5</span>
+        <span class="pin" style="top:78%">6</span>
+      </div>
+      <ol class="parts">
+        <li><span><b>Título y origen.</b> Quién la propuso, en qué canal y cuándo. El título se edita tocándolo.</span></li>
+        <li><span><b>Estado.</b> Los cinco pasos del tablero y «Cerrar…» para descartarla, marcarla duplicada o «ya existe».</span></li>
+        <li><span><b>Descripción.</b> Qué pasa hoy y qué se propone, en dos oraciones. Si vino de Slack la escribe la IA a partir del mensaje y lo indica abajo.</span></li>
+        <li><span><b>Links.</b> A donde está el detalle: el hilo de Slack, la propuesta, el topic del Idea Box. La discusión sigue en Slack.</span></li>
+        <li><span><b>Área, tipo, para quién y responsable.</b> Las iniciales del responsable aparecen en el tablero.</span></li>
+        <li><span><b>Plegado:</b> links editables, release, PRs y flag; las menciones; comentarios internos; el historial de cambios.</span></li>
+      </ol>
+    </div>
+  </div>
+  <div class="pg">05</div>
+</section></div>
+
+<!-- 6 · El tablero -->
+<div class="frame"><section class="slide">
+  <div class="kicker">El tablero</div>
+  <h2>Se lee <b>de un vistazo</b></h2>
+  <div class="body">
+    <div class="board-wrap">
+      <div class="board-shot"><img src="assets/tablero.png" alt="Tablero del Kanban con las ideas cargadas"></div>
+      <div class="defs">
+        <div class="def"><h4>Columnas</h4><p>Una por estado: Nueva, En análisis, Priorizada, En progreso, Lanzada. «Cerradas» queda plegada al costado.</p></div>
+        <div class="def"><h4>Mover</h4><p>Arrastrá la tarjeta a otra columna. Dentro de una columna, el orden también se guarda. Soltarla en «Cerradas» pregunta cómo se cierra.</p></div>
+        <div class="def"><h4>Qué muestra cada tarjeta</h4><p>Título, de dónde vino (💬 Slack · 💡 Idea Box · ✍️ a mano, con ×N si tiene varias menciones), área y responsable.</p>
+          <div class="chipline"><span class="chip warn">⚠ Misma idea · #N</span><span class="chip ok">🚀 Release · estado</span></div>
+          <p style="margin-top:6px">Estas dos marcas aparecen solo cuando corresponde.</p></div>
+        <div class="def"><h4>Filtros</h4><p>Texto o #número, área, fuente y «⚠ Posible misma idea».</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="pg">06</div>
+</section></div>
+
+<!-- 7 · Estados -->
+<div class="frame"><section class="slide">
+  <div class="kicker">Estados</div>
+  <h2>Qué significa cada columna <b>y qué hacer</b></h2>
+  <div class="body mid">
+    <div class="states">
+      <div class="st" style="--c:var(--st-nueva)"><h4>Nueva</h4><div class="q">Recién entró y nadie la miró.</div><div class="do">Resolver si es repetida, completar área y tipo, y pasarla a análisis o cerrarla.</div></div>
+      <div class="st" style="--c:var(--st-analisis)"><h4>En análisis</h4><div class="q">Alguien la evalúa: qué resuelve, cuántos la piden, si ya existe.</div><div class="do">Poner responsable. Sale a Priorizada o se cierra.</div></div>
+      <div class="st" style="--c:var(--st-priorizada)"><h4>Priorizada</h4><div class="q">Se decidió hacerla y espera su turno.</div><div class="do">Ordenar la columna: arriba va lo que se hace primero.</div></div>
+      <div class="st" style="--c:var(--st-progreso)"><span class="auto">Automático</span><h4>En progreso</h4><div class="q">Se está construyendo. Pasa sola cuando se vincula a un release.</div><div class="do">Cargar el PR o el flag en la tarjeta.</div></div>
+      <div class="st" style="--c:var(--st-lanzada)"><span class="auto">Automático</span><h4>Lanzada</h4><div class="q">Está en producción. Pasa sola cuando se libera su release.</div><div class="do">Nada. A mano solo si salió sin release.</div></div>
+    </div>
+    <div class="closed">
+      <div class="lab">Cerradas<br><span style="font-weight:500;letter-spacing:0;text-transform:none;font-size:13px;color:var(--frost-faint)">se ven plegadas</span></div>
+      <div class="c"><h4>Descartada</h4><p>No se va a hacer. Pide escribir por qué.</p></div>
+      <div class="c"><h4>Duplicada</h4><p>Es la misma que otra. Se elige la original y las menciones pasan a esa.</p></div>
+      <div class="c"><h4>Ya existe</h4><p>Lo que pide ya está en el producto. Conviene anotar dónde.</p></div>
+    </div>
+  </div>
+  <div class="pg">07</div>
+</section></div>
+
+<!-- 8 · Repetidas -->
+<div class="frame"><section class="slide">
+  <div class="kicker">Ideas repetidas</div>
+  <h2>Avisa cuando es la misma idea, <b>nunca fusiona sola</b></h2>
+  <div class="body">
+    <div class="dup">
+      <div>
+        <ol class="steps">
+          <li><span>Cada idea que entra o se edita <b>se compara con todas las tarjetas</b>, también las lanzadas y las descartadas: sirve saber que algo ya se descartó y por qué.</span></li>
+          <li><span>Primero se buscan las de texto parecido. Después <b>una IA lee cada par</b> y decide si es la misma idea dicha con otras palabras.</span></li>
+          <li><span>Si es la misma, la tarjeta muestra <span class="chip warn">⚠ Misma idea · #N</span>. En el detalle: <b>«Es duplicada»</b> la cierra y pasa sus menciones a la original; <b>«No es»</b> borra el aviso y ese par no se vuelve a sugerir.</span></li>
+        </ol>
+      </div>
+      <div>
+        <div class="verdicts">
+          <div class="verdict misma"><div class="t">Misma idea</div><p>Resolver una resuelve la otra. Es el único caso que se marca en el tablero.</p></div>
+          <div class="verdict"><div class="t">Relacionada</div><p>Mismo tema, otro pedido. No se marca: no pide ninguna acción.</p></div>
+          <div class="verdict"><div class="t">Distinta</div><p>No tienen que ver.</p></div>
+        </div>
+        <div class="example">
+          <div class="h">Ejemplo real</div>
+          <div class="pair">
+            <div><span>#20 · Slack</span>Avisar cuando le toca volver</div>
+            <div><span>#10 · Idea Box</span>Enviar mensajes relevantes a clientes en el momento correcto</div>
+          </div>
+          <p>Las dos hablan de mensajes a clientas, pero una es un aviso automático para volver a reservar y la otra, difusiones por segmento. La IA las marcó <b>relacionadas</b>, no la misma: no aparece aviso.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pg">08</div>
+</section></div>
+
+<!-- 9 · Releases -->
+<div class="frame"><section class="slide">
+  <div class="kicker">Relación con Releases</div>
+  <h2>Cuando la idea sale, <b>se cierra el círculo</b></h2>
+  <div class="body mid">
+    <div class="rel">
+      <ol class="tl">
+        <li><span class="n">1</span><div><h4>Se vincula al release</h4><p>Si la tarjeta tiene el mismo <b>PR o flag</b> que el release, queda vinculada sola cuando Beto lo abre con <code>/release-abrir</code>. Si no, se elige el release en la tarjeta o se vincula desde el release, que sugiere ideas parecidas.</p></div></li>
+        <li><span class="n">2</span><div><h4>Pasa a «En progreso»</h4><p>Al vincularse, si estaba en Nueva, En análisis o Priorizada. En el release se ven sus ideas y quién las pidió: son los primeros a consultar para el feedback.</p></div></li>
+        <li><span class="n">3</span><div><h4>Al liberar, pasa a «Lanzada» y se avisa</h4><p>Sale un mensaje en #anuncios-inapp con cada idea y quién la sugirió. Una sola vez por release.</p></div></li>
+      </ol>
+      <div>
+        <div class="notice">
+          <div class="who">Multiplex <span>#anuncios-inapp</span></div>
+<pre>🚀 Se liberó <b>&lt;nombre del release&gt;</b> → <a>multiplex.agora.red/releases?release=…</a>
+Ideas del Kanban que resuelve:
+• #20 «Avisar cuando le toca volver» → <a>multiplex.agora.red/kanban?card=20</a>
+   Lo propusieron por Slack: <span class="mention">@Alberto Yanes</span> (#brainstorming)</pre>
+        </div>
+        <p class="cap">Formato del aviso, con una idea real de ejemplo (ese release todavía no existe). Si la pidieron negocios por el Idea Box, suma «Lo pidieron por el Idea Box: @usuario, …». Las ideas cargadas a mano no nombran a nadie.</p>
+      </div>
+    </div>
+  </div>
+  <div class="pg">09</div>
+</section></div>
+
+<!-- 10 · Rutina -->
+<div class="frame"><section class="slide">
+  <div class="kicker">Cómo lo usamos</div>
+  <h2>Quién hace qué</h2>
+  <div class="body mid">
+    <div class="routine">
+      <div class="r">
+        <div class="who">Todo el equipo</div>
+        <h4>Cargar ideas</h4>
+        <ul>
+          <li>Cuando aparece una idea en Slack, <code>@Multiplex kanban</code> en el hilo.</li>
+          <li>Si llega por otro lado (Intercom, una llamada), <b>«+ Nueva idea»</b> con el link.</li>
+          <li>Si ya existe, sumarla como <b>mención</b>: la cantidad de menciones muestra cuánto se pide.</li>
+        </ul>
+      </div>
+      <div class="r">
+        <div class="who">Admins · Producto</div>
+        <h4>Ordenar el tablero</h4>
+        <ul>
+          <li>Revisar <b>Nueva</b>: resolver los «⚠ Misma idea», completar área y tipo, pasarla a análisis o cerrarla.</li>
+          <li>En <b>análisis</b>: poner responsable y decidir si se prioriza o se descarta (con el porqué).</li>
+          <li>Mantener <b>Priorizada</b> ordenada: arriba, lo próximo.</li>
+        </ul>
+      </div>
+      <div class="r">
+        <div class="who">Quien construye</div>
+        <h4>Conectar con el release</h4>
+        <ul>
+          <li>Al empezar el desarrollo, cargar en la tarjeta el <b>PR o el flag</b>.</li>
+          <li>Con eso se vincula sola al release cuando se abre, y pasa a <b>En progreso</b>.</li>
+          <li>Al lanzar no hay que tocar nada: pasa a <b>Lanzada</b> cuando se libera el release.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="pg">10</div>
+</section></div>
+
+<!-- 11 · Para arrancar -->
+<div class="frame"><section class="slide ink">
+  <div class="kicker">Para arrancar</div>
+  <h2>Dónde está <b>y qué falta</b></h2>
+  <div class="body mid"><div class="close-grid" style="margin-top:0">
+    <div class="box go">
+      <h4>Dónde</h4>
+      <ul>
+        <li><b>Multiplex → Producto → Kanban de ideas.</b> Lo ven los Admin.</li>
+        <li>La pestaña <b>«Cómo funciona»</b> tiene esta misma guía, con todos los campos.</li>
+        <li>Para cargar desde Slack: <code>@Multiplex kanban</code> en el hilo.</li>
+      </ul>
+      <a class="btn-open" href="kanban/">Abrir el Kanban ↗</a>
+      <p class="demo-note">Es una demo con las ideas cargadas hoy: se puede mover y editar, pero los cambios no se guardan.</p>
+    </div>
+    <div class="box">
+      <h4>Antes de usarlo</h4>
+      <ul>
+        <li>Pasarlo a producción (hoy corre en local).</li>
+        <li>Invitar al bot a #brainstorming: <code>/invite @Multiplex</code>. Sin eso, el comando no funciona en ese canal.</li>
+      </ul>
+    </div>
+  </div></div>
+  <div class="pg">11</div>
+</section></div>
+
+</div>
+<script>
+  // Cada slide mide 1280×720 y se escala para entrar en la ventana.
+  const fit = () => document.documentElement.style.setProperty('--z', Math.min((innerWidth - 48) / 1280, (innerHeight - 48) / 720).toFixed(3))
+  fit(); addEventListener('resize', fit)
+  addEventListener('keydown', (e) => {
+    const f = [...document.querySelectorAll('.frame')]
+    const i = f.findIndex((x) => Math.abs(x.getBoundingClientRect().top) < innerHeight / 2)
+    if (['ArrowDown', 'ArrowRight', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); f[Math.min(i + 1, f.length - 1)].scrollIntoView({ behavior: 'smooth' }) }
+    if (['ArrowUp', 'ArrowLeft', 'PageUp'].includes(e.key)) { e.preventDefault(); f[Math.max(i - 1, 0)].scrollIntoView({ behavior: 'smooth' }) }
+  })
+</script>
+</body>
+</html>

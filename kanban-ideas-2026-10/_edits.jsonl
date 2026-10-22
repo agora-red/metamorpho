@@ -1,0 +1,7 @@
+{"ts": "2026-10-22T23:10:00Z", "source": "self-review", "instruction": "chip de release roto en la slide 6", "diff_summary": ".chip.rel chocaba con .rel (grid de la slide 9) → .chip.ok"}
+{"ts": "2026-10-22T23:10:00Z", "source": "self-review", "instruction": "franjas vacías al pie (slides 2, 7, 9, 10, 11)", "diff_summary": ".body.mid centra el contenido en el alto disponible; textos de 2 y 10 un punto más grandes"}
+{"ts": "2026-10-22T23:10:00Z", "source": "self-review", "instruction": "banda oscura bajo la captura (slide 4)", "diff_summary": ".flow align-items: start"}
+{"ts": "2026-10-22T23:10:00Z", "source": "self-review", "instruction": "chip del comando suelto con punto separado (slide 3) y «Misma idea» partido en dos líneas (slide 4)", "diff_summary": "frase reordenada; nowrap"}
+{"ts": "2026-10-22T23:10:00Z", "source": "self-review", "instruction": "URLs del aviso partidas (slide 9)", "diff_summary": "columna del aviso 590px, texto 12.5px"}
+{"ts": "2026-10-22T23:30:00Z", "instruction": "link al kanban en la presentación (local)", "diff_summary": "crumb «Kanban de ideas ↗» en la portada y botón «Abrir el Kanban ↗» en la slide 11 → http://localhost:5191/kanban"}
+{"ts": "2026-10-22T23:55:00Z", "instruction": "subir a Metamorpho con el Kanban navegable (opción 2)", "diff_summary": "demo estática en kanban/ (Kanban.tsx real + API simulada en el navegador, datos sin citas ni MRR); links de la presentación → kanban/"}
