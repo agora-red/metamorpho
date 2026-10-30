@@ -181,6 +181,27 @@ code { font-family: var(--sans); font-weight: 600; font-size: 0.92em; background
 .notice pre a { color: var(--frost-primary-hover); text-decoration: none; }
 .cap { font-size: 12.5px; color: var(--frost-muted); line-height: 1.5; margin-top: 10px; }
 
+/* Agente */
+.agent { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; height: 100%; }
+.srcs { display: flex; flex-direction: column; gap: 10px; }
+.src { display: grid; grid-template-columns: 40px 1fr; gap: 12px; align-items: center; background: var(--frost-surface-muted); border-radius: var(--r-btn); padding: 12px 14px; }
+.src .ic { width: 40px; height: 40px; border-radius: var(--r-btn); background: var(--frost-surface); display: grid; place-items: center; font-size: 19px; box-shadow: var(--sh-sm); }
+.src h4 { font-size: 15px; font-weight: 600; }
+.src p { font-size: 13.5px; line-height: 1.4; }
+.yesno { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.yn { border-radius: var(--r-btn); padding: 14px 16px; }
+.yn.si { background: var(--frost-primary-soft); }
+.yn.no { border: 1px solid var(--frost-border); }
+.yn h4 { font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 8px; color: var(--frost-primary); }
+.yn.no h4 { color: var(--frost-muted); }
+.yn ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.yn li { font-size: 13.5px; line-height: 1.4; }
+.when { margin-top: 14px; font-size: 13.5px; line-height: 1.5; color: var(--frost-ink-soft); border-left: 2px solid var(--frost-border); padding-left: 14px; }
+.voz { display: grid; grid-template-columns: 560px 1fr; gap: 40px; height: 100%; align-items: start; }
+.stat { display: flex; gap: 22px; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--frost-border); }
+.stat div { font-size: 12.5px; color: var(--frost-muted); line-height: 1.4; }
+.stat b { display: block; font-size: 28px; font-weight: 300; color: var(--frost-ink); letter-spacing: -0.02em; }
+
 /* Rutina */
 .routine { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: stretch; }
 .routine .r { padding: 28px 26px; }
@@ -234,7 +255,7 @@ code { font-family: var(--sans); font-weight: 600; font-size: 0.92em; background
   <div>
     <div class="kicker">Multiplex · Producto</div>
     <h1>Kanban <b>de ideas</b></h1>
-    <p class="sub">El lugar donde queda cada idea de producto: de dónde salió, en qué estado está y en qué release terminó.</p>
+    <p class="sub">El lugar donde queda cada idea de producto, con las palabras de quien la pidió y en qué estado está. Se alimenta solo.</p>
   </div>
   <div class="where"><span class="crumb">Multiplex</span>›<span class="crumb">Producto</span>›<a class="crumb on" href="kanban/" >Kanban de ideas ↗</a><span style="margin-left:10px">Solo Admin</span></div>
 </section></div>
@@ -248,22 +269,73 @@ code { font-family: var(--sans); font-weight: 600; font-size: 0.92em; background
       <div class="h">Hoy</div><div></div><div class="h ok">Con el Kanban</div>
       <div class="a">Una idea se tira en #brainstorming, otra la pide un negocio en el Idea Box, otra queda en una conversación. Cada una vive en su lugar.</div>
       <div class="arr">→</div>
-      <div class="b"><b>Un tablero, una tarjeta por idea</b>, con el link a donde salió. Si vuelve a aparecer, se suma como mención a la misma tarjeta.</div>
+      <div class="b"><b>Un agente lee las conversaciones con negocios</b> y anota cada pedido de producto en una tarjeta, con sus palabras y el link. Si vuelve a aparecer, lo suma a la misma tarjeta.</div>
       <div class="a">Para saber si algo ya se propuso hay que acordarse o buscar en varios lados.</div>
       <div class="arr">→</div>
-      <div class="b"><b>Cada idea nueva se compara con todas las cargadas</b> y el tablero avisa cuando es la misma.</div>
+      <div class="b"><b>Cada idea nueva se compara con todas las cargadas.</b> De noche el agente las vuelve a cruzar entre sí, así las viejas también se comparan con las nuevas.</div>
       <div class="a">No queda registro de en qué terminó cada idea, y quien la pidió no se entera cuando sale.</div>
       <div class="arr">→</div>
-      <div class="b"><b>Cada tarjeta tiene un estado.</b> Cuando sale en un release pasa sola a «Lanzada» y se avisa en #anuncios-inapp quién la había pedido.</div>
+      <div class="b"><b>Cada tarjeta tiene un estado</b>, de «Nueva» a «Lanzada», y guarda quiénes la pidieron. Cómo avisarles cuando sale queda por definir junto con Releases.</div>
     </div>
   </div>
   <div class="pg">02</div>
 </section></div>
 
-<!-- 3 · Cómo entra -->
+<!-- 3 · El agente -->
 <div class="frame"><section class="slide">
   <div class="kicker">Cómo se alimenta</div>
-  <h2>Una idea entra <b>de tres formas</b></h2>
+  <h2>Un agente <b>lo carga solo</b></h2>
+  <div class="body">
+    <div class="agent">
+      <div class="srcs">
+        <div class="src"><span class="ic">🎧</span><div><h4>Intercom</h4><p>Las conversaciones de soporte, también las de WhatsApp que entran por ahí.</p></div></div>
+        <div class="src"><span class="ic">💡</span><div><h4>Idea Box</h4><p>Cada idea que deja un negocio en la app. Si su topic ya está en el tablero, va directo a esa tarjeta.</p></div></div>
+        <div class="src"><span class="ic">📋</span><div><h4>Encuestas in-app</h4><p>Las respuestas de texto.</p></div></div>
+        <div class="src"><span class="ic">🚪</span><div><h4>Bajas</h4><p>Lo que escribe el negocio cuando pide la baja.</p></div></div>
+        <div class="src"><span class="ic">💬</span><div><h4>#brainstorming</h4><p>Los mensajes del equipo que proponen algo. Las respuestas del hilo no.</p></div></div>
+      </div>
+      <div>
+        <div class="yesno">
+          <div class="yn si"><h4>Anota</h4><ul><li>«Me gustaría que…», «deberían agregar…»: algo que Ágora no hace o que haga distinto.</li><li>Funciones nuevas, mejoras e integraciones.</li></ul></div>
+          <div class="yn no"><h4>No anota</h4><ul><li>Preguntas de uso («¿se puede…?», «¿cómo hago…?»).</li><li>Problemas de una cuenta, pedidos a soporte, reclamos de cobro.</li><li>Pedidos de precio o descuento.</li></ul></div>
+        </div>
+        <p class="when">Corre cada 30 minutos. Si duda, no anota: es preferible perder un pedido a llenar el tablero de ruido. Usa gpt-6-luna por API, no la cuota de Claude.</p>
+        <p class="when">De noche hace un repaso: vuelve a comparar las ideas entre sí.</p>
+      </div>
+    </div>
+  </div>
+  <div class="pg">03</div>
+</section></div>
+
+<!-- 4 · Voz del cliente -->
+<div class="frame"><section class="slide">
+  <div class="kicker">Voz del cliente</div>
+  <h2>Las palabras del negocio, <b>tal cual</b></h2>
+  <div class="body">
+    <div class="voz">
+      <div class="shot"><img src="assets/tarjeta-voz.png" alt="Tarjeta detectada por el agente con dos citas de negocios"></div>
+      <div>
+        <ol class="steps">
+          <li><span>De cada pedido guarda <b>la frase exacta del negocio</b> y el link a la conversación. Si la frase no está tal cual en el original, no se guarda: nunca una paráfrasis.</span></li>
+          <li><span>Busca si ya hay una tarjeta con <b>la misma idea</b>. Si la hay, la cita se suma ahí; si no, crea una tarjeta en «Nueva» marcada «Detectada por el agente».</span></li>
+          <li><span>El tablero muestra <b>🗣 N</b>: cuántos negocios distintos lo pidieron.</span></li>
+        </ol>
+        <div class="stat">
+          <div><b>575</b>conversaciones de Intercom en 14 días</div>
+          <div><b>27</b>tarjetas nuevas</div>
+          <div><b>2</b>citas sumadas a una idea que ya estaba</div>
+        </div>
+        <p class="cap">Prueba con datos reales del 16 al 30 de octubre, sin escribir en el tablero real. En la captura, el nombre del negocio está oculto.</p>
+      </div>
+    </div>
+  </div>
+  <div class="pg">04</div>
+</section></div>
+
+<!-- 5 · Cómo entra a mano -->
+<div class="frame"><section class="slide">
+  <div class="kicker">Cómo se alimenta</div>
+  <h2>También se carga <b>a mano</b></h2>
   <div class="body">
     <div class="cols3">
       <div class="col">
@@ -272,14 +344,14 @@ code { font-family: var(--sans); font-weight: 600; font-size: 0.92em; background
         <p>Suelto también sirve: <code>@Multiplex kanban &lt;la idea&gt;</code></p>
         <div class="lbl">Qué trae</div>
         <ul><li>Resumen corto escrito por la IA</li><li>Link al hilo y a la propuesta o doc del mensaje</li><li>Quién lo escribió y en qué canal</li></ul>
-        <div class="foot">El bot tiene que estar en el canal: <code>/invite @Multiplex</code></div>
+        <div class="foot">Sirve en cualquier canal. El bot tiene que estar: <code>/invite @Multiplex</code></div>
       </div>
       <div class="col">
         <h3><span class="ic">💡</span>Idea Box</h3>
         <p>Abrí el topic en Multiplex → Idea Box y tocá <b>«Llevar al Kanban»</b>. Si ya está, el botón dice «En Kanban: #N» y te lleva a la tarjeta.</p>
         <div class="lbl">Qué trae</div>
         <ul><li>Título, resumen y lo que dijeron los negocios</li><li>Cuántos negocios lo piden y el MRR asociado</li><li>Link al topic</li></ul>
-        <div class="foot">No cambia el topic ni lo que ve el negocio en Flash.</div>
+        <div class="foot">Las ideas nuevas del Idea Box ya entran solas; esto trae el topic entero.</div>
       </div>
       <div class="col">
         <h3><span class="ic">✍️</span>A mano</h3>
@@ -287,11 +359,11 @@ code { font-family: var(--sans); font-weight: 600; font-size: 0.92em; background
         <p><b>«✨ Completar con IA»</b> ordena la descripción si quedó vaga.</p>
         <div class="lbl">Mientras escribís</div>
         <ul><li>Busca si ya hay una parecida</li><li>Si es la misma, <b>«Sumar como mención»</b> la agrega a esa tarjeta en vez de crear otra</li></ul>
-        <div class="foot">Sirve para lo que llega por Intercom, una llamada o una reunión.</div>
+        <div class="foot">Para lo que llega por una llamada o una reunión.</div>
       </div>
     </div>
   </div>
-  <div class="pg">03</div>
+  <div class="pg">05</div>
 </section></div>
 
 <!-- 4 · De Slack a la tarjeta -->
@@ -322,7 +394,7 @@ code { font-family: var(--sans); font-weight: 600; font-size: 0.92em; background
       <div class="shot"><img src="assets/tarjeta-20.png" alt="Tarjeta #20 en el Kanban"></div>
     </div>
   </div>
-  <div class="pg">04</div>
+  <div class="pg">06</div>
 </section></div>
 
 <!-- 5 · La tarjeta -->
@@ -346,11 +418,11 @@ code { font-family: var(--sans); font-weight: 600; font-size: 0.92em; background
         <li><span><b>Descripción.</b> Qué pasa hoy y qué se propone, en dos oraciones. Si vino de Slack la escribe la IA a partir del mensaje y lo indica abajo.</span></li>
         <li><span><b>Links.</b> A donde está el detalle: el hilo de Slack, la propuesta, el topic del Idea Box. La discusión sigue en Slack.</span></li>
         <li><span><b>Área, tipo, para quién y responsable.</b> Las iniciales del responsable aparecen en el tablero.</span></li>
-        <li><span><b>Plegado:</b> links editables, release, PRs y flag; las menciones; comentarios internos; el historial de cambios.</span></li>
+        <li><span><b>Plegado:</b> links editables; las menciones; comentarios internos; el historial de cambios.</span></li>
       </ol>
     </div>
   </div>
-  <div class="pg">05</div>
+  <div class="pg">07</div>
 </section></div>
 
 <!-- 6 · El tablero -->
@@ -363,14 +435,14 @@ code { font-family: var(--sans); font-weight: 600; font-size: 0.92em; background
       <div class="defs">
         <div class="def"><h4>Columnas</h4><p>Una por estado: Nueva, En análisis, Priorizada, En progreso, Lanzada. «Cerradas» queda plegada al costado.</p></div>
         <div class="def"><h4>Mover</h4><p>Arrastrá la tarjeta a otra columna. Dentro de una columna, el orden también se guarda. Soltarla en «Cerradas» pregunta cómo se cierra.</p></div>
-        <div class="def"><h4>Qué muestra cada tarjeta</h4><p>Título, de dónde vino (💬 Slack · 💡 Idea Box · ✍️ a mano, con ×N si tiene varias menciones), área y responsable.</p>
-          <div class="chipline"><span class="chip warn">⚠ Misma idea · #N</span><span class="chip ok">🚀 Release · estado</span></div>
-          <p style="margin-top:6px">Estas dos marcas aparecen solo cuando corresponde.</p></div>
+        <div class="def"><h4>Qué muestra cada tarjeta</h4><p>Título, de dónde vino (🎧 Intercom · 💡 Idea Box · 📋 Encuesta · 🚪 Baja · 💬 Slack · ✍️ a mano), área, <b>🗣 N</b> negocios que la pidieron y responsable.</p>
+          <div class="chipline"><span class="chip warn">⚠ Misma idea · #N</span></div>
+          <p style="margin-top:6px">Aparece solo cuando el agente cree que dos tarjetas son la misma idea.</p></div>
         <div class="def"><h4>Filtros</h4><p>Texto o #número, área, fuente y «⚠ Posible misma idea».</p></div>
       </div>
     </div>
   </div>
-  <div class="pg">06</div>
+  <div class="pg">08</div>
 </section></div>
 
 <!-- 7 · Estados -->
@@ -379,11 +451,11 @@ code { font-family: var(--sans); font-weight: 600; font-size: 0.92em; background
   <h2>Qué significa cada columna <b>y qué hacer</b></h2>
   <div class="body mid">
     <div class="states">
-      <div class="st" style="--c:var(--st-nueva)"><h4>Nueva</h4><div class="q">Recién entró y nadie la miró.</div><div class="do">Resolver si es repetida, completar área y tipo, y pasarla a análisis o cerrarla.</div></div>
+      <div class="st" style="--c:var(--st-nueva)"><h4>Nueva</h4><div class="q">Recién entró y nadie la miró. Acá caen las que detecta el agente.</div><div class="do">Descartar lo que no es un pedido, resolver si es repetida y pasarla a análisis o cerrarla.</div></div>
       <div class="st" style="--c:var(--st-analisis)"><h4>En análisis</h4><div class="q">Alguien la evalúa: qué resuelve, cuántos la piden, si ya existe.</div><div class="do">Poner responsable. Sale a Priorizada o se cierra.</div></div>
       <div class="st" style="--c:var(--st-priorizada)"><h4>Priorizada</h4><div class="q">Se decidió hacerla y espera su turno.</div><div class="do">Ordenar la columna: arriba va lo que se hace primero.</div></div>
-      <div class="st" style="--c:var(--st-progreso)"><span class="auto">Automático</span><h4>En progreso</h4><div class="q">Se está construyendo. Pasa sola cuando se vincula a un release.</div><div class="do">Cargar el PR o el flag en la tarjeta.</div></div>
-      <div class="st" style="--c:var(--st-lanzada)"><span class="auto">Automático</span><h4>Lanzada</h4><div class="q">Está en producción. Pasa sola cuando se libera su release.</div><div class="do">Nada. A mano solo si salió sin release.</div></div>
+      <div class="st" style="--c:var(--st-progreso)"><h4>En progreso</h4><div class="q">Se está construyendo.</div><div class="do">Moverla cuando arranca el desarrollo.</div></div>
+      <div class="st" style="--c:var(--st-lanzada)"><h4>Lanzada</h4><div class="q">Está en producción.</div><div class="do">Moverla cuando sale.</div></div>
     </div>
     <div class="closed">
       <div class="lab">Cerradas<br><span style="font-weight:500;letter-spacing:0;text-transform:none;font-size:13px;color:var(--frost-faint)">se ven plegadas</span></div>
@@ -392,7 +464,7 @@ code { font-family: var(--sans); font-weight: 600; font-size: 0.92em; background
       <div class="c"><h4>Ya existe</h4><p>Lo que pide ya está en el producto. Conviene anotar dónde.</p></div>
     </div>
   </div>
-  <div class="pg">07</div>
+  <div class="pg">09</div>
 </section></div>
 
 <!-- 8 · Repetidas -->
@@ -403,7 +475,7 @@ code { font-family: var(--sans); font-weight: 600; font-size: 0.92em; background
     <div class="dup">
       <div>
         <ol class="steps">
-          <li><span>Cada idea que entra o se edita <b>se compara con todas las tarjetas</b>, también las lanzadas y las descartadas: sirve saber que algo ya se descartó y por qué.</span></li>
+          <li><span>Cada idea que entra o se edita <b>se compara con todas las tarjetas</b>, también las lanzadas y las descartadas. Si un negocio vuelve a pedir algo descartado, la cita se suma igual y la tarjeta no se reabre.</span></li>
           <li><span>Primero se buscan las de texto parecido. Después <b>una IA lee cada par</b> y decide si es la misma idea dicha con otras palabras.</span></li>
           <li><span>Si es la misma, la tarjeta muestra <span class="chip warn">⚠ Misma idea · #N</span>. En el detalle: <b>«Es duplicada»</b> la cierra y pasa sus menciones a la original; <b>«No es»</b> borra el aviso y ese par no se vuelve a sugerir.</span></li>
         </ol>
@@ -425,33 +497,7 @@ code { font-family: var(--sans); font-weight: 600; font-size: 0.92em; background
       </div>
     </div>
   </div>
-  <div class="pg">08</div>
-</section></div>
-
-<!-- 9 · Releases -->
-<div class="frame"><section class="slide">
-  <div class="kicker">Relación con Releases</div>
-  <h2>Cuando la idea sale, <b>se cierra el círculo</b></h2>
-  <div class="body mid">
-    <div class="rel">
-      <ol class="tl">
-        <li><span class="n">1</span><div><h4>Se vincula al release</h4><p>Si la tarjeta tiene el mismo <b>PR o flag</b> que el release, queda vinculada sola cuando Beto lo abre con <code>/release-abrir</code>. Si no, se elige el release en la tarjeta o se vincula desde el release, que sugiere ideas parecidas.</p></div></li>
-        <li><span class="n">2</span><div><h4>Pasa a «En progreso»</h4><p>Al vincularse, si estaba en Nueva, En análisis o Priorizada. En el release se ven sus ideas y quién las pidió: son los primeros a consultar para el feedback.</p></div></li>
-        <li><span class="n">3</span><div><h4>Al liberar, pasa a «Lanzada» y se avisa</h4><p>Sale un mensaje en #anuncios-inapp con cada idea y quién la sugirió. Una sola vez por release.</p></div></li>
-      </ol>
-      <div>
-        <div class="notice">
-          <div class="who">Multiplex <span>#anuncios-inapp</span></div>
-<pre>🚀 Se liberó <b>&lt;nombre del release&gt;</b> → <a>multiplex.agora.red/releases?release=…</a>
-Ideas del Kanban que resuelve:
-• #20 «Avisar cuando le toca volver» → <a>multiplex.agora.red/kanban?card=20</a>
-   Lo propusieron por Slack: <span class="mention">@Alberto Yanes</span> (#brainstorming)</pre>
-        </div>
-        <p class="cap">Formato del aviso, con una idea real de ejemplo (ese release todavía no existe). Si la pidieron negocios por el Idea Box, suma «Lo pidieron por el Idea Box: @usuario, …». Las ideas cargadas a mano no nombran a nadie.</p>
-      </div>
-    </div>
-  </div>
-  <div class="pg">09</div>
+  <div class="pg">10</div>
 </section></div>
 
 <!-- 10 · Rutina -->
@@ -464,32 +510,32 @@ Ideas del Kanban que resuelve:
         <div class="who">Todo el equipo</div>
         <h4>Cargar ideas</h4>
         <ul>
-          <li>Cuando aparece una idea en Slack, <code>@Multiplex kanban</code> en el hilo.</li>
-          <li>Si llega por otro lado (Intercom, una llamada), <b>«+ Nueva idea»</b> con el link.</li>
-          <li>Si ya existe, sumarla como <b>mención</b>: la cantidad de menciones muestra cuánto se pide.</li>
+          <li>Lo que piden los negocios por Intercom, el Idea Box, encuestas o la baja <b>entra solo</b>.</li>
+          <li>Una idea de Slack fuera de #brainstorming: <code>@Multiplex kanban</code> en el hilo.</li>
+          <li>Lo que llega por una llamada o una reunión: <b>«+ Nueva idea»</b> con el link.</li>
         </ul>
       </div>
       <div class="r">
         <div class="who">Admins · Producto</div>
         <h4>Ordenar el tablero</h4>
         <ul>
-          <li>Revisar <b>Nueva</b>: resolver los «⚠ Misma idea», completar área y tipo, pasarla a análisis o cerrarla.</li>
+          <li>Revisar <b>Nueva</b> seguido: descartar lo que el agente anotó y no es un pedido, resolver los «⚠ Misma idea».</li>
           <li>En <b>análisis</b>: poner responsable y decidir si se prioriza o se descarta (con el porqué).</li>
           <li>Mantener <b>Priorizada</b> ordenada: arriba, lo próximo.</li>
         </ul>
       </div>
       <div class="r">
-        <div class="who">Quien construye</div>
-        <h4>Conectar con el release</h4>
+        <div class="who">Quien la construye</div>
+        <h4>Mover la tarjeta</h4>
         <ul>
-          <li>Al empezar el desarrollo, cargar en la tarjeta el <b>PR o el flag</b>.</li>
-          <li>Con eso se vincula sola al release cuando se abre, y pasa a <b>En progreso</b>.</li>
-          <li>Al lanzar no hay que tocar nada: pasa a <b>Lanzada</b> cuando se libera el release.</li>
+          <li>A <b>En progreso</b> cuando arranca el desarrollo.</li>
+          <li>A <b>Lanzada</b> cuando sale.</li>
+          <li>Hasta que se defina la conexión con Releases, esto se hace a mano.</li>
         </ul>
       </div>
     </div>
   </div>
-  <div class="pg">10</div>
+  <div class="pg">11</div>
 </section></div>
 
 <!-- 11 · Para arrancar -->
@@ -502,7 +548,7 @@ Ideas del Kanban que resuelve:
       <ul>
         <li><b>Multiplex → Producto → Kanban de ideas.</b> Lo ven los Admin.</li>
         <li>La pestaña <b>«Cómo funciona»</b> tiene esta misma guía, con todos los campos.</li>
-        <li>Para cargar desde Slack: <code>@Multiplex kanban</code> en el hilo.</li>
+        <li>Se alimenta solo cada 30 minutos; a mano, <code>@Multiplex kanban</code> en Slack o «+ Nueva idea».</li>
       </ul>
       <a class="btn-open" href="kanban/">Abrir el Kanban ↗</a>
       <p class="demo-note">Es una demo con las ideas cargadas hoy: se puede mover y editar, pero los cambios no se guardan.</p>
@@ -511,11 +557,13 @@ Ideas del Kanban que resuelve:
       <h4>Antes de usarlo</h4>
       <ul>
         <li>Pasarlo a producción (hoy corre en local).</li>
-        <li>Invitar al bot a #brainstorming: <code>/invite @Multiplex</code>. Sin eso, el comando no funciona en ese canal.</li>
+        <li>Invitar al bot a #brainstorming: <code>/invite @Multiplex</code>. Sin eso, el agente no lee ese canal.</li>
+        <li><b>Definir cómo se conecta con Releases</b> (<code>/release-abrir</code>, <code>/release-contenidos</code>): cuándo se vincula una idea, cómo pasa a «Lanzada» y cómo se les avisa a quienes la pidieron.</li>
       </ul>
+      <p class="demo-note">Un antecedente: probamos que el agente cruzara solo los PRs de GitHub con las ideas. De 40 PRs desde el 1/10 no vinculó ninguno y sugirió 1, dudoso: un PR describe el cambio técnico, no el pedido del negocio. Lo sacamos.</p>
     </div>
   </div></div>
-  <div class="pg">11</div>
+  <div class="pg">12</div>
 </section></div>
 
 </div>
