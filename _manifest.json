@@ -1,15 +1,15 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
   "version": 1,
-  "updated_at": "2026-10-30",
+  "updated_at": "2026-11-03",
   "outputs": [
     {
       "type": "deck",
       "typeLabel": "Deck",
-      "title": "Kanban de ideas · cómo funciona",
-      "description": "Qué resuelve, cómo un agente carga solo los pedidos de los negocios (Intercom, Idea Box, encuestas, bajas, #brainstorming) con sus palabras textuales, la tarjeta, los estados y las repetidas. Con una demo navegable del tablero.",
-      "detail": "12 slides · demo del Kanban · equipo interno",
-      "date": "OCT 2026",
+      "title": "Kanban de Producto · cómo funciona",
+      "description": "La herramienta de trabajo de Producto: ideas que carga solo un agente, trabajo con tipo, responsable y deadline, la vista Semana y el tramo Release que refleja el checklist de cada release. Con una demo navegable del tablero.",
+      "detail": "17 slides · demo del Kanban · equipo interno",
+      "date": "NOV 2026",
       "href": "./kanban-ideas-2026-10/index.html",
       "slug": "kanban-ideas-2026-10"
     },
