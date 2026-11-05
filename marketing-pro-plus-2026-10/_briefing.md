@@ -3,7 +3,7 @@ Fecha: 2026-10-02 · Última revisión: 2026-10-03 (v16)
 
 ## Estado actual (v16)
 
-**Empaquetado, como Finanzas Pro.** Una sola entrada «Marketing» en el menú de Flash:
+**Empaquetado, como Addon Pro.** Una sola entrada «Marketing» en el menú de Flash:
 - **Incluido en tu plan** (ya existe y se muda adentro): Mensajes de reservas (antes «Mensajes automáticos»), Descuentos, Reseñas, Contenido IG.
 - **Marketing PRO+** (marcado, con candado y activación si no está contratado): Pulse (nuevo; incluye ofrecer horarios libres), Campañas, Automatizaciones, Fidelización, Resultados.
 - **Vistas que ya existen y suman partes de PRO+, marcadas en la misma vista:** Mi negocio › Clientes (grupos, a quién escribir, invitación), Mi negocio › Analítica (canales, audiencia, recorrido, Google), Mensajes de reservas (receta «Invitar a volver»).
@@ -19,7 +19,7 @@ Fecha: 2026-10-02 · Última revisión: 2026-10-03 (v16)
 ## Historial de revisiones
 
 ## Confirmado en el pedido
-Proponer un adicional de marketing similar en facturación a Finanzas Pro. Incluir Pulse, campañas, grupos de clientes y acciones. Las plantillas de WhatsApp operativas son transversales. El usuario pidió una propuesta visual con metamorpho-propuestas.
+Proponer un adicional de marketing similar en facturación a Addon Pro. Incluir Pulse, campañas, grupos de clientes y acciones. Las plantillas de WhatsApp operativas son transversales. El usuario pidió una propuesta visual con metamorpho-propuestas.
 
 ## Objetivo y audiencia
 Una página breve para evaluar la oferta, escrita de forma comprensible para profesionales de belleza. Promesa: más clientes que vuelven y más agenda ocupada.
@@ -171,16 +171,16 @@ Criterio: PRO+ no agrega un menú aparte. Potencia cinco lugares que ya existen 
 Documento: tabla «Qué suma» con siete filas que dicen dónde vive cada cosa, pasos de Cómo funciona, guías y mapa de lectura con siete lugares, y ocho decisiones internas (se suman Mensajes automáticos y Horarios libres como modelo nuevo sobre Ofertas).
 
 
-## Revisión v14 · Un solo módulo, como Finanzas Pro
+## Revisión v14 · Un solo módulo, como Addon Pro
 
-Pedido: está todo desordenado, hay que empaquetarlo. Pulse hoy está en el dashboard y se quiere sacar de ahí como módulo propio. Referencia: cómo se hizo Finanzas Pro.
+Pedido: está todo desordenado, hay que empaquetarlo. Pulse hoy está en el dashboard y se quiere sacar de ahí como módulo propio. Referencia: cómo se hizo Addon Pro.
 
-Patrón de Finanzas Pro (flash/src/hooks/useNavbarItems.ts): una sola entrada «Finanzas» en el menú con todo adentro. Primero los subítems incluidos en el plan (Resumen, Ventas, Por cobrar, Cobradas), después los del adicional marcados (addOn) y con candado si no está contratado, que llevan al onboarding que lo explica y lo activa. Caja y Comisiones se mudaron adentro y sus rutas viejas redirigen.
+Patrón del Addon Pro (flash/src/hooks/useNavbarItems.ts): una sola entrada «Finanzas» en el menú con todo adentro. Primero los subítems incluidos en el plan (Resumen, Ventas, Por cobrar, Cobradas), después los del adicional marcados (addOn) y con candado si no está contratado, que llevan al onboarding que lo explica y lo activa. Caja y Comisiones se mudaron adentro y sus rutas viejas redirigen.
 
 Marketing con el mismo patrón:
 - **Incluido en tu plan:** Pulse (sale del Inicio y es la portada del módulo), Mensajes de reservas (antes «Mensajes automáticos»), Descuentos, Reseñas, Contenido IG. Se mudan desde «Marketing y comunicación».
 - **Marketing PRO+ (marcado con punto):** Analítica, Segmentos, Campañas, Automatizaciones, Horarios libres, Fidelización, Resultados.
-- **Sin PRO+:** botón «Ver sin PRO+» en el ejemplo; lo marcado muestra candado y lleva a «Activá Marketing PRO+» (qué se activa, precio, tres pasos), igual que Finanzas Pro. Lo incluido sigue funcionando.
+- **Sin PRO+:** botón «Ver sin PRO+» en el ejemplo; lo marcado muestra candado y lleva a «Activá Marketing PRO+» (qué se activa, precio, tres pasos), igual que Addon Pro. Lo incluido sigue funcionando.
 - Sin pestañas internas en ningún lado. Plantillas se abre desde Campañas y Automatizaciones.
 - Documento: «Todo tu marketing en un módulo» reemplaza la tabla comparativa con las dos listas (incluido / PRO+). Pasos, guías y mapa de lectura con Segmentos y Resultados como secciones. Decisiones: el módulo Marketing (mudanzas y rutas que redirigen; Tarjetas de regalo a Catálogo y Seguimiento a Ajustes), Analítica y datos de Google, Automatizaciones vs. recordatorio para volver, Horarios libres sobre Ofertas.
 
